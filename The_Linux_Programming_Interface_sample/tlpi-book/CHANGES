@@ -1,0 +1,237 @@
+This file summarizes the changes that have been made since publication
+to the program examples printed in "The Linux Programming Interface".
+Background on some of these changes can be found in the online errata
+for TLPI, available at http://man7.org/tlpi/errata/.
+
+2010-11-13
+        sockets/us_abstract_bind.c
+                The code was improved as per the errata for page 1176.
+
+2011-01-17
+        timers/real_timer.c
+                A mistake in the ordering of the code in main() was fixed.
+                See the erratum for page 483.
+
+2011-02-17
+        psem/thread_incr_psem.c
+                Fixed an error in a comment. See the erratum for page 1102.
+
+2011-04-05
+        threads/thread_multijoin.c.
+                Fixed a race condition. See the erratum for page 649.
+        threads/prod_condvar.c
+                Fixed a race condition. The problem was similar to that
+                described in the erratum for page 649.
+        threads/prod_no_condvar.c
+                Fixed a race condition. The problem was similar to that
+                described in the erratum for page 649.
+
+2011-04-19
+        altio/demo_sigio.c
+                Fixed a race condition. See the erratum for page 1349.
+        daemons/daemon_SIGHUP.c
+                Fixed a race condition. See the erratum for page 774.
+
+2011-05-18
+        signals/t_kill.c
+                Fixed an error in a diagnostic message. See the erratum
+                for page 406.
+
+2011-07-06
+        Makefile
+                Added missing "memalloc" to the directory list.
+        memalloc/free_and_sbrk.c
+                Added feature test macro definition (_BSD_SOURCE).
+                See the erratum for page 142.
+
+2011-08-11
+        acl/acl_view.c
+                Fixed a small bug as per the erratum for page 336.
+
+2011-09-04
+        pipes/popen_glob.c
+        procexec/make_zombie.c
+        sockets/inet_sockets.c
+                Removed an unnecessary assignment statement that added
+                a terminating null byte to the string buffer output by
+                snprintf().  See the erratum for page 555.
+
+2011-12-05
+        dirs_links/t_unlink.c
+                Added a comment referring to the erratum for page 348.
+
+2011-12-06
+        pty/unbuffer.c
+                Change parent exit status when read() returns <= 0
+                from EXIT_FAILURE to EXIT_SUCCESS.
+
+2011-12-13
+        signals/catch_rtsigs.c
+                Restore 3 lines that were accidentally omitted at the
+                end of this program. See the erratum for page 463.
+
+2011-12-31
+        threads/thread_incr.c
+                Make global variable 'glob' volatile, so that the program
+                more easily produces "incorrect" behavior, even in the face
+                of compiler optimizations. See the erratum for page 632.
+
+2012-02-16
+        lib/alt_functions.c
+                Fix indentation in ALT_posix_openpt().
+
+2012-04-03
+        lib/Makefile
+        lib/Build_ename.sh
+                Refactor, so that Build_ename.sh produces output on stdout,
+                rather than to a named file.
+
+2012-04-06
+        lib/itimerspec_from_str.c
+                Conditionally make the content of this file empty if
+                compiling on MacOSX, since that operating system doesn't
+                define the 'itimerspec' structure.
+                (Only in "dist" version of code.)
+        Makefile.inc.MacOSX
+                Remove '-lrt' from the IMPL_LDLIBS definition, since there
+                is no librt on MacOSX.
+
+2012-05-04
+        fileio/seek_io.c
+                Fix a typo in comment at top of the program.
+                (Only in "dist" version of code.)
+
+2012-05-11
+        psem/Makefile
+                Correct the makefile to use "cc -pthreads" for POSIX
+                semaphores. Formerly, the makefile used "cc -lrt", but
+                recent toolchain changes mean that that this no longer works
+                ("cc -pthreads" always worked.) See the erratum for page 1061.
+                (Thanks to Robert P. J. Day.)
+        pshm/Makefile
+                Correct a bug in the makefile that caused link errors.
+                (Formerly, the makefile worked, but this was fortuitous;
+                recent toolchain changes revealed the bug.)
+
+2012-05-13
+        pshm/README
+                Fix a wordo.
+
+2012-05-20
+        README
+                Various small fixes.
+                (Thanks to Robert P. J. Day.)
+
+2012-05-25
+        BUILDING
+                Various small fixes.
+                (Thanks to Robert P. J. Day.)
+
+2012-05-26
+        memalloc/free_and_sbrk.c
+                Fix an error in the code comments at the top of the program.
+                (Only in "dist" version of code.)
+                (Thanks to Robert P. J. Day.)
+
+2012-05-31
+        svmsg/svmsg_info.c
+        svsem/svsem_info.c
+        svshm/svshm_info.c
+                Eliminate unnecessary inclusion of <sys/ipc.h> header file.
+                (Thanks to Robert P. J. Day.)
+
+2012-06-05
+        COPYING
+                Renamed to COPYING.agpl-v3
+        Added new files:
+                COPYING.gpl-v3
+                        Copy of the GNU General Public License, version 3
+                COPYING.lgpl-v3
+                        Copy of the GNU Lesser General Public License, version 3
+        lib/*
+                Changed the license of the library functions in the /lib
+                directory to GNU Lesser General Public License, version 3.
+        sockets/read_line_buf.c
+        sockets/read_line_buf.h
+                Created links for the sockets/read_line_buf.{c,h} files in the
+                lib/ directory, so that these files are licensed LGPLv3.
+
+        README
+                Updated to note the licensing of the library functions.
+
+2012-07-05
+        filesys/t_statfs.c
+        filesys/t_statvfs.c
+                Changed several printf() statements to use unsigned types for
+                various fields, since (in the case of the 'statvfs' structure at
+                least) these fields are specified as unsigned in SUSv[34].
+                (The 'statfs' structure isn't covered by SUSv[34], but using 
+                unsigned types seems reasonable and safe.)
+
+2012-07-22
+        filelock/create_pid_file.c
+                Small wording fix in a comment.
+                (Only in "dist" version of code.)
+        procexec/execlp.c
+                Small wording fix in a comment.
+        svshm/svshm_xfr_reader.c
+                Small wording fix in a comment.
+                (Only in "dist" version of code.)
+        sysinfo/procfs_pidmax.c
+                Small wording fix in a comment.
+                (Only in "dist" version of code.)
+        threads/one_time_init.c
+                Small wording fix in a comment.
+
+2012-07-26
+        filebuff/direct_read.c
+                Fix an error in comment describing program arguments.
+                (Thanks to Jason Orendorff.)
+                (Only in "dist" version of code.)
+
+2012-08-03
+        loginacct/dump_utmpx.c
+        loginacct/utmpx_login.c
+        loginacct/view_lastlog.c
+                Remove unneeded casts.
+                See the errata for pages 824, 829, and 831.
+
+2012-09-10
+        loginacct/dump_utmpx.c
+                Fix error introduced in 2012-08-03 changes.
+        altio/epoll_input.c
+                Improve a comment.
+                See the erratum for page 1363.
+
+2012-09-27
+        svsem/Makefile
+                Fixed a bug in the Makefile that causes svsem_demo.c
+                not to be built.
+                (Thanks to Jinnan Wang.)
+
+2012-09-30
+        timers/real_timer.c
+                Use NULL instead of 0 for last argument of setitimer() call.
+                See the erratum for page 484.
+                (Thanks to Trevor Woerner.)
+
+2012-10-02
+        Makefile.inc
+                Add "-Wno-unused-but-set-variable" to compiler flags
+                (the IMPL_CFLAGS macro), to prevent compilation warnings
+                in three of the example programs.  (Those warnings do not
+                correspond to real problems in the code.) The
+                "-Wunused-but-set-variable" flag was added (and turned on
+                by default) in GCC 4.6, which was released on 2011-03-35
+                (i.e., after TLPI was written).
+
+2012-10-15
+        loginacct/dump_utmpx.c
+        loginacct/utmpx_login.c
+        loginacct/view_lastlog.c
+                Revert the changes of 2012-08-03. These were made overlooking
+                the fact that in the 'utmpx' structure, 'tv_sec' is defined as
+                being of type 'int32_t', not 'time_t', so that the 2012-08-03
+                changes in fact cause warnings on 64-bit systems.
+                As a consequence, three (as yet unapplied) errata
+                for pages 824, 829, and 831 are removed.
