@@ -1,0 +1,42 @@
+# This material is inherited from the Linux Makefile: arch/alpha/Makefile:
+
+# This file is included by the global makefile so that you can add your own
+# architecture-specific flags and dependencies. Remember to do have actions
+# for "archclean" and "archdep" for cleaning up and making dependencies for
+# this architecture
+#
+# This file is subject to the terms and conditions of the GNU General Public
+# License.  See the file "COPYING" in the main directory of this archive
+# for more details.
+#
+# Copyright (C) 1994 by Linus Torvalds
+# Changes for PPC by Gary Thomas
+# Rewritten by Cort Dougan and Paul Mackerras
+#
+
+KERNELLOAD	=0xc0000000
+
+ifeq ($(shell uname -m),ppc)
+CHECKS		= checks
+endif
+
+ASFLAGS		=
+LINKFLAGS	= -T arch/ppc/vmlinux.lds -Ttext $(KERNELLOAD) -Bstatic
+CPPFLAGS	:= $(CPPFLAGS) -D__powerpc__
+CFLAGS          := $(CFLAGS) -D__powerpc__ -fsigned-char -msoft-float -pipe \
+                -fno-builtin -ffixed-r2 -Wno-uninitialized -mmultiple -mstring
+CPP		= $(CC) -E $(CFLAGS)
+
+ifdef CONFIG_4xx
+CFLAGS := $(CFLAGS) -mcpu=403
+endif
+
+ifdef CONFIG_8xx
+CFLAGS := $(CFLAGS) -mcpu=860 -I../8xx_io
+endif
+
+ifdef CONFIG_PPC64BRIDGE
+CFLAGS := $(CFLAGS) -Wa,-mppc64bridge
+endif
+
+

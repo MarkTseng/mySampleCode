@@ -1,0 +1,124 @@
+echo 0 > /tmp/syms.res; \
+for n in 20 22 24; do \
+   echo ""; echo "Checking syms for linux-$n"; \
+   if [ -f /morgana/home/rubini/ldd.book/src/_syms-$n.alpha ]; then \
+      SYMS=/morgana/home/rubini/ldd.book/src/_syms-$n.alpha; else \
+      SYMS=/morgana/home/rubini/ldd.book/src/_syms-$n; fi; \
+   OBJS="/morgana/home/rubini/ldd.book/src/_empty_object *-$n.o"; \
+   SYMS=`nm $OBJS | egrep -v '(mod_use_count_|__this_module)' | \
+	awk '$1=="U" {print $2}'`; \
+   for s in $SYMS; do \
+      (grep $s /morgana/home/rubini/ldd.book/src/_syms-$n  || \
+       (grep -n -w $s *.c /dev/null; echo "**** $s not in $n."; \
+        echo `expr \`cat /tmp/syms.res\` + 1` > /tmp/syms.res)); \
+   done; \
+done; \
+exit `cat /tmp/syms.res`
+
+Checking syms for linux-20
+**** __constant_c_memset not in 20.
+**** __divl not in 20.
+**** __divq not in 20.
+00112eb0 __down
+**** __down_interruptible not in 20.
+**** __memcpy not in 20.
+**** __reml not in 20.
+**** __remq not in 20.
+00112dc0 __up
+001bc108 current_set
+00176610 fasync_helper
+00112ef0 interruptible_sleep_on
+00121420 kfree
+0013dd60 kfree_skb
+0013e2c0 dev_kfree_skb
+001308b0 kill_fasync
+00121200 kmalloc
+001153a0 printk
+00160f20 proc_register_dynamic
+001a0f80 proc_root
+00160e40 proc_unregister
+00127410 register_chrdev
+00127550 unregister_chrdev
+0018b310 sprintf
+0018ae40 vsprintf
+00127550 unregister_chrdev
+0011c6c0 verify_area
+00112cd0 wake_up_interruptible
+
+Checking syms for linux-22
+**** __constant_c_memset not in 22.
+**** __copy_user not in 22.
+**** __divl not in 22.
+**** __divq not in 22.
+c01a605c __down_failed
+c01a6068 __down_failed_interruptible
+c01a6074 __down_failed_trylock
+c01a6068 __down_failed_interruptible
+c012ba44 __pollwait
+**** __reml not in 22.
+**** __remq not in 22.
+c01a6080 __up_wakeup
+c010ee98 __wake_up
+c013ec8c create_proc_entry
+c018df24 fasync_helper
+c010f08c interruptible_sleep_on
+c010f0e8 interruptible_sleep_on_timeout
+c011e5ac kfree
+c011e764 kfree_s
+c014d9e8 sock_kfree_s
+c014e1e4 __kfree_skb
+c012b36c kill_fasync
+c011e450 kmalloc
+c014d9a8 sock_kmalloc
+access.c:330:        memset(lptr, 0, sizeof(struct scull_listitem));
+main.c:271:            memset(dev->next, 0, sizeof(Scull_Dev));
+main.c:353:        memset(dptr->data, 0, qset * sizeof(char *));
+main.c:786:    memset(scull_devices, 0, scull_nr_devs * sizeof(Scull_Dev));
+pipe.c:444:    memset(scull_p_devices, 0, scull_p_nr_devs * sizeof(Scull_Pipe));
+**** memset not in 22.
+c01118cc printk
+c0123000 register_chrdev
+c0123108 unregister_chrdev
+c013edd4 remove_proc_entry
+c01c4314 securebits
+c01a6ce8 sprintf
+c01a6804 vsprintf
+c0123108 unregister_chrdev
+
+Checking syms for linux-24
+**** __constant_c_memset not in 24.
+**** __copy_user not in 24.
+**** __divl not in 24.
+**** __divq not in 24.
+c0107b44 __down_failed
+c0107b50 __down_failed_interruptible
+c0107b5c __down_failed_trylock
+c0107b50 __down_failed_interruptible
+c013df50 __pollwait
+**** __reml not in 24.
+**** __remq not in 24.
+c0107b68 __up_wakeup
+c0117ba0 __wake_up
+c0148fa0 create_proc_entry
+c013d3e0 fasync_helper
+c0117e10 interruptible_sleep_on
+c0117e60 interruptible_sleep_on_timeout
+c012a8c0 kfree
+c01ba000 sock_kfree_s
+c01bab90 __kfree_skb
+c013d520 kill_fasync
+c013d4c0 __kill_fasync
+c012a730 kmalloc
+c01b9fc0 sock_kmalloc
+c01f3400 memset
+c011a040 printk
+c012fc80 register_chrdev
+c012fd10 unregister_chrdev
+c0155c60 devfs_register_chrdev
+c0155ce0 devfs_unregister_chrdev
+c0149110 remove_proc_entry
+c022d6c8 securebits
+c01f4250 sprintf
+c01f3bb0 vsprintf
+c012fd10 unregister_chrdev
+c0155ce0 devfs_unregister_chrdev

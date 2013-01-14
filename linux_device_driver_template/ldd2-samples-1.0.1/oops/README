@@ -1,0 +1,9 @@
+The "oops" program only deals with "Oops" messages generated on the PC
+platform. I never got the time to extend it to the Alpha and the Sparc
+(whose Oops messages actually give less information than the Intel one).
+Nowadays there are many debugging tools available, and I don't feel like
+this one is needed. If, on the other hand, you need such a best, feel
+free to call me.
+
+/alessandro
+rubini@linux.it

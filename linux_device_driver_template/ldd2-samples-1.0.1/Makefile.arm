@@ -1,0 +1,166 @@
+
+# This material is inherited from the Linux Makefile: arch/arm/Makefile:
+# (2.4.0.-test6 official)  -- maybe the last part is not needed, though
+#
+# This file is included by the global makefile so that you can add your own
+# architecture-specific flags and dependencies. Remember to do have actions
+# for "archclean" and "archdep" for cleaning up and making dependencies for
+# this architecture
+#
+# This file is subject to the terms and conditions of the GNU General Public
+# License.  See the file "COPYING" in the main directory of this archive
+# for more details.
+#
+# Copyright (C) 1995-1999 by Russell King
+
+OBJCOPY		:= $(CROSS_COMPILE)objcopy -O binary -R .note -R .comment -S
+CPP		:= $(CC) -E
+LINKFLAGS	:= -p -X -T arch/arm/vmlinux.lds
+ARCHCC		:= $(word 1,$(CC))
+
+AFLAGS		+= -mno-fpu
+CFLAGS_PIPE	:= -pipe
+CFLAGS		:= $(CFLAGS) $(CFLAGS_PIPE) -msoft-float
+
+ifdef CONFIG_FRAME_POINTER
+CFLAGS		:= $(CFLAGS:-fomit-frame-pointer=)
+endif
+
+ifdef CONFIG_DEBUG_INFO
+CFLAGS		+= -g
+endif
+
+GZFLAGS		= -9
+
+# Ensure this is ld "2.9.4" or later
+NEW_LINKER	:= $(shell if $(LD) --gc-sections --version >/dev/null 2>&1; then echo y; else echo n; fi)
+
+ifneq ($(NEW_LINKER),y)
+dummy:;		@echo '*** ${VERSION}.${PATCHLEVEL} kernels no longer build correctly with old versions of binutils.'
+		@echo '*** Please upgrade your binutils to 2.9.5.'
+		@false
+endif
+
+# GCC 2.7 uses different options to later compilers; sort out which we have
+NEW_GCC		:= $(shell if $(CC) --version 2>&1 | grep '^2\.7' > /dev/null; then echo n; else echo y; fi)
+
+#
+# select flags depending on the compiler
+#
+ifeq ($(NEW_GCC),y)
+CFLAGS			+= -mshort-load-bytes
+CFLAGS_PROC_CPU_26	:= -mcpu=arm3 -Os
+CFLAGS_PROC_CPU_32v3	:= -march=armv3
+CFLAGS_PROC_CPU_32v4	:= -march=armv4
+CFLAGS_ARM6		:= -mtune=arm6
+CFLAGS_ARM7		:= -mtune=arm7
+CFLAGS_ARM720		:= -mtune=arm7tdmi
+CFLAGS_SA110		:= -mtune=strongarm110
+else
+CFLAGS			+= -DNO_TEXT_SECTIONS
+CFLAGS_PROC_CPU_26	:= -m3
+CFLAGS_PROC_CPU_32v3	:=
+CFLAGS_PROC_CPU_32v4	:=
+CFLAGS_ARM6		:= -m6
+CFLAGS_ARM7		:= -m6
+CFLAGS_ARM720		:= -m6
+CFLAGS_SA110		:= -m6
+endif
+
+#
+# Select CPU dependent flags
+#
+ifeq ($(CONFIG_CPU_26),y)
+ PROCESSOR	 = armo
+ TEXTADDR	 = 0x02080000
+ CFLAGS		+= $(CFLAGS_PROC_CPU_26)
+ AFLAGS		+= -mapcs-26
+endif
+
+ifeq ($(CONFIG_CPU_32),y)
+ PROCESSOR	 = armv
+ TEXTADDR	 = 0xC0008000
+ ifeq ($(CONFIG_CPU_32v4),y)
+  CFLAGS	+= $(CFLAGS_PROC_CPU_32v4)
+  AFLAGS	+= -mapcs-32 -marmv4
+ else
+  CFLAGS	+= $(CFLAGS_PROC_CPU_32v3)
+  AFLAGS	+= -mapcs-32 -marmv3m
+ endif
+ #
+ # Exactly one of the following must be selected
+ #
+ ifeq ($(CONFIG_CPU_ARM6),y)
+  CFLAGS	+= $(CFLAGS_ARM6)
+ else
+ ifeq ($(CONFIG_CPU_ARM7),y)
+  CFLAGS	+= $(CFLAGS_ARM7)
+ else
+ ifeq ($(CONFIG_CPU_ARM720),y)
+  CFLAGS	+= $(CFLAGS_ARM720)
+ else
+ ifeq ($(CONFIG_CPU_SA110),y)
+  CFLAGS	+= $(CFLAGS_SA110)
+ else
+ ifeq ($(CONFIG_CPU_SA1100),y)
+  CFLAGS	+= $(CFLAGS_SA110)
+ endif
+ endif
+ endif
+ endif
+ endif
+endif
+
+LIBGCC		:= $(shell $(CC) $(CFLAGS) --print-libgcc-file-name)
+
+export	LIBGCC MACHINE PROCESSOR TEXTADDR GZFLAGS
+
+ifeq ($(CONFIG_ARCH_ARCA5K),y)
+MACHINE		 = arc
+ARCHDIR		 = arc
+endif
+
+ifeq ($(CONFIG_ARCH_RPC),y)
+MACHINE		 = rpc
+ARCHDIR		 = rpc
+endif
+
+ifeq ($(CONFIG_ARCH_EBSA110),y)
+MACHINE		 = ebsa110
+ARCHDIR		 = ebsa110
+endif
+
+ifeq ($(CONFIG_ARCH_CLPS7500),y)
+MACHINE		 = clps7500
+ARCHDIR		 = cl7500
+endif
+
+ifeq ($(CONFIG_FOOTBRIDGE),y)
+MACHINE		 = footbridge
+ARCHDIR		 = ebsa285
+endif
+
+ifeq ($(CONFIG_ARCH_CO285),y)
+TEXTADDR	 = 0x60008000
+endif
+
+ifeq ($(CONFIG_ARCH_NEXUSPCI),y)
+MACHINE		 = nexuspci
+ARCHDIR		 = nexuspci
+endif
+
+ifeq ($(CONFIG_ARCH_SHARK),y)
+MACHINE		 = shark
+ARCHDIR		 = shark
+endif
+
+ifeq ($(CONFIG_ARCH_SA1100),y)
+MACHINE		 = sa1100
+ARCHDIR		 = sa1100
+endif
+
+ifeq ($(CONFIG_ARCH_L7200),y)
+MACHINE		 = l7200
+ARCHDIR		 = l7200
+endif
+

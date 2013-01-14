@@ -1,0 +1,17 @@
+#!/bin/sh
+
+export PATH=/sbin:/bin
+
+# Use a pathname, as new modutils don't look in the current dir by default
+insmod ./snull.o $*
+ifconfig sn0 local0
+ifconfig sn1 local1
+
+# The route commands are needed for 2.0, not for later kernels
+case "`uname -r`" in
+    2.0.*)
+        route add -net snullnet0 sn0
+        route add -net snullnet1 sn1
+        ;;
+esac
+

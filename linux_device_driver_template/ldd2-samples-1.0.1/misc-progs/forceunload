@@ -1,0 +1,14 @@
+#!/bin/sh
+
+# if you have kdebug, this unloads a module with non-0 usage count.
+# use with care
+set -v
+
+add=`ksyms -m | awk "/.---.*\[$1\]/ {print \\$1}"`
+
+echo "
+set *0x${add}=0
+quit
+y
+" | kgdb
+rmmod $1

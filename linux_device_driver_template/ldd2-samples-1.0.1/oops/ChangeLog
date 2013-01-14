@@ -1,0 +1,4 @@
+Wed Jun  5 18:53:03 1996    (rubini@morgana)
+
+	* oops.c: enlarged the gets buffer, it was too short
+

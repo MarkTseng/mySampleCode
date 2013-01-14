@@ -1,0 +1,6 @@
+# This material is inherited from the Linux Makefile: arch/alpha/Makefile:
+
+CFLAGS := $(CFLAGS) -pipe $(EXTRA) -Wa,-x -ffixed-r13 -mfixed-range=f10-f15,f32-f127 \
+          -funwind-tables
+
+CFLAGS_KERNEL := -mconstant-gp

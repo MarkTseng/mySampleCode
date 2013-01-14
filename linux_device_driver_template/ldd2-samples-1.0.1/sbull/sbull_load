@@ -1,0 +1,49 @@
+#!/bin/sh
+module="sbull"
+device="sbull"
+mode="664"
+chardevice="sbullr"
+
+# Group: since distributions do it differently, look for wheel or use staff
+if grep '^staff:' /etc/group > /dev/null; then
+    group="staff"
+else
+    group="wheel"
+fi
+
+# invoke insmod with all arguments we got
+# and use a pathname, as newer modutils don't look in . by default
+/sbin/insmod -f ./$module.o $* || exit 1
+
+major=`cat /proc/devices | awk "\\$2==\"$module\" {print \\$1}"`
+
+# Remove stale nodes and replace them, then give gid and perms
+# Usually the script is shorter, it's scull that has several devices in it.
+
+rm -f /dev/${device}[0-3] /dev/${device}
+
+mknod /dev/${device}0 b $major 0
+mknod /dev/${device}1 b $major 1
+mknod /dev/${device}2 b $major 2
+mknod /dev/${device}3 b $major 3
+ln -sf ${device}0 /dev/${device}
+chgrp $group /dev/${device}[0-3] 
+chmod $mode  /dev/${device}[0-3]
+
+#
+# Look and see if the raw device is present as well.  If so set it up.
+#
+if ! grep " $chardevice\$" /proc/devices > /dev/null; then
+    exit
+fi
+charmajor=`cat /proc/devices | awk "\\$2==\"$chardevice\" {print \\$1}"`
+
+rm -f /dev/${chardevice}[0-3] /dev/${chardevice}
+
+mknod /dev/${chardevice}0 c $charmajor 0
+mknod /dev/${chardevice}1 c $charmajor 1
+mknod /dev/${chardevice}2 c $charmajor 2
+mknod /dev/${chardevice}3 c $charmajor 3
+ln -sf ${chardevice}0 /dev/${chardevice}
+chgrp $group /dev/${chardevice}[0-3] 
+chmod $mode  /dev/${chardevice}[0-3]

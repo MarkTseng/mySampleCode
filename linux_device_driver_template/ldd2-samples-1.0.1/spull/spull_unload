@@ -1,0 +1,15 @@
+#!/bin/sh
+module="spull"
+device="pd"
+
+# invoke rmmod with all arguments we got
+/sbin/rmmod $module $* || exit 1
+
+# Remove stale nodes
+
+rm -f /dev/${device}[a-d][0-8] /dev/${device}[a-d]
+
+
+
+
+

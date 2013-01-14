@@ -1,0 +1,30 @@
+cd /arcana/home/cvs && /home/rubini/bin/backup-dir
+
+These are the source files for the book "Linux Device Drivers".
+This tree is version 1.0.1 for the second edition of the book.
+
+All files include their license; most of them follow under these rules:
+
+ Copyright (C) 2001 Alessandro Rubini and Jonathan Corbet
+ Copyright (C) 2001 O'Reilly & Associates
+
+ The source code in this file can be freely used, adapted,
+ and redistributed in source or binary form, so long as an
+ acknowledgment appears in derived source files.  The citation
+ should list that the code comes from the book "Linux Device
+ Drivers" by Alessandro Rubini and Jonathan Corbet, published
+ by O'Reilly & Associates.   No warranty is attached;
+ we cannot take responsibility for errors or fitness for use.
+
+
+A few of the files, on the other hand, are released according to the
+GNU GPL becuase either they use kernel code or they have been
+developed independently. Their "restrictive" license should not be an
+issue becuase those files are not meant to be samples that the user
+may incorporate in his/her own work.
+
+Even if nobody requires that, if kernel modules are released as Free
+Software (possibly under the GPL) that's good for both the author and
+the user, on our opinion.
+
+/alessandro and jonathan

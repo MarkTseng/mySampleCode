@@ -1,0 +1,42 @@
+
+
+Unless  otherwise stated, the  source code distributed  with this book
+can   be  redistributed in source    or  binary form   so  long  as an
+acknowledgment  appears in derived source   files. The citation should
+list that the code comes from BOOK  by AUTHOR, published by O'Reilly &
+Associates.  This  code is under copyright and  cannot be  included in
+any other book, publication, or educational product without permission
+from O'Reilly &  Associates. No warranty  is attached; we  cannot take
+responsibility for errors or fitness for use.
+
+
+There are  a  few exception to  this  licence, however:  a few sources
+herein    are  distributed  according   to   the  GNU   General Public
+License. You'll find a copy  of the license in /usr/src/linux/COPYING,
+and in other places in your filesystem. The affected source files are:
+
+ 	pci/pcidata.c
+ 	pci/pciregions.c
+	misc-modules/allocator.c
+
+The  files in ./pci inherit the   GPL from the kernel
+sources, as  some of their code comes  straight from the kernel; their
+being GPL'd doesn't  prevent you from writing  binary modules,  as the
+code in the pci* modules isn't meant to be included in custom drivers,
+the modules are just standalone probing tools.
+
+The allocator,  on the other hand,  is completely mine, but I'd better
+not allow hiding code dealing  with memory management.  If you want to
+use  the  allocator  in a  binary-only module,   just compile it  as a
+standalone module and distribute its source.
+
+
+
+Note  that   although everything here  is  designed  to allow building
+binary modules, I'm strongly against this practice. All software in my
+opinion should be  free (in the  sense  of freedom). Every Linux  user
+should acknowledge the importance of the GPL and should use it for any
+new software.
+
+Enjoy
+/alessandro

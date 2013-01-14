@@ -1,0 +1,21 @@
+mount /morgana
+unalias rm
+cd /morgana/home/rubini/ldd.book/src/misc-modules
+cd /morgana/home/rubini/ldd.book/src/misc-progs
+
+killall klogd; /usr/local/bin/netlog-ksend k`hostname` 192.168.16.1:1234 &
+
+arm:
+	setenv PATH `echo $PATH | sed 's/:.usr.local.bin:/:/'`
+
+sparc:
+	export CC="gcc -D__FDSET_INTS=__FDSET_LONGS"
+	INCLUDEDIR=/usr/src/linux-2.0/include
+
+sparc64:
+	export CC=sparc64-linux-gcc
+	INCLUDEDIR=/usr/src/linux-2.2/include UP=1
+
+
+ppc:
+	export INCLUDEDIR="/usr/src/linux-2.2.13/include"

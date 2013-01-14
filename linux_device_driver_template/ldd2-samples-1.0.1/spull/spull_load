@@ -1,0 +1,39 @@
+#!/bin/sh
+module="spull"
+device="pd"
+mode="664"
+
+# Group: since distributions do it differently, look for wheel or use staff
+if grep '^staff:' /etc/group > /dev/null; then
+    group="staff"
+else
+    group="wheel"
+fi
+
+# invoke insmod with all arguments we got
+# and use a pathname, as newer modutils don't look in . by default
+/sbin/insmod -f ./$module.o $* || exit 1
+
+major=`cat /proc/devices | awk "\\$2==\"$module\" {print \\$1}"`
+
+# Remove stale nodes and replace them, then give gid and perms
+# Usually the script is shorter, it's scull that has several devices in it.
+
+rm -f /dev/${device}[a-d][0-8] /dev/${device}[a-d]
+
+for p in "" 1 2 3 4 5 6 7 8; do
+	n=$p; if [ "$n" = "" ]; then n=0; fi
+	mknod /dev/${device}a${p} b $major $n
+	mknod /dev/${device}b${p} b $major `expr 16 + $n`
+	mknod /dev/${device}c${p} b $major `expr 32 + $n`
+	mknod /dev/${device}d${p} b $major `expr 48 + $n`
+done
+
+chgrp $group /dev/${device}[a-d][0-8]  /dev/${device}[a-d]
+chmod $mode  /dev/${device}[a-d][0-8]  /dev/${device}[a-d]
+
+
+
+
+
+

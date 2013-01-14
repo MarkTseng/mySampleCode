@@ -1,0 +1,13 @@
+
+Changes from version 1.0.0 to 1.0.1
+
+- Added copyright lines in all files
+
+- Added README file
+
+- Added Changes file -- :)
+
+- Added shortprint/ directory (we forgot about it)
+
+- Fixed problem with scull, where a function only define #ifdef SCULL_DEBUG
+	was always called even if the macro was not defined
