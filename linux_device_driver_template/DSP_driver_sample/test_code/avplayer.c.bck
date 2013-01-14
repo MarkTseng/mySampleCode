@@ -1,0 +1,892 @@
+/*
+ * Sunplus  Multimedia player program
+ * Author : Mark Tseng
+ * DOCUMENT: 
+ *		1. Create dsp device node
+ *		# mknod /dev/dsp c 42 0
+ *		2. execute dsp_ioctl
+ * $Id: dsp_ioctl.c,v 0.1 2011/11/21 Mark Tseng Exp $
+ */
+static char const rcsid[] = "$Id: avplayer, v0.0.0.1 " __DATE__ " " __TIME__ " Mark Exp $";
+
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <sys/mman.h>
+#include <sys/errno.h>
+#include <sys/time.h>
+#include <fcntl.h>
+#include <sys/types.h>
+#include <linux/types.h>
+#include <sys/stat.h>
+#include <sys/ioctl.h>		/* ioctl */
+#include <pthread.h>
+#include <signal.h>
+#include <mcheck.h>  // check memory leak
+
+// ffmpeg header
+#include <libavcodec/avcodec.h>
+#include <libavcodec/avfft.h>
+#include <libavformat/avformat.h>
+#include <libavutil/avutil.h>
+#include <libavutil/samplefmt.h>
+#include <libavutil/avstring.h>
+
+#include "cyg-profile.h"
+#include "dsp_api.h"
+#include "colortext.h"
+int DSPfd;
+
+// BSFeed Bitrate
+#define BSFeed32K	32 * 1024
+#define BSFeed40K	40 * 1024
+#define BSFeed48K	48 * 1024
+#define BSFeed64K	64 * 1024
+#define BSFeed128K	128 * 1024
+#define BSFeed224K	224 * 1024
+#define BSFeed256K	256 * 1024
+#define BSFeed384K	384 * 1024
+#define BSFeed512K	512 * 1024
+#define BSFeed640K	640 * 1024
+#define BSFeed700K	700 * 1024
+
+//audio queue buffer size
+#define AUDIO_QUEUE_BUF_SIZE	5 * 16 * 1024
+#define VIDEO_QUEUE_BUF_SIZE	5 * 256 * 1024
+#define MIN_FRAMES 5
+
+/* no AV sync correction is done if below the AV sync threshold */
+#define AV_SYNC_THRESHOLD 0.01
+/* no AV correction is done if too big error */
+#define AV_NOSYNC_THRESHOLD 10.0
+
+#define FRAME_SKIP_FACTOR 0.05
+
+/* maximum audio speed change to get correct sync */
+#define SAMPLE_CORRECTION_PERCENT_MAX 10
+
+/* we use about AUDIO_DIFF_AVG_NB A-V differences to make the average */
+#define AUDIO_DIFF_AVG_NB   20
+
+/* NOTE: the size must be big enough to compensate the hardware audio buffersize size */
+//#define SAMPLE_ARRAY_SIZE (2*65536)
+
+static AVPacket flush_pkt;
+
+typedef struct PacketQueue {
+    AVPacketList *first_pkt, *last_pkt;
+    int nb_packets;
+    int size;
+    int abort_request;
+    pthread_mutex_t mutex;
+    pthread_cond_t cond;
+} __attribute__((packed)) PacketQueue;
+
+#define VIDEO_PICTURE_QUEUE_SIZE 2
+#define SUBPICTURE_QUEUE_SIZE 4
+
+typedef struct VideoPicture {
+    double pts;             ///<presentation time stamp for this picture
+    double target_clock;    ///<av_gettime() time at which this should be displayed ideally
+    int64_t pos;            ///<byte position in file
+    //SDL_Overlay *bmp;
+    int width, height; /* source height & width */
+    int allocated;
+    enum PixelFormat pix_fmt;
+
+} VideoPicture;
+
+typedef struct SubPicture {
+    double pts; /* presentation time stamp for this picture */
+    AVSubtitle sub;
+} SubPicture;
+
+// test quque
+PacketQueue audioq;
+PacketQueue videoq;
+
+typedef enum {
+	ProgStop,
+	ProgRun,
+	ProgExit,
+}eProgStatus;
+
+typedef struct ProgramState {
+ 	eProgStatus bMainProgStatus; 
+	eProgStatus bAudioDecoderThreadStatus; 
+	eProgStatus bVideoDecoderThreadStatus; 
+	eProgStatus bReadStreamThreadStatus; 
+
+} __attribute__((packed)) ProgramState;
+
+ProgramState AVPlayerStatus;
+
+// start time stamp
+int64_t AudioDecoderStartTime;
+int64_t VideoDecoderStartTime;
+
+enum {
+    AV_SYNC_AUDIO_MASTER, /* default choice */
+    AV_SYNC_VIDEO_MASTER,
+    AV_SYNC_EXTERNAL_CLOCK, /* synchronize to an external clock */
+};
+
+typedef struct VideoState {
+
+  AVFormatContext *pFormatCtx;
+  int             videoStream, audioStream;
+
+  int             av_sync_type;
+  double          external_clock; /* external clock base */
+  int64_t         external_clock_time;
+  int             seek_req;
+  int             seek_flags;
+  int64_t         seek_pos;
+  double          audio_clock;
+  AVStream        *audio_st;
+  PacketQueue     audioq;
+  DECLARE_ALIGNED(16, uint8_t, audio_buf[(AVCODEC_MAX_AUDIO_FRAME_SIZE * 3) / 2]);
+  unsigned int    audio_buf_size;
+  unsigned int    audio_buf_index;
+  AVPacket        audio_pkt;
+  uint8_t         *audio_pkt_data;
+  int             audio_pkt_size;
+  int             audio_hw_buf_size;  
+  double          audio_diff_cum; /* used for AV difference average computation */
+  double          audio_diff_avg_coef;
+  double          audio_diff_threshold;
+  int             audio_diff_avg_count;
+  double          frame_timer;
+  double          frame_last_pts;
+  double          frame_last_delay;
+  double          video_clock; ///<pts of last decoded frame / predicted pts of next decoded frame
+  double          video_current_pts; ///<current displayed pts (different from video_clock if frame fifos are used)
+  int64_t         video_current_pts_time;  ///<time (av_gettime) at which we updated video_current_pts - used to have running video pts
+  AVStream        *video_st;
+  PacketQueue     videoq;
+
+  VideoPicture    pictq[VIDEO_PICTURE_QUEUE_SIZE];
+  int             pictq_size, pictq_rindex, pictq_windex;
+  pthread_mutex_t       *pictq_mutex;
+  pthread_cond_t        *pictq_cond;
+  pthread_t      *parse_tid;
+  pthread_t      *video_tid;
+  char            filename[1024];
+  int             quit;
+} VideoState;
+
+
+static void packet_queue_flush(PacketQueue *q)
+{
+    AVPacketList *pkt, *pkt1;
+
+    pthread_mutex_lock(&q->mutex);
+    for(pkt = q->first_pkt; pkt != NULL; pkt = pkt1) {
+        pkt1 = pkt->next;
+        av_free_packet(&pkt->pkt);
+        av_freep(&pkt);
+    }
+    q->last_pkt = NULL;
+    q->first_pkt = NULL;
+    q->nb_packets = 0;
+    q->size = 0;
+    pthread_mutex_unlock(&q->mutex);
+}
+
+static void packet_queue_end(PacketQueue *q)
+{
+    packet_queue_flush(q);
+    pthread_mutex_destroy(&q->mutex);
+	pthread_cond_destroy(&q->cond);
+}
+
+static void packet_queue_abort(PacketQueue *q)
+{
+    pthread_mutex_lock(&q->mutex);
+
+    q->abort_request = 1;
+
+    pthread_cond_signal(&q->cond);
+
+    pthread_mutex_unlock(&q->mutex);
+}
+
+static int packet_queue_put(PacketQueue *q, AVPacket *pkt)
+{
+    AVPacketList *pkt1;
+
+    /* duplicate the packet */
+    if (pkt!=&flush_pkt && av_dup_packet(pkt) < 0)
+        return -1;
+
+    pkt1 = av_malloc(sizeof(AVPacketList));
+    if (!pkt1)
+        return -1;
+    pkt1->pkt = *pkt;
+    pkt1->next = NULL;
+
+
+    pthread_mutex_lock(&q->mutex);
+
+    if (!q->last_pkt)
+
+        q->first_pkt = pkt1;
+    else
+        q->last_pkt->next = pkt1;
+    q->last_pkt = pkt1;
+    q->nb_packets++;
+	q->size += pkt1->pkt.size ;
+#if 0
+	av_log(NULL, AV_LOG_WARNING,"Queue(%p): size: %d ,nb_packets: %d \n",q,q->size,q->nb_packets);
+#endif
+    /* XXX: should duplicate packet data in DV case */
+    pthread_cond_signal(&q->cond);
+
+    pthread_mutex_unlock(&q->mutex);
+    return 0;
+}
+
+/* return < 0 if aborted, 0 if no packet and > 0 if packet.  */
+static int packet_queue_get(PacketQueue *q, AVPacket *pkt, int block)
+{
+    AVPacketList *pkt1;
+    int ret;
+
+    pthread_mutex_lock(&q->mutex);
+
+    for(;;) {
+        if (q->abort_request) {
+            ret = -1;
+            break;
+        }
+
+        pkt1 = q->first_pkt;
+        if (pkt1) {
+            q->first_pkt = pkt1->next;
+            if (!q->first_pkt)
+                q->last_pkt = NULL;
+            q->nb_packets--;
+            q->size -= pkt1->pkt.size ;
+            *pkt = pkt1->pkt;
+            av_free(pkt1);
+            ret = 1;
+            break;
+        } else if (!block) {
+            ret = 0;
+            break;
+        } else {
+            pthread_cond_wait(&q->cond, &q->mutex);
+        }
+    }
+    pthread_mutex_unlock(&q->mutex);
+    return ret;
+}
+
+/* packet queue handling */
+static void packet_queue_init(PacketQueue *q)
+{
+    memset(q, 0, sizeof(PacketQueue));
+    pthread_mutex_init(&q->mutex, NULL);
+    pthread_cond_init(&q->cond,NULL);
+    packet_queue_put(q, &flush_pkt);
+}
+
+
+static void ShowDecoderTime(int64_t timestamp)
+{
+	
+	int hours, mins, secs, us;
+	secs = timestamp / AV_TIME_BASE;
+	us = timestamp % AV_TIME_BASE;
+	mins = secs / 60;
+	secs %= 60;
+	hours = mins / 60;
+	mins %= 60;
+	av_log(NULL, AV_LOG_INFO, "time: %02d:%02d:%02d.%02d\r", hours, mins, secs,(100 * us) / AV_TIME_BASE);
+}
+
+static void ShowDurationTime(int64_t timestamp)
+{
+	
+	int hours, mins, secs, us;
+	secs = timestamp / AV_TIME_BASE;
+	us = timestamp % AV_TIME_BASE;
+	mins = secs / 60;
+	secs %= 60;
+	hours = mins / 60;
+	mins %= 60;
+	av_log(NULL, AV_LOG_WARNING, "\ttime: %02d:%02d:%02d.%02d\n", hours, mins, secs,(100 * us) / AV_TIME_BASE);
+}
+
+AVFormatContext *pFormatCtx;
+int             i,videoCount,audioCount, videoStream,audioStream;
+AVCodecContext  *pCodecCtx;
+AVCodec         *pCodec;
+AVFrame         *pFrame; 
+AVFrame         *pFrameRGB;
+//AVPacket        packet;
+AVStream		*video_st,*audio_st;
+int64_t			TotalPacketSize = 0;
+const char		*codec_name;
+uint8_t         *buffer;
+unsigned int	AudioFrameNum = 0, VideoFrameNum = 0;
+int64_t			AudioPacketSize = 0, VideoPacketSize = 0;
+
+AVPacket		audiopkt;
+AVPacket		videopkt;
+unsigned int	AudioBitrate;
+double			audio_clock, video_clock;
+double			video_fps = 0;
+
+static void *read_stream_thread(void *arg)
+{
+	int ret;
+	int dusecs;
+	char	*FileName;
+	
+	AVPacket        packet;
+
+	// test variable
+	int audio_pkt_cnt, video_pkt_cnt;
+
+	FileName = (char *)(arg);
+	
+	ret = av_open_input_file(&pFormatCtx, FileName, NULL, 0, NULL);
+	if(ret != 0)
+		pthread_exit((void *)ret);
+
+	// Retrieve stream information
+	pFormatCtx->probesize = 64;
+	pFormatCtx->flags |= AVFMT_FLAG_GENPTS;
+	ret = av_find_stream_info(pFormatCtx);
+	if(ret < 0)
+	{
+		pthread_exit((void *)ret);
+	}
+
+#if 0
+	// Dump information about file onto standard error
+	dump_format(pFormatCtx, 0, FileName, 0);
+#endif
+
+	videoStream = -1;
+	audioStream = -1;
+
+	for(i=0; i<pFormatCtx->nb_streams; i++) 
+	{
+		if(pFormatCtx->streams[i]->codec->codec_type == AVMEDIA_TYPE_AUDIO) {
+			audioStream = i;
+		}
+
+		if(pFormatCtx->streams[i]->codec->codec_type == AVMEDIA_TYPE_VIDEO) {
+			videoStream = i;
+		}
+	}
+
+	// show stream infomation
+	av_log(NULL, AV_LOG_WARNING,"stream info\n");
+	av_log(NULL, AV_LOG_WARNING,"\tDuration(sec):%lld \n",pFormatCtx->duration / AV_TIME_BASE);
+	ShowDurationTime(pFormatCtx->duration);
+	av_log(NULL, AV_LOG_WARNING,"\tstart_time:%lld \n",pFormatCtx->start_time );
+	av_log(NULL, AV_LOG_WARNING,"\tcontainer bitrate:%d kb/s\n",pFormatCtx->bit_rate / 1000);
+	av_log(NULL, AV_LOG_WARNING,"\tfile_size:%lld byte\n",pFormatCtx->file_size);
+
+	if( videoStream != -1){
+		// Get a pointer to the codec context for the video stream
+		pCodecCtx=pFormatCtx->streams[videoStream]->codec;
+		video_st = pFormatCtx->streams[videoStream];
+
+		av_log(NULL, AV_LOG_WARNING, "videoStream idex: %d\n",videoStream);
+		// Find the decoder for the video stream
+		pCodec=avcodec_find_decoder(pCodecCtx->codec_id);
+		if(pCodec==NULL) {
+			av_log(NULL, AV_LOG_WARNING, "\tUnsupported codec!\n");
+			pthread_exit(NULL);
+		}else{
+			av_log(NULL, AV_LOG_WARNING, "\tCodec ID:%d \n",pCodecCtx->codec_id);
+		}
+		
+		// open codec for video decoder thread		
+		if(!pCodec || (avcodec_open(pCodecCtx, pCodec) < 0)) {
+			fprintf(stderr, "Unsupported codec!\n");
+			return -1;
+		}
+
+		av_log(NULL, AV_LOG_WARNING, "\tVideo stream codec:%s\n",pCodec->name);
+		av_log(NULL, AV_LOG_WARNING, "\twidth:%d\n\theight:%d\n",pCodecCtx->width,pCodecCtx->height);
+		video_fps = av_q2d(video_st->r_frame_rate);
+		av_log(NULL, AV_LOG_WARNING, "\tfps:%f\n",video_fps);
+
+	}
+
+	if(audioStream != -1){
+		// Get a pointer to the codec context for the video stream
+		pCodecCtx=pFormatCtx->streams[audioStream]->codec;
+		audio_st = pFormatCtx->streams[audioStream];
+
+		av_log(NULL, AV_LOG_WARNING, "audioStream index: %d\n",audioStream);
+
+		// Find the decoder for the video stream
+		pCodec=avcodec_find_decoder(pCodecCtx->codec_id);
+		if(pCodec==NULL) {
+			av_log(NULL, AV_LOG_WARNING, "\tUnsupported codec!\n");
+			pthread_exit(NULL);
+		}else{
+			av_log(NULL, AV_LOG_WARNING, "\tCodec ID:%d\n",pCodecCtx->codec_id);
+		}
+		av_log(NULL, AV_LOG_WARNING,"\tsample_rate:%d, channels:%d, fmt:%s\n",
+				pCodecCtx->sample_rate,
+				pCodecCtx->channels,
+				av_get_sample_fmt_name(pCodecCtx->sample_fmt)
+				);
+
+		av_log(NULL, AV_LOG_WARNING,"\tAudio stream bitrate:%d\n",pCodecCtx->bit_rate);
+		AudioBitrate = pCodecCtx->bit_rate / 8;
+
+		av_log(NULL, AV_LOG_WARNING,"\tAudio stream codec short name:%s\n",pCodec->name);
+
+		// setting DSP codec 
+		if(!strcmp(pCodec->name,"mp3"))
+		{
+			if(DSPDEV_SetAudioWavefmt(DSPfd,WAVE_FORMAT_MPEGLAYER3))
+				perror("DSPDEV_SetAudioWavefmt fail");
+		}
+		
+		if(!strcmp(pCodec->name,"ac3"))
+		{	
+			if(DSPDEV_SetAudioWavefmt(DSPfd,WAVE_FORMAT_DOLBY_AC3))
+				perror("DSPDEV_SetAudioWavefmt fail");
+		}
+	}
+
+	// Change ReadStreamThreadStatus to ProgRun status for decoder threader
+	AVPlayerStatus.bReadStreamThreadStatus = ProgRun;
+	
+	i = 1;
+	audio_pkt_cnt = 0;
+	video_pkt_cnt = 0;
+	while(AVPlayerStatus.bReadStreamThreadStatus == ProgRun)
+	{
+
+		if((audioq.size > AUDIO_QUEUE_BUF_SIZE) || (videoq.size > VIDEO_QUEUE_BUF_SIZE))
+		{
+#if 0
+			if(audioq.size > AUDIO_QUEUE_BUF_SIZE)	
+				av_log(NULL, AV_LOG_WARNING,"Audio Queue Full\n");
+
+			if(videoq.size > VIDEO_QUEUE_BUF_SIZE)
+				av_log(NULL, AV_LOG_WARNING,"Video Queue Full\n");
+#endif
+			usleep(3000);
+			continue;
+		}
+
+		if(av_read_frame(pFormatCtx, &packet) < 0) {
+			if(url_ferror(pFormatCtx->pb) == 0) {
+				/* no error; wait for user input */
+				AVPlayerStatus.bReadStreamThreadStatus = ProgStop;
+				continue;
+			} else {
+				AVPlayerStatus.bReadStreamThreadStatus = ProgStop;
+				break;
+			}
+		}
+
+		i++;
+#if 0
+		if(packet.stream_index == videoStream)
+		{
+			printf("read video %d frame: pts=%lld, dts: %lld\n",video_pkt_cnt,packet.pts,packet.dts);
+			video_pkt_cnt++;
+		}
+#endif
+#if 0
+		if(packet.stream_index == audioStream)
+		{
+			printf("read audio %d frame: pts=%lld, dts: %lld\n",audio_pkt_cnt,packet.pts,packet.dts);
+			audio_pkt_cnt++;
+		}
+#endif
+		// read video stream
+		if(packet.stream_index == videoStream)
+		{
+			packet_queue_put(&videoq, &packet);
+		}
+		else if(packet.stream_index == audioStream)
+		{
+			packet_queue_put(&audioq, &packet);
+		}
+		else
+		{
+			av_log(NULL, AV_LOG_WARNING,"Meta Data track\n");
+			av_free_packet(&packet);
+		}
+	}
+
+
+	// wait for decoder thread
+	if(AVPlayerStatus.bReadStreamThreadStatus == ProgStop)
+	{
+		// Close the video file
+		av_close_input_file(pFormatCtx);
+		AVPlayerStatus.bReadStreamThreadStatus = ProgExit;
+
+		// if no packet readed from file, stop Audio Decoder Thread
+		if(i == 0)
+			AVPlayerStatus.bAudioDecoderThreadStatus = ProgExit;
+	}
+
+	pthread_exit(NULL);
+}
+
+
+static void *audio_decoder_thread(void *arg)
+{
+	int BSFreeSize; 
+
+	// wait for ReadStreamThread to run
+	while(AVPlayerStatus.bReadStreamThreadStatus == ProgStop)
+	{
+		if(AVPlayerStatus.bAudioDecoderThreadStatus == ProgStop)
+		{
+			AVPlayerStatus.bAudioDecoderThreadStatus = ProgExit;
+		}
+
+		usleep(10000);
+	}
+
+	// get decoder time stamp
+	AudioDecoderStartTime = av_gettime();
+
+	while(AVPlayerStatus.bAudioDecoderThreadStatus == ProgRun)
+	{	
+		if(AVPlayerStatus.bReadStreamThreadStatus == ProgExit)
+		{
+			if((audioq.size == 0) ||((audioq.abort_request == 1)))
+			{
+				AVPlayerStatus.bAudioDecoderThreadStatus = ProgStop;
+			}
+		}
+	
+		if(AVPlayerStatus.bAudioDecoderThreadStatus == ProgStop)
+		{
+			printf("Stop Audio decoder thread\n");
+			break;
+		}
+
+
+		// Set DSP buf size which is the same as AudioBitrate
+		BSFreeSize = DSPDEV_GetBSFreeSize(DSPfd); 	
+		if(BSFreeSize > (BSFeed700K - AudioBitrate))
+		{
+			if(audiopkt.data)
+			{
+				av_free_packet(&audiopkt);
+			}
+			
+			// block thread here to read pakcet
+			if(packet_queue_get(&audioq, &audiopkt, 1))
+			{
+				write(DSPfd,audiopkt.data,audiopkt.size);
+				//printf(UNDBLU "func: %s, write: %d byte\n",__func__,audiopkt.size);
+				
+				/* if update the audio clock with the pts */
+				if (audiopkt.pts != AV_NOPTS_VALUE) {
+					audio_clock = av_q2d(audio_st->time_base) * audiopkt.pts;
+					//av_log(NULL, AV_LOG_WARNING,"Audio clock: %f \n",audio_clock);
+				}
+			}
+		}
+		usleep(10000);
+		//printf(UNDBLU "func: %s loop\n",__func__);
+#if 0
+		ShowDecoderTime(av_gettime() - AudioDecoderStartTime);
+#endif
+
+	}
+
+	if(AVPlayerStatus.bAudioDecoderThreadStatus == ProgStop)
+	{
+		AVPlayerStatus.bAudioDecoderThreadStatus = ProgExit;
+	}
+
+	pthread_exit(NULL);
+}
+
+static void *video_decoder_thread(void *arg)
+{
+	int video_pkt_cnt = 0, got_picture = 0, len1;
+	double diff_time = 0, pts;
+	
+	// initial pFrame 
+	pFrame = avcodec_alloc_frame();
+
+	// wait for ReadStreamThread to run
+	while(AVPlayerStatus.bReadStreamThreadStatus == ProgStop)
+	{
+		if(AVPlayerStatus.bAudioDecoderThreadStatus == ProgStop)
+		{
+			AVPlayerStatus.bAudioDecoderThreadStatus = ProgExit;
+		}
+
+		usleep(10000);
+	}
+
+	VideoDecoderStartTime = av_gettime();
+	
+	// No Video Stram data
+	if(videoStream == -1)
+		AVPlayerStatus.bVideoDecoderThreadStatus = ProgStop;
+	
+	while(AVPlayerStatus.bVideoDecoderThreadStatus == ProgRun)
+	{	
+		if(AVPlayerStatus.bReadStreamThreadStatus == ProgExit)
+		{
+			if((videoq.size == 0) ||((videoq.abort_request == 1)))
+			{
+				AVPlayerStatus.bVideoDecoderThreadStatus = ProgStop;
+			}
+		}
+	
+		if(AVPlayerStatus.bVideoDecoderThreadStatus == ProgStop)
+		{
+			printf("Stop Video decoder thread\n");
+			break;
+		}
+
+		// Exit Loop when audio queue buf empty
+		if((audioq.nb_packets == 0) && (audioq.size == 0))
+			AVPlayerStatus.bVideoDecoderThreadStatus = ProgStop;
+
+		// AV-sync by read file into queue
+		diff_time = video_clock - audio_clock;
+		if(diff_time > 0.01)
+		{
+			usleep(10000);
+			continue;
+		}
+
+		// block thread here to read pakcet
+		if(packet_queue_get(&videoq, &videopkt, 1))
+		{
+
+			if(videopkt.dts != AV_NOPTS_VALUE) {
+				video_clock = videopkt.dts;
+			} else {
+				video_clock = 0;
+			}
+
+			printf("video dts:%llu\n",videopkt.dts);
+			
+			// dts * time_base = xx seconds
+			video_clock *= av_q2d(video_st->time_base);
+
+#if 1
+			// sikp frame for av-sync
+			diff_time = audio_clock - video_clock;
+			if(diff_time > 0.1)	
+			{
+				printf("skip video frame\n");
+				av_free_packet(&videopkt);
+				continue;
+			}
+#endif
+
+			// software decode 
+			len1 = avcodec_decode_video2(video_st->codec, pFrame, &got_picture,	&videopkt);
+
+			if(got_picture)
+			{
+				// push decode frame to display
+				//printf(UNDBLU "codec(%p), Frame(%p),got_picture(%d),",video_st->codec,pFrame,got_picture);
+				printf(UNDBLU "decode len(%d)\n",len1);
+			}
+
+			av_free_packet(&videopkt);
+
+
+		}
+	}
+
+	if(AVPlayerStatus.bVideoDecoderThreadStatus == ProgStop)
+	{
+  		av_free(pFrame);
+		AVPlayerStatus.bVideoDecoderThreadStatus = ProgExit;
+	}
+
+	pthread_exit(NULL);
+}
+
+
+void StopMainProgram(int signo)
+{
+	if(AVPlayerStatus.bReadStreamThreadStatus == ProgRun)
+	{
+		AVPlayerStatus.bReadStreamThreadStatus = ProgStop;
+	}
+
+	if(AVPlayerStatus.bAudioDecoderThreadStatus == ProgRun)
+	{
+		AVPlayerStatus.bAudioDecoderThreadStatus = ProgStop;
+	}
+
+	if(AVPlayerStatus.bVideoDecoderThreadStatus == ProgRun)
+	{
+		AVPlayerStatus.bVideoDecoderThreadStatus = ProgStop;
+	}
+
+	av_log(NULL, AV_LOG_WARNING,"capture SIGINT signal\n");
+}
+
+int main (int argc, char **argv)
+{
+	int ret = 0;
+	pthread_t audio_decoder, video_decoder, read_stream;
+	int audio_max_priority, audio_min_priority;
+	struct sched_param audio_scheduling_value;
+	pthread_attr_t thread_attr;
+	int delay_time = 0;
+
+	ret = pthread_attr_init(&thread_attr);
+	if (ret != 0) {
+		perror("Attribute creation failed");
+		exit(EXIT_FAILURE);
+	}
+
+	ret = pthread_attr_setdetachstate(&thread_attr, PTHREAD_CREATE_DETACHED);
+	if (ret != 0) {
+		perror("Setting detached attribute failed");
+		exit(EXIT_FAILURE);
+	}
+
+	ret = pthread_attr_setschedpolicy(&thread_attr, SCHED_OTHER);
+	if (ret != 0) {
+		perror("Setting schedpolicy failed");
+		exit(EXIT_FAILURE);
+	}
+
+	audio_max_priority = sched_get_priority_max(SCHED_OTHER);
+	audio_min_priority = sched_get_priority_min(SCHED_OTHER);
+	audio_scheduling_value.sched_priority = audio_min_priority;
+	ret = pthread_attr_setschedparam(&thread_attr, &audio_scheduling_value);
+	if (ret != 0) {
+		perror("Setting schedpolicy failed");
+		exit(EXIT_FAILURE);
+	}
+	printf("Scheduling priority set to %d, max allowed was %d\n", audio_min_priority, audio_max_priority);
+
+	// initial thread status to ProgRun
+	memset(&AVPlayerStatus,0,sizeof(ProgramState));
+	AVPlayerStatus.bMainProgStatus = ProgRun;
+	AVPlayerStatus.bAudioDecoderThreadStatus = ProgRun;
+	AVPlayerStatus.bVideoDecoderThreadStatus = ProgRun;
+	AVPlayerStatus.bReadStreamThreadStatus = ProgStop;
+
+	DSPfd = DSPDEV_OPEN();
+	if(DSPfd < 0)
+		exit(-EBADF);
+
+
+#ifdef DEBUG
+	//function trace log
+	printf("Logfile: %s\n", cygprofile_getfilename ());
+    cygprofile_enable ();
+#endif
+#ifdef DEBUG
+	setenv("MALLOC_TRACE", "mtrace_check", 1);
+	mtrace();
+#endif
+#ifdef DEBUG
+	// ffmpeg log level to DEBUG
+	av_log_set_level(AV_LOG_DEBUG);
+#endif
+
+	// packet queue initial
+	packet_queue_init(&audioq);
+	packet_queue_init(&videoq);
+
+	// clean DSP decoder buf data
+	DSPDEV_CleanAudioBuf(DSPfd);
+
+	if(argc < 2) {
+		printf("Please provide a movie file\n");
+		return -1;
+	}
+
+    /* register all codecs, demux and protocols */
+    avcodec_register_all();
+
+	// Register all formats and codecs
+	av_register_all();
+	av_log(NULL, AV_LOG_WARNING,"av_register_all\n");
+
+	// create threads
+	pthread_create(&read_stream, &thread_attr, read_stream_thread, argv[1]);
+	pthread_create(&audio_decoder, &thread_attr, audio_decoder_thread, NULL);
+	pthread_create(&video_decoder, &thread_attr, video_decoder_thread, NULL);
+
+	// initial flush_pkt
+	av_init_packet(&flush_pkt);
+	flush_pkt.data= "FLUSH";
+
+	signal(SIGINT,StopMainProgram);
+
+	while(AVPlayerStatus.bMainProgStatus == ProgRun)
+	{
+
+#ifdef DEBUG
+		printf(BAKPUR "Main Program Loop\n");
+		printf(BAKPUR "AVPlayerStatus.bMainProgStatus: %d\n",AVPlayerStatus.bMainProgStatus);
+		printf(BAKPUR "AVPlayerStatus.bAudioDecoderThreadStatus: %d\n",AVPlayerStatus.bAudioDecoderThreadStatus);
+		printf(BAKPUR "AVPlayerStatus.bVideoDecoderThreadStatus: %d\n",AVPlayerStatus.bVideoDecoderThreadStatus);
+		printf(BAKPUR "AVPlayerStatus.bReadStreamThreadStatus: %d\n",AVPlayerStatus.bReadStreamThreadStatus);
+#endif
+
+		if((AVPlayerStatus.bReadStreamThreadStatus == ProgExit) &&
+			(AVPlayerStatus.bAudioDecoderThreadStatus == ProgExit)&&
+			(AVPlayerStatus.bVideoDecoderThreadStatus == ProgExit))
+		{
+			AVPlayerStatus.bMainProgStatus = ProgExit;
+			break;
+		}
+
+		// show playback clock
+		printf(UNDBLU "Audio clock: %f , Video clock: %f , delta:%f \n", audio_clock, video_clock,(audio_clock - video_clock) );
+
+		av_log(NULL, AV_LOG_WARNING,"Video Queue size: %d ,nb_packets: %d \n",videoq.size,videoq.nb_packets);
+		av_log(NULL, AV_LOG_WARNING,"Audio Queue size: %d ,nb_packets: %d \n",audioq.size,audioq.nb_packets);
+
+		if(video_fps != 0)
+		{
+			delay_time = (int)((1/video_fps) * AV_TIME_BASE);
+			usleep(delay_time);
+		}else{
+			usleep(416000);
+		}
+	}
+
+	// thread destory
+	pthread_attr_destroy(&thread_attr);
+	
+	// free queue buffer
+	packet_queue_abort(&audioq);
+	packet_queue_abort(&videoq);
+	packet_queue_end(&audioq);
+	packet_queue_end(&videoq);
+
+	DSPDEV_CLOSE(DSPfd);
+
+#ifdef DEBUG
+	printf(BAKPUR "AVPlayerStatus.bMainProgStatus: %d\n",AVPlayerStatus.bMainProgStatus);
+	printf(BAKPUR "AVPlayerStatus.bAudioDecoderThreadStatus: %d\n",AVPlayerStatus.bAudioDecoderThreadStatus);
+	printf(BAKPUR "AVPlayerStatus.bVideoDecoderThreadStatus: %d\n",AVPlayerStatus.bVideoDecoderThreadStatus);
+	printf(BAKPUR "AVPlayerStatus.bReadStreamThreadStatus: %d\n",AVPlayerStatus.bReadStreamThreadStatus);
+#endif
+
+	printf("\n %s Exit\n",argv[0]);
+	return 0;
+}
+
+
