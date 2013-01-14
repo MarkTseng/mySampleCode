@@ -1,0 +1,7 @@
+<zoo>
+  <animal noise="roar" attr2="animal_lion">lion</animal>
+  <animal noise="sniffle">bunny</animal>
+  <animal noise="lol">cat</animal>
+  <keeper/>
+</zoo>
+

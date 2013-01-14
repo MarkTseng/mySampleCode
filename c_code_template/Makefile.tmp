@@ -1,0 +1,44 @@
+# A makefile for "circle" to demonstrate double-colon rules.
+TOOL_CHAIN_DIR=/home/mark/MySoftware/bin
+CROSS_COMPILE=$(TOOL_CHAIN_DIR)/mips-linux-gnu-
+AS = $(CROSS_COMPILE)as
+LD = $(CROSS_COMPILE)ld
+CC = $(CROSS_COMPILE)gcc
+GPP = $(CROSS_COMPILE)g++
+CPP = $(CC) -E
+AR = $(CROSS_COMPILE)ar
+NM = $(CROSS_COMPILE)nm
+STRIP = $(CROSS_COMPILE)strip
+OBJCOPY = $(CROSS_COMPILE)objcopy
+OBJDUMP = $(CROSS_COMPILE)objdump
+RANLIB = $(CROSS_COMPILE)ranlib
+SIZE = $(CROSS_COMPILE)size
+
+
+RM = rm -f
+CFLAGS = -Wall -std=c99
+DBGFLAGS = -ggdb -pg
+DEBUGFILE = ./debug
+SRC = circle.c circulararea.c
+
+#debugging
+#DEBUG = y
+
+ifeq ($(DEBUG),y)
+  DBGFLAGS = -O -g -DSCULLC_DEBUG # "-O" is needed to expand inlines
+else
+  DBGFLAGS = -O2
+endif
+
+ 
+circle :: $(SRC)
+        $(CC) $(CFLAGS) -o $@ -lm $^
+ 
+circle :: $(DEBUGFILE)
+        $(CC) $(CFLAGS) $(DBGFLAGS) -o $@ -lm $(SRC)
+ 
+.PHONY : clean
+clean  :
+	$(RM) circle
+
+

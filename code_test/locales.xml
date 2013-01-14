@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<tr id="es">
+   <lang id="es">
+      <str id="msg1">Hola mundo</str>
+   </lang>
+   <lang id="ing">
+      <str id="msg1">Hello world</str>
+   </lang>
+</tr>
+

@@ -1,0 +1,11 @@
+kernel//home/tseng/temp/LDD3_EXAMPLE/misc-modules/hello.ko
+kernel//home/tseng/temp/LDD3_EXAMPLE/misc-modules/hellop.ko
+kernel//home/tseng/temp/LDD3_EXAMPLE/misc-modules/seq.ko
+kernel//home/tseng/temp/LDD3_EXAMPLE/misc-modules/jit.ko
+kernel//home/tseng/temp/LDD3_EXAMPLE/misc-modules/jiq.ko
+kernel//home/tseng/temp/LDD3_EXAMPLE/misc-modules/sleepy.ko
+kernel//home/tseng/temp/LDD3_EXAMPLE/misc-modules/complete.ko
+kernel//home/tseng/temp/LDD3_EXAMPLE/misc-modules/silly.ko
+kernel//home/tseng/temp/LDD3_EXAMPLE/misc-modules/faulty.ko
+kernel//home/tseng/temp/LDD3_EXAMPLE/misc-modules/kdatasize.ko
+kernel//home/tseng/temp/LDD3_EXAMPLE/misc-modules/kdataalign.ko

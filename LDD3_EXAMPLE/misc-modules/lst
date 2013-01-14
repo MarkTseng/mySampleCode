@@ -1,0 +1,20 @@
+make -C /lib/modules/2.6.21.1/build M=/usr/src/examples/misc-modules modules
+make[1]: Entering directory `/usr/src/linux-2.6.21.1'
+  CC [M]  /usr/src/examples/misc-modules/hello.o
+  CC [M]  /usr/src/examples/misc-modules/hellop.o
+  CC [M]  /usr/src/examples/misc-modules/seq.o
+  CC [M]  /usr/src/examples/misc-modules/jit.o
+  CC [M]  /usr/src/examples/misc-modules/jiq.o
+/usr/src/examples/misc-modules/jiq.c: In function ‘jiq_print_wq’:
+/usr/src/examples/misc-modules/jiq.c:124: warning: passing argument 1 of ‘schedule_delayed_work’ from incompatible pointer type
+/usr/src/examples/misc-modules/jiq.c: In function ‘jiq_read_wq_delayed’:
+/usr/src/examples/misc-modules/jiq.c:162: warning: passing argument 1 of ‘schedule_delayed_work’ from incompatible pointer type
+/usr/src/examples/misc-modules/jiq.c:246:46: error: macro "INIT_WORK" passed 3 arguments, but takes just 2
+/usr/src/examples/misc-modules/jiq.c: In function ‘jiq_init’:
+/usr/src/examples/misc-modules/jiq.c:246: error: ‘INIT_WORK’ undeclared (first use in this function)
+/usr/src/examples/misc-modules/jiq.c:246: error: (Each undeclared identifier is reported only once
+/usr/src/examples/misc-modules/jiq.c:246: error: for each function it appears in.)
+make[2]: *** [/usr/src/examples/misc-modules/jiq.o] Error 1
+make[1]: *** [_module_/usr/src/examples/misc-modules] Error 2
+make[1]: Leaving directory `/usr/src/linux-2.6.21.1'
+make: *** [modules] Error 2

@@ -1,0 +1,44 @@
+# 1 "hello.c"
+# 1 "<built-in>"
+# 1 "<command line>"
+# 1 "hello.c"
+
+
+
+
+# 1 "/usr/include/linux/kernel.h" 1 3 4
+# 10 "/usr/include/linux/kernel.h" 3 4
+struct sysinfo {
+ long uptime;
+ unsigned long loads[3];
+ unsigned long totalram;
+ unsigned long freeram;
+ unsigned long sharedram;
+ unsigned long bufferram;
+ unsigned long totalswap;
+ unsigned long freeswap;
+ unsigned short procs;
+ unsigned short pad;
+ unsigned long totalhigh;
+ unsigned long freehigh;
+ unsigned int mem_unit;
+ char _f[20-2*sizeof(long)-sizeof(int)];
+};
+# 6 "hello.c" 2
+
+
+MODULE_LICENSE("Dual BSD/GPL");
+
+static int hello_init(void)
+{
+ printk(KERN_ALERT "Hello, world\n");
+ return 0;
+}
+
+static void hello_exit(void)
+{
+ printk(KERN_ALERT "Goodbye, cruel world\n");
+}
+
+module_init(hello_init);
+module_exit(hello_exit);
