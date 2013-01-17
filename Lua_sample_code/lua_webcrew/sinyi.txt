@@ -1,0 +1,7 @@
+光復路一段
+
+http://buy.sinyi.com.tw/index.php/5YWJ5b6p6Lev5LiA5q61/1/21/300/P0_0/S0_0/1/0/0/0/0/0/0/U0_0/F0_0/R0_0/S0_0/0/0/_/0/0/0/2/0/0/0/0/0/0/0/0/0/0/0/0/0
+
+b, c, h = http.request("http://buy.sinyi.com.tw/index.php/5YWJ5b6p6Lev5LiA5q61/1/21/300/P0_0/S0_0/1/0/0/0/0/0/0/U0_0/F0_0/R0_0/S0_0/0/0/_/0/0/0/2/0/0/0/0/0/0/0/0/0/0/0/0/0")
+print(b,c,h)
+

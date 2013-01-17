@@ -1,0 +1,368 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=big5">
+<title>Yahoo!奇摩股市</title>
+<link rel="stylesheet" type="text/css" href="http://l.yimg.com/f/i/tw/hp/masthead/yhtw_masthead_standard.css" media="screen, print" />
+<link rel="stylesheet" type="text/css" href="http://l.yimg.com/f/i/tw/hp/masthead/yhtw_masthead_12.css" media="screen, print" />
+<link rel="stylesheet" type="text/css" href="http://l.yimg.com/f/i/tw/stock/revampe/css_1750_min.css" media="screen, print" />
+<link rel="stylesheet" type="text/css" href="http://l.yimg.com/f/i/tw/stock/img06/stock_wd.css" media="screen, print" />
+<link rel="stylesheet" type="text/css" href="http://l.yimg.com/f/i/tw/stock/img06/stock_print_1_2.css" media="print" />
+<link href="http://l.yimg.com/f/i/tw/hp/Universal_header/uh_bt3.css" type="text/css" rel="stylesheet"/>
+<link href="http://l.yimg.com/f/i/tw/stock/revampe/ystock_uh_1_1_min.css" type="text/css" rel="stylesheet"/>
+<script type="text/JavaScript">
+<!--
+function MM_swapImgRestore() { //v3.0
+ var i,x,a=document.MM_sr; for(i=0;a&&i<a.length&&(x=a[i])&&x.oSrc;i++) x.src=x.oSrc;
+}
+function MM_preloadImages() { //v3.0
+ var d=document; if(d.images){ if(!d.MM_p) d.MM_p=new Array();
+ var i,j=d.MM_p.length,a=MM_preloadImages.arguments; for(i=0; i<a.length; i++)
+ if (a[i].indexOf("#")!=0){ d.MM_p[j]=new Image; d.MM_p[j++].src=a[i];}}
+}
+function MM_findObj(n, d) { //v4.01
+ var p,i,x; if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
+ d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
+ if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
+ for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=MM_findObj(n,d.layers[i].document);
+ if(!x && d.getElementById) x=d.getElementById(n); return x;
+}
+function MM_swapImage() { //v3.0
+ var i,j=0,x,a=MM_swapImage.arguments; document.MM_sr=new Array; for(i=0;i<(a.length-2);i+=3)
+ if ((x=MM_findObj(a[i]))!=null){document.MM_sr[j++]=x; if(!x.oSrc) x.oSrc=x.src; x.src=a[i+2];}
+}
+//-->
+</script>
+<style type="text/css">
+<!--
+.style1 {
+ color: #000000;
+ font-family: "新細明體";
+}
+.style2 {color: #4f5d70}
+.style4 {color: #009900}
+.style5 {color: #FF0000}
+.style8 {font-size: 10pt;}
+.style9 {color: #000000; }
+.style12 {line-height: 25pt; font-family: "新細明體", mingliu, taipei;}
+.style13 {color: #4f5d70}
+-->
+</style>
+<script language="JavaScript" src="http://l.yimg.com/f/i/tw/hp/wd/wd_20050720.js"></script>
+<script language="JavaScript" src="http://us.js2.yimg.com/us.js.yimg.com/lib/common/utils/2/yahoo_2.0.0-b2.js" ></script>
+<script language="JavaScript" src="http://us.js2.yimg.com/us.js.yimg.com/lib/common/utils/2/dom_2.0.0-b2.js" ></script>
+<script language="JavaScript" src="http://us.js2.yimg.com/us.js.yimg.com/lib/common/utils/2/event_2.0.0-b2.js" ></script>
+<script language="JavaScript" src="http://us.js2.yimg.com/us.js.yimg.com/lib/common/utils/2/dragdrop_2.0.0-b2.js" ></script>
+<script language="JavaScript" src="http://l.yimg.com/f/i/tw/stock/img06/stk_wd.js"></script>
+<script language="javascript" src="http://l.yimg.com/f/i/tw/stock/img06/stock22.js"></script>
+<script language="javascript" src="http://l.yimg.com/f/i/tw/stock/img06/auth.js"></script>
+<script language="javascript" src="http://l.yimg.com/f/i/tw/mc/mc.js"></script>
+<script language="javascript" src="http://l.yimg.com/f/i/tw/stock/img06/quotelist.js"></script>
+<script language="javascript" src="http://l.yimg.com/f/i/tw/stock/img06/tsc22_r1826.js"></script>
+</head>
+<body vlink=#3948CC style="margin-top:0px">
+<center>
+<!-- SpaceID=0 robot -->
+<!-- SpaceID=0 robot -->
+<script lang="text/javascript">
+<!--
+var redirect = "http://tw.rd.yahoo.com/referurl/stock/other";
+function stkClearMe(control)
+{
+ control.value = '';
+ control.style.color = "black";
+}
+function stkRestore(control, str)
+{
+ if (control.value == '') {control.value = str; control.style.color = "#a8a8a8";};
+}
+function stockmenu_submit (form)
+{
+ if (form.stock_id.value == '輸入台股代號/名稱')
+ {
+ return false;
+ }
+ else
+ {
+ switch ( form.func.value ) {
+ case 'G': form.action = redirect + '/get_quote/quote/*' + form.action; break;
+ case 'L': form.action = redirect + '/get_quote/chart/*' + form.action; break;
+ case 'I': form.action = redirect + '/get_quote/prices/*' + form.action; break;
+ case 'N': form.action = redirect + '/get_quote/news/*' + form.action; break;
+ case 'F': form.action = redirect + '/get_quote/fundamental/*' + form.action; break;
+ case 'C': form.action = redirect + '/get_quote/credit/*' + form.action; break;
+ case 'T': form.action = redirect + '/get_quote/daily/*' + form.action; break;
+ case 'W': form.action = redirect + '/get_quote/weekly/*' + form.action; break;
+ case 'M': form.action = redirect + '/get_quote/monthly/*' + form.action; break;
+ }
+ form.submit();
+ }
+}
+//-->
+</script>
+<!--主選單 start-->
+<div id="ystkglonav">
+<table width="750" border="0" align="center" cellpadding="0" cellspacing="0">
+ <tr>
+ <td height="36" valign="bottom" background="http://l.yimg.com/f/i/tw/stock/revamp/t_bg01.jpg"><table width="730" border="0" align="center" cellpadding="0" cellspacing="0">
+ <tr>
+<td width="90" valign="bottom"><a href='http://tw.rd.yahoo.com/referurl/stock/other/nav/home/*http://tw.stock.yahoo.com/' onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('Image50','','http://l.yimg.com/f/i/tw/stock/yimg/t1_idx_v.png',1)"><img src="http://l.yimg.com/f/i/tw/stock/yimg/t1_idx.png" name="Image50" width="85" height="24" border="0" title="首頁" alt="首頁"/></a></td>
+<td width="89" valign="bottom"><a href='http://tw.rd.yahoo.com/referurl/stock/other/nav/portfolio/*http://tw.stock.yahoo.com/pf/mypf' onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('Image51','','http://l.yimg.com/f/i/tw/stock/yimg/t2_ivst_v.png',1)"><img src="http://l.yimg.com/f/i/tw/stock/yimg/t2_ivst.png" name="Image51" width="85" height="24" border="0" title="投資組合" alt="投資組合"/></a></td>
+<td width="89" valign="bottom"><a href='http://tw.rd.yahoo.com/referurl/stock/other/nav/industry/*http://tw.stock.yahoo.com/h/getclass.php'><img src="http://l.yimg.com/f/i/tw/stock/yimg/t3_tdy_o.png" name="Image52" width="85" height="31" border="0" title="當日行情" alt="當日行情"></a></td>
+<td width="57" valign="bottom"><a href='http://tw.rd.yahoo.com/referurl/stock/other/nav/tse/*http://tw.stock.yahoo.com/s/tse.php' onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('Image53','','http://l.yimg.com/f/i/tw/stock/yimg/t4_big_v.png',1)"><img src="http://l.yimg.com/f/i/tw/stock/yimg/t4_big.png" name="Image53" width="53" height="24" border="0" title="大盤" alt="大盤"/></a></td>
+<td width="57" valign="bottom"><a href='http://tw.rd.yahoo.com/referurl/stock/other/nav/indice/*http://tw.stock.yahoo.com/s/nine.php' onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('Image54','','http://l.yimg.com/f/i/tw/stock/yimg/t5_cls_v.png',1)"><img src="http://l.yimg.com/f/i/tw/stock/yimg/t5_cls.png" name="Image54" width="53" height="24" border="0" title="類股" alt="類股"/></a></td>
+<td width="57" valign="bottom"><a href='http://tw.rd.yahoo.com/referurl/stock/other/nav/futures/*http://tw.stock.yahoo.com/future/' onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('Image55','','http://l.yimg.com/f/i/tw/stock/yimg/t6_ftr_v.png',1)"><img src="http://l.yimg.com/f/i/tw/stock/yimg/t6_ftr.png" name="Image55" width="53" height="24" border="0" title="期貨" alt="期貨"/></a></td>
+<td width="89" valign="bottom"><a href='http://tw.rd.yahoo.com/referurl/stock/other/nav/hkcn/*http://tw.stock.yahoo.com/hkcn/' onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('Image56','','http://l.yimg.com/f/i/tw/stock/yimg/t7_hk_v.png',1)"><img src="http://l.yimg.com/f/i/tw/stock/yimg/t7_hk.png" name="Image56" width="85" height="24" border="0" title="港滬深股" alt="港滬深股"/></a></td>
+<td width="57" valign="bottom"><a href='http://tw.rd.yahoo.com/referurl/stock/other/nav/us/*http://tw.stock.yahoo.com/us/' onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('Image57','','http://l.yimg.com/f/i/tw/stock/yimg/t8_us_v.png',1)"><img src="http://l.yimg.com/f/i/tw/stock/yimg/t8_us.png" name="Image57" width="53" height="24" border="0" title="美股" alt="美股"/></a></td>
+<td width="57" valign="bottom"><a href='http://tw.rd.yahoo.com/referurl/stock/other/nav/news/*http://tw.stock.yahoo.com/news_index.html' onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('Image58','','http://l.yimg.com/f/i/tw/stock/yimg/t9_nws_v.png',1)"><img src="http://l.yimg.com/f/i/tw/stock/yimg/t9_nws.png" name="Image58" width="53" height="24" border="0" title="新聞" alt="新聞"/></a></td>
+<td width="93" valign="bottom"><a href='http://tw.rd.yahoo.com/referurl/stock/other/nav/money/*http://tw.money.yahoo.com/' onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('Image59','','http://l.yimg.com/f/i/tw/stock/yimg/t10_fd_v.png',1)"><img src="http://l.yimg.com/f/i/tw/stock/yimg/t10_fd.png" name="Image59" width="93" height="24" border="0" title="理財" alt="理財"/></a></td>
+ </tr>
+ </table></td>
+ </tr>
+ <tr>
+ <td height="8" background="http://l.yimg.com/f/i/tw/stock/revamp/bg02.gif"></td>
+ </tr>
+ <tr>
+ <td height="36" bgcolor="#4f627b"><table width="740" border="0" align="center" cellpadding="0" cellspacing="2">
+ <tr><form name="menu" action="http://tw.stock.yahoo.com/h/stockmenu.php" onsubmit="return stockmenu_submit(this);">
+ <td><a href="javascript:open_win('/h/kimosel.php','menu','stock_id','stock_name')" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('button01','','http://l.yimg.com/f/i/tw/stock/revamp/button01_f2.gif',1);"><img name="button01" src="http://l.yimg.com/f/i/tw/stock/revamp/button01.gif" width="95" height="21" border="0" alt=""></a></td>
+ <td>
+ <input type="hidden" name="stock_name" value>
+ <input value="輸入台股代號/名稱" onfocus="javascript:stkClearMe(this);" onblur="javascript:stkRestore(this,'輸入台股代號/名稱');" id="stock_id" name="stock_id" type="text" size="15" />
+<script language="javascript">
+if(document.getElementById("stock_id").value == "輸入台股代號/名稱")
+{
+ document.getElementById("stock_id").style.color = "#a8a8a8";
+}
+ </script>
+ </td>
+ <td><label>
+ <select name="func" onChange="return stockmenu_submit(this.form);">
+ <option VALUE="G" SELECTED>－－當日個股股價－－</option>
+ <option VALUE="L">－－當日個股走勢－－</option>
+ <option VALUE="I">－－個股成交明細－－</option>
+ <option VALUE="N">－－個股新聞－－</option>
+ <option VALUE="F">－－公司基本資料－－</option>
+ <option VALUE="C">－－個股籌碼分析－－</option>
+ <option VALUE="T">－－歷史股價Ｋ線圖－</option>
+ </select>
+ </label></td>
+ <td><label><input style="width:38px;height:23px;padding-bottom:3px;*padding-top:3px;padding-left:3px;text-align:left;" type="submit" name="xSubmit" value="查詢"/>
+ </label></td>
+<!-- type - 2, ref: Array
+(
+    [hh] => 13
+    [mm] => 30
+)
+ -->
+ <td width="321" class="ssbody"><div align="right"><span class="ssbodyw">2010/09/01 09:15 距離台股收盤還有4小時15分鐘</span></div></td>
+ <td>
+ <input style="width:38px;height:23px;padding-bottom:3px;*padding-top:3px;padding-left:3px;text-align:left;" type="button" name="re" value="更新" onClick ="javascript:location.href='http://tw.rd.yahoo.com/referurl/stock/get_quote/refresh/*http://tw.stock.yahoo.com/q/q?s=3454'" >
+ </td>
+ </div></td> </form></tr>
+ </table>
+ <label></label></td>
+ </tr>
+ <tr>
+ <td height="4" bgcolor="#FFFFFF"></td>
+ </tr>
+</table>
+</div>
+<script language="javascript">
+if(document.getElementById("stock_id").value == "請輸入股號")
+{
+ document.getElementById("stock_id").style.color = "#a8a8a8";
+}
+</script> 
+<!--主選單 end-->
+<br>
+<center>
+ <a href="http://tw.rd.yahoo.com/referurl/stock/announcement/flash_update_entry/*http://tw.stock.yahoo.com/pr/announce.html"><strong><font color="#FF0000">如果你的螢幕無法正常顯示線圖，請點這裡，立即下載更新版本</font></strong></a> 
+ </center>
+
+        <script language="javascript">
+		<!-- 
+                document.menu.stock_id.value="3454";
+
+		//-->
+	</script>
+					 
+<br>
+    <table width=750 border=0 cellpadding=1 cellspacing=0>
+        <tr bgcolor=#FFF0C1>
+	<td width=540 align=left>
+	    <script language="javascript">
+	    ykuser_control(2);
+	    </script>
+	    &nbsp; 
+	</td> 
+	<td width=160 align=right><font color=#3333FF class=tt>　資料日期:  99/09/01</font></td>
+	</tr>
+    </table>
+<table border=0 cellSpacing=0 cellpadding="0" width="750">
+  <tr>
+    <td>
+      <table border=2 width="750">
+        <tr bgcolor=#fff0c1>
+          <th align=center >股票<br>代號</th>
+          <th align=center width="55">時間</th>
+          <th align=center width="55">成交</th>
+
+          <th align=center width="55">買進</th>
+          <th align=center width="55">賣出</th>
+          <th align=center width="55">漲跌</th>
+          <th align=center width="55">張數</th>
+          <th align=center width="55">昨收</th>
+          <th align=center width="55">開盤</th>
+
+          <th align=center width="55">最高</th>
+          <th align=center width="55">最低</th>
+          <th align=center>個股資料</th>
+        </tr>
+        <tr>
+          <td align=center width=105><a
+	  href="/q/bc?s=3454">3454晶睿</a><br><a href="/pf/pfsel?stocklist=3454;"><font size=-1>加到投資組合</font><br></a></td>
+                <td align="center" bgcolor="#FFFfff" nowrap>09:00</td>
+                <td align="center" bgcolor="#FFFfff" nowrap><b>46.50</b></td>
+                <td align="center" bgcolor="#FFFfff" nowrap>46.65</td>
+                <td align="center" bgcolor="#FFFfff" nowrap>47.55</td>
+                <td align="center" bgcolor="#FFFfff" nowrap><font color=#009900>▽0.30
+                <td align="center" bgcolor="#FFFfff" nowrap>1</td>
+                <td align="center" bgcolor="#FFFfff" nowrap>46.80</td>
+                <td align="center" bgcolor="#FFFfff" nowrap>46.50</td>
+                <td align="center" bgcolor="#FFFfff" nowrap>46.50</td>
+                <td align="center" bgcolor="#FFFfff" nowrap>46.50</td>
+          <td align=center width=137 class="tt">
+    <a href="/q/ts?s=3454">成交明細</a><br><a href="/q/ta?s=3454">技術</a>　<a href='/q/h?s=3454'>新聞</a><a href='/d/s/company_3454.html'><br>基本</a>　<a href='/d/s/credit_3454.html'>籌碼</a></font></td>        </tr>
+<form name=orderform>
+<input type=hidden name="df" value="">
+<input type=hidden name="stkid" value="3454">
+<input type=hidden name="stkname" value="晶睿">
+<tr bgcolor="#fdedef">
+<th nowrap height=35><font color="#990066">凱基證券下單</font></th>
+<td colspan=11 height=35>
+<input type=radio name="bs" value="1" style="BACKGROUND-COLOR: rgb(257,237,239); COLOR: rgb(257,237,239)"> <font color="#ff0000">買</font>
+<input type=radio name="bs" value="5" style="BACKGROUND-COLOR: rgb(257,237,239); COLOR: rgb(257,237,239)"> <font color="#009900">賣</font>
+<input type=text name="vol" size="5"> <font color="#990066">張</font>
+
+<input type=button value="送出" onClick="CheckP(this.form, 'I', '/fcgi-bin/orderpage.fcg');">
+<font class="stext"><a href="javascript: CheckP(document.orderform, 'Z', '/fcgi-bin/orderpage.fcg');">零股交易</a></font></td>
+</tr>
+</form>
+      </table>
+    </td>
+  </tr>
+</table>
+<br>
+<table style="border:solid 1px #CCC;" width="750" border="0" cellpadding="0" cellspacing="0" bordercolor="#cccccc" bgcolor="#FFFFFF">
+ <tr>
+ <td><table width="750" border="0" cellpadding="1" cellspacing="1" bgcolor="#FFFFFF">
+ <tr>
+ <td style="padding:8px; font-size:13px; line-height:18px;" width="3%" bgcolor="#e6e6e6"><p>廣<br />
+ <br />
+ 
+ <br />
+ 告</p>
+ </td>
+ <td style="padding-top:5px;" width="97%" bgcolor="#f4f4f4">
+ <!-- SpaceID=0 robot -->
+
+ </td>
+ </tr>
+ </table></td>
+ </tr>
+</table>
+<p> <table align="center" border="0" cellpadding="0" cellspacing="0" width="750">
+ <tbody><tr align="center" bgcolor="#fec003">
+ <td colspan="3" class="ttt" bgcolor="#fff1c4" height="26"><div align="center"><a name="news">個　股　新　聞　與　研　究　報　告</a></div></td>
+ </tr>
+ <tr align="center">
+ <td> <table align="center" border="0" cellpadding="0" cellspacing="0" width="750">
+ <tbody><tr align="center"> 
+ <td class="ttt" height="18"><div align="center"></div></td>
+ <td rowspan="2" bgcolor="#ffffff" valign="top" width="250">
+<!-- SpaceID=0 robot -->
+ </td>
+ </tr>
+ <tr> 
+ <td valign="top"> <table border="0" cellpadding="0" cellspacing="0" width="100%">
+ <tbody>
+ <tr bgcolor="#fff1c4">
+ <td rowspan="2" height="58">‧</td>
+ <td height="37" valign="bottom"><a href="/news_content/url/d/a/100805/1/25mdh.html">【公告】晶睿 2010年7月營收1.504億元 年增70.15%</a></td>
+ </tr>
+ <tr bgcolor="#fff1c4">
+ <td height="29" valign="middle"><font size="-1">(2010/08/05 中央社)</font> </td>
+ </tr> <tr bgcolor="#fffbee">
+ <td rowspan="2" height="58">‧</td>
+ <td height="37" valign="bottom"><a href="/news_content/url/d/a/100728/1/255to.html">【公告】晶睿補正98年度年報部份內容</a></td>
+ </tr>
+ <tr bgcolor="#fffbee">
+ <td height="29" valign="middle"><font size="-1">(2010/07/28 中央社)</font> </td>
+ </tr> <tr bgcolor="#fff1c4">
+ <td rowspan="2" height="58">‧</td>
+ <td height="37" valign="bottom"><a href="/news_content/url/d/a/100707/1/23x4c.html">【公告】晶睿 2010年6月營收1.494億元 年增99.23%</a></td>
+ </tr>
+ <tr bgcolor="#fff1c4">
+ <td height="29" valign="middle"><font size="-1">(2010/07/07 中央社)</font> </td>
+ </tr> <tr bgcolor="#fffbee">
+ <td rowspan="2" height="58">‧</td>
+ <td height="37" valign="bottom"><a href="/news_content/url/d/a/100702/1/23mwp.html">【公告】晶睿董事會決議除權息基準日及九十八年度盈餘分派之配股率及配息率</a></td>
+ </tr>
+ <tr bgcolor="#fffbee">
+ <td height="29" valign="middle"><font size="-1">(2010/07/02 中央社)</font> </td>
+ </tr> <tr bgcolor="#fff1c4">
+ <td rowspan="2" height="58">‧</td>
+ <td height="37" valign="bottom"><a href="/news_content/url/d/a/100617/1/22s6v.html">【公告】晶睿董事會通過轉讓庫藏股1500仟股予員工</a></td>
+ </tr>
+ <tr bgcolor="#fff1c4">
+ <td height="29" valign="middle"><font size="-1">(2010/06/17 中央社)</font> </td>
+ </tr> <tr bgcolor="#fffbee">
+ <td rowspan="2" height="58">‧</td>
+ <td height="37" valign="bottom"><a href="/news_content/url/d/a/100617/1/22s6q.html">【公告】晶睿99年股東常會決議事項</a></td>
+ </tr>
+ <tr bgcolor="#fffbee">
+ <td height="29" valign="middle"><font size="-1">(2010/06/17 中央社)</font> </td>
+ </tr> 
+ </tbody></table></td>
+ </tr>
+ </tbody></table></td>
+ </tr>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+ <td valign="top"><label> </label>
+ <div align="center"><input type="button" onClick="location='/q/h?s=3454&pg=2'" class="mtext" value="下一頁"> </div></td>
+ </tr>
+ <tr>
+ <td valign="top"><div align="center"><span class="mtext">共 2 頁：</span><span class="mtext"><br> 1  | [<a href="/q/h?s=3454&pg=2">2</a>]</table> </tbody></table>
+<p>
+<table width="750" border="0" cellpadding="0" cellspacing="0">
+<tr><td>
+<!--START:YSM CM MODULE-->
+<script>
+ysm_type=2;
+ysm_partner="yahoo_tw_stock_q_index_cm_hybrid";
+ysm_maxCount=3;
+document.write
+('<script src="http://tw.yimg.com/i/tw/ysm/hybrid/hybrid_stock02_big5.js?rnd=' + Number(new Date()) + '"></sc' + 'ript>'); </script> 
+<!--END:YSM CM MODULE-->
+</td></tr></table>
+</p>
+<table width="750" border="0" align="center" cellpadding="0" cellspacing="0">
+ <tr>
+ <td height="90" valign="bottom">
+ <DIV id=yhtw_mastfoot>
+<!-- SpaceID=0 robot -->
+<DIV class=other>資料來源<A 
+href="http://www.twse.com.tw/">台灣證券交易所(TWSE)</A>，<A 
+href="http://newmops.twse.com.tw/">公開資訊觀測站</A>及<A 
+href="http://www.otc.org.tw/">櫃檯買賣中心(OTC)</A>。本資料僅供參考，成交值及成交量不含零股及巨額交易，使用者依本資料交易發生交易損失需自行負責，Yahoo!奇摩對資料內容錯誤、更新延誤或傳輸中斷不負任何責任。(請看 
+Yahoo!奇摩之<A 
+href="http://tw.yahoo.com/info/disclaimers.html">免責條款</A>)<BR />Yahoo! News Work</DIV>
+</DIV></td>
+ </tr>
+</table>
+<!-- SpaceID=0 robot -->
+</center>
+</body>
+<script src="http://l.yimg.com/f/i/tw/mb/universal_header/uh_tw_v11.js" type="text/javascript"></script></html>
+<!-- w113.finance.tw1.yahoo.com uncompressed/chunked Wed Sep  1 09:15:55 CST 2010 -->

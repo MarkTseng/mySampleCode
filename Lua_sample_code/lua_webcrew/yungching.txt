@@ -1,0 +1,8 @@
+光復路一段
+
+b, c, h = http.request("http://yungching.housefun.com.tw/Buy/Ashx/ShowList.ashx","County=&District=&Rooms=&PriceMin=&PriceMax=&AreaMin=&AreaMax=&Purpose=&CaseType=&BuildAge=&CaseFloor=&DirFace=&ParkingSpace=&KeyWord=光復路一段&Group=&ListMode=PhotosAndWords&PageCount=999&CurrentPage=1&Current")
+print(b,c,h)
+
+
+
+http://buy.sinyi.com.tw/index.php/city=0&county=0&minPrice=0&maxPrice=0&kw=%E5%85%89%E5%BE%A9%E8%B7%AF%E4%B8%80%E6%AE%B5&area=0&sort=0&road=0&price=0_0&ping=0_0&pingType=1&minPing=0&maxPing=0&minPriceLeft=0&maxPriceLeft=0&minUniprice=0&maxUniprice=0&minAge=_&maxAge=_&minFloor=0&maxFloor=0&minRoom=0&maxRoom=0&minShower=0&maxShower=0&houseIncs=0&garageTypes=_&isNearTags=0&houseType=0&dirType=2&dirNs=0&nhasRoomTypes=0&mediaLink=0&mrtWalkTime=0&mrts=0&mrtLine=0&mrtStation=0&pointType=0&pointID=0&hasAddRoom=0&srhType=0&viewMode=0&sortMode=0&myShowLinkType=0&mapPointArea=0&p=1
