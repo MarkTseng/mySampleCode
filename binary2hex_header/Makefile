@@ -1,4 +1,4 @@
-TARGET = bin2hexheader hexheader2bin
+TARGET = hello bin2hexheader hexheader2bin
 
 all: $(TARGET)
 	@echo "compile $(TARGET) done"
@@ -8,6 +8,9 @@ bin2hexheader:
 
 hexheader2bin:
 	gcc -o hexheader2bin hexheader2bin.c
+
+hello:
+	gcc -o hello hello.c
 
 clean:
 	rm $(TARGET) 
