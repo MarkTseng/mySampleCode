@@ -71,6 +71,7 @@ int main()
 	{
 		ret = nice(-1);
 		printf("nice: %d\n", ret);
+		printf("uid: %d\n", getuid());
 		printf("wait....\n");
 	 printf("Cap data 0x%x, 0x%x, 0x%x\n", cap_data->effective,
 			 cap_data->permitted, cap_data->inheritable);
