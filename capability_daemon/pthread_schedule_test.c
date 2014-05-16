@@ -144,9 +144,10 @@ main(int argc, char *argv[])
 	printf("setresuid\n");
 	
 	/* Clear all but the capability to bind to low ports */
+     //cap_data->effective |= CAP_TO_MASK(CAP_SYS_ADMIN) | CAP_TO_MASK(CAP_SETUID) | CAP_TO_MASK(CAP_SYS_NICE);
      cap_data->effective |= CAP_TO_MASK(CAP_SYS_ADMIN) | CAP_TO_MASK(CAP_SETUID) | CAP_TO_MASK(CAP_SYS_NICE);
-     cap_data->permitted |= CAP_TO_MASK(CAP_SYS_ADMIN) | CAP_TO_MASK(CAP_SETUID) | CAP_TO_MASK(CAP_SYS_NICE);
-     cap_data->inheritable = CAP_TO_MASK(CAP_SYS_ADMIN) | CAP_TO_MASK(CAP_SETUID) | CAP_TO_MASK(CAP_SYS_NICE); 
+     //cap_data->permitted |= CAP_TO_MASK(CAP_SYS_ADMIN) | CAP_TO_MASK(CAP_SETUID) | CAP_TO_MASK(CAP_SYS_NICE);
+     //cap_data->inheritable = CAP_TO_MASK(CAP_SYS_ADMIN) | CAP_TO_MASK(CAP_SETUID) | CAP_TO_MASK(CAP_SYS_NICE); 
 
 	 if (capset(cap_header, cap_data) < 0)
 		 printf("capset failed");
