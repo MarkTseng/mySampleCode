@@ -1,0 +1,21 @@
+./simple
+if [ $? -eq 1 ] ; then 
+	echo "ERROR" 
+	exit 1 
+fi
+./simple_threads
+if [ $? -eq 1 ] ; then
+        echo "ERROR"
+        exit 1
+fi
+./simple_processes
+if [ $? -eq 1 ] ; then
+        echo "ERROR"
+        exit 1
+fi
+./simple_mutex
+if [ $? -eq 1 ] ; then
+        echo "ERROR"
+        exit 1
+fi
+

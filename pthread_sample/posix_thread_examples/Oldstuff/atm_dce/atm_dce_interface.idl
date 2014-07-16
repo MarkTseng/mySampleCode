@@ -1,0 +1,56 @@
+/********************************************************
+ * An example source module to accompany...
+ *
+ * "Using POSIX Threads: Programming with Pthreads"
+ *     by Brad nichols, Dick Buttlar, Jackie Farrell
+ *     O'Reilly & Associates, Inc.
+ *
+ ********************************************************
+ * atm_if.idl --
+ *
+ * Defines an RPC interface to the ATM DCE example.
+ */
+[
+uuid(6f01ac60-119b-11cf-a6d7-08002bbaabb0),
+version(1.0)
+]
+interface atm
+{
+	void open_account(
+		[in]	handle_t	handle,
+		[out]	long		*id,
+		[out]	long		*passwd,
+	        [out]   long		*success,
+		[out]   char		estring[20]);
+		
+	void deposit(
+		[in]	handle_t	handle,
+		[in]	long		*id,
+		[in]	long		*password,
+		[in]	long 		*amt,	
+		[out]   long            *success,
+		[out]   char		estring[20]);
+
+
+	void withdraw(
+		[in]	handle_t	handle,
+		[in]	long		*id,
+		[in]	long		*password,
+		[in]	long 		*amt,
+		[out]	long		*success,
+		[out]   char		estring[20]);
+
+	void balance(
+		[in]	handle_t	handle,
+		[in]	long		*id,
+		[in]	long		*password,
+		[out]   long            *success,
+		[out]	long		*cur_balance,
+		[out]   char		estring[20]);
+
+	void shutdown_server(
+		[in]	handle_t	handle,
+		[in]	long		*spassword,
+		[out]	long		*success,
+		[out]	char		estring[20]);
+}

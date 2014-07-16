@@ -1,0 +1,60 @@
+menu "Kernel hacking"
+
+config GSL_HEAP_A_SIZE
+	int "GSL Heap A Size (MByte)"
+	default 16
+
+config GSL_HEAP_B_SIZE
+	int "GSL Heap B Size (MByte)"
+	default 8
+
+menuconfig DEBUG_MEMORY
+	bool "Memory debugger"
+	default n
+	help
+		Enable memory debugging utilities
+
+if DEBUG_MEMORY
+config MEMORY_WATCH
+	bool "memwatch"
+	default n
+	help
+		Enable memwatch, which is a tool mainly used to detect
+		memory leaks allcoated by GL_MemAlloc() and GL_MemRealloc().
+
+		For more details, see http://www.linkdata.se/sourcecode/memwatch
+
+	config MEMORY_WATCH_LOG_PATH
+		string "memwatch log path"
+		depends on MEMORY_WATCH
+		default "/tmp/"
+		help
+			Default directory where memwatch writes logs. The file names
+			of logs will be "memwatch.log" or "memwatXX.log".
+
+config MEMORY_TRACE
+	bool "mtrace"
+	default n
+	help
+		Enable mtrace, which is a built-in malloc debugger in GNU C libraries.
+		It detects memory errors allocated from malloc(), calloc(), or realloc().
+		Errors like memory leaks and unknown pointers to free will be detected.
+		HOWTO:
+			1. Fetch log file from the platform. "mtrace.log" for example.
+			2. Put mtrace.log in my_codebase_directory/bin
+			3. If application name is "new_app_rls", then execute:
+				../tools/mtrace <application> mtrace.log
+
+				Finally, we can see the results.
+
+	config MEMORY_TRACE_LOG_FILE
+		string "mtrace log file"
+		depends on MEMORY_TRACE
+		default "/tmp/mtrace.log"
+		help
+			Default file where mtrace writes logs.
+
+endif # DEBUG_MEMORY
+
+endmenu # Kernel hacking
+

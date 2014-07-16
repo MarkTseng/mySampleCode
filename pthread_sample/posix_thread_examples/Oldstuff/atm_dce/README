@@ -1,0 +1,3 @@
+This is a version of the ATM example which worked with DCE and
+its threads on an early version of Tru64 UNIX. Has not been 
+updated to compile on GNU/Linux.

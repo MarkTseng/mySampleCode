@@ -1,0 +1,6 @@
+This is an early version of the ATM program that is pthreads draft 4
+and ran on Digital UNIX 3.X.
+
+It was used to generate the performance numbers for the book
+Pthread Programming: Using POSIX Threads
+
