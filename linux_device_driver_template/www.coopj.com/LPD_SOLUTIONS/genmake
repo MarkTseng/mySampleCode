@@ -1,0 +1,103 @@
+#!/bin/bash
+
+# Automatic makefile generation
+# Jerry Cooperstein, coop@coopj.com, 2/2003 - 1/2009
+# License: GPLv2
+
+U_S=""    # list of userland programs (.c files)
+U_X=""    # list of userland programs (executables) 
+T_S=""    # list of userland programs (.c files) that use pthreads
+T_X=""    # list of userland programs (executables) that use pthreads
+ALL=""    # list of all targets
+
+CFLAGS_U_X="-O2 -Wall -pedantic"    # compile flags for user programs
+CFLAGS_T_X=$CFLAGS_U_X" -pthread"   # compile flags for threaded user programs
+
+# construct lists of sources and targets
+
+# skip empty directories
+if [ "$(find . -maxdepth 1 -name "*.c")" == "" ] ; then 
+    echo No need to make Makefile: no source code
+    exit
+fi
+
+for names in *.c ; do 
+
+# exclude files with NOMAKE
+
+ if [ "$(grep NOMAKE $names)" ] ; then
+
+     echo "$names is being skipped, it is not a program"
+
+     else
+
+# is it  a pthread'ed program?
+
+     if [ "$(grep '\<pthread.h\>' $names)" ] ; then
+	     FILENAME_EXE=$(basename $names .c)
+	     T_X=$T_X" $FILENAME_EXE"
+	     T_S=$T_S" $names"
+     else
+	 U_X=$U_X" $(basename $names .c)"
+	 U_S=$U_S" $names"
+     fi
+ fi
+done
+
+CLEANSTUFF="$U_X $T_X"
+
+# get ALL the targets
+
+if [ "$U_X" != "" ] ; then ALL=$ALL" userprogs"; fi
+if [ "$T_X" != "" ] ; then ALL=$ALL" threadprogs"; fi
+
+# echo if you are curious :>
+
+echo U_S=$U_S U_X=$U_X T_S=$T_S T_X=$T_X
+
+#####################################################################################
+# We're done preparing, lets build the makefile finally!
+
+# get rid of the old Makefile, build a new one
+
+rm -f Makefile
+
+echo "### Automatic Makefile generation by 'genmake' script        ####" >>Makefile
+echo "### Copyright, Jerry Cooperstein, Axian Inc, 2/2003 - 11/2009 ####" >>Makefile
+echo "### License: GPLv2 ###"                                              >>Makefile
+
+echo -e "\nallofit: $ALL" >> Makefile
+
+if [ "$U_X" != "" ] ; then 
+    echo -e "\nuserprogs:" >> Makefile
+    echo -e "\t@\$(MAKE) \\" >> Makefile
+    echo -e "\t\tCFLAGS=\"$CFLAGS_U_X\" \\" >> Makefile
+    if [ "$LDLIBS" != "" ] ; then
+	echo -e "\t\tLDLIBS=\"$LDLIBS\" \\" >> Makefile
+    fi
+    if [ "$CPPFLAGS" != '' ] ; then
+    echo -e "\t\tCPPFLAGS=\"$CPPFLAGS\" \\" >> Makefile
+    fi
+    echo -e "\t$U_X" >> Makefile 
+fi
+
+if [ "$T_X" != "" ] ; then 
+    echo -e "\nthreadprogs:" >> Makefile
+    echo -e "\t@\$(MAKE) \\" >> Makefile
+    echo -e "\t\tCFLAGS=\"$CFLAGS_T_X\" \\" >> Makefile
+    if [ "$LDLIBS" != "" ] ; then
+	echo -e "\t\tLDLIBS=\"$LDLIBS\" \\" >> Makefile
+    fi
+    if [ "$CPPFLAGS" != '' ] ; then
+	echo -e "\t\tCPPFLAGS=\"$CPPFLAGS\" \\" >> Makefile
+    fi
+    echo -e "\t$T_X" >> Makefile 
+fi
+
+echo -e "\nclean:" >> Makefile
+echo -e "\trm -rf $CLEANSTUFF" >> Makefile
+
+exit
+
+######################################################################################
+
