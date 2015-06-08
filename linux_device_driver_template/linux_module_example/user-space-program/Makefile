@@ -1,5 +1,5 @@
-TOOL_CHAIN_DIR=/home/mark/MySoftware/bin
-CROSS_COMPILE=$(TOOL_CHAIN_DIR)/mips-linux-gnu-
+TOOL_CHAIN_DIR=/home/mark/RTK_workshop/magellan2/rtk_demo_board/kernel/system/tmp/toolchain/asdk-4.9.2-a53-EL-3.10-g2.19-a32n-141121/bin
+CROSS_COMPILE=$(TOOL_CHAIN_DIR)/arm-linux-
 CC = $(CROSS_COMPILE)gcc
 STRIP = $(CROSS_COMPILE)strip
 
@@ -18,7 +18,7 @@ FUNC_TRACE_FLAG = -finstrument-functions
 
 RM = rm -f
 INC = ./
-ProgramName = print_segmemts netlink_recv netlink_send tailq_ex
+ProgramName = print_segmemts netlink_recv netlink_send tailq_ex netlink_event
 
 all: $(ProgramName)
 	@echo "Programs is ready $(ProgramName)" 
@@ -29,6 +29,11 @@ print_segmemts: print_segmemts.c
 	$(STRIP) $@
 
 netlink_recv: netlink_recv.c
+	@echo "Compile $@" 
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $^
+	$(STRIP) $@
+
+netlink_event: netlink_event.c
 	@echo "Compile $@" 
 	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $^
 	$(STRIP) $@
