@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
 {
 	struct sockaddr_nl nls;
 	struct pollfd pfd;
-	char buf[512];
+	char buf[4096];
 
 	// Open hotplug event netlink socket
 

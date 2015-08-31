@@ -24,11 +24,30 @@
 
 MODULE_LICENSE ("GPL");
 
-int hello_major = 250;
+int hello_major = 244;
 int hello_minor = 0;
 int number_of_devices = 1;
 struct cdev cdev;
 dev_t dev = 0;
+struct device *my_device;
+
+ssize_t write_param(struct device *dev, struct device_attribute *attr, 
+                 const char *buf, size_t count)
+{
+	pr_err("call write_param\n");
+	return count;
+}
+
+static ssize_t
+read_param(struct device *dev, struct device_attribute *attr, char *buf)
+{
+	pr_err("call read_param\n");
+	return 0;
+}
+
+// using dev_attr_param in device_crate_file()
+static DEVICE_ATTR(param, S_IRUGO | S_IWUGO , read_param, write_param);
+
 
 struct file_operations hello_fops = {
 	.owner = THIS_MODULE,
@@ -52,7 +71,8 @@ static void char_reg_setup_cdev (void)
 		return ;
 	}
 	/* register your own device in sysfs, and this will cause udevd to create corresponding device node */
-	device_create(my_class,NULL, devno, NULL,"hello");
+	my_device = device_create(my_class,NULL, devno, NULL,"hello");
+	device_create_file(my_device, &dev_attr_param);
 }
 
 static int __init hello_2_init (void)

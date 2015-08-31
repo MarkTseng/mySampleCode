@@ -4,12 +4,12 @@
 
 
 # Toolchain setting
-TOOL_CHAIN_DIR=/home/mark/project/Buildroot/output/host/usr/bin
-CROSS_COMPILE=$(TOOL_CHAIN_DIR)/mipsel-linux-
-ARCH_PLATFORM=mips
+TOOL_CHAIN_DIR=/home/mark/RTK_workshop/merlin/native_linux/kernel/system-rtk/tmp/toolchain/asdk-4.9.2-a53-EL-3.10-g2.19-a32n-141121/bin
+CROSS_COMPILE=$(TOOL_CHAIN_DIR)/arm-linux-
+ARCH_PLATFORM=arm
 
 # Kernel path
-KERNELDIR=/home/mark/STB_Project/STB1502_Linux/linux-kernel/linux-2.6.33.7_SVN
+KERNELDIR=/home/mark/RTK_workshop/merlin/native_linux/kernel/linux/linux-3.10.19-rtk
 
 # module install directory
 INSTALLDIR=/home/mark/SVN/kernelteam/FileSystem/ramfs/root/lib/modules/2.6.38_SPHE9200_V1
@@ -24,10 +24,10 @@ else
 endif
 
 # Add CFLAGS 
-PROJECT_DIR = /home/mark/project/spv9200/spv9200_mm
-INCLUDE_DIR += -I$(PROJECT_DIR)/include
-INCLUDE_DIR += -I$(PROJECT_DIR)/dsp_codec
-EXTRA_CFLAGS += $(DEBFLAGS) $(INCLUDE_DIR)
+#PROJECT_DIR = /home/mark/project/spv9200/spv9200_mm
+#INCLUDE_DIR += -I$(PROJECT_DIR)/include
+#INCLUDE_DIR += -I$(PROJECT_DIR)/dsp_codec
+#EXTRA_CFLAGS += $(DEBFLAGS) $(INCLUDE_DIR)
 
 # target module name 
 #obj-m += ProcessList.o
@@ -42,12 +42,13 @@ EXTRA_CFLAGS += $(DEBFLAGS) $(INCLUDE_DIR)
 #obj-m += tasklet.o
 #obj-m += memory_size.o
 #obj-m += slab_memory_pool.o
-obj-m += interrupt.o
+#obj-m += interrupt.o
 #obj-m += wait_queue_manual.o
 #obj-m += proc.o
 #obj-m += proc_quick.o
 #obj-m += debugfs.o
 #obj-m += system_call.o
+obj-m += cdev_device.o
 all: modules
 
 modules:

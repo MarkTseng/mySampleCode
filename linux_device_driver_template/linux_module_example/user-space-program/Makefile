@@ -1,5 +1,5 @@
-TOOL_CHAIN_DIR=/home/mark/RTK_workshop/magellan2/rtk_demo_board/kernel/system/tmp/toolchain/asdk-4.9.2-a53-EL-3.10-g2.19-a32n-141121/bin
-CROSS_COMPILE=$(TOOL_CHAIN_DIR)/arm-linux-
+#TOOL_CHAIN_DIR=/home/mark/RTK_workshop/magellan2/rtk_demo_board/kernel/system/tmp/toolchain/asdk-4.9.2-a53-EL-3.10-g2.19-a32n-141121/bin
+#CROSS_COMPILE=$(TOOL_CHAIN_DIR)/arm-linux-
 CC = $(CROSS_COMPILE)gcc
 STRIP = $(CROSS_COMPILE)strip
 
