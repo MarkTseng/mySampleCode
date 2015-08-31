@@ -94,6 +94,7 @@ static void __exit hello_2_exit (void)
 	dev_t devno = MKDEV (hello_major, hello_minor);
 	cdev_del (&cdev);
 	unregister_chrdev_region (devno, number_of_devices);
+	device_remove_file(my_device, &dev_attr_param);
 	device_destroy(my_class, devno);
 	class_destroy(my_class);
 }
