@@ -9,7 +9,7 @@ CROSS_COMPILE=$(TOOL_CHAIN_DIR)/arm-linux-
 ARCH_PLATFORM=arm
 
 # Kernel path
-KERNELDIR=/home/mark/RTK_workshop/merlin/native_linux/kernel/linux/linux-3.10.19-rtk
+KERNELDIR=/home/mark/RTK_workshop/merlin/native_linux/kernel/linux/linux-3.10.19-lge
 
 # module install directory
 INSTALLDIR=/home/mark/SVN/kernelteam/FileSystem/ramfs/root/lib/modules/2.6.38_SPHE9200_V1
@@ -48,7 +48,8 @@ endif
 #obj-m += proc_quick.o
 #obj-m += debugfs.o
 #obj-m += system_call.o
-obj-m += cdev_device.o
+#obj-m += cdev_device.o
+obj-m += kthread_example.o
 all: modules
 
 modules:
