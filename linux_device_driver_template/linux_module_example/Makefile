@@ -4,12 +4,14 @@
 
 
 # Toolchain setting
-TOOL_CHAIN_DIR=/home/mark/RTK_workshop/merlin/native_linux/kernel/system-rtk/tmp/toolchain/asdk-4.9.2-a53-EL-3.10-g2.19-a32n-141121/bin
+#TOOL_CHAIN_DIR=/home/mark/RTK_workshop/merlin/native_linux/kernel/system-rtk/tmp/toolchain/asdk-4.9.2-a53-EL-3.10-g2.19-a32n-141121/bin
+TOOL_CHAIN_DIR=/home/mark/RTK_workshop/merlin/native_linux/kernel/system-lge/tmp/toolchain/arm-lg115x-linux-gnueabi-4.8-2014.08-1-i686/bin
 CROSS_COMPILE=$(TOOL_CHAIN_DIR)/arm-linux-
 ARCH_PLATFORM=arm
 
 # Kernel path
-KERNELDIR=/home/mark/RTK_workshop/merlin/native_linux/kernel/linux/linux-3.10.19-lge
+#KERNELDIR=/home/mark/RTK_workshop/merlin/native_linux/kernel/linux/linux-3.10.19-rtk
+KERNELDIR=/home/mark/RTK_workshop/merlin/native_linux/kernel/linux/linux-3.10.19-lge-mainline-usb-bug
 
 # module install directory
 INSTALLDIR=/home/mark/SVN/kernelteam/FileSystem/ramfs/root/lib/modules/2.6.38_SPHE9200_V1
@@ -39,6 +41,7 @@ endif
 #obj-m += link_list.o
 #obj-m += timer.o
 #obj-m += workqueue.o
+#obj-m += workqueue2.o
 #obj-m += tasklet.o
 #obj-m += memory_size.o
 #obj-m += slab_memory_pool.o
@@ -49,7 +52,9 @@ endif
 #obj-m += debugfs.o
 #obj-m += system_call.o
 #obj-m += cdev_device.o
-obj-m += kthread_example.o
+#obj-m += kthread_example.o
+#obj-m += kthread_hw_semaphore.o
+obj-m += file_log.o
 all: modules
 
 modules:
