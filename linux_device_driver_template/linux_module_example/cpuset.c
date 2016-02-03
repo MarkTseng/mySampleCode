@@ -6,17 +6,20 @@
 #include <linux/delay.h>
 #include <linux/completion.h>
 
-DECLARE_COMPLETION(comp_lock);
 struct task_struct *kthread_task; /* task struct for kthread. */
 
 int MainRoutine( void *pParam )
 {
+	struct cpumask vsc_cpumask;
+	cpumask_clear(&vsc_cpumask);
+	cpumask_set_cpu(3, &vsc_cpumask); // run task in core 3
+	sched_setaffinity(0, &vsc_cpumask);
+
    	while (1)
 	{
-		pr_info("start to wait complete : %lu \n", jiffies);
-		wait_for_completion(&comp_lock);
-		pr_info("complete : %lu \n", jiffies);
+		pr_err("thread run ...\n");
 
+		msleep(1000);
 		// exit kthead
 		if (kthread_should_stop())
 			break;
@@ -31,16 +34,10 @@ static int __init dsp_init(void)
 {
     int ret = 0;
 
-	//INIT_COMPLETION(comp_lock);
 	kthread_task = kthread_run(MainRoutine, NULL, "myKthread");
 	if (IS_ERR(kthread_task )) {
 		pr_info("start kthread.\n");
 	}
-	msleep(10000);
-
-	complete (&comp_lock);
-
-	kthread_stop(kthread_task);
 
     return ret;
 	
@@ -48,7 +45,7 @@ static int __init dsp_init(void)
 
 static void __exit dsp_cleanup(void)
 {
-	
+	kthread_stop(kthread_task);
 	return;
 }
 	

@@ -54,7 +54,8 @@ endif
 #obj-m += cdev_device.o
 #obj-m += kthread_example.o
 #obj-m += kthread_hw_semaphore.o
-obj-m += file_log.o
+#obj-m += file_log.o
+obj-m += cpuset.o
 all: modules
 
 modules:
