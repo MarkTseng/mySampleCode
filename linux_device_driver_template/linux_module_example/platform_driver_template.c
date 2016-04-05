@@ -33,7 +33,6 @@ static unsigned int register_password = 0;
 static struct device *crt_device;
 static struct platform_device *crt_platform_devs;
 
-
 static ssize_t crt_register_show(struct kobject *kobj, struct kobj_attribute *attr,
 		char *buf)
 {
@@ -158,41 +157,33 @@ static int __init crt_module_init(void)
 {
 	int retval;
 
-	crt_kobj = kobject_create_and_add("crt", NULL);
-	if (!crt_kobj)
-		return -ENOMEM;
-
-	retval = sysfs_create_group(crt_kobj, &attr_group);
-	if (retval)
-		kobject_put(crt_kobj);
-
-
 	/* register device to get major and minor number */
 	if (crt_major) {
 		crt_devnum = MKDEV(crt_major, crt_minor);
 		retval = register_chrdev_region(crt_devnum, crt_nr_devs, "crt");
 	} else {
 		retval = alloc_chrdev_region(&crt_devnum, crt_minor, crt_nr_devs, "crt");
-		crt_major = MAJOR(crt_devnum);
 	}
+
 	if (retval < 0) {
 		pr_warn("CRT : can't get major %d\n", crt_major);
 		return retval;
 	}
+	
+	crt_major = MAJOR(crt_devnum);
 
 	/* create device node by udev API */
 	crt_class = class_create(THIS_MODULE, "crt");
 	if (IS_ERR(crt_class)) {
 		return PTR_ERR(crt_class);
 	}
+
 	crt_class->devnode = crt_devnode;
 	crt_device = device_create(crt_class, NULL, crt_devnum, NULL, "crt");
 	pr_info("CRT module init, major number = %d, device name = %s \n", crt_major, dev_name(crt_device));
 
 	/* cdev API to register file operation */
 	cdev_init (&crt_cdev, &crt_fops);
-	crt_cdev.owner = THIS_MODULE;
-	crt_cdev.ops = &crt_fops;
 	retval = cdev_add (&crt_cdev, crt_devnum , 1);
 	if (retval) {
 		pr_err("Error %d adding char_reg_setup_cdev", retval);
@@ -210,6 +201,15 @@ static int __init crt_module_init(void)
 
 	spin_lock_init(&crt_lock);
 
+	crt_kobj = kobject_create_and_add("crt", NULL);
+	if (!crt_kobj)
+		return -ENOMEM;
+
+	retval = sysfs_create_group(crt_kobj, &attr_group);
+	if (retval)
+		kobject_put(crt_kobj);
+
+
 	return retval;
 }
 
@@ -220,7 +220,7 @@ static void __exit crt_module_exit(void)
 
 	platform_driver_unregister(&crt_platform_driver);
 
-	kobject_put(crt_kobj);
+	kobject_del(crt_kobj);
 	device_destroy(crt_class, crt_devnum);
 	class_destroy(crt_class);
 	unregister_chrdev_region(crt_devnum, crt_nr_devs);
