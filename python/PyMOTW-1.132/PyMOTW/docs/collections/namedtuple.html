@@ -1,0 +1,251 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>namedtuple &mdash; Python Module of the Week</title>
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.132',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="collections – Container data types" href="index.html" />
+    <link rel="next" title="OrderedDict" href="ordereddict.html" />
+    <link rel="prev" title="Deque" href="deque.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="ordereddict.html" title="OrderedDict"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="deque.html" title="Deque"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../data_types.html" >Data Types</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">collections &#8211; Container data types</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">namedtuple</a><ul>
+<li><a class="reference internal" href="#defining">Defining</a></li>
+<li><a class="reference internal" href="#invalid-field-names">Invalid Field Names</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="deque.html"
+                        title="previous chapter">Deque</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="ordereddict.html"
+                        title="next chapter">OrderedDict</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/collections/namedtuple.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="namedtuple">
+<span id="collections-namedtuple"></span><h1>namedtuple<a class="headerlink" href="#namedtuple" title="Permalink to this headline">¶</a></h1>
+<p>The standard <tt class="xref py py-class docutils literal"><span class="pre">tuple</span></tt> uses numerical indexes to access its
+members.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">bob</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;Bob&#39;</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="s">&#39;male&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;Representation:&#39;</span><span class="p">,</span> <span class="n">bob</span>
+
+<span class="n">jane</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;Jane&#39;</span><span class="p">,</span> <span class="mi">29</span><span class="p">,</span> <span class="s">&#39;female&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">Field by index:&#39;</span><span class="p">,</span> <span class="n">jane</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">Fields by index:&#39;</span>
+<span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="p">[</span> <span class="n">bob</span><span class="p">,</span> <span class="n">jane</span> <span class="p">]:</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s"> is a </span><span class="si">%d</span><span class="s"> year old </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">p</span>
+</pre></div>
+</div>
+<p>This makes <tt class="xref py py-class docutils literal"><span class="pre">tuples</span></tt> convenient containers for simple uses.</p>
+<div class="highlight-python"><pre>$ python collections_tuple.py
+
+Representation: ('Bob', 30, 'male')
+
+Field by index: Jane
+
+Fields by index:
+Bob is a 30 year old male
+Jane is a 29 year old female</pre>
+</div>
+<p>On the other hand, remembering which index should be used for each
+value can lead to errors, especially if the <tt class="xref py py-class docutils literal"><span class="pre">tuple</span></tt> has a lot
+of fields and is constructed far from where it is used.  A
+<tt class="xref py py-class docutils literal"><span class="pre">namedtuple</span></tt> assigns names, as well as the numerical index, to
+each member.</p>
+<div class="section" id="defining">
+<h2>Defining<a class="headerlink" href="#defining" title="Permalink to this headline">¶</a></h2>
+<p><tt class="xref py py-class docutils literal"><span class="pre">namedtuple</span></tt> instances are just as memory efficient as regular
+tuples because they do not have per-instance dictionaries.  Each kind
+of <tt class="xref py py-class docutils literal"><span class="pre">namedtuple</span></tt> is represented by its own class, created by
+using the <tt class="xref py py-func docutils literal"><span class="pre">namedtuple()</span></tt> factory function.  The arguments are the
+name of the new class and a string containing the names of the
+elements.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">collections</span>
+
+<span class="n">Person</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">namedtuple</span><span class="p">(</span><span class="s">&#39;Person&#39;</span><span class="p">,</span> <span class="s">&#39;name age gender&#39;</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&#39;Type of Person:&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">Person</span><span class="p">)</span>
+
+<span class="n">bob</span> <span class="o">=</span> <span class="n">Person</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;Bob&#39;</span><span class="p">,</span> <span class="n">age</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">gender</span><span class="o">=</span><span class="s">&#39;male&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">Representation:&#39;</span><span class="p">,</span> <span class="n">bob</span>
+
+<span class="n">jane</span> <span class="o">=</span> <span class="n">Person</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;Jane&#39;</span><span class="p">,</span> <span class="n">age</span><span class="o">=</span><span class="mi">29</span><span class="p">,</span> <span class="n">gender</span><span class="o">=</span><span class="s">&#39;female&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">Field by name:&#39;</span><span class="p">,</span> <span class="n">jane</span><span class="o">.</span><span class="n">name</span>
+
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">Fields by index:&#39;</span>
+<span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="p">[</span> <span class="n">bob</span><span class="p">,</span> <span class="n">jane</span> <span class="p">]:</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s"> is a </span><span class="si">%d</span><span class="s"> year old </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">p</span>
+    
+</pre></div>
+</div>
+<p>As the example illustrates, it is possible to access the fields of the
+<tt class="xref py py-class docutils literal"><span class="pre">namedtuple</span></tt> by name using dotted notation (<tt class="docutils literal"><span class="pre">obj.attr</span></tt>) as
+well as using the positional indexes of standard tuples.</p>
+<div class="highlight-python"><pre>$ python collections_namedtuple_person.py
+
+Type of Person: &lt;type 'type'&gt;
+
+Representation: Person(name='Bob', age=30, gender='male')
+
+Field by name: Jane
+
+Fields by index:
+Bob is a 30 year old male
+Jane is a 29 year old female</pre>
+</div>
+</div>
+<div class="section" id="invalid-field-names">
+<h2>Invalid Field Names<a class="headerlink" href="#invalid-field-names" title="Permalink to this headline">¶</a></h2>
+<p>As the field names are parsed, invalid values cause <a class="reference internal" href="../exceptions/index.html#exceptions-valueerror"><em>ValueError</em></a> exceptions.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">collections</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">collections</span><span class="o">.</span><span class="n">namedtuple</span><span class="p">(</span><span class="s">&#39;Person&#39;</span><span class="p">,</span> <span class="s">&#39;name class age gender&#39;</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">ValueError</span><span class="p">,</span> <span class="n">err</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">err</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">collections</span><span class="o">.</span><span class="n">namedtuple</span><span class="p">(</span><span class="s">&#39;Person&#39;</span><span class="p">,</span> <span class="s">&#39;name age gender age&#39;</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">ValueError</span><span class="p">,</span> <span class="n">err</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">err</span>
+    
+</pre></div>
+</div>
+<p>Names are invalid if they are repeated or conflict with Python
+keywords.</p>
+<div class="highlight-python"><pre>$ python collections_namedtuple_bad_fields.py
+
+Type names and field names cannot be a keyword: 'class'
+Encountered duplicate field name: 'age'</pre>
+</div>
+<p>In situations where a <tt class="xref py py-class docutils literal"><span class="pre">namedtuple</span></tt> is being created based on
+values outside of the control of the programm (such as to represent
+the rows returned by a database query, where the schema is not known
+in advance), set the <em>rename</em> option to <tt class="xref docutils literal"><span class="pre">True</span></tt> so the fields are
+renamed.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">collections</span>
+
+<span class="n">with_class</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">namedtuple</span><span class="p">(</span><span class="s">&#39;Person&#39;</span><span class="p">,</span> <span class="s">&#39;name class age gender&#39;</span><span class="p">,</span> <span class="n">rename</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">with_class</span><span class="o">.</span><span class="n">_fields</span>
+
+<span class="n">two_ages</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">namedtuple</span><span class="p">(</span><span class="s">&#39;Person&#39;</span><span class="p">,</span> <span class="s">&#39;name age gender age&#39;</span><span class="p">,</span> <span class="n">rename</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">two_ages</span><span class="o">.</span><span class="n">_fields</span>
+</pre></div>
+</div>
+<p>The field with name <tt class="docutils literal"><span class="pre">class</span></tt> becomes <tt class="docutils literal"><span class="pre">_1</span></tt> and the duplicate <tt class="docutils literal"><span class="pre">age</span></tt>
+field is changed to <tt class="docutils literal"><span class="pre">_3</span></tt>.</p>
+<div class="highlight-python"><pre>$ python collections_namedtuple_rename.py
+
+('name', '_1', 'age', 'gender')
+('name', 'age', 'gender', '_3')</pre>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="ordereddict.html" title="OrderedDict"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="deque.html" title="Deque"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../data_types.html" >Data Types</a> &raquo;</li>
+          <li><a href="index.html" >collections &#8211; Container data types</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright Doug Hellmann.
+      Last updated on Oct 24, 2010.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+
+    <br/><a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/88x31.png"/></a>
+    
+    </div>
+  </body>
+</html>

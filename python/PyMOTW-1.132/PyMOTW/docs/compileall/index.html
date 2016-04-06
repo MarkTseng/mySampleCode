@@ -1,0 +1,274 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>compileall – Byte-compile Source Files &mdash; Python Module of the Week</title>
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.132',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="Python Language Services" href="../language.html" />
+    <link rel="next" title="dis – Python Bytecode Disassembler" href="../dis/index.html" />
+    <link rel="prev" title="Python Language Services" href="../language.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../dis/index.html" title="dis – Python Bytecode Disassembler"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../language.html" title="Python Language Services"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../language.html" accesskey="U">Python Language Services</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">compileall &#8211; Byte-compile Source Files</a><ul>
+<li><a class="reference internal" href="#compiling-one-directory">Compiling One Directory</a></li>
+<li><a class="reference internal" href="#compiling-sys-path">Compiling sys.path</a></li>
+<li><a class="reference internal" href="#from-the-command-line">From the Command Line</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../language.html"
+                        title="previous chapter">Python Language Services</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../dis/index.html"
+                        title="next chapter">dis &#8211; Python Bytecode Disassembler</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/compileall/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-compileall">
+<span id="compileall-byte-compile-source-files"></span><h1>compileall &#8211; Byte-compile Source Files<a class="headerlink" href="#module-compileall" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Purpose:</th><td class="field-body">Convert source files to byte-compiled version.</td>
+</tr>
+<tr class="field"><th class="field-name">Python Version:</th><td class="field-body">1.4</td>
+</tr>
+</tbody>
+</table>
+<p>The <a class="reference internal" href="#module-compileall" title="compileall: Byte-compile Source Files"><tt class="xref py py-mod docutils literal"><span class="pre">compileall</span></tt></a> module finds Python source files and compiles
+them to the byte-code representation, saving the results in <tt class="docutils literal"><span class="pre">.pyc</span></tt>
+or <tt class="docutils literal"><span class="pre">.pyo</span></tt> files.</p>
+<div class="section" id="compiling-one-directory">
+<h2>Compiling One Directory<a class="headerlink" href="#compiling-one-directory" title="Permalink to this headline">¶</a></h2>
+<p><tt class="docutils literal"><span class="pre">compile_dir()</span></tt> is used to recursively scan a directory and
+byte-compile the files within it.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">compileall</span>
+
+<span class="n">compileall</span><span class="o">.</span><span class="n">compile_dir</span><span class="p">(</span><span class="s">&#39;examples&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>By default, all of the subdirectories are scanned to a depth of 10.
+When using a version control system such as subversion, this can lead
+to unnecessary scanning, as seen here:</p>
+<div class="highlight-python"><pre>$ python compileall_compile_dir.py
+
+Listing examples ...
+Listing examples/.svn ...
+Listing examples/.svn/prop-base ...
+Listing examples/.svn/text-base ...
+Compiling examples/a.py ...
+Listing examples/subdir ...
+Listing examples/subdir/.svn ...
+Listing examples/subdir/.svn/prop-base ...
+Listing examples/subdir/.svn/text-base ...
+Compiling examples/subdir/b.py ...</pre>
+</div>
+<p>To filter directories out, use the <tt class="docutils literal"><span class="pre">rx</span></tt> argument to provide a
+regular expression to match the names to exclude.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">compileall</span>
+<span class="kn">import</span> <span class="nn">re</span>
+
+<span class="n">compileall</span><span class="o">.</span><span class="n">compile_dir</span><span class="p">(</span><span class="s">&#39;examples&#39;</span><span class="p">,</span> 
+    <span class="n">rx</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">r&#39;/\.svn&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-python"><pre>$ python compileall_exclude_dirs.py
+
+Listing examples ...
+Listing examples/.svn ...
+Listing examples/.svn/prop-base ...
+Listing examples/.svn/text-base ...
+Compiling examples/a.py ...
+Listing examples/subdir ...
+Listing examples/subdir/.svn ...
+Listing examples/subdir/.svn/prop-base ...
+Listing examples/subdir/.svn/text-base ...
+Compiling examples/subdir/b.py ...</pre>
+</div>
+<p>The maxlevels argument controls the depth of recursion.  For example,
+to avoid recursion entirely pass <tt class="docutils literal"><span class="pre">0</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">compileall</span>
+<span class="kn">import</span> <span class="nn">re</span>
+
+<span class="n">compileall</span><span class="o">.</span><span class="n">compile_dir</span><span class="p">(</span><span class="s">&#39;examples&#39;</span><span class="p">,</span> 
+    <span class="n">maxlevels</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> 
+    <span class="n">rx</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">r&#39;/\.svn&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-python"><pre>$ python compileall_recursion_depth.py
+
+Listing examples ...
+Compiling examples/a.py ...</pre>
+</div>
+</div>
+<div class="section" id="compiling-sys-path">
+<h2>Compiling sys.path<a class="headerlink" href="#compiling-sys-path" title="Permalink to this headline">¶</a></h2>
+<p>All of the Python source files found in sys.path can be compiled with
+a single call to <tt class="docutils literal"><span class="pre">compile_path()</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">compileall</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="p">[:]</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;examples&#39;</span><span class="p">,</span> <span class="s">&#39;notthere&#39;</span><span class="p">]</span>
+<span class="k">print</span> <span class="s">&#39;sys.path =&#39;</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">path</span>
+<span class="n">compileall</span><span class="o">.</span><span class="n">compile_path</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This example replaces the default contents of sys.path to avoid
+permission errors while running the script, but still illustrates the
+default behavior.  Note that the maxlevels value defaults to <tt class="docutils literal"><span class="pre">0</span></tt>.</p>
+<div class="highlight-python"><pre>$ python compileall_path.py
+
+sys.path = ['examples', 'notthere']
+Listing examples ...
+Compiling examples/a.py ...
+Listing notthere ...
+Can't list notthere</pre>
+</div>
+</div>
+<div class="section" id="from-the-command-line">
+<h2>From the Command Line<a class="headerlink" href="#from-the-command-line" title="Permalink to this headline">¶</a></h2>
+<p>It is also possible to invoke <a class="reference internal" href="#module-compileall" title="compileall: Byte-compile Source Files"><tt class="xref py py-mod docutils literal"><span class="pre">compileall</span></tt></a> from the command line,
+as you might when integrating it with a build system via a Makefile.
+For example:</p>
+<div class="highlight-python"><pre>$ python -m compileall -h
+
+option -h not recognized
+usage: python compileall.py [-l] [-f] [-q] [-d destdir] [-x regexp] [-i list] [directory|file ...]
+-l: don't recurse down
+-f: force rebuild even if timestamps are up-to-date
+-q: quiet operation
+-d destdir: purported directory name for error messages
+   if no directory arguments, -l sys.path is assumed
+-x regexp: skip files matching the regular expression regexp
+   the regexp is searched for in the full path of the file
+-i list: expand list with its content (file and directory names)</pre>
+</div>
+<p>To recreate the example above, skipping <tt class="docutils literal"><span class="pre">.svn</span></tt> directories, one
+would run:</p>
+<div class="highlight-python"><pre>$ python -m compileall -x '/\.svn' examples
+
+Listing examples ...
+Listing examples/.svn ...
+Listing examples/.svn/prop-base ...
+Listing examples/.svn/text-base ...
+Compiling examples/a.py ...
+Listing examples/subdir ...
+Listing examples/subdir/.svn ...
+Listing examples/subdir/.svn/prop-base ...
+Listing examples/subdir/.svn/text-base ...
+Compiling examples/subdir/b.py ...</pre>
+</div>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://docs.python.org/library/compileall.html">compileall</a></dt>
+<dd>The standard library documentation for this module.</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../dis/index.html" title="dis – Python Bytecode Disassembler"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../language.html" title="Python Language Services"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../language.html" >Python Language Services</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright Doug Hellmann.
+      Last updated on Oct 24, 2010.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+
+    <br/><a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/88x31.png"/></a>
+    
+    </div>
+  </body>
+</html>

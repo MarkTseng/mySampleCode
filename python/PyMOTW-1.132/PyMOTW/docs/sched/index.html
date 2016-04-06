@@ -1,0 +1,328 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>sched – Generic event scheduler. &mdash; Python Module of the Week</title>
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.132',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="Data Types" href="../data_types.html" />
+    <link rel="next" title="Queue – A thread-safe FIFO implementation" href="../Queue/index.html" />
+    <link rel="prev" title="bisect – Maintain lists in sorted order" href="../bisect/index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../Queue/index.html" title="Queue – A thread-safe FIFO implementation"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../bisect/index.html" title="bisect – Maintain lists in sorted order"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../data_types.html" accesskey="U">Data Types</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">sched &#8211; Generic event scheduler.</a><ul>
+<li><a class="reference internal" href="#running-events-with-a-delay">Running Events With a Delay</a></li>
+<li><a class="reference internal" href="#overlapping-events">Overlapping Events</a></li>
+<li><a class="reference internal" href="#event-priorities">Event Priorities</a></li>
+<li><a class="reference internal" href="#canceling-events">Canceling Events</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../bisect/index.html"
+                        title="previous chapter">bisect &#8211; Maintain lists in sorted order</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../Queue/index.html"
+                        title="next chapter">Queue &#8211; A thread-safe FIFO implementation</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/sched/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-sched">
+<span id="sched-generic-event-scheduler"></span><h1>sched &#8211; Generic event scheduler.<a class="headerlink" href="#module-sched" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Purpose:</th><td class="field-body">Generic event scheduler.</td>
+</tr>
+<tr class="field"><th class="field-name">Python Version:</th><td class="field-body">1.4</td>
+</tr>
+</tbody>
+</table>
+<p>The <a class="reference internal" href="#module-sched" title="sched: Generic event scheduler."><tt class="xref py py-mod docutils literal"><span class="pre">sched</span></tt></a> module implements a generic event scheduler for
+running tasks at specific times. The scheduler class uses a <em>time</em>
+function to learn the current time, and a <em>delay</em> function to wait for
+a specific period of time. The actual units of time are not important,
+which makes the interface flexible enough to be used for many
+purposes.</p>
+<p>The <em>time</em> function is called without any arguments, and should return
+a number representing the current time. The <em>delay</em> function is called
+with a single integer argument, using the same scale as the time
+function, and should wait that many time units before returning. For
+example, the <tt class="docutils literal"><span class="pre">time.time()</span></tt> and <tt class="docutils literal"><span class="pre">time.sleep()</span></tt> functions meet these
+requirements.</p>
+<p>To support multi-threaded applications, the delay function is called
+with argument 0 after each event is generated, to ensure that other
+threads also have a chance to run.</p>
+<div class="section" id="running-events-with-a-delay">
+<h2>Running Events With a Delay<a class="headerlink" href="#running-events-with-a-delay" title="Permalink to this headline">¶</a></h2>
+<p>Events can be scheduled to run after a delay, or at a specific
+time. To schedule them with a delay, use the <tt class="docutils literal"><span class="pre">enter()</span></tt> method, which
+takes 4 arguments:</p>
+<ul class="simple">
+<li>A number representing the delay</li>
+<li>A priority value</li>
+<li>The function to call</li>
+<li>A tuple of arguments for the function</li>
+</ul>
+<p>This example schedules 2 different events to run after 2 and 3 seconds
+respectively. When the event&#8217;s time comes up, <tt class="docutils literal"><span class="pre">print_event()</span></tt> is
+called and prints the current time and the name argument passed to the
+event.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sched</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="n">scheduler</span> <span class="o">=</span> <span class="n">sched</span><span class="o">.</span><span class="n">scheduler</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">print_event</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&#39;EVENT:&#39;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">(),</span> <span class="n">name</span>
+
+<span class="k">print</span> <span class="s">&#39;START:&#39;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">scheduler</span><span class="o">.</span><span class="n">enter</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">print_event</span><span class="p">,</span> <span class="p">(</span><span class="s">&#39;first&#39;</span><span class="p">,))</span>
+<span class="n">scheduler</span><span class="o">.</span><span class="n">enter</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">print_event</span><span class="p">,</span> <span class="p">(</span><span class="s">&#39;second&#39;</span><span class="p">,))</span>
+
+<span class="n">scheduler</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The output will look something like this:</p>
+<div class="highlight-python"><pre>$ python sched_basic.py
+
+START: 1287924871.34
+EVENT: 1287924873.34 first
+EVENT: 1287924874.34 second</pre>
+</div>
+<p>The time printed for the first event is 2 seconds after start, and the
+time for the second event is 3 seconds after start.</p>
+</div>
+<div class="section" id="overlapping-events">
+<h2>Overlapping Events<a class="headerlink" href="#overlapping-events" title="Permalink to this headline">¶</a></h2>
+<p>The call to <tt class="docutils literal"><span class="pre">run()</span></tt> blocks until all of the events have been
+processed. Each event is run in the same thread, so if an event takes
+longer to run than the delay between events, there will be
+overlap. The overlap is resolved by postponing the later event. No
+events are lost, but some events may be called later than they were
+scheduled. In the next example, <tt class="docutils literal"><span class="pre">long_event()</span></tt> sleeps but it could
+just as easily delay by performing a long calculation or by blocking
+on I/O.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sched</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="n">scheduler</span> <span class="o">=</span> <span class="n">sched</span><span class="o">.</span><span class="n">scheduler</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">long_event</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&#39;BEGIN EVENT :&#39;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">(),</span> <span class="n">name</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;FINISH EVENT:&#39;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">(),</span> <span class="n">name</span>
+
+<span class="k">print</span> <span class="s">&#39;START:&#39;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">scheduler</span><span class="o">.</span><span class="n">enter</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">long_event</span><span class="p">,</span> <span class="p">(</span><span class="s">&#39;first&#39;</span><span class="p">,))</span>
+<span class="n">scheduler</span><span class="o">.</span><span class="n">enter</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">long_event</span><span class="p">,</span> <span class="p">(</span><span class="s">&#39;second&#39;</span><span class="p">,))</span>
+
+<span class="n">scheduler</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The result is the second event is run immediately after the first
+finishes, since the first event took long enough to push the clock
+past the desired start time of the second event.</p>
+<div class="highlight-python"><pre>$ python sched_overlap.py
+
+START: 1287924874.39
+BEGIN EVENT : 1287924876.39 first
+FINISH EVENT: 1287924878.39 first
+BEGIN EVENT : 1287924878.39 second
+FINISH EVENT: 1287924880.39 second</pre>
+</div>
+</div>
+<div class="section" id="event-priorities">
+<h2>Event Priorities<a class="headerlink" href="#event-priorities" title="Permalink to this headline">¶</a></h2>
+<p>If more than one event is scheduled for the same time their priority values
+are used to determine the order they are run.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sched</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="n">scheduler</span> <span class="o">=</span> <span class="n">sched</span><span class="o">.</span><span class="n">scheduler</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">print_event</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&#39;EVENT:&#39;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">(),</span> <span class="n">name</span>
+
+<span class="n">now</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="k">print</span> <span class="s">&#39;START:&#39;</span><span class="p">,</span> <span class="n">now</span>
+<span class="n">scheduler</span><span class="o">.</span><span class="n">enterabs</span><span class="p">(</span><span class="n">now</span><span class="o">+</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">print_event</span><span class="p">,</span> <span class="p">(</span><span class="s">&#39;first&#39;</span><span class="p">,))</span>
+<span class="n">scheduler</span><span class="o">.</span><span class="n">enterabs</span><span class="p">(</span><span class="n">now</span><span class="o">+</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">print_event</span><span class="p">,</span> <span class="p">(</span><span class="s">&#39;second&#39;</span><span class="p">,))</span>
+
+<span class="n">scheduler</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This example needs to ensure that they are scheduled for the exact
+same time, so the <tt class="docutils literal"><span class="pre">enterabs()</span></tt> method is used instead of
+<tt class="docutils literal"><span class="pre">enter()</span></tt>. The first argument to <tt class="docutils literal"><span class="pre">enterabs()</span></tt> is the time to run
+the event, instead of the amount of time to delay.</p>
+<div class="highlight-python"><pre>$ python sched_priority.py
+
+START: 1287924880.45
+EVENT: 1287924882.45 second
+EVENT: 1287924882.45 first</pre>
+</div>
+</div>
+<div class="section" id="canceling-events">
+<h2>Canceling Events<a class="headerlink" href="#canceling-events" title="Permalink to this headline">¶</a></h2>
+<p>Both <tt class="docutils literal"><span class="pre">enter()</span></tt> and <tt class="docutils literal"><span class="pre">enterabs()</span></tt> return a reference to the event
+which can be used to cancel it later. Since <tt class="docutils literal"><span class="pre">run()</span></tt> blocks, the
+event has to be canceled in a different thread. For this example, a
+thread is started to run the scheduler and the main processing thread
+is used to cancel the event.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sched</span>
+<span class="kn">import</span> <span class="nn">threading</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="n">scheduler</span> <span class="o">=</span> <span class="n">sched</span><span class="o">.</span><span class="n">scheduler</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">)</span>
+
+<span class="c"># Set up a global to be modified by the threads</span>
+<span class="n">counter</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="k">def</span> <span class="nf">increment_counter</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+    <span class="k">global</span> <span class="n">counter</span>
+    <span class="k">print</span> <span class="s">&#39;EVENT:&#39;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">(),</span> <span class="n">name</span>
+    <span class="n">counter</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">print</span> <span class="s">&#39;NOW:&#39;</span><span class="p">,</span> <span class="n">counter</span>
+
+<span class="k">print</span> <span class="s">&#39;START:&#39;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">e1</span> <span class="o">=</span> <span class="n">scheduler</span><span class="o">.</span><span class="n">enter</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">increment_counter</span><span class="p">,</span> <span class="p">(</span><span class="s">&#39;E1&#39;</span><span class="p">,))</span>
+<span class="n">e2</span> <span class="o">=</span> <span class="n">scheduler</span><span class="o">.</span><span class="n">enter</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">increment_counter</span><span class="p">,</span> <span class="p">(</span><span class="s">&#39;E2&#39;</span><span class="p">,))</span>
+
+<span class="c"># Start a thread to run the events</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">scheduler</span><span class="o">.</span><span class="n">run</span><span class="p">)</span>
+<span class="n">t</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+<span class="c"># Back in the main thread, cancel the first scheduled event.</span>
+<span class="n">scheduler</span><span class="o">.</span><span class="n">cancel</span><span class="p">(</span><span class="n">e1</span><span class="p">)</span>
+
+<span class="c"># Wait for the scheduler to finish running in the thread</span>
+<span class="n">t</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+
+<span class="k">print</span> <span class="s">&#39;FINAL:&#39;</span><span class="p">,</span> <span class="n">counter</span>
+</pre></div>
+</div>
+<p>Two events were scheduled, but the first was later canceled. Only the
+second event runs, so the counter variable is only incremented one
+time.</p>
+<div class="highlight-python"><pre>$ python sched_cancel.py
+
+START: 1287924882.5
+EVENT: 1287924885.5 E2
+NOW: 1
+FINAL: 1</pre>
+</div>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://docs.python.org/lib/module-sched.html">sched</a></dt>
+<dd>Standard library documentation for this module.</dd>
+<dt><a class="reference internal" href="../time/index.html#module-time" title="time: Functions for manipulating clock time"><tt class="xref py py-mod docutils literal"><span class="pre">time</span></tt></a></dt>
+<dd>The time module.</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../Queue/index.html" title="Queue – A thread-safe FIFO implementation"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../bisect/index.html" title="bisect – Maintain lists in sorted order"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../data_types.html" >Data Types</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright Doug Hellmann.
+      Last updated on Oct 24, 2010.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+
+    <br/><a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/88x31.png"/></a>
+    
+    </div>
+  </body>
+</html>

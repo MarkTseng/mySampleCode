@@ -1,0 +1,464 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Interpreter Settings &mdash; Python Module of the Week</title>
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.132',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="sys – System-specific Configuration" href="index.html" />
+    <link rel="next" title="Runtime Environment" href="runtime.html" />
+    <link rel="prev" title="sys – System-specific Configuration" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="runtime.html" title="Runtime Environment"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="sys – System-specific Configuration"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../runtime_services.html" >Python Runtime Services</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">sys &#8211; System-specific Configuration</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Interpreter Settings</a><ul>
+<li><a class="reference internal" href="#build-time-version-information">Build-time Version Information</a></li>
+<li><a class="reference internal" href="#install-location">Install Location</a></li>
+<li><a class="reference internal" href="#command-line-options">Command Line Options</a></li>
+<li><a class="reference internal" href="#unicode-defaults">Unicode Defaults</a></li>
+<li><a class="reference internal" href="#interactive-prompts">Interactive Prompts</a></li>
+<li><a class="reference internal" href="#display-hook">Display Hook</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">sys &#8211; System-specific Configuration</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="runtime.html"
+                        title="next chapter">Runtime Environment</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/sys/interpreter.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="interpreter-settings">
+<span id="sys-interpreter"></span><h1>Interpreter Settings<a class="headerlink" href="#interpreter-settings" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference internal" href="index.html#module-sys" title="sys: System-specific configuration"><tt class="xref py py-mod docutils literal"><span class="pre">sys</span></tt></a> contains attributes and functions for accessing
+compile-time or runtime configuration settings for the interpreter.</p>
+<div class="section" id="build-time-version-information">
+<span id="sys-build-time-info"></span><h2>Build-time Version Information<a class="headerlink" href="#build-time-version-information" title="Permalink to this headline">¶</a></h2>
+<p>The version used to build the C interpreter is available in a few
+forms.  <tt class="xref py py-const docutils literal"><span class="pre">sys.version</span></tt> is a human-readable string that usually
+includes the full version number as well as information about the
+build date, compiler, and platform.  <tt class="xref py py-const docutils literal"><span class="pre">sys.hexversion</span></tt> is easier
+to use for checking the interpreter version since it is a simple
+integer.  When formatted using <tt class="xref py py-func docutils literal"><span class="pre">hex()</span></tt>, it is clear that parts of
+<tt class="xref py py-const docutils literal"><span class="pre">sys.hexversion</span></tt> come from the version information also visible
+in the more readable <tt class="xref py py-const docutils literal"><span class="pre">sys.version_info</span></tt> (a 5-part tuple
+representing just the version number).</p>
+<p>More specific information about the source that went into the build
+can be found in the <tt class="xref py py-const docutils literal"><span class="pre">sys.subversion</span></tt> tuple, which includes the
+actual branch and subversion revision that was checked out and built.
+The separate C API version used by the current interpreter is saved in
+<tt class="xref py py-const docutils literal"><span class="pre">sys.api_version</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="k">print</span> <span class="s">&#39;Version info:&#39;</span>
+<span class="k">print</span>
+<span class="k">print</span> <span class="s">&#39;sys.version      =&#39;</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">version</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;sys.version_info =&#39;</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span>
+<span class="k">print</span> <span class="s">&#39;sys.hexversion   =&#39;</span><span class="p">,</span> <span class="nb">hex</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">hexversion</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;sys.subversion   =&#39;</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">subversion</span>
+<span class="k">print</span> <span class="s">&#39;sys.api_version  =&#39;</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">api_version</span>
+</pre></div>
+</div>
+<p>All of the values depend on the actual interpreter used to run the
+sample program, of course.</p>
+<div class="highlight-python"><pre>$ python2.6 sys_version_values.py
+
+Version info:
+
+sys.version      = '2.6.5 (r265:79359, Mar 24 2010, 01:32:55) \n[GCC 4
+.0.1 (Apple Inc. build 5493)]'
+sys.version_info = (2, 6, 5, 'final', 0)
+sys.hexversion   = 0x20605f0
+sys.subversion   = ('CPython', 'tags/r265', '79359')
+sys.api_version  = 1013
+
+$ python2.7 sys_version_values.py
+
+Version info:
+
+sys.version      = '2.7 (r27:82508, Jul  3 2010, 21:12:11) \n[GCC 4.0.
+1 (Apple Inc. build 5493)]'
+sys.version_info = sys.version_info(major=2, minor=7, micro=0, release
+level='final', serial=0)
+sys.hexversion   = 0x20700f0
+sys.subversion   = ('CPython', 'tags/r27', '82508')
+sys.api_version  = 1013</pre>
+</div>
+<p>The operating system platform used to build the interpreter is saved
+as <tt class="xref py py-const docutils literal"><span class="pre">sys.platform</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="k">print</span> <span class="s">&#39;This interpreter was built for:&#39;</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">platform</span>
+</pre></div>
+</div>
+<p>For most Unix systems, the value comes from combining the output of
+<tt class="docutils literal"><span class="pre">uname</span> <span class="pre">-s</span></tt> with the first part of the version in <tt class="docutils literal"><span class="pre">uname</span> <span class="pre">-r</span></tt>. For
+other operating systems there is a <a class="reference external" href="http://docs.python.org/library/sys.html#sys.platform">hard-coded table of values</a>.</p>
+<div class="highlight-python"><pre>$ python sys_platform.py
+
+This interpreter was built for: darwin</pre>
+</div>
+</div>
+<div class="section" id="install-location">
+<span id="sys-prefix"></span><h2>Install Location<a class="headerlink" href="#install-location" title="Permalink to this headline">¶</a></h2>
+<p>The path to the actual interpreter program is available in
+<tt class="xref py py-const docutils literal"><span class="pre">sys.executable</span></tt> on all systems for which having a path to the
+interpreter makes sense.  This can be useful for ensuring that the
+<em>correct</em> interpreter is being used, and also gives clues about paths
+that might be set based on the interpreter location.</p>
+<p><tt class="xref py py-const docutils literal"><span class="pre">sys.prefix</span></tt> refers to the parent directory of the interpreter
+installation.  It usually includes <tt class="docutils literal"><span class="pre">bin</span></tt> and <tt class="docutils literal"><span class="pre">lib</span></tt> directories for
+executables and installed modules, respectively.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="k">print</span> <span class="s">&#39;Interpreter executable:&#39;</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">executable</span>
+<span class="k">print</span> <span class="s">&#39;Installation prefix   :&#39;</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">prefix</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This example output was produced on a Mac running a framework build
+installed from python.org.  Other versions may produce different
+path information, even on a Mac.</p>
+</div>
+<div class="highlight-python"><pre>$ python sys_locations.py
+
+Interpreter executable: /Users/dhellmann/.virtualenvs/pymotw/bin/python
+Installation prefix   : /Users/dhellmann/.virtualenvs/pymotw/bin/..</pre>
+</div>
+</div>
+<div class="section" id="command-line-options">
+<h2>Command Line Options<a class="headerlink" href="#command-line-options" title="Permalink to this headline">¶</a></h2>
+<p>The CPython interpreter accepts several command line options to
+control its behavior.</p>
+<div class="highlight-python"><pre>$ python -h
+
+usage: python [option] ... [-c cmd | -m mod | file | -] [arg] ...
+Options and arguments (and corresponding environment variables):
+-B     : don't write .py[co] files on import; also PYTHONDONTWRITEBYTECODE=x
+-c cmd : program passed in as string (terminates option list)
+-d     : debug output from parser; also PYTHONDEBUG=x
+-E     : ignore PYTHON* environment variables (such as PYTHONPATH)
+-h     : print this help message and exit (also --help)
+-i     : inspect interactively after running script; forces a prompt even
+         if stdin does not appear to be a terminal; also PYTHONINSPECT=x
+-m mod : run library module as a script (terminates option list)
+-O     : optimize generated bytecode slightly; also PYTHONOPTIMIZE=x
+-OO    : remove doc-strings in addition to the -O optimizations
+-Q arg : division options: -Qold (default), -Qwarn, -Qwarnall, -Qnew
+-s     : don't add user site directory to sys.path; also PYTHONNOUSERSITE
+-S     : don't imply 'import site' on initialization
+-t     : issue warnings about inconsistent tab usage (-tt: issue errors)
+-u     : unbuffered binary stdout and stderr; also PYTHONUNBUFFERED=x
+         see man page for details on internal buffering relating to '-u'
+-v     : verbose (trace import statements); also PYTHONVERBOSE=x
+         can be supplied multiple times to increase verbosity
+-V     : print the Python version number and exit (also --version)
+-W arg : warning control; arg is action:message:category:module:lineno
+         also PYTHONWARNINGS=arg
+-x     : skip first line of source, allowing use of non-Unix forms of #!cmd
+-3     : warn about Python 3.x incompatibilities that 2to3 cannot trivially fix
+file   : program read from script file
+-      : program read from stdin (default; interactive mode if a tty)
+arg ...: arguments passed to program in sys.argv[1:]
+
+Other environment variables:
+PYTHONSTARTUP: file executed on interactive startup (no default)
+PYTHONPATH   : ':'-separated list of directories prefixed to the
+               default module search path.  The result is sys.path.
+PYTHONHOME   : alternate &lt;prefix&gt; directory (or &lt;prefix&gt;:&lt;exec_prefix&gt;).
+               The default module search path uses &lt;prefix&gt;/pythonX.X.
+PYTHONCASEOK : ignore case in 'import' statements (Windows).
+PYTHONIOENCODING: Encoding[:errors] used for stdin/stdout/stderr.</pre>
+</div>
+<p>Some of these are available for programs to check through
+<tt class="xref py py-const docutils literal"><span class="pre">sys.flags</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">flags</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;Debuging&#39;</span>
+<span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">flags</span><span class="o">.</span><span class="n">py3k_warning</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;Warning about Python 3.x incompatibilities&#39;</span>
+<span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">flags</span><span class="o">.</span><span class="n">division_warning</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;Warning about division change&#39;</span>
+<span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">flags</span><span class="o">.</span><span class="n">division_new</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;New division behavior enabled&#39;</span>
+<span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">flags</span><span class="o">.</span><span class="n">inspect</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;Will enter interactive mode after running&#39;</span>
+<span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">flags</span><span class="o">.</span><span class="n">optimize</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;Optimizing byte-code&#39;</span>
+<span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">flags</span><span class="o">.</span><span class="n">dont_write_bytecode</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;Not writing byte-code files&#39;</span>
+<span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">flags</span><span class="o">.</span><span class="n">no_site</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;Not importing &quot;site&quot;&#39;</span>
+<span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">flags</span><span class="o">.</span><span class="n">ignore_environment</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;Ignoring environment&#39;</span>
+<span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">flags</span><span class="o">.</span><span class="n">tabcheck</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;Checking for mixed tabs and spaces&#39;</span>
+<span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">flags</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;Verbose mode&#39;</span>
+<span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">flags</span><span class="o">.</span><span class="n">unicode</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;Unicode&#39;</span>
+</pre></div>
+</div>
+<p>Experiment with <tt class="docutils literal"><span class="pre">sys_flags.py</span></tt> to learn how the command line options
+map to the flags settings.</p>
+<div class="highlight-python"><pre>$ python -3 -S -E sys_flags.py
+
+Warning about Python 3.x incompatibilities
+Warning about division change
+Not importing "site"
+Ignoring environment
+Checking for mixed tabs and spaces</pre>
+</div>
+</div>
+<div class="section" id="unicode-defaults">
+<span id="sys-unicode-defaults"></span><h2>Unicode Defaults<a class="headerlink" href="#unicode-defaults" title="Permalink to this headline">¶</a></h2>
+<p>To get the name of the default Unicode encoding being used by the
+interpreter, use <tt class="xref py py-func docutils literal"><span class="pre">getdefaultencoding()</span></tt>.  The value is set during
+startup by <a class="reference internal" href="../site/index.html#module-site" title="site: Site-wide configuration"><tt class="xref py py-mod docutils literal"><span class="pre">site</span></tt></a>, which calls <tt class="xref py py-func docutils literal"><span class="pre">sys.setdefaultencoding()</span></tt> and
+then removes it from the namespace in <a class="reference internal" href="index.html#module-sys" title="sys: System-specific configuration"><tt class="xref py py-mod docutils literal"><span class="pre">sys</span></tt></a> to avoid having it
+called again.</p>
+<p>The internal encoding default and the filesystem encoding may be
+different for some operating systems, so there is a separate way to
+retrieve the filesystem setting.  <tt class="xref py py-func docutils literal"><span class="pre">getfilesystemencoding()</span></tt>
+returns an OS-specific (<em>not</em> filesystem-specific) value.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="k">print</span> <span class="s">&#39;Default encoding    :&#39;</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">getdefaultencoding</span><span class="p">()</span>
+<span class="k">print</span> <span class="s">&#39;Filesystem encoding :&#39;</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">getfilesystemencoding</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Rather than changing the global default encoding, most Unicode experts
+recommend making an application explicitly Unicode-aware. This
+provides two benefits: Different Unicode encodings for different data
+sources can be handled more cleanly, and the number of assumptions
+about encodings in the application code is reduced.</p>
+<div class="highlight-python"><pre>$ python sys_unicode.py
+
+Default encoding    : ascii
+Filesystem encoding : utf-8</pre>
+</div>
+</div>
+<div class="section" id="interactive-prompts">
+<h2>Interactive Prompts<a class="headerlink" href="#interactive-prompts" title="Permalink to this headline">¶</a></h2>
+<p>The interactive interpreter uses two separate prompts for indicating
+the default input level (<tt class="xref py py-data docutils literal"><span class="pre">ps1</span></tt>) and the &#8220;continuation&#8221; of a
+multi-line statement (<tt class="xref py py-data docutils literal"><span class="pre">ps2</span></tt>).  The values are only used by the
+interactive interpreter.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sys</span><span class="o">.</span><span class="n">ps1</span>
+<span class="go">&#39;&gt;&gt;&gt; &#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sys</span><span class="o">.</span><span class="n">ps2</span>
+<span class="go">&#39;... &#39;</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p>Either or both prompt can be changed to a different string</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">sys</span><span class="o">.</span><span class="n">ps1</span> <span class="o">=</span> <span class="s">&#39;::: &#39;</span>
+<span class="go">::: sys.ps2 = &#39;~~~ &#39;</span>
+<span class="go">::: for i in range(3):</span>
+<span class="go">~~~   print i</span>
+<span class="go">~~~</span>
+<span class="go">0</span>
+<span class="go">1</span>
+<span class="go">2</span>
+<span class="go">:::</span>
+</pre></div>
+</div>
+<p>Alternately, any object that can be converted to a string (via
+<tt class="docutils literal"><span class="pre">__str__</span></tt>) can be used for the prompt.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="k">class</span> <span class="nc">LineCounter</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="s">&#39;(</span><span class="si">%3d</span><span class="s">)&gt; &#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">count</span>
+</pre></div>
+</div>
+<p>The <tt class="xref py py-class docutils literal"><span class="pre">LineCounter</span></tt> keeps track of how many times it has been
+used, so the number in the prompt increases each time.</p>
+<div class="highlight-python"><pre>$ python
+Python 2.6.2 (r262:71600, Apr 16 2009, 09:17:39)
+[GCC 4.0.1 (Apple Computer, Inc. build 5250)] on darwin
+Type "help", "copyright", "credits" or "license" for more information.
+&gt;&gt;&gt; from PyMOTW.sys.sys_ps1 import LineCounter
+&gt;&gt;&gt; import sys
+&gt;&gt;&gt; sys.ps1 = LineCounter()
+(  1)&gt;
+(  2)&gt;
+(  3)&gt;</pre>
+</div>
+</div>
+<div class="section" id="display-hook">
+<h2>Display Hook<a class="headerlink" href="#display-hook" title="Permalink to this headline">¶</a></h2>
+<p><tt class="xref py py-data docutils literal"><span class="pre">sys.displayhook</span></tt> is invoked by the interactive interpreter each
+time the user enters an expression.  The <em>result</em> of the expression is
+passed as the only argument to the function.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="k">class</span> <span class="nc">ExpressionCounter</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">previous_value</span> <span class="o">=</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">print</span>
+        <span class="k">print</span> <span class="s">&#39;  Previous:&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">previous_value</span>
+        <span class="k">print</span> <span class="s">&#39;  New     :&#39;</span><span class="p">,</span> <span class="n">value</span>
+        <span class="k">print</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">previous_value</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">ps1</span> <span class="o">=</span> <span class="s">&#39;(</span><span class="si">%3d</span><span class="s">)&gt; &#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">count</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">previous_value</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">__displayhook__</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&#39;installing&#39;</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">displayhook</span> <span class="o">=</span> <span class="n">ExpressionCounter</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The default value (saved in <tt class="xref py py-data docutils literal"><span class="pre">sys.__displayhook__</span></tt>) prints the
+result to stdout and saves it in <tt class="xref py py-data docutils literal"><span class="pre">__builtin__._</span></tt> for easy
+reference later.</p>
+<div class="highlight-python"><pre>$ python
+Python 2.6.2 (r262:71600, Apr 16 2009, 09:17:39)
+[GCC 4.0.1 (Apple Computer, Inc. build 5250)] on darwin
+Type "help", "copyright", "credits" or "license" for more information.
+&gt;&gt;&gt; import PyMOTW.sys.sys_displayhook
+installing
+&gt;&gt;&gt; 1+2
+
+  Previous: &lt;PyMOTW.sys.sys_displayhook.ExpressionCounter object at 0x9c5f90&gt;
+  New     : 3
+
+3
+(  1)&gt; 'abc'
+
+  Previous: 3
+  New     : abc
+
+'abc'
+(  2)&gt; 'abc'
+
+  Previous: abc
+  New     : abc
+
+'abc'
+(  2)&gt; 'abc' * 3
+
+  Previous: abc
+  New     : abcabcabc
+
+'abcabcabc'
+(  3)&gt;</pre>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="runtime.html" title="Runtime Environment"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="sys – System-specific Configuration"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../runtime_services.html" >Python Runtime Services</a> &raquo;</li>
+          <li><a href="index.html" >sys &#8211; System-specific Configuration</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright Doug Hellmann.
+      Last updated on Oct 24, 2010.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+
+    <br/><a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/88x31.png"/></a>
+    
+    </div>
+  </body>
+</html>

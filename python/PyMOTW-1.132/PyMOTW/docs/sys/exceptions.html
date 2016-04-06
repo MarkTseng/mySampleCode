@@ -1,0 +1,259 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Exception Handling &mdash; Python Module of the Week</title>
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.132',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="sys – System-specific Configuration" href="index.html" />
+    <link rel="next" title="Tracing a Program As It Runs" href="tracing.html" />
+    <link rel="prev" title="Memory Management and Limits" href="limits.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="tracing.html" title="Tracing a Program As It Runs"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="limits.html" title="Memory Management and Limits"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../runtime_services.html" >Python Runtime Services</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">sys &#8211; System-specific Configuration</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Exception Handling</a><ul>
+<li><a class="reference internal" href="#unhandled-exceptions">Unhandled Exceptions</a></li>
+<li><a class="reference internal" href="#current-exception">Current Exception</a></li>
+<li><a class="reference internal" href="#previous-interactive-exception">Previous Interactive Exception</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="limits.html"
+                        title="previous chapter">Memory Management and Limits</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="tracing.html"
+                        title="next chapter">Tracing a Program As It Runs</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/sys/exceptions.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="exception-handling">
+<span id="sys-exceptions"></span><h1>Exception Handling<a class="headerlink" href="#exception-handling" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference internal" href="index.html#module-sys" title="sys: System-specific configuration"><tt class="xref py py-mod docutils literal"><span class="pre">sys</span></tt></a> includes features for trapping and working with exceptions.</p>
+<div class="section" id="unhandled-exceptions">
+<h2>Unhandled Exceptions<a class="headerlink" href="#unhandled-exceptions" title="Permalink to this headline">¶</a></h2>
+<p>Many applications are structured with a main loop that wraps execution
+in a global exception handler to trap errors not handled at a lower
+level.  Another way to achieve the same thing is by setting the
+<tt class="xref py py-data docutils literal"><span class="pre">sys.excepthook</span></tt> to a function that takes three arguments (error
+type, error value, and traceback) and let it deal with unhandled
+errors.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="k">def</span> <span class="nf">my_excepthook</span><span class="p">(</span><span class="nb">type</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">traceback</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&#39;Unhandled error:&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="p">,</span> <span class="n">value</span>
+
+<span class="n">sys</span><span class="o">.</span><span class="n">excepthook</span> <span class="o">=</span> <span class="n">my_excepthook</span>
+
+<span class="k">print</span> <span class="s">&#39;Before exception&#39;</span>
+
+<span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s">&#39;This is the error message&#39;</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&#39;After exception&#39;</span>
+</pre></div>
+</div>
+<p>Since there is no <strong class="command">try:except</strong> block around the line where
+the exception is raised the following <strong class="command">print</strong> statement is
+not run, even though the except hook is set.</p>
+<div class="highlight-python"><pre>$ python sys_excepthook.py
+
+Before exception
+Unhandled error: &lt;type 'exceptions.RuntimeError'&gt; This is the error message</pre>
+</div>
+</div>
+<div class="section" id="current-exception">
+<h2>Current Exception<a class="headerlink" href="#current-exception" title="Permalink to this headline">¶</a></h2>
+<p>There are times when an explicit exception handler is preferred,
+either for code clarity or to avoid conflicts with libraries that try
+to install their own excepthook.  In these cases you may want to write
+a common handler function, but avoid passing the exception object to
+it explicitly.  You can get the current exception for a thread by
+calling <tt class="xref py py-func docutils literal"><span class="pre">exc_info()</span></tt>.</p>
+<p>The return value of <tt class="xref py py-func docutils literal"><span class="pre">exc_info()</span></tt> is a three member tuple
+containing the exception class, an exception instance, and a
+traceback.  Using <tt class="xref py py-func docutils literal"><span class="pre">exc_info()</span></tt> is preferred over the old form
+(with <tt class="xref py py-const docutils literal"><span class="pre">exc_type</span></tt>, <tt class="xref py py-const docutils literal"><span class="pre">exc_value</span></tt>, and
+<tt class="xref py py-const docutils literal"><span class="pre">exc_traceback</span></tt>) because it is thread-safe.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">threading</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="k">def</span> <span class="nf">do_something_with_exception</span><span class="p">():</span>
+    <span class="n">exc_type</span><span class="p">,</span> <span class="n">exc_value</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">exc_info</span><span class="p">()[:</span><span class="mi">2</span><span class="p">]</span>
+    <span class="k">print</span> <span class="s">&#39;Handling </span><span class="si">%s</span><span class="s"> exception with message &quot;</span><span class="si">%s</span><span class="s">&quot; in </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> \
+        <span class="p">(</span><span class="n">exc_type</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="n">exc_value</span><span class="p">,</span> <span class="n">threading</span><span class="o">.</span><span class="n">current_thread</span><span class="p">()</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">cause_exception</span><span class="p">(</span><span class="n">delay</span><span class="p">):</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">delay</span><span class="p">)</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s">&#39;This is the error message&#39;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">thread_target</span><span class="p">(</span><span class="n">delay</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">cause_exception</span><span class="p">(</span><span class="n">delay</span><span class="p">)</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="n">do_something_with_exception</span><span class="p">()</span>
+
+<span class="n">threads</span> <span class="o">=</span> <span class="p">[</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">thread_target</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="mf">0.3</span><span class="p">,)),</span>
+            <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">thread_target</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,)),</span>
+            <span class="p">]</span>
+<span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">threads</span><span class="p">:</span>
+    <span class="n">t</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">threads</span><span class="p">:</span>
+    <span class="n">t</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This example avoids introducing a circular reference between the
+traceback object and a local variable in the current frame by ignoring
+that part of the return value from <tt class="xref py py-func docutils literal"><span class="pre">exc_info()</span></tt>.  If the traceback
+is needed (e.g., so it can be logged), explicitly delete the local
+variable (using <strong class="command">del</strong>) to avoid cycles.</p>
+<div class="highlight-python"><pre>$ python sys_exc_info.py
+
+Handling RuntimeError exception with message "This is the error message" in Thread-2
+Handling RuntimeError exception with message "This is the error message" in Thread-1</pre>
+</div>
+</div>
+<div class="section" id="previous-interactive-exception">
+<h2>Previous Interactive Exception<a class="headerlink" href="#previous-interactive-exception" title="Permalink to this headline">¶</a></h2>
+<p>In the interactive interpreter, there is only one thread of
+interaction.  Unhandled exceptions in that thread are saved to three
+variables in <a class="reference internal" href="index.html#module-sys" title="sys: System-specific configuration"><tt class="xref py py-mod docutils literal"><span class="pre">sys</span></tt></a> (<tt class="xref py py-const docutils literal"><span class="pre">last_type</span></tt>, <tt class="xref py py-const docutils literal"><span class="pre">last_value</span></tt>, and
+<tt class="xref py py-const docutils literal"><span class="pre">last_traceback</span></tt>) to make it easy to retrieve them for
+debugging.  Using the post-mortem debugger in <a class="reference internal" href="../pdb/index.html#module-pdb" title="pdb: Interactive Debugger"><tt class="xref py py-mod docutils literal"><span class="pre">pdb</span></tt></a> avoids any
+need to use the values directly.</p>
+<div class="highlight-python"><pre>$ python
+Python 2.6.2 (r262:71600, Apr 16 2009, 09:17:39)
+[GCC 4.0.1 (Apple Computer, Inc. build 5250)] on darwin
+Type "help", "copyright", "credits" or "license" for more information.
+&gt;&gt;&gt; def cause_exception():
+...   raise RuntimeError('This is the error message')
+...
+&gt;&gt;&gt; cause_exception()
+Traceback (most recent call last):
+  File "&lt;stdin&gt;", line 1, in &lt;module&gt;
+  File "&lt;stdin&gt;", line 2, in cause_exception
+RuntimeError: This is the error message
+&gt;&gt;&gt; import pdb
+&gt;&gt;&gt; pdb.pm()
+&gt; &lt;stdin&gt;(2)cause_exception()
+(Pdb) where
+  &lt;stdin&gt;(1)&lt;module&gt;()
+&gt; &lt;stdin&gt;(2)cause_exception()
+(Pdb)</pre>
+</div>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference internal" href="../exceptions/index.html#module-exceptions" title="exceptions: Built-in error classes"><tt class="xref py py-mod docutils literal"><span class="pre">exceptions</span></tt></a></dt>
+<dd>Built-in errors</dd>
+<dt><a class="reference internal" href="../pdb/index.html#module-pdb" title="pdb: Interactive Debugger"><tt class="xref py py-mod docutils literal"><span class="pre">pdb</span></tt></a></dt>
+<dd>Python debugger</dd>
+<dt><a class="reference internal" href="../traceback/index.html#module-traceback" title="traceback: Extract, format, and print exceptions and stack traces."><tt class="xref py py-mod docutils literal"><span class="pre">traceback</span></tt></a></dt>
+<dd>Module for working with tracebacks.</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="tracing.html" title="Tracing a Program As It Runs"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="limits.html" title="Memory Management and Limits"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../runtime_services.html" >Python Runtime Services</a> &raquo;</li>
+          <li><a href="index.html" >sys &#8211; System-specific Configuration</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright Doug Hellmann.
+      Last updated on Oct 24, 2010.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+
+    <br/><a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/88x31.png"/></a>
+    
+    </div>
+  </body>
+</html>

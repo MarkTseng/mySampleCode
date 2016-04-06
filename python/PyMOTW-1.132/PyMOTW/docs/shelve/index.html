@@ -1,0 +1,287 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>shelve – Persistent storage of arbitrary Python objects &mdash; Python Module of the Week</title>
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.132',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="Data Persistence" href="../persistence.html" />
+    <link rel="next" title="whichdb – Identify DBM-style database formats" href="../whichdb/index.html" />
+    <link rel="prev" title="pickle and cPickle – Python object serialization" href="../pickle/index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../whichdb/index.html" title="whichdb – Identify DBM-style database formats"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../pickle/index.html" title="pickle and cPickle – Python object serialization"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../persistence.html" accesskey="U">Data Persistence</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">shelve &#8211; Persistent storage of arbitrary Python objects</a><ul>
+<li><a class="reference internal" href="#creating-a-new-shelf">Creating a new Shelf</a></li>
+<li><a class="reference internal" href="#write-back">Write-back</a></li>
+<li><a class="reference internal" href="#specific-shelf-types">Specific Shelf Types</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../pickle/index.html"
+                        title="previous chapter">pickle and cPickle &#8211; Python object serialization</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../whichdb/index.html"
+                        title="next chapter">whichdb &#8211; Identify DBM-style database formats</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/shelve/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-shelve">
+<span id="shelve-persistent-storage-of-arbitrary-python-objects"></span><h1>shelve &#8211; Persistent storage of arbitrary Python objects<a class="headerlink" href="#module-shelve" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Purpose:</th><td class="field-body">The shelve module implements persistent storage for arbitrary Python objects which can be pickled, using a dictionary-like API.</td>
+</tr>
+</tbody>
+</table>
+<p>The <a class="reference internal" href="#module-shelve" title="shelve: Persistent storage of arbitrary Python objects"><tt class="xref py py-mod docutils literal"><span class="pre">shelve</span></tt></a> module can be used as a simple persistent storage
+option for Python objects when a relational database is overkill. The
+shelf is accessed by keys, just as with a dictionary. The values are
+pickled and written to a database created and managed by
+<a class="reference internal" href="../anydbm/index.html#module-anydbm" title="anydbm: anydbm provides a generic dictionary-like interface to DBM-style, string-keyed databases"><tt class="xref py py-mod docutils literal"><span class="pre">anydbm</span></tt></a>.</p>
+<div class="section" id="creating-a-new-shelf">
+<h2>Creating a new Shelf<a class="headerlink" href="#creating-a-new-shelf" title="Permalink to this headline">¶</a></h2>
+<p>The simplest way to use shelve is via the <tt class="xref py py-class docutils literal"><span class="pre">DbfilenameShelf</span></tt>
+class. It uses anydbm to store the data. You can use the class
+directly, or simply call <tt class="xref py py-func docutils literal"><span class="pre">shelve.open()</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">shelve</span>
+
+<span class="n">s</span> <span class="o">=</span> <span class="n">shelve</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&#39;test_shelf.db&#39;</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">s</span><span class="p">[</span><span class="s">&#39;key1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span> <span class="s">&#39;int&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s">&#39;float&#39;</span><span class="p">:</span><span class="mf">9.5</span><span class="p">,</span> <span class="s">&#39;string&#39;</span><span class="p">:</span><span class="s">&#39;Sample data&#39;</span> <span class="p">}</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">s</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>To access the data again, open the shelf and use it like a dictionary:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">shelve</span>
+
+<span class="n">s</span> <span class="o">=</span> <span class="n">shelve</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&#39;test_shelf.db&#39;</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">existing</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="s">&#39;key1&#39;</span><span class="p">]</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">s</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="k">print</span> <span class="n">existing</span>
+</pre></div>
+</div>
+<p>If you run both sample scripts, you should see:</p>
+<div class="highlight-python"><pre>$ python shelve_create.py
+$ python shelve_existing.py
+
+{'int': 10, 'float': 9.5, 'string': 'Sample data'}</pre>
+</div>
+<p>The <a class="reference internal" href="../dbm/index.html#module-dbm" title="dbm: Simple database interface"><tt class="xref py py-mod docutils literal"><span class="pre">dbm</span></tt></a> module does not support multiple applications writing to the same
+database at the same time. If you know your client will not be modifying the
+shelf, you can tell shelve to open the database read-only.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">shelve</span>
+
+<span class="n">s</span> <span class="o">=</span> <span class="n">shelve</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&#39;test_shelf.db&#39;</span><span class="p">,</span> <span class="n">flag</span><span class="o">=</span><span class="s">&#39;r&#39;</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">existing</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="s">&#39;key1&#39;</span><span class="p">]</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">s</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="k">print</span> <span class="n">existing</span>
+</pre></div>
+</div>
+<p>If your program tries to modify the database while it is opened read-only, an
+access error exception is generated. The exception type depends on the
+database module selected by anydbm when the database was created.</p>
+</div>
+<div class="section" id="write-back">
+<h2>Write-back<a class="headerlink" href="#write-back" title="Permalink to this headline">¶</a></h2>
+<p>Shelves do not track modifications to volatile objects, by default. That means
+if you change the contents of an item stored in the shelf, you must update the
+shelf explicitly by storing the item again.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">shelve</span>
+
+<span class="n">s</span> <span class="o">=</span> <span class="n">shelve</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&#39;test_shelf.db&#39;</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">s</span><span class="p">[</span><span class="s">&#39;key1&#39;</span><span class="p">]</span>
+    <span class="n">s</span><span class="p">[</span><span class="s">&#39;key1&#39;</span><span class="p">][</span><span class="s">&#39;new_value&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;this was not here before&#39;</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">s</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="n">s</span> <span class="o">=</span> <span class="n">shelve</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&#39;test_shelf.db&#39;</span><span class="p">,</span> <span class="n">writeback</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">s</span><span class="p">[</span><span class="s">&#39;key1&#39;</span><span class="p">]</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">s</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>In this example, the dictionary at &#8216;key1&#8217; is not stored again, so when the
+shelf is re-opened, the changes have not been preserved.</p>
+<div class="highlight-python"><pre>$ python shelve_create.py
+$ python shelve_withoutwriteback.py
+
+{'int': 10, 'float': 9.5, 'string': 'Sample data'}
+{'int': 10, 'float': 9.5, 'string': 'Sample data'}</pre>
+</div>
+<p>To automatically catch changes to volatile objects stored in the shelf, open
+the shelf with writeback enabled. The writeback flag causes the shelf to
+remember all of the objects retrieved from the database using an in-memory
+cache. Each cache object is also written back to the database when the shelf
+is closed.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">shelve</span>
+
+<span class="n">s</span> <span class="o">=</span> <span class="n">shelve</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&#39;test_shelf.db&#39;</span><span class="p">,</span> <span class="n">writeback</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">s</span><span class="p">[</span><span class="s">&#39;key1&#39;</span><span class="p">]</span>
+    <span class="n">s</span><span class="p">[</span><span class="s">&#39;key1&#39;</span><span class="p">][</span><span class="s">&#39;new_value&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;this was not here before&#39;</span>
+    <span class="k">print</span> <span class="n">s</span><span class="p">[</span><span class="s">&#39;key1&#39;</span><span class="p">]</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">s</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="n">s</span> <span class="o">=</span> <span class="n">shelve</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&#39;test_shelf.db&#39;</span><span class="p">,</span> <span class="n">writeback</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">s</span><span class="p">[</span><span class="s">&#39;key1&#39;</span><span class="p">]</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">s</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Although it reduces the chance of programmer error, and can make object
+persistence more transparent, using writeback mode may not be desirable in
+every situation. The cache consumes extra memory while the shelf is open, and
+pausing to write every cached object back to the database when it is closed
+can take extra time. Since there is no way to tell if the cached objects have
+been modified, they are all written back. If your application reads data more
+than it writes, writeback will add more overhead than you might want.</p>
+<div class="highlight-python"><pre>$ python shelve_create.py
+$ python shelve_writeback.py
+
+{'int': 10, 'float': 9.5, 'string': 'Sample data'}
+{'int': 10, 'new_value': 'this was not here before', 'float': 9.5, 'string': 'Sample data'}
+{'int': 10, 'new_value': 'this was not here before', 'float': 9.5, 'string': 'Sample data'}</pre>
+</div>
+</div>
+<div class="section" id="specific-shelf-types">
+<span id="shelve-shelf-types"></span><h2>Specific Shelf Types<a class="headerlink" href="#specific-shelf-types" title="Permalink to this headline">¶</a></h2>
+<p>The examples above all use the default shelf implementation. Using
+<tt class="xref py py-func docutils literal"><span class="pre">shelve.open()</span></tt> instead of one of the shelf implementations
+directly is a common usage pattern, especially if you do not care what
+type of database is used to store the data. There are times, however,
+when you do care. In those situations, you may want to use
+<tt class="xref py py-class docutils literal"><span class="pre">DbfilenameShelf</span></tt> or <tt class="xref py py-class docutils literal"><span class="pre">BsdDbShelf</span></tt> directly, or even
+subclass <tt class="xref py py-class docutils literal"><span class="pre">Shelf</span></tt> for a custom solution.</p>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://docs.python.org/lib/module-shelve.html">shelve</a></dt>
+<dd>Standard library documentation for this module.</dd>
+<dt><a class="reference internal" href="../anydbm/index.html#module-anydbm" title="anydbm: anydbm provides a generic dictionary-like interface to DBM-style, string-keyed databases"><tt class="xref py py-mod docutils literal"><span class="pre">anydbm</span></tt></a></dt>
+<dd>The anydbm module.</dd>
+<dt><a class="reference external" href="http://www.doughellmann.com/projects/feedcache/">feedcache</a></dt>
+<dd>The feedcache module uses shelve as a default storage option.</dd>
+<dt><a class="reference external" href="http://pypi.python.org/pypi/shove/">shove</a></dt>
+<dd>Shove implements a similar API with more backend formats.</dd>
+<dt><a class="reference internal" href="../articles/data_persistence.html#article-data-persistence"><em>Data Persistence and Exchange</em></a></dt>
+<dd>Other mechanisms for storing data using standard library modules.</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../whichdb/index.html" title="whichdb – Identify DBM-style database formats"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../pickle/index.html" title="pickle and cPickle – Python object serialization"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../persistence.html" >Data Persistence</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright Doug Hellmann.
+      Last updated on Oct 24, 2010.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+
+    <br/><a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/88x31.png"/></a>
+    
+    </div>
+  </body>
+</html>

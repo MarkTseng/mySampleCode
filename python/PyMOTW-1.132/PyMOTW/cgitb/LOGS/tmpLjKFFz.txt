@@ -1,0 +1,69 @@
+<type 'exceptions.ZeroDivisionError'>
+Python 2.7: /Users/dhellmann/.virtualenvs/pymotw/bin/python
+Sun Oct 24 08:53:19 2010
+
+A problem occurred in a Python script.  Here is the sequence of
+function calls leading up to the error, in the order they occurred.
+
+ /Users/dhellmann/Documents/PyMOTW/src/PyMOTW/cgitb/cgitb_log_exception.py in <module>()
+   21 def func1(a, b):
+   22     c = b - 5
+   23     return func2(a, c)
+   24 
+   25 func1(1, 5)
+func1 = <function func1>
+
+ /Users/dhellmann/Documents/PyMOTW/src/PyMOTW/cgitb/cgitb_log_exception.py in func1(a=1, b=5)
+   21 def func1(a, b):
+   22     c = b - 5
+   23     return func2(a, c)
+   24 
+   25 func1(1, 5)
+global func2 = <function func2>
+a = 1
+c = 0
+
+ /Users/dhellmann/Documents/PyMOTW/src/PyMOTW/cgitb/cgitb_log_exception.py in func2(a=1, divisor=0)
+   17 
+   18 def func2(a, divisor):
+   19     return a / divisor
+   20 
+   21 def func1(a, b):
+a = 1
+divisor = 0
+<type 'exceptions.ZeroDivisionError'>: integer division or modulo by zero
+    __class__ = <type 'exceptions.ZeroDivisionError'>
+    __delattr__ = <method-wrapper '__delattr__' of exceptions.ZeroDivisionError object>
+    __dict__ = {}
+    __doc__ = 'Second argument to a division or modulo operation was zero.'
+    __format__ = <built-in method __format__ of exceptions.ZeroDivisionError object>
+    __getattribute__ = <method-wrapper '__getattribute__' of exceptions.ZeroDivisionError object>
+    __getitem__ = <method-wrapper '__getitem__' of exceptions.ZeroDivisionError object>
+    __getslice__ = <method-wrapper '__getslice__' of exceptions.ZeroDivisionError object>
+    __hash__ = <method-wrapper '__hash__' of exceptions.ZeroDivisionError object>
+    __init__ = <method-wrapper '__init__' of exceptions.ZeroDivisionError object>
+    __new__ = <built-in method __new__ of type object>
+    __reduce__ = <built-in method __reduce__ of exceptions.ZeroDivisionError object>
+    __reduce_ex__ = <built-in method __reduce_ex__ of exceptions.ZeroDivisionError object>
+    __repr__ = <method-wrapper '__repr__' of exceptions.ZeroDivisionError object>
+    __setattr__ = <method-wrapper '__setattr__' of exceptions.ZeroDivisionError object>
+    __setstate__ = <built-in method __setstate__ of exceptions.ZeroDivisionError object>
+    __sizeof__ = <built-in method __sizeof__ of exceptions.ZeroDivisionError object>
+    __str__ = <method-wrapper '__str__' of exceptions.ZeroDivisionError object>
+    __subclasshook__ = <built-in method __subclasshook__ of type object>
+    __unicode__ = <built-in method __unicode__ of exceptions.ZeroDivisionError object>
+    args = ('integer division or modulo by zero',)
+    message = 'integer division or modulo by zero'
+
+The above is a description of an error in a Python program.  Here is
+the original traceback:
+
+Traceback (most recent call last):
+  File "cgitb_log_exception.py", line 25, in <module>
+    func1(1, 5)
+  File "cgitb_log_exception.py", line 23, in func1
+    return func2(a, c)
+  File "cgitb_log_exception.py", line 19, in func2
+    return a / divisor
+ZeroDivisionError: integer division or modulo by zero
+

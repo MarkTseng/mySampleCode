@@ -1,0 +1,215 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Sending Binary Data &mdash; Python Module of the Week</title>
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.132',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="socket – Network Communication" href="index.html" />
+    <link rel="next" title="Non-blocking Communication and Timeouts" href="nonblocking.html" />
+    <link rel="prev" title="Multicast" href="multicast.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="nonblocking.html" title="Non-blocking Communication and Timeouts"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="multicast.html" title="Multicast"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../internet_protocols.html" >Internet Protocols and Support</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">socket &#8211; Network Communication</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="multicast.html"
+                        title="previous chapter">Multicast</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="nonblocking.html"
+                        title="next chapter">Non-blocking Communication and Timeouts</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/socket/binary.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="sending-binary-data">
+<h1>Sending Binary Data<a class="headerlink" href="#sending-binary-data" title="Permalink to this headline">¶</a></h1>
+<p>Sockets transmit streams of bytes.  Those bytes can contain text
+messages, as in the previous examples, or they can be made up of
+binary data that has been encoded for transmission.  To prepare binary
+data values for transmission, pack them into a buffer with
+<a class="reference internal" href="../struct/index.html#module-struct" title="struct: Convert between strings and binary data."><tt class="xref py py-mod docutils literal"><span class="pre">struct</span></tt></a>.</p>
+<p>This client program encodes an integer, a string of two characters,
+and a floating point value into a sequence of bytes that can be passed
+to the socket for transmission.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">binascii</span>
+<span class="kn">import</span> <span class="nn">socket</span>
+<span class="kn">import</span> <span class="nn">struct</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="c"># Create a TCP/IP socket</span>
+<span class="n">sock</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_STREAM</span><span class="p">)</span>
+<span class="n">server_address</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">10000</span><span class="p">)</span>
+<span class="n">sock</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">server_address</span><span class="p">)</span>
+
+<span class="n">values</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">&#39;ab&#39;</span><span class="p">,</span> <span class="mf">2.7</span><span class="p">)</span>
+<span class="n">packer</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">Struct</span><span class="p">(</span><span class="s">&#39;I 2s f&#39;</span><span class="p">)</span>
+<span class="n">packed_data</span> <span class="o">=</span> <span class="n">packer</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="o">*</span><span class="n">values</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    
+    <span class="c"># Send data</span>
+    <span class="k">print</span> <span class="o">&gt;&gt;</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&#39;sending &quot;</span><span class="si">%s</span><span class="s">&quot;&#39;</span> <span class="o">%</span> <span class="n">binascii</span><span class="o">.</span><span class="n">hexlify</span><span class="p">(</span><span class="n">packed_data</span><span class="p">),</span> <span class="n">values</span>
+    <span class="n">sock</span><span class="o">.</span><span class="n">sendall</span><span class="p">(</span><span class="n">packed_data</span><span class="p">)</span>
+
+<span class="k">finally</span><span class="p">:</span>
+    <span class="k">print</span> <span class="o">&gt;&gt;</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&#39;closing socket&#39;</span>
+    <span class="n">sock</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The server program uses the same <tt class="xref py py-class docutils literal"><span class="pre">Struct</span></tt> specifier to unpack
+the bytes it receives.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">binascii</span>
+<span class="kn">import</span> <span class="nn">socket</span>
+<span class="kn">import</span> <span class="nn">struct</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="c"># Create a TCP/IP socket</span>
+<span class="n">sock</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_STREAM</span><span class="p">)</span>
+<span class="n">server_address</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">10000</span><span class="p">)</span>
+<span class="n">sock</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">server_address</span><span class="p">)</span>
+<span class="n">sock</span><span class="o">.</span><span class="n">listen</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">unpacker</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">Struct</span><span class="p">(</span><span class="s">&#39;I 2s f&#39;</span><span class="p">)</span>
+
+<span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+    <span class="k">print</span> <span class="o">&gt;&gt;</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">waiting for a connection&#39;</span>
+    <span class="n">connection</span><span class="p">,</span> <span class="n">client_address</span> <span class="o">=</span> <span class="n">sock</span><span class="o">.</span><span class="n">accept</span><span class="p">()</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="n">unpacker</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+        <span class="k">print</span> <span class="o">&gt;&gt;</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&#39;received &quot;</span><span class="si">%s</span><span class="s">&quot;&#39;</span> <span class="o">%</span> <span class="n">binascii</span><span class="o">.</span><span class="n">hexlify</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+        <span class="n">unpacked_data</span> <span class="o">=</span> <span class="n">unpacker</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">print</span> <span class="o">&gt;&gt;</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&#39;unpacked:&#39;</span><span class="p">,</span> <span class="n">unpacked_data</span>
+        
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="n">connection</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Running the client produces:</p>
+<div class="highlight-python"><pre>$ python ./socket_binary_client.py
+
+sending "0100000061620000cdcc2c40" (1, 'ab', 2.7)
+closing socket</pre>
+</div>
+<p>And the server shows the values it receives:</p>
+<div class="highlight-python"><pre>$ python ./socket_binary_server.py
+
+waiting for a connection
+received "0100000061620000cdcc2c40"
+unpacked: (1, 'ab', 2.700000047683716)
+
+waiting for a connection</pre>
+</div>
+<p>The floating point value loses some precision as it is packed and
+unpacked, but otherwise the data is transmitted as expected.  One
+thing to keep in mind is that depending on the value of the integer,
+it may be more efficient to convert it to text and then transmit,
+instead of using <a class="reference internal" href="../struct/index.html#module-struct" title="struct: Convert between strings and binary data."><tt class="xref py py-mod docutils literal"><span class="pre">struct</span></tt></a>.  The integer <tt class="docutils literal"><span class="pre">1</span></tt> uses one byte when
+represented as a string, but four when packed into the structure.</p>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference internal" href="../struct/index.html#module-struct" title="struct: Convert between strings and binary data."><tt class="xref py py-mod docutils literal"><span class="pre">struct</span></tt></a></dt>
+<dd>Converting between strings and other data types.</dd>
+</dl>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="nonblocking.html" title="Non-blocking Communication and Timeouts"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="multicast.html" title="Multicast"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../internet_protocols.html" >Internet Protocols and Support</a> &raquo;</li>
+          <li><a href="index.html" >socket &#8211; Network Communication</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright Doug Hellmann.
+      Last updated on Oct 24, 2010.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+
+    <br/><a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/88x31.png"/></a>
+    
+    </div>
+  </body>
+</html>

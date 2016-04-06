@@ -1,0 +1,322 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>imp – Interface to module import mechanism. &mdash; Python Module of the Week</title>
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.132',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="Importing Modules" href="../importing.html" />
+    <link rel="next" title="pkgutil – Package Utilities" href="../pkgutil/index.html" />
+    <link rel="prev" title="Importing Modules" href="../importing.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../pkgutil/index.html" title="pkgutil – Package Utilities"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../importing.html" title="Importing Modules"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../importing.html" accesskey="U">Importing Modules</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">imp &#8211; Interface to module import mechanism.</a><ul>
+<li><a class="reference internal" href="#example-package">Example Package</a></li>
+<li><a class="reference internal" href="#module-types">Module Types</a></li>
+<li><a class="reference internal" href="#finding-modules">Finding Modules</a></li>
+<li><a class="reference internal" href="#loading-modules">Loading Modules</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../importing.html"
+                        title="previous chapter">Importing Modules</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../pkgutil/index.html"
+                        title="next chapter">pkgutil &#8211; Package Utilities</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/imp/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-imp">
+<span id="imp-interface-to-module-import-mechanism"></span><h1>imp &#8211; Interface to module import mechanism.<a class="headerlink" href="#module-imp" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Purpose:</th><td class="field-body">The imp module exposes the implementation of Python&#8217;s import statement.</td>
+</tr>
+<tr class="field"><th class="field-name">Python Version:</th><td class="field-body">At least 2.2.1</td>
+</tr>
+</tbody>
+</table>
+<p>The imp module includes functions that expose part of the underlying
+implementation of Python&#8217;s import mechanism for loading code in packages and
+modules. It is one access point to importing modules dynamically, and useful
+in some cases where you don&#8217;t know the name of the module you need to import
+when you write your code (e.g., for plugins or extensions to an application).</p>
+<div class="section" id="example-package">
+<h2>Example Package<a class="headerlink" href="#example-package" title="Permalink to this headline">¶</a></h2>
+<p>The examples below use a package called &#8220;example&#8221; with <tt class="docutils literal"><span class="pre">__init__.py</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">print</span> <span class="s">&#39;Importing example package&#39;</span>
+</pre></div>
+</div>
+<p>and module called submodule containing:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">print</span> <span class="s">&#39;Importing submodule&#39;</span>
+</pre></div>
+</div>
+<p>Watch for the text from the print statements in the sample output when
+the package or module are imported.</p>
+</div>
+<div class="section" id="module-types">
+<h2>Module Types<a class="headerlink" href="#module-types" title="Permalink to this headline">¶</a></h2>
+<p>Python supports several styles of modules. Each requires its own handling when
+opening the module and adding it to the namespace. Some of the supported types
+and those parameters can be listed by the <tt class="docutils literal"><span class="pre">get_suffixes()</span></tt> function.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">imp</span>
+
+<span class="n">module_types</span> <span class="o">=</span> <span class="p">{</span> <span class="n">imp</span><span class="o">.</span><span class="n">PY_SOURCE</span><span class="p">:</span>   <span class="s">&#39;source&#39;</span><span class="p">,</span>
+                 <span class="n">imp</span><span class="o">.</span><span class="n">PY_COMPILED</span><span class="p">:</span> <span class="s">&#39;compiled&#39;</span><span class="p">,</span>
+                 <span class="n">imp</span><span class="o">.</span><span class="n">C_EXTENSION</span><span class="p">:</span> <span class="s">&#39;extension&#39;</span><span class="p">,</span>
+                 <span class="n">imp</span><span class="o">.</span><span class="n">PY_RESOURCE</span><span class="p">:</span> <span class="s">&#39;resource&#39;</span><span class="p">,</span>
+                 <span class="n">imp</span><span class="o">.</span><span class="n">PKG_DIRECTORY</span><span class="p">:</span> <span class="s">&#39;package&#39;</span><span class="p">,</span>
+                 <span class="p">}</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">fmt</span> <span class="o">=</span> <span class="s">&#39;</span><span class="si">%10s</span><span class="s"> </span><span class="si">%10s</span><span class="s"> </span><span class="si">%10s</span><span class="s">&#39;</span>
+    <span class="k">print</span> <span class="n">fmt</span> <span class="o">%</span> <span class="p">(</span><span class="s">&#39;Extension&#39;</span><span class="p">,</span> <span class="s">&#39;Mode&#39;</span><span class="p">,</span> <span class="s">&#39;Type&#39;</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;-&#39;</span> <span class="o">*</span> <span class="mi">32</span>
+    <span class="k">for</span> <span class="n">extension</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">module_type</span> <span class="ow">in</span> <span class="n">imp</span><span class="o">.</span><span class="n">get_suffixes</span><span class="p">():</span>
+        <span class="k">print</span> <span class="n">fmt</span> <span class="o">%</span> <span class="p">(</span><span class="n">extension</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">module_types</span><span class="p">[</span><span class="n">module_type</span><span class="p">])</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><tt class="docutils literal"><span class="pre">get_suffixes()</span></tt> returns a sequence of tuples containing the file
+extension, mode to use for opening the file, and a type code from a
+constant defined in the module. This table is incomplete, because some
+of the importable module or package types do not correspond to single
+files.</p>
+<div class="highlight-python"><pre>$ python imp_get_suffixes.py
+
+ Extension       Mode       Type
+--------------------------------
+       .so         rb  extension
+ module.so         rb  extension
+       .py          U     source
+      .pyc         rb   compiled</pre>
+</div>
+</div>
+<div class="section" id="finding-modules">
+<h2>Finding Modules<a class="headerlink" href="#finding-modules" title="Permalink to this headline">¶</a></h2>
+<p>The first step to loading a module is finding it. <tt class="docutils literal"><span class="pre">find_module()</span></tt>
+scans the import search path looking for a package or module with the
+given name. It returns an open file handle (if appropriate for the
+type), filename where the module was found, and &#8220;description&#8221; (a tuple
+such as those returned by <tt class="docutils literal"><span class="pre">get_suffixes()</span></tt>).</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">imp</span>
+<span class="kn">from</span> <span class="nn">imp_get_suffixes</span> <span class="kn">import</span> <span class="n">module_types</span>
+
+<span class="k">print</span> <span class="s">&#39;Package:&#39;</span>
+<span class="n">f</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">description</span> <span class="o">=</span> <span class="n">imp</span><span class="o">.</span><span class="n">find_module</span><span class="p">(</span><span class="s">&#39;example&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">module_types</span><span class="p">[</span><span class="n">description</span><span class="p">[</span><span class="mi">2</span><span class="p">]],</span> <span class="n">filename</span>
+<span class="k">print</span>
+
+<span class="k">print</span> <span class="s">&#39;Sub-module:&#39;</span>
+<span class="n">f</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">description</span> <span class="o">=</span> <span class="n">imp</span><span class="o">.</span><span class="n">find_module</span><span class="p">(</span><span class="s">&#39;submodule&#39;</span><span class="p">,</span> <span class="p">[</span><span class="n">filename</span><span class="p">])</span>
+<span class="k">print</span> <span class="n">module_types</span><span class="p">[</span><span class="n">description</span><span class="p">[</span><span class="mi">2</span><span class="p">]],</span> <span class="n">filename</span>
+<span class="k">if</span> <span class="n">f</span><span class="p">:</span> <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><tt class="docutils literal"><span class="pre">find_module()</span></tt> does not pay attention to dotted package names
+(&#8220;example.submodule&#8221;), so the caller has to take care to pass the
+correct path for any nested modules. That means that when importing
+the submodule from the package, you need to give a path that points to
+the package directory for <tt class="docutils literal"><span class="pre">find_module()</span></tt> to locate the module
+you&#8217;re looking for.</p>
+<div class="highlight-python"><pre>$ python imp_find_module.py
+
+Package:
+package /Users/dhellmann/Documents/PyMOTW/src/PyMOTW/imp/example
+
+Sub-module:
+source /Users/dhellmann/Documents/PyMOTW/src/PyMOTW/imp/example/submodule.py</pre>
+</div>
+<p>If <tt class="docutils literal"><span class="pre">find_module()</span></tt> cannot locate the module, it raises an
+<a class="reference internal" href="../exceptions/index.html#exceptions-importerror"><em>ImportError</em></a>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">imp</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">imp</span><span class="o">.</span><span class="n">find_module</span><span class="p">(</span><span class="s">&#39;no_such_module&#39;</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">,</span> <span class="n">err</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;ImportError:&#39;</span><span class="p">,</span> <span class="n">err</span>
+</pre></div>
+</div>
+<div class="highlight-python"><pre>$ python imp_find_module_error.py
+
+ImportError: No module named no_such_module</pre>
+</div>
+</div>
+<div class="section" id="loading-modules">
+<h2>Loading Modules<a class="headerlink" href="#loading-modules" title="Permalink to this headline">¶</a></h2>
+<p>Once you have found the module, use <tt class="docutils literal"><span class="pre">load_module()</span></tt> to actually
+import it.  <tt class="docutils literal"><span class="pre">load_module()</span></tt> takes the full dotted path module name
+and the values returned by <tt class="docutils literal"><span class="pre">find_module()</span></tt> (the open file handle,
+filename, and description tuple).</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">imp</span>
+
+<span class="n">f</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">description</span> <span class="o">=</span> <span class="n">imp</span><span class="o">.</span><span class="n">find_module</span><span class="p">(</span><span class="s">&#39;example&#39;</span><span class="p">)</span>
+<span class="n">example_package</span> <span class="o">=</span> <span class="n">imp</span><span class="o">.</span><span class="n">load_module</span><span class="p">(</span><span class="s">&#39;example&#39;</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">description</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;Package:&#39;</span><span class="p">,</span> <span class="n">example_package</span>
+
+<span class="n">f</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">description</span> <span class="o">=</span> <span class="n">imp</span><span class="o">.</span><span class="n">find_module</span><span class="p">(</span><span class="s">&#39;submodule&#39;</span><span class="p">,</span> 
+                                           <span class="n">example_package</span><span class="o">.</span><span class="n">__path__</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">submodule</span> <span class="o">=</span> <span class="n">imp</span><span class="o">.</span><span class="n">load_module</span><span class="p">(</span><span class="s">&#39;example.module&#39;</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">description</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;Sub-module:&#39;</span><span class="p">,</span> <span class="n">submodule</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><tt class="docutils literal"><span class="pre">load_module()</span></tt> creates a new module object with the name given,
+loads the code for it, and adds it to <a class="reference internal" href="../sys/imports.html#sys-modules"><em>sys.modules</em></a>.</p>
+<div class="highlight-python"><pre>$ python imp_load_module.py
+Importing example package
+Package: &lt;module 'example' from '/Users/dhellmann/Documents/PyMOTW/trunk/PyMOTW/imp/example/__init__.py'&gt;
+Importing submodule
+Sub-module: &lt;module 'example.module' from '/Users/dhellmann/Documents/PyMOTW/trunk/PyMOTW/imp/example/submodule.py'&gt;</pre>
+</div>
+<p>If you call <tt class="docutils literal"><span class="pre">load_module()</span></tt> for a module which has already been
+imported, the effect is like calling <tt class="docutils literal"><span class="pre">reload()</span></tt> on the existing
+module object.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">imp</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
+    <span class="k">print</span> <span class="n">i</span><span class="p">,</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="s">&#39;example&#39;</span><span class="p">]</span>
+    <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&#39;(not in sys.modules)&#39;</span><span class="p">,</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&#39;(have in sys.modules)&#39;</span><span class="p">,</span>
+    <span class="n">f</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">description</span> <span class="o">=</span> <span class="n">imp</span><span class="o">.</span><span class="n">find_module</span><span class="p">(</span><span class="s">&#39;example&#39;</span><span class="p">)</span>
+    <span class="n">example_package</span> <span class="o">=</span> <span class="n">imp</span><span class="o">.</span><span class="n">load_module</span><span class="p">(</span><span class="s">&#39;example&#39;</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">description</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Instead of a creating a new module, the contents of the existing
+module are simply replaced.</p>
+<div class="highlight-python"><pre>$ python imp_load_module_reload.py
+
+0 (not in sys.modules) Importing example package
+1 (have in sys.modules) Importing example package</pre>
+</div>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://docs.python.org/library/imp.html">imp</a></dt>
+<dd>The standard library documentation for this module.</dd>
+<dt><a class="reference internal" href="../sys/imports.html#sys-imports"><em>Modules and Imports</em></a></dt>
+<dd>Import hooks, the module search path, and other related machinery.</dd>
+<dt><a class="reference internal" href="../inspect/index.html#module-inspect" title="inspect: Inspect live objects"><tt class="xref py py-mod docutils literal"><span class="pre">inspect</span></tt></a></dt>
+<dd>Load information from a module programmatically.</dd>
+<dt><span class="target" id="index-0"></span><a class="pep reference external" href="http://www.python.org/dev/peps/pep-0302"><strong>PEP 302</strong></a></dt>
+<dd>New import hooks.</dd>
+<dt><span class="target" id="index-1"></span><a class="pep reference external" href="http://www.python.org/dev/peps/pep-0369"><strong>PEP 369</strong></a></dt>
+<dd>Post import hooks.</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../pkgutil/index.html" title="pkgutil – Package Utilities"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../importing.html" title="Importing Modules"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../importing.html" >Importing Modules</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright Doug Hellmann.
+      Last updated on Oct 24, 2010.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+
+    <br/><a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/88x31.png"/></a>
+    
+    </div>
+  </body>
+</html>

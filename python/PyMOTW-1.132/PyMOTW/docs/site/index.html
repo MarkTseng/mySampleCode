@@ -1,0 +1,517 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>site – Site-wide configuration &mdash; Python Module of the Week</title>
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.132',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="Python Runtime Services" href="../runtime_services.html" />
+    <link rel="next" title="sys – System-specific Configuration" href="../sys/index.html" />
+    <link rel="prev" title="inspect – Inspect live objects" href="../inspect/index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../sys/index.html" title="sys – System-specific Configuration"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../inspect/index.html" title="inspect – Inspect live objects"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../runtime_services.html" accesskey="U">Python Runtime Services</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">site &#8211; Site-wide configuration</a><ul>
+<li><a class="reference internal" href="#import-path">Import Path</a></li>
+<li><a class="reference internal" href="#user-directories">User Directories</a></li>
+<li><a class="reference internal" href="#path-configuration-files">Path Configuration Files</a></li>
+<li><a class="reference internal" href="#sitecustomize">sitecustomize</a></li>
+<li><a class="reference internal" href="#usercustomize">usercustomize</a></li>
+<li><a class="reference internal" href="#disabling-site">Disabling site</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../inspect/index.html"
+                        title="previous chapter">inspect &#8211; Inspect live objects</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../sys/index.html"
+                        title="next chapter">sys &#8211; System-specific Configuration</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/site/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-site">
+<span id="site-site-wide-configuration"></span><h1>site &#8211; Site-wide configuration<a class="headerlink" href="#module-site" title="Permalink to this headline">¶</a></h1>
+<p>The <a class="reference internal" href="#module-site" title="site: Site-wide configuration"><tt class="xref py py-mod docutils literal"><span class="pre">site</span></tt></a> module handles site-specific configuration, especially
+the <a class="reference internal" href="../sys/imports.html#sys-path"><em>import path</em></a>.</p>
+<div class="section" id="import-path">
+<h2>Import Path<a class="headerlink" href="#import-path" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="#module-site" title="site: Site-wide configuration"><tt class="xref py py-mod docutils literal"><span class="pre">site</span></tt></a> is automatically imported each time the interpreter starts
+up.  On import, it extends <a class="reference internal" href="../sys/imports.html#sys-path"><em>sys.path</em></a> with
+site-specific names constructed by combining the prefix values
+<a class="reference internal" href="../sys/interpreter.html#sys-prefix"><em>sys.prefix</em></a> and <a class="reference internal" href="../sys/interpreter.html#sys-prefix"><em>sys.exec_prefix</em></a>
+with several suffixes.  The prefix values used are saved in the
+module-level variable <tt class="docutils literal"><span class="pre">PREFIXES</span></tt> for reference later.  Under
+Windows, the suffixes are an empty string and <tt class="docutils literal"><span class="pre">lib/site-packages</span></tt>.
+For Unix-like platforms, the values are
+<tt class="docutils literal"><span class="pre">lib/python$version/site-packages</span></tt> and <tt class="docutils literal"><span class="pre">lib/site-python</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">platform</span>
+<span class="kn">import</span> <span class="nn">site</span>
+
+<span class="k">if</span> <span class="s">&#39;Windows&#39;</span> <span class="ow">in</span> <span class="n">platform</span><span class="o">.</span><span class="n">platform</span><span class="p">():</span>
+    <span class="n">SUFFIXES</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s">&#39;&#39;</span><span class="p">,</span>
+        <span class="s">&#39;lib/site-packages&#39;</span><span class="p">,</span>
+        <span class="p">]</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">SUFFIXES</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s">&#39;lib/python</span><span class="si">%s</span><span class="s">/site-packages&#39;</span> <span class="o">%</span> <span class="n">sys</span><span class="o">.</span><span class="n">version</span><span class="p">[:</span><span class="mi">3</span><span class="p">],</span>
+        <span class="s">&#39;lib/site-python&#39;</span><span class="p">,</span>
+        <span class="p">]</span>
+
+<span class="k">print</span> <span class="s">&#39;Path prefixes:&#39;</span>
+<span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">site</span><span class="o">.</span><span class="n">PREFIXES</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;  &#39;</span><span class="p">,</span> <span class="n">p</span>
+
+<span class="k">for</span> <span class="n">prefix</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">site</span><span class="o">.</span><span class="n">PREFIXES</span><span class="p">)):</span>
+    <span class="k">print</span>
+    <span class="k">for</span> <span class="n">suffix</span> <span class="ow">in</span> <span class="n">SUFFIXES</span><span class="p">:</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="n">suffix</span><span class="p">)</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="p">)</span>
+        <span class="k">print</span> <span class="n">path</span>
+        <span class="k">print</span> <span class="s">&#39;   exists:&#39;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="k">print</span> <span class="s">&#39;  in path:&#39;</span><span class="p">,</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">path</span>
+</pre></div>
+</div>
+<p>Each of the paths resulting from the combinations is tested, and those
+that exist are added to <a class="reference internal" href="../sys/imports.html#sys-path"><em>sys.path</em></a>.</p>
+<div class="highlight-python"><pre>$ python site_import_path.py
+Path prefixes:
+   /Library/Frameworks/Python.framework/Versions/2.7
+   /Library/Frameworks/Python.framework/Versions/2.7
+
+/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages
+   exists: True
+  in path: True
+/Library/Frameworks/Python.framework/Versions/2.7/lib/site-python
+   exists: False
+  in path: False</pre>
+</div>
+</div>
+<div class="section" id="user-directories">
+<h2>User Directories<a class="headerlink" href="#user-directories" title="Permalink to this headline">¶</a></h2>
+<p>In addition to the global site-packages paths, <a class="reference internal" href="#module-site" title="site: Site-wide configuration"><tt class="xref py py-mod docutils literal"><span class="pre">site</span></tt></a> is
+responsible for adding the user-specific locations to the import path.
+The user-specific paths are all based on the <tt class="docutils literal"><span class="pre">USER_BASE</span></tt> directory,
+which usually located in a part of the filesystem owned (and writable)
+by the current user.  Inside the <tt class="docutils literal"><span class="pre">USER_BASE</span></tt> is a site-packages
+directory, with the path accessible as <tt class="docutils literal"><span class="pre">USER_SITE</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">site</span>
+
+<span class="k">print</span> <span class="s">&#39;Base:&#39;</span><span class="p">,</span> <span class="n">site</span><span class="o">.</span><span class="n">USER_BASE</span>
+<span class="k">print</span> <span class="s">&#39;Site:&#39;</span><span class="p">,</span> <span class="n">site</span><span class="o">.</span><span class="n">USER_SITE</span>
+</pre></div>
+</div>
+<p>The <tt class="docutils literal"><span class="pre">USER_SITE</span></tt> path name is created using the same
+platform-specific values described above.</p>
+<div class="highlight-python"><pre>$ python site_user_base.py
+
+Base: /Users/dhellmann/.local
+Site: /Users/dhellmann/.local/lib/python2.7/site-packages</pre>
+</div>
+<p>The user base directory can be set through the <tt class="docutils literal"><span class="pre">PYTHONUSERBASE</span></tt>
+environment variable, and has platform-specific defaults
+(<tt class="docutils literal"><span class="pre">~/Python$version/site-packages</span></tt> for Windows and <tt class="docutils literal"><span class="pre">~/.local</span></tt> for
+non-Windows).</p>
+<p>You can check the <tt class="docutils literal"><span class="pre">USER_BASE</span></tt> value from outside of your Python
+program by running <a class="reference internal" href="#module-site" title="site: Site-wide configuration"><tt class="xref py py-mod docutils literal"><span class="pre">site</span></tt></a> from the command line.  <a class="reference internal" href="#module-site" title="site: Site-wide configuration"><tt class="xref py py-mod docutils literal"><span class="pre">site</span></tt></a>
+will give you the name of the directory whether or not it exists, but
+it is only added to the import path when it does.</p>
+<div class="highlight-python"><pre>$ python -m site --user-base
+
+
+
+$ python -m site --user-site
+
+
+
+$ PYTHONUSERBASE=/tmp/$USER python -m site --user-base
+
+
+
+$ PYTHONUSERBASE=/tmp/$USER python -m site --user-site</pre>
+</div>
+<p>The user directory is disabled under some circumstances that would
+pose security issues.  For example, if the process is running with a
+different effective user or group id than the actual user that started
+it.  Your application can check the setting by examining
+<tt class="docutils literal"><span class="pre">ENABLE_USER_SITE</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">site</span>
+
+<span class="n">status</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="bp">None</span><span class="p">:</span><span class="s">&#39;Disabled for security&#39;</span><span class="p">,</span>
+    <span class="bp">True</span><span class="p">:</span><span class="s">&#39;Enabled&#39;</span><span class="p">,</span>
+    <span class="bp">False</span><span class="p">:</span><span class="s">&#39;Disabled by command-line option&#39;</span><span class="p">,</span>
+    <span class="p">}</span>
+
+<span class="k">print</span> <span class="s">&#39;Flag   :&#39;</span><span class="p">,</span> <span class="n">site</span><span class="o">.</span><span class="n">ENABLE_USER_SITE</span>
+<span class="k">print</span> <span class="s">&#39;Meaning:&#39;</span><span class="p">,</span> <span class="n">status</span><span class="p">[</span><span class="n">site</span><span class="o">.</span><span class="n">ENABLE_USER_SITE</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>The user directory can also be explicitly disabled on the command line
+with <em class="xref std std-option">-s</em>.</p>
+<div class="highlight-python"><pre>$ python site_enable_user_site.py
+
+Flag   : True
+Meaning: Enabled
+
+$ python -s site_enable_user_site.py
+
+Flag   : False
+Meaning: Disabled by command-line option</pre>
+</div>
+</div>
+<div class="section" id="path-configuration-files">
+<h2>Path Configuration Files<a class="headerlink" href="#path-configuration-files" title="Permalink to this headline">¶</a></h2>
+<p>As paths are added to the import path, they are also scanned for <em>path
+configuration files</em>.  A path configuration file is a plain text file
+with the extension <tt class="docutils literal"><span class="pre">.pth</span></tt>.  Each line in the file can take one of
+four forms:</p>
+<ol class="arabic simple">
+<li>A full or relative path to another location that should be added to
+the import path.</li>
+<li>A Python statement to be executed.  All such lines must begin with
+an <tt class="docutils literal"><span class="pre">import</span></tt> statement.</li>
+<li>Blank lines are ignored.</li>
+<li>A line starting with <tt class="docutils literal"><span class="pre">#</span></tt> is treated as a comment and ignored.</li>
+</ol>
+<p>Path configuration files can be used to extend the import path to look
+in locations that would not have been added automatically.  For
+example, <a class="reference external" href="http://packages.python.org/distribute">Distribute</a> adds a path to <tt class="docutils literal"><span class="pre">easy-install.pth</span></tt> when it
+installs a package in &#8220;develop&#8221; mode using <tt class="docutils literal"><span class="pre">python</span> <span class="pre">setup.py</span>
+<span class="pre">develop</span></tt>.</p>
+<p>The function for extending <tt class="docutils literal"><span class="pre">sys.path</span></tt> is public, so we can use it in
+example programs to show how the path configuration files work.  Given
+a directory <tt class="docutils literal"><span class="pre">with_modules</span></tt> containing the file <tt class="docutils literal"><span class="pre">mymodule.py</span></tt> with
+this <tt class="docutils literal"><span class="pre">print</span></tt> statement showing how the module was imported:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">os</span>
+<span class="k">print</span> <span class="s">&#39;Loaded&#39;</span><span class="p">,</span> <span class="n">__name__</span><span class="p">,</span> <span class="s">&#39;from&#39;</span><span class="p">,</span> <span class="n">__file__</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">())</span><span class="o">+</span><span class="mi">1</span><span class="p">:]</span>
+</pre></div>
+</div>
+<p>This script shows how <tt class="xref py py-func docutils literal"><span class="pre">addsitedir()</span></tt> extends the import path so
+the interpreter can find the desired module.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">site</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="n">script_directory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">__file__</span><span class="p">)</span>
+<span class="n">module_directory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">script_directory</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">mymodule</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">,</span> <span class="n">err</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;Could not import mymodule:&#39;</span><span class="p">,</span> <span class="n">err</span>
+
+<span class="k">print</span>
+<span class="n">before_len</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
+<span class="n">site</span><span class="o">.</span><span class="n">addsitedir</span><span class="p">(</span><span class="n">module_directory</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;New paths:&#39;</span>
+<span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="p">[</span><span class="n">before_len</span><span class="p">:]:</span>
+    <span class="k">print</span> <span class="s">&#39;  &#39;</span><span class="p">,</span> <span class="n">p</span>
+
+<span class="k">print</span>
+<span class="kn">import</span> <span class="nn">mymodule</span>
+</pre></div>
+</div>
+<p>After the directory containing the module is added to <tt class="docutils literal"><span class="pre">sys.path</span></tt>,
+the script can import <tt class="xref py py-mod docutils literal"><span class="pre">mymodule</span></tt> without issue.</p>
+<div class="highlight-python"><pre>$ python site_addsitedir.py with_modules
+
+Could not import mymodule: No module named mymodule
+
+New paths:
+   /Users/dhellmann/Documents/PyMOTW/src/PyMOTW/site/with_modules
+
+Loaded mymodule from with_modules/mymodule.py</pre>
+</div>
+<p>If the directory given to <tt class="xref py py-func docutils literal"><span class="pre">addsitedir()</span></tt> includes any files
+matching the pattern <tt class="docutils literal"><span class="pre">*.pth</span></tt>, they are loaded as path configuration
+files.  For example, if we create <tt class="docutils literal"><span class="pre">with_pth/pymotw.pth</span></tt> containing:</p>
+<div class="highlight-python"><pre># Add a single subdirectory to the path.
+./subdir
+</pre>
+</div>
+<p>and copy <tt class="docutils literal"><span class="pre">mymodule.py</span></tt> to <tt class="docutils literal"><span class="pre">with_pth/subdir/mymodule.py</span></tt>, then we
+can import it by adding <tt class="docutils literal"><span class="pre">with_pth</span></tt> as a site directory, even though
+the module is not in that directory.</p>
+<div class="highlight-python"><pre>$ python site_addsitedir.py with_pth
+
+Could not import mymodule: No module named mymodule
+
+New paths:
+   /Users/dhellmann/Documents/PyMOTW/src/PyMOTW/site/with_pth
+   /Users/dhellmann/Documents/PyMOTW/src/PyMOTW/site/with_pth/subdir
+
+Loaded mymodule from with_pth/subdir/mymodule.py</pre>
+</div>
+<p>If a site directory contains multiple <tt class="docutils literal"><span class="pre">.pth</span></tt> files, they are
+processed in alphabetical order.</p>
+<div class="highlight-python"><pre>$ ls -F with_multiple_pth
+
+a.pth
+b.pth
+from_a/
+from_b/
+
+$ cat with_multiple_pth/a.pth
+
+./from_a
+
+$ cat with_multiple_pth/b.pth
+
+./from_b</pre>
+</div>
+<p>In this case, the module is found in <tt class="docutils literal"><span class="pre">with_multiple_pth/from_a</span></tt>
+because <tt class="docutils literal"><span class="pre">a.pth</span></tt> is read before <tt class="docutils literal"><span class="pre">b.pth</span></tt>.</p>
+<div class="highlight-python"><pre>$ python site_addsitedir.py with_multiple_pth
+
+Could not import mymodule: No module named mymodule
+
+New paths:
+   /Users/dhellmann/Documents/PyMOTW/src/PyMOTW/site/with_multiple_pth
+   /Users/dhellmann/Documents/PyMOTW/src/PyMOTW/site/with_multiple_pth/from_a
+   /Users/dhellmann/Documents/PyMOTW/src/PyMOTW/site/with_multiple_pth/from_b
+
+Loaded mymodule from with_multiple_pth/from_a/mymodule.py</pre>
+</div>
+<span class="target" id="module-sitecustomize"></span></div>
+<div class="section" id="sitecustomize">
+<h2>sitecustomize<a class="headerlink" href="#sitecustomize" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference internal" href="#module-site" title="site: Site-wide configuration"><tt class="xref py py-mod docutils literal"><span class="pre">site</span></tt></a> module is also responsible for loading site-wide
+customization defined by the local site owner in a
+<a class="reference internal" href="#module-sitecustomize" title="sitecustomize: Site-specific configuration"><tt class="xref py py-mod docutils literal"><span class="pre">sitecustomize</span></tt></a> module.  Uses for <a class="reference internal" href="#module-sitecustomize" title="sitecustomize: Site-specific configuration"><tt class="xref py py-mod docutils literal"><span class="pre">sitecustomize</span></tt></a> include
+extending the import path and <a class="reference external" href="http://nedbatchelder.com/blog/201001/running_code_at_python_startup.html">enabling coverage</a>,
+profiling, or other development tools.</p>
+<p>For example, this <tt class="docutils literal"><span class="pre">sitecustomize.py</span></tt> script extends the import path
+with a directory based on the current platform.  The platform-specific
+path in <tt class="docutils literal"><span class="pre">/opt/python</span></tt> is added to the import path, so any packages
+installed there can be imported.  A system like this is useful for
+sharing packages containing compiled extension modules between hosts
+on a network via a shared filesystem.  Only the <tt class="docutils literal"><span class="pre">sitecustomize.py</span></tt>
+script needs to be installed on each host, and the other packages can
+be accessed from the file server.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">print</span> <span class="s">&#39;Loading sitecustomize.py&#39;</span>
+
+<span class="kn">import</span> <span class="nn">site</span>
+<span class="kn">import</span> <span class="nn">platform</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s">&#39;/opt&#39;</span><span class="p">,</span> <span class="s">&#39;python&#39;</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">version</span><span class="p">[:</span><span class="mi">3</span><span class="p">],</span> <span class="n">platform</span><span class="o">.</span><span class="n">platform</span><span class="p">())</span>
+<span class="k">print</span> <span class="s">&#39;Adding new path&#39;</span><span class="p">,</span> <span class="n">path</span>
+                    
+<span class="n">site</span><span class="o">.</span><span class="n">addsitedir</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    
+</pre></div>
+</div>
+<p>A simple script can be used to show that <tt class="docutils literal"><span class="pre">sitecustomize.py</span></tt> is
+imported before Python starts running your own code.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="k">print</span> <span class="s">&#39;Running main program&#39;</span>
+
+<span class="k">print</span> <span class="s">&#39;End of path:&#39;</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Since <a class="reference internal" href="#module-sitecustomize" title="sitecustomize: Site-specific configuration"><tt class="xref py py-mod docutils literal"><span class="pre">sitecustomize</span></tt></a> is meant for system-wide configuration, it
+should be installed somewere in the default path (usally in the
+<tt class="docutils literal"><span class="pre">site-packages</span></tt> directory).  This example sets <tt class="docutils literal"><span class="pre">PYTHONPATH</span></tt>
+explicitly to ensure the module is picked up.</p>
+<div class="highlight-python"><pre>$ PYTHONPATH=with_sitecustomize python with_sitecustomize/site_sitecustomize.py
+
+Loading sitecustomize.py
+Adding new path /opt/python/2.7/Darwin-10.4.0-i386-64bit
+Running main program
+End of path: /opt/python/2.7/Darwin-10.4.0-i386-64bit</pre>
+</div>
+<span class="target" id="module-usercustomize"></span></div>
+<div class="section" id="usercustomize">
+<h2>usercustomize<a class="headerlink" href="#usercustomize" title="Permalink to this headline">¶</a></h2>
+<p>Similar to <a class="reference internal" href="#module-sitecustomize" title="sitecustomize: Site-specific configuration"><tt class="xref py py-mod docutils literal"><span class="pre">sitecustomize</span></tt></a>, the <a class="reference internal" href="#module-usercustomize" title="usercustomize: User-specific configuration"><tt class="xref py py-mod docutils literal"><span class="pre">usercustomize</span></tt></a> module can
+be used to set up user-specific settings each time the interpreter
+starts up.  <a class="reference internal" href="#module-usercustomize" title="usercustomize: User-specific configuration"><tt class="xref py py-mod docutils literal"><span class="pre">usercustomize</span></tt></a> is loaded after <a class="reference internal" href="#module-sitecustomize" title="sitecustomize: Site-specific configuration"><tt class="xref py py-mod docutils literal"><span class="pre">sitecustomize</span></tt></a>,
+so site-wide customizations can be overridden.</p>
+<p>In environments where a user&#8217;s home directory is shared on several
+servers running different operating systems or versions, the standard
+user directory mechanism may not work for user-specific installations
+of packages.  In these cases, platform-specific directory tree can be
+used instead.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">print</span> <span class="s">&#39;Loading usercustomize.py&#39;</span>
+
+<span class="kn">import</span> <span class="nn">site</span>
+<span class="kn">import</span> <span class="nn">platform</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s">&#39;~&#39;</span><span class="p">,</span> <span class="s">&#39;python&#39;</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">version</span><span class="p">[:</span><span class="mi">3</span><span class="p">],</span> <span class="n">platform</span><span class="o">.</span><span class="n">platform</span><span class="p">()))</span>
+<span class="k">print</span> <span class="s">&#39;Adding new path&#39;</span><span class="p">,</span> <span class="n">path</span>
+                    
+<span class="n">site</span><span class="o">.</span><span class="n">addsitedir</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    
+</pre></div>
+</div>
+<p>Another simple script, similar to the one used for
+<a class="reference internal" href="#module-sitecustomize" title="sitecustomize: Site-specific configuration"><tt class="xref py py-mod docutils literal"><span class="pre">sitecustomize</span></tt></a>, can be used to show that <tt class="docutils literal"><span class="pre">usercustomize.py</span></tt> is
+imported before Python starts running your own code.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="k">print</span> <span class="s">&#39;Running main program&#39;</span>
+
+<span class="k">print</span> <span class="s">&#39;End of path:&#39;</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Since <a class="reference internal" href="#module-usercustomize" title="usercustomize: User-specific configuration"><tt class="xref py py-mod docutils literal"><span class="pre">usercustomize</span></tt></a> is meant for user-specific configuration
+for a user, it should be installed somewhere in the user&#8217;s default
+path, but not on the site-wide path. The default <tt class="docutils literal"><span class="pre">USER_BASE</span></tt>
+directory is a good location.  This example sets <tt class="docutils literal"><span class="pre">PYTHONPATH</span></tt>
+explicitly to ensure the module is picked up.</p>
+<div class="highlight-python"><pre>$ PYTHONPATH=with_usercustomize python with_usercustomize/site_usercustomize.py
+
+Loading usercustomize.py
+Adding new path /Users/dhellmann/python/2.7/Darwin-10.4.0-i386-64bit
+Running main program
+End of path: /Users/dhellmann/python/2.7/Darwin-10.4.0-i386-64bit</pre>
+</div>
+<p>When the user site directory feature is disabled, <a class="reference internal" href="#module-usercustomize" title="usercustomize: User-specific configuration"><tt class="xref py py-mod docutils literal"><span class="pre">usercustomize</span></tt></a>
+is not imported, whether it is located in the user site directory or
+elsewhere.</p>
+<div class="highlight-python"><pre>$ PYTHONPATH=with_usercustomize python -s with_usercustomize/site_usercustomize.py
+
+Running main program
+End of path: /Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages</pre>
+</div>
+</div>
+<div class="section" id="disabling-site">
+<h2>Disabling site<a class="headerlink" href="#disabling-site" title="Permalink to this headline">¶</a></h2>
+<p>To maintain backwards-compatibility with versions of Python from
+before the automatic import was added, the interpreter accepts an
+<em class="xref std std-option">-S</em> option.</p>
+<div class="highlight-python"><pre>$ python -S site_import_path.py
+Path prefixes:
+   sys.prefix     : /Library/Frameworks/Python.framework/Versions/2.7
+   sys.exec_prefix: /Library/Frameworks/Python.framework/Versions/2.7
+
+/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages
+   exists: True
+  in path: False
+/Library/Frameworks/Python.framework/Versions/2.7/lib/site-python
+   exists: False
+  in path: False</pre>
+</div>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://docs.python.org/library/site.html">site</a></dt>
+<dd>The standard library documentation for this module.</dd>
+<dt><a class="reference internal" href="../sys/imports.html#sys-imports"><em>Modules and Imports</em></a></dt>
+<dd>Description of how the import path defined in <a class="reference internal" href="../sys/index.html#module-sys" title="sys: System-specific configuration"><tt class="xref py py-mod docutils literal"><span class="pre">sys</span></tt></a> works.</dd>
+<dt><a class="reference external" href="http://nedbatchelder.com/blog/201001/running_code_at_python_startup.html">Running code at Python startup</a></dt>
+<dd>Post from Ned Batchelder discussing ways to cause the Python
+interpreter to run your custom initialization code before
+starting the main program execution.</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../sys/index.html" title="sys – System-specific Configuration"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../inspect/index.html" title="inspect – Inspect live objects"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../runtime_services.html" >Python Runtime Services</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright Doug Hellmann.
+      Last updated on Oct 24, 2010.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+
+    <br/><a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/88x31.png"/></a>
+    
+    </div>
+  </body>
+</html>

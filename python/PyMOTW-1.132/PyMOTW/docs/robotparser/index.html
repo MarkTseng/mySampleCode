@@ -1,0 +1,268 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>robotparser – Internet spider access control &mdash; Python Module of the Week</title>
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.132',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="File Formats" href="../file_formats.html" />
+    <link rel="next" title="Cryptographic Services" href="../cryptographic.html" />
+    <link rel="prev" title="ConfigParser – Work with configuration files" href="../ConfigParser/index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../cryptographic.html" title="Cryptographic Services"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../ConfigParser/index.html" title="ConfigParser – Work with configuration files"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../file_formats.html" accesskey="U">File Formats</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">robotparser &#8211; Internet spider access control</a><ul>
+<li><a class="reference internal" href="#robots-txt">robots.txt</a></li>
+<li><a class="reference internal" href="#simple-example">Simple Example</a></li>
+<li><a class="reference internal" href="#long-lived-spiders">Long-lived Spiders</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../ConfigParser/index.html"
+                        title="previous chapter">ConfigParser &#8211; Work with configuration files</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../cryptographic.html"
+                        title="next chapter">Cryptographic Services</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/robotparser/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-robotparser">
+<span id="robotparser-internet-spider-access-control"></span><h1>robotparser &#8211; Internet spider access control<a class="headerlink" href="#module-robotparser" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Purpose:</th><td class="field-body">Parse robots.txt file used to control Internet spiders</td>
+</tr>
+<tr class="field"><th class="field-name">Python Version:</th><td class="field-body">2.1.3 and later</td>
+</tr>
+</tbody>
+</table>
+<p><a class="reference internal" href="#module-robotparser" title="robotparser: Internet spider access control"><tt class="xref py py-mod docutils literal"><span class="pre">robotparser</span></tt></a> implements a parser for the <tt class="docutils literal"><span class="pre">robots.txt</span></tt> file format, including a simple function for checking if a given user agent can access a resource.  It is intended for use in well-behaved spiders or other crawler applications that need to either be throttled or otherwise restricted.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The <a class="reference internal" href="#module-robotparser" title="robotparser: Internet spider access control"><tt class="xref py py-mod docutils literal"><span class="pre">robotparser</span></tt></a> module has been renamed <tt class="xref py py-mod docutils literal"><span class="pre">urllib.robotparser</span></tt> in Python 3.0.
+Existing code using <a class="reference internal" href="#module-robotparser" title="robotparser: Internet spider access control"><tt class="xref py py-mod docutils literal"><span class="pre">robotparser</span></tt></a> can be updated using 2to3.</p>
+</div>
+<div class="section" id="robots-txt">
+<h2>robots.txt<a class="headerlink" href="#robots-txt" title="Permalink to this headline">¶</a></h2>
+<p>The <tt class="docutils literal"><span class="pre">robots.txt</span></tt> file format is a simple text-based access control system for computer programs that automatically access web resources (&#8220;spiders&#8221;, &#8220;crawlers&#8221;, etc.).  The file is made up of records that specify the user agent identifier for the program followed by a list of URLs (or URL prefixes) the agent may not access.</p>
+<p>This is the <tt class="docutils literal"><span class="pre">robots.txt</span></tt> file for <tt class="docutils literal"><span class="pre">http://www.doughellmann.com/</span></tt>:</p>
+<div class="highlight-python"><pre>User-agent: *
+Disallow: /admin/
+Disallow: /downloads/
+Disallow: /media/
+Disallow: /static/
+Disallow: /codehosting/
+</pre>
+</div>
+<p>It prevents access to some of the expensive parts of my site that would overload the server if a search engine tried to index them.  For a more complete set of examples, refer to <a class="reference external" href="http://www.robotstxt.org/orig.html">The Web Robots Page</a>.</p>
+</div>
+<div class="section" id="simple-example">
+<h2>Simple Example<a class="headerlink" href="#simple-example" title="Permalink to this headline">¶</a></h2>
+<p>Using the data above, a simple crawler can test whether it is allowed to download a page using the <tt class="docutils literal"><span class="pre">RobotFileParser</span></tt>&#8216;s <tt class="docutils literal"><span class="pre">can_fetch()</span></tt> method.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">robotparser</span>
+<span class="kn">import</span> <span class="nn">urlparse</span>
+
+<span class="n">AGENT_NAME</span> <span class="o">=</span> <span class="s">&#39;PyMOTW&#39;</span>
+<span class="n">URL_BASE</span> <span class="o">=</span> <span class="s">&#39;http://www.doughellmann.com/&#39;</span>
+<span class="n">parser</span> <span class="o">=</span> <span class="n">robotparser</span><span class="o">.</span><span class="n">RobotFileParser</span><span class="p">()</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">set_url</span><span class="p">(</span><span class="n">urlparse</span><span class="o">.</span><span class="n">urljoin</span><span class="p">(</span><span class="n">URL_BASE</span><span class="p">,</span> <span class="s">&#39;robots.txt&#39;</span><span class="p">))</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+<span class="n">PATHS</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s">&#39;/&#39;</span><span class="p">,</span>
+    <span class="s">&#39;/PyMOTW/&#39;</span><span class="p">,</span>
+    <span class="s">&#39;/admin/&#39;</span><span class="p">,</span>
+    <span class="s">&#39;/downloads/PyMOTW-1.92.tar.gz&#39;</span><span class="p">,</span>
+    <span class="p">]</span>
+
+<span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">PATHS</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="si">%6s</span><span class="s"> : </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">can_fetch</span><span class="p">(</span><span class="n">AGENT_NAME</span><span class="p">,</span> <span class="n">path</span><span class="p">),</span> <span class="n">path</span><span class="p">)</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="n">urlparse</span><span class="o">.</span><span class="n">urljoin</span><span class="p">(</span><span class="n">URL_BASE</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="si">%6s</span><span class="s"> : </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">can_fetch</span><span class="p">(</span><span class="n">AGENT_NAME</span><span class="p">,</span> <span class="n">url</span><span class="p">),</span> <span class="n">url</span><span class="p">)</span>
+    <span class="k">print</span>
+</pre></div>
+</div>
+<p>The URL argument to <tt class="docutils literal"><span class="pre">can_fetch()</span></tt> can be a path relative to the root of the site, or full URL.</p>
+<div class="highlight-python"><pre>$ python robotparser_simple.py
+
+  True : /
+  True : http://www.doughellmann.com/
+
+  True : /PyMOTW/
+  True : http://www.doughellmann.com/PyMOTW/
+
+ False : /admin/
+ False : http://www.doughellmann.com/admin/
+
+ False : /downloads/PyMOTW-1.92.tar.gz
+ False : http://www.doughellmann.com/downloads/PyMOTW-1.92.tar.gz</pre>
+</div>
+</div>
+<div class="section" id="long-lived-spiders">
+<h2>Long-lived Spiders<a class="headerlink" href="#long-lived-spiders" title="Permalink to this headline">¶</a></h2>
+<p>An application that takes a long time to process the resources it downloads or that is throttled to pause between downloads may want to check for new <tt class="docutils literal"><span class="pre">robots.txt</span></tt> files periodically based on the age of the content it has downloaded already.  The age is not managed automatically, but there are convenience methods to make tracking it easier.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">robotparser</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">urlparse</span>
+
+<span class="n">AGENT_NAME</span> <span class="o">=</span> <span class="s">&#39;PyMOTW&#39;</span>
+<span class="n">parser</span> <span class="o">=</span> <span class="n">robotparser</span><span class="o">.</span><span class="n">RobotFileParser</span><span class="p">()</span>
+<span class="c"># Using the local copy</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">set_url</span><span class="p">(</span><span class="s">&#39;robots.txt&#39;</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">modified</span><span class="p">()</span>
+
+<span class="n">PATHS</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s">&#39;/&#39;</span><span class="p">,</span>
+    <span class="s">&#39;/PyMOTW/&#39;</span><span class="p">,</span>
+    <span class="s">&#39;/admin/&#39;</span><span class="p">,</span>
+    <span class="s">&#39;/downloads/PyMOTW-1.92.tar.gz&#39;</span><span class="p">,</span>
+    <span class="p">]</span>
+
+<span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="n">path</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">PATHS</span><span class="p">):</span>
+    <span class="k">print</span>
+    <span class="n">age</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">parser</span><span class="o">.</span><span class="n">mtime</span><span class="p">())</span>
+    <span class="k">print</span> <span class="s">&#39;age:&#39;</span><span class="p">,</span> <span class="n">age</span><span class="p">,</span>
+    <span class="k">if</span> <span class="n">age</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&#39;re-reading robots.txt&#39;</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">modified</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="si">%6s</span><span class="s"> : </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">can_fetch</span><span class="p">(</span><span class="n">AGENT_NAME</span><span class="p">,</span> <span class="n">path</span><span class="p">),</span> <span class="n">path</span><span class="p">)</span>
+    <span class="c"># Simulate a delay in processing</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This extreme example downloads a new <tt class="docutils literal"><span class="pre">robots.txt</span></tt> file if the one it has is more than 1 second old.</p>
+<div class="highlight-python"><pre>$ python robotparser_longlived.py
+
+
+age: 0
+  True : /
+
+age: 1
+  True : /PyMOTW/
+
+age: 2 re-reading robots.txt
+ False : /admin/
+
+age: 1
+ False : /downloads/PyMOTW-1.92.tar.gz</pre>
+</div>
+<p>A &#8220;nicer&#8221; version of the long-lived application might request the modification time for the file before downloading the entire thing.  On the other hand, <tt class="docutils literal"><span class="pre">robots.txt</span></tt> files are usually fairly small, so it isn&#8217;t that much more expensive to just grab the entire document again.</p>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://docs.python.org/library/robotparser.html">robotparser</a></dt>
+<dd>The standard library documentation for this module.</dd>
+<dt><a class="reference external" href="http://www.robotstxt.org/orig.html">The Web Robots Page</a></dt>
+<dd>Description of robots.txt format.</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../cryptographic.html" title="Cryptographic Services"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../ConfigParser/index.html" title="ConfigParser – Work with configuration files"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../file_formats.html" >File Formats</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright Doug Hellmann.
+      Last updated on Oct 24, 2010.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+
+    <br/><a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/88x31.png"/></a>
+    
+    </div>
+  </body>
+</html>

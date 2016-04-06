@@ -1,0 +1,455 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>shutil – High-level file operations. &mdash; Python Module of the Week</title>
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.132',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="File and Directory Access" href="../file_access.html" />
+    <link rel="next" title="dircache – Cache directory listings" href="../dircache/index.html" />
+    <link rel="prev" title="linecache – Read text files efficiently" href="../linecache/index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../dircache/index.html" title="dircache – Cache directory listings"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../linecache/index.html" title="linecache – Read text files efficiently"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../file_access.html" accesskey="U">File and Directory Access</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">shutil &#8211; High-level file operations.</a><ul>
+<li><a class="reference internal" href="#copying-files">Copying Files</a></li>
+<li><a class="reference internal" href="#copying-file-meta-data">Copying File Meta-data</a></li>
+<li><a class="reference internal" href="#working-with-directory-trees">Working With Directory Trees</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../linecache/index.html"
+                        title="previous chapter">linecache &#8211; Read text files efficiently</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../dircache/index.html"
+                        title="next chapter">dircache &#8211; Cache directory listings</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/shutil/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-shutil">
+<span id="shutil-high-level-file-operations"></span><h1>shutil &#8211; High-level file operations.<a class="headerlink" href="#module-shutil" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Purpose:</th><td class="field-body">High-level file operations.</td>
+</tr>
+<tr class="field"><th class="field-name">Python Version:</th><td class="field-body">1.4 and later</td>
+</tr>
+</tbody>
+</table>
+<p>The <a class="reference internal" href="#module-shutil" title="shutil: High-level file operations."><tt class="xref py py-mod docutils literal"><span class="pre">shutil</span></tt></a> module includes high-level file operations such as
+copying, setting permissions, etc.</p>
+<div class="section" id="copying-files">
+<h2>Copying Files<a class="headerlink" href="#copying-files" title="Permalink to this headline">¶</a></h2>
+<p><tt class="xref py py-func docutils literal"><span class="pre">copyfile()</span></tt> copies the contents of the source to the
+destination. Raises <a class="reference internal" href="../exceptions/index.html#exceptions-ioerror"><em>IOError</em></a> if you do not
+have permission to write to the destination file.  Because the
+function opens the input file for reading, regardless of its type,
+special files cannot be copied as new special files with
+<tt class="xref py py-func docutils literal"><span class="pre">copyfile()</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">shutil</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">glob</span> <span class="kn">import</span> <span class="n">glob</span>
+
+<span class="k">print</span> <span class="s">&#39;BEFORE:&#39;</span><span class="p">,</span> <span class="n">glob</span><span class="p">(</span><span class="s">&#39;shutil_copyfile.*&#39;</span><span class="p">)</span>
+<span class="n">copyfile</span><span class="p">(</span><span class="s">&#39;shutil_copyfile.py&#39;</span><span class="p">,</span> <span class="s">&#39;shutil_copyfile.py.copy&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;AFTER:&#39;</span><span class="p">,</span> <span class="n">glob</span><span class="p">(</span><span class="s">&#39;shutil_copyfile.*&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><pre>$ python shutil_copyfile.py
+
+BEFORE: ['shutil_copyfile.py']
+AFTER: ['shutil_copyfile.py', 'shutil_copyfile.py.copy']</pre>
+</div>
+<p><tt class="xref py py-func docutils literal"><span class="pre">copyfile()</span></tt> is written using the lower-level function
+<tt class="xref py py-func docutils literal"><span class="pre">copyfileobj()</span></tt>. While the arguments to <tt class="xref py py-func docutils literal"><span class="pre">copyfile()</span></tt> are
+file names, the arguments to <tt class="xref py py-func docutils literal"><span class="pre">copyfileobj()</span></tt> are open file
+handles. The optional third argument is a buffer length to use for
+reading in chunks (by default, the entire file is read at one time).</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">shutil</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">StringIO</span> <span class="kn">import</span> <span class="n">StringIO</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="k">class</span> <span class="nc">VerboseStringIO</span><span class="p">(</span><span class="n">StringIO</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="nb">next</span> <span class="o">=</span> <span class="n">StringIO</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+        <span class="k">print</span> <span class="s">&#39;read(</span><span class="si">%d</span><span class="s">) =&gt;&#39;</span> <span class="o">%</span> <span class="n">n</span><span class="p">,</span> <span class="nb">next</span>
+        <span class="k">return</span> <span class="nb">next</span>
+
+<span class="n">lorem_ipsum</span> <span class="o">=</span> <span class="s">&#39;&#39;&#39;Lorem ipsum dolor sit amet, consectetuer adipiscing elit. </span>
+<span class="s">Vestibulum aliquam mollis dolor. Donec vulputate nunc ut diam. </span>
+<span class="s">Ut rutrum mi vel sem. Vestibulum ante ipsum.&#39;&#39;&#39;</span>
+
+<span class="k">print</span> <span class="s">&#39;Default:&#39;</span>
+<span class="nb">input</span> <span class="o">=</span> <span class="n">VerboseStringIO</span><span class="p">(</span><span class="n">lorem_ipsum</span><span class="p">)</span>
+<span class="n">output</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">()</span>
+<span class="n">copyfileobj</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">output</span><span class="p">)</span>
+
+<span class="k">print</span>
+
+<span class="k">print</span> <span class="s">&#39;All at once:&#39;</span>
+<span class="nb">input</span> <span class="o">=</span> <span class="n">VerboseStringIO</span><span class="p">(</span><span class="n">lorem_ipsum</span><span class="p">)</span>
+<span class="n">output</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">()</span>
+<span class="n">copyfileobj</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="k">print</span>
+
+<span class="k">print</span> <span class="s">&#39;Blocks of 20:&#39;</span>
+<span class="nb">input</span> <span class="o">=</span> <span class="n">VerboseStringIO</span><span class="p">(</span><span class="n">lorem_ipsum</span><span class="p">)</span>
+<span class="n">output</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">()</span>
+<span class="n">copyfileobj</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The default behavior is to read using large blocks.  Use <tt class="docutils literal"><span class="pre">-1</span></tt> to
+read all of the input at one time or another positive integer to set
+your own block size.</p>
+<div class="highlight-python"><pre>$ python shutil_copyfileobj.py
+
+Default:
+read(16384) =&gt; Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+Vestibulum aliquam mollis dolor. Donec vulputate nunc ut diam.
+Ut rutrum mi vel sem. Vestibulum ante ipsum.
+read(16384) =&gt;
+
+All at once:
+read(-1) =&gt; Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+Vestibulum aliquam mollis dolor. Donec vulputate nunc ut diam.
+Ut rutrum mi vel sem. Vestibulum ante ipsum.
+read(-1) =&gt;
+
+Blocks of 20:
+read(20) =&gt; Lorem ipsum dolor si
+read(20) =&gt; t amet, consectetuer
+read(20) =&gt;  adipiscing elit.
+V
+read(20) =&gt; estibulum aliquam mo
+read(20) =&gt; llis dolor. Donec vu
+read(20) =&gt; lputate nunc ut diam
+read(20) =&gt; .
+Ut rutrum mi vel
+read(20) =&gt; sem. Vestibulum ante
+read(20) =&gt;  ipsum.
+read(20) =&gt;</pre>
+</div>
+<p>The <a class="reference internal" href="../copy/index.html#module-copy" title="copy: Provides functions for duplicating objects using shallow or deep copy semantics."><tt class="xref py py-func docutils literal"><span class="pre">copy()</span></tt></a> function interprets the output name like the Unix
+command line tool <tt class="docutils literal"><span class="pre">cp</span></tt>. If the named destination refers to a
+directory instead of a file, a new file is created in the directory
+using the base name of the source. The permissions of the file are
+copied along with the contents.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">shutil</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="s">&#39;example&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;BEFORE:&#39;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s">&#39;example&#39;</span><span class="p">)</span>
+<span class="n">copy</span><span class="p">(</span><span class="s">&#39;shutil_copy.py&#39;</span><span class="p">,</span> <span class="s">&#39;example&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;AFTER:&#39;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s">&#39;example&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><pre>$ python shutil_copy.py
+
+BEFORE: []
+AFTER: ['shutil_copy.py']</pre>
+</div>
+<p><tt class="xref py py-func docutils literal"><span class="pre">copy2()</span></tt> works like <a class="reference internal" href="../copy/index.html#module-copy" title="copy: Provides functions for duplicating objects using shallow or deep copy semantics."><tt class="xref py py-func docutils literal"><span class="pre">copy()</span></tt></a>, but includes the access and
+modification times in the meta-data copied to the new file.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">shutil</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="k">def</span> <span class="nf">show_file_info</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="n">stat_info</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">stat</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">Mode    :&#39;</span><span class="p">,</span> <span class="n">stat_info</span><span class="o">.</span><span class="n">st_mode</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">Created :&#39;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">ctime</span><span class="p">(</span><span class="n">stat_info</span><span class="o">.</span><span class="n">st_ctime</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">Accessed:&#39;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">ctime</span><span class="p">(</span><span class="n">stat_info</span><span class="o">.</span><span class="n">st_atime</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">Modified:&#39;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">ctime</span><span class="p">(</span><span class="n">stat_info</span><span class="o">.</span><span class="n">st_mtime</span><span class="p">)</span>
+
+<span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="s">&#39;example&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;SOURCE:&#39;</span>
+<span class="n">show_file_info</span><span class="p">(</span><span class="s">&#39;shutil_copy2.py&#39;</span><span class="p">)</span>
+<span class="n">copy2</span><span class="p">(</span><span class="s">&#39;shutil_copy2.py&#39;</span><span class="p">,</span> <span class="s">&#39;example&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;DEST:&#39;</span>
+<span class="n">show_file_info</span><span class="p">(</span><span class="s">&#39;example/shutil_copy2.py&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><pre>$ python shutil_copy2.py
+
+SOURCE:
+        Mode    : 33188
+        Created : Thu Oct 21 06:02:32 2010
+        Accessed: Sun Oct 24 08:54:46 2010
+        Modified: Sun Oct 10 09:12:22 2010
+DEST:
+        Mode    : 33188
+        Created : Sun Oct 24 08:54:46 2010
+        Accessed: Sun Oct 24 08:54:46 2010
+        Modified: Sun Oct 10 09:12:22 2010</pre>
+</div>
+</div>
+<div class="section" id="copying-file-meta-data">
+<h2>Copying File Meta-data<a class="headerlink" href="#copying-file-meta-data" title="Permalink to this headline">¶</a></h2>
+<p>By default when a new file is created under Unix, it receives
+permissions based on the umask of the current user. To copy the
+permissions from one file to another, use <tt class="xref py py-func docutils literal"><span class="pre">copymode()</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">shutil</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">commands</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;file_to_change.txt&#39;</span><span class="p">,</span> <span class="s">&#39;wt&#39;</span><span class="p">)</span>
+<span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;content&#39;</span><span class="p">)</span>
+<span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="n">os</span><span class="o">.</span><span class="n">chmod</span><span class="p">(</span><span class="s">&#39;file_to_change.txt&#39;</span><span class="p">,</span> <span class="mo">0444</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&#39;BEFORE:&#39;</span><span class="p">,</span> <span class="n">getstatus</span><span class="p">(</span><span class="s">&#39;file_to_change.txt&#39;</span><span class="p">)</span>
+<span class="n">copymode</span><span class="p">(</span><span class="s">&#39;shutil_copymode.py&#39;</span><span class="p">,</span> <span class="s">&#39;file_to_change.txt&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;AFTER :&#39;</span><span class="p">,</span> <span class="n">getstatus</span><span class="p">(</span><span class="s">&#39;file_to_change.txt&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>First, create a file to be modified:</p>
+<div class="highlight-python"><pre>#!/bin/sh
+# Set up file needed by shutil_copymode.py
+touch file_to_change.txt
+chmod ugo+w file_to_change.txt
+</pre>
+</div>
+<p>Then run the example script to change the permissions.</p>
+<div class="highlight-python"><pre>$ python shutil_copymode.py
+
+BEFORE: -r--r--r--  1 dhellmann  dhellmann  7 Oct 24 08:54 file_to_change.txt
+AFTER : -rw-r--r--  1 dhellmann  dhellmann  7 Oct 24 08:54 file_to_change.txt</pre>
+</div>
+<p>To copy other meta-data about the file (permissions, last access time,
+and last modified time), use <tt class="xref py py-func docutils literal"><span class="pre">copystat()</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">shutil</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="k">def</span> <span class="nf">show_file_info</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="n">stat_info</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">stat</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">Mode    :&#39;</span><span class="p">,</span> <span class="n">stat_info</span><span class="o">.</span><span class="n">st_mode</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">Created :&#39;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">ctime</span><span class="p">(</span><span class="n">stat_info</span><span class="o">.</span><span class="n">st_ctime</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">Accessed:&#39;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">ctime</span><span class="p">(</span><span class="n">stat_info</span><span class="o">.</span><span class="n">st_atime</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">Modified:&#39;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">ctime</span><span class="p">(</span><span class="n">stat_info</span><span class="o">.</span><span class="n">st_mtime</span><span class="p">)</span>
+
+<span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;file_to_change.txt&#39;</span><span class="p">,</span> <span class="s">&#39;wt&#39;</span><span class="p">)</span>
+<span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;content&#39;</span><span class="p">)</span>
+<span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="n">os</span><span class="o">.</span><span class="n">chmod</span><span class="p">(</span><span class="s">&#39;file_to_change.txt&#39;</span><span class="p">,</span> <span class="mo">0444</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&#39;BEFORE:&#39;</span>
+<span class="n">show_file_info</span><span class="p">(</span><span class="s">&#39;file_to_change.txt&#39;</span><span class="p">)</span>
+<span class="n">copystat</span><span class="p">(</span><span class="s">&#39;shutil_copystat.py&#39;</span><span class="p">,</span> <span class="s">&#39;file_to_change.txt&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;AFTER :&#39;</span>
+<span class="n">show_file_info</span><span class="p">(</span><span class="s">&#39;file_to_change.txt&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><pre>$ python shutil_copystat.py
+
+BEFORE:
+        Mode    : 33060
+        Created : Sun Oct 24 08:54:47 2010
+        Accessed: Sun Oct 24 08:54:47 2010
+        Modified: Sun Oct 24 08:54:47 2010
+AFTER :
+        Mode    : 33188
+        Created : Sun Oct 24 08:54:47 2010
+        Accessed: Sun Oct 24 08:54:47 2010
+        Modified: Sun Oct 10 09:12:22 2010</pre>
+</div>
+</div>
+<div class="section" id="working-with-directory-trees">
+<h2>Working With Directory Trees<a class="headerlink" href="#working-with-directory-trees" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="#module-shutil" title="shutil: High-level file operations."><tt class="xref py py-mod docutils literal"><span class="pre">shutil</span></tt></a> includes 3 functions for working with directory
+trees. To copy a directory from one place to another, use
+<tt class="xref py py-func docutils literal"><span class="pre">copytree()</span></tt>. It recurses through the source directory tree,
+copying files to the destination. The destination directory must not
+exist in advance. The <em>symlinks</em> argument controls whether symbolic
+links are copied as links or as files. The default is to copy the
+contents to new files. If the option is true, new symlinks are created
+within the destination tree.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The documentation for <tt class="xref py py-func docutils literal"><span class="pre">copytree()</span></tt> says it should be
+considered a sample implementation, rather than a tool. You may want
+to copy the implementation and make it more robust, or add features
+like a progress meter.</p>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">shutil</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">commands</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="k">print</span> <span class="s">&#39;BEFORE:&#39;</span>
+<span class="k">print</span> <span class="n">getoutput</span><span class="p">(</span><span class="s">&#39;ls -rlast /tmp/example&#39;</span><span class="p">)</span>
+<span class="n">copytree</span><span class="p">(</span><span class="s">&#39;example&#39;</span><span class="p">,</span> <span class="s">&#39;/tmp/example&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;AFTER:&#39;</span>
+<span class="k">print</span> <span class="n">getoutput</span><span class="p">(</span><span class="s">&#39;ls -rlast /tmp/example&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><pre>$ python shutil_copytree.py
+
+BEFORE:
+ls: /tmp/example: No such file or directory
+AFTER:
+total 8
+8 -rw-r--r--   1 dhellmann  wheel  1595 Oct 10 09:12 shutil_copy2.py
+0 drwxr-xr-x   3 dhellmann  wheel   102 Oct 24 08:54 .
+0 drwxrwxrwt  18 root       wheel   612 Oct 24 08:54 ..</pre>
+</div>
+<p>To remove a directory and its contents, use <tt class="xref py py-func docutils literal"><span class="pre">rmtree()</span></tt>. Errors
+are raised as exceptions by default, but can be ignored if the second
+argument is true, and a special error handler function can be provided
+in the third argument.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">shutil</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">commands</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="k">print</span> <span class="s">&#39;BEFORE:&#39;</span>
+<span class="k">print</span> <span class="n">getoutput</span><span class="p">(</span><span class="s">&#39;ls -rlast /tmp/example&#39;</span><span class="p">)</span>
+<span class="n">rmtree</span><span class="p">(</span><span class="s">&#39;/tmp/example&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;AFTER:&#39;</span>
+<span class="k">print</span> <span class="n">getoutput</span><span class="p">(</span><span class="s">&#39;ls -rlast /tmp/example&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><pre>$ python shutil_rmtree.py
+
+BEFORE:
+total 8
+8 -rw-r--r--   1 dhellmann  wheel  1595 Oct 10 09:12 shutil_copy2.py
+0 drwxr-xr-x   3 dhellmann  wheel   102 Oct 24 08:54 .
+0 drwxrwxrwt  18 root       wheel   612 Oct 24 08:54 ..
+AFTER:
+ls: /tmp/example: No such file or directory</pre>
+</div>
+<p>To move a file or directory from one place to another, use
+<tt class="xref py py-func docutils literal"><span class="pre">move()</span></tt>. The semantics are similar to those of the Unix command
+<tt class="docutils literal"><span class="pre">mv</span></tt>. If the source and destination are within the same filesystem,
+the source is simply renamed.  Otherwise the source is copied to the
+destination and then the source is removed.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">shutil</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">glob</span> <span class="kn">import</span> <span class="n">glob</span>
+
+<span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;example.txt&#39;</span><span class="p">,</span> <span class="s">&#39;wt&#39;</span><span class="p">)</span>
+<span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;contents&#39;</span><span class="p">)</span>
+<span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="k">print</span> <span class="s">&#39;BEFORE: &#39;</span><span class="p">,</span> <span class="n">glob</span><span class="p">(</span><span class="s">&#39;example*&#39;</span><span class="p">)</span>
+<span class="n">move</span><span class="p">(</span><span class="s">&#39;example.txt&#39;</span><span class="p">,</span> <span class="s">&#39;example.out&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;AFTER : &#39;</span><span class="p">,</span> <span class="n">glob</span><span class="p">(</span><span class="s">&#39;example*&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><pre>$ python shutil_move.py
+
+BEFORE:  ['example.txt']
+AFTER :  ['example.out']</pre>
+</div>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://docs.python.org/lib/module-shutil.html">shutil</a></dt>
+<dd>Standard library documentation for this module.</dd>
+<dt><a class="reference internal" href="../articles/file_access.html#article-file-access"><em>File Access</em></a></dt>
+<dd>Other utilities for working with files.</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../dircache/index.html" title="dircache – Cache directory listings"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../linecache/index.html" title="linecache – Read text files efficiently"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../file_access.html" >File and Directory Access</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright Doug Hellmann.
+      Last updated on Oct 24, 2010.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+
+    <br/><a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/88x31.png"/></a>
+    
+    </div>
+  </body>
+</html>

@@ -1,0 +1,314 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>hashlib – Cryptographic hashes and message digests &mdash; Python Module of the Week</title>
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.132',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="Cryptographic Services" href="../cryptographic.html" />
+    <link rel="next" title="hmac – Cryptographic signature and verification of messages." href="../hmac/index.html" />
+    <link rel="prev" title="Cryptographic Services" href="../cryptographic.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../hmac/index.html" title="hmac – Cryptographic signature and verification of messages."
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../cryptographic.html" title="Cryptographic Services"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../cryptographic.html" accesskey="U">Cryptographic Services</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">hashlib &#8211; Cryptographic hashes and message digests</a><ul>
+<li><a class="reference internal" href="#sample-data">Sample Data</a></li>
+<li><a class="reference internal" href="#md5-example">MD5 Example</a></li>
+<li><a class="reference internal" href="#sha1-example">SHA1 Example</a></li>
+<li><a class="reference internal" href="#new">new()</a></li>
+<li><a class="reference internal" href="#calling-update-more-than-once">Calling update() more than once</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../cryptographic.html"
+                        title="previous chapter">Cryptographic Services</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../hmac/index.html"
+                        title="next chapter">hmac &#8211; Cryptographic signature and verification of messages.</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/hashlib/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-hashlib">
+<span id="hashlib-cryptographic-hashes-and-message-digests"></span><h1>hashlib &#8211; Cryptographic hashes and message digests<a class="headerlink" href="#module-hashlib" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Purpose:</th><td class="field-body">Cryptographic hashes and message digests</td>
+</tr>
+<tr class="field"><th class="field-name">Python Version:</th><td class="field-body">2.5</td>
+</tr>
+</tbody>
+</table>
+<p>The <a class="reference internal" href="#module-hashlib" title="hashlib: Cryptographic hashes and message digests"><tt class="xref py py-mod docutils literal"><span class="pre">hashlib</span></tt></a> module deprecates the separate <tt class="xref py py-mod docutils literal"><span class="pre">md5</span></tt> and
+<tt class="xref py py-mod docutils literal"><span class="pre">sha</span></tt> modules and makes their API consistent. To work with a
+specific hash algorithm, use the appropriate constructor function to
+create a hash object. Then you can use the same API to interact with
+the hash no matter what algorithm is being used.</p>
+<p>Since <a class="reference internal" href="#module-hashlib" title="hashlib: Cryptographic hashes and message digests"><tt class="xref py py-mod docutils literal"><span class="pre">hashlib</span></tt></a> is &#8220;backed&#8221; by OpenSSL, all of of the algorithms
+provided by that library are available, including:</p>
+<blockquote>
+<ul class="simple">
+<li>md5</li>
+<li>sha1</li>
+<li>sha224</li>
+<li>sha256</li>
+<li>sha384</li>
+<li>sha512</li>
+</ul>
+</blockquote>
+<div class="section" id="sample-data">
+<h2>Sample Data<a class="headerlink" href="#sample-data" title="Permalink to this headline">¶</a></h2>
+<p>All of the examples below use the same sample data:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">hashlib</span>
+
+<span class="n">lorem</span> <span class="o">=</span> <span class="s">&#39;&#39;&#39;Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do</span>
+<span class="s">eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim</span>
+<span class="s">veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo</span>
+<span class="s">consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum</span>
+<span class="s">dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,</span>
+<span class="s">sunt in culpa qui officia deserunt mollit anim id est laborum.&#39;&#39;&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="md5-example">
+<h2>MD5 Example<a class="headerlink" href="#md5-example" title="Permalink to this headline">¶</a></h2>
+<p>To calculate the MD5 digest for a block of data (here an ASCII
+string), create the hash object, add the data, and compute the digest.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">hashlib</span>
+
+<span class="kn">from</span> <span class="nn">hashlib_data</span> <span class="kn">import</span> <span class="n">lorem</span>
+
+<span class="n">h</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">md5</span><span class="p">()</span>
+<span class="n">h</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">lorem</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">h</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This example uses the <tt class="xref py py-func docutils literal"><span class="pre">hexdigest()</span></tt> method instead of
+<tt class="xref py py-func docutils literal"><span class="pre">digest()</span></tt> because the output is formatted to be printed. If a
+binary digest value is acceptable, you can use <tt class="xref py py-func docutils literal"><span class="pre">digest()</span></tt>.</p>
+<div class="highlight-python"><pre>$ python hashlib_md5.py
+
+c3abe541f361b1bfbbcfecbf53aad1fb</pre>
+</div>
+</div>
+<div class="section" id="sha1-example">
+<h2>SHA1 Example<a class="headerlink" href="#sha1-example" title="Permalink to this headline">¶</a></h2>
+<p>A SHA1 digest for the same data would be calculated in much the same way.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">hashlib</span>
+
+<span class="kn">from</span> <span class="nn">hashlib_data</span> <span class="kn">import</span> <span class="n">lorem</span>
+
+<span class="n">h</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha1</span><span class="p">()</span>
+<span class="n">h</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">lorem</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">h</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The digest value is different in this example because we changed the
+algorithm from MD5 to SHA1</p>
+<div class="highlight-python"><pre>$ python hashlib_sha1.py
+
+ac2a96a4237886637d5352d606d7a7b6d7ad2f29</pre>
+</div>
+</div>
+<div class="section" id="new">
+<h2>new()<a class="headerlink" href="#new" title="Permalink to this headline">¶</a></h2>
+<p>Sometimes it is more convenient to refer to the algorithm by name in a
+string rather than by using the constructor function directly. It is
+useful, for example, to be able to store the hash type in a
+configuration file. In those cases, use <tt class="xref py py-func docutils literal"><span class="pre">new()</span></tt> to create a hash
+calculator.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">hashlib</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">hash_name</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;Specify the hash name as the first argument.&#39;</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+    <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>    
+        <span class="kn">from</span> <span class="nn">hashlib_data</span> <span class="kn">import</span> <span class="n">lorem</span> <span class="k">as</span> <span class="n">data</span>
+    
+    <span class="n">h</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">hash_name</span><span class="p">)</span>
+    <span class="n">h</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="k">print</span> <span class="n">h</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>When run with a variety of arguments:</p>
+<div class="highlight-python"><pre>$ python hashlib_new.py sha1
+
+ac2a96a4237886637d5352d606d7a7b6d7ad2f29
+
+$ python hashlib_new.py sha256
+
+88b7404fc192fcdb9bb1dba1ad118aa1ccd580e9faa110d12b4d63988cf20332
+
+$ python hashlib_new.py sha512
+
+f58c6935ef9d5a94d296207ee4a7d9bba411539d8677482b7e9d60e4b7137f68d25f9747cab62fe752ec5ed1e5b2fa4cdbc8c9203267f995a5d17e4408dccdb4
+
+$ python hashlib_new.py md5
+
+c3abe541f361b1bfbbcfecbf53aad1fb</pre>
+</div>
+</div>
+<div class="section" id="calling-update-more-than-once">
+<h2>Calling update() more than once<a class="headerlink" href="#calling-update-more-than-once" title="Permalink to this headline">¶</a></h2>
+<p>The <tt class="xref py py-func docutils literal"><span class="pre">update()</span></tt> method of the hash calculators can be called
+repeatedly. Each time, the digest is updated based on the additional
+text fed in. This can be much more efficient than reading an entire
+file into memory, for example.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">hashlib</span>
+
+<span class="kn">from</span> <span class="nn">hashlib_data</span> <span class="kn">import</span> <span class="n">lorem</span>
+
+<span class="n">h</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">md5</span><span class="p">()</span>
+<span class="n">h</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">lorem</span><span class="p">)</span>
+<span class="n">all_at_once</span> <span class="o">=</span> <span class="n">h</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">chunkize</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+    <span class="s">&quot;Return parts of the text in size-based increments.&quot;</span>
+    <span class="n">start</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="n">start</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+        <span class="n">chunk</span> <span class="o">=</span> <span class="n">text</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">start</span><span class="o">+</span><span class="n">size</span><span class="p">]</span>
+        <span class="k">yield</span> <span class="n">chunk</span>
+        <span class="n">start</span> <span class="o">+=</span> <span class="n">size</span>
+    <span class="k">return</span>
+
+<span class="n">h</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">md5</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">chunkize</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="n">lorem</span><span class="p">):</span>
+    <span class="n">h</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
+<span class="n">line_by_line</span> <span class="o">=</span> <span class="n">h</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+
+<span class="k">print</span> <span class="s">&#39;All at once :&#39;</span><span class="p">,</span> <span class="n">all_at_once</span>
+<span class="k">print</span> <span class="s">&#39;Line by line:&#39;</span><span class="p">,</span> <span class="n">line_by_line</span>
+<span class="k">print</span> <span class="s">&#39;Same        :&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">all_at_once</span> <span class="o">==</span> <span class="n">line_by_line</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This example is a little contrived because it works with such a small amount
+of text, but it illustrates how you could incrementally update a digest as
+data is read or otherwise produced.</p>
+<div class="highlight-python"><pre>$ python hashlib_update.py
+
+All at once : c3abe541f361b1bfbbcfecbf53aad1fb
+Line by line: c3abe541f361b1bfbbcfecbf53aad1fb
+Same        : True</pre>
+</div>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://docs.python.org/library/hashlib.html">hashlib</a></dt>
+<dd>The standard library documentation for this module.</dd>
+<dt><a class="reference external" href="http://www.voidspace.org.uk/python/weblog/arch_d7_2006_10_07.shtml#e497">Voidspace: IronPython and hashlib</a></dt>
+<dd>A wrapper for <a class="reference internal" href="#module-hashlib" title="hashlib: Cryptographic hashes and message digests"><tt class="xref py py-mod docutils literal"><span class="pre">hashlib</span></tt></a> that works with IronPython.</dd>
+<dt><a class="reference internal" href="../hmac/index.html#module-hmac" title="hmac: Cryptographic signature and verification of messages."><tt class="xref py py-mod docutils literal"><span class="pre">hmac</span></tt></a></dt>
+<dd>The <a class="reference internal" href="../hmac/index.html#module-hmac" title="hmac: Cryptographic signature and verification of messages."><tt class="xref py py-mod docutils literal"><span class="pre">hmac</span></tt></a> module.</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../hmac/index.html" title="hmac – Cryptographic signature and verification of messages."
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../cryptographic.html" title="Cryptographic Services"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../cryptographic.html" >Cryptographic Services</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright Doug Hellmann.
+      Last updated on Oct 24, 2010.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+
+    <br/><a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/88x31.png"/></a>
+    
+    </div>
+  </body>
+</html>

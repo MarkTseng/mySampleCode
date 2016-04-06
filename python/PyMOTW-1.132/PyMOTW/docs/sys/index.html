@@ -1,0 +1,199 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>sys – System-specific Configuration &mdash; Python Module of the Week</title>
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.132',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="Python Runtime Services" href="../runtime_services.html" />
+    <link rel="next" title="Interpreter Settings" href="interpreter.html" />
+    <link rel="prev" title="site – Site-wide configuration" href="../site/index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="interpreter.html" title="Interpreter Settings"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../site/index.html" title="site – Site-wide configuration"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../runtime_services.html" accesskey="U">Python Runtime Services</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../site/index.html"
+                        title="previous chapter">site &#8211; Site-wide configuration</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="interpreter.html"
+                        title="next chapter">Interpreter Settings</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/sys/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-sys">
+<span id="sys-system-specific-configuration"></span><h1>sys &#8211; System-specific Configuration<a class="headerlink" href="#module-sys" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Purpose:</th><td class="field-body">Provides system-specific configuration and operations.</td>
+</tr>
+<tr class="field"><th class="field-name">Python Version:</th><td class="field-body">1.4 and later</td>
+</tr>
+</tbody>
+</table>
+<p>The <a class="reference internal" href="#module-sys" title="sys: System-specific configuration"><tt class="xref py py-mod docutils literal"><span class="pre">sys</span></tt></a> module includes a collection of services for probing or
+changing the configuration of the interpreter at runtime and resources
+for interacting with the operating environment outside of the current
+program.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="interpreter.html">Interpreter Settings</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="interpreter.html#build-time-version-information">Build-time Version Information</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interpreter.html#install-location">Install Location</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interpreter.html#command-line-options">Command Line Options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interpreter.html#unicode-defaults">Unicode Defaults</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interpreter.html#interactive-prompts">Interactive Prompts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interpreter.html#display-hook">Display Hook</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="runtime.html">Runtime Environment</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="runtime.html#command-line-arguments">Command Line Arguments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="runtime.html#input-and-output-steams">Input and Output Steams</a></li>
+<li class="toctree-l2"><a class="reference internal" href="runtime.html#returning-status">Returning Status</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="limits.html">Memory Management and Limits</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="limits.html#reference-counts">Reference Counts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="limits.html#object-size">Object Size</a></li>
+<li class="toctree-l2"><a class="reference internal" href="limits.html#recursion">Recursion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="limits.html#maximum-values">Maximum Values</a></li>
+<li class="toctree-l2"><a class="reference internal" href="limits.html#floating-point-values">Floating Point Values</a></li>
+<li class="toctree-l2"><a class="reference internal" href="limits.html#byte-ordering">Byte Ordering</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="exceptions.html">Exception Handling</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="exceptions.html#unhandled-exceptions">Unhandled Exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exceptions.html#current-exception">Current Exception</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exceptions.html#previous-interactive-exception">Previous Interactive Exception</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tracing.html">Tracing a Program As It Runs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tracing.html#tracing-function-calls">Tracing Function Calls</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tracing.html#tracing-inside-functions">Tracing Inside Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tracing.html#watching-the-stack">Watching the Stack</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tracing.html#exception-propagation">Exception Propagation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="threads.html">Low-level Thread Support</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="threads.html#check-interval">Check Interval</a></li>
+<li class="toctree-l2"><a class="reference internal" href="threads.html#debugging">Debugging</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="imports.html">Modules and Imports</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="imports.html#imported-modules">Imported Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="imports.html#built-in-modules">Built-in Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="imports.html#import-path">Import Path</a></li>
+<li class="toctree-l2"><a class="reference internal" href="imports.html#custom-importers">Custom Importers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="imports.html#importer-cache">Importer Cache</a></li>
+<li class="toctree-l2"><a class="reference internal" href="imports.html#meta-path">Meta Path</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://docs.python.org/library/sys.html">sys</a></dt>
+<dd>The standard library documentation for this module.</dd>
+</dl>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="interpreter.html" title="Interpreter Settings"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../site/index.html" title="site – Site-wide configuration"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../runtime_services.html" >Python Runtime Services</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright Doug Hellmann.
+      Last updated on Oct 24, 2010.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+
+    <br/><a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/88x31.png"/></a>
+    
+    </div>
+  </body>
+</html>

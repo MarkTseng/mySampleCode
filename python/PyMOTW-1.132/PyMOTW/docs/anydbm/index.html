@@ -1,0 +1,266 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>anydbm – Access to DBM-style databases &mdash; Python Module of the Week</title>
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.132',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="Data Persistence" href="../persistence.html" />
+    <link rel="next" title="dbhash – DBM-style API for the BSD database library" href="../dbhash/index.html" />
+    <link rel="prev" title="Data Persistence" href="../persistence.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../dbhash/index.html" title="dbhash – DBM-style API for the BSD database library"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../persistence.html" title="Data Persistence"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../persistence.html" accesskey="U">Data Persistence</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">anydbm &#8211; Access to DBM-style databases</a><ul>
+<li><a class="reference internal" href="#creating-a-new-database">Creating a New Database</a></li>
+<li><a class="reference internal" href="#opening-an-existing-database">Opening an Existing Database</a></li>
+<li><a class="reference internal" href="#error-cases">Error Cases</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../persistence.html"
+                        title="previous chapter">Data Persistence</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../dbhash/index.html"
+                        title="next chapter">dbhash &#8211; DBM-style API for the BSD database library</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/anydbm/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-anydbm">
+<span id="anydbm-access-to-dbm-style-databases"></span><h1>anydbm &#8211; Access to DBM-style databases<a class="headerlink" href="#module-anydbm" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Purpose:</th><td class="field-body">anydbm provides a generic dictionary-like interface to DBM-style, string-keyed databases</td>
+</tr>
+<tr class="field"><th class="field-name">Python Version:</th><td class="field-body">1.4 and later</td>
+</tr>
+</tbody>
+</table>
+<p>anydbm is a front-end for DBM-style databases that use simple string
+values as keys to access records containing strings.  It uses the
+<a class="reference internal" href="../whichdb/index.html#module-whichdb" title="whichdb: Identify DBM-style database formats"><tt class="xref py py-mod docutils literal"><span class="pre">whichdb</span></tt></a> module to identify <a class="reference internal" href="../dbhash/index.html#module-dbhash" title="dbhash: DBM-style API for the BSD database library"><tt class="xref py py-mod docutils literal"><span class="pre">dbhash</span></tt></a>, <a class="reference internal" href="../gdbm/index.html#module-gdbm" title="gdbm: GNU's version of the dbm library"><tt class="xref py py-mod docutils literal"><span class="pre">gdbm</span></tt></a>, and
+<a class="reference internal" href="../dbm/index.html#module-dbm" title="dbm: Simple database interface"><tt class="xref py py-mod docutils literal"><span class="pre">dbm</span></tt></a> databases, then opens them with the appropriate module.  It
+is used as a backend for <a class="reference internal" href="../shelve/index.html#module-shelve" title="shelve: Persistent storage of arbitrary Python objects"><tt class="xref py py-mod docutils literal"><span class="pre">shelve</span></tt></a>, which knows how to store
+objects using <a class="reference internal" href="../pickle/index.html#module-pickle" title="pickle: Python object serialization"><tt class="xref py py-mod docutils literal"><span class="pre">pickle</span></tt></a>.</p>
+<div class="section" id="creating-a-new-database">
+<h2>Creating a New Database<a class="headerlink" href="#creating-a-new-database" title="Permalink to this headline">¶</a></h2>
+<p>The storage format for new databases is selected by looking for each
+of these modules in order:</p>
+<ul class="simple">
+<li><a class="reference internal" href="../dbhash/index.html#module-dbhash" title="dbhash: DBM-style API for the BSD database library"><tt class="xref py py-mod docutils literal"><span class="pre">dbhash</span></tt></a></li>
+<li><a class="reference internal" href="../gdbm/index.html#module-gdbm" title="gdbm: GNU's version of the dbm library"><tt class="xref py py-mod docutils literal"><span class="pre">gdbm</span></tt></a></li>
+<li><a class="reference internal" href="../dbm/index.html#module-dbm" title="dbm: Simple database interface"><tt class="xref py py-mod docutils literal"><span class="pre">dbm</span></tt></a></li>
+<li><a class="reference internal" href="../dumbdbm/index.html#module-dumbdbm" title="dumbdbm: Portable DBM Implementation"><tt class="xref py py-mod docutils literal"><span class="pre">dumbdbm</span></tt></a></li>
+</ul>
+<p>The <tt class="xref py py-func docutils literal"><span class="pre">open()</span></tt> function takes <em>flags</em> to control how the database
+file is managed.  To create a new database when necessary, use
+<tt class="docutils literal"><span class="pre">'c'</span></tt>.  To always create a new database, use <tt class="docutils literal"><span class="pre">'n'</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">anydbm</span>
+
+<span class="n">db</span> <span class="o">=</span> <span class="n">anydbm</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&#39;/tmp/example.db&#39;</span><span class="p">,</span> <span class="s">&#39;n&#39;</span><span class="p">)</span>
+<span class="n">db</span><span class="p">[</span><span class="s">&#39;key&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;value&#39;</span>
+<span class="n">db</span><span class="p">[</span><span class="s">&#39;today&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;Sunday&#39;</span>
+<span class="n">db</span><span class="p">[</span><span class="s">&#39;author&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;Doug&#39;</span>
+<span class="n">db</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python"><pre>$ python anydbm_new.py</pre>
+</div>
+<p>In this example, the file is always re-initialized.  To see what type
+of database was created, we can use <a class="reference internal" href="../whichdb/index.html#module-whichdb" title="whichdb: Identify DBM-style database formats"><tt class="xref py py-mod docutils literal"><span class="pre">whichdb</span></tt></a>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">whichdb</span>
+
+<span class="k">print</span> <span class="n">whichdb</span><span class="o">.</span><span class="n">whichdb</span><span class="p">(</span><span class="s">&#39;/tmp/example.db&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Your results may vary, depending on what modules are installed on your
+system.</p>
+<div class="highlight-python"><pre>$ python anydbm_whichdb.py
+
+dbhash</pre>
+</div>
+</div>
+<div class="section" id="opening-an-existing-database">
+<h2>Opening an Existing Database<a class="headerlink" href="#opening-an-existing-database" title="Permalink to this headline">¶</a></h2>
+<p>To open an existing database, use <em>flags</em> of either <tt class="docutils literal"><span class="pre">'r'</span></tt> (for
+read-only) or <tt class="docutils literal"><span class="pre">'w'</span></tt> (for read-write).  You don&#8217;t need to worry about
+the format, because existing databases are automatically given to
+<a class="reference internal" href="../whichdb/index.html#module-whichdb" title="whichdb: Identify DBM-style database formats"><tt class="xref py py-mod docutils literal"><span class="pre">whichdb</span></tt></a> to identify.  If a file can be identified, the
+appropriate module is used to open it.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">anydbm</span>
+
+<span class="n">db</span> <span class="o">=</span> <span class="n">anydbm</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&#39;/tmp/example.db&#39;</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;keys():&#39;</span><span class="p">,</span> <span class="n">db</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">db</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+        <span class="k">print</span> <span class="s">&#39;iterating:&#39;</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span>
+    <span class="k">print</span> <span class="s">&#39;db[&quot;author&quot;] =&#39;</span><span class="p">,</span> <span class="n">db</span><span class="p">[</span><span class="s">&#39;author&#39;</span><span class="p">]</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">db</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Once open, <tt class="docutils literal"><span class="pre">db</span></tt> is a dictionary-like object, with support for the
+usual methods:</p>
+<div class="highlight-python"><pre>$ python anydbm_existing.py
+
+keys(): ['author', 'key', 'today']
+iterating: author Doug
+iterating: key value
+iterating: today Sunday
+db["author"] = Doug</pre>
+</div>
+</div>
+<div class="section" id="error-cases">
+<h2>Error Cases<a class="headerlink" href="#error-cases" title="Permalink to this headline">¶</a></h2>
+<p>The keys of the database need to be strings.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">anydbm</span>
+
+<span class="n">db</span> <span class="o">=</span> <span class="n">anydbm</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&#39;/tmp/example.db&#39;</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">db</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;one&#39;</span>
+<span class="k">except</span> <span class="ne">TypeError</span><span class="p">,</span> <span class="n">err</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s">: </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">err</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">db</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Passing another type results in a <a class="reference internal" href="../exceptions/index.html#exceptions-typeerror"><em>TypeError</em></a>.</p>
+<div class="highlight-python"><pre>$ python anydbm_intkeys.py
+
+TypeError: Integer keys only allowed for Recno and Queue DB's</pre>
+</div>
+<p>Values must be strings or <tt class="xref docutils literal"><span class="pre">None</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">anydbm</span>
+
+<span class="n">db</span> <span class="o">=</span> <span class="n">anydbm</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&#39;/tmp/example.db&#39;</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">db</span><span class="p">[</span><span class="s">&#39;one&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="k">except</span> <span class="ne">TypeError</span><span class="p">,</span> <span class="n">err</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s">: </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">err</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">db</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>A similar <a class="reference internal" href="../exceptions/index.html#exceptions-typeerror"><em>TypeError</em></a> is raised if a value
+is not a string.</p>
+<div class="highlight-python"><pre>$ python anydbm_intvalue.py
+
+TypeError: Data values must be of type string or None.</pre>
+</div>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt>Module <a class="reference internal" href="../shelve/index.html#module-shelve" title="shelve: Persistent storage of arbitrary Python objects"><tt class="xref py py-mod docutils literal"><span class="pre">shelve</span></tt></a></dt>
+<dd>Examples for the <a class="reference internal" href="../shelve/index.html#module-shelve" title="shelve: Persistent storage of arbitrary Python objects"><tt class="xref py py-mod docutils literal"><span class="pre">shelve</span></tt></a> module, which uses <a class="reference internal" href="#module-anydbm" title="anydbm: anydbm provides a generic dictionary-like interface to DBM-style, string-keyed databases"><tt class="xref py py-mod docutils literal"><span class="pre">anydbm</span></tt></a> to store data.</dd>
+<dt><a class="reference external" href="http://docs.python.org/library/anydbm.html">anydbm</a></dt>
+<dd>The standard library documentation for this module.</dd>
+<dt><a class="reference internal" href="../articles/data_persistence.html#article-data-persistence"><em>Data Persistence and Exchange</em></a></dt>
+<dd>Descriptions of other modules for storing data.</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../dbhash/index.html" title="dbhash – DBM-style API for the BSD database library"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../persistence.html" title="Data Persistence"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../persistence.html" >Data Persistence</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright Doug Hellmann.
+      Last updated on Oct 24, 2010.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+
+    <br/><a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/88x31.png"/></a>
+    
+    </div>
+  </body>
+</html>

@@ -1,0 +1,309 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Multicast &mdash; Python Module of the Week</title>
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.132',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="socket – Network Communication" href="index.html" />
+    <link rel="next" title="Sending Binary Data" href="binary.html" />
+    <link rel="prev" title="Unix Domain Sockets" href="uds.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="binary.html" title="Sending Binary Data"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="uds.html" title="Unix Domain Sockets"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../internet_protocols.html" >Internet Protocols and Support</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">socket &#8211; Network Communication</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Multicast</a><ul>
+<li><a class="reference internal" href="#sending-multicast-messages">Sending Multicast Messages</a></li>
+<li><a class="reference internal" href="#receiving-multicast-messages">Receiving Multicast Messages</a></li>
+<li><a class="reference internal" href="#example-output">Example Output</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="uds.html"
+                        title="previous chapter">Unix Domain Sockets</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="binary.html"
+                        title="next chapter">Sending Binary Data</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/socket/multicast.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="multicast">
+<h1>Multicast<a class="headerlink" href="#multicast" title="Permalink to this headline">¶</a></h1>
+<p>Point-to-point connections handle a lot of communication needs, but
+passing the same information between many peers becomes challenging as
+the number of direct connections grows.  Sending messages separately
+to each recipient consumes additional processing time and bandwidth,
+which can be a problem for applications such as streaming video or
+audio.  Using <em>multicast</em> to deliver messages to more than one
+endpoint at a time achieves better efficiency because the network
+infrastructure ensures that the packets are delivered to all
+recipients.</p>
+<p>Multicast messages are always sent using UDP, since TCP requires an
+end-to-end communication channel.  The addresses for multicast, called
+<em>multicast groups</em>, are a subset of regular IPv4 address range
+(224.0.0.0 through 230.255.255.255) reserved for multicast traffic.
+These addresses are treated specially by network routers and switches,
+so messages sent to the group can be distributed over the Internet to
+all recipients that have joined the group.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Some managed switches and routers have multicast traffic disabled
+by default.  If you have trouble with the example programs, check
+your network hardware settings.</p>
+</div>
+<div class="section" id="sending-multicast-messages">
+<h2>Sending Multicast Messages<a class="headerlink" href="#sending-multicast-messages" title="Permalink to this headline">¶</a></h2>
+<p>This modified echo client will send a message to a multicast group,
+then report all of the responses it receives.  Since it has no way of
+knowing how many responses to expect, it uses a timeout value on the
+socket to avoid blocking indefinitely waiting for an answer.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">socket</span>
+<span class="kn">import</span> <span class="nn">struct</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="n">message</span> <span class="o">=</span> <span class="s">&#39;very important data&#39;</span>
+<span class="n">multicast_group</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;224.3.29.71&#39;</span><span class="p">,</span> <span class="mi">10000</span><span class="p">)</span>
+
+<span class="c"># Create the datagram socket</span>
+<span class="n">sock</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_DGRAM</span><span class="p">)</span>
+
+<span class="c"># Set a timeout so the socket does not block indefinitely when trying</span>
+<span class="c"># to receive data.</span>
+<span class="n">sock</span><span class="o">.</span><span class="n">settimeout</span><span class="p">(</span><span class="mf">0.2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The socket also needs to be configured with a <em>time-to-live</em> value
+(TTL) for the messages.  The TTL controls how many networks will
+receive the packet.  Set the TTL with the <tt class="xref py py-const docutils literal"><span class="pre">IP_MULTICAST_TTL</span></tt>
+option and <tt class="xref py py-func docutils literal"><span class="pre">setsockopt()</span></tt>.  The default, <tt class="docutils literal"><span class="pre">1</span></tt>, means that the
+packets are not forwarded by the router beyond the current network
+segment.  The value can range up to 255, and should be packed into a
+single byte.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># Set the time-to-live for messages to 1 so they do not go past the</span>
+<span class="c"># local network segment.</span>
+<span class="n">ttl</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s">&#39;b&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">sock</span><span class="o">.</span><span class="n">setsockopt</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">IPPROTO_IP</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">IP_MULTICAST_TTL</span><span class="p">,</span> <span class="n">ttl</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The rest of the sender looks like the UDP echo client, except that it
+expects multiple responses so uses a loop to call <tt class="xref py py-func docutils literal"><span class="pre">recvfrom()</span></tt>
+until it times out.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">try</span><span class="p">:</span>
+
+    <span class="c"># Send data to the multicast group</span>
+    <span class="k">print</span> <span class="o">&gt;&gt;</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&#39;sending &quot;</span><span class="si">%s</span><span class="s">&quot;&#39;</span> <span class="o">%</span> <span class="n">message</span>
+    <span class="n">sent</span> <span class="o">=</span> <span class="n">sock</span><span class="o">.</span><span class="n">sendto</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">multicast_group</span><span class="p">)</span>
+
+    <span class="c"># Look for responses from all recipients</span>
+    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="k">print</span> <span class="o">&gt;&gt;</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&#39;waiting to receive&#39;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">data</span><span class="p">,</span> <span class="n">server</span> <span class="o">=</span> <span class="n">sock</span><span class="o">.</span><span class="n">recvfrom</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">socket</span><span class="o">.</span><span class="n">timeout</span><span class="p">:</span>
+            <span class="k">print</span> <span class="o">&gt;&gt;</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&#39;timed out, no more responses&#39;</span>
+            <span class="k">break</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">print</span> <span class="o">&gt;&gt;</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&#39;received &quot;</span><span class="si">%s</span><span class="s">&quot; from </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">server</span><span class="p">)</span>
+
+<span class="k">finally</span><span class="p">:</span>
+    <span class="k">print</span> <span class="o">&gt;&gt;</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&#39;closing socket&#39;</span>
+    <span class="n">sock</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="receiving-multicast-messages">
+<h2>Receiving Multicast Messages<a class="headerlink" href="#receiving-multicast-messages" title="Permalink to this headline">¶</a></h2>
+<p>The first step to establishing a multicast receiver is to create the
+UDP socket.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">socket</span>
+<span class="kn">import</span> <span class="nn">struct</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="n">multicast_group</span> <span class="o">=</span> <span class="s">&#39;224.3.29.71&#39;</span>
+<span class="n">server_address</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">,</span> <span class="mi">10000</span><span class="p">)</span>
+
+<span class="c"># Create the socket</span>
+<span class="n">sock</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_DGRAM</span><span class="p">)</span>
+
+<span class="c"># Bind to the server address</span>
+<span class="n">sock</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">server_address</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>After the regular socket is created and bound to a port, it can be
+added to the multicast group by using <tt class="xref py py-func docutils literal"><span class="pre">setsockopt()</span></tt> to change the
+<tt class="xref py py-const docutils literal"><span class="pre">IP_ADD_MEMBERSHIP</span></tt> option.  The option value is the 8-byte
+packed representation of the multicast group address followed by the
+network interface on which the server should listen for the traffic,
+identified by its IP address.  In this case, the receiver listens on
+all interfaces using <tt class="xref py py-const docutils literal"><span class="pre">INADDR_ANY</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># Tell the operating system to add the socket to the multicast group</span>
+<span class="c"># on all interfaces.</span>
+<span class="n">group</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">inet_aton</span><span class="p">(</span><span class="n">multicast_group</span><span class="p">)</span>
+<span class="n">mreq</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s">&#39;4sL&#39;</span><span class="p">,</span> <span class="n">group</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">INADDR_ANY</span><span class="p">)</span>
+<span class="n">sock</span><span class="o">.</span><span class="n">setsockopt</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">IPPROTO_IP</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">IP_ADD_MEMBERSHIP</span><span class="p">,</span> <span class="n">mreq</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The main loop for the receiver is just like the regular UDP echo
+server.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># Receive/respond loop</span>
+<span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+    <span class="k">print</span> <span class="o">&gt;&gt;</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">waiting to receive message&#39;</span>
+    <span class="n">data</span><span class="p">,</span> <span class="n">address</span> <span class="o">=</span> <span class="n">sock</span><span class="o">.</span><span class="n">recvfrom</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
+    
+    <span class="k">print</span> <span class="o">&gt;&gt;</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&#39;received </span><span class="si">%s</span><span class="s"> bytes from </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">address</span><span class="p">)</span>
+    <span class="k">print</span> <span class="o">&gt;&gt;</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span> <span class="n">data</span>
+
+    <span class="k">print</span> <span class="o">&gt;&gt;</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&#39;sending acknowledgement to&#39;</span><span class="p">,</span> <span class="n">address</span>
+    <span class="n">sock</span><span class="o">.</span><span class="n">sendto</span><span class="p">(</span><span class="s">&#39;ack&#39;</span><span class="p">,</span> <span class="n">address</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="example-output">
+<h2>Example Output<a class="headerlink" href="#example-output" title="Permalink to this headline">¶</a></h2>
+<p>This example shows the multicast receiver running on two different
+hosts, <tt class="docutils literal"><span class="pre">A</span></tt> has address <tt class="docutils literal"><span class="pre">192.168.1.17</span></tt> and <tt class="docutils literal"><span class="pre">B</span></tt> has address
+<tt class="docutils literal"><span class="pre">192.168.1.8</span></tt>.</p>
+<div class="highlight-python"><pre>[A]$ python ./socket_multicast_receiver.py
+
+waiting to receive message
+received 19 bytes from ('192.168.1.17', 51382)
+very important data
+sending acknowledgement to ('192.168.1.17', 51382)
+
+[B]$ python ./socket_multicast_receiver.py
+
+binding to ('', 10000)
+
+waiting to receive message
+received 19 bytes from ('192.168.1.17', 51382)
+very important data
+sending acknowledgement to ('192.168.1.17', 51382)</pre>
+</div>
+<p>The sender is running on host <tt class="docutils literal"><span class="pre">A</span></tt>.</p>
+<div class="highlight-python"><pre>$ python ./socket_multicast_sender.py
+
+sending "very important data"
+waiting to receive
+received "ack" from ('192.168.1.17', 10000)
+waiting to receive
+received "ack" from ('192.168.1.8', 10000)
+waiting to receive
+timed out, no more responses
+closing socket</pre>
+</div>
+<p>The message is sent one time, and two acknowledgements of the outgoing
+message are received, one from each of host <tt class="docutils literal"><span class="pre">A</span></tt> and <tt class="docutils literal"><span class="pre">B</span></tt>.</p>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://en.wikipedia.org/wiki/Multicast">Wikipedia: Multicast</a></dt>
+<dd>Article describing technical details of multicasting.</dd>
+<dt><a class="reference external" href="http://en.wikipedia.org/wiki/IP_multicast">Wikipedia: IP Multicast</a></dt>
+<dd>Article about IP multicasting, with information about addressing.</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="binary.html" title="Sending Binary Data"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="uds.html" title="Unix Domain Sockets"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../internet_protocols.html" >Internet Protocols and Support</a> &raquo;</li>
+          <li><a href="index.html" >socket &#8211; Network Communication</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright Doug Hellmann.
+      Last updated on Oct 24, 2010.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+
+    <br/><a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/88x31.png"/></a>
+    
+    </div>
+  </body>
+</html>

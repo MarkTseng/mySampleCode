@@ -1,0 +1,314 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>resource – System resource management &mdash; Python Module of the Week</title>
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.132',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="Unix-specific Services" href="../unix.html" />
+    <link rel="next" title="Interprocess Communication and Networking" href="../ipc.html" />
+    <link rel="prev" title="pwd – Unix Password Database" href="../pwd/index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../ipc.html" title="Interprocess Communication and Networking"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../pwd/index.html" title="pwd – Unix Password Database"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../unix.html" accesskey="U">Unix-specific Services</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">resource &#8211; System resource management</a><ul>
+<li><a class="reference internal" href="#current-usage">Current Usage</a></li>
+<li><a class="reference internal" href="#resource-limits">Resource Limits</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../pwd/index.html"
+                        title="previous chapter">pwd &#8211; Unix Password Database</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../ipc.html"
+                        title="next chapter">Interprocess Communication and Networking</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/resource/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-resource">
+<span id="resource-system-resource-management"></span><h1>resource &#8211; System resource management<a class="headerlink" href="#module-resource" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Purpose:</th><td class="field-body">Manage the system resource limits for a Unix program.</td>
+</tr>
+<tr class="field"><th class="field-name">Python Version:</th><td class="field-body">1.5.2</td>
+</tr>
+</tbody>
+</table>
+<p>The functions in <a class="reference internal" href="#module-resource" title="resource: System resource management"><tt class="xref py py-mod docutils literal"><span class="pre">resource</span></tt></a> probe the current system resources
+consumed by a process, and place limits on them to control how much
+load a program can impose on a system.</p>
+<div class="section" id="current-usage">
+<h2>Current Usage<a class="headerlink" href="#current-usage" title="Permalink to this headline">¶</a></h2>
+<p>Use <tt class="xref py py-func docutils literal"><span class="pre">getrusage()</span></tt> to probe the resources used by the current
+process and/or its children.  The return value is a data structure
+containing several resource metrics based on the current state of the
+system.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Not all of the resource values gathered are displayed here.  Refer
+to the <a class="reference external" href="http://docs.python.org/library/resource.html#resource.getrusage">stdlib docs</a>
+for a more complete list.</p>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">resource</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="n">usage</span> <span class="o">=</span> <span class="n">resource</span><span class="o">.</span><span class="n">getrusage</span><span class="p">(</span><span class="n">resource</span><span class="o">.</span><span class="n">RUSAGE_SELF</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">desc</span> <span class="ow">in</span> <span class="p">[</span>
+    <span class="p">(</span><span class="s">&#39;ru_utime&#39;</span><span class="p">,</span> <span class="s">&#39;User time&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s">&#39;ru_stime&#39;</span><span class="p">,</span> <span class="s">&#39;System time&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s">&#39;ru_maxrss&#39;</span><span class="p">,</span> <span class="s">&#39;Max. Resident Set Size&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s">&#39;ru_ixrss&#39;</span><span class="p">,</span> <span class="s">&#39;Shared Memory Size&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s">&#39;ru_idrss&#39;</span><span class="p">,</span> <span class="s">&#39;Unshared Memory Size&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s">&#39;ru_isrss&#39;</span><span class="p">,</span> <span class="s">&#39;Stack Size&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s">&#39;ru_inblock&#39;</span><span class="p">,</span> <span class="s">&#39;Block inputs&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s">&#39;ru_oublock&#39;</span><span class="p">,</span> <span class="s">&#39;Block outputs&#39;</span><span class="p">),</span>
+    <span class="p">]:</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="si">%-25s</span><span class="s"> (</span><span class="si">%-10s</span><span class="s">) = </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">desc</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">usage</span><span class="p">,</span> <span class="n">name</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Because the test program is extremely simple, it does not use very
+many resources:</p>
+<div class="highlight-python"><pre>$ python resource_getrusage.py
+
+User time                 (ru_utime  ) = 0.012333
+System time               (ru_stime  ) = 0.009865
+Max. Resident Set Size    (ru_maxrss ) = 3854336
+Shared Memory Size        (ru_ixrss  ) = 0
+Unshared Memory Size      (ru_idrss  ) = 0
+Stack Size                (ru_isrss  ) = 0
+Block inputs              (ru_inblock) = 0
+Block outputs             (ru_oublock) = 0</pre>
+</div>
+</div>
+<div class="section" id="resource-limits">
+<h2>Resource Limits<a class="headerlink" href="#resource-limits" title="Permalink to this headline">¶</a></h2>
+<p>Separate from the current actual usage, it is possible to check the
+<em>limits</em> imposed on the application, and then change them.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">resource</span>
+
+<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">desc</span> <span class="ow">in</span> <span class="p">[</span>
+    <span class="p">(</span><span class="s">&#39;RLIMIT_CORE&#39;</span><span class="p">,</span> <span class="s">&#39;core file size&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s">&#39;RLIMIT_CPU&#39;</span><span class="p">,</span>  <span class="s">&#39;CPU time&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s">&#39;RLIMIT_FSIZE&#39;</span><span class="p">,</span> <span class="s">&#39;file size&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s">&#39;RLIMIT_DATA&#39;</span><span class="p">,</span> <span class="s">&#39;heap size&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s">&#39;RLIMIT_STACK&#39;</span><span class="p">,</span> <span class="s">&#39;stack size&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s">&#39;RLIMIT_RSS&#39;</span><span class="p">,</span> <span class="s">&#39;resident set size&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s">&#39;RLIMIT_NPROC&#39;</span><span class="p">,</span> <span class="s">&#39;number of processes&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s">&#39;RLIMIT_NOFILE&#39;</span><span class="p">,</span> <span class="s">&#39;number of open files&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s">&#39;RLIMIT_MEMLOCK&#39;</span><span class="p">,</span> <span class="s">&#39;lockable memory address&#39;</span><span class="p">),</span>
+    <span class="p">]:</span>
+    <span class="n">limit_num</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">resource</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+    <span class="n">soft</span><span class="p">,</span> <span class="n">hard</span> <span class="o">=</span> <span class="n">resource</span><span class="o">.</span><span class="n">getrlimit</span><span class="p">(</span><span class="n">limit_num</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;Maximum </span><span class="si">%-25s</span><span class="s"> (</span><span class="si">%-15s</span><span class="s">) : </span><span class="si">%20s</span><span class="s"> </span><span class="si">%20s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">desc</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">soft</span><span class="p">,</span> <span class="n">hard</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The return value for each limit is a tuple containing the <em>soft</em> limit
+imposed by the current configuration and the <em>hard</em> limit imposed by
+the operating system.</p>
+<div class="highlight-python"><pre>$ python resource_getrlimit.py
+
+Maximum core file size            (RLIMIT_CORE    ) :                    0  9223372036854775807
+Maximum CPU time                  (RLIMIT_CPU     ) :  9223372036854775807  9223372036854775807
+Maximum file size                 (RLIMIT_FSIZE   ) :  9223372036854775807  9223372036854775807
+Maximum heap size                 (RLIMIT_DATA    ) :  9223372036854775807  9223372036854775807
+Maximum stack size                (RLIMIT_STACK   ) :              8388608             67104768
+Maximum resident set size         (RLIMIT_RSS     ) :  9223372036854775807  9223372036854775807
+Maximum number of processes       (RLIMIT_NPROC   ) :                  266                  532
+Maximum number of open files      (RLIMIT_NOFILE  ) :                 7168  9223372036854775807
+Maximum lockable memory address   (RLIMIT_MEMLOCK ) :  9223372036854775807  9223372036854775807</pre>
+</div>
+<p>The limits can be changed with <tt class="xref py py-func docutils literal"><span class="pre">setrlimit()</span></tt>.  For example, to
+control the number of files a process can open the <tt class="xref py py-const docutils literal"><span class="pre">RLIMIT_NOFILE</span></tt>
+value can be set to use a smaller soft limit value.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">resource</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">soft</span><span class="p">,</span> <span class="n">hard</span> <span class="o">=</span> <span class="n">resource</span><span class="o">.</span><span class="n">getrlimit</span><span class="p">(</span><span class="n">resource</span><span class="o">.</span><span class="n">RLIMIT_NOFILE</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;Soft limit starts as  :&#39;</span><span class="p">,</span> <span class="n">soft</span>
+
+<span class="n">resource</span><span class="o">.</span><span class="n">setrlimit</span><span class="p">(</span><span class="n">resource</span><span class="o">.</span><span class="n">RLIMIT_NOFILE</span><span class="p">,</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">hard</span><span class="p">))</span>
+
+<span class="n">soft</span><span class="p">,</span> <span class="n">hard</span> <span class="o">=</span> <span class="n">resource</span><span class="o">.</span><span class="n">getrlimit</span><span class="p">(</span><span class="n">resource</span><span class="o">.</span><span class="n">RLIMIT_NOFILE</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;Soft limit changed to :&#39;</span><span class="p">,</span> <span class="n">soft</span>
+
+<span class="n">random</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;/dev/random&#39;</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;random has fd =&#39;</span><span class="p">,</span> <span class="n">random</span><span class="o">.</span><span class="n">fileno</span><span class="p">()</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">null</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;/dev/null&#39;</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">IOError</span><span class="p">,</span> <span class="n">err</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">err</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;null has fd =&#39;</span><span class="p">,</span> <span class="n">null</span><span class="o">.</span><span class="n">fileno</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python"><pre>$ python resource_setrlimit_nofile.py
+
+Soft limit starts as  : 7168
+Soft limit changed to : 4
+random has fd = 3
+[Errno 24] Too many open files: '/dev/null'</pre>
+</div>
+<p>It can also be useful to limit the amount of CPU time a process should
+consume, to avoid eating up too much time.  When the process runs past
+the allotted amount of time, it it sent a <tt class="xref py py-const docutils literal"><span class="pre">SIGXCPU</span></tt> signal.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">resource</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">signal</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="c"># Set up a signal handler to notify us</span>
+<span class="c"># when we run out of time.</span>
+<span class="k">def</span> <span class="nf">time_expired</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">stack</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&#39;EXPIRED :&#39;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">ctime</span><span class="p">()</span>
+    <span class="k">raise</span> <span class="ne">SystemExit</span><span class="p">(</span><span class="s">&#39;(time ran out)&#39;</span><span class="p">)</span>
+
+<span class="n">signal</span><span class="o">.</span><span class="n">signal</span><span class="p">(</span><span class="n">signal</span><span class="o">.</span><span class="n">SIGXCPU</span><span class="p">,</span> <span class="n">time_expired</span><span class="p">)</span>
+
+<span class="c"># Adjust the CPU time limit</span>
+<span class="n">soft</span><span class="p">,</span> <span class="n">hard</span> <span class="o">=</span> <span class="n">resource</span><span class="o">.</span><span class="n">getrlimit</span><span class="p">(</span><span class="n">resource</span><span class="o">.</span><span class="n">RLIMIT_CPU</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;Soft limit starts as  :&#39;</span><span class="p">,</span> <span class="n">soft</span>
+
+<span class="n">resource</span><span class="o">.</span><span class="n">setrlimit</span><span class="p">(</span><span class="n">resource</span><span class="o">.</span><span class="n">RLIMIT_CPU</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">hard</span><span class="p">))</span>
+
+<span class="n">soft</span><span class="p">,</span> <span class="n">hard</span> <span class="o">=</span> <span class="n">resource</span><span class="o">.</span><span class="n">getrlimit</span><span class="p">(</span><span class="n">resource</span><span class="o">.</span><span class="n">RLIMIT_CPU</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;Soft limit changed to :&#39;</span><span class="p">,</span> <span class="n">soft</span>
+<span class="k">print</span>
+
+<span class="c"># Consume some CPU time in a pointless exercise</span>
+<span class="k">print</span> <span class="s">&#39;Starting:&#39;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">ctime</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">200000</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">200000</span><span class="p">):</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="n">i</span> <span class="o">*</span> <span class="n">i</span>
+
+<span class="c"># We should never make it this far</span>
+<span class="k">print</span> <span class="s">&#39;Exiting :&#39;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">ctime</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Normally the signal handler should flush all open files and close
+them, but in this case it just prints a message and exits.</p>
+<div class="highlight-python"><pre>$ python resource_setrlimit_cpu.py
+
+Soft limit starts as  : 9223372036854775807
+Soft limit changed to : 1
+
+Starting: Sun Oct 24 08:54:25 2010
+EXPIRED : Sun Oct 24 08:54:26 2010
+(time ran out)</pre>
+</div>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://docs.python.org/library/resource.html">resource</a></dt>
+<dd>The standard library documentation for this module.</dd>
+<dt><a class="reference internal" href="../signal/index.html#module-signal" title="signal: Receive notification of asynchronous system events"><tt class="xref py py-mod docutils literal"><span class="pre">signal</span></tt></a></dt>
+<dd>For details on registering signal handlers.</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../ipc.html" title="Interprocess Communication and Networking"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../pwd/index.html" title="pwd – Unix Password Database"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../unix.html" >Unix-specific Services</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright Doug Hellmann.
+      Last updated on Oct 24, 2010.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+
+    <br/><a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/88x31.png"/></a>
+    
+    </div>
+  </body>
+</html>

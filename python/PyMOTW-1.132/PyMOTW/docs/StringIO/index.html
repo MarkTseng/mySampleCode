@@ -1,0 +1,212 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>StringIO and cStringIO – Work with text buffers using file-like API &mdash; Python Module of the Week</title>
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.132',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="String Services" href="../string_services.html" />
+    <link rel="next" title="re – Regular Expressions" href="../re/index.html" />
+    <link rel="prev" title="string – Working with text" href="../string/index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../re/index.html" title="re – Regular Expressions"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../string/index.html" title="string – Working with text"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../string_services.html" accesskey="U">String Services</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">StringIO and cStringIO &#8211; Work with text buffers using file-like API</a><ul>
+<li><a class="reference internal" href="#example">Example</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../string/index.html"
+                        title="previous chapter">string &#8211; Working with text</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../re/index.html"
+                        title="next chapter">re &#8211; Regular Expressions</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/StringIO/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-StringIO">
+<span id="stringio-and-cstringio-work-with-text-buffers-using-file-like-api"></span><h1>StringIO and cStringIO &#8211; Work with text buffers using file-like API<a class="headerlink" href="#module-StringIO" title="Permalink to this headline">¶</a></h1>
+<span class="target" id="module-cStringIO"></span><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Purpose:</th><td class="field-body">Work with text buffers using file-like API</td>
+</tr>
+<tr class="field"><th class="field-name">Python Version:</th><td class="field-body">StringIO: 1.4, cStringIO: 1.5</td>
+</tr>
+</tbody>
+</table>
+<p><a class="reference internal" href="#module-StringIO" title="StringIO: Work with text buffers using file-like API"><tt class="xref py py-class docutils literal"><span class="pre">StringIO</span></tt></a> provides a convenient means of working with text in
+memory using the file API (read, write. etc.). There are two separate
+implementations. The <a class="reference internal" href="#module-cStringIO" title="cStringIO: Work with text buffers using file-like API"><tt class="xref py py-mod docutils literal"><span class="pre">cStringIO</span></tt></a> version is written in C for
+speed, while <a class="reference internal" href="#module-StringIO" title="StringIO: Work with text buffers using file-like API"><tt class="xref py py-mod docutils literal"><span class="pre">StringIO</span></tt></a> is written in Python for
+portability. Using <a class="reference internal" href="#module-cStringIO" title="cStringIO: Work with text buffers using file-like API"><tt class="xref py py-mod docutils literal"><span class="pre">cStringIO</span></tt></a> to build large strings can offer
+performance savings over some other string conctatenation techniques.</p>
+<div class="section" id="example">
+<h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+<p>Here are some pretty standard, simple, examples of using
+<a class="reference internal" href="#module-StringIO" title="StringIO: Work with text buffers using file-like API"><tt class="xref py py-class docutils literal"><span class="pre">StringIO</span></tt></a> buffers:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># Find the best implementation available on this platform</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">cStringIO</span> <span class="kn">import</span> <span class="n">StringIO</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">StringIO</span> <span class="kn">import</span> <span class="n">StringIO</span>
+
+<span class="c"># Writing to a buffer</span>
+<span class="n">output</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">()</span>
+<span class="n">output</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;This goes into the buffer. &#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="o">&gt;&gt;</span><span class="n">output</span><span class="p">,</span> <span class="s">&#39;And so does this.&#39;</span>
+
+<span class="c"># Retrieve the value written</span>
+<span class="k">print</span> <span class="n">output</span><span class="o">.</span><span class="n">getvalue</span><span class="p">()</span>
+
+<span class="n">output</span><span class="o">.</span><span class="n">close</span><span class="p">()</span> <span class="c"># discard buffer memory</span>
+
+<span class="c"># Initialize a read buffer</span>
+<span class="nb">input</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">(</span><span class="s">&#39;Inital value for read buffer&#39;</span><span class="p">)</span>
+
+<span class="c"># Read from the buffer</span>
+<span class="k">print</span> <span class="nb">input</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This example uses <tt class="xref py py-func docutils literal"><span class="pre">read()</span></tt>, but the <a class="reference internal" href="../readline/index.html#module-readline" title="readline: Interface to the GNU readline library"><tt class="xref py py-func docutils literal"><span class="pre">readline()</span></tt></a> and
+<tt class="xref py py-func docutils literal"><span class="pre">readlines()</span></tt> methods are also available. The <a class="reference internal" href="#module-StringIO" title="StringIO: Work with text buffers using file-like API"><tt class="xref py py-class docutils literal"><span class="pre">StringIO</span></tt></a>
+class also provides a <tt class="xref py py-func docutils literal"><span class="pre">seek()</span></tt> method so it is possible to jump
+around in a buffer while reading, which can be useful for rewinding if
+you are using some sort of look-ahead parsing algorithm.</p>
+<div class="highlight-python"><pre>$ python stringio_examples.py
+
+This goes into the buffer. And so does this.
+
+Inital value for read buffer</pre>
+</div>
+<p>Real world applications of <a class="reference internal" href="#module-StringIO" title="StringIO: Work with text buffers using file-like API"><tt class="xref py py-mod docutils literal"><span class="pre">StringIO</span></tt></a> include a web application
+stack where various parts of the stack may add text to the response,
+or testing the output generated by parts of a program which typically
+write to a file.</p>
+<p>The application we are building at work includes a shell scripting
+interface in the form of several command line programs. Some of these
+programs are responsible for pulling data from the database and
+dumping it on the console (either to show the user, or so the text can
+serve as input to another command). The commands share a set of
+formatter plugins to produce a text representation of an object in a
+variety of ways (XML, bash syntax, human readable, etc.). Since the
+formatters normally write to standard output, testing the results
+would be a little tricky without the StringIO module. Using StringIO
+to intercept the output of the formatter gives us an easy way to
+collect the output in memory to compare against expected results.</p>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://docs.python.org/lib/module-StringIO.html">StringIO</a></dt>
+<dd>Standard library documentation for this module.</dd>
+<dt><a class="reference external" href="http://effbot.org/librarybook/stringio.htm">The StringIO module ::: www.effbot.org</a></dt>
+<dd>effbot&#8217;s examples with StringIO</dd>
+<dt><a class="reference external" href="http://www.skymind.com/%7Eocrow/python_string/">Efficient String Concatenation in Python</a></dt>
+<dd>Examines various methods of combining strings and their relative merits.</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../re/index.html" title="re – Regular Expressions"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../string/index.html" title="string – Working with text"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../string_services.html" >String Services</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright Doug Hellmann.
+      Last updated on Oct 24, 2010.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+
+    <br/><a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/88x31.png"/></a>
+    
+    </div>
+  </body>
+</html>

@@ -1,0 +1,199 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>socket – Network Communication &mdash; Python Module of the Week</title>
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.132',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="Internet Protocols and Support" href="../internet_protocols.html" />
+    <link rel="next" title="Addressing, Protocol Families and Socket Types" href="addressing.html" />
+    <link rel="prev" title="smtplib – Simple Mail Transfer Protocol client" href="../smtplib/index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="addressing.html" title="Addressing, Protocol Families and Socket Types"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../smtplib/index.html" title="smtplib – Simple Mail Transfer Protocol client"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../internet_protocols.html" accesskey="U">Internet Protocols and Support</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../smtplib/index.html"
+                        title="previous chapter">smtplib &#8211; Simple Mail Transfer Protocol client</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="addressing.html"
+                        title="next chapter">Addressing, Protocol Families and Socket Types</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/socket/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-socket">
+<span id="socket-network-communication"></span><h1>socket &#8211; Network Communication<a class="headerlink" href="#module-socket" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Purpose:</th><td class="field-body">Provides access to network communication</td>
+</tr>
+<tr class="field"><th class="field-name">Python Version:</th><td class="field-body">1.4 and later</td>
+</tr>
+</tbody>
+</table>
+<p>The <a class="reference internal" href="#module-socket" title="socket: Network communication"><tt class="xref py py-mod docutils literal"><span class="pre">socket</span></tt></a> module exposes the low-level C API for communicating
+over a network using the BSD socket interface.  It includes the
+<a class="reference internal" href="#module-socket" title="socket: Network communication"><tt class="xref py py-class docutils literal"><span class="pre">socket</span></tt></a> class, for handling the actual data channel, and
+functions for network-related tasks such as converting a server&#8217;s name
+to an address and formatting data to be sent across the network.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="addressing.html">Addressing, Protocol Families and Socket Types</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="addressing.html#looking-up-hosts-on-the-network">Looking up Hosts on the Network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="addressing.html#finding-service-information">Finding Service Information</a></li>
+<li class="toctree-l2"><a class="reference internal" href="addressing.html#looking-up-server-addresses">Looking Up Server Addresses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="addressing.html#ip-address-representations">IP Address Representations</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tcp.html">TCP/IP Client and Server</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tcp.html#echo-server">Echo Server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tcp.html#echo-client">Echo Client</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tcp.html#client-and-server-together">Client and Server Together</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tcp.html#easy-client-connections">Easy Client Connections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tcp.html#choosing-an-address-for-listening">Choosing an Address for Listening</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="udp.html">User Datagram Client and Server</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="udp.html#echo-server">Echo Server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="udp.html#echo-client">Echo Client</a></li>
+<li class="toctree-l2"><a class="reference internal" href="udp.html#client-and-server-together">Client and Server Together</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="uds.html">Unix Domain Sockets</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="uds.html#permissions">Permissions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uds.html#communication-between-parent-and-child-processes">Communication Between Parent and Child Processes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="multicast.html">Multicast</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="multicast.html#sending-multicast-messages">Sending Multicast Messages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multicast.html#receiving-multicast-messages">Receiving Multicast Messages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multicast.html#example-output">Example Output</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="binary.html">Sending Binary Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nonblocking.html">Non-blocking Communication and Timeouts</a></li>
+</ul>
+</div>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://docs.python.org/library/socket.html">socket</a></dt>
+<dd>The standard library documentation for this module.</dd>
+<dt><a class="reference external" href="http://docs.python.org/howto/sockets.html">Socket Programming HOWOTO</a></dt>
+<dd>An instructional guide by Gordon McMillan, included in the
+standard library documentation.</dd>
+<dt><a class="reference internal" href="../select/index.html#module-select" title="select: Wait for I/O Efficiently"><tt class="xref py py-mod docutils literal"><span class="pre">select</span></tt></a></dt>
+<dd>Testing a socket to see if it is ready for reading or writing.</dd>
+<dt><a class="reference internal" href="../SocketServer/index.html#module-SocketServer" title="SocketServer: Creating network servers."><tt class="xref py py-mod docutils literal"><span class="pre">SocketServer</span></tt></a></dt>
+<dd>Framework for creating network servers.</dd>
+<dt><a class="reference internal" href="../asyncore/index.html#module-asyncore" title="asyncore: Asynchronous I/O handler"><tt class="xref py py-mod docutils literal"><span class="pre">asyncore</span></tt></a> and <a class="reference internal" href="../asynchat/index.html#module-asynchat" title="asynchat: Asynchronous protocol handler"><tt class="xref py py-mod docutils literal"><span class="pre">asynchat</span></tt></a></dt>
+<dd>Frameworks for asynchronous communication.</dd>
+<dt><a class="reference internal" href="../urllib/index.html#module-urllib" title="urllib: Accessing remote resources that don't need authentication, cookies, etc."><tt class="xref py py-mod docutils literal"><span class="pre">urllib</span></tt></a> and <a class="reference internal" href="../urllib2/index.html#module-urllib2" title="urllib2: Library for opening URLs."><tt class="xref py py-mod docutils literal"><span class="pre">urllib2</span></tt></a></dt>
+<dd>Most network clients should use the more convenient libraries
+for accessing remote resoruces through a URL.</dd>
+<dt><em>Unix Network Programming, Volume 1: The Sockets Networking API, 3/E</em></dt>
+<dd>By W. Richard Stevens, Bill Fenner, and Andrew
+M. Rudoff. Published by Addison-Wesley Professional, 2004.
+ISBN-10: 0131411551</dd>
+</dl>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="addressing.html" title="Addressing, Protocol Families and Socket Types"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../smtplib/index.html" title="smtplib – Simple Mail Transfer Protocol client"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../internet_protocols.html" >Internet Protocols and Support</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright Doug Hellmann.
+      Last updated on Oct 24, 2010.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+
+    <br/><a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/88x31.png"/></a>
+    
+    </div>
+  </body>
+</html>

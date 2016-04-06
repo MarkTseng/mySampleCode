@@ -1,0 +1,250 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Runtime Environment &mdash; Python Module of the Week</title>
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.132',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="sys – System-specific Configuration" href="index.html" />
+    <link rel="next" title="Memory Management and Limits" href="limits.html" />
+    <link rel="prev" title="Interpreter Settings" href="interpreter.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="limits.html" title="Memory Management and Limits"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="interpreter.html" title="Interpreter Settings"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../runtime_services.html" >Python Runtime Services</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">sys &#8211; System-specific Configuration</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Runtime Environment</a><ul>
+<li><a class="reference internal" href="#command-line-arguments">Command Line Arguments</a></li>
+<li><a class="reference internal" href="#input-and-output-steams">Input and Output Steams</a></li>
+<li><a class="reference internal" href="#returning-status">Returning Status</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="interpreter.html"
+                        title="previous chapter">Interpreter Settings</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="limits.html"
+                        title="next chapter">Memory Management and Limits</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/sys/runtime.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="runtime-environment">
+<span id="sys-runtime"></span><h1>Runtime Environment<a class="headerlink" href="#runtime-environment" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference internal" href="index.html#module-sys" title="sys: System-specific configuration"><tt class="xref py py-mod docutils literal"><span class="pre">sys</span></tt></a> provides low-level APIs for interacting with the system
+outside of an application, by accepting command line arguments,
+accessing user input, and passing messages and status values to the
+user.</p>
+<div class="section" id="command-line-arguments">
+<span id="sys-argv"></span><h2>Command Line Arguments<a class="headerlink" href="#command-line-arguments" title="Permalink to this headline">¶</a></h2>
+<p>The arguments captured by the interpreter are processed there and not
+passed along to the program directly.  Any remaining options and
+arguments, including the name of the script itself, are saved to
+<tt class="xref py py-const docutils literal"><span class="pre">sys.argv</span></tt> in case the program does need to use them.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="k">print</span> <span class="s">&#39;Arguments:&#39;</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span>
+</pre></div>
+</div>
+<p>In the third example below, the <tt class="docutils literal"><span class="pre">-u</span></tt> option is understood by the
+interpreter, and is not passed directly to the program being run.</p>
+<div class="highlight-python"><pre>$ python sys_argv.py
+
+Arguments: ['sys_argv.py']
+
+$ python sys_argv.py -v foo blah
+
+Arguments: ['sys_argv.py', '-v', 'foo', 'blah']
+
+$ python -u sys_argv.py
+
+Arguments: ['sys_argv.py']</pre>
+</div>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference internal" href="../getopt/index.html#module-getopt" title="getopt: Command line option parsing"><tt class="xref py py-mod docutils literal"><span class="pre">getopt</span></tt></a>, <a class="reference internal" href="../optparse/index.html#module-optparse" title="optparse: Command line option parser to replace :mod:`getopt`."><tt class="xref py py-mod docutils literal"><span class="pre">optparse</span></tt></a>, <a class="reference internal" href="../argparse/index.html#module-argparse" title="argparse: Command line option and argument parsing."><tt class="xref py py-mod docutils literal"><span class="pre">argparse</span></tt></a></dt>
+<dd>Modules for parsing command line arguments.</dd>
+</dl>
+</div>
+</div>
+<div class="section" id="input-and-output-steams">
+<span id="sys-input-output"></span><h2>Input and Output Steams<a class="headerlink" href="#input-and-output-steams" title="Permalink to this headline">¶</a></h2>
+<p>Following the Unix paradigm, Python programs can access three file
+descriptors by default.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="k">print</span> <span class="o">&gt;&gt;</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&#39;STATUS: Reading from stdin&#39;</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+<span class="k">print</span> <span class="o">&gt;&gt;</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&#39;STATUS: Writing data to stdout&#39;</span>
+
+<span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+
+<span class="k">print</span> <span class="o">&gt;&gt;</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&#39;STATUS: Done&#39;</span>
+</pre></div>
+</div>
+<p><tt class="xref py py-const docutils literal"><span class="pre">stdin</span></tt> is the standard way to read input, usually from a
+console but also from other programs via a pipeline.  <tt class="xref py py-const docutils literal"><span class="pre">stdout</span></tt>
+is the standard way to write output for a user (to the console) or to
+be sent to the next program in a pipeline.  <tt class="xref py py-const docutils literal"><span class="pre">stderr</span></tt> is
+intended for use with warning or error messages.</p>
+<div class="highlight-python"><pre>$ cat sys_stdio.py | python sys_stdio.py
+
+STATUS: Reading from stdin
+STATUS: Writing data to stdout
+#!/usr/bin/env python
+# encoding: utf-8
+#
+# Copyright (c) 2009 Doug Hellmann All rights reserved.
+#
+"""
+"""
+#end_pymotw_header
+
+import sys
+
+print &gt;&gt;sys.stderr, 'STATUS: Reading from stdin'
+
+data = sys.stdin.read()
+
+print &gt;&gt;sys.stderr, 'STATUS: Writing data to stdout'
+
+sys.stdout.write(data)
+sys.stdout.flush()
+
+print &gt;&gt;sys.stderr, 'STATUS: Done'
+STATUS: Done</pre>
+</div>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference internal" href="../subprocess/index.html#module-subprocess" title="subprocess: Work with additional processes"><tt class="xref py py-mod docutils literal"><span class="pre">subprocess</span></tt></a>, <a class="reference internal" href="../pipes/index.html#module-pipes" title="pipes: Unix shell command pipeline templates"><tt class="xref py py-mod docutils literal"><span class="pre">pipes</span></tt></a></dt>
+<dd>Both subprocess and pipes have features for pipelining programs together.</dd>
+</dl>
+</div>
+</div>
+<div class="section" id="returning-status">
+<h2>Returning Status<a class="headerlink" href="#returning-status" title="Permalink to this headline">¶</a></h2>
+<p>To return an exit code from your program, pass an integer value to
+<tt class="xref py py-func docutils literal"><span class="pre">sys.exit()</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="n">exit_code</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">exit_code</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>A non-zero value means the program exited with an error.</p>
+<div class="highlight-python"><pre>$ python sys_exit.py 0 ; echo "Exited $?"
+
+Exited 0
+
+$ python sys_exit.py 1 ; echo "Exited $?"
+
+Exited 1</pre>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="limits.html" title="Memory Management and Limits"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="interpreter.html" title="Interpreter Settings"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../runtime_services.html" >Python Runtime Services</a> &raquo;</li>
+          <li><a href="index.html" >sys &#8211; System-specific Configuration</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright Doug Hellmann.
+      Last updated on Oct 24, 2010.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+
+    <br/><a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/88x31.png"/></a>
+    
+    </div>
+  </body>
+</html>

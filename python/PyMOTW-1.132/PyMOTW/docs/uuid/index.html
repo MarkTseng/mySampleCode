@@ -1,0 +1,383 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>uuid – Universally unique identifiers &mdash; Python Module of the Week</title>
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.132',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="Internet Protocols and Support" href="../internet_protocols.html" />
+    <link rel="next" title="webbrowser – Displays web pages" href="../webbrowser/index.html" />
+    <link rel="prev" title="urlparse – Split URL into component pieces." href="../urlparse/index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../webbrowser/index.html" title="webbrowser – Displays web pages"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../urlparse/index.html" title="urlparse – Split URL into component pieces."
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../internet_protocols.html" accesskey="U">Internet Protocols and Support</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">uuid &#8211; Universally unique identifiers</a><ul>
+<li><a class="reference internal" href="#uuid-1-ieee-802-mac-address">UUID 1 - IEEE 802 MAC Address</a></li>
+<li><a class="reference internal" href="#uuid-3-and-5-name-based-values">UUID 3 and 5 - Name-Based Values</a></li>
+<li><a class="reference internal" href="#uuid-4-random-values">UUID 4 - Random Values</a></li>
+<li><a class="reference internal" href="#working-with-uuid-objects">Working with UUID Objects</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../urlparse/index.html"
+                        title="previous chapter">urlparse &#8211; Split URL into component pieces.</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../webbrowser/index.html"
+                        title="next chapter">webbrowser &#8211; Displays web pages</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/uuid/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-uuid">
+<span id="uuid-universally-unique-identifiers"></span><h1>uuid &#8211; Universally unique identifiers<a class="headerlink" href="#module-uuid" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Purpose:</th><td class="field-body">The <a class="reference internal" href="#module-uuid" title="uuid: Universally unique identifiers"><tt class="xref py py-mod docutils literal"><span class="pre">uuid</span></tt></a> module implements Universally Unique Identifiers as described in <span class="target" id="index-0"></span><a class="rfc reference external" href="http://tools.ietf.org/html/rfc4122.html"><strong>RFC 4122</strong></a>.</td>
+</tr>
+<tr class="field"><th class="field-name">Python Version:</th><td class="field-body">2.5 and later</td>
+</tr>
+</tbody>
+</table>
+<p><span class="target" id="index-1"></span><a class="rfc reference external" href="http://tools.ietf.org/html/rfc4122.html"><strong>RFC 4122</strong></a> defines a system for creating universally unique
+identifiers for resources in a way that does not require a central
+registrar. UUID values are 128 bits long and &#8220;can guarantee uniqueness
+across space and time&#8221;. They are useful for identifiers for documents,
+hosts, application clients, and other situations where a unique value
+is necessary. The RFC is specifically geared toward creating a Uniform
+Resource Name namespace.</p>
+<p>Three main algorithms are covered by the spec:</p>
+<ul class="simple">
+<li>Using IEEE 802 MAC addresses as a source of uniqueness</li>
+<li>Using pseudo-random numbers</li>
+<li>Using well-known strings combined with cryptographic hashing</li>
+</ul>
+<p>In all cases the seed value is combined with the system clock and a
+clock sequence value (to maintain uniqueness in case the clock was set
+backwards).</p>
+<div class="section" id="uuid-1-ieee-802-mac-address">
+<h2>UUID 1 - IEEE 802 MAC Address<a class="headerlink" href="#uuid-1-ieee-802-mac-address" title="Permalink to this headline">¶</a></h2>
+<p>UUID version 1 values are computed using the MAC address of the host.
+The <a class="reference internal" href="#module-uuid" title="uuid: Universally unique identifiers"><tt class="xref py py-mod docutils literal"><span class="pre">uuid</span></tt></a> module uses <tt class="xref py py-func docutils literal"><span class="pre">getnode()</span></tt> to retrieve the MAC
+value on a given system:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">uuid</span>
+
+<span class="k">print</span> <span class="nb">hex</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">getnode</span><span class="p">())</span>
+</pre></div>
+</div>
+<div class="highlight-python"><pre>$ python uuid_getnode.py
+
+0x1ec200d9e0</pre>
+</div>
+<p>If a system has more than one network card, and so more than one MAC,
+any one of the values may be returned.</p>
+<p>To generate a UUID for a given host, identified by its MAC address,
+use the <tt class="xref py py-func docutils literal"><span class="pre">uuid1()</span></tt> function. You can pass a node identifier, or
+leave the field blank to use the value returned by <tt class="xref py py-func docutils literal"><span class="pre">getnode()</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">uuid</span>
+
+<span class="n">u</span> <span class="o">=</span> <span class="n">uuid</span><span class="o">.</span><span class="n">uuid1</span><span class="p">()</span>
+
+<span class="k">print</span> <span class="n">u</span>
+<span class="k">print</span> <span class="nb">type</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;bytes   :&#39;</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">u</span><span class="o">.</span><span class="n">bytes</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;hex     :&#39;</span><span class="p">,</span> <span class="n">u</span><span class="o">.</span><span class="n">hex</span>
+<span class="k">print</span> <span class="s">&#39;int     :&#39;</span><span class="p">,</span> <span class="n">u</span><span class="o">.</span><span class="n">int</span>
+<span class="k">print</span> <span class="s">&#39;urn     :&#39;</span><span class="p">,</span> <span class="n">u</span><span class="o">.</span><span class="n">urn</span>
+<span class="k">print</span> <span class="s">&#39;variant :&#39;</span><span class="p">,</span> <span class="n">u</span><span class="o">.</span><span class="n">variant</span>
+<span class="k">print</span> <span class="s">&#39;version :&#39;</span><span class="p">,</span> <span class="n">u</span><span class="o">.</span><span class="n">version</span>
+<span class="k">print</span> <span class="s">&#39;fields  :&#39;</span><span class="p">,</span> <span class="n">u</span><span class="o">.</span><span class="n">fields</span>
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">time_low            : &#39;</span><span class="p">,</span> <span class="n">u</span><span class="o">.</span><span class="n">time_low</span>
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">time_mid            : &#39;</span><span class="p">,</span> <span class="n">u</span><span class="o">.</span><span class="n">time_mid</span>
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">time_hi_version     : &#39;</span><span class="p">,</span> <span class="n">u</span><span class="o">.</span><span class="n">time_hi_version</span>
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">clock_seq_hi_variant: &#39;</span><span class="p">,</span> <span class="n">u</span><span class="o">.</span><span class="n">clock_seq_hi_variant</span>
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">clock_seq_low       : &#39;</span><span class="p">,</span> <span class="n">u</span><span class="o">.</span><span class="n">clock_seq_low</span>
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">node                : &#39;</span><span class="p">,</span> <span class="n">u</span><span class="o">.</span><span class="n">node</span>
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">time                : &#39;</span><span class="p">,</span> <span class="n">u</span><span class="o">.</span><span class="n">time</span>
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">clock_seq           : &#39;</span><span class="p">,</span> <span class="n">u</span><span class="o">.</span><span class="n">clock_seq</span>
+</pre></div>
+</div>
+<p>The components of the UUID object returned can be accessed through
+read-only instance attributes. Some attributes, such as <em>hex</em>, <em>int</em>,
+and <em>urn</em>, are different representations of the UUID value.</p>
+<div class="highlight-python"><pre>$ python uuid_uuid1.py
+
+098c95b3-df6e-11df-899a-001ec200d9e0
+&lt;class 'uuid.UUID'&gt;
+bytes   : '\t\x8c\x95\xb3\xdfn\x11\xdf\x89\x9a\x00\x1e\xc2\x00\xd9\xe0'
+hex     : 098c95b3df6e11df899a001ec200d9e0
+int     : 12693009852279376310425064831178562016
+urn     : urn:uuid:098c95b3-df6e-11df-899a-001ec200d9e0
+variant : specified in RFC 4122
+version : 1
+fields  : (160208307L, 57198L, 4575L, 137L, 154L, 132103854560L)
+        time_low            :  160208307
+        time_mid            :  57198
+        time_hi_version     :  4575
+        clock_seq_hi_variant:  137
+        clock_seq_low       :  154
+        node                :  132103854560
+        time                :  135072177544009139
+        clock_seq           :  2458</pre>
+</div>
+<p>Because of the time component, each time <tt class="xref py py-func docutils literal"><span class="pre">uuid1()</span></tt> is called a
+new value is returned.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">uuid</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+    <span class="k">print</span> <span class="n">uuid</span><span class="o">.</span><span class="n">uuid1</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Notice in this output that only the time component (at the beginning
+of the string) changes.</p>
+<div class="highlight-python"><pre>$ python uuid_uuid1_repeat.py
+
+099b0e00-df6e-11df-9acd-001ec200d9e0
+099cea35-df6e-11df-8121-001ec200d9e0
+099cebcf-df6e-11df-bc49-001ec200d9e0</pre>
+</div>
+<p>Because your computer has a different MAC address than mine, you will
+see entirely different values if you run the examples, because the
+node identifier at the end of the UUID will change, too.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">uuid</span>
+
+<span class="n">node1</span> <span class="o">=</span> <span class="n">uuid</span><span class="o">.</span><span class="n">getnode</span><span class="p">()</span>
+<span class="k">print</span> <span class="nb">hex</span><span class="p">(</span><span class="n">node1</span><span class="p">),</span> <span class="n">uuid</span><span class="o">.</span><span class="n">uuid1</span><span class="p">(</span><span class="n">node1</span><span class="p">)</span>
+
+<span class="n">node2</span> <span class="o">=</span>  <span class="mh">0x1e5274040e</span>
+<span class="k">print</span> <span class="nb">hex</span><span class="p">(</span><span class="n">node2</span><span class="p">),</span> <span class="n">uuid</span><span class="o">.</span><span class="n">uuid1</span><span class="p">(</span><span class="n">node2</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><pre>$ python uuid_uuid1_othermac.py
+
+0x1ec200d9e0 09af7551-df6e-11df-b2e2-001ec200d9e0
+0x1e5274040e 09b00e5e-df6e-11df-a0c4-001e5274040e</pre>
+</div>
+</div>
+<div class="section" id="uuid-3-and-5-name-based-values">
+<h2>UUID 3 and 5 - Name-Based Values<a class="headerlink" href="#uuid-3-and-5-name-based-values" title="Permalink to this headline">¶</a></h2>
+<p>It is also useful in some contexts to create UUID values from names
+instead of random or time-based values. Versions 3 and 5 of the UUID
+specification use cryptographic hash values (MD5 or SHA-1) to combine
+namespace-specific seed values with &#8220;names&#8221; (DNS hostnames, URLs,
+object ids, etc.). There are several well-known namespaces, identified
+by pre-defined UUID values, for working with DNS, URLs, ISO OIDs, and
+X.500 Distinguished Names. You can also define your own application-
+specific namespaces by generating and saving UUID values.</p>
+<p>To create a UUID from a DNS name, pass <tt class="docutils literal"><span class="pre">uuid.NAMESPACE_DNS</span></tt> as the
+namespace argument to <tt class="xref py py-func docutils literal"><span class="pre">uuid3()</span></tt> or <tt class="xref py py-func docutils literal"><span class="pre">uuid5()</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">uuid</span>
+
+<span class="n">hostnames</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;www.doughellmann.com&#39;</span><span class="p">,</span> <span class="s">&#39;blog.doughellmann.com&#39;</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">hostnames</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">name</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">MD5   :&#39;</span><span class="p">,</span> <span class="n">uuid</span><span class="o">.</span><span class="n">uuid3</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">NAMESPACE_DNS</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">SHA-1 :&#39;</span><span class="p">,</span> <span class="n">uuid</span><span class="o">.</span><span class="n">uuid5</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">NAMESPACE_DNS</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><pre>$ python uuid_uuid3_uuid5.py
+
+www.doughellmann.com
+        MD5   : bcd02e22-68f0-3046-a512-327cca9def8f
+        SHA-1 : e3329b12-30b7-57c4-8117-c2cd34a87ce9
+blog.doughellmann.com
+        MD5   : 9bdabfce-dfd6-37ab-8a3f-7f7293bcf111
+        SHA-1 : fa829736-7ef8-5239-9906-b4775a5abacb</pre>
+</div>
+<p>The UUID value for a given name in a namespace is always the same, no
+matter when or where it is calculated. Values for the same name in
+different namespaces are different.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">uuid</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+    <span class="k">print</span> <span class="n">uuid</span><span class="o">.</span><span class="n">uuid3</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">NAMESPACE_DNS</span><span class="p">,</span> <span class="s">&#39;www.doughellmann.com&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><pre>$ python uuid_uuid3_repeat.py
+
+bcd02e22-68f0-3046-a512-327cca9def8f
+bcd02e22-68f0-3046-a512-327cca9def8f
+bcd02e22-68f0-3046-a512-327cca9def8f</pre>
+</div>
+</div>
+<div class="section" id="uuid-4-random-values">
+<h2>UUID 4 - Random Values<a class="headerlink" href="#uuid-4-random-values" title="Permalink to this headline">¶</a></h2>
+<p>Sometimes host-based and namespace-based UUID values are not
+&#8220;different enough&#8221;. For example, in cases where you want to use the
+UUID as a lookup key, a more random sequence of values with more
+differentiation is desirable to avoid collisions in a hash
+table. Having values with fewer common digits also makes it easier to
+find them in log files. To add greater differentiation in your UUIDs,
+use <tt class="xref py py-func docutils literal"><span class="pre">uuid4()</span></tt> to generate them using random input values.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">uuid</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+    <span class="k">print</span> <span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python"><pre>$ python uuid_uuid4.py
+
+05082f2e-6e12-4016-8b07-7970f9dcf9a7
+60aae332-5119-40d0-9bb7-174e53454654
+671bdeb2-fbee-458c-9b6f-55764054e635</pre>
+</div>
+</div>
+<div class="section" id="working-with-uuid-objects">
+<h2>Working with UUID Objects<a class="headerlink" href="#working-with-uuid-objects" title="Permalink to this headline">¶</a></h2>
+<p>In addition to generating new UUID values, you can parse strings in
+various formats to create UUID objects. This makes it easier to
+compare them, sort them, etc.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">uuid</span>
+
+<span class="k">def</span> <span class="nf">show</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">l</span><span class="p">):</span>
+    <span class="k">print</span> <span class="n">msg</span>
+    <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">l</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">&#39;</span><span class="p">,</span> <span class="n">v</span>
+    <span class="k">print</span>
+
+<span class="n">input_values</span> <span class="o">=</span> <span class="p">[</span> 
+    <span class="s">&#39;urn:uuid:f2f84497-b3bf-493a-bba9-7c68e6def80b&#39;</span><span class="p">,</span>
+    <span class="s">&#39;{417a5ebb-01f7-4ed5-aeac-3d56cd5037b0}&#39;</span><span class="p">,</span>
+    <span class="s">&#39;2115773a-5bf1-11dd-ab48-001ec200d9e0&#39;</span><span class="p">,</span>
+    <span class="p">]</span>
+
+<span class="n">show</span><span class="p">(</span><span class="s">&#39;input_values&#39;</span><span class="p">,</span> <span class="n">input_values</span><span class="p">)</span>
+
+<span class="n">uuids</span> <span class="o">=</span> <span class="p">[</span> <span class="n">uuid</span><span class="o">.</span><span class="n">UUID</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">input_values</span> <span class="p">]</span>
+<span class="n">show</span><span class="p">(</span><span class="s">&#39;converted to uuids&#39;</span><span class="p">,</span> <span class="n">uuids</span><span class="p">)</span>
+
+<span class="n">uuids</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+<span class="n">show</span><span class="p">(</span><span class="s">&#39;sorted&#39;</span><span class="p">,</span> <span class="n">uuids</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><pre>$ python uuid_uuid_objects.py
+
+input_values
+        urn:uuid:f2f84497-b3bf-493a-bba9-7c68e6def80b
+        {417a5ebb-01f7-4ed5-aeac-3d56cd5037b0}
+        2115773a-5bf1-11dd-ab48-001ec200d9e0
+
+converted to uuids
+        f2f84497-b3bf-493a-bba9-7c68e6def80b
+        417a5ebb-01f7-4ed5-aeac-3d56cd5037b0
+        2115773a-5bf1-11dd-ab48-001ec200d9e0
+
+sorted
+        2115773a-5bf1-11dd-ab48-001ec200d9e0
+        417a5ebb-01f7-4ed5-aeac-3d56cd5037b0
+        f2f84497-b3bf-493a-bba9-7c68e6def80b</pre>
+</div>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://docs.python.org/lib/module-uuid.html">uuid</a></dt>
+<dd>Standard library documentation for this module.</dd>
+<dt><span class="target" id="index-2"></span><a class="rfc reference external" href="http://tools.ietf.org/html/rfc4122.html"><strong>RFC 4122</strong></a></dt>
+<dd>A Universally Unique IDentifier (UUID) URN Namespace</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../webbrowser/index.html" title="webbrowser – Displays web pages"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../urlparse/index.html" title="urlparse – Split URL into component pieces."
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../internet_protocols.html" >Internet Protocols and Support</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright Doug Hellmann.
+      Last updated on Oct 24, 2010.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+
+    <br/><a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/88x31.png"/></a>
+    
+    </div>
+  </body>
+</html>

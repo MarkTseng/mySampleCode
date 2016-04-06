@@ -1,0 +1,179 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>xml.etree.ElementTree – XML Manipulation API &mdash; Python Module of the Week</title>
+    <link rel="stylesheet" href="../../../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '1.132',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../../../about.html" />
+    <link rel="top" title="Python Module of the Week" href="../../../index.html" />
+    <link rel="up" title="Structured Markup Processing Tools" href="../../../markup.html" />
+    <link rel="next" title="Parsing XML Documents" href="parse.html" />
+    <link rel="prev" title="Structured Markup Processing Tools" href="../../../markup.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="parse.html" title="Parsing XML Documents"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../../../markup.html" title="Structured Markup Processing Tools"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../../../markup.html" accesskey="U">Structured Markup Processing Tools</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../../../markup.html"
+                        title="previous chapter">Structured Markup Processing Tools</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="parse.html"
+                        title="next chapter">Parsing XML Documents</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../../_sources/xml/etree/ElementTree/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-xml.etree.ElementTree">
+<span id="xml-etree-elementtree-xml-manipulation-api"></span><h1>xml.etree.ElementTree &#8211; XML Manipulation API<a class="headerlink" href="#module-xml.etree.ElementTree" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Purpose:</th><td class="field-body">Generate and parse XML documents</td>
+</tr>
+<tr class="field"><th class="field-name">Python Version:</th><td class="field-body">2.5 and later</td>
+</tr>
+</tbody>
+</table>
+<p>The ElementTree library was contributed to the standard library by
+Fredrick Lundh.  It includes tools for parsing XML using event-based
+and document-based APIs, searching parsed documents with XPath
+expressions, and creating new or modifying existing documents.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">All of the examples in this section use the Python implementation of
+ElementTree for simplicity, but there is also a C implementation in
+<tt class="xref py py-mod docutils literal"><span class="pre">xml.etree.cElementTree</span></tt>.</p>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="parse.html">Parsing XML Documents</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="parse.html#parsing-an-entire-document">Parsing an Entire Document</a></li>
+<li class="toctree-l2"><a class="reference internal" href="parse.html#traversing-the-parsed-tree">Traversing the Parsed Tree</a></li>
+<li class="toctree-l2"><a class="reference internal" href="parse.html#finding-nodes-in-a-document">Finding Nodes in a Document</a></li>
+<li class="toctree-l2"><a class="reference internal" href="parse.html#parsed-node-attributes">Parsed Node Attributes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="parse.html#watching-events-while-parsing">Watching Events While Parsing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="parse.html#creating-a-custom-tree-builder">Creating a Custom Tree Builder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="parse.html#parsing-strings">Parsing Strings</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="create.html">Creating XML Documents</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="create.html#building-element-nodes">Building Element Nodes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="create.html#pretty-printing-xml">Pretty-Printing XML</a></li>
+<li class="toctree-l2"><a class="reference internal" href="create.html#setting-element-properties">Setting Element Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="create.html#building-trees-from-lists-of-nodes">Building Trees from Lists of Nodes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="create.html#serializing-xml-to-a-stream">Serializing XML to a Stream</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://docs.python.org/library/xml.etree.elementtree.html">xml.etree.ElementTree</a></dt>
+<dd>The standard library documentation for this module.</dd>
+<dt><a class="reference external" href="http://effbot.org/zone/element-index.htm">ElementTree Overview</a></dt>
+<dd>Fredrick Lundh&#8217;s original documentation and links to the
+development versions of the ElementTree library.</dd>
+<dt><a class="reference external" href="http://www.ibm.com/developerworks/library/x-matters28/">Process XML in Python with ElementTree</a></dt>
+<dd>IBM DeveloperWorks article by David Mertz.</dd>
+<dt><a class="reference external" href="http://codespeak.net/lxml/">lxml.etree</a></dt>
+<dd>A separate implementation of the ElementTree API based on libxml2 with more complete XPath support.</dd>
+</dl>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="parse.html" title="Parsing XML Documents"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../../../markup.html" title="Structured Markup Processing Tools"
+             >previous</a> |</li>
+        <li><a href="../../../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../../../markup.html" >Structured Markup Processing Tools</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright Doug Hellmann.
+      Last updated on Oct 24, 2010.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+
+    <br/><a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/88x31.png"/></a>
+    
+    </div>
+  </body>
+</html>

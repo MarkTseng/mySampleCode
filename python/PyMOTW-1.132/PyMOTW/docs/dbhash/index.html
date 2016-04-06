@@ -1,0 +1,143 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>dbhash – DBM-style API for the BSD database library &mdash; Python Module of the Week</title>
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.132',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="Data Persistence" href="../persistence.html" />
+    <link rel="next" title="dbm – Simple database interface" href="../dbm/index.html" />
+    <link rel="prev" title="anydbm – Access to DBM-style databases" href="../anydbm/index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../dbm/index.html" title="dbm – Simple database interface"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../anydbm/index.html" title="anydbm – Access to DBM-style databases"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../persistence.html" accesskey="U">Data Persistence</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../anydbm/index.html"
+                        title="previous chapter">anydbm &#8211; Access to DBM-style databases</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../dbm/index.html"
+                        title="next chapter">dbm &#8211; Simple database interface</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/dbhash/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-dbhash">
+<span id="dbhash-dbm-style-api-for-the-bsd-database-library"></span><h1>dbhash &#8211; DBM-style API for the BSD database library<a class="headerlink" href="#module-dbhash" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Purpose:</th><td class="field-body">Provides a dictionary-like API for accessing BSD <tt class="docutils literal"><span class="pre">db</span></tt> files.</td>
+</tr>
+<tr class="field"><th class="field-name">Python Version:</th><td class="field-body">1.4 and later</td>
+</tr>
+</tbody>
+</table>
+<p>The <a class="reference internal" href="#module-dbhash" title="dbhash: DBM-style API for the BSD database library"><tt class="xref py py-mod docutils literal"><span class="pre">dbhash</span></tt></a> module is the primary backend for <a class="reference internal" href="../anydbm/index.html#module-anydbm" title="anydbm: anydbm provides a generic dictionary-like interface to DBM-style, string-keyed databases"><tt class="xref py py-mod docutils literal"><span class="pre">anydbm</span></tt></a>.  It uses the <tt class="xref py py-mod docutils literal"><span class="pre">bsddb</span></tt> library to manage database files.  The semantics are the same as <a class="reference internal" href="../anydbm/index.html#module-anydbm" title="anydbm: anydbm provides a generic dictionary-like interface to DBM-style, string-keyed databases"><tt class="xref py py-mod docutils literal"><span class="pre">anydbm</span></tt></a>, so refer to the examples on that page for details.</p>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://docs.python.org/library/dbhash.html">dbhash</a></dt>
+<dd>The standard library documentation for this module.</dd>
+<dt><a class="reference internal" href="../anydbm/index.html#module-anydbm" title="anydbm: anydbm provides a generic dictionary-like interface to DBM-style, string-keyed databases"><tt class="xref py py-mod docutils literal"><span class="pre">anydbm</span></tt></a></dt>
+<dd>The <a class="reference internal" href="../anydbm/index.html#module-anydbm" title="anydbm: anydbm provides a generic dictionary-like interface to DBM-style, string-keyed databases"><tt class="xref py py-mod docutils literal"><span class="pre">anydbm</span></tt></a> module.</dd>
+</dl>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../dbm/index.html" title="dbm – Simple database interface"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../anydbm/index.html" title="anydbm – Access to DBM-style databases"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../persistence.html" >Data Persistence</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright Doug Hellmann.
+      Last updated on Oct 24, 2010.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+
+    <br/><a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/88x31.png"/></a>
+    
+    </div>
+  </body>
+</html>

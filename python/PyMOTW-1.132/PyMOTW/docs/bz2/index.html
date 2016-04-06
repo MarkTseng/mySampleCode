@@ -1,0 +1,645 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>bz2 – bzip2 compression &mdash; Python Module of the Week</title>
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.132',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="Data Compression and Archiving" href="../compression.html" />
+    <link rel="next" title="gzip – Read and write GNU zip files" href="../gzip/index.html" />
+    <link rel="prev" title="Data Compression and Archiving" href="../compression.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../gzip/index.html" title="gzip – Read and write GNU zip files"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../compression.html" title="Data Compression and Archiving"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../compression.html" accesskey="U">Data Compression and Archiving</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">bz2 &#8211; bzip2 compression</a><ul>
+<li><a class="reference internal" href="#one-shot-operations-in-memory">One-shot Operations in Memory</a></li>
+<li><a class="reference internal" href="#working-with-streams">Working with Streams</a></li>
+<li><a class="reference internal" href="#mixed-content-streams">Mixed Content Streams</a></li>
+<li><a class="reference internal" href="#writing-compressed-files">Writing Compressed Files</a></li>
+<li><a class="reference internal" href="#reading-compressed-files">Reading Compressed Files</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../compression.html"
+                        title="previous chapter">Data Compression and Archiving</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../gzip/index.html"
+                        title="next chapter">gzip &#8211; Read and write GNU zip files</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/bz2/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-bz2">
+<span id="bz2-bzip2-compression"></span><h1>bz2 &#8211; bzip2 compression<a class="headerlink" href="#module-bz2" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Purpose:</th><td class="field-body">bzip2 compression</td>
+</tr>
+<tr class="field"><th class="field-name">Python Version:</th><td class="field-body">2.3 and later</td>
+</tr>
+</tbody>
+</table>
+<p>The <a class="reference internal" href="#module-bz2" title="bz2: bzip2 compression"><tt class="xref py py-mod docutils literal"><span class="pre">bz2</span></tt></a> module is an interface for the bzip2 library, used to
+compress data for storage or transmission.  There are three APIs
+provided:</p>
+<ul class="simple">
+<li>&#8220;one shot&#8221; compression/decompression functions for operating on a blob of data</li>
+<li>iterative compression/decompression objects for working with streams of data</li>
+<li>a file-like class that supports reading and writing as with an uncompressed file</li>
+</ul>
+<div class="section" id="one-shot-operations-in-memory">
+<h2>One-shot Operations in Memory<a class="headerlink" href="#one-shot-operations-in-memory" title="Permalink to this headline">¶</a></h2>
+<p>The simplest way to work with bz2 requires holding all of the data to
+be compressed or decompressed in memory, and then using
+<tt class="xref py py-func docutils literal"><span class="pre">compress()</span></tt> and <tt class="xref py py-func docutils literal"><span class="pre">decompress()</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">bz2</span>
+<span class="kn">import</span> <span class="nn">binascii</span>
+
+<span class="n">original_data</span> <span class="o">=</span> <span class="s">&#39;This is the original text.&#39;</span>
+<span class="k">print</span> <span class="s">&#39;Original     :&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">original_data</span><span class="p">),</span> <span class="n">original_data</span>
+
+<span class="n">compressed</span> <span class="o">=</span> <span class="n">bz2</span><span class="o">.</span><span class="n">compress</span><span class="p">(</span><span class="n">original_data</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;Compressed   :&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">compressed</span><span class="p">),</span> <span class="n">binascii</span><span class="o">.</span><span class="n">hexlify</span><span class="p">(</span><span class="n">compressed</span><span class="p">)</span>
+
+<span class="n">decompressed</span> <span class="o">=</span> <span class="n">bz2</span><span class="o">.</span><span class="n">decompress</span><span class="p">(</span><span class="n">compressed</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;Decompressed :&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">decompressed</span><span class="p">),</span> <span class="n">decompressed</span>
+</pre></div>
+</div>
+<div class="highlight-python"><pre>$ python bz2_memory.py
+
+Original     : 26 This is the original text.
+Compressed   : 62 425a683931415926535916be35a600000293804001040022e59c402000314c000111e93d434da223028cf9e73148cae0a0d6ed7f17724538509016be35a6
+Decompressed : 26 This is the original text.</pre>
+</div>
+<p>Notice that for short text, the compressed version can be
+significantly longer.  While the actual results depend on the input
+data, for short bits of text it is interesting to observe the
+compression overhead.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">bz2</span>
+
+<span class="n">original_data</span> <span class="o">=</span> <span class="s">&#39;This is the original text.&#39;</span>
+
+<span class="n">fmt</span> <span class="o">=</span> <span class="s">&#39;</span><span class="si">%15s</span><span class="s">  </span><span class="si">%15s</span><span class="s">&#39;</span>
+<span class="k">print</span> <span class="n">fmt</span> <span class="o">%</span> <span class="p">(</span><span class="s">&#39;len(data)&#39;</span><span class="p">,</span> <span class="s">&#39;len(compressed)&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">fmt</span> <span class="o">%</span> <span class="p">(</span><span class="s">&#39;-&#39;</span> <span class="o">*</span> <span class="mi">15</span><span class="p">,</span> <span class="s">&#39;-&#39;</span> <span class="o">*</span> <span class="mi">15</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">20</span><span class="p">):</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">original_data</span> <span class="o">*</span> <span class="n">i</span>
+    <span class="n">compressed</span> <span class="o">=</span> <span class="n">bz2</span><span class="o">.</span><span class="n">compress</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>    
+    <span class="k">print</span> <span class="n">fmt</span> <span class="o">%</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">compressed</span><span class="p">)),</span> <span class="s">&#39;*&#39;</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">compressed</span><span class="p">)</span> <span class="k">else</span> <span class="s">&#39;&#39;</span>
+</pre></div>
+</div>
+<div class="highlight-python"><pre>$ python bz2_lengths.py
+
+      len(data)  len(compressed)
+---------------  ---------------
+              0               14 *
+             26               62 *
+             52               68 *
+             78               70
+            104               72
+            130               77
+            156               77
+            182               73
+            208               75
+            234               80
+            260               80
+            286               81
+            312               80
+            338               81
+            364               81
+            390               76
+            416               78
+            442               84
+            468               84
+            494               87</pre>
+</div>
+</div>
+<div class="section" id="working-with-streams">
+<h2>Working with Streams<a class="headerlink" href="#working-with-streams" title="Permalink to this headline">¶</a></h2>
+<p>The in-memory approach is not practical for real-world use cases,
+since you rarely want to hold both the entire compressed and
+uncompressed data sets in memory at the same time.  The alternative is
+to use <tt class="xref py py-class docutils literal"><span class="pre">BZ2Compressor</span></tt> and <tt class="xref py py-class docutils literal"><span class="pre">BZ2Decompressor</span></tt> objects to
+work with streams of data, so that the entire data set does not have
+to fit into memory.</p>
+<p>The simple server below responds to requests consisting of filenames
+by writing a compressed version of the file to the socket used to
+communicate with the client.  It has some artificial chunking in place
+to illustrate the buffering behavior that happens when the data passed
+to <tt class="xref py py-func docutils literal"><span class="pre">compress()</span></tt> or <tt class="xref py py-func docutils literal"><span class="pre">decompress()</span></tt> doesn&#8217;t result in a
+complete block of compressed or uncompressed output.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">This implementation has obvious security implications.  Do not run
+it on a server on the open internet or in any environment where
+security might be an issue.</p>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">bz2</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">SocketServer</span>
+<span class="kn">import</span> <span class="nn">binascii</span>
+
+<span class="n">BLOCK_SIZE</span> <span class="o">=</span> <span class="mi">32</span>
+
+<span class="k">class</span> <span class="nc">Bz2RequestHandler</span><span class="p">(</span><span class="n">SocketServer</span><span class="o">.</span><span class="n">BaseRequestHandler</span><span class="p">):</span>
+
+    <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s">&#39;Server&#39;</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">handle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">compressor</span> <span class="o">=</span> <span class="n">bz2</span><span class="o">.</span><span class="n">BZ2Compressor</span><span class="p">()</span>
+        
+        <span class="c"># Find out what file the client wants</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;client asked for: &quot;</span><span class="si">%s</span><span class="s">&quot;&#39;</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+        
+        <span class="c"># Send chunks of the file as they are compressed</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="nb">input</span><span class="p">:</span>
+            <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>            
+                <span class="n">block</span> <span class="o">=</span> <span class="nb">input</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">BLOCK_SIZE</span><span class="p">)</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">block</span><span class="p">:</span>
+                    <span class="k">break</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;RAW &quot;</span><span class="si">%s</span><span class="s">&quot;&#39;</span><span class="p">,</span> <span class="n">block</span><span class="p">)</span>
+                <span class="n">compressed</span> <span class="o">=</span> <span class="n">compressor</span><span class="o">.</span><span class="n">compress</span><span class="p">(</span><span class="n">block</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">compressed</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;SENDING &quot;</span><span class="si">%s</span><span class="s">&quot;&#39;</span><span class="p">,</span> <span class="n">binascii</span><span class="o">.</span><span class="n">hexlify</span><span class="p">(</span><span class="n">compressed</span><span class="p">))</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">compressed</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;BUFFERING&#39;</span><span class="p">)</span>
+        
+        <span class="c"># Send any data being buffered by the compressor</span>
+        <span class="n">remaining</span> <span class="o">=</span> <span class="n">compressor</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+        <span class="k">while</span> <span class="n">remaining</span><span class="p">:</span>
+            <span class="n">to_send</span> <span class="o">=</span> <span class="n">remaining</span><span class="p">[:</span><span class="n">BLOCK_SIZE</span><span class="p">]</span>
+            <span class="n">remaining</span> <span class="o">=</span> <span class="n">remaining</span><span class="p">[</span><span class="n">BLOCK_SIZE</span><span class="p">:]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;FLUSHING &quot;</span><span class="si">%s</span><span class="s">&quot;&#39;</span><span class="p">,</span> <span class="n">binascii</span><span class="o">.</span><span class="n">hexlify</span><span class="p">(</span><span class="n">to_send</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">to_send</span><span class="p">)</span>
+        <span class="k">return</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">socket</span>
+    <span class="kn">import</span> <span class="nn">threading</span>
+    <span class="kn">from</span> <span class="nn">cStringIO</span> <span class="kn">import</span> <span class="n">StringIO</span>
+
+    <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">,</span>
+                        <span class="n">format</span><span class="o">=</span><span class="s">&#39;</span><span class="si">%(name)s</span><span class="s">: </span><span class="si">%(message)s</span><span class="s">&#39;</span><span class="p">,</span>
+                        <span class="p">)</span>
+    <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s">&#39;Client&#39;</span><span class="p">)</span>
+
+    <span class="c"># Set up a server, running in a separate thread</span>
+    <span class="n">address</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="c"># let the kernel give us a port</span>
+    <span class="n">server</span> <span class="o">=</span> <span class="n">SocketServer</span><span class="o">.</span><span class="n">TCPServer</span><span class="p">(</span><span class="n">address</span><span class="p">,</span> <span class="n">Bz2RequestHandler</span><span class="p">)</span>
+    <span class="n">ip</span><span class="p">,</span> <span class="n">port</span> <span class="o">=</span> <span class="n">server</span><span class="o">.</span><span class="n">server_address</span> <span class="c"># find out what port we were given</span>
+
+    <span class="n">t</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">server</span><span class="o">.</span><span class="n">serve_forever</span><span class="p">)</span>
+    <span class="n">t</span><span class="o">.</span><span class="n">setDaemon</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">t</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+    <span class="c"># Connect to the server</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&#39;Contacting server on </span><span class="si">%s</span><span class="s">:</span><span class="si">%s</span><span class="s">&#39;</span><span class="p">,</span> <span class="n">ip</span><span class="p">,</span> <span class="n">port</span><span class="p">)</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_STREAM</span><span class="p">)</span>
+    <span class="n">s</span><span class="o">.</span><span class="n">connect</span><span class="p">((</span><span class="n">ip</span><span class="p">,</span> <span class="n">port</span><span class="p">))</span>
+
+    <span class="c"># Ask for a file</span>
+    <span class="n">requested_file</span> <span class="o">=</span> <span class="s">&#39;lorem.txt&#39;</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;sending filename: &quot;</span><span class="si">%s</span><span class="s">&quot;&#39;</span><span class="p">,</span> <span class="n">requested_file</span><span class="p">)</span>
+    <span class="n">len_sent</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">requested_file</span><span class="p">)</span>
+
+    <span class="c"># Receive a response</span>
+    <span class="nb">buffer</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">()</span>
+    <span class="n">decompressor</span> <span class="o">=</span> <span class="n">bz2</span><span class="o">.</span><span class="n">BZ2Decompressor</span><span class="p">()</span>
+    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="n">BLOCK_SIZE</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">response</span><span class="p">:</span>
+            <span class="k">break</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;READ &quot;</span><span class="si">%s</span><span class="s">&quot;&#39;</span><span class="p">,</span> <span class="n">binascii</span><span class="o">.</span><span class="n">hexlify</span><span class="p">(</span><span class="n">response</span><span class="p">))</span>
+
+        <span class="c"># Include any unconsumed data when feeding the decompressor.</span>
+        <span class="n">decompressed</span> <span class="o">=</span> <span class="n">decompressor</span><span class="o">.</span><span class="n">decompress</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">decompressed</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;DECOMPRESSED &quot;</span><span class="si">%s</span><span class="s">&quot;&#39;</span><span class="p">,</span> <span class="n">decompressed</span><span class="p">)</span>
+            <span class="nb">buffer</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">decompressed</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;BUFFERING&#39;</span><span class="p">)</span>
+
+    <span class="n">full_response</span> <span class="o">=</span> <span class="nb">buffer</span><span class="o">.</span><span class="n">getvalue</span><span class="p">()</span>
+    <span class="n">lorem</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;lorem.txt&#39;</span><span class="p">,</span> <span class="s">&#39;rt&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;response matches file contents: </span><span class="si">%s</span><span class="s">&#39;</span><span class="p">,</span> <span class="n">full_response</span> <span class="o">==</span> <span class="n">lorem</span><span class="p">)</span>
+
+    <span class="c"># Clean up</span>
+    <span class="n">s</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="n">server</span><span class="o">.</span><span class="n">socket</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python"><pre>$ python bz2_server.py
+Client: Contacting server on 127.0.0.1:54092
+Client: sending filename: "lorem.txt"
+Server: client asked for: "lorem.txt"
+Server: RAW "Lorem ipsum dolor sit amet, cons"
+Server: BUFFERING
+Server: RAW "ectetuer adipiscing elit. Donec
+"
+Server: BUFFERING
+Server: RAW "egestas, enim et consectetuer ul"
+Server: BUFFERING
+Server: RAW "lamcorper, lectus ligula rutrum "
+Server: BUFFERING
+Server: RAW "leo, a
+elementum elit tortor eu "
+Server: BUFFERING
+Server: RAW "quam. Duis tincidunt nisi ut ant"
+Server: BUFFERING
+Server: RAW "e. Nulla
+facilisi. Sed tristique"
+Server: BUFFERING
+Server: RAW " eros eu libero. Pellentesque ve"
+Server: BUFFERING
+Server: RAW "l arcu. Vivamus
+purus orci, iacu"
+Server: BUFFERING
+Server: RAW "lis ac, suscipit sit amet, pulvi"
+Server: BUFFERING
+Server: RAW "nar eu,
+lacus. Praesent placerat"
+Server: BUFFERING
+Server: RAW " tortor sed nisl. Nunc blandit d"
+Server: BUFFERING
+Server: RAW "iam egestas
+dui. Pellentesque ha"
+Server: BUFFERING
+Server: RAW "bitant morbi tristique senectus "
+Server: BUFFERING
+Server: RAW "et netus et
+malesuada fames ac t"
+Server: BUFFERING
+Server: RAW "urpis egestas. Aliquam viverra f"
+Server: BUFFERING
+Server: RAW "ringilla
+leo. Nulla feugiat augu"
+Server: BUFFERING
+Server: RAW "e eleifend nulla. Vivamus mauris"
+Server: BUFFERING
+Server: RAW ". Vivamus sed
+mauris in nibh pla"
+Server: BUFFERING
+Server: RAW "cerat egestas. Suspendisse poten"
+Server: BUFFERING
+Server: RAW "ti. Mauris massa. Ut
+eget velit "
+Server: BUFFERING
+Server: RAW "auctor tortor blandit sollicitud"
+Server: BUFFERING
+Server: RAW "in. Suspendisse imperdiet
+justo."
+Server: BUFFERING
+Server: RAW "
+"
+Server: BUFFERING
+Server: FLUSHING "425a68393141592653590fd264ff00004357800010400524074b003ff7ff0040"
+Server: FLUSHING "01dd936c1834269926d4d13d232640341a986935343534f5000018d311846980"
+Client: READ "425a68393141592653590fd264ff00004357800010400524074b003ff7ff0040"
+Server: FLUSHING "0001299084530d35434f51ea1ea13fce3df02cb7cde200b67bb8fca353727a30"
+Client: BUFFERING
+Server: FLUSHING "fe67cdcdd2307c455a3964fad491e9350de1a66b9458a40876613e7575a9d2de"
+Client: READ "01dd936c1834269926d4d13d232640341a986935343534f5000018d311846980"
+Server: FLUSHING "db28ab492d5893b99616ebae68b8a61294a48ba5d0a6c428f59ad9eb72e0c40f"
+Client: BUFFERING
+Server: FLUSHING "f449c4f64c35ad8a27caa2bbd9e35214df63183393aa35919a4f1573615c6ae3"
+Client: READ "0001299084530d35434f51ea1ea13fce3df02cb7cde200b67bb8fca353727a30"
+Server: FLUSHING "611f18917467ad690abb4cb67a3a5f1fd36c2511d105836a0fed317be03702ba"
+Client: BUFFERING
+Server: FLUSHING "394984c68a595d1cc2f5219a1ada69b6d6863cf5bd925f36626046d68c3a9921"
+Client: READ "fe67cdcdd2307c455a3964fad491e9350de1a66b9458a40876613e7575a9d2de"
+Server: FLUSHING "3103445c9d2438d03b5a675dfdc74e3bed98e8b72dec76c923afa395eb5ce61b"
+Client: BUFFERING
+Server: FLUSHING "50cfc0ccaaa726b293a50edc28b551261dd09a24aba682972bc75f1fae4c4765"
+Client: READ "db28ab492d5893b99616ebae68b8a61294a48ba5d0a6c428f59ad9eb72e0c40f"
+Server: FLUSHING "f3b7eeea36e771e577350970dab4baf07750ccf96494df9e63a9454b7133be1d"
+Client: BUFFERING
+Server: FLUSHING "ee330da50a869eea59f73319b18959262860897dafdc965ac4b79944c4cc3341"
+Client: READ "f449c4f64c35ad8a27caa2bbd9e35214df63183393aa35919a4f1573615c6ae3"
+Server: FLUSHING "5b23816d45912c8860f40ea930646fc8adbc48040cbb6cd4fc222f8c66d58256"
+Client: BUFFERING
+Server: FLUSHING "d508d8eb4f43986b9203e13f8bb9229c284807e9327f80"
+Client: READ "611f18917467ad690abb4cb67a3a5f1fd36c2511d105836a0fed317be03702ba"
+Client: BUFFERING
+Client: READ "394984c68a595d1cc2f5219a1ada69b6d6863cf5bd925f36626046d68c3a9921"
+Client: BUFFERING
+Client: READ "3103445c9d2438d03b5a675dfdc74e3bed98e8b72dec76c923afa395eb5ce61b"
+Client: BUFFERING
+Client: READ "50cfc0ccaaa726b293a50edc28b551261dd09a24aba682972bc75f1fae4c4765"
+Client: BUFFERING
+Client: READ "f3b7eeea36e771e577350970dab4baf07750ccf96494df9e63a9454b7133be1d"
+Client: BUFFERING
+Client: READ "ee330da50a869eea59f73319b18959262860897dafdc965ac4b79944c4cc3341"
+Client: BUFFERING
+Client: READ "5b23816d45912c8860f40ea930646fc8adbc48040cbb6cd4fc222f8c66d58256"
+Client: BUFFERING
+Client: READ "d508d8eb4f43986b9203e13f8bb9229c284807e9327f80"
+Client: DECOMPRESSED "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec
+egestas, enim et consectetuer ullamcorper, lectus ligula rutrum leo, a
+elementum elit tortor eu quam. Duis tincidunt nisi ut ante. Nulla
+facilisi. Sed tristique eros eu libero. Pellentesque vel arcu. Vivamus
+purus orci, iaculis ac, suscipit sit amet, pulvinar eu,
+lacus. Praesent placerat tortor sed nisl. Nunc blandit diam egestas
+dui. Pellentesque habitant morbi tristique senectus et netus et
+malesuada fames ac turpis egestas. Aliquam viverra fringilla
+leo. Nulla feugiat augue eleifend nulla. Vivamus mauris. Vivamus sed
+mauris in nibh placerat egestas. Suspendisse potenti. Mauris massa. Ut
+eget velit auctor tortor blandit sollicitudin. Suspendisse imperdiet
+justo.
+"
+Client: response matches file contents: True</pre>
+</div>
+</div>
+<div class="section" id="mixed-content-streams">
+<h2>Mixed Content Streams<a class="headerlink" href="#mixed-content-streams" title="Permalink to this headline">¶</a></h2>
+<p><tt class="xref py py-class docutils literal"><span class="pre">BZ2Decompressor</span></tt> can also be used in situations where
+compressed and uncompressed data is mixed together.  After
+decompressing all of the data, the <em>unused_data</em> attribute contains
+any data not used.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">bz2</span>
+
+<span class="n">lorem</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;lorem.txt&#39;</span><span class="p">,</span> <span class="s">&#39;rt&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="n">compressed</span> <span class="o">=</span> <span class="n">bz2</span><span class="o">.</span><span class="n">compress</span><span class="p">(</span><span class="n">lorem</span><span class="p">)</span>
+<span class="n">combined</span> <span class="o">=</span> <span class="n">compressed</span> <span class="o">+</span> <span class="n">lorem</span>
+
+<span class="n">decompressor</span> <span class="o">=</span> <span class="n">bz2</span><span class="o">.</span><span class="n">BZ2Decompressor</span><span class="p">()</span>
+<span class="n">decompressed</span> <span class="o">=</span> <span class="n">decompressor</span><span class="o">.</span><span class="n">decompress</span><span class="p">(</span><span class="n">combined</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&#39;Decompressed matches lorem:&#39;</span><span class="p">,</span> <span class="n">decompressed</span> <span class="o">==</span> <span class="n">lorem</span>
+<span class="k">print</span> <span class="s">&#39;Unused data matches lorem :&#39;</span><span class="p">,</span> <span class="n">decompressor</span><span class="o">.</span><span class="n">unused_data</span> <span class="o">==</span> <span class="n">lorem</span>
+</pre></div>
+</div>
+<div class="highlight-python"><pre>$ python bz2_mixed.py
+
+Decompressed matches lorem: True
+Unused data matches lorem : True</pre>
+</div>
+</div>
+<div class="section" id="writing-compressed-files">
+<h2>Writing Compressed Files<a class="headerlink" href="#writing-compressed-files" title="Permalink to this headline">¶</a></h2>
+<p><tt class="xref py py-class docutils literal"><span class="pre">BZ2File</span></tt> can be used to write to and read from
+bzip2-compressed files using the usual methods for writing and reading
+data.  To write data into a compressed file, open the file with mode
+<tt class="docutils literal"><span class="pre">'w'</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">bz2</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">output</span> <span class="o">=</span> <span class="n">bz2</span><span class="o">.</span><span class="n">BZ2File</span><span class="p">(</span><span class="s">&#39;example.txt.bz2&#39;</span><span class="p">,</span> <span class="s">&#39;wb&#39;</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">output</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;Contents of the example file go here.</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">output</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s">&#39;file example.txt.bz2&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><pre>$ python bz2_file_write.py
+
+example.txt.bz2: bzip2 compressed data, block size = 900k</pre>
+</div>
+<p>Different compression levels can be used by passing a <em>compresslevel</em>
+argument.  Valid values range from 1 to 9, inclusive.  Lower values
+are faster and result in less compression.  Higher values are slower
+and compress more, up to a point.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">bz2</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;lorem.txt&#39;</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span> <span class="o">*</span> <span class="mi">1024</span>
+<span class="k">print</span> <span class="s">&#39;Input contains </span><span class="si">%d</span><span class="s"> bytes&#39;</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">):</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="s">&#39;compress-level-</span><span class="si">%s</span><span class="s">.bz2&#39;</span> <span class="o">%</span> <span class="n">i</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="n">bz2</span><span class="o">.</span><span class="n">BZ2File</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s">&#39;wb&#39;</span><span class="p">,</span> <span class="n">compresslevel</span><span class="o">=</span><span class="n">i</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">output</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="n">output</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s">&#39;cksum </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">filename</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The center column of numbers in the output of the script is the size
+in bytes of the files produced.  As you see, for this input data, the
+higher compression values do not always pay off in decreased storage
+space for the same input data.  Results will vary for other inputs.</p>
+<div class="highlight-python"><pre>$ python bz2_file_compresslevel.py
+3018243926 8771 compress-level-1.bz2
+1942389165 4949 compress-level-2.bz2
+2596054176 3708 compress-level-3.bz2
+1491394456 2705 compress-level-4.bz2
+1425874420 2705 compress-level-5.bz2
+2232840816 2574 compress-level-6.bz2
+447681641 2394 compress-level-7.bz2
+3699654768 1137 compress-level-8.bz2
+3103658384 1137 compress-level-9.bz2
+Input contains 754688 bytes</pre>
+</div>
+<p>A <tt class="xref py py-class docutils literal"><span class="pre">BZ2File</span></tt> instance also includes a <tt class="xref py py-func docutils literal"><span class="pre">writelines()</span></tt>
+method that can be used to write a sequence of strings.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">bz2</span>
+<span class="kn">import</span> <span class="nn">itertools</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">output</span> <span class="o">=</span> <span class="n">bz2</span><span class="o">.</span><span class="n">BZ2File</span><span class="p">(</span><span class="s">&#39;example_lines.txt.bz2&#39;</span><span class="p">,</span> <span class="s">&#39;wb&#39;</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">output</span><span class="o">.</span><span class="n">writelines</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="s">&#39;The same line, over and over.</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">output</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s">&#39;bzcat example_lines.txt.bz2&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><pre>$ python bz2_file_writelines.py
+
+The same line, over and over.
+The same line, over and over.
+The same line, over and over.
+The same line, over and over.
+The same line, over and over.
+The same line, over and over.
+The same line, over and over.
+The same line, over and over.
+The same line, over and over.
+The same line, over and over.</pre>
+</div>
+</div>
+<div class="section" id="reading-compressed-files">
+<h2>Reading Compressed Files<a class="headerlink" href="#reading-compressed-files" title="Permalink to this headline">¶</a></h2>
+<p>To read data back from previously compressed files, simply open the
+file with mode <tt class="docutils literal"><span class="pre">'r'</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">bz2</span>
+
+<span class="n">input_file</span> <span class="o">=</span> <span class="n">bz2</span><span class="o">.</span><span class="n">BZ2File</span><span class="p">(</span><span class="s">&#39;example.txt.bz2&#39;</span><span class="p">,</span> <span class="s">&#39;rb&#39;</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">input_file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">input_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This example reads the file written by <tt class="docutils literal"><span class="pre">bz2_file_write.py</span></tt> from the
+previous section.</p>
+<div class="highlight-python"><pre>$ python bz2_file_read.py
+
+Contents of the example file go here.</pre>
+</div>
+<p>While reading a file, it is also possible to seek and read only part
+of the data.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">bz2</span>
+
+<span class="n">input_file</span> <span class="o">=</span> <span class="n">bz2</span><span class="o">.</span><span class="n">BZ2File</span><span class="p">(</span><span class="s">&#39;example.txt.bz2&#39;</span><span class="p">,</span> <span class="s">&#39;rb&#39;</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;Entire file:&#39;</span>
+    <span class="n">all_data</span> <span class="o">=</span> <span class="n">input_file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="k">print</span> <span class="n">all_data</span>
+    
+    <span class="n">expected</span> <span class="o">=</span> <span class="n">all_data</span><span class="p">[</span><span class="mi">5</span><span class="p">:</span><span class="mi">15</span><span class="p">]</span>
+    
+    <span class="c"># rewind to beginning</span>
+    <span class="n">input_file</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    
+    <span class="c"># move ahead 5 bytes</span>
+    <span class="n">input_file</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;Starting at position 5 for 10 bytes:&#39;</span>
+    <span class="n">partial</span> <span class="o">=</span> <span class="n">input_file</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+    <span class="k">print</span> <span class="n">partial</span>
+    
+    <span class="k">print</span>
+    <span class="k">print</span> <span class="n">expected</span> <span class="o">==</span> <span class="n">partial</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">input_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The <tt class="xref py py-func docutils literal"><span class="pre">seek()</span></tt> position is relative to the <em>uncompressed</em> data, so the
+caller does not even need to know that the data file is compressed.</p>
+<div class="highlight-python"><pre>$ python bz2_file_seek.py
+
+Entire file:
+Contents of the example file go here.
+
+Starting at position 5 for 10 bytes:
+nts of the
+
+True</pre>
+</div>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://docs.python.org/library/bz2.html">bz2</a></dt>
+<dd>The standard library documentation for this module.</dd>
+<dt><a class="reference external" href="http://www.bzip.org/">bzip2.org</a></dt>
+<dd>The home page for bzip2.</dd>
+<dt><a class="reference internal" href="../zlib/index.html#module-zlib" title="zlib: Low-level access to GNU zlib compression library"><tt class="xref py py-mod docutils literal"><span class="pre">zlib</span></tt></a></dt>
+<dd>The zlib module for GNU zip compression.</dd>
+<dt><a class="reference internal" href="../gzip/index.html#module-gzip" title="gzip: Read and write gzip files"><tt class="xref py py-mod docutils literal"><span class="pre">gzip</span></tt></a></dt>
+<dd>A file-like interface to GNU zip compressed files.</dd>
+<dt><a class="reference internal" href="../SocketServer/index.html#module-SocketServer" title="SocketServer: Creating network servers."><tt class="xref py py-mod docutils literal"><span class="pre">SocketServer</span></tt></a></dt>
+<dd>Base classes for creating your own network servers.</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../gzip/index.html" title="gzip – Read and write GNU zip files"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../compression.html" title="Data Compression and Archiving"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../compression.html" >Data Compression and Archiving</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright Doug Hellmann.
+      Last updated on Oct 24, 2010.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+
+    <br/><a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/88x31.png"/></a>
+    
+    </div>
+  </body>
+</html>

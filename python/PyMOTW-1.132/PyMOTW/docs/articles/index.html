@@ -1,0 +1,156 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Features of the Standard Library &mdash; Python Module of the Week</title>
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.132',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="next" title="Data Persistence and Exchange" href="data_persistence.html" />
+    <link rel="prev" title="About Python Module of the Week" href="../about.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="data_persistence.html" title="Data Persistence and Exchange"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../about.html" title="About Python Module of the Week"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../about.html"
+                        title="previous chapter">About Python Module of the Week</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="data_persistence.html"
+                        title="next chapter">Data Persistence and Exchange</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/articles/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="features-of-the-standard-library">
+<h1>Features of the Standard Library<a class="headerlink" href="#features-of-the-standard-library" title="Permalink to this headline">¶</a></h1>
+<p>This section of the PyMOTW guide includes feature-based introductions to several modules in the standard library, organized by what your goal might be.  Each article may include cross-references to several modules from different parts of the library, and show how they relate to one another.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="data_persistence.html">Data Persistence and Exchange</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="data_persistence.html#serializing-objects">Serializing Objects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data_persistence.html#storing-serialized-objects">Storing Serialized Objects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data_persistence.html#relational-databases">Relational Databases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data_persistence.html#data-exchange-through-standard-formats">Data Exchange Through Standard Formats</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="data_structures.html">In-Memory Data Structures</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="data_structures.html#array">array</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data_structures.html#sorting">Sorting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data_structures.html#queue">Queue</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data_structures.html#collections">collections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data_structures.html#decoding-data">Decoding Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data_structures.html#custom-variations">Custom Variations</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="file_access.html">File Access</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_access.html#filenames">Filenames</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_access.html#meta-data">Meta-data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_access.html#reading-files">Reading Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_access.html#temporary-files">Temporary Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_access.html#files-and-directories">Files and Directories</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="text_processing.html">Text Processing Tools</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="text_processing.html#string-module">string module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="text_processing.html#text-input">Text Input</a></li>
+<li class="toctree-l2"><a class="reference internal" href="text_processing.html#text-output">Text Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="text_processing.html#comparing-values">Comparing Values</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="data_persistence.html" title="Data Persistence and Exchange"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../about.html" title="About Python Module of the Week"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright Doug Hellmann.
+      Last updated on Oct 24, 2010.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+
+    <br/><a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/88x31.png"/></a>
+    
+    </div>
+  </body>
+</html>

@@ -1,0 +1,234 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>User Datagram Client and Server &mdash; Python Module of the Week</title>
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.132',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="socket – Network Communication" href="index.html" />
+    <link rel="next" title="Unix Domain Sockets" href="uds.html" />
+    <link rel="prev" title="TCP/IP Client and Server" href="tcp.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="uds.html" title="Unix Domain Sockets"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="tcp.html" title="TCP/IP Client and Server"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../internet_protocols.html" >Internet Protocols and Support</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">socket &#8211; Network Communication</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">User Datagram Client and Server</a><ul>
+<li><a class="reference internal" href="#echo-server">Echo Server</a></li>
+<li><a class="reference internal" href="#echo-client">Echo Client</a></li>
+<li><a class="reference internal" href="#client-and-server-together">Client and Server Together</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="tcp.html"
+                        title="previous chapter">TCP/IP Client and Server</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="uds.html"
+                        title="next chapter">Unix Domain Sockets</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/socket/udp.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="user-datagram-client-and-server">
+<h1>User Datagram Client and Server<a class="headerlink" href="#user-datagram-client-and-server" title="Permalink to this headline">¶</a></h1>
+<p>The user datagram protocol (UDP) works differently from TCP/IP.  Where
+TCP is a <em>stream oriented</em> protocol, ensuring that all of the data is
+transmitted in the right order, UDP is a <em>message oriented</em> protocol.
+UDP does not require a long-lived connection, so setting up a UDP
+socket is a little simpler.  On the other hand, UDP messages must fit
+within a single packet (for IPv4, that means they can only hold 65,507
+bytes because the 65,535 byte packet also includes header information)
+and delivery is not guaranteed as it is with TCP.</p>
+<div class="section" id="echo-server">
+<h2>Echo Server<a class="headerlink" href="#echo-server" title="Permalink to this headline">¶</a></h2>
+<p>Since there is no connection, per se, the server does not need to
+listen for and accept connections.  It only needs to use <tt class="xref py py-func docutils literal"><span class="pre">bind()</span></tt>
+to associate its socket with a port, and then wait for individual
+messages.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">socket</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="c"># Create a TCP/IP socket</span>
+<span class="n">sock</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_DGRAM</span><span class="p">)</span>
+
+<span class="c"># Bind the socket to the port</span>
+<span class="n">server_address</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">10000</span><span class="p">)</span>
+<span class="k">print</span> <span class="o">&gt;&gt;</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&#39;starting up on </span><span class="si">%s</span><span class="s"> port </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">server_address</span>
+<span class="n">sock</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">server_address</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Messages are read from the socket using <tt class="xref py py-func docutils literal"><span class="pre">recvfrom()</span></tt>, which
+returns the data as well as the address of the client from which it
+was sent.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+    <span class="k">print</span> <span class="o">&gt;&gt;</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">waiting to receive message&#39;</span>
+    <span class="n">data</span><span class="p">,</span> <span class="n">address</span> <span class="o">=</span> <span class="n">sock</span><span class="o">.</span><span class="n">recvfrom</span><span class="p">(</span><span class="mi">4096</span><span class="p">)</span>
+    
+    <span class="k">print</span> <span class="o">&gt;&gt;</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&#39;received </span><span class="si">%s</span><span class="s"> bytes from </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">address</span><span class="p">)</span>
+    <span class="k">print</span> <span class="o">&gt;&gt;</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span> <span class="n">data</span>
+    
+    <span class="k">if</span> <span class="n">data</span><span class="p">:</span>
+        <span class="n">sent</span> <span class="o">=</span> <span class="n">sock</span><span class="o">.</span><span class="n">sendto</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">address</span><span class="p">)</span>
+        <span class="k">print</span> <span class="o">&gt;&gt;</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&#39;sent </span><span class="si">%s</span><span class="s"> bytes back to </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">sent</span><span class="p">,</span> <span class="n">address</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="echo-client">
+<h2>Echo Client<a class="headerlink" href="#echo-client" title="Permalink to this headline">¶</a></h2>
+<p>The UDP echo client is similar the server, but does not use
+<tt class="xref py py-func docutils literal"><span class="pre">bind()</span></tt> to attach its socket to an address.  It uses
+<tt class="xref py py-func docutils literal"><span class="pre">sendto()</span></tt> to deliver its message directly to the server, and
+<tt class="xref py py-func docutils literal"><span class="pre">recvfrom()</span></tt> to receive the response.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">socket</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="c"># Create a UDP socket</span>
+<span class="n">sock</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_DGRAM</span><span class="p">)</span>
+
+<span class="n">server_address</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">10000</span><span class="p">)</span>
+<span class="n">message</span> <span class="o">=</span> <span class="s">&#39;This is the message.  It will be repeated.&#39;</span>
+
+<span class="k">try</span><span class="p">:</span>
+
+    <span class="c"># Send data</span>
+    <span class="k">print</span> <span class="o">&gt;&gt;</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&#39;sending &quot;</span><span class="si">%s</span><span class="s">&quot;&#39;</span> <span class="o">%</span> <span class="n">message</span>
+    <span class="n">sent</span> <span class="o">=</span> <span class="n">sock</span><span class="o">.</span><span class="n">sendto</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">server_address</span><span class="p">)</span>
+
+    <span class="c"># Receive response</span>
+    <span class="k">print</span> <span class="o">&gt;&gt;</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&#39;waiting to receive&#39;</span>
+    <span class="n">data</span><span class="p">,</span> <span class="n">server</span> <span class="o">=</span> <span class="n">sock</span><span class="o">.</span><span class="n">recvfrom</span><span class="p">(</span><span class="mi">4096</span><span class="p">)</span>
+    <span class="k">print</span> <span class="o">&gt;&gt;</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&#39;received &quot;</span><span class="si">%s</span><span class="s">&quot;&#39;</span> <span class="o">%</span> <span class="n">data</span>
+
+<span class="k">finally</span><span class="p">:</span>
+    <span class="k">print</span> <span class="o">&gt;&gt;</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&#39;closing socket&#39;</span>
+    <span class="n">sock</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="client-and-server-together">
+<h2>Client and Server Together<a class="headerlink" href="#client-and-server-together" title="Permalink to this headline">¶</a></h2>
+<p>Running the server produces:</p>
+<div class="highlight-python"><pre>$ python ./socket_echo_server_dgram.py
+
+starting up on localhost port 10000
+
+waiting to receive message
+received 42 bytes from ('127.0.0.1', 50139)
+This is the message.  It will be repeated.
+sent 42 bytes back to ('127.0.0.1', 50139)
+
+waiting to receive message</pre>
+</div>
+<p>and the client output is:</p>
+<div class="highlight-python"><pre>$ python ./socket_echo_client_dgram.py
+
+sending "This is the message.  It will be repeated."
+waiting to receive
+received "This is the message.  It will be repeated."
+closing socket
+
+$</pre>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="uds.html" title="Unix Domain Sockets"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="tcp.html" title="TCP/IP Client and Server"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../internet_protocols.html" >Internet Protocols and Support</a> &raquo;</li>
+          <li><a href="index.html" >socket &#8211; Network Communication</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright Doug Hellmann.
+      Last updated on Oct 24, 2010.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+
+    <br/><a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/88x31.png"/></a>
+    
+    </div>
+  </body>
+</html>

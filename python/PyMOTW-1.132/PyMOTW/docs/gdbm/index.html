@@ -1,0 +1,153 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>gdbm – GNU’s version of the dbm library &mdash; Python Module of the Week</title>
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.132',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="Data Persistence" href="../persistence.html" />
+    <link rel="next" title="pickle and cPickle – Python object serialization" href="../pickle/index.html" />
+    <link rel="prev" title="dumbdbm – Portable DBM Implementation" href="../dumbdbm/index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../pickle/index.html" title="pickle and cPickle – Python object serialization"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../dumbdbm/index.html" title="dumbdbm – Portable DBM Implementation"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../persistence.html" accesskey="U">Data Persistence</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../dumbdbm/index.html"
+                        title="previous chapter">dumbdbm &#8211; Portable DBM Implementation</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../pickle/index.html"
+                        title="next chapter">pickle and cPickle &#8211; Python object serialization</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/gdbm/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-gdbm">
+<span id="gdbm-gnu-s-version-of-the-dbm-library"></span><h1>gdbm &#8211; GNU&#8217;s version of the dbm library<a class="headerlink" href="#module-gdbm" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Purpose:</th><td class="field-body">GNU&#8217;s version of the dbm library</td>
+</tr>
+<tr class="field"><th class="field-name">Python Version:</th><td class="field-body">1.4 and later</td>
+</tr>
+</tbody>
+</table>
+<p><a class="reference internal" href="#module-gdbm" title="gdbm: GNU's version of the dbm library"><tt class="xref py py-mod docutils literal"><span class="pre">gdbm</span></tt></a> is GNU&#8217;s updated version of the <a class="reference internal" href="../dbm/index.html#module-dbm" title="dbm: Simple database interface"><tt class="xref py py-mod docutils literal"><span class="pre">dbm</span></tt></a> library.  It follows the same semantics as the other DBM implementations described under <a class="reference internal" href="../anydbm/index.html#module-anydbm" title="anydbm: anydbm provides a generic dictionary-like interface to DBM-style, string-keyed databases"><tt class="xref py py-mod docutils literal"><span class="pre">anydbm</span></tt></a>, with a few changes to the <em>flags</em> supported by <tt class="docutils literal"><span class="pre">open()</span></tt>.</p>
+<p>Besides the standard <tt class="docutils literal"><span class="pre">'r'</span></tt>, <tt class="docutils literal"><span class="pre">'w'</span></tt>, <tt class="docutils literal"><span class="pre">'c'</span></tt>, and <tt class="docutils literal"><span class="pre">'n'</span></tt> flags, <tt class="docutils literal"><span class="pre">gdbm.open()</span></tt> supports:</p>
+<blockquote>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">'f'</span></tt> to open the database in <em>fast</em> mode. In fast mode, writes to the database are not synchronized.</li>
+<li><tt class="docutils literal"><span class="pre">'s'</span></tt> to open the database in <em>synchronized</em> mode. Changes to the database are written to the file as they are made, rather than being delayed until the database is closed or synced explicitly.</li>
+<li><tt class="docutils literal"><span class="pre">'u'</span></tt> to open the database unlocked.</li>
+</ul>
+</blockquote>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://docs.python.org/library/gdbm.html">gdbm</a></dt>
+<dd>The standard library documentation for this module.</dd>
+<dt><a class="reference internal" href="../dbm/index.html#module-dbm" title="dbm: Simple database interface"><tt class="xref py py-mod docutils literal"><span class="pre">dbm</span></tt></a></dt>
+<dd>The <a class="reference internal" href="../dbm/index.html#module-dbm" title="dbm: Simple database interface"><tt class="xref py py-mod docutils literal"><span class="pre">dbm</span></tt></a> module.</dd>
+<dt><a class="reference internal" href="../anydbm/index.html#module-anydbm" title="anydbm: anydbm provides a generic dictionary-like interface to DBM-style, string-keyed databases"><tt class="xref py py-mod docutils literal"><span class="pre">anydbm</span></tt></a></dt>
+<dd>The <a class="reference internal" href="../anydbm/index.html#module-anydbm" title="anydbm: anydbm provides a generic dictionary-like interface to DBM-style, string-keyed databases"><tt class="xref py py-mod docutils literal"><span class="pre">anydbm</span></tt></a> module.</dd>
+</dl>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../pickle/index.html" title="pickle and cPickle – Python object serialization"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../dumbdbm/index.html" title="dumbdbm – Portable DBM Implementation"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../persistence.html" >Data Persistence</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright Doug Hellmann.
+      Last updated on Oct 24, 2010.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+
+    <br/><a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/88x31.png"/></a>
+    
+    </div>
+  </body>
+</html>

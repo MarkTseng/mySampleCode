@@ -1,0 +1,283 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>dircache – Cache directory listings &mdash; Python Module of the Week</title>
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.132',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="File and Directory Access" href="../file_access.html" />
+    <link rel="next" title="Data Compression and Archiving" href="../compression.html" />
+    <link rel="prev" title="shutil – High-level file operations." href="../shutil/index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../compression.html" title="Data Compression and Archiving"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../shutil/index.html" title="shutil – High-level file operations."
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../file_access.html" accesskey="U">File and Directory Access</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">dircache &#8211; Cache directory listings</a><ul>
+<li><a class="reference internal" href="#listing-directory-contents">Listing Directory Contents</a></li>
+<li><a class="reference internal" href="#annotated-listings">Annotated Listings</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../shutil/index.html"
+                        title="previous chapter">shutil &#8211; High-level file operations.</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../compression.html"
+                        title="next chapter">Data Compression and Archiving</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/dircache/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-dircache">
+<span id="dircache-cache-directory-listings"></span><h1>dircache &#8211; Cache directory listings<a class="headerlink" href="#module-dircache" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Purpose:</th><td class="field-body">Cache directory listings, updating when the modification time of a directory changes.</td>
+</tr>
+<tr class="field"><th class="field-name">Python Version:</th><td class="field-body">1.4 and later</td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="listing-directory-contents">
+<h2>Listing Directory Contents<a class="headerlink" href="#listing-directory-contents" title="Permalink to this headline">¶</a></h2>
+<p>The main function in the <a class="reference internal" href="#module-dircache" title="dircache: Cache directory listings"><tt class="xref py py-mod docutils literal"><span class="pre">dircache</span></tt></a> API is <tt class="xref py py-func docutils literal"><span class="pre">listdir()</span></tt>, a
+wrapper around <tt class="xref py py-func docutils literal"><span class="pre">os.listdir()</span></tt> that caches the results and returns
+the same <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt> each time it is called with a given path, unless the
+modification date of the named directory changes.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">dircache</span>
+
+<span class="n">path</span> <span class="o">=</span> <span class="s">&#39;.&#39;</span>
+<span class="n">first</span> <span class="o">=</span> <span class="n">dircache</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+<span class="n">second</span> <span class="o">=</span> <span class="n">dircache</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&#39;Contents :&#39;</span><span class="p">,</span> <span class="n">first</span>
+<span class="k">print</span> <span class="s">&#39;Identical:&#39;</span><span class="p">,</span> <span class="n">first</span> <span class="ow">is</span> <span class="n">second</span>
+<span class="k">print</span> <span class="s">&#39;Equal    :&#39;</span><span class="p">,</span> <span class="n">first</span> <span class="o">==</span> <span class="n">second</span>
+</pre></div>
+</div>
+<p>It is important to recognize that the exact same <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt> is
+returned each time, so it should not be modified in place.</p>
+<div class="highlight-python"><pre>$ python dircache_listdir.py
+
+Contents : ['__init__.py', 'dircache_annotate.py', 'dircache_listdir.py', 'dircache_listdir_file_added.py', 'dircache_reset.py', 'index.rst']
+Identical: True
+Equal    : True</pre>
+</div>
+<p>If the contents of the directory changes, it is rescanned.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">dircache</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">path</span> <span class="o">=</span> <span class="s">&#39;/tmp&#39;</span>
+<span class="n">file_to_create</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s">&#39;pymotw_tmp.txt&#39;</span><span class="p">)</span>
+
+<span class="c"># Look at the directory contents</span>
+<span class="n">first</span> <span class="o">=</span> <span class="n">dircache</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+
+<span class="c"># Create the new file</span>
+<span class="nb">open</span><span class="p">(</span><span class="n">file_to_create</span><span class="p">,</span> <span class="s">&#39;wt&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="c"># Rescan the directory</span>
+<span class="n">second</span> <span class="o">=</span> <span class="n">dircache</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+
+<span class="c"># Remove the file we created</span>
+<span class="n">os</span><span class="o">.</span><span class="n">unlink</span><span class="p">(</span><span class="n">file_to_create</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&#39;Identical :&#39;</span><span class="p">,</span> <span class="n">first</span> <span class="ow">is</span> <span class="n">second</span>
+<span class="k">print</span> <span class="s">&#39;Equal     :&#39;</span><span class="p">,</span> <span class="n">first</span> <span class="o">==</span> <span class="n">second</span>
+<span class="k">print</span> <span class="s">&#39;Difference:&#39;</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">second</span><span class="p">)</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="n">first</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>In this case the new file causes a new <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt> to be
+constructed.</p>
+<div class="highlight-python"><pre>$ python dircache_listdir_file_added.py
+
+Identical : False
+Equal     : False
+Difference: ['pymotw_tmp.txt']</pre>
+</div>
+<p>It is also possible to reset the entire cache, discarding its contents so that
+each path will be rechecked.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">dircache</span>
+
+<span class="n">path</span> <span class="o">=</span> <span class="s">&#39;/tmp&#39;</span>
+<span class="n">first</span> <span class="o">=</span> <span class="n">dircache</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+<span class="n">dircache</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+<span class="n">second</span> <span class="o">=</span> <span class="n">dircache</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&#39;Identical :&#39;</span><span class="p">,</span> <span class="n">first</span> <span class="ow">is</span> <span class="n">second</span>
+<span class="k">print</span> <span class="s">&#39;Equal     :&#39;</span><span class="p">,</span> <span class="n">first</span> <span class="o">==</span> <span class="n">second</span>
+<span class="k">print</span> <span class="s">&#39;Difference:&#39;</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">second</span><span class="p">)</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="n">first</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>After resetting, a new <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt> instance is returned.</p>
+<div class="highlight-python"><pre>$ python dircache_reset.py
+
+Identical : False
+Equal     : True
+Difference: []</pre>
+</div>
+</div>
+<div class="section" id="annotated-listings">
+<h2>Annotated Listings<a class="headerlink" href="#annotated-listings" title="Permalink to this headline">¶</a></h2>
+<p>The other interesting function provided by the dircache module is
+<tt class="xref py py-func docutils literal"><span class="pre">annotate()</span></tt>.  When called, <tt class="xref py py-func docutils literal"><span class="pre">annotate()</span></tt> modifies a
+<tt class="xref py py-func docutils literal"><span class="pre">list()</span></tt> such as is returned by <tt class="xref py py-func docutils literal"><span class="pre">listdir()</span></tt>, adding a <tt class="docutils literal"><span class="pre">'/'</span></tt>
+to the end of the names that represent directories.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">dircache</span>
+<span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">path</span> <span class="o">=</span> <span class="s">&#39;../..&#39;</span>
+
+<span class="n">contents</span> <span class="o">=</span> <span class="n">dircache</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+
+<span class="n">annotated</span> <span class="o">=</span> <span class="n">contents</span><span class="p">[:]</span>
+<span class="n">dircache</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">annotated</span><span class="p">)</span>
+
+<span class="n">fmt</span> <span class="o">=</span> <span class="s">&#39;</span><span class="si">%25s</span><span class="se">\t</span><span class="si">%25s</span><span class="s">&#39;</span>
+
+<span class="k">print</span> <span class="n">fmt</span> <span class="o">%</span> <span class="p">(</span><span class="s">&#39;ORIGINAL&#39;</span><span class="p">,</span> <span class="s">&#39;ANNOTATED&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">fmt</span> <span class="o">%</span> <span class="p">((</span><span class="s">&#39;-&#39;</span> <span class="o">*</span> <span class="mi">25</span><span class="p">,)</span><span class="o">*</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">o</span><span class="p">,</span> <span class="n">a</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">contents</span><span class="p">,</span> <span class="n">annotated</span><span class="p">):</span>
+    <span class="k">print</span> <span class="n">fmt</span> <span class="o">%</span> <span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Unfortunately for Windows users, although <tt class="xref py py-func docutils literal"><span class="pre">annotate()</span></tt> uses
+<tt class="xref py py-func docutils literal"><span class="pre">os.path.join()</span></tt> to construct names to test, it always appends a
+<tt class="docutils literal"><span class="pre">'/'</span></tt>, not <tt class="xref py py-data docutils literal"><span class="pre">os.sep</span></tt>.</p>
+<div class="highlight-python"><pre>$ python dircache_annotate.py
+
+                 ORIGINAL                       ANNOTATED
+-------------------------       -------------------------
+                      .hg                            .hg/
+                .hgignore                       .hgignore
+                  .hgtags                         .hgtags
+              LICENSE.txt                     LICENSE.txt
+              MANIFEST.in                     MANIFEST.in
+                   PyMOTW                         PyMOTW/
+          PyMOTW.egg-info                PyMOTW.egg-info/
+               README.txt                      README.txt
+                      bin                            bin/
+               blog_posts                     blog_posts/
+                     dist                           dist/
+                   module                          module
+                     motw                            motw
+              pavement.py                     pavement.py
+        paver-minilib.zip               paver-minilib.zip
+                 setup.py                        setup.py
+   sitemap_gen_config.xml          sitemap_gen_config.xml
+                   sphinx                         sphinx/
+                    utils                          utils/
+                      web                            web/</pre>
+</div>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://docs.python.org/library/dircache.html">dircache</a></dt>
+<dd>The standard library documentation for this module.</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../compression.html" title="Data Compression and Archiving"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../shutil/index.html" title="shutil – High-level file operations."
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../file_access.html" >File and Directory Access</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright Doug Hellmann.
+      Last updated on Oct 24, 2010.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+
+    <br/><a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/88x31.png"/></a>
+    
+    </div>
+  </body>
+</html>

@@ -1,0 +1,11 @@
+include LICENSE.txt
+include ChangeLog
+include setup.py
+include paver-minilib.zip
+include pavement.py
+include README.txt
+include module
+recursive-include PyMOTW *.rst *.html *.txt *.css *.js *.png
+include sphinx/conf.py
+recursive-include sphinx/templates *.py *.html
+prune utils

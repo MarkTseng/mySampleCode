@@ -1,0 +1,263 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>fnmatch – Compare filenames against Unix-style glob patterns. &mdash; Python Module of the Week</title>
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.132',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="File and Directory Access" href="../file_access.html" />
+    <link rel="next" title="linecache – Read text files efficiently" href="../linecache/index.html" />
+    <link rel="prev" title="glob – Filename pattern matching" href="../glob/index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../linecache/index.html" title="linecache – Read text files efficiently"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../glob/index.html" title="glob – Filename pattern matching"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../file_access.html" accesskey="U">File and Directory Access</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">fnmatch &#8211; Compare filenames against Unix-style glob patterns.</a><ul>
+<li><a class="reference internal" href="#simple-matching">Simple Matching</a></li>
+<li><a class="reference internal" href="#filtering">Filtering</a></li>
+<li><a class="reference internal" href="#translating-patterns">Translating Patterns</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../glob/index.html"
+                        title="previous chapter">glob &#8211; Filename pattern matching</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../linecache/index.html"
+                        title="next chapter">linecache &#8211; Read text files efficiently</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/fnmatch/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-fnmatch">
+<span id="fnmatch-compare-filenames-against-unix-style-glob-patterns"></span><h1>fnmatch &#8211; Compare filenames against Unix-style glob patterns.<a class="headerlink" href="#module-fnmatch" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Purpose:</th><td class="field-body">Handle Unix-style filename comparison with the fnmatch module.</td>
+</tr>
+<tr class="field"><th class="field-name">Python Version:</th><td class="field-body">1.4 and later.</td>
+</tr>
+</tbody>
+</table>
+<p>The fnmatch module is used to compare filenames against glob-style patterns
+such as used by Unix shells.</p>
+<div class="section" id="simple-matching">
+<h2>Simple Matching<a class="headerlink" href="#simple-matching" title="Permalink to this headline">¶</a></h2>
+<p><tt class="docutils literal"><span class="pre">fnmatch()</span></tt> compares a single filename against a pattern and returns
+a boolean indicating whether or not they match. The comparison is
+case-sensitive when the operating system uses a case-sensitive
+filesystem.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">fnmatch</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">pattern</span> <span class="o">=</span> <span class="s">&#39;fnmatch_*.py&#39;</span>
+<span class="k">print</span> <span class="s">&#39;Pattern :&#39;</span><span class="p">,</span> <span class="n">pattern</span>
+<span class="k">print</span>
+
+<span class="n">files</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s">&#39;.&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;Filename: </span><span class="si">%-25s</span><span class="s"> </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">fnmatch</span><span class="o">.</span><span class="n">fnmatch</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">pattern</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>In this example, the pattern matches all files starting with &#8216;<a class="reference external" href="http://docs.python.org/library/fnmatch.html">fnmatch</a>&#8216; and
+ending in &#8216;.py&#8217;.</p>
+<div class="highlight-python"><pre>$ python fnmatch_fnmatch.py
+
+Pattern : fnmatch_*.py
+
+Filename: __init__.py               False
+Filename: fnmatch_filter.py         True
+Filename: fnmatch_fnmatch.py        True
+Filename: fnmatch_fnmatchcase.py    True
+Filename: fnmatch_translate.py      True
+Filename: index.rst                 False</pre>
+</div>
+<p>To force a case-sensitive comparison, regardless of the filesystem and
+operating system settings, use <tt class="docutils literal"><span class="pre">fnmatchcase()</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">fnmatch</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">pattern</span> <span class="o">=</span> <span class="s">&#39;FNMATCH_*.PY&#39;</span>
+<span class="k">print</span> <span class="s">&#39;Pattern :&#39;</span><span class="p">,</span> <span class="n">pattern</span>
+<span class="k">print</span>
+
+<span class="n">files</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s">&#39;.&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;Filename: </span><span class="si">%-25s</span><span class="s"> </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">fnmatch</span><span class="o">.</span><span class="n">fnmatchcase</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">pattern</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Since my laptop uses a case-sensitive filesystem, no files match the modified
+pattern.</p>
+<div class="highlight-python"><pre>$ python fnmatch_fnmatchcase.py
+
+Pattern : FNMATCH_*.PY
+
+Filename: __init__.py               False
+Filename: fnmatch_filter.py         False
+Filename: fnmatch_fnmatch.py        False
+Filename: fnmatch_fnmatchcase.py    False
+Filename: fnmatch_translate.py      False
+Filename: index.rst                 False</pre>
+</div>
+</div>
+<div class="section" id="filtering">
+<h2>Filtering<a class="headerlink" href="#filtering" title="Permalink to this headline">¶</a></h2>
+<p>To test a sequence of filenames, you can use <tt class="docutils literal"><span class="pre">filter()</span></tt>. It returns
+a list of the names that match the pattern argument.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">fnmatch</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">pattern</span> <span class="o">=</span> <span class="s">&#39;fnmatch_*.py&#39;</span>
+<span class="k">print</span> <span class="s">&#39;Pattern :&#39;</span><span class="p">,</span> <span class="n">pattern</span>
+
+<span class="n">files</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s">&#39;.&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;Files   :&#39;</span><span class="p">,</span> <span class="n">files</span>
+
+<span class="k">print</span> <span class="s">&#39;Matches :&#39;</span><span class="p">,</span> <span class="n">fnmatch</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">files</span><span class="p">,</span> <span class="n">pattern</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In this example, <tt class="docutils literal"><span class="pre">filter()</span></tt> returns the list of names of the example
+source files associated with this post.</p>
+<div class="highlight-python"><pre>$ python fnmatch_filter.py
+
+Pattern : fnmatch_*.py
+Files   : ['__init__.py', 'fnmatch_filter.py', 'fnmatch_fnmatch.py', 'fnmatch_fnmatchcase.py', 'fnmatch_translate.py', 'index.rst']
+Matches : ['fnmatch_filter.py', 'fnmatch_fnmatch.py', 'fnmatch_fnmatchcase.py', 'fnmatch_translate.py']</pre>
+</div>
+</div>
+<div class="section" id="translating-patterns">
+<h2>Translating Patterns<a class="headerlink" href="#translating-patterns" title="Permalink to this headline">¶</a></h2>
+<p>Internally, fnmatch converts the glob pattern to a regular expression
+and uses the <a class="reference internal" href="../re/index.html#module-re" title="re: Searching within and changing text using formal patterns."><tt class="xref py py-mod docutils literal"><span class="pre">re</span></tt></a> module to compare the name and pattern. The
+<tt class="docutils literal"><span class="pre">translate()</span></tt> function is the public API for converting glob patterns to
+regular expressions.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">fnmatch</span>
+
+<span class="n">pattern</span> <span class="o">=</span> <span class="s">&#39;fnmatch_*.py&#39;</span>
+<span class="k">print</span> <span class="s">&#39;Pattern :&#39;</span><span class="p">,</span> <span class="n">pattern</span>
+<span class="k">print</span> <span class="s">&#39;Regex   :&#39;</span><span class="p">,</span> <span class="n">fnmatch</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="n">pattern</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Notice that some of the characters are escaped to make a valid expression.</p>
+<div class="highlight-python"><pre>$ python fnmatch_translate.py
+
+Pattern : fnmatch_*.py
+Regex   : fnmatch\_.*\.py\Z(?ms)</pre>
+</div>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://docs.python.org/library/fnmatch.html">fnmatch</a></dt>
+<dd>The standard library documentation for this module.</dd>
+<dt><a class="reference internal" href="../glob/index.html#module-glob" title="glob: Use Unix shell rules to fine filenames matching a pattern."><tt class="xref py py-mod docutils literal"><span class="pre">glob</span></tt></a></dt>
+<dd>The glob module combines <a class="reference internal" href="#module-fnmatch" title="fnmatch: Compare filenames against Unix-style glob patterns."><tt class="xref py py-mod docutils literal"><span class="pre">fnmatch</span></tt></a> matching with
+<tt class="docutils literal"><span class="pre">os.listdir()</span></tt> to produce lists of files and directories
+matching patterns.</dd>
+<dt><a class="reference internal" href="../articles/file_access.html#article-file-access"><em>File Access</em></a></dt>
+<dd>More modules for working with files.</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../linecache/index.html" title="linecache – Read text files efficiently"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../glob/index.html" title="glob – Filename pattern matching"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../file_access.html" >File and Directory Access</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright Doug Hellmann.
+      Last updated on Oct 24, 2010.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+
+    <br/><a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/88x31.png"/></a>
+    
+    </div>
+  </body>
+</html>

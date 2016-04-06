@@ -1,0 +1,180 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>multiprocessing – Manage processes like threads &mdash; Python Module of the Week</title>
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.132',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="Optional Operating System Services" href="../optional_os.html" />
+    <link rel="next" title="multiprocessing Basics" href="basics.html" />
+    <link rel="prev" title="mmap – Memory-map files" href="../mmap/index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="basics.html" title="multiprocessing Basics"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../mmap/index.html" title="mmap – Memory-map files"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../optional_os.html" accesskey="U">Optional Operating System Services</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../mmap/index.html"
+                        title="previous chapter">mmap &#8211; Memory-map files</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="basics.html"
+                        title="next chapter">multiprocessing Basics</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/multiprocessing/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-multiprocessing">
+<span id="multiprocessing-manage-processes-like-threads"></span><h1>multiprocessing &#8211; Manage processes like threads<a class="headerlink" href="#module-multiprocessing" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Purpose:</th><td class="field-body">Provides an API for managing processes.</td>
+</tr>
+<tr class="field"><th class="field-name">Python Version:</th><td class="field-body">2.6</td>
+</tr>
+</tbody>
+</table>
+<p>The <a class="reference internal" href="#module-multiprocessing" title="multiprocessing: Manage processes like threads."><tt class="xref py py-mod docutils literal"><span class="pre">multiprocessing</span></tt></a> module includes a relatively simple API for
+dividing work up between multiple processes.  It is based on the API
+for <a class="reference internal" href="../threading/index.html#module-threading" title="threading: Manage several concurrent threads of execution."><tt class="xref py py-mod docutils literal"><span class="pre">threading</span></tt></a>, and in some cases is a drop-in replacement.  Due
+to the similarity, the first few examples here are modified from the
+<a class="reference internal" href="../threading/index.html#module-threading" title="threading: Manage several concurrent threads of execution."><tt class="xref py py-mod docutils literal"><span class="pre">threading</span></tt></a> examples.  Features provided by
+<a class="reference internal" href="#module-multiprocessing" title="multiprocessing: Manage processes like threads."><tt class="xref py py-mod docutils literal"><span class="pre">multiprocessing</span></tt></a> but not available in <a class="reference internal" href="../threading/index.html#module-threading" title="threading: Manage several concurrent threads of execution."><tt class="xref py py-mod docutils literal"><span class="pre">threading</span></tt></a> are
+covered later.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="basics.html">multiprocessing Basics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="basics.html#importable-target-functions">Importable Target Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basics.html#determining-the-current-process">Determining the Current Process</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basics.html#daemon-processes">Daemon Processes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basics.html#waiting-for-processes">Waiting for Processes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basics.html#terminating-processes">Terminating Processes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basics.html#process-exit-status">Process Exit Status</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basics.html#logging">Logging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basics.html#subclassing-process">Subclassing Process</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="communication.html">Communication Between Processes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="communication.html#passing-messages-to-processes">Passing Messages to Processes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="communication.html#signaling-between-processes">Signaling between Processes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="communication.html#controlling-access-to-resources">Controlling Access to Resources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="communication.html#synchronizing-operations">Synchronizing Operations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="communication.html#controlling-concurrent-access-to-resources">Controlling Concurrent Access to Resources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="communication.html#managing-shared-state">Managing Shared State</a></li>
+<li class="toctree-l2"><a class="reference internal" href="communication.html#shared-namespaces">Shared Namespaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="communication.html#process-pools">Process Pools</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="mapreduce.html">Implementing MapReduce with multiprocessing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mapreduce.html#simplemapreduce">SimpleMapReduce</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mapreduce.html#counting-words-in-files">Counting Words in Files</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://docs.python.org/library/multiprocessing.html">multiprocessing</a></dt>
+<dd>The standard library documentation for this module.</dd>
+<dt><a class="reference internal" href="../threading/index.html#module-threading" title="threading: Manage several concurrent threads of execution."><tt class="xref py py-mod docutils literal"><span class="pre">threading</span></tt></a></dt>
+<dd>High-level API for working with threads.</dd>
+</dl>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="basics.html" title="multiprocessing Basics"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../mmap/index.html" title="mmap – Memory-map files"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../optional_os.html" >Optional Operating System Services</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright Doug Hellmann.
+      Last updated on Oct 24, 2010.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+
+    <br/><a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/88x31.png"/></a>
+    
+    </div>
+  </body>
+</html>

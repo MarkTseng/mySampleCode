@@ -1,0 +1,397 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>gzip – Read and write GNU zip files &mdash; Python Module of the Week</title>
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.132',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="Data Compression and Archiving" href="../compression.html" />
+    <link rel="next" title="tarfile – Tar archive access" href="../tarfile/index.html" />
+    <link rel="prev" title="bz2 – bzip2 compression" href="../bz2/index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../tarfile/index.html" title="tarfile – Tar archive access"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../bz2/index.html" title="bz2 – bzip2 compression"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../compression.html" accesskey="U">Data Compression and Archiving</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">gzip &#8211; Read and write GNU zip files</a><ul>
+<li><a class="reference internal" href="#writing-compressed-files">Writing Compressed Files</a></li>
+<li><a class="reference internal" href="#reading-compressed-data">Reading Compressed Data</a></li>
+<li><a class="reference internal" href="#working-with-streams">Working with Streams</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../bz2/index.html"
+                        title="previous chapter">bz2 &#8211; bzip2 compression</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../tarfile/index.html"
+                        title="next chapter">tarfile &#8211; Tar archive access</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/gzip/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-gzip">
+<span id="gzip-read-and-write-gnu-zip-files"></span><h1>gzip &#8211; Read and write GNU zip files<a class="headerlink" href="#module-gzip" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Purpose:</th><td class="field-body">Read and write gzip files.</td>
+</tr>
+<tr class="field"><th class="field-name">Python Version:</th><td class="field-body">1.5.2 and later</td>
+</tr>
+</tbody>
+</table>
+<p>The gzip module provides a file-like interface to GNU zip files, using
+<a class="reference internal" href="../zlib/index.html#module-zlib" title="zlib: Low-level access to GNU zlib compression library"><tt class="xref py py-mod docutils literal"><span class="pre">zlib</span></tt></a> to compress and uncompress the data.</p>
+<div class="section" id="writing-compressed-files">
+<h2>Writing Compressed Files<a class="headerlink" href="#writing-compressed-files" title="Permalink to this headline">¶</a></h2>
+<p>The module-level function <tt class="docutils literal"><span class="pre">open()</span></tt> creates an instance of the
+file-like class GzipFile.  The usual methods for writing and reading
+data are provided.  To write data into a compressed file, open the
+file with mode <tt class="docutils literal"><span class="pre">'w'</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">gzip</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">outfilename</span> <span class="o">=</span> <span class="s">&#39;example.txt.gz&#39;</span>
+<span class="n">output</span> <span class="o">=</span> <span class="n">gzip</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">outfilename</span><span class="p">,</span> <span class="s">&#39;wb&#39;</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">output</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;Contents of the example file go here.</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">output</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="k">print</span> <span class="n">outfilename</span><span class="p">,</span> <span class="s">&#39;contains&#39;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">stat</span><span class="p">(</span><span class="n">outfilename</span><span class="p">)</span><span class="o">.</span><span class="n">st_size</span><span class="p">,</span> <span class="s">&#39;bytes of compressed data&#39;</span>
+<span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s">&#39;file -b --mime </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">outfilename</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><pre>$ python gzip_write.py
+
+application/x-gzip; charset=binary
+example.txt.gz contains 68 bytes of compressed data</pre>
+</div>
+<p>Different amounts of compression can be used by passing a
+<em>compresslevel</em> argument.  Valid values range from 1 to 9, inclusive.
+Lower values are faster and result in less compression.  Higher values
+are slower and compress more, up to a point.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">gzip</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">hashlib</span>
+
+<span class="k">def</span> <span class="nf">get_hash</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">md5</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;lorem.txt&#39;</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span> <span class="o">*</span> <span class="mi">1024</span>
+<span class="n">cksum</span> <span class="o">=</span> <span class="n">get_hash</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&#39;Level  Size        Checksum&#39;</span>
+<span class="k">print</span> <span class="s">&#39;-----  ----------  ---------------------------------&#39;</span>
+<span class="k">print</span> <span class="s">&#39;data   </span><span class="si">%10d</span><span class="s">  </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">cksum</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">):</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="s">&#39;compress-level-</span><span class="si">%s</span><span class="s">.gz&#39;</span> <span class="o">%</span> <span class="n">i</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="n">gzip</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s">&#39;wb&#39;</span><span class="p">,</span> <span class="n">compresslevel</span><span class="o">=</span><span class="n">i</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">output</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="n">output</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="n">size</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">stat</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span><span class="o">.</span><span class="n">st_size</span>
+    <span class="n">cksum</span> <span class="o">=</span> <span class="n">get_hash</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s">&#39;rb&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="si">%5d</span><span class="s">  </span><span class="si">%10d</span><span class="s">  </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">cksum</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The center column of numbers in the output of the script is the size
+in bytes of the files produced.  As you see, for this input data, the
+higher compression values do not necessarily pay off in decreased
+storage space.  Results will vary, depending on the input data.</p>
+<div class="highlight-python"><pre>$ python gzip_compresslevel.py
+
+Level  Size        Checksum
+-----  ----------  ---------------------------------
+data       754688  e4c0f9433723971563f08a458715119c
+    1        9839  c81740789963048582bee228b12bbdd1
+    2        8260  61102a896189f4dfbc95af29ee8130f1
+    3        8221  d49ce4575cfd369767f2e922083cfa19
+    4        4160  c10d7f55f45804fb30669b82adfe4335
+    5        4160  3b55c304a821fc05d89bb542a3d7b237
+    6        4160  6775db0b68bb995a544e42bbe11ee8bc
+    7        4160  36cdb6571f649ad8b0037924ec07bbb3
+    8        4160  01005892852ed67bc5ad62069bb63e64
+    9        4160  6f4514ad96f781ad22f19f2dfcf91b93</pre>
+</div>
+<p>A GzipFile instance also includes a <tt class="docutils literal"><span class="pre">writelines()</span></tt> method that can
+be used to write a sequence of strings.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">gzip</span>
+<span class="kn">import</span> <span class="nn">itertools</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">output</span> <span class="o">=</span> <span class="n">gzip</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&#39;example_lines.txt.gz&#39;</span><span class="p">,</span> <span class="s">&#39;wb&#39;</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">output</span><span class="o">.</span><span class="n">writelines</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="s">&#39;The same line, over and over.</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">output</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s">&#39;gzcat example_lines.txt.gz&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><pre>$ python gzip_writelines.py
+
+The same line, over and over.
+The same line, over and over.
+The same line, over and over.
+The same line, over and over.
+The same line, over and over.
+The same line, over and over.
+The same line, over and over.
+The same line, over and over.
+The same line, over and over.
+The same line, over and over.</pre>
+</div>
+</div>
+<div class="section" id="reading-compressed-data">
+<h2>Reading Compressed Data<a class="headerlink" href="#reading-compressed-data" title="Permalink to this headline">¶</a></h2>
+<p>To read data back from previously compressed files, simply open the
+file with mode <tt class="docutils literal"><span class="pre">'r'</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">gzip</span>
+
+<span class="n">input_file</span> <span class="o">=</span> <span class="n">gzip</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&#39;example.txt.gz&#39;</span><span class="p">,</span> <span class="s">&#39;rb&#39;</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">input_file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">input_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This example reads  the file  written by  <tt class="docutils literal"><span class="pre">gzip_write.py</span></tt>  from the
+previous section.</p>
+<div class="highlight-python"><pre>$ python gzip_read.py
+
+Contents of the example file go here.</pre>
+</div>
+<p>While reading a file, it is also possible to seek and read only part
+of the data.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">gzip</span>
+
+<span class="n">input_file</span> <span class="o">=</span> <span class="n">gzip</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&#39;example.txt.gz&#39;</span><span class="p">,</span> <span class="s">&#39;rb&#39;</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;Entire file:&#39;</span>
+    <span class="n">all_data</span> <span class="o">=</span> <span class="n">input_file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="k">print</span> <span class="n">all_data</span>
+    
+    <span class="n">expected</span> <span class="o">=</span> <span class="n">all_data</span><span class="p">[</span><span class="mi">5</span><span class="p">:</span><span class="mi">15</span><span class="p">]</span>
+    
+    <span class="c"># rewind to beginning</span>
+    <span class="n">input_file</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    
+    <span class="c"># move ahead 5 bytes</span>
+    <span class="n">input_file</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;Starting at position 5 for 10 bytes:&#39;</span>
+    <span class="n">partial</span> <span class="o">=</span> <span class="n">input_file</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+    <span class="k">print</span> <span class="n">partial</span>
+    
+    <span class="k">print</span>
+    <span class="k">print</span> <span class="n">expected</span> <span class="o">==</span> <span class="n">partial</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">input_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The <tt class="docutils literal"><span class="pre">seek()</span></tt> position is relative to the <em>uncompressed</em> data, so the
+caller does not even need to know that the data file is compressed.</p>
+<div class="highlight-python"><pre>$ python gzip_seek.py
+
+Entire file:
+Contents of the example file go here.
+
+Starting at position 5 for 10 bytes:
+nts of the
+
+True</pre>
+</div>
+</div>
+<div class="section" id="working-with-streams">
+<h2>Working with Streams<a class="headerlink" href="#working-with-streams" title="Permalink to this headline">¶</a></h2>
+<p>When working with a data stream instead of a file, use the GzipFile
+class directly to compress or uncompress it.  This is useful when the
+data is being transmitted over a socket or from read an existing
+(already open) file handle.  A StringIO buffer can also be used.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">gzip</span>
+<span class="kn">from</span> <span class="nn">cStringIO</span> <span class="kn">import</span> <span class="n">StringIO</span>
+<span class="kn">import</span> <span class="nn">binascii</span>
+
+<span class="n">uncompressed_data</span> <span class="o">=</span> <span class="s">&#39;The same line, over and over.</span><span class="se">\n</span><span class="s">&#39;</span> <span class="o">*</span> <span class="mi">10</span>
+<span class="k">print</span> <span class="s">&#39;UNCOMPRESSED:&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">uncompressed_data</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">uncompressed_data</span>
+
+<span class="n">buf</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">()</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">gzip</span><span class="o">.</span><span class="n">GzipFile</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s">&#39;wb&#39;</span><span class="p">,</span> <span class="n">fileobj</span><span class="o">=</span><span class="n">buf</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">uncompressed_data</span><span class="p">)</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="n">compressed_data</span> <span class="o">=</span> <span class="n">buf</span><span class="o">.</span><span class="n">getvalue</span><span class="p">()</span>
+<span class="k">print</span> <span class="s">&#39;COMPRESSED:&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">compressed_data</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">binascii</span><span class="o">.</span><span class="n">hexlify</span><span class="p">(</span><span class="n">compressed_data</span><span class="p">)</span>
+
+<span class="n">inbuffer</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">(</span><span class="n">compressed_data</span><span class="p">)</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">gzip</span><span class="o">.</span><span class="n">GzipFile</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s">&#39;rb&#39;</span><span class="p">,</span> <span class="n">fileobj</span><span class="o">=</span><span class="n">inbuffer</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">reread_data</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">uncompressed_data</span><span class="p">))</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="k">print</span>
+<span class="k">print</span> <span class="s">&#39;RE-READ:&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">reread_data</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">reread_data</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">When re-reading the previously compressed data, I pass an explicit length to
+<tt class="docutils literal"><span class="pre">read()</span></tt>.  Leaving the length off resulted in a CRC error, possibly because
+StringIO returned an empty string before reporting EOF.  If you are
+working with streams of compressed data, you may want to prefix the data with
+an integer representing the actual amount of data to be read.</p>
+</div>
+<div class="highlight-python"><pre>$ python gzip_StringIO.py
+
+UNCOMPRESSED: 300
+The same line, over and over.
+The same line, over and over.
+The same line, over and over.
+The same line, over and over.
+The same line, over and over.
+The same line, over and over.
+The same line, over and over.
+The same line, over and over.
+The same line, over and over.
+The same line, over and over.
+
+COMPRESSED: 51
+1f8b0800522cc44c02ff0bc94855284ecc4d55c8c9cc4bd551c82f4b2d5248cc4b0133f4b8424665916401d3e717802c010000
+
+RE-READ: 300
+The same line, over and over.
+The same line, over and over.
+The same line, over and over.
+The same line, over and over.
+The same line, over and over.
+The same line, over and over.
+The same line, over and over.
+The same line, over and over.
+The same line, over and over.
+The same line, over and over.</pre>
+</div>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://docs.python.org/library/gzip.html">gzip</a></dt>
+<dd>The standard library documentation for this module.</dd>
+<dt><a class="reference internal" href="../zlib/index.html#module-zlib" title="zlib: Low-level access to GNU zlib compression library"><tt class="xref py py-mod docutils literal"><span class="pre">zlib</span></tt></a></dt>
+<dd>The zlib module is a lower-level interface to gzip compression.</dd>
+<dt><a class="reference internal" href="../zipfile/index.html#module-zipfile" title="zipfile: Read and write ZIP archive files."><tt class="xref py py-mod docutils literal"><span class="pre">zipfile</span></tt></a></dt>
+<dd>The zipfile module gives access to ZIP archives.</dd>
+<dt><a class="reference internal" href="../bz2/index.html#module-bz2" title="bz2: bzip2 compression"><tt class="xref py py-mod docutils literal"><span class="pre">bz2</span></tt></a></dt>
+<dd>The bz2 module uses the bzip2 compression format.</dd>
+<dt><a class="reference internal" href="../tarfile/index.html#module-tarfile" title="tarfile: Tar archive access"><tt class="xref py py-mod docutils literal"><span class="pre">tarfile</span></tt></a></dt>
+<dd>The tarfile module includes built-in support for reading compressed tar archives.</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../tarfile/index.html" title="tarfile – Tar archive access"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../bz2/index.html" title="bz2 – bzip2 compression"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../compression.html" >Data Compression and Archiving</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright Doug Hellmann.
+      Last updated on Oct 24, 2010.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+
+    <br/><a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/88x31.png"/></a>
+    
+    </div>
+  </body>
+</html>

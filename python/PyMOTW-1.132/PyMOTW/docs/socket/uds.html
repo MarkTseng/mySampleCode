@@ -1,0 +1,325 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Unix Domain Sockets &mdash; Python Module of the Week</title>
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.132',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="socket – Network Communication" href="index.html" />
+    <link rel="next" title="Multicast" href="multicast.html" />
+    <link rel="prev" title="User Datagram Client and Server" href="udp.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="multicast.html" title="Multicast"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="udp.html" title="User Datagram Client and Server"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../internet_protocols.html" >Internet Protocols and Support</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">socket &#8211; Network Communication</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Unix Domain Sockets</a><ul>
+<li><a class="reference internal" href="#permissions">Permissions</a></li>
+<li><a class="reference internal" href="#communication-between-parent-and-child-processes">Communication Between Parent and Child Processes</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="udp.html"
+                        title="previous chapter">User Datagram Client and Server</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="multicast.html"
+                        title="next chapter">Multicast</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/socket/uds.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="unix-domain-sockets">
+<h1>Unix Domain Sockets<a class="headerlink" href="#unix-domain-sockets" title="Permalink to this headline">¶</a></h1>
+<p>From the programmer&#8217;s perspective there are two essential differences
+between using a Unix domain socket and an TCP/IP socket.  First, the
+address of the socket is a path on the filesystem, rather than a tuple
+containing servername and port.  Second, the node created in the
+filesystem to represent the socket persists after the socket is
+closed, and needs to be removed each time the server starts up.  The
+echo server example from earlier can be updated to use UDS by making a
+few changes in the setup section.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">socket</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">server_address</span> <span class="o">=</span> <span class="s">&#39;./uds_socket&#39;</span>
+
+<span class="c"># Make sure the socket does not already exist</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">unlink</span><span class="p">(</span><span class="n">server_address</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">server_address</span><span class="p">):</span>
+        <span class="k">raise</span>
+</pre></div>
+</div>
+<p>The <a class="reference internal" href="index.html#module-socket" title="socket: Network communication"><tt class="xref py py-class docutils literal"><span class="pre">socket</span></tt></a> needs to be created with address family
+<tt class="xref py py-const docutils literal"><span class="pre">AF_UNIX</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># Create a UDS socket</span>
+<span class="n">sock</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_UNIX</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_STREAM</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Binding the socket and managing the incomming connections works the
+same as with TCP/IP sockets.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># Bind the socket to the port</span>
+<span class="k">print</span> <span class="o">&gt;&gt;</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&#39;starting up on </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">server_address</span>
+<span class="n">sock</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">server_address</span><span class="p">)</span>
+
+<span class="c"># Listen for incoming connections</span>
+<span class="n">sock</span><span class="o">.</span><span class="n">listen</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+    <span class="c"># Wait for a connection</span>
+    <span class="k">print</span> <span class="o">&gt;&gt;</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&#39;waiting for a connection&#39;</span>
+    <span class="n">connection</span><span class="p">,</span> <span class="n">client_address</span> <span class="o">=</span> <span class="n">sock</span><span class="o">.</span><span class="n">accept</span><span class="p">()</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">print</span> <span class="o">&gt;&gt;</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&#39;connection from&#39;</span><span class="p">,</span> <span class="n">client_address</span>
+
+        <span class="c"># Receive the data in small chunks and retransmit it</span>
+        <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
+            <span class="k">print</span> <span class="o">&gt;&gt;</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&#39;received &quot;</span><span class="si">%s</span><span class="s">&quot;&#39;</span> <span class="o">%</span> <span class="n">data</span>
+            <span class="k">if</span> <span class="n">data</span><span class="p">:</span>
+                <span class="k">print</span> <span class="o">&gt;&gt;</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&#39;sending data back to the client&#39;</span>
+                <span class="n">connection</span><span class="o">.</span><span class="n">sendall</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">print</span> <span class="o">&gt;&gt;</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&#39;no more data from&#39;</span><span class="p">,</span> <span class="n">client_address</span>
+                <span class="k">break</span>
+            
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="c"># Clean up the connection</span>
+        <span class="n">connection</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        
+</pre></div>
+</div>
+<p>The client setup also needs to be modified to work with UDS.  It
+should assume the filesystem node for the socket exists, since the
+server creates it by binding to the address.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">socket</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="c"># Create a UDS socket</span>
+<span class="n">sock</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_UNIX</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_STREAM</span><span class="p">)</span>
+
+<span class="c"># Connect the socket to the port where the server is listening</span>
+<span class="n">server_address</span> <span class="o">=</span> <span class="s">&#39;./uds_socket&#39;</span>
+<span class="k">print</span> <span class="o">&gt;&gt;</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&#39;connecting to </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">server_address</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">sock</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">server_address</span><span class="p">)</span>
+<span class="k">except</span> <span class="n">socket</span><span class="o">.</span><span class="n">error</span><span class="p">,</span> <span class="n">msg</span><span class="p">:</span>
+    <span class="k">print</span> <span class="o">&gt;&gt;</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span> <span class="n">msg</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Sending and receiving data works the same way in the UDS client as the
+TCP/IP client from before.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">try</span><span class="p">:</span>
+    
+    <span class="c"># Send data</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="s">&#39;This is the message.  It will be repeated.&#39;</span>
+    <span class="k">print</span> <span class="o">&gt;&gt;</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&#39;sending &quot;</span><span class="si">%s</span><span class="s">&quot;&#39;</span> <span class="o">%</span> <span class="n">message</span>
+    <span class="n">sock</span><span class="o">.</span><span class="n">sendall</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+
+    <span class="n">amount_received</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">amount_expected</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+    
+    <span class="k">while</span> <span class="n">amount_received</span> <span class="o">&lt;</span> <span class="n">amount_expected</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">sock</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
+        <span class="n">amount_received</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">print</span> <span class="o">&gt;&gt;</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&#39;received &quot;</span><span class="si">%s</span><span class="s">&quot;&#39;</span> <span class="o">%</span> <span class="n">data</span>
+
+<span class="k">finally</span><span class="p">:</span>
+    <span class="k">print</span> <span class="o">&gt;&gt;</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&#39;closing socket&#39;</span>
+    <span class="n">sock</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The program output is mostly the same, with appropriate updates for
+the address information.  From the server:</p>
+<div class="highlight-python"><pre>$ python ./socket_echo_server_uds.py
+
+starting up on ./uds_socket
+waiting for a connection
+connection from
+received "This is the mess"
+sending data back to the client
+received "age.  It will be"
+sending data back to the client
+received " repeated."
+sending data back to the client
+received ""
+no more data from
+waiting for a connection</pre>
+</div>
+<p>and from the client:</p>
+<div class="highlight-python"><pre>$ python socket_echo_client_uds.py
+
+connecting to ./uds_socket
+sending "This is the message.  It will be repeated."
+received "This is the mess"
+received "age.  It will be"
+received " repeated."
+closing socket</pre>
+</div>
+<div class="section" id="permissions">
+<h2>Permissions<a class="headerlink" href="#permissions" title="Permalink to this headline">¶</a></h2>
+<p>Since the UDS socket is represented by a node on the filesystem,
+standard filesystem permissions can be used to control access to the
+server.</p>
+<div class="highlight-python"><pre>$ ls -l ./uds_socket
+srwxr-xr-x  1 dhellmann  dhellmann  0 Sep 20 08:24 ./uds_socket
+
+$ sudo chown root ./uds_socket
+
+$ ls -l ./uds_socket
+srwxr-xr-x  1 root  dhellmann  0 Sep 20 08:24 ./uds_socket</pre>
+</div>
+<p>Running the client as a user other than <tt class="docutils literal"><span class="pre">root</span></tt> now results in an
+error because the process does not have permission to open the socket.</p>
+<div class="highlight-python"><pre>$ python socket_echo_client_uds.py
+
+connecting to ./uds_socket
+[Errno 13] Permission denied</pre>
+</div>
+</div>
+<div class="section" id="communication-between-parent-and-child-processes">
+<h2>Communication Between Parent and Child Processes<a class="headerlink" href="#communication-between-parent-and-child-processes" title="Permalink to this headline">¶</a></h2>
+<p>The <tt class="xref py py-func docutils literal"><span class="pre">socketpair()</span></tt> function is useful for setting up UDS sockets
+for interprocess communication under Unix.  It creates a pair of
+connected sockets that can be used to communicate between a parent
+process and a child process after the child is forked.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">socket</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">parent</span><span class="p">,</span> <span class="n">child</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socketpair</span><span class="p">()</span>
+
+<span class="n">pid</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">fork</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="n">pid</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;in parent, sending message&#39;</span>
+    <span class="n">child</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="n">parent</span><span class="o">.</span><span class="n">sendall</span><span class="p">(</span><span class="s">&#39;ping&#39;</span><span class="p">)</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">parent</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;response from child:&#39;</span><span class="p">,</span> <span class="n">response</span>
+    <span class="n">parent</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;in child, waiting for message&#39;</span>
+    <span class="n">parent</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="n">child</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;message from parent:&#39;</span><span class="p">,</span> <span class="n">message</span>
+    <span class="n">child</span><span class="o">.</span><span class="n">sendall</span><span class="p">(</span><span class="s">&#39;pong&#39;</span><span class="p">)</span>
+    <span class="n">child</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>By default, a UDS socket is created, but the caller can also pass
+address family, socket type, and even protocol options to control how
+the sockets are created.</p>
+<div class="highlight-python"><pre>$ python socket_socketpair.py
+
+in child, waiting for message
+message from parent: ping
+in parent, sending message
+response from child: pong</pre>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="multicast.html" title="Multicast"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="udp.html" title="User Datagram Client and Server"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../internet_protocols.html" >Internet Protocols and Support</a> &raquo;</li>
+          <li><a href="index.html" >socket &#8211; Network Communication</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright Doug Hellmann.
+      Last updated on Oct 24, 2010.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+
+    <br/><a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/88x31.png"/></a>
+    
+    </div>
+  </body>
+</html>

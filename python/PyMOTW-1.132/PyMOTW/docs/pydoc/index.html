@@ -1,0 +1,198 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>pydoc – Online help for Python modules &mdash; Python Module of the Week</title>
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.132',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="Development Tools" href="../dev_tools.html" />
+    <link rel="next" title="unittest – Automated testing framework" href="../unittest/index.html" />
+    <link rel="prev" title="doctest – Testing through documentation" href="../doctest/index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../unittest/index.html" title="unittest – Automated testing framework"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../doctest/index.html" title="doctest – Testing through documentation"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../dev_tools.html" accesskey="U">Development Tools</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">pydoc &#8211; Online help for Python modules</a><ul>
+<li><a class="reference internal" href="#plain-text-help">Plain Text Help</a></li>
+<li><a class="reference internal" href="#html-help">HTML Help</a></li>
+<li><a class="reference internal" href="#interactive-help">Interactive Help</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../doctest/index.html"
+                        title="previous chapter">doctest &#8211; Testing through documentation</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../unittest/index.html"
+                        title="next chapter">unittest &#8211; Automated testing framework</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/pydoc/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-pydoc">
+<span id="pydoc-online-help-for-python-modules"></span><h1>pydoc &#8211; Online help for Python modules<a class="headerlink" href="#module-pydoc" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Purpose:</th><td class="field-body">Generates help for Python modules and classes from the code.</td>
+</tr>
+<tr class="field"><th class="field-name">Python Version:</th><td class="field-body">2.1 and later</td>
+</tr>
+</tbody>
+</table>
+<p>The <a class="reference internal" href="#module-pydoc" title="pydoc: Online help for Python modules"><tt class="xref py py-mod docutils literal"><span class="pre">pydoc</span></tt></a> module imports a Python module and uses the contents
+to generate help text at runtime. The output includes docstrings for
+any objects that have them, and all of the documentable contents of
+the module are described.</p>
+<div class="section" id="plain-text-help">
+<h2>Plain Text Help<a class="headerlink" href="#plain-text-help" title="Permalink to this headline">¶</a></h2>
+<p>Running:</p>
+<div class="highlight-python"><pre>$ pydoc atexit</pre>
+</div>
+<p>Produces plaintext help on the console, using your pager if one is
+configured.</p>
+</div>
+<div class="section" id="html-help">
+<h2>HTML Help<a class="headerlink" href="#html-help" title="Permalink to this headline">¶</a></h2>
+<p>You can also cause <a class="reference internal" href="#module-pydoc" title="pydoc: Online help for Python modules"><tt class="xref py py-mod docutils literal"><span class="pre">pydoc</span></tt></a> to generate HTML output, either
+writing a static file to a local directory or starting a web server to
+browse documentation online.</p>
+<div class="highlight-python"><pre>$ pydoc -w atexit</pre>
+</div>
+<p>Creates <tt class="docutils literal"><span class="pre">atexit.html</span></tt> in the current directory.</p>
+<div class="highlight-python"><pre>$ pydoc -p 5000</pre>
+</div>
+<p>Starts a web server listening at <a class="reference external" href="http://localhost:5000/">http://localhost:5000/</a>. The server
+generates documentation as you browse through the available modules.</p>
+</div>
+<div class="section" id="interactive-help">
+<h2>Interactive Help<a class="headerlink" href="#interactive-help" title="Permalink to this headline">¶</a></h2>
+<p>pydoc also adds a function <tt class="docutils literal"><span class="pre">help()</span></tt> to the <tt class="docutils literal"><span class="pre">__builtins__</span></tt> so you
+can access the same information from the Python interpreter prompt.</p>
+<div class="highlight-python"><pre>$ python
+Python 2.6.2 (r262:71600, Apr 16 2009, 09:17:39)
+[GCC 4.0.1 (Apple Computer, Inc. build 5250)] on darwin
+Type "help", "copyright", "credits" or "license" for more information.
+&gt;&gt;&gt; help('atexit')
+Help on module atexit:
+
+NAME
+    atexit
+
+FILE
+    /Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/atexit.py
+...</pre>
+</div>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://docs.python.org/library/pydoc.html">pydoc</a></dt>
+<dd>The standard library documentation for this module.</dd>
+<dt><a class="reference internal" href="../about.html#motw-cli"><em>The motw Command Line Interface</em></a></dt>
+<dd>Accessing the Module of the Week articles from the command line.</dd>
+<dt><a class="reference internal" href="../about.html#motw-interactive"><em>Using PyMOTW with the Interactive Interpreter</em></a></dt>
+<dd>Accessing the Module of the Week articles from the interactive interpreter.</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../unittest/index.html" title="unittest – Automated testing framework"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../doctest/index.html" title="doctest – Testing through documentation"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../dev_tools.html" >Development Tools</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright Doug Hellmann.
+      Last updated on Oct 24, 2010.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+
+    <br/><a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/88x31.png"/></a>
+    
+    </div>
+  </body>
+</html>

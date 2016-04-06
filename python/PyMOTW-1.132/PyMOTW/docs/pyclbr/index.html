@@ -1,0 +1,285 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>pyclbr – Python class browser support &mdash; Python Module of the Week</title>
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.132',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="Python Language Services" href="../language.html" />
+    <link rel="next" title="tabnanny – Indentation validator" href="../tabnanny/index.html" />
+    <link rel="prev" title="dis – Python Bytecode Disassembler" href="../dis/index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../tabnanny/index.html" title="tabnanny – Indentation validator"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../dis/index.html" title="dis – Python Bytecode Disassembler"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../language.html" accesskey="U">Python Language Services</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">pyclbr &#8211; Python class browser support</a><ul>
+<li><a class="reference internal" href="#scanning-for-classes">Scanning for Classes</a></li>
+<li><a class="reference internal" href="#scanning-for-functions">Scanning for Functions</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../dis/index.html"
+                        title="previous chapter">dis &#8211; Python Bytecode Disassembler</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../tabnanny/index.html"
+                        title="next chapter">tabnanny &#8211; Indentation validator</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/pyclbr/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-pyclbr">
+<span id="pyclbr-python-class-browser-support"></span><h1>pyclbr &#8211; Python class browser support<a class="headerlink" href="#module-pyclbr" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Purpose:</th><td class="field-body">Implements an API suitable for use in a source code editor for making a class browser.</td>
+</tr>
+<tr class="field"><th class="field-name">Python Version:</th><td class="field-body">1.4 and later</td>
+</tr>
+</tbody>
+</table>
+<p><a class="reference internal" href="#module-pyclbr" title="pyclbr: Python class browser support"><tt class="xref py py-mod docutils literal"><span class="pre">pyclbr</span></tt></a> can scan Python source to find classes and stand-alone functions.  The information about class, method, and function names and line numbers is gathered using <tt class="xref py py-mod docutils literal"><span class="pre">tokenize</span></tt> <em>without</em> importing the code.</p>
+<p>The examples below use this source file as input:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="sd">&quot;&quot;&quot;Example source for pyclbr.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="k">class</span> <span class="nc">Base</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This is the base class.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">def</span> <span class="nf">method1</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span>
+
+<span class="k">class</span> <span class="nc">Sub1</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This is the first subclass.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<span class="k">class</span> <span class="nc">Sub2</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This is the second subclass.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<span class="k">class</span> <span class="nc">Mixin</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;A mixin class.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">def</span> <span class="nf">method2</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span>
+
+<span class="k">class</span> <span class="nc">MixinUser</span><span class="p">(</span><span class="n">Sub2</span><span class="p">,</span> <span class="n">Mixin</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Overrides method1 and method2</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">def</span> <span class="nf">method1</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span>
+    
+    <span class="k">def</span> <span class="nf">method2</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span>
+        
+    <span class="k">def</span> <span class="nf">method3</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span>
+
+<span class="k">def</span> <span class="nf">my_function</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Stand-alone function.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span>
+</pre></div>
+</div>
+<div class="section" id="scanning-for-classes">
+<h2>Scanning for Classes<a class="headerlink" href="#scanning-for-classes" title="Permalink to this headline">¶</a></h2>
+<p>There are two public functions exposed by <a class="reference internal" href="#module-pyclbr" title="pyclbr: Python class browser support"><tt class="xref py py-mod docutils literal"><span class="pre">pyclbr</span></tt></a>.  <tt class="docutils literal"><span class="pre">readmodule()</span></tt> takes the name of the module as argument returns a mapping of class names to <tt class="docutils literal"><span class="pre">Class</span></tt> objects containing the meta-data about the class source.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">pyclbr</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">operator</span> <span class="kn">import</span> <span class="n">itemgetter</span>
+
+<span class="k">def</span> <span class="nf">show_class</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">class_data</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&#39;Class:&#39;</span><span class="p">,</span> <span class="n">name</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">File: {0} [{1}]&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">class_data</span><span class="o">.</span><span class="n">file</span><span class="p">),</span> <span class="n">class_data</span><span class="o">.</span><span class="n">lineno</span><span class="p">)</span>
+    <span class="n">show_super_classes</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">class_data</span><span class="p">)</span>
+    <span class="n">show_methods</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">class_data</span><span class="p">)</span>
+    <span class="k">print</span>
+    <span class="k">return</span>
+
+<span class="k">def</span> <span class="nf">show_methods</span><span class="p">(</span><span class="n">class_name</span><span class="p">,</span> <span class="n">class_data</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">lineno</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">class_data</span><span class="o">.</span><span class="n">methods</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="n">itemgetter</span><span class="p">(</span><span class="mi">1</span><span class="p">)):</span>
+        <span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">Method: {0} [{1}]&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">lineno</span><span class="p">)</span>
+    <span class="k">return</span>
+
+<span class="k">def</span> <span class="nf">show_super_classes</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">class_data</span><span class="p">):</span>
+    <span class="n">super_class_names</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">super_class</span> <span class="ow">in</span> <span class="n">class_data</span><span class="o">.</span><span class="n">super</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">super_class</span> <span class="o">==</span> <span class="s">&#39;object&#39;</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">super_class</span><span class="p">,</span> <span class="nb">basestring</span><span class="p">):</span>
+            <span class="n">super_class_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">super_class</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">super_class_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">super_class</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">super_class_names</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">Super classes:&#39;</span><span class="p">,</span> <span class="n">super_class_names</span>
+    <span class="k">return</span>
+
+<span class="n">example_data</span> <span class="o">=</span> <span class="n">pyclbr</span><span class="o">.</span><span class="n">readmodule</span><span class="p">(</span><span class="s">&#39;pyclbr_example&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">class_data</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">example_data</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">lineno</span><span class="p">):</span>
+    <span class="n">show_class</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">class_data</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The meta-data for the class includes the file and line number where it is defined, as well as the names of super classes.  The methods of the class are saved as a mapping between method name and line number.  The output below shows the classes and methods listed in order based on their line number in the source file.</p>
+<div class="highlight-python"><pre>$ python pyclbr_readmodule.py
+
+Class: Base
+        File: pyclbr_example.py [10]
+        Method: method1 [14]
+
+Class: Sub1
+        File: pyclbr_example.py [17]
+        Super classes: ['Base']
+
+Class: Sub2
+        File: pyclbr_example.py [21]
+        Super classes: ['Base']
+
+Class: Mixin
+        File: pyclbr_example.py [25]
+        Method: method2 [29]
+
+Class: MixinUser
+        File: pyclbr_example.py [32]
+        Super classes: ['Sub2', 'Mixin']
+        Method: method1 [36]
+        Method: method2 [39]
+        Method: method3 [42]</pre>
+</div>
+</div>
+<div class="section" id="scanning-for-functions">
+<h2>Scanning for Functions<a class="headerlink" href="#scanning-for-functions" title="Permalink to this headline">¶</a></h2>
+<p>The other public function in <a class="reference internal" href="#module-pyclbr" title="pyclbr: Python class browser support"><tt class="xref py py-mod docutils literal"><span class="pre">pyclbr</span></tt></a> is <tt class="docutils literal"><span class="pre">readmodule_ex()</span></tt>.  It does everything that <tt class="docutils literal"><span class="pre">readmodule()</span></tt> does, and adds functions to the result set.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">pyclbr</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">operator</span> <span class="kn">import</span> <span class="n">itemgetter</span>
+
+<span class="n">example_data</span> <span class="o">=</span> <span class="n">pyclbr</span><span class="o">.</span><span class="n">readmodule_ex</span><span class="p">(</span><span class="s">&#39;pyclbr_example&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">example_data</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">lineno</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">pyclbr</span><span class="o">.</span><span class="n">Function</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;Function: {0} [{1}]&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">lineno</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Each <tt class="docutils literal"><span class="pre">Function</span></tt> object has properties much like the <tt class="docutils literal"><span class="pre">Class</span></tt> object.</p>
+<div class="highlight-python"><pre>$ python pyclbr_readmodule_ex.py
+
+Function: my_function [45]</pre>
+</div>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://docs.python.org/library/pyclbr.html">pyclbr</a></dt>
+<dd>The standard library documentation for this module.</dd>
+<dt><a class="reference internal" href="../inspect/index.html#module-inspect" title="inspect: Inspect live objects"><tt class="xref py py-mod docutils literal"><span class="pre">inspect</span></tt></a></dt>
+<dd>The inspect module can discover more meta-data about classes and functions, but requires importing the code.</dd>
+<dt><tt class="xref py py-mod docutils literal"><span class="pre">tokenize</span></tt></dt>
+<dd>The tokenize module parses Python source code into tokens.</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../tabnanny/index.html" title="tabnanny – Indentation validator"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../dis/index.html" title="dis – Python Bytecode Disassembler"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../language.html" >Python Language Services</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright Doug Hellmann.
+      Last updated on Oct 24, 2010.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+
+    <br/><a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/88x31.png"/></a>
+    
+    </div>
+  </body>
+</html>

@@ -1,0 +1,282 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>commands – Run external shell commands &mdash; Python Module of the Week</title>
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.132',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="Unix-specific Services" href="../unix.html" />
+    <link rel="next" title="grp – Unix Group Database" href="../grp/index.html" />
+    <link rel="prev" title="Unix-specific Services" href="../unix.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../grp/index.html" title="grp – Unix Group Database"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../unix.html" title="Unix-specific Services"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../unix.html" accesskey="U">Unix-specific Services</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">commands &#8211; Run external shell commands</a><ul>
+<li><a class="reference internal" href="#getstatusoutput">getstatusoutput()</a></li>
+<li><a class="reference internal" href="#getoutput">getoutput()</a></li>
+<li><a class="reference internal" href="#getstatus">getstatus()</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../unix.html"
+                        title="previous chapter">Unix-specific Services</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../grp/index.html"
+                        title="next chapter">grp &#8211; Unix Group Database</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/commands/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-commands">
+<span id="commands-run-external-shell-commands"></span><h1>commands &#8211; Run external shell commands<a class="headerlink" href="#module-commands" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Purpose:</th><td class="field-body">The commands module contains utility functions for working with shell command output under Unix.</td>
+</tr>
+<tr class="field"><th class="field-name">Python Version:</th><td class="field-body">1.4</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">This module is made obsolete by the <a class="reference internal" href="../subprocess/index.html#module-subprocess" title="subprocess: Work with additional processes"><tt class="xref py py-mod docutils literal"><span class="pre">subprocess</span></tt></a> module.</p>
+</div>
+<p>There are 3 functions in the commands module for working with external
+commands. The functions are shell-aware and return the output or status code
+from the command.</p>
+<div class="section" id="getstatusoutput">
+<h2>getstatusoutput()<a class="headerlink" href="#getstatusoutput" title="Permalink to this headline">¶</a></h2>
+<p>The function getstatusoutput() runs a command via the shell and returns the
+exit code and the text output (stdout and stderr combined). The exit codes are
+the same as for the C function wait() or os.wait(). The code is a 16-bit
+number. The low byte contains the signal number that killed the process. When
+the signal is zero, the high byte is the exit status of the program. If a core
+file was produced, the high bit of the low byte is set.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">commands</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="k">def</span> <span class="nf">run_command</span><span class="p">(</span><span class="n">cmd</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&#39;Running: &quot;</span><span class="si">%s</span><span class="s">&quot;&#39;</span> <span class="o">%</span> <span class="n">cmd</span>
+    <span class="n">status</span><span class="p">,</span> <span class="n">text</span> <span class="o">=</span> <span class="n">getstatusoutput</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+    <span class="n">exit_code</span> <span class="o">=</span> <span class="n">status</span> <span class="o">&gt;&gt;</span> <span class="mi">8</span> <span class="c"># high byte</span>
+    <span class="n">signal_num</span> <span class="o">=</span> <span class="n">status</span> <span class="o">%</span> <span class="mi">256</span> <span class="c"># low byte</span>
+    <span class="k">print</span> <span class="s">&#39;Status: x</span><span class="si">%04x</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">status</span>
+    <span class="k">print</span> <span class="s">&#39;Signal: x</span><span class="si">%02x</span><span class="s"> (</span><span class="si">%d</span><span class="s">)&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">signal_num</span><span class="p">,</span> <span class="n">signal_num</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;Exit  : x</span><span class="si">%02x</span><span class="s"> (</span><span class="si">%d</span><span class="s">)&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">exit_code</span><span class="p">,</span> <span class="n">exit_code</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;Core? : </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="nb">bool</span><span class="p">(</span><span class="n">signal_num</span> <span class="o">&amp;</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">8</span><span class="p">))</span> <span class="c"># high bit</span>
+    <span class="k">print</span> <span class="s">&#39;Output:&#39;</span>
+    <span class="k">print</span> <span class="n">text</span>
+    <span class="k">print</span>
+
+<span class="n">run_command</span><span class="p">(</span><span class="s">&#39;ls -l *.py&#39;</span><span class="p">)</span>
+<span class="n">run_command</span><span class="p">(</span><span class="s">&#39;ls -l *.notthere&#39;</span><span class="p">)</span>
+<span class="n">run_command</span><span class="p">(</span><span class="s">&#39;./dumpscore&#39;</span><span class="p">)</span>
+<span class="n">run_command</span><span class="p">(</span><span class="s">&#39;echo &quot;WAITING TO BE KILLED&quot;; read input&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This example runs two commands that exit normally, a third meant to generate a core dump, and a fourth that
+blocks waiting to be killed from another shell. (Don&#8217;t simply use Ctrl-C as the interpreter will intercept that
+signal. Use ps and grep in another window to find the read process and send it a signal with kill.)</p>
+<div class="highlight-python"><pre>$ python commands_getstatusoutput.py
+Running: "ls -l *.py"
+Status: x0000
+Signal: x00 (0)
+Exit  : x00 (0)
+Core? : False
+Output:
+-rw-r--r--  1 dhellmann  dhellmann  1140 Mar 12  2009 __init__.py
+-rw-r--r--  1 dhellmann  dhellmann  1297 Mar 12  2009 commands_getoutput.py
+-rw-r--r--@ 1 dhellmann  dhellmann  1355 Mar 12  2009 commands_getstatus.py
+-rw-r--r--@ 1 dhellmann  dhellmann  1739 Nov 26 12:52 commands_getstatusoutput.py
+
+Running: "ls -l *.notthere"
+Status: x0100
+Signal: x00 (0)
+Exit  : x01 (1)
+Core? : False
+Output:
+ls: *.notthere: No such file or directory
+
+Running: "./dumpscore"
+Status: x8600
+Signal: x00 (0)
+Exit  : x86 (134)
+Core? : False
+Output:
+sh: line 1: 47021 Abort trap              (core dumped) ./dumpscore
+
+Running: "echo "WAITING TO BE KILLED"; read input"
+Status: x0001
+Signal: x01 (1)
+Exit  : x00 (0)
+Core? : False
+Output:
+WAITING TO BE KILLED</pre>
+</div>
+<p>In this example, I used <tt class="docutils literal"><span class="pre">kill</span> <span class="pre">-HUP</span> <span class="pre">$PID</span></tt> to kill the reading process from a separate shell window, so the
+signal is reported as <tt class="docutils literal"><span class="pre">1</span></tt>.</p>
+</div>
+<div class="section" id="getoutput">
+<h2>getoutput()<a class="headerlink" href="#getoutput" title="Permalink to this headline">¶</a></h2>
+<p>If the exit code is not useful for your application, you can use getoutput()
+to receive only the text output from the command.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">commands</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">text</span> <span class="o">=</span> <span class="n">getoutput</span><span class="p">(</span><span class="s">&#39;ls -l *.py&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;ls -l *.py:&#39;</span>
+<span class="k">print</span> <span class="n">text</span>
+
+<span class="k">print</span> 
+
+<span class="n">text</span> <span class="o">=</span> <span class="n">getoutput</span><span class="p">(</span><span class="s">&#39;ls -l *.notthere&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;ls -l *.py:&#39;</span>
+<span class="k">print</span> <span class="n">text</span>
+</pre></div>
+</div>
+<div class="highlight-python"><pre>$ python commands_getoutput.py
+ls -l *.py:
+-rw-r--r--   1 dhellman  dhellman  1191 Oct 21 09:41 __init__.py
+-rw-r--r--   1 dhellman  dhellman  1321 Oct 21 09:48 commands_getoutput.py
+-rw-r--r--   1 dhellman  dhellman  1265 Oct 21 09:50 commands_getstatus.py
+-rw-r--r--   1 dhellman  dhellman  1626 Oct 21 10:10 commands_getstatusoutput.py
+
+ls -l *.py:
+ls: *.notthere: No such file or directory</pre>
+</div>
+</div>
+<div class="section" id="getstatus">
+<h2>getstatus()<a class="headerlink" href="#getstatus" title="Permalink to this headline">¶</a></h2>
+<p>Contrary to what you might expect, getstatus() does not run a command and
+return the status code. Instead, it&#8217;s argument is a filename which is combined
+with &#8220;ls -ld&#8221; to build a command to be run by getoutput(). The text output of
+the command is returned.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">commands</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">status</span> <span class="o">=</span> <span class="n">getstatus</span><span class="p">(</span><span class="s">&#39;commands_getstatus.py&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;commands_getstatus.py:&#39;</span><span class="p">,</span> <span class="n">status</span>
+<span class="n">status</span> <span class="o">=</span> <span class="n">getstatus</span><span class="p">(</span><span class="s">&#39;notthere.py&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;notthere.py:&#39;</span><span class="p">,</span> <span class="n">status</span>
+<span class="n">status</span> <span class="o">=</span> <span class="n">getstatus</span><span class="p">(</span><span class="s">&#39;$filename&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;$filename:&#39;</span><span class="p">,</span> <span class="n">status</span>
+</pre></div>
+</div>
+<p>As you notice from the output, the $ character in the argument to the last
+call is escaped so the environment variable name is not expanded.</p>
+<div class="highlight-python"><pre>$ python commands_getstatus.py
+commands_getstatus.py: -rw-r--r--   1 dhellman  dhellman  1387 Oct 21 10:19 commands_getstatus.py
+notthere.py: ls: notthere.py: No such file or directory
+$filename: ls: $filename: No such file or directory</pre>
+</div>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://docs.python.org/library/commands.html">commands</a></dt>
+<dd>The standard library documentation for this module.</dd>
+<dt><a class="reference internal" href="../signal/index.html#module-signal" title="signal: Receive notification of asynchronous system events"><tt class="xref py py-mod docutils literal"><span class="pre">signal</span></tt></a></dt>
+<dd>Defines constants for signals such as HUP (<tt class="docutils literal"><span class="pre">1</span></tt>).</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../grp/index.html" title="grp – Unix Group Database"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../unix.html" title="Unix-specific Services"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../unix.html" >Unix-specific Services</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright Doug Hellmann.
+      Last updated on Oct 24, 2010.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+
+    <br/><a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/88x31.png"/></a>
+    
+    </div>
+  </body>
+</html>

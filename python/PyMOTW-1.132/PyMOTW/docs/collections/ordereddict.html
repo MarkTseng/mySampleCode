@@ -1,0 +1,232 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>OrderedDict &mdash; Python Module of the Week</title>
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.132',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="collections – Container data types" href="index.html" />
+    <link rel="next" title="heapq – In-place heap sort algorithm" href="../heapq/index.html" />
+    <link rel="prev" title="namedtuple" href="namedtuple.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../heapq/index.html" title="heapq – In-place heap sort algorithm"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="namedtuple.html" title="namedtuple"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../data_types.html" >Data Types</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">collections &#8211; Container data types</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">OrderedDict</a><ul>
+<li><a class="reference internal" href="#equality">Equality</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="namedtuple.html"
+                        title="previous chapter">namedtuple</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../heapq/index.html"
+                        title="next chapter">heapq &#8211; In-place heap sort algorithm</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/collections/ordereddict.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="ordereddict">
+<h1>OrderedDict<a class="headerlink" href="#ordereddict" title="Permalink to this headline">¶</a></h1>
+<p>An <tt class="xref py py-class docutils literal"><span class="pre">OrderedDict</span></tt> is a dictionary subclass that remembers the
+order in which its contents are added.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">collections</span>
+
+<span class="k">print</span> <span class="s">&#39;Regular dictionary:&#39;</span>
+<span class="n">d</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">d</span><span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;A&#39;</span>
+<span class="n">d</span><span class="p">[</span><span class="s">&#39;b&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;B&#39;</span>
+<span class="n">d</span><span class="p">[</span><span class="s">&#39;c&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;C&#39;</span>
+<span class="n">d</span><span class="p">[</span><span class="s">&#39;d&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;D&#39;</span>
+<span class="n">d</span><span class="p">[</span><span class="s">&#39;e&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;E&#39;</span>
+
+<span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">d</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="k">print</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span>
+
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">OrderedDict:&#39;</span>
+<span class="n">d</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">OrderedDict</span><span class="p">()</span>
+<span class="n">d</span><span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;A&#39;</span>
+<span class="n">d</span><span class="p">[</span><span class="s">&#39;b&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;B&#39;</span>
+<span class="n">d</span><span class="p">[</span><span class="s">&#39;c&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;C&#39;</span>
+<span class="n">d</span><span class="p">[</span><span class="s">&#39;d&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;D&#39;</span>
+<span class="n">d</span><span class="p">[</span><span class="s">&#39;e&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;E&#39;</span>
+
+<span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">d</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="k">print</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span>
+    
+</pre></div>
+</div>
+<p>A regular <tt class="xref py py-class docutils literal"><span class="pre">dict</span></tt> does not track the insertion order, and
+iterating over it produces the values in an arbitrary order.  In an
+<tt class="xref py py-class docutils literal"><span class="pre">OrderedDict</span></tt>, by contrast, the order the items are inserted is
+remembered and used when creating an iterator.</p>
+<div class="highlight-python"><pre>$ python collections_ordereddict_iter.py
+
+Regular dictionary:
+a A
+c C
+b B
+e E
+d D
+
+OrderedDict:
+a A
+b B
+c C
+d D
+e E</pre>
+</div>
+<div class="section" id="equality">
+<h2>Equality<a class="headerlink" href="#equality" title="Permalink to this headline">¶</a></h2>
+<p>A regular <tt class="xref py py-class docutils literal"><span class="pre">dict</span></tt> looks at its contents when testing for
+equality.  An <tt class="xref py py-class docutils literal"><span class="pre">OrderedDict</span></tt> also considers the order the items
+were added.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">collections</span>
+
+<span class="k">print</span> <span class="s">&#39;dict       :&#39;</span><span class="p">,</span>
+<span class="n">d1</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">d1</span><span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;A&#39;</span>
+<span class="n">d1</span><span class="p">[</span><span class="s">&#39;b&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;B&#39;</span>
+<span class="n">d1</span><span class="p">[</span><span class="s">&#39;c&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;C&#39;</span>
+<span class="n">d1</span><span class="p">[</span><span class="s">&#39;d&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;D&#39;</span>
+<span class="n">d1</span><span class="p">[</span><span class="s">&#39;e&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;E&#39;</span>
+
+<span class="n">d2</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">d2</span><span class="p">[</span><span class="s">&#39;e&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;E&#39;</span>
+<span class="n">d2</span><span class="p">[</span><span class="s">&#39;d&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;D&#39;</span>
+<span class="n">d2</span><span class="p">[</span><span class="s">&#39;c&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;C&#39;</span>
+<span class="n">d2</span><span class="p">[</span><span class="s">&#39;b&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;B&#39;</span>
+<span class="n">d2</span><span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;A&#39;</span>
+
+<span class="k">print</span> <span class="n">d1</span> <span class="o">==</span> <span class="n">d2</span>
+
+<span class="k">print</span> <span class="s">&#39;OrderedDict:&#39;</span><span class="p">,</span>
+
+<span class="n">d1</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">OrderedDict</span><span class="p">()</span>
+<span class="n">d1</span><span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;A&#39;</span>
+<span class="n">d1</span><span class="p">[</span><span class="s">&#39;b&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;B&#39;</span>
+<span class="n">d1</span><span class="p">[</span><span class="s">&#39;c&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;C&#39;</span>
+<span class="n">d1</span><span class="p">[</span><span class="s">&#39;d&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;D&#39;</span>
+<span class="n">d1</span><span class="p">[</span><span class="s">&#39;e&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;E&#39;</span>
+
+<span class="n">d2</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">OrderedDict</span><span class="p">()</span>
+<span class="n">d2</span><span class="p">[</span><span class="s">&#39;e&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;E&#39;</span>
+<span class="n">d2</span><span class="p">[</span><span class="s">&#39;d&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;D&#39;</span>
+<span class="n">d2</span><span class="p">[</span><span class="s">&#39;c&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;C&#39;</span>
+<span class="n">d2</span><span class="p">[</span><span class="s">&#39;b&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;B&#39;</span>
+<span class="n">d2</span><span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;A&#39;</span>
+
+<span class="k">print</span> <span class="n">d1</span> <span class="o">==</span> <span class="n">d2</span>
+</pre></div>
+</div>
+<p>In this case, since the two ordered dictionaries are created from
+values in a different order, they are considered to be different.</p>
+<div class="highlight-python"><pre>$ python collections_ordereddict_equality.py
+
+dict       : True
+OrderedDict: False</pre>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../heapq/index.html" title="heapq – In-place heap sort algorithm"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="namedtuple.html" title="namedtuple"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../data_types.html" >Data Types</a> &raquo;</li>
+          <li><a href="index.html" >collections &#8211; Container data types</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright Doug Hellmann.
+      Last updated on Oct 24, 2010.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+
+    <br/><a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/88x31.png"/></a>
+    
+    </div>
+  </body>
+</html>

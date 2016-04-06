@@ -1,0 +1,398 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>pprint – Pretty-print data structures &mdash; Python Module of the Week</title>
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.132',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="Data Types" href="../data_types.html" />
+    <link rel="next" title="Numeric and Mathematical Modules" href="../numeric.html" />
+    <link rel="prev" title="copy – Duplicate objects" href="../copy/index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../numeric.html" title="Numeric and Mathematical Modules"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../copy/index.html" title="copy – Duplicate objects"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../data_types.html" accesskey="U">Data Types</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">pprint &#8211; Pretty-print data structures</a><ul>
+<li><a class="reference internal" href="#printing">Printing</a></li>
+<li><a class="reference internal" href="#formatting">Formatting</a></li>
+<li><a class="reference internal" href="#arbitrary-classes">Arbitrary Classes</a></li>
+<li><a class="reference internal" href="#recursion">Recursion</a></li>
+<li><a class="reference internal" href="#limiting-nested-output">Limiting Nested Output</a></li>
+<li><a class="reference internal" href="#controlling-output-width">Controlling Output Width</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../copy/index.html"
+                        title="previous chapter">copy &#8211; Duplicate objects</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../numeric.html"
+                        title="next chapter">Numeric and Mathematical Modules</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/pprint/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-pprint">
+<span id="pprint-pretty-print-data-structures"></span><h1>pprint &#8211; Pretty-print data structures<a class="headerlink" href="#module-pprint" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Purpose:</th><td class="field-body">Pretty-print data structures</td>
+</tr>
+<tr class="field"><th class="field-name">Python Version:</th><td class="field-body">1.4</td>
+</tr>
+</tbody>
+</table>
+<p><a class="reference internal" href="#module-pprint" title="pprint: Pretty-print data structures"><tt class="xref py py-mod docutils literal"><span class="pre">pprint</span></tt></a> contains a &#8220;pretty printer&#8221; for producing aesthetically
+pleasing representations of your data structures.  The formatter
+produces representations of data structures that can be parsed
+correctly by the interpreter, and are also easy for a human to
+read. The output is kept on a single line, if possible, and indented
+when split across multiple lines.</p>
+<p>The examples below all depend on <tt class="docutils literal"><span class="pre">pprint_data.py</span></tt>, which contains:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">data</span> <span class="o">=</span> <span class="p">[</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="p">{</span> <span class="s">&#39;a&#39;</span><span class="p">:</span><span class="s">&#39;A&#39;</span><span class="p">,</span>
+               <span class="s">&#39;b&#39;</span><span class="p">:</span><span class="s">&#39;B&#39;</span><span class="p">,</span>
+               <span class="s">&#39;c&#39;</span><span class="p">:</span><span class="s">&#39;C&#39;</span><span class="p">,</span>
+               <span class="s">&#39;d&#39;</span><span class="p">:</span><span class="s">&#39;D&#39;</span><span class="p">,</span>
+               <span class="s">&#39;e&#39;</span><span class="p">:</span><span class="s">&#39;E&#39;</span><span class="p">,</span>
+               <span class="s">&#39;f&#39;</span><span class="p">:</span><span class="s">&#39;F&#39;</span><span class="p">,</span>
+               <span class="s">&#39;g&#39;</span><span class="p">:</span><span class="s">&#39;G&#39;</span><span class="p">,</span>
+               <span class="s">&#39;h&#39;</span><span class="p">:</span><span class="s">&#39;H&#39;</span><span class="p">,</span>
+               <span class="p">})</span>
+         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+         <span class="p">]</span>
+</pre></div>
+</div>
+<div class="section" id="printing">
+<h2>Printing<a class="headerlink" href="#printing" title="Permalink to this headline">¶</a></h2>
+<p>The simplest way to use the module is through the <tt class="docutils literal"><span class="pre">pprint()</span></tt>
+function. It formats your object and writes it to the data stream
+passed as argument (or <a class="reference internal" href="../sys/runtime.html#sys-input-output"><em>sys.stdout</em></a> by
+default).</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
+
+<span class="kn">from</span> <span class="nn">pprint_data</span> <span class="kn">import</span> <span class="n">data</span>
+
+<span class="k">print</span> <span class="s">&#39;PRINT:&#39;</span>
+<span class="k">print</span> <span class="n">data</span>
+<span class="k">print</span>
+<span class="k">print</span> <span class="s">&#39;PPRINT:&#39;</span>
+<span class="n">pprint</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><pre>$ python pprint_pprint.py
+
+PRINT:
+[(0, {'a': 'A', 'c': 'C', 'b': 'B', 'e': 'E', 'd': 'D', 'g': 'G', 'f': 'F', 'h': 'H'}), (1, {'a': 'A', 'c': 'C', 'b': 'B', 'e': 'E', 'd': 'D', 'g': 'G', 'f': 'F', 'h': 'H'}), (2, {'a': 'A', 'c': 'C', 'b': 'B', 'e': 'E', 'd': 'D', 'g': 'G', 'f': 'F', 'h': 'H'})]
+
+PPRINT:
+[(0,
+  {'a': 'A',
+   'b': 'B',
+   'c': 'C',
+   'd': 'D',
+   'e': 'E',
+   'f': 'F',
+   'g': 'G',
+   'h': 'H'}),
+ (1,
+  {'a': 'A',
+   'b': 'B',
+   'c': 'C',
+   'd': 'D',
+   'e': 'E',
+   'f': 'F',
+   'g': 'G',
+   'h': 'H'}),
+ (2,
+  {'a': 'A',
+   'b': 'B',
+   'c': 'C',
+   'd': 'D',
+   'e': 'E',
+   'f': 'F',
+   'g': 'G',
+   'h': 'H'})]</pre>
+</div>
+</div>
+<div class="section" id="formatting">
+<h2>Formatting<a class="headerlink" href="#formatting" title="Permalink to this headline">¶</a></h2>
+<p>If you need to format a data structure, but do not want to write it
+directly to a stream (for logging purposes, for example) you can use
+<tt class="docutils literal"><span class="pre">pformat()</span></tt> to build a string representation that can then be passed
+to another function.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pformat</span>
+<span class="kn">from</span> <span class="nn">pprint_data</span> <span class="kn">import</span> <span class="n">data</span>
+
+<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">,</span>
+                    <span class="n">format</span><span class="o">=</span><span class="s">&#39;</span><span class="si">%(levelname)-8s</span><span class="s"> </span><span class="si">%(message)s</span><span class="s">&#39;</span><span class="p">,</span>
+                    <span class="p">)</span>
+
+<span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;Logging pformatted data&#39;</span><span class="p">)</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">pformat</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-python"><pre>$ python pprint_pformat.py
+
+DEBUG    Logging pformatted data
+DEBUG    [(0,
+  {'a': 'A',
+   'b': 'B',
+   'c': 'C',
+   'd': 'D',
+   'e': 'E',
+   'f': 'F',
+   'g': 'G',
+   'h': 'H'}),
+ (1,
+  {'a': 'A',
+   'b': 'B',
+   'c': 'C',
+   'd': 'D',
+   'e': 'E',
+   'f': 'F',
+   'g': 'G',
+   'h': 'H'}),
+ (2,
+  {'a': 'A',
+   'b': 'B',
+   'c': 'C',
+   'd': 'D',
+   'e': 'E',
+   'f': 'F',
+   'g': 'G',
+   'h': 'H'})]</pre>
+</div>
+</div>
+<div class="section" id="arbitrary-classes">
+<h2>Arbitrary Classes<a class="headerlink" href="#arbitrary-classes" title="Permalink to this headline">¶</a></h2>
+<p>The <tt class="docutils literal"><span class="pre">PrettyPrinter</span></tt> class used by <tt class="docutils literal"><span class="pre">pprint()</span></tt> can also work with
+your own classes, if they define a <tt class="docutils literal"><span class="pre">__repr__()</span></tt> method.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
+
+<span class="k">class</span> <span class="nc">node</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">contents</span><span class="o">=</span><span class="p">[]):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">contents</span> <span class="o">=</span> <span class="n">contents</span><span class="p">[:]</span>
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">&#39;node(&#39;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#39;, &#39;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">contents</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#39;)&#39;</span>
+
+<span class="n">trees</span> <span class="o">=</span> <span class="p">[</span> <span class="n">node</span><span class="p">(</span><span class="s">&#39;node-1&#39;</span><span class="p">),</span>
+         <span class="n">node</span><span class="p">(</span><span class="s">&#39;node-2&#39;</span><span class="p">,</span> <span class="p">[</span> <span class="n">node</span><span class="p">(</span><span class="s">&#39;node-2-1&#39;</span><span class="p">)]),</span>
+         <span class="n">node</span><span class="p">(</span><span class="s">&#39;node-3&#39;</span><span class="p">,</span> <span class="p">[</span> <span class="n">node</span><span class="p">(</span><span class="s">&#39;node-3-1&#39;</span><span class="p">)]),</span>
+         <span class="p">]</span>
+<span class="n">pprint</span><span class="p">(</span><span class="n">trees</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><pre>$ python pprint_arbitrary_object.py
+
+[node('node-1', []),
+ node('node-2', [node('node-2-1', [])]),
+ node('node-3', [node('node-3-1', [])])]</pre>
+</div>
+</div>
+<div class="section" id="recursion">
+<h2>Recursion<a class="headerlink" href="#recursion" title="Permalink to this headline">¶</a></h2>
+<p>Recursive data structures are represented with a reference to the original
+source of the data, with the form <tt class="docutils literal"><span class="pre">&lt;Recursion</span> <span class="pre">on</span> <span class="pre">typename</span> <span class="pre">with</span> <span class="pre">id=number&gt;</span></tt>. For
+example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
+
+<span class="n">local_data</span> <span class="o">=</span> <span class="p">[</span> <span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span> <span class="p">]</span>
+<span class="n">local_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">local_data</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&#39;id(local_data) =&gt;&#39;</span><span class="p">,</span> <span class="nb">id</span><span class="p">(</span><span class="n">local_data</span><span class="p">)</span>
+<span class="n">pprint</span><span class="p">(</span><span class="n">local_data</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><pre>$ python pprint_recursion.py
+
+id(local_data) =&gt; 4299515952
+['a', 'b', 1, 2, &lt;Recursion on list with id=4299515952&gt;]</pre>
+</div>
+</div>
+<div class="section" id="limiting-nested-output">
+<h2>Limiting Nested Output<a class="headerlink" href="#limiting-nested-output" title="Permalink to this headline">¶</a></h2>
+<p>For very deep data structures, you may not want the output to include all of
+the details. It might be impossible to format the data properly, the formatted
+text might be too large to manage, or you may need all of it. In that case,
+the depth argument can control how far down into the nested data structure the
+pretty printer goes.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
+
+<span class="kn">from</span> <span class="nn">pprint_data</span> <span class="kn">import</span> <span class="n">data</span>
+
+<span class="n">pprint</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">depth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><pre>$ python pprint_depth.py
+
+[(...), (...), (...)]</pre>
+</div>
+</div>
+<div class="section" id="controlling-output-width">
+<h2>Controlling Output Width<a class="headerlink" href="#controlling-output-width" title="Permalink to this headline">¶</a></h2>
+<p>The default output width for the formatted text is 80 columns. To adjust that
+width, use the width argument to <tt class="docutils literal"><span class="pre">pprint()</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
+
+<span class="kn">from</span> <span class="nn">pprint_data</span> <span class="kn">import</span> <span class="n">data</span>
+
+<span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="s">&#39;defgh&#39;</span><span class="p">:</span>
+        <span class="k">del</span> <span class="n">d</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="n">c</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">width</span> <span class="ow">in</span> <span class="p">[</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">5</span> <span class="p">]:</span>
+    <span class="k">print</span> <span class="s">&#39;WIDTH =&#39;</span><span class="p">,</span> <span class="n">width</span>
+    <span class="n">pprint</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="n">width</span><span class="p">)</span>
+    <span class="k">print</span>
+</pre></div>
+</div>
+<p>Notice that when the width is too low to accommodate the formatted data
+structure, the lines are not truncated or wrapped if that would introduce
+invalid syntax.</p>
+<div class="highlight-python"><pre>$ python pprint_width.py
+
+WIDTH = 80
+[(0, {'a': 'A', 'b': 'B', 'c': 'C'}),
+ (1, {'a': 'A', 'b': 'B', 'c': 'C'}),
+ (2, {'a': 'A', 'b': 'B', 'c': 'C'})]
+
+WIDTH = 20
+[(0,
+  {'a': 'A',
+   'b': 'B',
+   'c': 'C'}),
+ (1,
+  {'a': 'A',
+   'b': 'B',
+   'c': 'C'}),
+ (2,
+  {'a': 'A',
+   'b': 'B',
+   'c': 'C'})]
+
+WIDTH = 5
+[(0,
+  {'a': 'A',
+   'b': 'B',
+   'c': 'C'}),
+ (1,
+  {'a': 'A',
+   'b': 'B',
+   'c': 'C'}),
+ (2,
+  {'a': 'A',
+   'b': 'B',
+   'c': 'C'})]</pre>
+</div>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://docs.python.org/lib/module-pprint.html">pprint</a></dt>
+<dd>Standard library documentation for this module.</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../numeric.html" title="Numeric and Mathematical Modules"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../copy/index.html" title="copy – Duplicate objects"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../data_types.html" >Data Types</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright Doug Hellmann.
+      Last updated on Oct 24, 2010.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+
+    <br/><a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/88x31.png"/></a>
+    
+    </div>
+  </body>
+</html>

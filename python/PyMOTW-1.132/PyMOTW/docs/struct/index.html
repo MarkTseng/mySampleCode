@@ -1,0 +1,335 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>struct – Working with Binary Data &mdash; Python Module of the Week</title>
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.132',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="String Services" href="../string_services.html" />
+    <link rel="next" title="textwrap – Formatting text paragraphs" href="../textwrap/index.html" />
+    <link rel="prev" title="re – Regular Expressions" href="../re/index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../textwrap/index.html" title="textwrap – Formatting text paragraphs"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../re/index.html" title="re – Regular Expressions"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../string_services.html" accesskey="U">String Services</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">struct &#8211; Working with Binary Data</a><ul>
+<li><a class="reference internal" href="#functions-vs-struct-class">Functions vs. Struct Class</a></li>
+<li><a class="reference internal" href="#packing-and-unpacking">Packing and Unpacking</a></li>
+<li><a class="reference internal" href="#endianness">Endianness</a></li>
+<li><a class="reference internal" href="#buffers">Buffers</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../re/index.html"
+                        title="previous chapter">re &#8211; Regular Expressions</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../textwrap/index.html"
+                        title="next chapter">textwrap &#8211; Formatting text paragraphs</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/struct/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-struct">
+<span id="struct-working-with-binary-data"></span><h1>struct &#8211; Working with Binary Data<a class="headerlink" href="#module-struct" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Purpose:</th><td class="field-body">Convert between strings and binary data.</td>
+</tr>
+<tr class="field"><th class="field-name">Python Version:</th><td class="field-body">1.4 and later</td>
+</tr>
+</tbody>
+</table>
+<p>The <a class="reference internal" href="#module-struct" title="struct: Convert between strings and binary data."><tt class="xref py py-mod docutils literal"><span class="pre">struct</span></tt></a> module includes functions for converting between
+strings of bytes and native Python data types such as numbers and
+strings.</p>
+<div class="section" id="functions-vs-struct-class">
+<h2>Functions vs. Struct Class<a class="headerlink" href="#functions-vs-struct-class" title="Permalink to this headline">¶</a></h2>
+<p>There are a set of module-level functions for working with structured
+values, and there is also the <tt class="xref py py-class docutils literal"><span class="pre">Struct</span></tt> class (new in Python
+2.5).  Format specifiers are converted from their string format to a
+compiled representation, similar to the way regular expressions are.
+The conversion takes some resources, so it is typically more efficient
+to do it once when creating a <tt class="xref py py-class docutils literal"><span class="pre">Struct</span></tt> instance and call
+methods on the instance instead of using the module-level functions.
+All of the examples below use the <tt class="xref py py-class docutils literal"><span class="pre">Struct</span></tt> class.</p>
+</div>
+<div class="section" id="packing-and-unpacking">
+<h2>Packing and Unpacking<a class="headerlink" href="#packing-and-unpacking" title="Permalink to this headline">¶</a></h2>
+<p>Structs support <em>packing</em> data into strings, and <em>unpacking</em> data from
+strings using format specifiers made up of characters representing the
+type of the data and optional count and endian-ness indicators.  For
+complete details, refer to <a class="reference external" href="http://docs.python.org/library/struct.html">the standard library documentation</a>.</p>
+<p>In this example, the format specifier calls for an integer or long
+value, a two character string, and a floating point number.  The
+spaces between the format specifiers are included here for clarity,
+and are ignored when the format is compiled.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">struct</span>
+<span class="kn">import</span> <span class="nn">binascii</span>
+
+<span class="n">values</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">&#39;ab&#39;</span><span class="p">,</span> <span class="mf">2.7</span><span class="p">)</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">Struct</span><span class="p">(</span><span class="s">&#39;I 2s f&#39;</span><span class="p">)</span>
+<span class="n">packed_data</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="o">*</span><span class="n">values</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&#39;Original values:&#39;</span><span class="p">,</span> <span class="n">values</span>
+<span class="k">print</span> <span class="s">&#39;Format string  :&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">format</span>
+<span class="k">print</span> <span class="s">&#39;Uses           :&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="s">&#39;bytes&#39;</span>
+<span class="k">print</span> <span class="s">&#39;Packed Value   :&#39;</span><span class="p">,</span> <span class="n">binascii</span><span class="o">.</span><span class="n">hexlify</span><span class="p">(</span><span class="n">packed_data</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The example converts the packed value to a sequence of hex bytes for
+printing with <tt class="docutils literal"><span class="pre">binascii.hexlify()</span></tt>, since some of the characters are
+nulls.</p>
+<div class="highlight-python"><pre>$ python struct_pack.py
+
+Original values: (1, 'ab', 2.7)
+Format string  : I 2s f
+Uses           : 12 bytes
+Packed Value   : 0100000061620000cdcc2c40</pre>
+</div>
+<p>If we pass the packed value to <tt class="xref py py-func docutils literal"><span class="pre">unpack()</span></tt>, we get basically the
+same values back (note the discrepancy in the floating point value).</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">struct</span>
+<span class="kn">import</span> <span class="nn">binascii</span>
+
+<span class="n">packed_data</span> <span class="o">=</span> <span class="n">binascii</span><span class="o">.</span><span class="n">unhexlify</span><span class="p">(</span><span class="s">&#39;0100000061620000cdcc2c40&#39;</span><span class="p">)</span>
+
+<span class="n">s</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">Struct</span><span class="p">(</span><span class="s">&#39;I 2s f&#39;</span><span class="p">)</span>
+<span class="n">unpacked_data</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="n">packed_data</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;Unpacked Values:&#39;</span><span class="p">,</span> <span class="n">unpacked_data</span>
+</pre></div>
+</div>
+<div class="highlight-python"><pre>$ python struct_unpack.py
+
+Unpacked Values: (1, 'ab', 2.700000047683716)</pre>
+</div>
+</div>
+<div class="section" id="endianness">
+<h2>Endianness<a class="headerlink" href="#endianness" title="Permalink to this headline">¶</a></h2>
+<p>By default values are encoded using the native C library notion of
+&#8220;endianness&#8221;.  It is easy to override that choice by providing an
+explicit endianness directive in the format string.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">struct</span>
+<span class="kn">import</span> <span class="nn">binascii</span>
+
+<span class="n">values</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">&#39;ab&#39;</span><span class="p">,</span> <span class="mf">2.7</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;Original values:&#39;</span><span class="p">,</span> <span class="n">values</span>
+
+<span class="n">endianness</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="s">&#39;@&#39;</span><span class="p">,</span> <span class="s">&#39;native, native&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s">&#39;=&#39;</span><span class="p">,</span> <span class="s">&#39;native, standard&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s">&#39;&lt;&#39;</span><span class="p">,</span> <span class="s">&#39;little-endian&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s">&#39;&gt;&#39;</span><span class="p">,</span> <span class="s">&#39;big-endian&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s">&#39;!&#39;</span><span class="p">,</span> <span class="s">&#39;network&#39;</span><span class="p">),</span>
+    <span class="p">]</span>
+
+<span class="k">for</span> <span class="n">code</span><span class="p">,</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">endianness</span><span class="p">:</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">Struct</span><span class="p">(</span><span class="n">code</span> <span class="o">+</span> <span class="s">&#39; I 2s f&#39;</span><span class="p">)</span>
+    <span class="n">packed_data</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="o">*</span><span class="n">values</span><span class="p">)</span>
+    <span class="k">print</span>
+    <span class="k">print</span> <span class="s">&#39;Format string  :&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">format</span><span class="p">,</span> <span class="s">&#39;for&#39;</span><span class="p">,</span> <span class="n">name</span>
+    <span class="k">print</span> <span class="s">&#39;Uses           :&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="s">&#39;bytes&#39;</span>
+    <span class="k">print</span> <span class="s">&#39;Packed Value   :&#39;</span><span class="p">,</span> <span class="n">binascii</span><span class="o">.</span><span class="n">hexlify</span><span class="p">(</span><span class="n">packed_data</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;Unpacked Value :&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="n">packed_data</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><pre>$ python struct_endianness.py
+
+Original values: (1, 'ab', 2.7)
+
+Format string  : @ I 2s f for native, native
+Uses           : 12 bytes
+Packed Value   : 0100000061620000cdcc2c40
+Unpacked Value : (1, 'ab', 2.700000047683716)
+
+Format string  : = I 2s f for native, standard
+Uses           : 10 bytes
+Packed Value   : 010000006162cdcc2c40
+Unpacked Value : (1, 'ab', 2.700000047683716)
+
+Format string  : &lt; I 2s f for little-endian
+Uses           : 10 bytes
+Packed Value   : 010000006162cdcc2c40
+Unpacked Value : (1, 'ab', 2.700000047683716)
+
+Format string  : &gt; I 2s f for big-endian
+Uses           : 10 bytes
+Packed Value   : 000000016162402ccccd
+Unpacked Value : (1, 'ab', 2.700000047683716)
+
+Format string  : ! I 2s f for network
+Uses           : 10 bytes
+Packed Value   : 000000016162402ccccd
+Unpacked Value : (1, 'ab', 2.700000047683716)</pre>
+</div>
+</div>
+<div class="section" id="buffers">
+<h2>Buffers<a class="headerlink" href="#buffers" title="Permalink to this headline">¶</a></h2>
+<p>Working with binary packed data is typically reserved for highly
+performance sensitive situations or passing data into and out of
+extension modules.  In such situations, you can optimize by avoiding
+the overhead of allocating a new buffer for each packed structure.
+The <tt class="xref py py-meth docutils literal"><span class="pre">pack_into()</span></tt> and <tt class="xref py py-meth docutils literal"><span class="pre">unpack_from()</span></tt> methods support writing
+to pre-allocated buffers directly.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">struct</span>
+<span class="kn">import</span> <span class="nn">binascii</span>
+
+<span class="n">s</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">Struct</span><span class="p">(</span><span class="s">&#39;I 2s f&#39;</span><span class="p">)</span>
+<span class="n">values</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">&#39;ab&#39;</span><span class="p">,</span> <span class="mf">2.7</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;Original:&#39;</span><span class="p">,</span> <span class="n">values</span>
+
+<span class="k">print</span>
+<span class="k">print</span> <span class="s">&#39;ctypes string buffer&#39;</span>
+
+<span class="kn">import</span> <span class="nn">ctypes</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">create_string_buffer</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;Before  :&#39;</span><span class="p">,</span> <span class="n">binascii</span><span class="o">.</span><span class="n">hexlify</span><span class="p">(</span><span class="n">b</span><span class="o">.</span><span class="n">raw</span><span class="p">)</span>
+<span class="n">s</span><span class="o">.</span><span class="n">pack_into</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">*</span><span class="n">values</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;After   :&#39;</span><span class="p">,</span> <span class="n">binascii</span><span class="o">.</span><span class="n">hexlify</span><span class="p">(</span><span class="n">b</span><span class="o">.</span><span class="n">raw</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;Unpacked:&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">unpack_from</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+<span class="k">print</span>
+<span class="k">print</span> <span class="s">&#39;array&#39;</span>
+
+<span class="kn">import</span> <span class="nn">array</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">array</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="s">&#39;c&#39;</span><span class="p">,</span> <span class="s">&#39;</span><span class="se">\0</span><span class="s">&#39;</span> <span class="o">*</span> <span class="n">s</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;Before  :&#39;</span><span class="p">,</span> <span class="n">binascii</span><span class="o">.</span><span class="n">hexlify</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="n">s</span><span class="o">.</span><span class="n">pack_into</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">*</span><span class="n">values</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;After   :&#39;</span><span class="p">,</span> <span class="n">binascii</span><span class="o">.</span><span class="n">hexlify</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;Unpacked:&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">unpack_from</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The <em>size</em> attribute of the <tt class="xref py py-class docutils literal"><span class="pre">Struct</span></tt> tells us how big the
+buffer needs to be.</p>
+<div class="highlight-python"><pre>$ python struct_buffers.py
+
+Original: (1, 'ab', 2.7)
+
+ctypes string buffer
+Before  : 000000000000000000000000
+After   : 0100000061620000cdcc2c40
+Unpacked: (1, 'ab', 2.700000047683716)
+
+array
+Before  : 000000000000000000000000
+After   : 0100000061620000cdcc2c40
+Unpacked: (1, 'ab', 2.700000047683716)</pre>
+</div>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://docs.python.org/library/struct.html">struct</a></dt>
+<dd>The standard library documentation for this module.</dd>
+<dt><a class="reference internal" href="../array/index.html#module-array" title="array: Manage sequences of fixed-type numerical data efficiently."><tt class="xref py py-mod docutils literal"><span class="pre">array</span></tt></a></dt>
+<dd>The array module, for working with sequences of fixed-type values.</dd>
+<dt><tt class="xref py py-mod docutils literal"><span class="pre">binascii</span></tt></dt>
+<dd>The binascii module, for producing ASCII representations of binary data.</dd>
+<dt><a class="reference external" href="http://en.wikipedia.org/wiki/Endianness">WikiPedia: Endianness</a></dt>
+<dd>Explanation of byte order and endianness in encoding.</dd>
+<dt><a class="reference internal" href="../articles/data_structures.html#article-data-structures"><em>In-Memory Data Structures</em></a></dt>
+<dd>More tools for working with data structures.</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../textwrap/index.html" title="textwrap – Formatting text paragraphs"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../re/index.html" title="re – Regular Expressions"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../string_services.html" >String Services</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright Doug Hellmann.
+      Last updated on Oct 24, 2010.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+
+    <br/><a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/88x31.png"/></a>
+    
+    </div>
+  </body>
+</html>

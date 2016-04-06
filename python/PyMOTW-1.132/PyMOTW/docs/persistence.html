@@ -1,0 +1,139 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Data Persistence &mdash; Python Module of the Week</title>
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.132',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="top" title="Python Module of the Week" href="index.html" />
+    <link rel="next" title="anydbm – Access to DBM-style databases" href="anydbm/index.html" />
+    <link rel="prev" title="zlib – Low-level access to GNU zlib compression library" href="zlib/index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="anydbm/index.html" title="anydbm – Access to DBM-style databases"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="zlib/index.html" title="zlib – Low-level access to GNU zlib compression library"
+             accesskey="P">previous</a> |</li>
+        <li><a href="contents.html">PyMOTW</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="zlib/index.html"
+                        title="previous chapter">zlib &#8211; Low-level access to GNU zlib compression library</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="anydbm/index.html"
+                        title="next chapter">anydbm &#8211; Access to DBM-style databases</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/persistence.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="data-persistence">
+<span id="id1"></span><h1>Data Persistence<a class="headerlink" href="#data-persistence" title="Permalink to this headline">¶</a></h1>
+<p>The standard library includes a variety of modules for persisting data.  The most common pattern for storing data from Python objects for reuse is to serialize them with <a class="reference internal" href="pickle/index.html#module-pickle" title="pickle: Python object serialization"><tt class="xref py py-mod docutils literal"><span class="pre">pickle</span></tt></a> and then either write them directly to a file or store them using one of the many key-value pair database formats available with the <em>dbm</em> API.  If you don&#8217;t care about the underlying dbm format, the best persistence interface is provided by <a class="reference internal" href="shelve/index.html#module-shelve" title="shelve: Persistent storage of arbitrary Python objects"><tt class="xref py py-mod docutils literal"><span class="pre">shelve</span></tt></a>.  If you do care, you can use one of the other dbm-based modules directly.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="anydbm/index.html">anydbm &#8211; Access to DBM-style databases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dbhash/index.html">dbhash &#8211; DBM-style API for the BSD database library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dbm/index.html">dbm &#8211; Simple database interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dumbdbm/index.html">dumbdbm &#8211; Portable DBM Implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gdbm/index.html">gdbm &#8211; GNU&#8217;s version of the dbm library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pickle/index.html">pickle and cPickle &#8211; Python object serialization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shelve/index.html">shelve &#8211; Persistent storage of arbitrary Python objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="whichdb/index.html">whichdb &#8211; Identify DBM-style database formats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sqlite3/index.html">sqlite3 &#8211; Embedded Relational Database</a></li>
+</ul>
+</div>
+<p>For serializing over the web, the <a class="reference internal" href="json/index.html#module-json" title="json: JavaScript Object Notation Serializer"><tt class="xref py py-mod docutils literal"><span class="pre">json</span></tt></a> module may be a better choice since its format is more portable.</p>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="articles/data_persistence.html#article-data-persistence"><em>Data Persistence and Exchange</em></a></p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="anydbm/index.html" title="anydbm – Access to DBM-style databases"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="zlib/index.html" title="zlib – Low-level access to GNU zlib compression library"
+             >previous</a> |</li>
+        <li><a href="contents.html">PyMOTW</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright Doug Hellmann.
+      Last updated on Oct 24, 2010.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+
+    <br/><a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/88x31.png"/></a>
+    
+    </div>
+  </body>
+</html>

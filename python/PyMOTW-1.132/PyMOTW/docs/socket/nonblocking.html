@@ -1,0 +1,154 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Non-blocking Communication and Timeouts &mdash; Python Module of the Week</title>
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.132',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="socket – Network Communication" href="index.html" />
+    <link rel="next" title="select – Wait for I/O Efficiently" href="../select/index.html" />
+    <link rel="prev" title="Sending Binary Data" href="binary.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../select/index.html" title="select – Wait for I/O Efficiently"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="binary.html" title="Sending Binary Data"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../internet_protocols.html" >Internet Protocols and Support</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">socket &#8211; Network Communication</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="binary.html"
+                        title="previous chapter">Sending Binary Data</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../select/index.html"
+                        title="next chapter">select &#8211; Wait for I/O Efficiently</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/socket/nonblocking.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="non-blocking-communication-and-timeouts">
+<h1>Non-blocking Communication and Timeouts<a class="headerlink" href="#non-blocking-communication-and-timeouts" title="Permalink to this headline">¶</a></h1>
+<p>By default a <a class="reference internal" href="index.html#module-socket" title="socket: Network communication"><tt class="xref py py-class docutils literal"><span class="pre">socket</span></tt></a> is configured so that sending or
+receiving data <em>blocks</em>, stopping program execution until the socket
+is ready.  Calls to <tt class="xref py py-func docutils literal"><span class="pre">send()</span></tt> wait for buffer space to be available
+for the outgoing data, and calls to <tt class="xref py py-func docutils literal"><span class="pre">recv()</span></tt> wait for the other
+program to send data that can be read.  This form of I/O operation is
+easy to understand, but can lead to inefficient operation and even
+deadlocks, if both programs end up waiting for the other to send or
+receive data.</p>
+<p>There are a few ways to work around this situation.  One is to use a
+separate thread for communicating with each socket.  This can
+introduce other complexities, though, with communication between the
+threads.</p>
+<p>Another option is to change the socket to not block at all, and return
+immediately if it is not ready to handle the operation.  Use the
+<tt class="xref py py-func docutils literal"><span class="pre">setblocking()</span></tt> method to change the blocking flag for a socket.
+The default value is <tt class="docutils literal"><span class="pre">1</span></tt>, which means to block.  Passing a value of
+<tt class="docutils literal"><span class="pre">0</span></tt> turns off blocking.  If the socket is has blocking turned off
+and it is not ready for the operation, then <tt class="xref py py-class docutils literal"><span class="pre">socket.error</span></tt> is
+raised.</p>
+<p>A compromise solution is to set a timeout value for socket operations.
+Use <tt class="xref py py-func docutils literal"><span class="pre">settimeout()</span></tt> to change the timeout of a <a class="reference internal" href="index.html#module-socket" title="socket: Network communication"><tt class="xref py py-class docutils literal"><span class="pre">socket</span></tt></a> to a
+floating point value representing the number of seconds to block
+before deciding the socket is not ready for the operation.  When the
+timeout expires, a <tt class="xref py py-class docutils literal"><span class="pre">timeout</span></tt> exception is raised.</p>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last">Non-blocking I/O is covered in more detail in the examples for
+<a class="reference internal" href="../select/index.html#module-select" title="select: Wait for I/O Efficiently"><tt class="xref py py-mod docutils literal"><span class="pre">select</span></tt></a>.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../select/index.html" title="select – Wait for I/O Efficiently"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="binary.html" title="Sending Binary Data"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../internet_protocols.html" >Internet Protocols and Support</a> &raquo;</li>
+          <li><a href="index.html" >socket &#8211; Network Communication</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright Doug Hellmann.
+      Last updated on Oct 24, 2010.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+
+    <br/><a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/88x31.png"/></a>
+    
+    </div>
+  </body>
+</html>

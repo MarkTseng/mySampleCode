@@ -1,0 +1,222 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>webbrowser – Displays web pages &mdash; Python Module of the Week</title>
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.132',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="Internet Protocols and Support" href="../internet_protocols.html" />
+    <link rel="next" title="xmlrpclib – Client-side library for XML-RPC communication" href="../xmlrpclib/index.html" />
+    <link rel="prev" title="uuid – Universally unique identifiers" href="../uuid/index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../xmlrpclib/index.html" title="xmlrpclib – Client-side library for XML-RPC communication"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../uuid/index.html" title="uuid – Universally unique identifiers"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../internet_protocols.html" accesskey="U">Internet Protocols and Support</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">webbrowser &#8211; Displays web pages</a><ul>
+<li><a class="reference internal" href="#simple-example">Simple Example</a></li>
+<li><a class="reference internal" href="#windows-vs-tabs">Windows vs. Tabs</a></li>
+<li><a class="reference internal" href="#using-a-specific-browser">Using a specific browser</a></li>
+<li><a class="reference internal" href="#browser-variable"><tt class="docutils literal"><span class="pre">BROWSER</span></tt> variable</a></li>
+<li><a class="reference internal" href="#command-line-interface">Command Line Interface</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../uuid/index.html"
+                        title="previous chapter">uuid &#8211; Universally unique identifiers</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../xmlrpclib/index.html"
+                        title="next chapter">xmlrpclib &#8211; Client-side library for XML-RPC communication</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/webbrowser/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-webbrowser">
+<span id="webbrowser-displays-web-pages"></span><h1>webbrowser &#8211; Displays web pages<a class="headerlink" href="#module-webbrowser" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Purpose:</th><td class="field-body">Use the <cite>webbrowser</cite> module to display web pages to your users.</td>
+</tr>
+<tr class="field"><th class="field-name">Python Version:</th><td class="field-body">2.1.3 and later</td>
+</tr>
+</tbody>
+</table>
+<p>The <a class="reference internal" href="#module-webbrowser" title="webbrowser: Displays web pages"><tt class="xref py py-mod docutils literal"><span class="pre">webbrowser</span></tt></a> module includes functions to open URLs in interactive
+browser applications. The module includes a registry of available
+browsers, in case multiple options are available on the system. It can
+also be controlled with the <tt class="docutils literal"><span class="pre">BROWSER</span></tt> environment variable.</p>
+<div class="section" id="simple-example">
+<h2>Simple Example<a class="headerlink" href="#simple-example" title="Permalink to this headline">¶</a></h2>
+<p>To open a page in the browser, use the <tt class="xref py py-func docutils literal"><span class="pre">open()</span></tt> function.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">webbrowser</span>
+
+<span class="n">webbrowser</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&#39;http://docs.python.org/lib/module-webbrowser.html&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The URL is opened in a browser window, and that window is raised to
+the top of the window stack. The documentation says that an existing
+window will be reused, if possible, but the actual behavior may depend
+on your browser&#8217;s settings. Using Firefox on my Mac, a new window was
+always created.</p>
+</div>
+<div class="section" id="windows-vs-tabs">
+<h2>Windows vs. Tabs<a class="headerlink" href="#windows-vs-tabs" title="Permalink to this headline">¶</a></h2>
+<p>If you always want a new window used, use <tt class="xref py py-func docutils literal"><span class="pre">open_new()</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">webbrowser</span>
+
+<span class="n">webbrowser</span><span class="o">.</span><span class="n">open_new</span><span class="p">(</span><span class="s">&#39;http://docs.python.org/lib/module-webbrowser.html&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If you would rather create a new tab, use <tt class="xref py py-func docutils literal"><span class="pre">open_new_tab()</span></tt> instead.</p>
+</div>
+<div class="section" id="using-a-specific-browser">
+<h2>Using a specific browser<a class="headerlink" href="#using-a-specific-browser" title="Permalink to this headline">¶</a></h2>
+<p>If for some reason your application needs to use a specific browser,
+you can access the set of registered browser controllers using the
+<tt class="xref py py-func docutils literal"><span class="pre">get()</span></tt> function. The browser controller has methods to
+<tt class="xref py py-func docutils literal"><span class="pre">open()</span></tt>, <tt class="xref py py-func docutils literal"><span class="pre">open_new()</span></tt>, and <tt class="xref py py-func docutils literal"><span class="pre">open_new_tab()</span></tt>. This
+example forces the use of the lynx browser:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">webbrowser</span>
+
+<span class="n">b</span> <span class="o">=</span> <span class="n">webbrowser</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;lynx&#39;</span><span class="p">)</span>
+<span class="n">b</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&#39;http://docs.python.org/lib/module-webbrowser.html&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Refer to the module documentation for a list of available browser
+types.</p>
+</div>
+<div class="section" id="browser-variable">
+<h2><tt class="docutils literal"><span class="pre">BROWSER</span></tt> variable<a class="headerlink" href="#browser-variable" title="Permalink to this headline">¶</a></h2>
+<p>Users can control the module from outside your application by setting
+the environment variable <tt class="docutils literal"><span class="pre">BROWSER</span></tt> to the browser names or commands
+to try. The value should consist of a series of browser names
+separated by <tt class="docutils literal"><span class="pre">os.pathsep</span></tt>. If the name includes <tt class="docutils literal"><span class="pre">%s</span></tt>, the name is
+interpreted as a literal command and executed directly with the <tt class="docutils literal"><span class="pre">%s</span></tt>
+replaced by the URL. Otherwise, the name is passed to <tt class="xref py py-func docutils literal"><span class="pre">get()</span></tt> to
+obtain a controller object from the registry.</p>
+<p>For example, this command opens the web page in lynx, assuming it is
+available, no matter what other browsers are registered.</p>
+<div class="highlight-python"><pre>$ BROWSER=lynx python webbrowser_open.py</pre>
+</div>
+<p>If none of the names in <tt class="docutils literal"><span class="pre">BROWSER</span></tt> work, <a class="reference internal" href="#module-webbrowser" title="webbrowser: Displays web pages"><tt class="xref py py-mod docutils literal"><span class="pre">webbrowser</span></tt></a> falls back
+to its default behavior.</p>
+</div>
+<div class="section" id="command-line-interface">
+<h2>Command Line Interface<a class="headerlink" href="#command-line-interface" title="Permalink to this headline">¶</a></h2>
+<p>All of the features of the <a class="reference internal" href="#module-webbrowser" title="webbrowser: Displays web pages"><tt class="xref py py-mod docutils literal"><span class="pre">webbrowser</span></tt></a> module are available via
+the command line as well as from within your Python program.</p>
+<div class="highlight-python"><pre>$ python -m webbrowser
+Usage: /Library/Frameworks/Python.framework/Versions/2.5/lib/python2.5/webbrowser.py [-n | -t] url
+    -n: open new window
+    -t: open new tab</pre>
+</div>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://docs.python.org/lib/module-webbrowser.html">webbrowser</a></dt>
+<dd>Standard library documentation for this module.</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../xmlrpclib/index.html" title="xmlrpclib – Client-side library for XML-RPC communication"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../uuid/index.html" title="uuid – Universally unique identifiers"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../internet_protocols.html" >Internet Protocols and Support</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright Doug Hellmann.
+      Last updated on Oct 24, 2010.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+
+    <br/><a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/88x31.png"/></a>
+    
+    </div>
+  </body>
+</html>

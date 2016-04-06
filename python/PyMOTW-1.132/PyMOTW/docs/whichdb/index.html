@@ -1,0 +1,160 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>whichdb – Identify DBM-style database formats &mdash; Python Module of the Week</title>
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.132',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="Data Persistence" href="../persistence.html" />
+    <link rel="next" title="sqlite3 – Embedded Relational Database" href="../sqlite3/index.html" />
+    <link rel="prev" title="shelve – Persistent storage of arbitrary Python objects" href="../shelve/index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../sqlite3/index.html" title="sqlite3 – Embedded Relational Database"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../shelve/index.html" title="shelve – Persistent storage of arbitrary Python objects"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../persistence.html" accesskey="U">Data Persistence</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../shelve/index.html"
+                        title="previous chapter">shelve &#8211; Persistent storage of arbitrary Python objects</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../sqlite3/index.html"
+                        title="next chapter">sqlite3 &#8211; Embedded Relational Database</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/whichdb/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-whichdb">
+<span id="whichdb-identify-dbm-style-database-formats"></span><h1>whichdb &#8211; Identify DBM-style database formats<a class="headerlink" href="#module-whichdb" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Purpose:</th><td class="field-body">Examine existing DBM-style database file to determine what library should be used to open it.</td>
+</tr>
+<tr class="field"><th class="field-name">Python Version:</th><td class="field-body">1.4 and later</td>
+</tr>
+</tbody>
+</table>
+<p>The <a class="reference internal" href="#module-whichdb" title="whichdb: Identify DBM-style database formats"><tt class="xref py py-mod docutils literal"><span class="pre">whichdb</span></tt></a> module contains one function, <tt class="docutils literal"><span class="pre">whichdb()</span></tt>.  It can be used to examine an existing database file to determine which dbm library should be used to open it.  It returns <tt class="xref docutils literal"><span class="pre">None</span></tt> if there is a problem opening the file, or the string name of the module to use to open the file.  If it can open the file but cannot determine the library to use, it returns the empty string.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">anydbm</span>
+<span class="kn">import</span> <span class="nn">whichdb</span>
+
+<span class="n">db</span> <span class="o">=</span> <span class="n">anydbm</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&#39;/tmp/example.db&#39;</span><span class="p">,</span> <span class="s">&#39;n&#39;</span><span class="p">)</span>
+<span class="n">db</span><span class="p">[</span><span class="s">&#39;key&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;value&#39;</span>
+<span class="n">db</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="k">print</span> <span class="n">whichdb</span><span class="o">.</span><span class="n">whichdb</span><span class="p">(</span><span class="s">&#39;/tmp/example.db&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Your results will vary, depending on what modules are available in your PYTHONPATH.</p>
+<div class="highlight-python"><pre>$ python whichdb_whichdb.py
+
+dbhash</pre>
+</div>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://docs.python.org/lib/module-whichdb.html">whichdb</a></dt>
+<dd>Standard library documentation for this module.</dd>
+<dt><a class="reference internal" href="../anydbm/index.html#module-anydbm" title="anydbm: anydbm provides a generic dictionary-like interface to DBM-style, string-keyed databases"><tt class="xref py py-mod docutils literal"><span class="pre">anydbm</span></tt></a></dt>
+<dd>The anydbm module uses the best available DBM implementation when creating new databases.</dd>
+<dt><a class="reference internal" href="../shelve/index.html#module-shelve" title="shelve: Persistent storage of arbitrary Python objects"><tt class="xref py py-mod docutils literal"><span class="pre">shelve</span></tt></a></dt>
+<dd>The shelve module provides a mapping-style API for DBM databases.</dd>
+</dl>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../sqlite3/index.html" title="sqlite3 – Embedded Relational Database"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../shelve/index.html" title="shelve – Persistent storage of arbitrary Python objects"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../persistence.html" >Data Persistence</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright Doug Hellmann.
+      Last updated on Oct 24, 2010.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+
+    <br/><a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/88x31.png"/></a>
+    
+    </div>
+  </body>
+</html>

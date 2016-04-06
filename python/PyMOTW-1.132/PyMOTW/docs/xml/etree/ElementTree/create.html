@@ -1,0 +1,600 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Creating XML Documents &mdash; Python Module of the Week</title>
+    <link rel="stylesheet" href="../../../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '1.132',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../../../about.html" />
+    <link rel="top" title="Python Module of the Week" href="../../../index.html" />
+    <link rel="up" title="xml.etree.ElementTree – XML Manipulation API" href="index.html" />
+    <link rel="next" title="Internationalization" href="../../../i18n.html" />
+    <link rel="prev" title="Parsing XML Documents" href="parse.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../../../i18n.html" title="Internationalization"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="parse.html" title="Parsing XML Documents"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../../../markup.html" >Structured Markup Processing Tools</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">xml.etree.ElementTree &#8211; XML Manipulation API</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../../contents.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Creating XML Documents</a><ul>
+<li><a class="reference internal" href="#building-element-nodes">Building Element Nodes</a></li>
+<li><a class="reference internal" href="#pretty-printing-xml">Pretty-Printing XML</a></li>
+<li><a class="reference internal" href="#setting-element-properties">Setting Element Properties</a></li>
+<li><a class="reference internal" href="#building-trees-from-lists-of-nodes">Building Trees from Lists of Nodes</a></li>
+<li><a class="reference internal" href="#serializing-xml-to-a-stream">Serializing XML to a Stream</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="parse.html"
+                        title="previous chapter">Parsing XML Documents</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../../../i18n.html"
+                        title="next chapter">Internationalization</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../../_sources/xml/etree/ElementTree/create.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="creating-xml-documents">
+<span id="xml-etree-elementtree-creating"></span><h1>Creating XML Documents<a class="headerlink" href="#creating-xml-documents" title="Permalink to this headline">¶</a></h1>
+<p>In addition to its parsing capabilities, <a class="reference internal" href="index.html#module-xml.etree.ElementTree" title="xml.etree.ElementTree: XML Manipulation API"><tt class="xref py py-mod docutils literal"><span class="pre">xml.etree.ElementTree</span></tt></a>
+also supports creating well-formed XML documents from <tt class="xref py py-class docutils literal"><span class="pre">Element</span></tt>
+objects constructed in an application.  The <tt class="xref py py-class docutils literal"><span class="pre">Element</span></tt> class
+used when a document is parsed also knows how to generate a serialized
+form of its contents, which can then be written to a file or other
+data stream.</p>
+<div class="section" id="building-element-nodes">
+<h2>Building Element Nodes<a class="headerlink" href="#building-element-nodes" title="Permalink to this headline">¶</a></h2>
+<p>There are three helper functions useful for creating a hierarchy of
+<tt class="xref py py-class docutils literal"><span class="pre">Element</span></tt> nodes.  <tt class="xref py py-func docutils literal"><span class="pre">Element()</span></tt> creates a standard node,
+<tt class="xref py py-func docutils literal"><span class="pre">SubElement()</span></tt> attaches a new node to a parent, and
+<tt class="xref py py-func docutils literal"><span class="pre">Comment()</span></tt> creates a node that serializes using XML&#8217;s comment
+syntax.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">xml.etree.ElementTree</span> <span class="kn">import</span> <span class="n">Element</span><span class="p">,</span> <span class="n">SubElement</span><span class="p">,</span> <span class="n">Comment</span><span class="p">,</span> <span class="n">tostring</span>
+
+<span class="n">top</span> <span class="o">=</span> <span class="n">Element</span><span class="p">(</span><span class="s">&#39;top&#39;</span><span class="p">)</span>
+
+<span class="n">comment</span> <span class="o">=</span> <span class="n">Comment</span><span class="p">(</span><span class="s">&#39;Generated for PyMOTW&#39;</span><span class="p">)</span>
+<span class="n">top</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">comment</span><span class="p">)</span>
+
+<span class="n">child</span> <span class="o">=</span> <span class="n">SubElement</span><span class="p">(</span><span class="n">top</span><span class="p">,</span> <span class="s">&#39;child&#39;</span><span class="p">)</span>
+<span class="n">child</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s">&#39;This child contains text.&#39;</span>
+
+<span class="n">child_with_tail</span> <span class="o">=</span> <span class="n">SubElement</span><span class="p">(</span><span class="n">top</span><span class="p">,</span> <span class="s">&#39;child_with_tail&#39;</span><span class="p">)</span>
+<span class="n">child_with_tail</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s">&#39;This child has regular text.&#39;</span>
+<span class="n">child_with_tail</span><span class="o">.</span><span class="n">tail</span> <span class="o">=</span> <span class="s">&#39;And &quot;tail&quot; text.&#39;</span>
+
+<span class="n">child_with_entity_ref</span> <span class="o">=</span> <span class="n">SubElement</span><span class="p">(</span><span class="n">top</span><span class="p">,</span> <span class="s">&#39;child_with_entity_ref&#39;</span><span class="p">)</span>
+<span class="n">child_with_entity_ref</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s">&#39;This &amp; that&#39;</span>
+
+<span class="k">print</span> <span class="n">tostring</span><span class="p">(</span><span class="n">top</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The output contains only the XML nodes in the tree, not the XML declaration
+with version and encoding.</p>
+<div class="highlight-python"><pre>$ python ElementTree_create.py
+
+&lt;top&gt;&lt;!--Generated for PyMOTW--&gt;&lt;child&gt;This child contains text.&lt;/ch
+ild&gt;&lt;child_with_tail&gt;This child has regular text.&lt;/child_with_tail&gt;A
+nd "tail" text.&lt;child_with_entity_ref&gt;This &amp;amp; that&lt;/child_with_en
+tity_ref&gt;&lt;/top&gt;</pre>
+</div>
+<p>The <tt class="docutils literal"><span class="pre">&amp;</span></tt> character in the text of <tt class="docutils literal"><span class="pre">child_with_entity_ref</span></tt> is
+converted to the entity reference <tt class="docutils literal"><span class="pre">&amp;amp;</span></tt> automatically.</p>
+</div>
+<div class="section" id="pretty-printing-xml">
+<h2>Pretty-Printing XML<a class="headerlink" href="#pretty-printing-xml" title="Permalink to this headline">¶</a></h2>
+<p><tt class="xref py py-class docutils literal"><span class="pre">ElementTree</span></tt> makes no effort to &#8220;pretty print&#8221; the output
+produced by <tt class="xref py py-func docutils literal"><span class="pre">tostring()</span></tt>, since adding extra whitespace changes
+the contents of the document.  To make the output easier to follow for
+human readers, the rest of the examples below will use <a class="reference external" href="http://renesd.blogspot.com/2007/05/pretty-print-xml-with-python.html">a tip I found
+online</a>
+and re-parse the XML with <tt class="xref py py-mod docutils literal"><span class="pre">xml.dom.minidom</span></tt> then use its
+<tt class="xref py py-func docutils literal"><span class="pre">toprettyxml()</span></tt> method.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">xml.etree</span> <span class="kn">import</span> <span class="n">ElementTree</span>
+<span class="kn">from</span> <span class="nn">xml.dom</span> <span class="kn">import</span> <span class="n">minidom</span>
+
+<span class="k">def</span> <span class="nf">prettify</span><span class="p">(</span><span class="n">elem</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Return a pretty-printed XML string for the Element.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">rough_string</span> <span class="o">=</span> <span class="n">ElementTree</span><span class="o">.</span><span class="n">tostring</span><span class="p">(</span><span class="n">elem</span><span class="p">,</span> <span class="s">&#39;utf-8&#39;</span><span class="p">)</span>
+    <span class="n">reparsed</span> <span class="o">=</span> <span class="n">minidom</span><span class="o">.</span><span class="n">parseString</span><span class="p">(</span><span class="n">rough_string</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">reparsed</span><span class="o">.</span><span class="n">toprettyxml</span><span class="p">(</span><span class="n">indent</span><span class="o">=</span><span class="s">&quot;  &quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The updated example now looks like:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">xml.etree.ElementTree</span> <span class="kn">import</span> <span class="n">Element</span><span class="p">,</span> <span class="n">SubElement</span><span class="p">,</span> <span class="n">Comment</span>
+<span class="kn">from</span> <span class="nn">ElementTree_pretty</span> <span class="kn">import</span> <span class="n">prettify</span>
+
+<span class="n">top</span> <span class="o">=</span> <span class="n">Element</span><span class="p">(</span><span class="s">&#39;top&#39;</span><span class="p">)</span>
+
+<span class="n">comment</span> <span class="o">=</span> <span class="n">Comment</span><span class="p">(</span><span class="s">&#39;Generated for PyMOTW&#39;</span><span class="p">)</span>
+<span class="n">top</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">comment</span><span class="p">)</span>
+
+<span class="n">child</span> <span class="o">=</span> <span class="n">SubElement</span><span class="p">(</span><span class="n">top</span><span class="p">,</span> <span class="s">&#39;child&#39;</span><span class="p">)</span>
+<span class="n">child</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s">&#39;This child contains text.&#39;</span>
+
+<span class="n">child_with_tail</span> <span class="o">=</span> <span class="n">SubElement</span><span class="p">(</span><span class="n">top</span><span class="p">,</span> <span class="s">&#39;child_with_tail&#39;</span><span class="p">)</span>
+<span class="n">child_with_tail</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s">&#39;This child has regular text.&#39;</span>
+<span class="n">child_with_tail</span><span class="o">.</span><span class="n">tail</span> <span class="o">=</span> <span class="s">&#39;And &quot;tail&quot; text.&#39;</span>
+
+<span class="n">child_with_entity_ref</span> <span class="o">=</span> <span class="n">SubElement</span><span class="p">(</span><span class="n">top</span><span class="p">,</span> <span class="s">&#39;child_with_entity_ref&#39;</span><span class="p">)</span>
+<span class="n">child_with_entity_ref</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s">&#39;This &amp; that&#39;</span>
+
+<span class="k">print</span> <span class="n">prettify</span><span class="p">(</span><span class="n">top</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>and the output is easier to read:</p>
+<div class="highlight-python"><pre>$ python ElementTree_create_pretty.py
+
+&lt;?xml version="1.0" ?&gt;
+&lt;top&gt;
+  &lt;!--Generated for PyMOTW--&gt;
+  &lt;child&gt;
+    This child contains text.
+  &lt;/child&gt;
+  &lt;child_with_tail&gt;
+    This child has regular text.
+  &lt;/child_with_tail&gt;
+  And &amp;quot;tail&amp;quot; text.
+  &lt;child_with_entity_ref&gt;
+    This &amp;amp; that
+  &lt;/child_with_entity_ref&gt;
+&lt;/top&gt;</pre>
+</div>
+<p>In addition to the extra whitespace for formatting, the
+<tt class="xref py py-mod docutils literal"><span class="pre">xml.dom.minidom</span></tt> pretty-printer also adds an XML declaration to
+the output.</p>
+</div>
+<div class="section" id="setting-element-properties">
+<h2>Setting Element Properties<a class="headerlink" href="#setting-element-properties" title="Permalink to this headline">¶</a></h2>
+<p>The previous example created nodes with tags and text content, but did
+not set any attributes of the nodes.  Many of the examples from
+<a class="reference internal" href="parse.html#xml-etree-elementtree-parsing"><em>Parsing XML Documents</em></a> worked with an <a class="reference external" href="http://www.opml.org/">OPML</a> file listing
+podcasts and their feeds.  The <tt class="docutils literal"><span class="pre">outline</span></tt> nodes in the tree used
+attributes for the group names and podcast properties.
+<tt class="xref py py-class docutils literal"><span class="pre">ElementTree</span></tt> can be used to construct a similar XML file from
+a CSV input file, setting all of the element attributes as the tree is
+constructed.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">csv</span>
+<span class="kn">from</span> <span class="nn">xml.etree.ElementTree</span> <span class="kn">import</span> <span class="n">Element</span><span class="p">,</span> <span class="n">SubElement</span><span class="p">,</span> <span class="n">Comment</span><span class="p">,</span> <span class="n">tostring</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">from</span> <span class="nn">ElementTree_pretty</span> <span class="kn">import</span> <span class="n">prettify</span>
+
+<span class="n">generated_on</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">())</span>
+
+<span class="c"># Configure one attribute with set()</span>
+<span class="n">root</span> <span class="o">=</span> <span class="n">Element</span><span class="p">(</span><span class="s">&#39;opml&#39;</span><span class="p">)</span>
+<span class="n">root</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s">&#39;version&#39;</span><span class="p">,</span> <span class="s">&#39;1.0&#39;</span><span class="p">)</span>
+
+<span class="n">root</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Comment</span><span class="p">(</span><span class="s">&#39;Generated by ElementTree_csv_to_xml.py for PyMOTW&#39;</span><span class="p">))</span>
+
+<span class="n">head</span> <span class="o">=</span> <span class="n">SubElement</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="s">&#39;head&#39;</span><span class="p">)</span>
+<span class="n">title</span> <span class="o">=</span> <span class="n">SubElement</span><span class="p">(</span><span class="n">head</span><span class="p">,</span> <span class="s">&#39;title&#39;</span><span class="p">)</span>
+<span class="n">title</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s">&#39;My Podcasts&#39;</span>
+<span class="n">dc</span> <span class="o">=</span> <span class="n">SubElement</span><span class="p">(</span><span class="n">head</span><span class="p">,</span> <span class="s">&#39;dateCreated&#39;</span><span class="p">)</span>
+<span class="n">dc</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">generated_on</span>
+<span class="n">dm</span> <span class="o">=</span> <span class="n">SubElement</span><span class="p">(</span><span class="n">head</span><span class="p">,</span> <span class="s">&#39;dateModified&#39;</span><span class="p">)</span>
+<span class="n">dm</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">generated_on</span>
+
+<span class="n">body</span> <span class="o">=</span> <span class="n">SubElement</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="s">&#39;body&#39;</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;podcasts.csv&#39;</span><span class="p">,</span> <span class="s">&#39;rt&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">current_group</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">reader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">reader</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">reader</span><span class="p">:</span>
+        <span class="n">group_name</span><span class="p">,</span> <span class="n">podcast_name</span><span class="p">,</span> <span class="n">xml_url</span><span class="p">,</span> <span class="n">html_url</span> <span class="o">=</span> <span class="n">row</span>
+        <span class="k">if</span> <span class="n">current_group</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">or</span> <span class="n">group_name</span> <span class="o">!=</span> <span class="n">current_group</span><span class="o">.</span><span class="n">text</span><span class="p">:</span>
+            <span class="c"># Start a new group</span>
+            <span class="n">current_group</span> <span class="o">=</span> <span class="n">SubElement</span><span class="p">(</span><span class="n">body</span><span class="p">,</span> <span class="s">&#39;outline&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s">&#39;text&#39;</span><span class="p">:</span><span class="n">group_name</span><span class="p">})</span>
+        <span class="c"># Add this podcast to the group,</span>
+        <span class="c"># setting all of its attributes at</span>
+        <span class="c"># once.</span>
+        <span class="n">podcast</span> <span class="o">=</span> <span class="n">SubElement</span><span class="p">(</span><span class="n">current_group</span><span class="p">,</span> <span class="s">&#39;outline&#39;</span><span class="p">,</span>
+                             <span class="p">{</span><span class="s">&#39;text&#39;</span><span class="p">:</span><span class="n">podcast_name</span><span class="p">,</span>
+                              <span class="s">&#39;xmlUrl&#39;</span><span class="p">:</span><span class="n">xml_url</span><span class="p">,</span>
+                              <span class="s">&#39;htmlUrl&#39;</span><span class="p">:</span><span class="n">html_url</span><span class="p">,</span>
+                              <span class="p">})</span>
+
+<span class="k">print</span> <span class="n">prettify</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The attribute values can be configured one at a time with
+<tt class="xref py py-func docutils literal"><span class="pre">set()</span></tt> (as with the <tt class="docutils literal"><span class="pre">root</span></tt> node), or all at once by passing a
+dictionary to the node factory (as with each group and podcast node).</p>
+<div class="highlight-python"><pre>$ python ElementTree_csv_to_xml.py
+
+&lt;?xml version="1.0" ?&gt;
+&lt;opml version="1.0"&gt;
+  &lt;!--Generated by ElementTree_csv_to_xml.py for PyMOTW--&gt;
+  &lt;head&gt;
+    &lt;title&gt;
+      My Podcasts
+    &lt;/title&gt;
+    &lt;dateCreated&gt;
+      2010-10-24 08:55:56.434549
+    &lt;/dateCreated&gt;
+    &lt;dateModified&gt;
+      2010-10-24 08:55:56.434549
+    &lt;/dateModified&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;outline text="Science and Tech"&gt;
+      &lt;outline htmlUrl="http://www.publicradio.org/columns/futureten
+se/" text="APM: Future Tense" xmlUrl="http://www.publicradio.org/col
+umns/futuretense/podcast.xml"/&gt;
+    &lt;/outline&gt;
+    &lt;outline text="Science and Tech"&gt;
+      &lt;outline htmlUrl="http://www.uh.edu/engines/engines.htm" text=
+"Engines Of Our Ingenuity Podcast" xmlUrl="http://www.npr.org/rss/po
+dcast.php?id=510030"/&gt;
+    &lt;/outline&gt;
+    &lt;outline text="Science and Tech"&gt;
+      &lt;outline htmlUrl="http://www.nyas.org/WhatWeDo/SciencetheCity.
+aspx" text="Science &amp;amp; the City" xmlUrl="http://www.nyas.org/Podc
+asts/Atom.axd"/&gt;
+    &lt;/outline&gt;
+    &lt;outline text="Books and Fiction"&gt;
+      &lt;outline htmlUrl="http://www.podiobooks.com/blog" text="Podiob
+ooker" xmlUrl="http://feeds.feedburner.com/podiobooks"/&gt;
+    &lt;/outline&gt;
+    &lt;outline text="Books and Fiction"&gt;
+      &lt;outline htmlUrl="http://web.me.com/normsherman/Site/Podcast/P
+odcast.html" text="The Drabblecast" xmlUrl="http://web.me.com/normsh
+erman/Site/Podcast/rss.xml"/&gt;
+    &lt;/outline&gt;
+    &lt;outline text="Books and Fiction"&gt;
+      &lt;outline htmlUrl="http://www.tor.com/" text="tor.com / categor
+y / tordotstories" xmlUrl="http://www.tor.com/rss/category/TorDotSto
+ries"/&gt;
+    &lt;/outline&gt;
+    &lt;outline text="Computers and Programming"&gt;
+      &lt;outline htmlUrl="http://twit.tv/mbw" text="MacBreak Weekly" x
+mlUrl="http://leo.am/podcasts/mbw"/&gt;
+    &lt;/outline&gt;
+    &lt;outline text="Computers and Programming"&gt;
+      &lt;outline htmlUrl="http://twit.tv" text="FLOSS Weekly" xmlUrl="
+http://leo.am/podcasts/floss"/&gt;
+    &lt;/outline&gt;
+    &lt;outline text="Computers and Programming"&gt;
+      &lt;outline htmlUrl="http://www.coreint.org/" text="Core Intuitio
+n" xmlUrl="http://www.coreint.org/podcast.xml"/&gt;
+    &lt;/outline&gt;
+    &lt;outline text="Python"&gt;
+      &lt;outline htmlUrl="http://advocacy.python.org/podcasts/" text="
+PyCon Podcast" xmlUrl="http://advocacy.python.org/podcasts/pycon.rss
+"/&gt;
+    &lt;/outline&gt;
+    &lt;outline text="Python"&gt;
+      &lt;outline htmlUrl="http://advocacy.python.org/podcasts/" text="
+A Little Bit of Python" xmlUrl="http://advocacy.python.org/podcasts/
+littlebit.rss"/&gt;
+    &lt;/outline&gt;
+    &lt;outline text="Python"&gt;
+      &lt;outline htmlUrl="" text="Django Dose Everything Feed" xmlUrl=
+"http://djangodose.com/everything/feed/"/&gt;
+    &lt;/outline&gt;
+    &lt;outline text="Miscelaneous"&gt;
+      &lt;outline htmlUrl="http://www.castsampler.com/users/dhellmann/"
+ text="dhellmann's CastSampler Feed" xmlUrl="http://www.castsampler.
+com/cast/feed/rss/dhellmann/"/&gt;
+    &lt;/outline&gt;
+  &lt;/body&gt;
+&lt;/opml&gt;</pre>
+</div>
+</div>
+<div class="section" id="building-trees-from-lists-of-nodes">
+<h2>Building Trees from Lists of Nodes<a class="headerlink" href="#building-trees-from-lists-of-nodes" title="Permalink to this headline">¶</a></h2>
+<p>Multiple children can be added to an <tt class="xref py py-class docutils literal"><span class="pre">Element</span></tt> instance with
+the <tt class="xref py py-func docutils literal"><span class="pre">extend()</span></tt> method.  The argument to <tt class="xref py py-func docutils literal"><span class="pre">extend()</span></tt> is any
+iterable, including a <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt> or another <tt class="xref py py-class docutils literal"><span class="pre">Element</span></tt>
+instance.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">xml.etree.ElementTree</span> <span class="kn">import</span> <span class="n">Element</span><span class="p">,</span> <span class="n">tostring</span>
+<span class="kn">from</span> <span class="nn">ElementTree_pretty</span> <span class="kn">import</span> <span class="n">prettify</span>
+
+<span class="n">top</span> <span class="o">=</span> <span class="n">Element</span><span class="p">(</span><span class="s">&#39;top&#39;</span><span class="p">)</span>
+
+<span class="n">children</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">Element</span><span class="p">(</span><span class="s">&#39;child&#39;</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+    <span class="p">]</span>
+
+<span class="n">top</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">children</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="n">prettify</span><span class="p">(</span><span class="n">top</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>When a <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt> is given, the nodes in the list are added
+directly to the new parent.</p>
+<div class="highlight-python"><pre>$ python ElementTree_extend.py
+
+&lt;?xml version="1.0" ?&gt;
+&lt;top&gt;
+  &lt;child num="0"/&gt;
+  &lt;child num="1"/&gt;
+  &lt;child num="2"/&gt;
+&lt;/top&gt;</pre>
+</div>
+<p>When another <tt class="xref py py-class docutils literal"><span class="pre">Element</span></tt> instance is given, the children of that
+node are added to the new parent.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">xml.etree.ElementTree</span> <span class="kn">import</span> <span class="n">Element</span><span class="p">,</span> <span class="n">SubElement</span><span class="p">,</span> <span class="n">tostring</span><span class="p">,</span> <span class="n">XML</span>
+<span class="kn">from</span> <span class="nn">ElementTree_pretty</span> <span class="kn">import</span> <span class="n">prettify</span>
+
+<span class="n">top</span> <span class="o">=</span> <span class="n">Element</span><span class="p">(</span><span class="s">&#39;top&#39;</span><span class="p">)</span>
+
+<span class="n">parent</span> <span class="o">=</span> <span class="n">SubElement</span><span class="p">(</span><span class="n">top</span><span class="p">,</span> <span class="s">&#39;parent&#39;</span><span class="p">)</span>
+
+<span class="n">children</span> <span class="o">=</span> <span class="n">XML</span><span class="p">(</span><span class="s">&#39;&#39;&#39;&lt;root&gt;&lt;child num=&quot;0&quot; /&gt;&lt;child num=&quot;1&quot; /&gt;&lt;child num=&quot;2&quot; /&gt;&lt;/root&gt; &#39;&#39;&#39;</span><span class="p">)</span>
+<span class="n">parent</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">children</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="n">prettify</span><span class="p">(</span><span class="n">top</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In this case, the node with tag <tt class="docutils literal"><span class="pre">root</span></tt> created by parsing the XML
+string has three children, which are added to the <tt class="docutils literal"><span class="pre">parent</span></tt> node.
+The <tt class="docutils literal"><span class="pre">root</span></tt> node is not part of the output tree.</p>
+<div class="highlight-python"><pre>$ python ElementTree_extend_node.py
+
+&lt;?xml version="1.0" ?&gt;
+&lt;top&gt;
+  &lt;parent&gt;
+    &lt;child num="0"/&gt;
+    &lt;child num="1"/&gt;
+    &lt;child num="2"/&gt;
+  &lt;/parent&gt;
+&lt;/top&gt;</pre>
+</div>
+<p>It is important to understand that <tt class="xref py py-func docutils literal"><span class="pre">extend()</span></tt> does not modify any
+existing parent-child relationships with the nodes.  If the values
+passed to extend exist somewhere in the tree already, they will still
+be there, and will be repeated in the output.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">xml.etree.ElementTree</span> <span class="kn">import</span> <span class="n">Element</span><span class="p">,</span> <span class="n">SubElement</span><span class="p">,</span> <span class="n">tostring</span><span class="p">,</span> <span class="n">XML</span>
+<span class="kn">from</span> <span class="nn">ElementTree_pretty</span> <span class="kn">import</span> <span class="n">prettify</span>
+
+<span class="n">top</span> <span class="o">=</span> <span class="n">Element</span><span class="p">(</span><span class="s">&#39;top&#39;</span><span class="p">)</span>
+
+<span class="n">parent_a</span> <span class="o">=</span> <span class="n">SubElement</span><span class="p">(</span><span class="n">top</span><span class="p">,</span> <span class="s">&#39;parent&#39;</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="s">&#39;A&#39;</span><span class="p">)</span>
+<span class="n">parent_b</span> <span class="o">=</span> <span class="n">SubElement</span><span class="p">(</span><span class="n">top</span><span class="p">,</span> <span class="s">&#39;parent&#39;</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="s">&#39;B&#39;</span><span class="p">)</span>
+
+<span class="c"># Create children</span>
+<span class="n">children</span> <span class="o">=</span> <span class="n">XML</span><span class="p">(</span><span class="s">&#39;&#39;&#39;&lt;root&gt;&lt;child num=&quot;0&quot; /&gt;&lt;child num=&quot;1&quot; /&gt;&lt;child num=&quot;2&quot; /&gt;&lt;/root&gt; &#39;&#39;&#39;</span><span class="p">)</span>
+
+<span class="c"># Set the id to the Python object id of the node to make duplicates</span>
+<span class="c"># easier to spot.</span>
+<span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">children</span><span class="p">:</span>
+    <span class="n">c</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s">&#39;id&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">c</span><span class="p">)))</span>
+
+<span class="c"># Add to first parent</span>
+<span class="n">parent_a</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">children</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&#39;A:&#39;</span>
+<span class="k">print</span> <span class="n">prettify</span><span class="p">(</span><span class="n">top</span><span class="p">)</span>
+<span class="k">print</span>
+
+<span class="c"># Copy nodes to second parent</span>
+<span class="n">parent_b</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">children</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&#39;B:&#39;</span>
+<span class="k">print</span> <span class="n">prettify</span><span class="p">(</span><span class="n">top</span><span class="p">)</span>
+<span class="k">print</span>
+</pre></div>
+</div>
+<p>Setting the <tt class="xref py py-attr docutils literal"><span class="pre">id</span></tt> attribute of these children to the Python
+unique object identifier exposes the fact that the same node objects
+appear in the output tree more than once.</p>
+<div class="highlight-python"><pre>$ python ElementTree_extend_node_copy.py
+
+A:
+&lt;?xml version="1.0" ?&gt;
+&lt;top&gt;
+  &lt;parent id="A"&gt;
+    &lt;child id="4300091088" num="0"/&gt;
+    &lt;child id="4300091152" num="1"/&gt;
+    &lt;child id="4300091344" num="2"/&gt;
+  &lt;/parent&gt;
+  &lt;parent id="B"/&gt;
+&lt;/top&gt;
+
+
+B:
+&lt;?xml version="1.0" ?&gt;
+&lt;top&gt;
+  &lt;parent id="A"&gt;
+    &lt;child id="4300091088" num="0"/&gt;
+    &lt;child id="4300091152" num="1"/&gt;
+    &lt;child id="4300091344" num="2"/&gt;
+  &lt;/parent&gt;
+  &lt;parent id="B"&gt;
+    &lt;child id="4300091088" num="0"/&gt;
+    &lt;child id="4300091152" num="1"/&gt;
+    &lt;child id="4300091344" num="2"/&gt;
+  &lt;/parent&gt;
+&lt;/top&gt;</pre>
+</div>
+</div>
+<div class="section" id="serializing-xml-to-a-stream">
+<h2>Serializing XML to a Stream<a class="headerlink" href="#serializing-xml-to-a-stream" title="Permalink to this headline">¶</a></h2>
+<p><tt class="xref py py-func docutils literal"><span class="pre">tostring()</span></tt> is implemented to write to an in-memory file-like
+object and then return a string representing the entire element tree.
+When working with large amounts of data, it will take less memory and
+make more efficient use of the I/O libraries to write directly to a
+file handle using the <tt class="xref py py-func docutils literal"><span class="pre">write()</span></tt> method of <tt class="xref py py-class docutils literal"><span class="pre">ElementTree</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">xml.etree.ElementTree</span> <span class="kn">import</span> <span class="n">Element</span><span class="p">,</span> <span class="n">SubElement</span><span class="p">,</span> <span class="n">Comment</span><span class="p">,</span> <span class="n">ElementTree</span>
+
+<span class="n">top</span> <span class="o">=</span> <span class="n">Element</span><span class="p">(</span><span class="s">&#39;top&#39;</span><span class="p">)</span>
+
+<span class="n">comment</span> <span class="o">=</span> <span class="n">Comment</span><span class="p">(</span><span class="s">&#39;Generated for PyMOTW&#39;</span><span class="p">)</span>
+<span class="n">top</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">comment</span><span class="p">)</span>
+
+<span class="n">child</span> <span class="o">=</span> <span class="n">SubElement</span><span class="p">(</span><span class="n">top</span><span class="p">,</span> <span class="s">&#39;child&#39;</span><span class="p">)</span>
+<span class="n">child</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s">&#39;This child contains text.&#39;</span>
+
+<span class="n">child_with_tail</span> <span class="o">=</span> <span class="n">SubElement</span><span class="p">(</span><span class="n">top</span><span class="p">,</span> <span class="s">&#39;child_with_tail&#39;</span><span class="p">)</span>
+<span class="n">child_with_tail</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s">&#39;This child has regular text.&#39;</span>
+<span class="n">child_with_tail</span><span class="o">.</span><span class="n">tail</span> <span class="o">=</span> <span class="s">&#39;And &quot;tail&quot; text.&#39;</span>
+
+<span class="n">child_with_entity_ref</span> <span class="o">=</span> <span class="n">SubElement</span><span class="p">(</span><span class="n">top</span><span class="p">,</span> <span class="s">&#39;child_with_entity_ref&#39;</span><span class="p">)</span>
+<span class="n">child_with_entity_ref</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s">&#39;This &amp; that&#39;</span>
+
+<span class="n">empty_child</span> <span class="o">=</span> <span class="n">SubElement</span><span class="p">(</span><span class="n">top</span><span class="p">,</span> <span class="s">&#39;empty_child&#39;</span><span class="p">)</span>
+
+<span class="n">ElementTree</span><span class="p">(</span><span class="n">top</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The example uses <a class="reference internal" href="../../../sys/runtime.html#sys-input-output"><em>sys.stdout</em></a> to write to the
+console, but it could also write to an open file or socket.</p>
+<div class="highlight-python"><pre>$ python ElementTree_write.py
+
+&lt;top&gt;&lt;!--Generated for PyMOTW--&gt;&lt;child&gt;This child contains text.&lt;/ch
+ild&gt;&lt;child_with_tail&gt;This child has regular text.&lt;/child_with_tail&gt;A
+nd "tail" text.&lt;child_with_entity_ref&gt;This &amp;amp; that&lt;/child_with_en
+tity_ref&gt;&lt;empty_child /&gt;&lt;/top&gt;</pre>
+</div>
+<p>The last node in the tree contains no text or sub-nodes, so it is
+written as an empty tag, <tt class="docutils literal"><span class="pre">&lt;empty_child</span> <span class="pre">/&gt;</span></tt>.  <tt class="xref py py-func docutils literal"><span class="pre">write()</span></tt> takes a
+<em>method</em> argument to control the handling for empty nodes.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">xml.etree.ElementTree</span> <span class="kn">import</span> <span class="n">Element</span><span class="p">,</span> <span class="n">SubElement</span><span class="p">,</span> <span class="n">ElementTree</span>
+
+<span class="n">top</span> <span class="o">=</span> <span class="n">Element</span><span class="p">(</span><span class="s">&#39;top&#39;</span><span class="p">)</span>
+
+<span class="n">child</span> <span class="o">=</span> <span class="n">SubElement</span><span class="p">(</span><span class="n">top</span><span class="p">,</span> <span class="s">&#39;child&#39;</span><span class="p">)</span>
+<span class="n">child</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s">&#39;This child contains text.&#39;</span>
+
+<span class="n">empty_child</span> <span class="o">=</span> <span class="n">SubElement</span><span class="p">(</span><span class="n">top</span><span class="p">,</span> <span class="s">&#39;empty_child&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">method</span> <span class="ow">in</span> <span class="p">[</span> <span class="s">&#39;xml&#39;</span><span class="p">,</span> <span class="s">&#39;html&#39;</span><span class="p">,</span> <span class="s">&#39;text&#39;</span> <span class="p">]:</span>
+    <span class="k">print</span> <span class="n">method</span>
+    <span class="n">ElementTree</span><span class="p">(</span><span class="n">top</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span>
+    
+</pre></div>
+</div>
+<p>Three methods are supported:</p>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">xml</span></tt></dt>
+<dd>The default method, produces <tt class="docutils literal"><span class="pre">&lt;empty_child</span> <span class="pre">/&gt;</span></tt>.</dd>
+<dt><tt class="docutils literal"><span class="pre">html</span></tt></dt>
+<dd>Produce the tag pair, as is required in HTML documents
+(<tt class="docutils literal"><span class="pre">&lt;empty_child&gt;&lt;/empty_child&gt;</span></tt>).</dd>
+<dt><tt class="docutils literal"><span class="pre">text</span></tt></dt>
+<dd>Prints only the text of nodes, and skips empty tags entirely.</dd>
+</dl>
+<div class="highlight-python"><pre>$ python ElementTree_write_method.py
+
+xml
+&lt;top&gt;&lt;child&gt;This child contains text.&lt;/child&gt;&lt;empty_child /&gt;&lt;/top&gt;
+
+html
+&lt;top&gt;&lt;child&gt;This child contains text.&lt;/child&gt;&lt;empty_child&gt;&lt;/empty_child&gt;&lt;/top&gt;
+
+text
+This child contains text.</pre>
+</div>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt>Outline Processor Markup Language, <a class="reference external" href="http://www.opml.org/">OPML</a></dt>
+<dd>Dave Winer&#8217;s OPML specification and documentation.</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../../../i18n.html" title="Internationalization"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="parse.html" title="Parsing XML Documents"
+             >previous</a> |</li>
+        <li><a href="../../../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../../../markup.html" >Structured Markup Processing Tools</a> &raquo;</li>
+          <li><a href="index.html" >xml.etree.ElementTree &#8211; XML Manipulation API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright Doug Hellmann.
+      Last updated on Oct 24, 2010.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+
+    <br/><a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/88x31.png"/></a>
+    
+    </div>
+  </body>
+</html>

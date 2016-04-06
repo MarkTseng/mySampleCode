@@ -1,0 +1,153 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Text Processing Tools &mdash; Python Module of the Week</title>
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.132',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="Features of the Standard Library" href="index.html" />
+    <link rel="next" title="Built-in Objects" href="../builtins.html" />
+    <link rel="prev" title="File Access" href="file_access.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../builtins.html" title="Built-in Objects"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="file_access.html" title="File Access"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Features of the Standard Library</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Text Processing Tools</a><ul>
+<li><a class="reference internal" href="#string-module">string module</a></li>
+<li><a class="reference internal" href="#text-input">Text Input</a></li>
+<li><a class="reference internal" href="#text-output">Text Output</a></li>
+<li><a class="reference internal" href="#comparing-values">Comparing Values</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="file_access.html"
+                        title="previous chapter">File Access</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../builtins.html"
+                        title="next chapter">Built-in Objects</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/articles/text_processing.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="text-processing-tools">
+<span id="article-text-processing"></span><h1>Text Processing Tools<a class="headerlink" href="#text-processing-tools" title="Permalink to this headline">¶</a></h1>
+<p>The string class is the most obvious text processing tool available to Python programmers, but there are plenty of other tools in the standard library to make text manipulation simpler.</p>
+<div class="section" id="string-module">
+<h2>string module<a class="headerlink" href="#string-module" title="Permalink to this headline">¶</a></h2>
+<p>Old-style code will use functions from the <a class="reference internal" href="../string/index.html#module-string" title="string: Contains constants and classes for working with text."><tt class="xref py py-mod docutils literal"><span class="pre">string</span></tt></a> module, instead of methods of string objects.  There is an equivalent method for each function from the module, and use of the functions is deprecated for new code.</p>
+<p>Newer code may use a <tt class="docutils literal"><span class="pre">string.Template</span></tt> as a simple way to parameterize strings beyond the features of the string or unicode classes.  While not as feature-rich as templates defined by many of the web frameworks or extension modules available on PyPI, <tt class="docutils literal"><span class="pre">string.Template</span></tt> is a good middle ground for user-modifiable templates where dynamic values need to be inserted into otherwise static text.</p>
+</div>
+<div class="section" id="text-input">
+<h2>Text Input<a class="headerlink" href="#text-input" title="Permalink to this headline">¶</a></h2>
+<p>Reading from a file is easy enough, but if you&#8217;re writing a line-by-line filter the <a class="reference internal" href="../fileinput/index.html#module-fileinput" title="fileinput: Process lines from input streams."><tt class="xref py py-mod docutils literal"><span class="pre">fileinput</span></tt></a> module is even easier.  The fileinput API calls for you to iterate over the <tt class="docutils literal"><span class="pre">input()</span></tt> generator, processing each line as it is yielded.  The generator handles parsing command line arguments for file names, or falling back to reading directly from <tt class="docutils literal"><span class="pre">sys.stdin</span></tt>.  The result is a flexible tool your users can run directly on a file or as part of a pipeline.</p>
+</div>
+<div class="section" id="text-output">
+<h2>Text Output<a class="headerlink" href="#text-output" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference internal" href="../textwrap/index.html#module-textwrap" title="textwrap: Formatting text by adjusting where line breaks occur in a paragraph."><tt class="xref py py-mod docutils literal"><span class="pre">textwrap</span></tt></a> module includes tools for formatting text from paragraphs by limiting the width of output, adding indentation, and inserting line breaks to wrap lines consistently.</p>
+</div>
+<div class="section" id="comparing-values">
+<h2>Comparing Values<a class="headerlink" href="#comparing-values" title="Permalink to this headline">¶</a></h2>
+<p>The standard library includes two modules related to comparing text values beyond the built-in equality and sort comparison supported by string objects.  <a class="reference internal" href="../re/index.html#module-re" title="re: Searching within and changing text using formal patterns."><tt class="xref py py-mod docutils literal"><span class="pre">re</span></tt></a> provides a complete regular expression library, implemented largely in C for performance.  Regular expressions are well-suited for finding substrings within a larger data set, comparing strings against a pattern (rather than another fixed string), and mild parsing.</p>
+<p><a class="reference internal" href="../difflib/index.html#module-difflib" title="difflib: Compare sequences, especially lines of text."><tt class="xref py py-mod docutils literal"><span class="pre">difflib</span></tt></a>, on the other hand, shows you the actual differences between sequences of text in terms of the parts added, removed, or changed.  The output of the comparison functions in <a class="reference internal" href="../difflib/index.html#module-difflib" title="difflib: Compare sequences, especially lines of text."><tt class="xref py py-mod docutils literal"><span class="pre">difflib</span></tt></a> can be used to provide more detailed feedback to user about where changes occur in two inputs, how a document has changed over time, etc.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../builtins.html" title="Built-in Objects"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="file_access.html" title="File Access"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="index.html" >Features of the Standard Library</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright Doug Hellmann.
+      Last updated on Oct 24, 2010.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+
+    <br/><a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/88x31.png"/></a>
+    
+    </div>
+  </body>
+</html>

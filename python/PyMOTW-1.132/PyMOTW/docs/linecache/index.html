@@ -1,0 +1,302 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>linecache – Read text files efficiently &mdash; Python Module of the Week</title>
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.132',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="File and Directory Access" href="../file_access.html" />
+    <link rel="next" title="shutil – High-level file operations." href="../shutil/index.html" />
+    <link rel="prev" title="fnmatch – Compare filenames against Unix-style glob patterns." href="../fnmatch/index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../shutil/index.html" title="shutil – High-level file operations."
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../fnmatch/index.html" title="fnmatch – Compare filenames against Unix-style glob patterns."
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../file_access.html" accesskey="U">File and Directory Access</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">linecache &#8211; Read text files efficiently</a><ul>
+<li><a class="reference internal" href="#test-data">Test Data</a></li>
+<li><a class="reference internal" href="#reading-specific-lines">Reading Specific Lines</a></li>
+<li><a class="reference internal" href="#handling-blank-lines">Handling Blank Lines</a></li>
+<li><a class="reference internal" href="#error-handling">Error Handling</a></li>
+<li><a class="reference internal" href="#python-source">Python Source</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../fnmatch/index.html"
+                        title="previous chapter">fnmatch &#8211; Compare filenames against Unix-style glob patterns.</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../shutil/index.html"
+                        title="next chapter">shutil &#8211; High-level file operations.</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/linecache/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-linecache">
+<span id="linecache-read-text-files-efficiently"></span><h1>linecache &#8211; Read text files efficiently<a class="headerlink" href="#module-linecache" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Purpose:</th><td class="field-body">Retrieve lines of text from files or imported python modules, holding a cache of the results to make reading many lines from the same file more efficient.</td>
+</tr>
+<tr class="field"><th class="field-name">Python Version:</th><td class="field-body">1.4</td>
+</tr>
+</tbody>
+</table>
+<p>The linecache module is used extensively throughout the Python standard
+library when dealing with Python source files. The implementation of the cache
+simply holds the contents of files, parsed into separate lines, in a
+dictionary in memory. The API returns the requested line(s) by indexing into a
+list. The time savings is from (repeatedly) reading the file and parsing lines
+to find the one desired. This is especially useful when looking for multiple
+lines from the same file, such as when producing a traceback for an error
+report.</p>
+<div class="section" id="test-data">
+<h2>Test Data<a class="headerlink" href="#test-data" title="Permalink to this headline">¶</a></h2>
+<p>We will use some text produced by the Lorem Ipsum generator as sample input.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">tempfile</span>
+
+<span class="n">lorem</span> <span class="o">=</span> <span class="s">&#39;&#39;&#39;Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</span>
+<span class="s">Vivamus eget elit. In posuere mi non risus. Mauris id quam posuere</span>
+<span class="s">lectus sollicitudin varius. Praesent at mi. Nunc eu velit. Sed augue</span>
+<span class="s">massa, fermentum id, nonummy a, nonummy sit amet, ligula. Curabitur</span>
+<span class="s">eros pede, egestas at, ultricies ac, pellentesque eu, tellus. </span>
+
+<span class="s">Sed sed odio sed mi luctus mollis. Integer et nulla ac augue convallis</span>
+<span class="s">accumsan. Ut felis. Donec lectus sapien, elementum nec, condimentum ac,</span>
+<span class="s">interdum non, tellus. Aenean viverra, mauris vehicula semper porttitor,</span>
+<span class="s">ipsum odio consectetuer lorem, ac imperdiet eros odio a sapien. Nulla</span>
+<span class="s">mauris tellus, aliquam non, egestas a, nonummy et, erat. Vivamus</span>
+<span class="s">sagittis porttitor eros.&#39;&#39;&#39;</span>
+
+<span class="k">def</span> <span class="nf">make_tempfile</span><span class="p">():</span>
+    <span class="n">fd</span><span class="p">,</span> <span class="n">temp_file_name</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">mkstemp</span><span class="p">()</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">fd</span><span class="p">)</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">temp_file_name</span><span class="p">,</span> <span class="s">&#39;wt&#39;</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">lorem</span><span class="p">)</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">temp_file_name</span>
+
+<span class="k">def</span> <span class="nf">cleanup</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">unlink</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="reading-specific-lines">
+<h2>Reading Specific Lines<a class="headerlink" href="#reading-specific-lines" title="Permalink to this headline">¶</a></h2>
+<p>Reading the 5th line from the file is a simple one-liner.
+Notice that the line numbers in the linecache module start with 1, but if we
+split the string ourselves we start indexing the array from 0. We also need to
+strip the trailing newline from the value returned from the cache.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">linecache</span>
+<span class="kn">from</span> <span class="nn">linecache_data</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">filename</span> <span class="o">=</span> <span class="n">make_tempfile</span><span class="p">()</span>
+
+<span class="c"># Pick out the same line from source and cache.</span>
+<span class="c"># (Notice that linecache counts from 1)</span>
+<span class="k">print</span> <span class="s">&#39;SOURCE: &#39;</span><span class="p">,</span> <span class="n">lorem</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)[</span><span class="mi">4</span><span class="p">]</span>
+<span class="k">print</span> <span class="s">&#39;CACHE : &#39;</span><span class="p">,</span> <span class="n">linecache</span><span class="o">.</span><span class="n">getline</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span>
+
+<span class="n">cleanup</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><pre>$ python linecache_getline.py
+
+SOURCE:  eros pede, egestas at, ultricies ac, pellentesque eu, tellus.
+CACHE :  eros pede, egestas at, ultricies ac, pellentesque eu, tellus.</pre>
+</div>
+</div>
+<div class="section" id="handling-blank-lines">
+<h2>Handling Blank Lines<a class="headerlink" href="#handling-blank-lines" title="Permalink to this headline">¶</a></h2>
+<p>Next let&#8217;s see what happens if the line we want is empty:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">linecache</span>
+<span class="kn">from</span> <span class="nn">linecache_data</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">filename</span> <span class="o">=</span> <span class="n">make_tempfile</span><span class="p">()</span>
+
+<span class="c"># Blank lines include the newline</span>
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">BLANK : &quot;</span><span class="si">%s</span><span class="s">&quot;&#39;</span> <span class="o">%</span> <span class="n">linecache</span><span class="o">.</span><span class="n">getline</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+
+<span class="n">cleanup</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><pre>$ python linecache_empty_line.py
+
+
+BLANK : "
+"</pre>
+</div>
+</div>
+<div class="section" id="error-handling">
+<h2>Error Handling<a class="headerlink" href="#error-handling" title="Permalink to this headline">¶</a></h2>
+<p>If the requested line number falls out of the range of valid lines in the
+file, linecache returns an empty string.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">linecache</span>
+<span class="kn">from</span> <span class="nn">linecache_data</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">filename</span> <span class="o">=</span> <span class="n">make_tempfile</span><span class="p">()</span>
+
+<span class="c"># The cache always returns a string, and uses</span>
+<span class="c"># an empty string to indicate a line which does</span>
+<span class="c"># not exist.</span>
+<span class="n">not_there</span> <span class="o">=</span> <span class="n">linecache</span><span class="o">.</span><span class="n">getline</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">NOT THERE: &quot;</span><span class="si">%s</span><span class="s">&quot; includes </span><span class="si">%d</span><span class="s"> characters&#39;</span> <span class="o">%</span>  <span class="p">(</span><span class="n">not_there</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">not_there</span><span class="p">))</span>
+
+<span class="n">cleanup</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><pre>$ python linecache_out_of_range.py
+
+
+NOT THERE: "" includes 0 characters</pre>
+</div>
+<p>The module never raises an exception, even if the file does not exist:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">linecache</span>
+
+<span class="c"># Errors are even hidden if linecache cannot find the file</span>
+<span class="n">no_such_file</span> <span class="o">=</span> <span class="n">linecache</span><span class="o">.</span><span class="n">getline</span><span class="p">(</span><span class="s">&#39;this_file_does_not_exist.txt&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">NO FILE: &#39;</span><span class="p">,</span> <span class="n">no_such_file</span>
+</pre></div>
+</div>
+<div class="highlight-python"><pre>$ python linecache_missing_file.py
+
+
+NO FILE:</pre>
+</div>
+</div>
+<div class="section" id="python-source">
+<h2>Python Source<a class="headerlink" href="#python-source" title="Permalink to this headline">¶</a></h2>
+<p>Since <a class="reference internal" href="#module-linecache" title="linecache: Retrieve lines of text from files or imported python modules, holding a cache of the results to make reading many lines from the same file more efficient."><tt class="xref py py-mod docutils literal"><span class="pre">linecache</span></tt></a> is used so heavily when producing tracebacks,
+one of the key features is the ability to find Python source modules
+in the <a class="reference internal" href="../sys/imports.html#sys-path"><em>import path</em></a> by specifying the base name of
+the module. The cache population code in <a class="reference internal" href="#module-linecache" title="linecache: Retrieve lines of text from files or imported python modules, holding a cache of the results to make reading many lines from the same file more efficient."><tt class="xref py py-mod docutils literal"><span class="pre">linecache</span></tt></a> searches
+<tt class="docutils literal"><span class="pre">sys.path</span></tt> for the module if it cannot find the file directly.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">linecache</span>
+
+<span class="c"># Look for the linecache module, using</span>
+<span class="c"># the built in sys.path search.</span>
+<span class="n">module_line</span> <span class="o">=</span> <span class="n">linecache</span><span class="o">.</span><span class="n">getline</span><span class="p">(</span><span class="s">&#39;linecache.py&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">MODULE : &#39;</span><span class="p">,</span> <span class="n">module_line</span>
+</pre></div>
+</div>
+<div class="highlight-python"><pre>$ python linecache_path_search.py
+
+
+MODULE :  This is intended to read lines from modules imported -- hence if a filename</pre>
+</div>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://docs.python.org/library/linecache.html">linecache</a></dt>
+<dd>The standard library documentation for this module.</dd>
+<dt><a class="reference external" href="http://www.ipsum.com/">http://www.ipsum.com/</a></dt>
+<dd>Lorem Ipsum generator.</dd>
+<dt><a class="reference internal" href="../articles/file_access.html#article-file-access"><em>File Access</em></a></dt>
+<dd>Other tools for working with files.</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../shutil/index.html" title="shutil – High-level file operations."
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../fnmatch/index.html" title="fnmatch – Compare filenames against Unix-style glob patterns."
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../file_access.html" >File and Directory Access</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright Doug Hellmann.
+      Last updated on Oct 24, 2010.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+
+    <br/><a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/88x31.png"/></a>
+    
+    </div>
+  </body>
+</html>
