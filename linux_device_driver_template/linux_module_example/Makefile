@@ -56,7 +56,10 @@ endif
 #obj-m += kthread_hw_semaphore.o
 #obj-m += file_log.o
 #obj-m += cpuset.o
-obj-m += platform_driver_template.o
+#obj-m += platform_driver_template.o
+obj-m += kprobe_test.o
+obj-m += jprobe_test.o
+obj-m += kretprobe_test.o
 all: modules
 
 modules:
