@@ -1,0 +1,10 @@
+include distribute_setup.py
+include LICENSE.txt
+include ChangeLog
+include setup.py
+include README.txt
+include PyMOTW/tarfile/example.tar
+include PyMOTW/tarfile/bad_example.tar
+include PyMOTW/zipfile/example.zip
+include PyMOTW/zipfile/bad_example.zip
+recursive-include PyMOTW *.rst *.html *.txt *.css *.js *.png *.pot
