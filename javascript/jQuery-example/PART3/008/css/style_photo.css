@@ -1,0 +1,265 @@
+﻿@charset "UTF-8";
+/*
+style.css
+*/
+
+body {
+  position: relative;
+  font-size: 62.5%;
+  line-height: 1.8;
+  margin: 0;
+  background: url(../img/bg.jpg);
+}
+
+h1,h2,p,span,li {
+  font-family: 'Roboto Condensed', Arial, Helvetica, "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+  color: #000;
+}
+
+/* 連結動畫樣式 */
+a, a.btn {
+  text-decoration: none;
+  -webkit-transition: all 0.4s linear;
+  transition: all 0.4s linear;
+}
+
+
+/*內容區的設定*/
+.inner {
+  position: relative;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+
+/*頁首樣式飾*/
+#headerContainer {
+  position: fixed;
+  width: 100%;
+  min-height: 24px;
+  z-index: 1000;
+}
+
+/*網站logo樣式*/
+#siteID {
+  font-size: 1.8em;
+  font-weight: 700;
+  line-height: 1;
+  margin: 15px 0 0 15px;
+  padding: 0;
+  color: #000;
+}
+
+#siteID .small {
+  font-size: 0.75em;
+}
+
+/*頁尾樣式飾*/
+#footerContainer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  z-index: 1000;
+  width: 100%;
+  padding:  0.5em 0;
+  background: #000;
+}
+
+#copyright{
+  color: #fff;
+	text-align: center;
+  font-size: 1.4em;
+  margin: 0;
+}
+
+/*
+客製化樣式
+*/
+
+#contentContainer ul,
+#contentContainer li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+#galleryContainer {
+  position: relative;
+  width: 55%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+#galleryContainer .column {
+  position: relative;
+  width: 100%;
+}
+#galleryContainer .photo {
+  position: relative;
+  top: 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+#galleryContainer img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+#galleryContainer img[src="img/loader.gif"]{
+  width: 32px;
+  margin: 30% auto;
+}
+
+/* 從左側滑動顯示的區域*/
+#subContainer {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 500;
+  width: 200px;
+  height: 100%;
+  background-color: rgba( 255, 255, 255, 0.9);
+  -webkit-transition: left 0.4s ease-in-out;
+  transition: left 0.4s ease-in-out;
+  behavior: url(PIE.htc);
+}
+
+#mainNavigation {
+  /* 瀏覽列 */
+  position: relative;
+  top: 60px;
+}
+#mainNavigation li {
+  padding-top: 1px;
+  margin-bottom: 1px;
+  border-bottom: 1px dotted #ccc;
+}
+#mainNavigation a {
+  display: block;
+  font-size: 1.6em;
+  padding: 0.5em 1em;
+  overflow: hidden;
+  color: #666;
+
+  -webkit-transition: all 0.2s linear;
+  transition: all 0.2s linear;
+}
+#mainNavigation a:hover,
+#mainNavigation li.current a {
+  color: #000;
+  background: rgba( 255, 120, 0, 0.2);
+}
+
+/* 用CSS加上陰影 */
+
+.shadow {
+  position: relative;
+  background:#fff;
+  width: 100%;
+  padding:10px;
+  margin: 0 auto 40px;
+}
+.shadow:before{
+  z-index: -1;
+  position: absolute;
+  content:'';
+  bottom: 10px;
+  left: 10px;
+  width: 50%;
+  top: 80%;
+  max-width: 100%;
+  background: #8d8c8c;
+  -webkit-box-shadow: 0 15px 10px #8d8c8c;
+  -moz-box-shadow: 0 15px 10px #8d8c8c;
+  box-shadow: 0 15px 10px #8d8c8c;
+  -webkit-transform: rotate(-5deg);
+  -moz-transform: rotate(-5deg);
+  -o-transform: rotate(-5deg);
+  -ms-transform: rotate(-5deg);
+  transform: rotate(-5deg);
+  behavior: url(PIE.htc);
+}
+.shadow:after{
+  z-index: -1;
+  position: absolute;
+  content:'';
+  bottom: 10px;
+  right: 10px;
+  width: 50%;
+  top: 80%;
+  max-width: 100%;
+  background: #8d8c8c;
+  -webkit-box-shadow: 0 15px 10px #8d8c8c;
+  -moz-box-shadow: 0 15px 10px #8d8c8c;
+  box-shadow: 0 15px 10px #8d8c8c;
+  -webkit-transform: rotate(5deg);
+  -moz-transform: rotate(5deg);
+  -o-transform: rotate(5deg);
+  -ms-transform: rotate(5deg);
+  transform:rotate(5deg);
+  behavior: url(PIE.htc);
+}
+
+
+
+/*
+responsive styles
+*/
+
+@media only screen and (max-width: 1024px){
+  #galleryContainer {
+    width: 94%;
+    max-width: auto;
+  }
+}
+
+@media only screen and (max-height: 640px){
+  #mainNavigation li {
+    width: 49.7%;
+    float: left;
+    padding-top: 0;
+    margin-bottom: 0;
+    border-bottom: 1px dotted #ccc;
+  }
+  #mainNavigation li:nth-child(even){
+    border-left: 1px dotted #ccc;
+  }
+}
+
+@media only screen and (max-height: 320px) {
+  #footerContainer {
+    position: relative;
+  }
+  #galleryContainer {
+    width: 60%;
+    max-width: auto;
+  }
+  #galleryContainer .column {
+    width: 100%;
+    padding-top: 40px;
+  }
+}
+
+@media only screen and (max-width: 599px) {
+  #subContainer {
+    left: -300px;
+  }
+}
+
+@media only screen and (max-width:320px) {
+  #copyright {
+    text-align: center;
+  }
+  #galleryContainer {
+    width: 94%;
+    max-width: auto;
+  }
+}

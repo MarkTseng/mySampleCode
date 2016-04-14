@@ -1,0 +1,251 @@
+﻿@charset 'utf-8';
+/*
+style.css
+*/
+
+body {
+  position: relative;
+  font-size: 62.5%;
+  line-height: 1.8;
+  margin: 0;
+}
+
+h1,h2,p,span,li {
+  font-family: 'Roboto Condensed', Arial, Helvetica, "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+  color: #000;
+}
+
+  /*  link common animation  */
+a, a.btn {
+  text-decoration: none;
+  -webkit-transition: all 0.4s linear;
+  transition: all 0.4s linear;
+}
+
+/*content area*/
+.inner {
+  position: relative;
+  max-width: 960px;
+  min-width: 720px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+#wrapper {
+  width: 100%;
+}
+
+/*header area*/
+#headerContainer {
+  position: absolute;
+  z-index: 100;
+  width: 100%;
+  background:#000;
+  box-shadow:0px 3px 5px #999;
+
+}
+
+#headerTopicContainer {
+  position: relative;
+  background: #000;
+}
+#headerTopicContainer img {
+  display: block;
+  margin: 0 auto;
+  width: 100%;
+  height: auto;
+}
+
+/*site logo*/
+#siteID {
+  font-size: 3.0em;
+  color: #fff;
+  line-height: 1.1;
+  font-weight: 400;
+  margin: 0 0 0 8px;
+  padding: 12px 0 14px;
+}
+#siteID .small {
+  color: #fff;
+  font-size: 0.7em;
+}
+
+
+
+/*footer*/
+#footerContainer {
+  position: relative;
+  left: 0;
+  bottom: 0;
+  z-index: 100;
+  width: 100%;
+  background: #000;
+  padding: 12px 0;
+}
+
+#copyright{
+  color: #fff;
+  text-align: right;
+  font-size: 1.4em;
+  margin: 0;
+}
+
+/*
+custom style
+*/
+
+#contentContainer {
+  padding: 60px 0;
+}
+
+#contentContainer .contentTitle {
+  font-size: 3.2em;
+}
+
+.tabContainer {
+  width:100%;
+  font-size: 1.4em;
+  margin: 0 0 5em;
+}
+.tabContainer ul.controls,
+.tabContainer .controls li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.tabContainer .controls li {
+  display: inline-block;
+  word-wrap: break-word;
+}
+
+.tabContainer .controls li a {
+  display: block;
+  padding: 0.5em 1em;
+  background: #333;
+  color: #fff;
+  border-radius: 8px 8px 0 0 ;
+  behavior: url(PIE.htc);
+}
+.tabContainer .controls li.current a,
+.tabContainer .controls li a:hover {
+  color: #333;
+  background: #f0f0f0;
+}
+
+/* fixed tab */
+.tabContainer.tabWidthFixed .controls li {
+  width: 24%;
+}
+
+.tabContainer .tabContentsContainer>* {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 94%;
+  padding: 3%;
+}
+
+
+
+.post {
+  overflow: hidden;
+  background: #f0f0f0;
+}
+.post:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+.post .entry-contentContainer {
+  float: right;
+  width: 72%;
+}
+.post .entry-thumbnail {
+  float: left;
+  width: 25%;
+}
+.post .entry-thumbnail img {
+  width: 100%;
+  height: auto;
+}
+.post h1 {
+  margin: -0.15em 0 0.4em;
+  font-size: 2.8em;
+  line-height: 1.15;
+}
+.post p {
+  font-size: 1.4em;
+}
+
+
+@media only screen and (max-width:768px){
+  .inner {
+    max-width: 92%;
+    min-width: 92%;
+    width: 92%;
+  }
+  .tabContainer .controls li {
+    width: 24%;
+    overflow: hidden;
+  }
+  .tabContainer .controls li a {
+    padding: 1em 0.5em;
+    line-height: 1.2;
+  }
+  .tabContainer .tabContentsContainer {
+    border-radius: 0 0 8px 8px;
+    padding: 1em 1em 0;
+  }
+  .tabContainer .tabContentsContainer p {
+    font-size: 1.1em;
+    line-height: 1.8;
+  }
+
+  #headerContainer {
+    position: relative;
+  }
+  #siteID {
+    float: none;
+    text-align: center;
+  }
+  #navigation {
+    position: relative;
+  }
+  #navigation li {
+    width: 25%;
+    margin: 1px 0;
+  }
+  #navigation a {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  #navigation li:not(:first-child) a {
+    border-left: 1px solid #000;
+  }
+  #contentContainer {
+    padding: 20px 0 0;
+    margin-bottom: 40px;
+  }
+  .post {
+    width: 90%;
+    padding: 5% 0 2em;
+    margin: 0 auto 2em;
+  }
+  .post .entry-contentContainer {
+    float: none;;
+    width: 100%;
+  }
+  .post .entry-thumbnail {
+    float: none;
+    max-width: 320px;
+    width: 80%;
+    margin: 0 auto 2em;
+  }
+  .post h1 {
+    margin: 0 0 0.4em;
+    font-size: 2em;
+  }
+  .post p {
+    font-size: 1.4em;
+  }
+}

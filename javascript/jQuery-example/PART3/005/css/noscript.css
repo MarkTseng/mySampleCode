@@ -1,0 +1,28 @@
+﻿@charset 'utf-8';
+/*
+noscript.css
+
+Javascript無效時載入
+*/
+
+body {
+	overflow: auto;
+}
+
+#columnContainer .column {
+	position: relative;
+	width: 100%;
+}
+
+#columnContainer .column_mainContent {
+	position: relative;
+	left: 0;
+	width: 960px;
+	min-height: 600px;
+	margin: 0 auto;
+	padding: 60px 0;
+}
+
+#columnContainer .number {
+
+}

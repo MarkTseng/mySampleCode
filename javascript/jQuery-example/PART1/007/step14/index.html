@@ -1,0 +1,25 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="utf-8" />
+	<title>sample</title>
+	<link rel="stylesheet" href="style.css" type="text/css" />
+	<script type="text/javascript" src="jquery-1.10.2.min.js"></script>
+	<script type="text/javascript">
+		$(function () {
+			$(".thumb").hover(function () {
+				$("img", this).stop().animate({marginTop:"-300px"},"fast");
+			},function () {
+				$("img", this).stop().animate({marginTop:"0px"},"fast");
+			});
+		});
+	</script>
+</head>
+<body>
+	<div id="wrapper">
+		<div class="thumb">
+			<img src="images/img.jpg">
+		</div>
+	</div>
+</body>
+</html>

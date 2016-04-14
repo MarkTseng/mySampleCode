@@ -1,0 +1,33 @@
+* {
+	font-family:      'Lucida Grande', 'Hiragino Kaku Gothic ProN', 'ÉqÉâÉMÉmäpÉS ProN W3', Meiryo, 'ÉÅÉCÉäÉI', sans-serif;
+}
+html,
+body {
+  height: 100%;
+  /* background-color: #efefef; */
+}
+h1, h2, h3, h4, h5, h6 {
+	font-weight:      bold;
+}
+h1 {
+	font-size:        46px;
+	line-height:      50px;
+	margin-bottom:    14px;
+}
+
+.form-control {
+	color: #333;
+}
+/* 
+body {
+  color: #fff;
+  text-shadow: 0 1px 3px rgba(0,0,0,.5);
+  box-shadow: inset 0 0 100px rgba(0,0,0,.5);
+}
+.jumbotron {
+	color: #333;
+}
+form {
+	padding: 0.5em;
+}
+*/

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+<title>tubular plugin sample</title>
+<link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body id="page-tubular">
+<header>
+<div class="navbar navbar-inverse navbar-fixed-top">
+<div class="navbar-inner">
+<div class="navbar-content">
+<h1 id="site_id"><a href="#top"><img src="img/logo_html5.png" alt="HTML5でサイトをつくろう" title="HTML5でサイトをつくろう"></a></h1>
+<nav>
+<ul id="pageNavi" class="nav">
+
+<li class="dropdown blur-level-control">
+<a href="#" class="dropdown-slider" data-toggle="dropdown">Background Blur<b class="caret"></b></a>
+<ul class="dropdown-menu">
+<li>
+<div id="blur-level-container">
+<label for="blur-level">Blur level</label>
+<input type="text" id="blur-level" value="0">
+<div id="blur-level-slider"></div>
+</div>
+</li>
+</ul>
+</li>
+<li class="dropdown overlay-pattern">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown">Background Overlay<b class="caret"></b></a>
+<ul class="dropdown-menu">
+<li>
+<ul id="pattern-menu">
+<li><a class="pat1">overlay pattern01</a></li>
+<li><a class="pat2">overlay pattern02</a></li>
+<li><a class="pat3">overlay pattern03</a></li>
+<li><a class="pat4">overlay pattern04</a></li>
+<li><a class="pat5">overlay pattern05</a></li>
+<li><a class="pat6">overlay pattern06</a></li>
+<li><a class="pat7">overlay pattern07</a></li>
+<li><a class="pat8">overlay pattern08</a></li>
+<li><a class="pat9">overlay pattern09</a></li>
+<li><a class="pat10">overlay pattern10</a></li>
+<li><a class="pat11">overlay pattern11</a></li>
+<li><a class="pat12">overlay pattern12</a></li>
+<li><a class="pat13" title="No overlay">No overlay</a></li>
+</ul>
+</li>
+</ul>
+<li class="content-switch">
+<dl>
+<dt>Content Display</dt>
+<dd class="onoffswitch">
+<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="content-switch-trigger" checked>
+<label class="onoffswitch-label" for="content-switch-trigger">
+<div class="onoffswitch-inner"></div>
+<div class="onoffswitch-switch"></div>
+</label>
+</dd>
+</dl>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+</header>
+<section id="contentContainer">
+<article id="contentContainerInner">
+
+<section class="layoutColumn layout2column photo-left bgfade">
+<div class="description">
+<dl>
+<dt>クラゲについて</dt>
+<dd>クラゲ（水母、海月、水月）は、刺胞動物門に属する動物のうち、淡水または海水中に生息し浮遊生活をする種の総称。体がゼラチン質で、普通は触手を持って捕食生活をしている。また、それに似たものもそう呼ぶこともある。</dd>
+</dl>
+<dl>
+<dt>基本的特徴</dt>
+<dd>クラゲは、通常は浮遊生活をする刺胞動物である。体はゼラチン質で柔らかく、透明。体全体は、多くのものでは傘のような形をしている。多くの場合、傘の下面の中心部に口がある。ヒドロクラゲでは傘から柄が伸びてその先に口があるものや、口の周囲に触手が発達するものもある。鉢クラゲの旗口クラゲ類、根口クラゲ類では、口の縁が長く伸びて口腕となる。根口クラゲでは口腕が複雑化して口は口腕の先端部に小さな吸口として開口するだけで、中央の口は閉じてしまうものもある。肛門はない。多くの種類では傘の縁に触手がある。また、ヒドロクラゲ類では触手の付け根に眼点を持つものがあるほか、傘の縁に平衡胞を持つものもある。箱虫類、鉢クラゲ類では、傘の縁に感覚器があるが、平衡胞のみの場合と、眼点を有する場合がある。箱虫類では非常に発達した眼を持つ。</dd>
+</dl>
+<cite>
+【出典】<a href="http://ja.wikipedia.org/wiki/%E3%82%AF%E3%83%A9%E3%82%B2" target="_blank">クラゲ - Wikipedia</a>
+</cite>
+<cite>
+【写真】<a href="http://www.ashinari.com/2010/05/26-337059.php" target="_blank">写真素材 足成：ミズクラゲ</a>
+</cite>
+</div>
+<div class="photoContainer">
+<img src='img/aqualium/ph_03.jpg' alt="クラゲの写真">
+</div>
+</section>
+</article>
+</section>
+<!--/ contentContainer-->
+<footer id="footer">
+<address>Presented by jQuery Lab.</address>
+</footer>
+<script src="lib/modernizr.custom.js"></script>
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+<script src="lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="lib/jquery.tubular/js/jquery.tubular.1.0.js"></script>
+<script src="lib/jquery.foggy.min.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

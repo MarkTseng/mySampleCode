@@ -1,0 +1,10 @@
+﻿@charset 'utf-8';
+/*
+noscript.css
+
+Javascript無效時載入
+*/
+
+.column {
+  visibility: visible;
+}

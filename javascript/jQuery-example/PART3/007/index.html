@@ -1,0 +1,48 @@
+﻿<!DOCTYPE HTML>
+<html lang="ja-JP">
+<head>
+<meta charset="UTF-8">
+<title>scroll</title>
+<link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="css/scrollbg.css">
+<link rel="stylesheet" href="css/scrollspace.css">
+<script src="js/jquery.min.js"></script>
+<script src="js/scrollbg.js"></script>
+<script src="js/scrollspace.js"></script>
+<script>
+$(function(){
+	//背景圖片的捲動連動
+	$(".mod-scrollBg").scrollBg()
+
+	// 內容前後移動	
+	$("#circle-0").scrollSpace();
+	$("#circle-1").scrollSpace({ z: 0.1 });
+	$("#circle-2").scrollSpace({ z: 0.14 });
+	$("#circle-3").scrollSpace({ z: 0.16 });
+	$("#circle-4").scrollSpace({ z: 0.18 });
+	$("#circle-5").scrollSpace({ z: 0.20 });
+	$("#circle-6").scrollSpace({ z: 0.24 });
+	$("#circle-7").scrollSpace({ z: 0.3 });
+
+});
+</script>
+</head>
+<body>
+<div id="wrapper">
+	<div class="mod-scrollBg"></div>
+	<section id="circle-7"><img src="img/circle/7.png" alt="" /></section>
+	<section id="circle-6"><img src="img/circle/6.png" alt="" /></section>
+	<section id="circle-5"><img src="img/circle/5.png" alt="" /></section>
+	<section id="circle-4"><img src="img/circle/4.png" alt="" /></section>
+	<section id="circle-3"><img src="img/circle/3.png" alt="" /></section>
+	<section id="circle-2"><img src="img/circle/2.png" alt="" /></section>
+	<section id="circle-1"><img src="img/circle/1.png" alt="" /></section>
+	<section id="circle-0"><img src="img/circle/0.png" alt="" /></section>
+	<a href="#" class="mod-pagetop">top</a>
+	<footer>
+		<div class="left"><img src="img/footer-left.png" alt="" /></div>
+		<div class="right"><img src="img/footer-right.png" alt="" /></div>
+	</footer>
+</div>
+</body>
+</html>

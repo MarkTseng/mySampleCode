@@ -1,0 +1,115 @@
+#wrapper {
+  min-width: 100%;
+}
+
+/* slider (base)
+--------------------------------------------------------- */
+.slideFrame {
+  overflow: hidden;
+}
+
+.slideCell {
+  display: block;
+}
+
+.slideGuide .slideCell {
+  float: left;
+  margin-right: 5px;
+}
+.slideGuide.up .slideCell, .slideGuide.down .slideCell {
+  float: none;
+  margin-right: 0;
+  margin-bottom: 10px;
+}
+
+/* controller */
+.slideCtrl {
+  position: absolute;
+  background-color: #333;
+  background-color: rgba(255, 255, 255, 0.55);
+  color: #fff;
+  font-size: 12px;
+  font-weight: bold;
+  text-align: center;
+}
+.slideCtrl.left, .slideCtrl.right {
+  top: 0;
+  width: 90px;
+  height: 100%;
+}
+.slideCtrl.up, .slideCtrl.down {
+  left: 0;
+  width: 100%;
+  height: 60px;
+  font-size: 14px;
+  line-height: 60px;
+}
+
+.slideCtrl.left {
+  left: 0;
+}
+
+.slideCtrl.right {
+  right: 0;
+}
+
+.slideCtrl.up {
+  top: 0;
+}
+
+.slideCtrl.down {
+  bottom: 0;
+}
+
+/* slider-0
+--------------------------------------------------------- */
+#slider-0.slideFrame .slideCell {
+  width: 300px;
+  height: 420px;
+  padding: 20px;
+}
+
+/* slider-1
+--------------------------------------------------------- */
+#slider-1.slideFrame {
+  position: relative;
+  height: 164px;
+  margin-left: 220px;
+  margin-top: 10px;
+}
+#slider-1.slideFrame .slideCell {
+  height: 122px;
+  padding: 20px;
+  background-color: #000;
+}
+#slider-1.slideFrame .slideCell:hover {
+  background-color: #505050;
+}
+#slider-1.slideFrame .slideCtrl {
+  padding-top: 80px;
+  color: #000;
+}
+
+/* おまけ
+--------------------------------------------------------- */
+body {
+  background: -webkit-gradient(linear, 0% 50%, 220 50%, color-stop(100%, #000000), color-stop(100%, #303030));
+  background: -webkit-linear-gradient(left, #000000 220px, #303030 220px);
+  background: -moz-linear-gradient(left, #000000 220px, #303030 220px);
+  background: -o-linear-gradient(left, #000000 220px, #303030 220px);
+  background: linear-gradient(left, #000000 220px, #303030 220px);
+}
+
+section:before,
+#slider-1.slideFrame:before {
+  content: "";
+  position: absolute;
+  margin-left: -2px;
+  width: 280px;
+  height: 100%;
+  background: -webkit-gradient(linear, 0% 50%, 100% 50%, color-stop(0%, #000000), color-stop(100%, rgba(0, 0, 0, 0)));
+  background: -webkit-linear-gradient(left, #000000, rgba(0, 0, 0, 0));
+  background: -moz-linear-gradient(left, #000000, rgba(0, 0, 0, 0));
+  background: -o-linear-gradient(left, #000000, rgba(0, 0, 0, 0));
+  background: linear-gradient(left, #000000, rgba(0, 0, 0, 0));
+}

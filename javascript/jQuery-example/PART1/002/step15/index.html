@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8" />
+    <title>sample</title>
+    <link rel="stylesheet" href="style.css" type="text/css" />
+    <script type="text/javascript" src="jquery-1.10.2.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#nav li ul").hide();
+            $("#nav li").hover(function () {
+                $(">ul:not(:animated)", this).slideDown("fast");
+            }, function () {
+                $(">ul", this).slideUp("fast");
+            });
+        });
+    </script>
+</head>
+<body>
+    <div id="wrapper">
+        <div id="nav">
+            <ul>
+                <li class="color-blue"><a href="#">Tableware</a>
+                    <ul class="subs">
+                        <li><a href="#">日式餐具</a>
+                            <ul>
+                                <li><a href="test.html">飯碗</a></li>
+                                <li><a href="test.html">湯碗</a></li>
+                                <li><a href="test.html">碟子·盆</a></li>
+                                <li><a href="test.html">茶碗</a></li>
+                                <li><a href="test.html">小茶壺</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="test.html">西餐餐具</a></li>
+                        <li><a href="#">玻璃餐具</a>
+                            <ul>
+                                <li><a href="test.html">玻璃酒杯·大玻璃杯</a></li>
+                                <li><a href="test.html">葡萄酒杯</a></li>
+                                <li><a href="test.html">日本酒·燒酒玻璃酒杯</a></li>
+                                <li><a href="test.html">碟子·盆</a></li>
+                                <li><a href="test.html">盤</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="test.html">餐具</a></li>
+                    </ul>
+                </li>
+                <li class="color-red"><a href="#">Cooking</a>
+                    <ul class="subs">
+                        <li><a href="test.html">鍋·煎鍋</a></li>
+                        <li><a href="#">烹飪器具</a>
+                            <ul>
+                                <li><a href="test.html">菜刀·刀</a></li>
+                                <li><a href="test.html">案板</a></li>
+                                <li><a href="test.html">碗</a></li>
+                                <li><a href="test.html">廚房用品</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="test.html">小東西·收納</a></li>
+                    </ul>
+                </li>
+                <li class="color-yellow"><a href="#">Kitchen fabric</a>
+                    <ul class="subs">
+                        <li><a href="test.html">圍裙</a></li>
+                        <li><a href="#">餐桌布藝</a>
+                            <ul>
+                                <li><a href="test.html">桌布</a></li>
+                                <li><a href="test.html">台心布</a></li>
+                                <li><a href="test.html">墊布</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="test.html">廚房毛巾</a></li>
+                    </ul>
+                </li>
+                <li class="color-green"><a href="#">Catalog</a>
+                    <ul class="subs last">
+                        <li><a href="test.html">Tableware 目錄</a></li>
+                        <li><a href="#">Cooking 目錄</a>
+                            <ul>
+                                <li><a href="test.html">鍋·煎鍋</a></li>
+                                <li><a href="test.html">烹飪器具</a></li>
+                                <li><a href="test.html">小東西·收納</a></li>
+                                <li><a href="test.html">廚房用品</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="test.html">Table linen 目錄</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

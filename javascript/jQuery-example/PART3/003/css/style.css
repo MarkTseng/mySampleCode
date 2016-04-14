@@ -1,0 +1,180 @@
+﻿@charset "utf-8";
+
+/*
+style.css
+*/
+
+html {
+  height: 100%;
+}
+body {
+  position: relative;
+  font-size: 62.5%;
+  line-height: 1.8;
+  margin: 0;
+}
+
+h1,h2,h3,p,span,li,a,dt,dd {
+  font-family: 'Roboto Condensed', Arial, Helvetica, "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+  color: #000;
+}
+
+  /*  link common animation  */
+a, a.btn {
+  text-decoration: none;
+  -webkit-transition: all 0.4s linear;
+  transition: all 0.4s linear;
+}
+
+/*content area*/
+.inner {
+  position: relative;
+  min-width: 720px;
+  width: 950px;
+  margin-left: auto;
+  margin-right: auto;
+}
+#wrapper {
+  width: 100%;
+}
+
+/*header area*/
+#headerContainer {
+  position: absolute;
+  z-index: 100;
+  width: 100%;
+  background: rgba( 0, 0, 0, 0.8);
+  box-shadow:0px 3px 5px #999;
+  behavior: url(PIE.htc);
+}
+
+#headerTopicContainer {
+  position: relative;
+  background: #000;
+}
+#headerTopicContainer img {
+  display: block;
+  margin: 0 auto;
+  width: 100%;
+  height: auto;
+}
+
+/*site logo*/
+#siteID {
+  font-size: 3.0em;
+  color: #fff;
+  line-height: 1.1;
+  font-weight: 400;
+  margin: 0 0 0 8px;
+  padding: 12px 0 14px;
+}
+#siteID .small {
+  color: #fff;
+  font-size: 0.7em;
+}
+
+/*footer style*/
+#footerContainer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  z-index: 100;
+  width: 100%;
+  background: #000;
+  padding: 12px 0;
+  behavior: url(PIE.htc);
+}
+
+#copyright{
+  color: #fff;
+  text-align: right;
+  font-size: 1.4em;
+  margin: 0;
+}
+
+/*
+custom style
+*/
+
+#contentContainer {
+  padding: 60px 0;
+}
+
+/* animation */
+#animationContainer{
+  background: #ccc;
+  padding: 5px 0;
+}
+
+#animationContents{
+  width: 950px;
+  height: 400px;
+  margin: 0 auto;
+  background: url(../img/loading.gif) no-repeat center center #fff;
+}
+
+#animation{
+  width: 950px;
+  height: 400px;
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+  background: url(../img/bg_animation.gif) no-repeat 0 0 #fff;
+}
+
+#animation #frame01,
+#animation #frame02,
+#animation #frame03,
+#animation #frame04,
+#animation #frame09{
+  display: none;
+}
+
+#animation div{
+  position: absolute;
+}
+
+#animation #frame01{
+  top: 30px;
+  left: 25px;
+}
+#animation #frame02{
+  top: 90px;
+  left: 35px;
+}
+#animation #frame03{
+  top: 145px;
+  left: 45px;
+  width:300px;
+}
+#animation #frame04{
+  top: 300px;
+  left: 40px;
+}
+#animation #frame05{
+  bottom: -110px;
+  left: 330px;
+}
+#animation #frame06{
+  top: 65px;
+  right: -240px;
+}
+#animation #frame07{
+  top: 40px;
+  right: -240px;
+}
+#animation #frame08{
+  top: 15px;
+  right: -240px;
+}
+#animation #frame09{
+  top: 0;
+  right: 0;
+}
+#animation #skip{
+  width: 51px;
+  height: 20px;
+  position: absolute;
+  right: 25px;
+  bottom: 15px;
+}

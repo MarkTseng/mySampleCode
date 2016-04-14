@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="ja-jp">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>接案我最行!jQuery商業範例必殺技</title>
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto+Condensed:400,300,700">
+<link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.1/css/font-awesome.css" rel="stylesheet">
+<link rel="stylesheet" href="css/normalize.css">
+<link rel="stylesheet" href="css/style.css">
+<!--[if lte IE 8]>
+<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js">
+</script><![endif]-->
+</head>
+<body>
+<div id="wrapper">
+
+<header id="headerContainer">
+<div class="inner">
+<h1 id="siteID">jQuery <span class="small">DESIGN METHOD</span></h1>
+</div>
+</header>
+<!--/headerContainer -->
+
+<section id="contentContainer" class="inner">
+
+<h1 class="contentTitle">Original Tooltip Samples</h1>
+
+<section id="tooltipSample1" class="tipsSampleContainer">
+<h2 class="contentTitle">Sample1　設定title屬性<br>(title屬性不移除)
+</h2>
+
+<div id="case_slider" class="caseSeparate">
+<h3 class="contentTitle">設定左右的連結按鈕</h3>
+<div class="sliderContainer">
+<ul>
+<li><img src="img/slider/01.jpg" alt=""></li>
+<li><img src="img/slider/02.jpg" alt=""></li>
+<li><img src="img/slider/03.jpg" alt=""></li>
+</ul>
+</div>
+<!-- slideContainer -->
+
+<ul class="controls">
+<li class="icon icon_left"><a href="#" title="看前一張幻燈片"><i class="fa fa-arrow-left"></i><span>看前一張幻燈片</span></a></li>
+<li class="icon icon_right"><a href="#" title="看後一張幻燈片"><i class="fa fa-arrow-right"></i><span>看後一張幻燈片</span></a></li>
+</ul>
+</div>
+<!--/ case_icons -->
+
+<div id="case_form" class="caseSeparate">
+<h3 class="contentTitle">做為表單輸入提示使用</h3>
+<form id="dummy_form">
+<dl>
+<dt><label for="name">Name</label></dt>
+<dd><input type="text" id="name" name="name" title="請用羅馬拼音輸入名字" data-tips-pos="mr"></label></dd>
+</dl>
+<dl>
+<dt><label for="email">E-mail</label></dt>
+<dd><input type="text" id="email" name="email" title="請輸入Email" data-tips-pos="mr"></label></dd>
+</dl>
+<dl>
+<dt><label for="inquiry">Inquiry</label></dt>
+<dd><textarea id="inquiry" name="inquiry" title="請輸入要詢問的問題" data-tips-pos="mr"></textarea></dd>
+</dl>
+<p class="submitBtn"><a href="#" id="btn_submit" name="submit" title="導頁至輸入內容的確認畫面" data-tips-pos="tc">輸入內容確認</a></p>
+</form>
+</div>
+<!--/ case_form -->
+
+</section>
+<!--/ tooltipSample1 -->
+
+</section>
+<!--/contentContainer -->
+
+<footer id="footerContainer">
+<div class="inner">
+<p id="copyright">Copyright&copy; jQuery Design Method All Rights Reserved.</p>
+</div>
+</footer>
+<!-- /footer -->
+
+</div>
+<!--/wrapper -->
+
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script src="js/script_title_attr.js"></script>
+
+<script>
+    // 展示用的幻燈片效果程式，沒有此段程式仍不影響tips的動作
+$(function(){
+
+	var mySlider = {
+		cnt: $('.sliderContainer'),
+		mover: $('.sliderContainer ul')
+	};
+
+	mySlider.mover.width( mySlider.mover.children().length * mySlider.cnt.width() );
+
+	$('.controls li').on('click', function(e){
+		if(typeof e.preventDefault() !== undefined) {
+			e.preventDefault();
+		}
+		var _dir = -1 + 2 * ($(this).index()),
+		_cnt = mySlider.cnt,
+		_mover = mySlider.mover,
+		_len = _mover.children().length - 1,
+		_w = -(_cnt.width()),
+		_max = _w * _len,
+		_cur = $.data(_cnt, 'current') || 0,
+		_next = (_cur + _dir) < 0 ? 0 : (_cur + _dir) > _len ? _len : (_cur + _dir);
+		$.data(_cnt, 'current', _next);
+		_mover.css('left', _w * _next);
+	});
+
+});
+
+</script>
+</body>
+</html>

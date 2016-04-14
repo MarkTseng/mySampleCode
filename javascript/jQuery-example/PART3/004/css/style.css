@@ -1,0 +1,259 @@
+﻿@charset 'utf-8';
+/*
+style.css
+*/
+
+body {
+  position: relative;
+  font-size: 62.5%;
+  line-height: 1.8;
+  margin: 0;
+  background: #000;
+}
+
+h1,h2,p,span,li,a {
+  font-family: 'Roboto Condensed', Arial, Helvetica, "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+  color: #000;
+}
+
+  /*  link common animation  */
+a, a.btn {
+  text-decoration: none;
+  -webkit-transition: all 0.4s linear;
+  transition: all 0.4s linear;
+}
+
+/*content area*/
+.inner {
+  position: relative;
+  max-width: 1080px;
+  min-width: 720px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+#wrapper {
+  width: 100%;
+}
+
+/*header area*/
+#headerContainer {
+  position: fixed;
+  z-index: 1000;
+  width: 100%;
+  background: rgba( 0, 0, 0, 0.8);
+  behavior: url(PIE.htc);
+}
+
+#headerTopicContainer {
+  position: relative;
+  background: #000;
+}
+#headerTopicContainer img {
+  display: block;
+  margin: 0 auto;
+  width: 100%;
+  height: auto;
+}
+
+/*site logo*/
+#siteID {
+  font-size: 3.0em;
+  line-height: 1.1;
+  font-weight: 400;
+  margin: 0 0 0 8px;
+  padding: 12px 0 14px;
+}
+#siteID a {
+  color: #fff;
+}
+#siteID .small {
+  color: #fff;
+  font-size: 0.7em;
+}
+
+/*nav style*/
+#navigation {
+  position: absolute;
+  right: 0;
+  top: 0;
+  overflow: hidden;
+  z-index: 10;
+}
+#navigation ul,
+#navigation li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+#navigation li {
+  float: left;
+  margin: 1px 0 0 1px;
+}
+#navigation a {
+  display: block;
+  color: #fff;
+  font-size: 1.6em;
+  line-height: 1;
+  text-align: center;
+  padding: 20px 2em 21px;
+  background: rgba( 255, 255, 255, 0.1);
+}
+#navigation a:hover {
+  color: #333;
+  background: rgba( 255, 255, 255, 0.8);
+}
+
+/*footer style*/
+#footerContainer {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+  height: 52px;
+  background: #000;
+  padding: 12px 0;
+  behavior: url(PIE.htc);
+}
+
+#copyright{
+  color: #fff;
+  text-align: right;
+  font-size: 1.4em;
+  margin: 0;
+}
+
+
+/*
+layout
+*/
+
+#slide1 {
+    top: 0;
+}
+
+.parallax {
+	display: block;
+	position: fixed;
+	top: 120%;
+	left: 0%;
+      z-index: 100;
+	width: 100%;
+	height: 100%;
+	opacity: 1;
+	text-align: center;
+	background: #000;
+}
+
+/*
+slideContent basic style
+*/
+
+.slideContent {
+	position: relative;
+	left: 0; top: 0;
+	width: 61.8%;
+	min-height: 860px;
+	margin: 0 auto;
+	padding: 100px 0 0;
+	font-size: 1.6em;
+	line-height: 1.7;
+}
+.slideContent:after {
+	content: "";
+	display: block;
+	clear: both;
+}
+.slideContent h2 {
+  font-size: 3em;
+	padding: 0 0 0.1em; margin: 0;
+	font-weight: normal;
+	color: #ddd;
+}
+.slideContent .meta {
+	font-size: 1.6em;
+	padding-left: 0.2em;
+	color: #ddd;
+}
+.slideContent header {
+	margin-bottom: 2em;
+}
+
+.descriptionContainer {
+	float: right;
+	width: 46%;
+	text-align: left;
+	margin: 0 0 0 8%;
+  color: #ccc;
+}
+.descriptionContainer blockquote,
+.descriptionContainer p {
+	margin-bottom: 1em;
+}
+.descriptionContainer dl {
+	margin: 0 0 2em;
+}
+.descriptionContainer dt {
+	color: #ccc;
+}
+.descriptionContainer dd {
+	margin: 0; padding: 0;
+}
+
+.photoContainer {
+	float: right;
+	width: 46%;
+}
+h2.photoContainer.whole {
+	float: none;
+	width: auto;
+	margin: 0;
+	text-align: center;
+}
+h2.photoContainer.whole img {
+  width: 100%;
+}
+.photoContainer img.photo {
+	border: 6px solid rgb( 32, 32, 32);
+}
+.photoContainer.whole img.photo {
+	border-width: 0;
+}
+
+/* pagerNavi */
+
+#pagerNavi {
+	position: fixed;
+	right: 4em;
+	bottom: 4rem;
+	z-index: 1000;
+}
+#pagerNavi p {
+	margin: 0 0 4px;
+}
+#pagerNavi a.button {
+	display: block;;
+	padding: 4px 10px;
+	margin: 0;
+	font-size: 1.4em;
+	color: #fff;
+  border: 1px solid rgb( 64, 64, 64);
+	background: rgb( 32, 32, 32);
+	opacity: 0.6;
+	cursor: pointer;
+
+	transition: opacity 0.4s linear;
+	-webkit-transition: opacity 0.4s linear;
+	-moz-transition: opacity 0.4s linear;
+	-o-transition: opacity 0.4s linear;
+	-ms-transition: opacity 0.4s linear;
+}
+#pagerNavi a.button i {
+	display: inline-block;
+	margin-top: 0;
+	line-height: 1;
+}
+#pagerNavi a.button:hover {
+	opacity: 1;
+}

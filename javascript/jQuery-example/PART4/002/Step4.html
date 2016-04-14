@@ -1,0 +1,99 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>好用的表單</title>
+		<meta name="author"      content="Toshiya TSURU @ SunBusiness, Inc.">
+		<meta name="viewport"    content="width=device-width, initial-scale=1">
+		<!-- Bootstrap -->
+		<link href="css/bootstrap.min.css" rel="stylesheet">
+		<link href="css/style.css"         rel="stylesheet">
+		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		<!--[if lt IE 9]>
+			<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+			<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+		<![endif]-->
+	</head>
+	<body>
+		
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-offset-3 span9">
+					<h1>聯絡我們表單</h1>
+					<hr/>
+				</div>
+			</div>
+		</div>
+		
+		<div class="container">
+			<div class="row">
+				<div class="span12">
+					<form class="form-horizontal" role="form" id="form" >
+						
+						<div class="form-group">
+							<label for="last_name" class="col-sm-3 control-label">姓</label>
+							<div class="col-sm-3 controls">
+								<input type="text" id="last_name" name="last_name" placeholder="山田" class="form-control" >
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label for="first_name" class="col-sm-3 control-label">名</label>
+							<div class="col-sm-3 controls">
+								<input type="text" id="first_name" name="first_name" placeholder="太郎" class="form-control" >
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label for="email" class="col-sm-3 control-label">電子郵件</label>
+							<div class="col-sm-4 controls">
+								<input type="email" id="email" name="email" placeholder="email@email.co.jp" maxlength="255" class="form-control">
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label for="zip" class="col-sm-3 control-label">郵遞區號</label>
+							<div class="col-sm-2 controls">
+								<input type="text" id="zip" name="zip" placeholder="101-0001" maxlength="8" class="form-control">
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label for="pref" class="col-sm-3 control-label">都道府縣</label>
+							<div class="col-sm-3 controls">
+								<input type="text" id="pref" name="pref" placeholder="東京都" class="form-control">
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label for="addr" class="col-sm-3 control-label">住所</label>
+							<div class="col-sm-6 controls">
+                                <input type="text" id="addr" name="addr" placeholder="港區芝1-10-11" class="form-control">
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label for="content" class="col-sm-3 control-label">詢問內容</label>
+							<div class="col-sm-6 controls">
+                                <textarea class="form-control" rows="7" id="content" name="content" placeholder="請輸入1,000 字以内"></textarea>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<div class="col-sm-offset-3 col-sm-6">
+								<button type="submit" class="btn btn-primary btn-lg btn-block">送出</button>
+							</div>
+						</div>
+						
+					</form>
+				</div>
+			</div>
+		</div>
+		<!-- jQuery -->
+		<script src="js/jquery-1.11.0.min.js"></script>
+		<!-- Bootstrap --> 
+		<script src="js/bootstrap.min.js"></script>
+	</body>
+</html>

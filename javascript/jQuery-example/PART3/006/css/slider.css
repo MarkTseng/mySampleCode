@@ -1,0 +1,116 @@
+/* slider (base)
+--------------------------------------------------------- */
+.slideFrame {
+  overflow: hidden;
+  width: 100%;
+  height: 100px;
+}
+
+.slideCell {
+  display: block;
+}
+
+.slideGuide .slideCell {
+  float: left;
+  margin-right: 5px;
+}
+.slideGuide.up .slideCell, .slideGuide.down .slideCell {
+  float: none;
+  margin-right: 0;
+  margin-bottom: 10px;
+}
+
+/* controller */
+.slideCtrl {
+  position: absolute;
+  background-color: #333;
+  background-color: rgba(255, 255, 255, 0.55);
+  color: #fff;
+  font-size: 12px;
+  font-weight: bold;
+  text-align: center;
+}
+.slideCtrl.left, .slideCtrl.right {
+  top: 0;
+  width: 90px;
+  height: 100%;
+}
+.slideCtrl.up, .slideCtrl.down {
+  left: 0;
+  width: 100%;
+  height: 60px;
+  font-size: 14px;
+  line-height: 60px;
+}
+
+.slideCtrl.left {
+  left: 0;
+}
+
+.slideCtrl.right {
+  right: 0;
+}
+
+.slideCtrl.up {
+  top: 0;
+}
+
+.slideCtrl.down {
+  bottom: 0;
+}
+
+/* slider-0
+--------------------------------------------------------- */
+#slider-0.slideFrame {
+  float: left;
+  width: 342px;
+}
+#slider-0.slideFrame .slideCell {
+  width: 300px;
+  padding: 20px;
+}
+
+/* slider-1
+--------------------------------------------------------- */
+#slider-1.slideFrame {
+  position: relative;
+  float: left;
+  width: 164px;
+  margin-left: 10px;
+}
+#slider-1.slideFrame .slideCell {
+  width: 122px;
+  padding: 20px;
+  background-color: #000;
+}
+#slider-1.slideFrame .slideCell:hover {
+  background-color: #505050;
+}
+
+/* slider-2
+--------------------------------------------------------- */
+#slider-2.slideFrame {
+  position: relative;
+  float: left;
+  width: 102px;
+  margin-left: 10px;
+}
+#slider-2.slideFrame .slideCell {
+  width: 60px;
+  padding: 20px;
+}
+
+/* slider-3
+--------------------------------------------------------- */
+#slider-3.slideFrame {
+  float: right;
+  width: 265px;
+  margin-left: 10px;
+}
+#slider-3.slideFrame .cell-other {
+  width: 263px;
+  margin-bottom: 10px;
+}
+#slider-3.slideFrame .cell-other img {
+  display: block;
+}

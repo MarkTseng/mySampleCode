@@ -1,0 +1,87 @@
+/* scrollSpace
+--------------------------------------------------------- */
+#circle-0, #circle-1, #circle-2, #circle-3, #circle-4, #circle-5, #circle-6, #circle-7 {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+}
+
+#circle-0 {
+  margin-left: -223px;
+  margin-top: 109px;
+  -webkit-transform-origin: 223px -109px;
+  -moz-transform-origin: 223px -109px;
+  -ms-transform-origin: 223px -109px;
+  -o-transform-origin: 223px -109px;
+  transform-origin: 223px -109px;
+}
+
+#circle-1 {
+  margin-left: -409px;
+  margin-top: -142px;
+  -webkit-transform-origin: 409px 142px;
+  -moz-transform-origin: 409px 142px;
+  -ms-transform-origin: 409px 142px;
+  -o-transform-origin: 409px 142px;
+  transform-origin: 409px 142px;
+}
+
+#circle-2 {
+  margin-left: -580px;
+  margin-top: -326px;
+  -webkit-transform-origin: 580px 326px;
+  -moz-transform-origin: 580px 326px;
+  -ms-transform-origin: 580px 326px;
+  -o-transform-origin: 580px 326px;
+  transform-origin: 580px 326px;
+}
+
+#circle-3 {
+  margin-left: -51px;
+  margin-top: -34px;
+  -webkit-transform-origin: 51px 34px;
+  -moz-transform-origin: 51px 34px;
+  -ms-transform-origin: 51px 34px;
+  -o-transform-origin: 51px 34px;
+  transform-origin: 51px 34px;
+}
+
+#circle-4 {
+  margin-left: 197px;
+  margin-top: -147px;
+  -webkit-transform-origin: -197px 147px;
+  -moz-transform-origin: -197px 147px;
+  -ms-transform-origin: -197px 147px;
+  -o-transform-origin: -197px 147px;
+  transform-origin: -197px 147px;
+}
+
+#circle-5 {
+  margin-left: -90px;
+  margin-top: -312px;
+  -webkit-transform-origin: 90px 312px;
+  -moz-transform-origin: 90px 312px;
+  -ms-transform-origin: 90px 312px;
+  -o-transform-origin: 90px 312px;
+  transform-origin: 90px 312px;
+}
+
+#circle-6 {
+  margin-left: 224px;
+  margin-top: -430px;
+  -webkit-transform-origin: -224px 430px;
+  -moz-transform-origin: -224px 430px;
+  -ms-transform-origin: -224px 430px;
+  -o-transform-origin: -224px 430px;
+  transform-origin: -224px 430px;
+}
+
+#circle-7 {
+  margin-left: -341px;
+  margin-top: -427px;
+  -webkit-transform-origin: 341px 427px;
+  -moz-transform-origin: 341px 427px;
+  -ms-transform-origin: 341px 427px;
+  -o-transform-origin: 341px 427px;
+  transform-origin: 341px 427px;
+}

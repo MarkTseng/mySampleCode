@@ -1,0 +1,197 @@
+﻿@charset "UTF-8";
+/*
+style.css
+*/
+
+body {
+  position: relative;
+  font-size: 62.5%;
+  line-height: 1.8;
+  margin: 0;
+  background-color: #000;
+}
+
+h1,h2,p,span,li {
+  font-family: 'Roboto Condensed', Arial, Helvetica, "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+  color: #000;
+}
+
+/* 連結動畫樣式 */
+a, a.btn {
+  text-decoration: none;
+  -webkit-transition: all 0.4s linear;
+  transition: all 0.4s linear;
+}
+
+
+/*內容區的設定*/
+.inner {
+  position: relative;
+  width: 60%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+
+/*頁首樣式*/
+#headerContainer {
+  position: fixed;
+  width: 100%;
+  min-height: 24px;
+  z-index: 1000;
+}
+
+/*網站logo樣式*/
+#siteID {
+  font-size: 1.8em;
+  font-weight: 700;
+  line-height: 1;
+  margin: 15px 0 0 20px;
+  padding: 0;
+  color: #000;
+}
+
+#siteID .small {
+  font-size: 0.75em;
+}
+
+/*頁尾樣式*/
+#footerContainer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  z-index: 1000;
+  width: 100%;
+  padding:  0.5em 0;
+  background: #000;
+}
+
+#copyright{
+  color: #fff;
+	text-align: center;
+  font-size: 1.4em;
+  margin: 0;
+}
+
+/*
+客製化樣式
+*/
+
+#contentContainer {
+  width: 100%;
+}
+#contentContainer ul,
+#contentContainer li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+#columnContainer .column {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+#columnContainer p.number {
+  position: absolute;
+  font-size: 60em;
+  color: #fff;
+  font-weight: bold;
+  line-height: 1;
+  margin: 0;
+  padding: 0;
+}
+
+/* 各欄位背景色 */
+
+#column1 {
+  background-color: #f1c40f;
+}
+#column2 {
+  background-color: #e67e22;
+}
+#column3 {
+  background-color: #2980b9;
+}
+#column4 {
+  background-color: #e74c3c;
+}
+#column5 {
+  background-color: #27ae60;
+}
+#column6 {
+  background-color: #8e44ad;
+}
+
+#subContainer {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 500;
+  width: 260px;
+  height: 100%;
+  background-color: rgba( 255, 255, 255, 0.9);
+  -webkit-transition: all 0.4s ease-in-out;
+  transition: all 0.4s ease-in-out;
+  behavior: url(PIE.htc);
+}
+
+#mainNavigation {
+  /* 瀏覽列 */
+  position: relative;
+  top: 60px;
+}
+#mainNavigation .separate.top {
+  border-top: 1px dotted #ccc;
+}
+#mainNavigation li {
+  padding-top: 1px;
+  margin-bottom: 1px;
+  border-bottom: 1px dotted #ccc;
+}
+#mainNavigation a {
+  display: block;
+  font-size: 1.6em;
+  padding: 0.8em 1em;
+  overflow: hidden;
+  color: #666;
+
+  -webkit-transition: all 0.2s linear;
+  transition: all 0.2s linear;
+}
+#mainNavigation a:hover,
+#mainNavigation li.current a {
+  color: #000;
+  background: rgba( 255, 120, 0, 0.2);
+}
+
+
+/*
+responsive styles
+*/
+
+
+@media only screen and (max-width: 599px) {
+  #columnContainer p.number {
+    font-size: 30em;
+  }
+  #subContainer {
+    left: -300px;
+  }
+}
+
+@media only screen and (max-width:320px) {
+  #copyright {
+    font-size: 1.2em;
+    text-align: center;
+  }
+}

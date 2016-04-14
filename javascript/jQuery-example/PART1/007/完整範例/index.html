@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="utf-8" />
+	<title>sample</title>
+	<link rel="stylesheet" href="style.css" type="text/css" />
+	<script type="text/javascript" src="jquery-1.10.2.min.js"></script>
+	<script type="text/javascript">
+		$(function () {
+			//為了將各效果於單一頁面顯示，因此要調整類別名稱
+			//第一個效果（類別名稱'thumb1'）
+			$(".thumb1").hover(function () {
+				$(this).stop().animate({opacity:0.5},"fast");
+			},function () {
+				$(this).stop().animate({opacity:1},"fast");
+			});
+
+            //第二個效果（類別名稱'thumb2'）
+			var interval;
+			var ofsx = 15;
+			var ofsy = 15;
+			var ofsr = 10;
+			$(".thumb2").hover(function () {
+				var $this = $(this);
+				interval = setInterval(function () {
+					var x = Math.round(Math.random() * ofsx * 2) - ofsx;
+					var y = Math.round(Math.random() * ofsy * 2) - ofsy;
+					var r = Math.round(Math.random() * ofsr * 2) - ofsr;
+					$this.css({
+						"position": "relative",
+						"left": x + "px",
+						"top": y + "px",
+						"-webkit-transform":"rotate(" + r + "deg)", 
+						"-moz-transform":"rotate(" + r + "deg)", 
+						"-ms-transform":"rotate(" + r + "deg)",
+						"-o-transform":"rotate(" + r + "deg)", 
+						"transform":"rotate(" + r + "deg)"
+					});
+				}, 20);
+			},function () {
+				clearInterval(interval);
+				$(this).css({
+					"left": 0,
+					"top": 0,
+					"-webkit-transform":"rotate(0deg)",
+					"-moz-transform":"rotate(0deg)",
+					"-ms-transform":"rotate(0deg)",
+					"-o-transform":"rotate(0deg)",
+					"transform":"rotate(0deg)"
+				});
+			});
+
+            //第三個效果（類別名稱'thumb3'）
+			$(".thumb3").hover(function () {
+				$("img", this).stop().animate({opacity:0},"fast");
+			},function () {
+				$("img", this).stop().animate({opacity:1},"fast");
+			});
+
+            //第四個效果（類別名稱'thumb4'）
+			$(".thumb4 img").css({opacity:0});
+			$(".thumb4").hover(function () {
+				$("img", this).stop().animate({opacity:1},"fast");
+			},function () {
+				$("img", this).stop().animate({opacity:0},"fast");
+			});
+
+            //第五個效果（類別名稱'thumb5'）
+			$(".thumb5").hover(function () {
+				$("img", this).stop().animate({marginTop:"-300px"},"fast");
+			},function () {
+				$("img", this).stop().animate({marginTop:"0px"},"fast");
+			});
+		});
+	</script>
+</head>
+<body>
+	<div id="header">
+		<div id="header-inner">
+			<div id="logo">
+				<img src="images/logo.png" />
+			</div>
+			<ul id="header-nav">
+				<li><a href="test.html">
+					<img src="images/about.png" /></a></li>
+				<li><a href="test.html">
+					<img src="images/contact.png" /></a></li>
+				<li><a href="test.html">
+					<img src="images/sitemap.png" /></a></li>
+			</ul>
+		</div>
+	</div>
+	<div id="wrapper">
+		<div class="imgLeft clearfix">
+			<div class="content">
+				<div class="thumb1">
+					<img src="images/img.jpg">
+				</div>
+			</div>
+			<div class="spec">
+				<h1>Effect 01</h1>
+				<p>
+					木頭玩具<br />
+					其他顏色也很充足<br />
+					請選購喜歡的顏色
+				</p>
+				<p>
+					原  料：木頭<br />
+					大  小：150×100mm<br />
+					價  格：2,500円
+				</p>
+			</div>
+		</div>
+		<div class="imgRight clearfix">
+			<div class="content">
+				<div class="thumb2">
+					<img src="images/img.jpg">
+				</div>
+			</div>
+			<div class="spec">
+				<h1>Effect 02</h1>
+				<p>
+					木頭玩具<br />
+					其他顏色也很充足<br />
+					請選購喜歡的顏色
+				</p>
+				<p>
+					原  料：木頭<br />
+					大  小：150×100mm<br />
+					價  格：2,500円
+				</p>
+			</div>
+		</div>
+		<div class="imgLeft clearfix">
+			<div class="content">
+				<div class="thumb3">
+					<img src="images/img.jpg">
+				</div>
+			</div>
+			<div class="spec">
+				<h1>Effect 03</h1>
+				<p>
+					木頭玩具<br />
+					其他顏色也很充足<br />
+					請選購喜歡的顏色
+				</p>
+				<p>
+					原  料：木頭<br />
+					大  小：150×100mm<br />
+					價  格：2,500円
+				</p>
+			</div>
+		</div>
+		<div class="imgRight clearfix">
+			<div class="content">
+				<div class="thumb4">
+					<img src="images/img2-2.png">
+				</div>
+			</div>
+			<div class="spec">
+				<h1>Effect 04</h1>
+				<p>
+					木頭玩具<br />
+					其他顏色也很充足<br />
+					請選購喜歡的顏色
+				</p>
+				<p>
+					原  料：木頭<br />
+					大  小：150×100mm<br />
+					價  格：2,500円
+				</p>
+			</div>
+		</div>
+		<div class="imgLeft clearfix">
+			<div class="content">
+				<div class="thumb5">
+					<img src="images/img3.jpg">
+				</div>
+			</div>
+			<div class="spec">
+				<h1>Effect 05</h1>
+				<p>
+					木頭玩具<br />
+					其他顏色也很充足<br />
+					請選購喜歡的顏色
+				</p>
+				<p>
+					原  料：木頭<br />
+					大  小：150×100mm<br />
+					價  格：2,500円
+				</p>
+			</div>
+		</div>
+	</div>
+	<div id="footer">
+		<div id="footer-inner">Copyright © 2014 MdN Department All Right Reserved.</div>
+	</div>
+</body>
+</html>

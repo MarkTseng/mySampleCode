@@ -1,0 +1,122 @@
+﻿@charset "utf-8";
+
+/* ------- base ------- */
+body{
+	background:#FFF;
+	font-family: "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, Osaka, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+	font-size:14px;
+	color: #FFF;
+}
+
+body, ul, li, div {
+	margin: 0;
+	padding: 0;
+}
+
+img {
+	border:0;
+}
+
+a {
+	text-decoration:none;
+}
+
+/* ------- wrapper ------- */
+#wrapper {
+	width: 740px;
+	margin: 30px auto;
+}
+
+/* ------- nav ------- */
+#nav {
+	width:190px;
+}
+
+#nav li {
+	list-style: none;
+}
+
+div.main {
+	height: 60px;
+	line-height: 60px;
+	text-indent:25px;
+	background-color:#3FC6F3;
+	border-right:10px solid #0D9BE5;
+	cursor:pointer;
+}
+
+ul.subs li a {
+	display:block;
+	height: 40px;
+	line-height: 40px;
+	text-indent:25px;
+	background-color:#F5F5F5;
+	border-right:10px solid #0D9BE5;
+	font-size:12px;
+	color: #164158;
+}
+
+/* ------- color selection ------- */
+/* main menu*/
+li.color-blue div.main {
+	background-color:#3FC6F3;
+	border-right:10px solid #0D9BE5;
+}
+
+li.color-red div.main {
+	background-color:#FF625F;
+	border-right:10px solid #FD2621;
+}
+
+li.color-yellow div.main {
+	background-color:#FEBD01;
+	border-right:10px solid #FF8D00;
+}
+
+li.color-green div.main {
+	background-color:#46D7C6;
+	border-right:10px solid #15B59B;
+}
+
+/* sub menu*/
+li.color-blue ul.subs li a {
+	border-right:10px solid #0D9BE5;
+	color: #0D9BE5;
+}
+
+li.color-red ul.subs li a {
+	border-right:10px solid #FD2621;
+	color: #FD2621;
+}
+
+li.color-yellow ul.subs li a {
+	border-right:10px solid #FF8D00;
+	color: #FF8D00;
+}
+
+li.color-green ul.subs li a {
+	border-right:10px solid #15B59B;
+	color: #15B59B;
+}
+
+
+li.color-blue ul.subs li a:hover {
+	background-color: #3FC6F3;
+	color: #FFF;
+}
+
+li.color-red ul.subs li a:hover {
+	background-color: #FF625F;
+	color: #FFF;
+}
+
+li.color-yellow ul.subs li a:hover {
+	background-color: #FEBD01;
+	color: #FFF;
+}
+
+li.color-green ul.subs li a:hover {
+	background-color: #46D7C6;
+	color: #FFF;
+}
+

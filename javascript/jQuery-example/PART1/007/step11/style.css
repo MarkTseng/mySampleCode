@@ -1,0 +1,31 @@
+﻿@charset "utf-8";
+
+/* ------- base ------- */
+body {
+	background-color: #222;
+	font-family: "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, Osaka, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+	color:#FFF;
+}
+
+body, div, ul, li {
+	margin:0;
+	padding:0;
+}
+
+img {
+	border:0;
+}
+
+/* ------- wrapper ------- */
+#wrapper {
+	width: 740px;
+	margin: 60px auto;
+}
+
+/* ------- thumb ------- */
+.thumb {
+	width: 360px;
+	height:300px;
+	cursor:pointer;
+	background:url("images/img2.png") no-repeat;
+}

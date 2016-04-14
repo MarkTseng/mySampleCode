@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="utf-8" />
+	<title>sample</title>
+	<link rel="stylesheet" href="style.css" type="text/css" />
+	<script type="text/javascript" src="jquery-1.10.2.min.js"></script>
+	<script type="text/javascript">
+		$(function () {
+			var interval;
+			var ofsx = 15;
+			var ofsy = 15;
+			var ofsr = 10;
+			$(".thumb").hover(function () {
+				var $this = $(this);
+				interval = setInterval(function () {
+					var x = Math.round(Math.random() * ofsx * 2) - ofsx;
+					var y = Math.round(Math.random() * ofsy * 2) - ofsy;
+					var r = Math.round(Math.random() * ofsr * 2) - ofsr;
+					$this.css({
+						"position": "relative",
+						"left": x + "px",
+						"top": y + "px",
+						"-webkit-transform":"rotate(" + r + "deg)", 
+						"-moz-transform":"rotate(" + r + "deg)", 
+						"-ms-transform":"rotate(" + r + "deg)",
+						"-o-transform":"rotate(" + r + "deg)", 
+						"transform":"rotate(" + r + "deg)"
+					});
+				}, 20);
+			},function () {
+				clearInterval(interval);
+				$(this).css({
+					"left": 0,
+					"top": 0,
+					"-webkit-transform":"rotate(0deg)",
+					"-moz-transform":"rotate(0deg)",
+					"-ms-transform":"rotate(0deg)",
+					"-o-transform":"rotate(0deg)",
+					"transform":"rotate(0deg)"
+				});
+			});
+		});
+	</script>
+</head>
+<body>
+	</div>
+	<div id="wrapper">
+		<div class="thumb">
+			<img src="images/img.jpg">
+		</div>
+	</div>
+</body>
+</html>

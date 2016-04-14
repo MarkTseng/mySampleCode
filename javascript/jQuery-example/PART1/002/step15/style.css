@@ -1,0 +1,163 @@
+@charset "utf-8";
+
+/* ------- base ------- */
+body {
+	background-color: #ECECEC;
+	font-family: "????角? Pro W3", "Hiragino Kaku Gothic Pro", "????", Meiryo, Osaka, "ＭＳ Ｐ????", "MS PGothic", sans-serif;
+	font-size: 12px;
+	color: #465866;
+}
+
+body, div, ul, li {
+	margin:0;
+	padding:0;
+}
+
+img {
+	border:0;
+}
+
+a {
+	text-decoration: none;
+	color: #465866;
+}
+
+/* ------- wrapper ------- */
+#wrapper {
+	width: 728px;
+	margin: 50px auto;
+}
+
+/* ------- nav ------- */
+#nav {
+	width: 728px;
+	height: 60px;
+}
+
+#nav li {
+	list-style: none;
+}
+
+#nav > ul > li {
+	position: relative;
+	float: left;
+	width: 180px;
+	margin: 0 1px;
+}
+
+#nav > ul > li > a {
+	display: block;
+	height:55px;
+	background-color: #FFFFFF;
+	font-family: Helvetica, Verdana, Arial, sans-serif;
+	font-size: 18px;
+	line-height: 55px;
+	text-align: center;
+}
+
+/* 子???? */
+ul.subs {
+	position: absolute;
+	top: 100%;
+	width: 180px;
+	background-color: #FFFFFF;
+}
+
+ul.subs li a {
+	display: block;
+	height:40px;
+	font-size: 12px;
+	line-height: 40px;
+	text-indent: 22px;
+}
+
+/* 孫???? */
+ul.subs li {
+	position: relative;
+}
+
+ul.subs li ul {
+	position: absolute;
+	top: 0;
+	left: 100%;
+	width: 182px;
+}
+
+ul.subs li ul li a {
+	color: #FFF;
+}
+
+ul.last li ul {
+	left: -182px;
+}
+
+/* ------- 色?指定 ------- */
+li.color-blue {
+	border-top: 5px solid #3FC6F3;
+}
+
+li.color-red {
+	border-top: 5px solid #FF625F;
+}
+
+li.color-yellow {
+	border-top: 5px solid #FEBD01;
+}
+
+li.color-green {
+	border-top: 5px solid #46D7C6;
+}
+
+/* 子???? */
+li.color-blue ul.subs li:hover a {
+	background-color: #3FC6F3;
+	color:#FFF;
+}
+
+li.color-red ul.subs li:hover a {
+	background-color: #FF625F;
+	color:#FFF;
+}
+
+li.color-yellow ul.subs li:hover a {
+	background-color: #FEBD01;
+	color:#FFF;
+}
+
+li.color-green ul.subs li:hover a {
+	background-color: #46D7C6;
+	color:#FFF;
+}
+
+/* 孫???? */
+li.color-blue ul.subs ul li a {
+	background-color: #3FC6F3;
+}
+
+li.color-red ul.subs ul li a {
+	background-color: #FF625F;
+}
+
+li.color-yellow ul.subs ul li a {
+	background-color: #FEBD01;
+}
+
+li.color-green ul.subs ul li a {
+	background-color: #46D7C6;
+}
+
+li.color-blue ul.subs ul li a:hover {
+	background-color: #0D9BE5;
+}
+
+li.color-red ul.subs ul li a:hover {
+	background-color: #FD2621;
+}
+
+li.color-yellow ul.subs ul li a:hover {
+	background-color: #FF8D00;
+}
+
+li.color-green ul.subs ul li a:hover {
+	background-color: #15B59B;
+}

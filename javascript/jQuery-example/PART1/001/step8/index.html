@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ja">
+	<head>
+		<meta charset="utf-8" />
+		<title>sample</title>
+		<link rel="stylesheet" href="style.css" type="text/css" />
+		<script type="text/javascript" src="jquery-1.10.2.min.js"></script>
+		<script type="text/javascript">
+			$(function(){
+//				$("ul.subs").hide();
+//				$("div.main").click(function(){
+//					$("ul.subs").slideUp();
+//					if($("+ul",this).css("display")=="none"){
+//						$("+ul",this).slideDown();
+//					}
+//				});
+				/*$("ul.subs").hide();*/
+				$("div.main").click(function(){
+					if($("+ul",this).css("display")=="none"){
+						$("+ul",this).slideDown();
+					}
+					else{
+						$("+ul",this).slideUp();
+					}
+				});
+			});
+		</script>
+	</head>
+	<body>
+		<div id="wrapper">
+			<div id="nav">
+								<ul> 
+					<li class="color-blue">
+						<div class="main">時尚</div>
+						<ul class="subs"> 
+							<li><a href="test.html">外套</a></li> 
+							<li><a href="test.html">襯衣</a></li> 
+							<li><a href="test.html">褲子</a></li> 
+							<li><a href="test.html">飾品</a></li>
+						</ul> 
+					</li> 
+					<li class="color-red">
+						<div class="main">家具˙室內裝飾</div>
+						<ul class="subs"> 
+							<li><a href="test.html">沙發</a></li> 
+							<li><a href="test.html">床</a></li> 
+							<li><a href="test.html">桌子</a></li> 
+							<li><a href="test.html">椅子</a></li> 
+						</ul> 
+					</li>
+					<li class="color-yellow">
+						<div class="main">文具</div>
+						<ul class="subs"> 
+							<li><a href="test.html">原子筆˙鉛筆</a></li> 
+							<li><a href="test.html">筆記本</a></li> 
+							<li><a href="test.html">資料夾</a></li> 
+						</ul> 
+					</li>
+					<li class="color-green">
+						<div class="main">生活雜貨</div>
+						<ul class="subs"> 
+							<li><a href="test.html">廚房用品</a></li> 
+							<li><a href="test.html">掃除˙洗滌用品</a></li> 
+							<li><a href="test.html">浴室˙廁所用品</a></li> 
+						</ul> 
+					</li> 
+				</ul>
+			</div>
+		</div>
+	</body>
+</html>

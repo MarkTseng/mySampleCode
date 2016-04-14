@@ -1,0 +1,89 @@
+<!doctype html>
+<html class="no-js" lang="ja">
+	<head>
+		<meta charset="utf-8">
+		<title>橫幅動畫</title>
+		<meta name="description" content="輪播">
+		<meta name="author"      content="Toshiya TSURU @ SunBusiness, Inc.">
+		<meta name="viewport"    content="width=device-width, initial-scale=1, maximum-scale=1">
+		<style>
+			body {
+				background-color: #262626;
+			}
+			h1, h2, h3, h4, h5, h6 {
+				font-family:      'Lucida Grande', 'Hiragino Kaku Gothic ProN', 'ヒラギノ角ゴ ProN W3', Meiryo, 'メイリオ', sans-serif;
+				font-weight:      bold;
+				color:            #fff;
+			}
+			h1 {
+				font-size:        46px;
+				line-height:      50px;
+				margin-bottom:    14px;
+			}
+			.container {
+				width:            940px;
+				margin:           auto;
+			}
+			iframe {
+				border: solid 1px #000;
+			}
+		</style>
+		<!--[if lt IE 9]>
+			<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+	</head>
+	<body>
+		<div class="container">
+			<h1 class="remove-bottom" style="margin-top: 40px">橫幅動畫</h1>
+			<hr/>
+			<br/>
+			<div id="banner">
+				<iframe width="940" height="300" frameborder="0" src="banners/002-01.html" ></iframe>
+			</div>
+		</div>
+		<!-- jQuery 載入  -->
+		<script src="scripts/jquery-2.0.3.min.js"></script>
+		<script>
+			$(function(){
+				// 橫幅陣列，也可用img元素
+				var _banners = [
+					'<iframe width="940" height="300" frameborder="0" src="banners/002-01.html" id="banner"></iframe>',
+					'<iframe width="940" height="300" frameborder="0" src="banners/002-02.html" id="banner"></iframe>',
+					'<iframe width="940" height="300" frameborder="0" src="banners/002-03.html" id="banner"></iframe>'
+				];
+				// 紀錄顯示橫幅的索引值
+				var _i   = 0;
+				// 橫幅物件
+				var $banner = $('#banner');
+				// 切換函數
+				setTimeout(function(){
+				    // 用此變數紀錄函數本身，之後作為Callback函數使用
+					var _callee = arguments.callee;
+					// 顯示特定橫幅
+					_i = ++_i % _banners.length;
+					// 動畫執行(淡出)）
+					$banner.animate(
+						{
+						    opacity: 0         // 不透明度:0->透明(隱藏)
+						},
+						200,                   // Duration
+						function(){
+						    // 動畫執行結束的Callback
+							// 切換橫幅元素的html
+							$banner.html(_banners[_i]);
+							// 動畫執行(淡入顯示)
+							$banner.animate(
+								{
+								    opacity: 1 // 不透明度:1->顯示
+								},
+								800,           // Duration
+								function(){
+								    // 動畫執行結束的Callback
+									setTimeout(_callee, 3000);
+								});
+						});
+				}, 3000);
+			});
+		</script>
+	</body>
+</html>

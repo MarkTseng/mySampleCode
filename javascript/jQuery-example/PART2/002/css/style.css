@@ -1,0 +1,413 @@
+﻿@charset 'utf-8';
+/*
+style.css
+*/
+
+body {
+  position: relative;
+  font-size: 62.5%;
+  line-height: 1.8;
+  margin: 0;
+}
+
+h1,h2,h3,p,span,li,a,dt,dd {
+  font-family: 'Roboto Condensed', Arial, Helvetica, "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+  color: #000;
+}
+
+  /*  link common animation  */
+a, a.btn {
+  text-decoration: none;
+  -webkit-transition: all 0.4s linear;
+  transition: all 0.4s linear;
+}
+
+/*content area*/
+.inner {
+  position: relative;
+  max-width: 800px;
+  min-width: 720px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+#wrapper {
+  width: 100%;
+}
+
+/*header area*/
+#headerContainer {
+  position: absolute;
+  z-index: 100;
+  width: 100%;
+  background: rgba( 0, 0, 0, 0.8);
+  box-shadow:0px 3px 5px #999;
+  behavior: url(PIE.htc);
+}
+
+#headerTopicContainer {
+  position: relative;
+  background: #000;
+}
+#headerTopicContainer img {
+  display: block;
+  margin: 0 auto;
+  width: 100%;
+  height: auto;
+}
+
+/*site logo*/
+#siteID {
+  font-size: 3.0em;
+  color: #fff;
+  line-height: 1.1;
+  font-weight: 400;
+  margin: 0 0 0 8px;
+  padding: 12px 0 14px;
+}
+#siteID .small {
+  color: #fff;
+  font-size: 0.7em;
+}
+
+/*footer style*/
+#footerContainer {
+  position: relative;
+  left: 0;
+  bottom: 0;
+  z-index: 100;
+  width: 100%;
+  background: #000;
+  padding: 12px 0;
+  behavior: url(PIE.htc);
+}
+
+#copyright{
+  color: #fff;
+  text-align: right;
+  font-size: 1.4em;
+  margin: 0;
+}
+
+/*
+custom style
+*/
+
+/*
+tips氣球的背景色樣式
+預設為rgba( 0, 0, 0, 0.8)
+*/
+.tipsContentContainer.color1 {
+  /* 紅色　*/
+  background-color: rgba(190, 82, 82, 0.8);
+}
+.tipsContentContainer.color2 {
+  /* 綠色　*/
+  background-color: rgba(105, 170, 62, 0.8);
+}
+.tipsContentContainer.color3 {
+  /* 藍色　*/
+  background-color: rgba(69, 111, 185, 0.8);
+}
+
+/* 範例共用樣式 */
+#contentContainer {
+  padding: 60px 0;
+}
+
+#contentContainer h1.contentTitle {
+  font-size: 3.2em;
+}
+#contentContainer h2.contentTitle {
+  font-size: 2em;
+  margin: 0 0 1em;
+}
+#contentContainer h3.contentTitle {
+  font-size: 1.6em;
+  margin: 0 0 2em;
+}
+
+#contentContainer ul,
+#contentContainer li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+#contentContainer dl,
+#contentContainer dt,
+#contentContainer dd {
+  margin: 0;
+  padding: 0;
+}
+
+/* tips共用樣式 */
+.tipsContentContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  min-height: 1.5em;
+  font-size: 1.2em;
+  color: #fff;
+  background: rgba( 0, 0, 0, 0.8);
+  padding: 16px;
+  border-radius: 8px;
+  behavior: url(PIE.htc);
+}
+
+.tipsContentContainer.magnified img {
+  display: block;
+  width: 100%;
+  height: auto;
+ }
+
+.tipsContentContainer p {
+  color: #fff;
+  line-height: 1.5;
+  margin: 0;
+  padding: 0;
+}
+
+
+
+/* tips範例 共用設定 */
+.tipsSampleContainer {
+  margin: 0 0 5em;
+  min-height: 400px;
+}
+.tipsSampleContainer ul {
+  overflow: hidden;
+}
+.tipsSampleContainer .caseSeparate {
+  margin-bottom: 120px;
+}
+
+
+
+/* 範例 slider樣式 */
+.sliderContainer {
+  position: relative;
+  width: 100%;
+  min-height: 400px;
+  overflow: hidden;
+}
+.sliderContainer ul {
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  -webkit-transition: left .4s linear;
+  transition: left .4s linear;
+}
+
+.sliderContainer li {
+  float: left;
+  width: 100%;
+  max-width: 800px;
+}
+
+.sliderContainer li img {
+  width: 100%;
+}
+
+#case_slider .controls {
+  position: relative;
+  top: 1em;
+  width: 100%;
+  min-height: 5em;
+}
+
+#case_slider .controls li {
+  position: absolute;
+  display: block;
+  float: left;
+  font-size: 4em;
+  width: 1em;
+  height: 1em;
+  line-height: 1;
+  overflow: hidden;
+}
+#case_slider .controls .icon_left {
+  left: 0;
+  text-align: left;
+}
+#case_slider .controls .icon_right {
+  right: 0;
+  text-align: right;
+}
+#case_slider .icon a:hover {
+  color: #666;
+}
+#case_slider .icon span {
+  display: block;
+  margin-top: 2em;
+}
+
+
+/* 範例 form樣式 */
+#case_form form {
+  font-size: 1.6em;
+  width: 60%;
+}
+#case_form form dl {
+  width: 100%;
+  margin: 0 0 2em;
+  overflow: hidden;
+}
+#case_form form dt {
+  float: left;
+  width: 20%;
+  padding-top: 2%;
+  line-height: 1;
+}
+#case_form form dd {
+  float: left;
+  width: 80%;
+}
+
+#case_form input,
+#case_form textarea {
+  -webkit-transition: background 0.4s linear;
+          transition: background 0.4s linear;
+}
+
+#case_form input {
+  padding: 2%;
+  width: 86%;
+  border: 1px solid #e8e8e8;
+  background: #eaeaea;
+  line-height: 1.2;
+}
+#case_form textarea {
+  width: 86%;
+  min-height: 8em;
+  padding: 2%;
+  border: 1px solid #e8e8e8;
+  background: #eaeaea;
+  line-height: 1.6;
+}
+#case_form input:focus,
+#case_form textarea:focus {
+  background: #f8f8f8;
+}
+
+#case_form .submitBtn {
+  margin: 0 auto 0 20%;
+}
+#case_form .submitBtn a {
+  display: inline-block;
+  padding: 0.5em 3em;
+  background: #e0aC13;
+  color: #000;
+  font-weight: bold;
+  border-radius: 8px;
+  behavior: url(PIE.htc);
+}
+#case_form .submitBtn a:hover {
+  background: #FFBE00;
+}
+
+
+/* 範例2 圖片快速預覽版本 */
+
+#tooltipSample2 .summaryContainer {
+  position: relative;
+  top: 0;
+  left: 0;
+  padding: 0 0 4em;
+  margin: 0 0 4em;
+  border-bottom: 1px dotted #ccc;
+}
+#tooltipSample2 .summaryContainer .photo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 20%;
+}
+#tooltipSample2 .summaryContainer .photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  cursor: pointer;
+}
+#tooltipSample2 .summaryContainer dt,
+#tooltipSample2 .summaryContainer .description {
+  position: relative;
+  top: 0;
+  left: 25%;
+  width: 75%;
+}
+#tooltipSample2 .summaryContainer dt {
+  font-size: 2.8em;
+  line-height: 1.4;
+}
+#tooltipSample2 .summaryContainer .description {
+  font-size: 1.4em;
+  min-height: 12em;
+}
+
+
+@media only screen and (max-width:768px){
+  .inner {
+    max-width: 100%;
+    min-width: 100%;
+  }
+  .tabContainer .controls li {
+    max-width: 24%;
+    overflow: hidden;
+  }
+  .tabContainer .controls li a {
+    line-height: 1.2;
+  }
+  #headerContainer {
+  position: relative;
+ }
+ #siteID {
+  float: none;
+  text-align: center;
+ }
+ #navigation {
+  position: relative;
+ }
+ #navigation li {
+  width: 25%;
+  margin: 1px 0;
+ }
+ #navigation a {
+  padding-left: 0;
+  padding-right: 0;
+ }
+ #navigation li:not(:first-child) a {
+  border-left: 1px solid #000;
+ }
+ #contentContainer {
+  padding: 20px 0 0;
+  margin-bottom: 40px;
+ }
+.post {
+  width: 90%;
+  padding: 5% 0 2em;
+  margin: 0 auto 2em;
+}
+ .post .entry-contentContainer {
+   float: none;;
+   width: 100%;
+ }
+ .post .entry-thumbnail {
+   float: none;
+   max-width: 320px;
+   width: 80%;
+   margin: 0 auto 2em;
+ }
+ .post h1 {
+   margin: 0 0 0.4em;
+   font-size: 2em;
+ }
+ .post p {
+   font-size: 1.4em;
+ }
+ .post .read_the_rest a.btn {
+  width: 75%;
+  margin: 0 auto;
+ }
+}

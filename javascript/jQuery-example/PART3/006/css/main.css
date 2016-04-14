@@ -1,0 +1,131 @@
+/**
+ * main
+ */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  font-size: 100%;
+  vertical-align: baseline;
+}
+
+html {
+  line-height: 1;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+caption, th, td {
+  text-align: left;
+  font-weight: normal;
+  vertical-align: middle;
+}
+
+q, blockquote {
+  quotes: none;
+}
+q:before, q:after, blockquote:before, blockquote:after {
+  content: "";
+  content: none;
+}
+
+a img {
+  border: none;
+}
+
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary {
+  display: block;
+}
+
+address {
+  font-style: normal;
+}
+
+body {
+  font-family: 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', 'メイリオ', Meiryo, 'ＭＳ Ｐゴシック', sans-serif;
+  word-wrap: break-word;
+  -webkit-text-size-adjust: none;
+}
+
+body {
+  background-color: #000;
+  background-image: -webkit-gradient(linear, 0% 50%, 500 50%, color-stop(44%, #000000), color-stop(100%, #303030));
+  background-image: -webkit-linear-gradient(left, #000000 220px, #303030 500px);
+  background-image: -moz-linear-gradient(left, #000000 220px, #303030 500px);
+  background-image: -o-linear-gradient(left, #000000 220px, #303030 500px);
+  background-image: linear-gradient(left, #000000 220px, #303030 500px);
+  color: #fff;
+}
+
+#wrapper {
+  *zoom: 1;
+  min-width: 1200px;
+}
+#wrapper:after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+header {
+  float: left;
+  padding: 48px 46px 0 80px;
+  background: #000;
+}
+
+section .cell-other,
+section .slideCell {
+  border: 1px solid #434343;
+  font-size: 10px;
+  line-height: 1.25;
+  cursor: pointer;
+}
+section .cell-other img + p,
+section .slideCell img + p {
+  margin-top: 20px;
+}
+section .cell-other:hover,
+section .slideCell:hover {
+  background-color: #505050;
+  border-color: #7c7c7c;
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 41px;
+  border-top: 1px solid #313131;
+  background-color: #000;
+}
+footer .left {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+footer .right {
+  position: absolute;
+  right: 0;
+  top: 0;
+}

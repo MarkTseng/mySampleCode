@@ -1,0 +1,197 @@
+﻿<!doctype html>
+<html class="no-js" lang="ja">
+	<head>
+		<meta charset="utf-8" />
+		<title>表示有特定類別的內容區塊(001) </title>
+		<meta name="description" content="表示有特定類別的內容區塊">
+		<meta name="author"      content="Toshiya TSURU @ SunBusiness, Inc.">
+		<meta name="viewport"    content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet"   href="css/foundation.css" />
+		<style>
+			* {
+				 font-family: 'Helvetica Neue', Helvetica, Arial, Verdana, 'ヒラギノ角ゴ ProN W3', 'Hiragino Kaku Gothic ProN', 'メイリオ', Meiryo, 'ＭＳ Ｐゴシック', 'MS PGothic', sans-serif;
+			}
+			h1, h2, h3, h4, h5 {
+				font-weight: bold;
+			}
+			#head {
+				background-color: #074E68;
+				color:            #FFF;
+				border:            none;
+			}
+			#head li li {
+				font-size:        95%;
+				font-weight:      normal;
+			}
+		</style>
+		<script src="js/modernizr.js"></script>
+	</head>
+	<body>
+		<!-- Top bar-->
+		<nav class="top-bar docs-bar" data-topbar>
+			<ul class="title-area">
+				<li class="name">
+					<h1><a>表示有特定類別的內容區塊</a></h1>
+				</li>
+			</ul>
+		</nav>
+		<!-- 説明 -->
+		<div class="panel" id="head">
+			<ul>
+				<li>於jQuery中使用下列項目。
+					<ul>
+						<li>.click() 函數</li>
+						<li>.maouseenter(), mouseleave()函數</li>
+						<li>id選擇器，類別選擇器</li>
+					</ul>
+				</li>
+				<br/>
+				<li>本次範例實作下列功能。
+					<ul>
+						<li>用各按紐的click事件切換內容顯示</li>
+						<li>預覽的部分可用滑鼠移入（maouseenter）/滑鼠移出（mouseleave）事件切換顯示內容</li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+		<!-- ボタン -->
+		<div class="row">
+			<div class="large-4 small-12 columns">
+				<!-- ボタン１ -->
+				<a href="#" class="radius expand button" id="button1">何謂Foundation</a>
+			</div>
+			<div class="large-4 small-12 columns">
+				<!-- ボタン２ -->
+				<a href="#" class="radius expand button" id="button2">前端開發框架</a>
+			</div>
+			<div class="large-4 small-12 columns">
+				<!-- ボタン３ -->
+				<a href="#" class="radius expand button" id="button3">Resposive</a>
+			</div>
+		</div>
+		<!-- コンテンツ１ -->
+		<div class="row content" id="content1">
+			<div class="large-12 columns">
+				<div class="panel">
+					<h3>何謂Foundation</h3>
+					<p>Founction是由ZURB公司所開發、發佈的一種前端框架，可有效率的以"Mobile First"製作"Resposive" Web頁面。<br/>其能使用類似於自然語言的方式撰寫CSS類別等優點，能讓WEB開發非常有效率。</p>
+				</div>
+			</div>
+		</div>
+		<!-- コンテンツ２ -->
+		<div class="row content" id="content2">
+			<div class="large-6 columns">
+				<div class="panel">
+					<h3>前端框架</h3>
+					<p>所謂前端框架，簡單來說就是CSS的預設集合，將一些表格系統、表單元素等基本Layout以系統化的方式提供類別使用。</p>
+				</div>
+			</div>
+			<div class="large-6 columns">
+				<div class="panel">
+					<h3>優點</h3>
+					<p>藉由利用前端框架，可利用固定的規定進行配置與設計，開發者就可更專注於更重要的開發工作。</p>
+				</div>
+			</div>
+		</div>
+		<!-- コンテンツ３ -->
+		<div class="row content" id="content3">
+			<div class="large-4 columns">
+				<div class="panel">
+					<h3>Resposive</h3>
+					<p>Resposive設計是可讓網頁內容以適合設備的方式做顯示的一種設計模式。使用如Media Query 等CSS3的機制，讓內容可在設備上適當的顯示。</p>
+				</div>
+			</div>
+			<div class="large-4 columns">
+				<div class="panel">
+					<h3>Mobile First</h3>
+					<p>網際網路已經進入大量使用移動設備存取的時代，「首先製作移動設備用的網頁」就是Mobile Fisrt的一種概念。</p>
+				</div>
+			</div>
+			<div class="large-4 columns">
+				<div class="panel">
+					<h3>HTML5/CSS3</h3>
+					<p>支援這些做法的基礎就是HTML5與CSS3的Web標準。依據這些Web標準所發展出來的技術，不論是線上或離線的，都可以在不同的地方發現。</p>
+				</div>
+			</div>
+		</div>
+		<!-- jQuery載入  -->
+		<script src="js/jquery.js"></script>
+		<!-- Foundation載入  -->
+		<script src="js/foundation.min.js"></script>
+		<script>
+			$(function(){
+				// foundation
+				$(document).foundation();
+				//一次隱藏所有內容
+				$('.content').hide();
+				//顯示Content 1
+				var $activePabnel = $('#content1').show();
+				//改變Button 1的顏色
+				var $activeButton = $('#button1').addClass('success');
+				//Button 1的事件處理
+				$('#button1')
+				    //滑鼠移入Button 1時的處理
+					.mouseenter(function(){
+					    $activeButton.removeClass('success'); //將active的按鈕設定為非active
+					    $activePabnel.hide();                 //隱藏目前顯示的內容
+					    $('#button1').addClass('success');    //將Button 1設定為Active
+					    $('#content1').show();                //顯示Content 1
+					})
+					//滑鼠移出Button 1時的處理
+					.mouseleave(function(){
+						$('#button1').removeClass('success');
+						$('#content1').hide();
+						$activeButton.addClass('success');
+						$activePabnel.show();
+					})
+					// Button 1點擊的處理
+					.click(function(){
+						$activePabnel = $('#content1');
+						$activeButton = $('#button1');
+					});
+		        //Button 2的事件處理
+				$('#button2')
+				    //滑鼠移入Button 2時的處理
+					.mouseenter(function(){
+						$activeButton.removeClass('success');
+						$activePabnel.hide();
+						$('#button2').addClass('success');
+						$('#content2').show();
+					})
+		            //滑鼠移出Button 2時的處理
+					.mouseleave(function(){
+						$('#button2').removeClass('success');
+						$('#content2').hide();
+						$activeButton.addClass('success');
+						$activePabnel.show();
+					})
+		            // Button 2點擊的處理
+					.click(function(){
+						$activePabnel = $('#content2');
+						$activeButton = $('#button2');
+					});
+		        //Button 3的事件處理
+				$('#button3')
+				    //滑鼠移入Button 3時的處理
+					.mouseenter(function(){
+						$activeButton.removeClass('success');
+						$activePabnel.hide();
+						$('#button3').addClass('success');
+						$('#content3').show();
+					})
+		            //滑鼠移出Button 3時的處理
+					.mouseleave(function(){
+						$('#button3').removeClass('success');
+						$('#content3').hide();
+						$activeButton.addClass('success');
+						$activePabnel.show();
+					})
+		            // Button 3點擊的處理
+					.click(function(){
+						$activePabnel = $('#content3');
+						$activeButton = $('#button3');
+					});
+			});
+		</script>
+	</body>
+</html>

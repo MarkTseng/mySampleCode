@@ -1,0 +1,16 @@
+/*
+style-ie.css
+*/
+
+.ie .items--small {
+  position: relative;
+}
+.ie .items--small.nonactive,
+.ie .items--big {
+  left: -2999px;
+}
+
+.ie .items--small,
+.ie .items--big.active {
+  left: 0;
+}

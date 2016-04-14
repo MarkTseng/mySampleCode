@@ -1,0 +1,177 @@
+﻿<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html> <!--<![endif]-->
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<title>東京賞花地圖</title>
+		<meta name="author"      content="Toshiya TSURU @ SunBusiness, Inc.">
+		<meta name="description" content="">
+		<meta name="viewport" content="width=device-width">
+		<link rel="stylesheet" href="css/bootstrap.min.css">
+		<style>
+			* {
+				 font-family: 'Helvetica Neue', Helvetica, Arial, Verdana, 'ヒラギノ角ゴ ProN W3', 'Hiragino Kaku Gothic ProN', 'メイリオ', Meiryo, 'ＭＳ Ｐゴシック', 'MS PGothic', sans-serif;
+			}
+			body {
+				padding-top:      50px;
+				padding-bottom:   20px;
+			}
+			footer {
+				color:            #F74040;
+			}
+			.navbar {
+				background-color: #F8C2C2;
+			}
+			.navbar-brand {
+				color:            #F74040;
+			}
+			.navbar-brand:hover {
+				color:            #F74040;
+				text-decoration:  underline;
+			}
+			.jumbotron {
+				background-color: #F2E8E8;
+			}
+			#controls li a span {
+				text-decoration:  underline;
+			}
+			#controls li:hover a span,
+			#controls li.active a span {
+				color:            #F74040;
+			}
+			#gmap {
+				border:           1px solid #F46464;
+				height:           500px;
+				width:            100%;
+			}
+		</style>
+		<link rel="stylesheet" href="css/bootstrap-theme.min.css">
+		<link rel="stylesheet" href="css/main.css">
+		<script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+	</head>
+	
+	<body>
+		
+		<div class="navbar navbar-fixed-top">
+			<div class="container">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="#">東京賞花地圖</a>
+				</div>
+			</div>
+		</div>
+	
+		<div class="jumbotron">
+			<div class="container">
+				<div class="row">
+					<div id="gmap"></div>
+				</div>
+			</div>
+		</div>
+		
+		<div id="controls" class="container" ></div>
+		
+		<hr/>
+		
+		<div class="container">
+			<div class="row">
+				<footer>
+					<p>&copy; SunBusiness, Inc. 2014</p>
+				</footer>
+			</div>
+		</div>
+		
+		<script src="http://maps.google.com/maps/api/js?sensor=false&v=3.7"></script>
+		<script src="js/vendor/jquery-1.9.1.min.js"></script>
+		<script src="js/vendor/bootstrap.min.js"></script>
+		<script src="js/maplace.min.js"></script>
+		<script>
+			(function() {
+				$(function() {
+					// 位置資訊的設定
+					var _locations = [{
+						lat:    35.653241,
+						lon:   139.749422,
+						title: '芝公園',
+						html: [
+							'<h4>%title</h4>',
+							'<adress>港區芝4-10-17</adress>',
+							'<p>王櫻、里櫻、枝垂櫻等約188棵</p>',
+						].join(''),
+						icon:  'img/sakura.gif',
+						zoom:  14,
+						
+					},{
+						lat:    35.714070,
+						lon:   139.774081,
+						title: '上野公園',
+						html: [
+							'<h4>%title</h4>',
+							'<adress>台東區上野公園5-20</adress>',
+							'<p>王櫻、里櫻、枝垂櫻等約1000棵</p>',
+						].join(''),
+						icon:  'img/sakura.gif',
+						zoom:  14,
+						
+					},{
+						lat:    35.669988,
+						lon:   139.700046,
+						title: '代代木公園',
+						html: [
+							'<h4>%title</h4>',
+							'<adress>澀谷區代代木神園町</adress>',
+							'<p>王櫻等約660棵</p>',
+						].join(''),
+						icon:  'img/sakura.gif',
+						zoom:  14,
+						
+					},{
+						lat:    35.673738,
+						lon:   139.756055,
+						title: '日比谷公園',
+						html: [
+							'<h4>%title</h4>',
+							'<adress>千代田區日比谷公園1-6</adress>',
+							'<p>王櫻、里櫻、枝垂櫻等約80棵</p>',
+						].join(''),
+						icon:  'img/sakura.gif',
+						zoom:  14,
+						
+					},{
+						lat:    35.750466,
+						lon:   139.738863,
+						title: '飛鳥山公園',
+						html: [
+							'<h4>%title</h4>',
+							'<adress>北區王子1-1-3</adress>',
+							'<p>王櫻等約650棵</p>',
+						].join(''),
+						icon:  'img/sakura.gif',
+						zoom:  14,
+						
+					}];
+				    // 地圖顯示
+					new Maplace({
+						map_div:           '#gmap',
+					    // mark
+						locations:         _locations,
+						// control
+						controls_div:      '#controls',
+						controls_cssclass: 'row',
+						controls_type:     'list',
+						controls_on_map:    false,
+						view_all_text:     '顯示全部',
+						map_options: {
+							zoom: 8
+						},
+					}).Load();
+					// control顯示調整
+					$('#controls li').addClass('col-lg-2 col-md-2');
+					
+				});
+			})();
+		</script>
+	</body>
+</html>

@@ -1,0 +1,27 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="utf-8" />
+	<title>sample</title>
+	<link rel="stylesheet" href="style.css" type="text/css" />
+	<script type="text/javascript" src="jquery-1.10.2.min.js"></script>
+	<script type="text/javascript">
+	    $(function () {
+            //將前景圖片設定為透明
+			$(".thumb img").css({opacity:0});
+			$(".thumb").hover(function () {
+				$("img", this).stop().animate({opacity:1},"fast");
+			},function () {
+				$("img", this).stop().animate({opacity:0},"fast");
+			});
+		});
+	</script>
+</head>
+<body>
+	<div id="wrapper">
+		<div class="thumb">
+			<img src="images/img2.png">
+		</div>
+	</div>
+</body>
+</html>
