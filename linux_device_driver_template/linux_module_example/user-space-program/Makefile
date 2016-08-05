@@ -1,5 +1,5 @@
-#TOOL_CHAIN_DIR=/home/mark/RTK_workshop/magellan2/rtk_demo_board/kernel/system/tmp/toolchain/asdk-4.9.2-a53-EL-3.10-g2.19-a32n-141121/bin
-#CROSS_COMPILE=$(TOOL_CHAIN_DIR)/arm-linux-
+TOOL_CHAIN_DIR=/home/mark/mstar_workshop/toolchain/gcc-linaro-arm-linux-gnueabihf-4.8-2014.04_linux/bin
+CROSS_COMPILE=$(TOOL_CHAIN_DIR)/arm-linux-gnueabihf-
 CC = $(CROSS_COMPILE)gcc
 STRIP = $(CROSS_COMPILE)strip
 
@@ -18,7 +18,7 @@ FUNC_TRACE_FLAG = -finstrument-functions
 
 RM = rm -f
 INC = ./
-ProgramName = print_segmemts netlink_recv netlink_send tailq_ex netlink_event
+ProgramName = devmem print_segmemts netlink_recv netlink_send tailq_ex netlink_event mmaptest
 
 all: $(ProgramName)
 	@echo "Programs is ready $(ProgramName)" 
@@ -48,6 +48,15 @@ tailq_ex: tailq_ex.c queue.h
 	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $^
 	$(STRIP) $@
 
+mmaptest: mmaptest.c
+	@echo "Compile $@" 
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $^
+	$(STRIP) $@
+
+devmem: devmem.c
+	@echo "Compile $@" 
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $^
+	$(STRIP) $@
 clean:
 	$(RM) $(ProgramName) *.o
  

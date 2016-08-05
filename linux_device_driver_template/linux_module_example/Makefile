@@ -5,13 +5,13 @@
 
 # Toolchain setting
 #TOOL_CHAIN_DIR=/home/mark/RTK_workshop/merlin/native_linux/kernel/system-rtk/tmp/toolchain/asdk-4.9.2-a53-EL-3.10-g2.19-a32n-141121/bin
-TOOL_CHAIN_DIR=/home/mark/RTK_workshop/merlin/native_linux/kernel/system-lge/tmp/toolchain/arm-lg115x-linux-gnueabi-4.8-2014.08-1-i686/bin
-CROSS_COMPILE=$(TOOL_CHAIN_DIR)/arm-linux-
+TOOL_CHAIN_DIR=/home/mark/mstar_workshop/toolchain/gcc-linaro-arm-linux-gnueabihf-4.8-2014.04_linux/bin
+CROSS_COMPILE=$(TOOL_CHAIN_DIR)/arm-linux-gnueabihf-
 ARCH_PLATFORM=arm
 
 # Kernel path
 #KERNELDIR=/home/mark/RTK_workshop/merlin/native_linux/kernel/linux/linux-3.10.19-rtk
-KERNELDIR=/home/mark/RTK_workshop/merlin/native_linux/kernel/linux/linux-3.10.19-lge-mainline-usb-bug
+KERNELDIR=/home/mark/mstar_workshop/IPCM/source/linux-3.18
 
 # module install directory
 INSTALLDIR=/home/mark/SVN/kernelteam/FileSystem/ramfs/root/lib/modules/2.6.38_SPHE9200_V1
@@ -57,9 +57,10 @@ endif
 #obj-m += file_log.o
 #obj-m += cpuset.o
 #obj-m += platform_driver_template.o
-obj-m += kprobe_test.o
-obj-m += jprobe_test.o
-obj-m += kretprobe_test.o
+#obj-m += kprobe_test.o
+#obj-m += jprobe_test.o
+#obj-m += kretprobe_test.o
+obj-m += mmapdriver.o
 all: modules
 
 modules:
