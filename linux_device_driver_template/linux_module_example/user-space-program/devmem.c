@@ -14,15 +14,15 @@ int main(int argc, char *argv[])
 	unsigned int phys_offset;
 	unsigned int phys_len;
 	unsigned int write_enable = 0;
+	unsigned int dump_file_enable = 0;
 	unsigned int page_size = getpagesize();
 	unsigned int page_size_mask = getpagesize() - 1;
 	int fd,i;
 	char * buffer;
-	unsigned int content;  
 	FILE *writeData;
 
 	if(argc < 4) {
-		printf("usage: devmem phys_addr r length\n");
+		printf("usage: devmem phys_addr r length [dump_file]\n");
 		printf("       devmem phys_addr w data_file\n");
 		exit(-1);
 	}
@@ -41,10 +41,9 @@ int main(int argc, char *argv[])
 		}
 	}else{ // read
 		phys_len = strtol(argv[3],NULL,16);
-		phys_offset = phys_addr & (page_size_mask);
-		if(phys_offset != 0) {
-			phys_addr = phys_addr & (~page_size_mask); // page size alignment
-			phys_len = phys_len + phys_offset;
+		if(argv[4] != NULL) {
+			printf("dump file : %s\n", argv[4]);
+			dump_file_enable = 1;
 		}
 	}
 	// cal write data length
@@ -98,17 +97,37 @@ int main(int argc, char *argv[])
 		for (i=phys_offset;i < phys_len; ++i)  
 		{ 
 			map_base[i] = (unsigned char)buffer[i];  
-			content = map_base[i];  
-			printf("updated address: 0x%p, content: 0x%x, buffer: %#x\n", (map_base+i), (unsigned int)content, buffer[i]);  
+			printf("updated address: 0x%p, content: 0x%x, buffer: %#x\n", (map_base+i), map_base[i], buffer[i]);  
 		}
 		free(buffer); 
 	} else { // read data from phys memory addr
+		if(dump_file_enable == 1)
+		{
+			buffer = (char*) malloc (sizeof(char)* (phys_len - phys_offset));
+			if (buffer == NULL) {fputs ("Memory error",stderr); exit (2);}
+		}
+
 		for (i=phys_offset;i < phys_len; ++i)  
 		{ 
+			if(dump_file_enable == 1)
+			{
+				buffer[i] = map_base[i];
+				printf("buffer: 0x%p   content %#x\n", (buffer +i), buffer[i]);  
+			}
+			printf("address: 0x%p   content %#x\n", (map_base +i), map_base[i]);  
+		}
 
-			content = map_base[i];  
-			printf("address: 0x%p   content %#x\n", (map_base +i), content);  
-		}  
+		if(dump_file_enable == 1){
+			writeData = fopen(argv[4],"wb");
+			if(writeData == NULL){ 
+				printf("open file fail\n");
+				exit(-1);
+			}
+			fwrite (buffer , 1, (phys_len - phys_offset), writeData);
+			fflush(writeData);
+			fclose(writeData);
+			free(buffer);
+		}
 	}
 	close(fd);  
 
