@@ -18,10 +18,12 @@ FUNC_TRACE_FLAG = -finstrument-functions
 
 RM = rm -f
 INC = ./
-ProgramName = devmem print_segmemts netlink_recv netlink_send tailq_ex netlink_event mmaptest
+ProgramName = memtool print_segmemts netlink_recv netlink_send tailq_ex netlink_event mmaptest
 
 all: $(ProgramName)
 	@echo "Programs is ready $(ProgramName)" 
+	@echo "copy to nfs"
+	cp -a $(ProgramName) ~/nfs;sync
 	
 print_segmemts: print_segmemts.c
 	@echo "Compile $@" 
@@ -57,6 +59,12 @@ devmem: devmem.c
 	@echo "Compile $@" 
 	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $^
 	$(STRIP) $@
+
+memtool: memtool.c
+	@echo "Compile $@" 
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $^
+	$(STRIP) $@
+
 clean:
 	$(RM) $(ProgramName) *.o
  
