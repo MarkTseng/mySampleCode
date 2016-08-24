@@ -1,4 +1,0 @@
-unifdef-y += aformat.h
-unifdef-y += vformat.h
-unifdef-y += amstream.h
-unifdef-y += jpegdec.h

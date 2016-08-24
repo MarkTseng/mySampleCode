@@ -1,7 +1,0 @@
-menu "Amlogic GPIO Driver"
-config  AM_GPIO
-	tristate  "gpio module"
-	default n
-	help 
-		gpio module support
-endmenu
