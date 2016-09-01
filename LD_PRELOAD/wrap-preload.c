@@ -2,7 +2,7 @@
 * File Name : wrap-preload.c
 * Purpose :
 * Creation Date : 01-09-2016
-* Last Modified : Thu 01 Sep 2016 09:37:43 AM CST
+* Last Modified : Thu 01 Sep 2016 09:44:53 AM CST
 * Created By : Mark Tseng  
 **********************************************/
 
@@ -39,7 +39,7 @@ void * malloc (size_t size)
 	identify_function_ptr(__builtin_return_address(0));
     __real_malloc = dlsym(RTLD_NEXT, "malloc");
     void *lptr = __real_malloc(size);
-    printf("Malloc: %lu bytes @%p, RA: %pF\n", size, lptr, __builtin_extract_return_addr(__builtin_return_address(0)));
+    printf("Malloc: %lu bytes @%p\n", size, lptr);
     return lptr;
 }
 
