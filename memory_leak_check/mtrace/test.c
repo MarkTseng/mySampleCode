@@ -18,5 +18,6 @@ int main() {
         return -1;
     }
 
+	muntrace();
     return 0;
 }
