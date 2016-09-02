@@ -1,0 +1,25 @@
+MemLeak -- a module for debugging memory leaks in C code and other problems related
+with malloc()-free() invocations. Distributed under GPL.
+
+Author: Stanislav Maslovski <stanislav.maslovski@gmail.com>
+Copyright: (c) 2005, 2008 Stanislav Maslovski.
+License: GPL
+
+The goal of this project is to provide a simple portable memory allocation debugging
+module (based on the standard C library calls) for C programmers. The module is written
+in ANSI C. It features collecting overall memory statistic, a complete list of allocated
+blocks with information by whom, where, and how much memory was allocated, a history of
+freed blocks, address checking based on the stored info, a SIGSEGV catcher, verbose and
+filtered dumping, and other things. Currently it is slightly above 400 lines of C code.
+
+MemLeak is not a standalone program or library. You have to include this module into
+your project makefiles. See memleak.c and memleak.h for instructions.
+
+Recent Changes
+==============
+
+2008-05-23
+  * fixed ANSI C conformance bugs.
+  * added a hack to support strdup() and strndup() functions.
+    Define WITH_DBG_STRDUP macro to enable this.
+  * added a primitive usage example and a Makefile.
