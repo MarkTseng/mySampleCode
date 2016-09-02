@@ -1,0 +1,408 @@
+# memprof 0.4.0 hu.po
+# Copyright (C) 1999-2000, 2006 Free Software Foundation, Inc.
+#
+# Gergely Nagy <greg@gnome.hu>, 2000.
+# Emese Kovacs <emese@gnome.hu>, 2001.
+# Andras Timar <timar@gnome.hu>, 2003.
+# Gabor Kelemen <kelemeng@gnome.hu>, 2006.
+msgid ""
+msgstr ""
+"Project-Id-Version: memprof-VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2006-11-28 06:55+0100\n"
+"PO-Revision-Date: 2006-11-29 03:36+0100\n"
+"Last-Translator: Gabor Kelemen <kelemeng@gnome.hu>\n"
+"Language-Team: Hungarian <gnome@gnome.hu>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.2\n"
+"Plural-Forms:  nplurals=2; plural=(n != 1);\n"
+
+#: ../leakdetect.c:503
+#, c-format
+msgid "Cannot open output file: %s\n"
+msgstr "A(z) %s kimeneti fájlt nem lehet megnyitni\n"
+
+#: ../main.c:797
+#, c-format
+msgid "Executation of \"%s\" failed: %s"
+msgstr "\"%s\" futtatása meghiúsult: %s"
+
+#: ../main.c:945
+msgid "MemProf"
+msgstr "MemProf"
+
+#: ../main.c:1054
+#, c-format
+msgid "Cannot find executable for \"%s\""
+msgstr "\"%s\" végrehajtható fájl nem található"
+
+#: ../main.c:1157
+msgid "Saving is disabled at the moment"
+msgstr "A mentés jelenleg le van tiltva"
+
+#. FIXME: these dialogs pop up below the window. Of course this
+#. * entire piece of UI needs to die anyway
+#.
+#: ../main.c:1348
+msgid "Function names cannot contain spaces"
+msgstr "A függvénynevek nem tartalmazhatnak szóközöket"
+
+#: ../main.c:1753
+msgid "MemProf Error"
+msgstr "MemProf hiba"
+
+#: ../main.c:1753
+msgid "MemProf Warning"
+msgstr "MemProf figyelmeztetés"
+
+#: ../main.c:1816 ../main.c:1833 ../main.c:1851
+msgid "Name"
+msgstr "Név"
+
+#: ../main.c:1817 ../main.c:1834 ../main.c:1852
+msgid "Self"
+msgstr "Saját"
+
+#: ../main.c:1818 ../main.c:1853
+msgid "Total"
+msgstr "Összesen"
+
+#: ../main.c:1835
+msgid "Cumulative"
+msgstr "Halmozott"
+
+#: ../main.c:1878
+msgid "Address"
+msgstr "Cím"
+
+#: ../main.c:1879
+msgid "Size"
+msgstr "Méret"
+
+#: ../main.c:1880
+msgid "Caller"
+msgstr "Hívó"
+
+#: ../main.c:1900
+msgid "Function"
+msgstr "Függvény"
+
+#: ../main.c:1901
+msgid "Line"
+msgstr "Sor"
+
+#: ../main.c:1902
+msgid "File"
+msgstr "Fájl"
+
+# main.c:1609
+#: ../main.c:2112
+msgid "Really detach from finished process?"
+msgstr "Tényleg le kíván válni a befejezett folyamatról?"
+
+# main.c:1611
+#: ../main.c:2114
+msgid "Really detach from running process?"
+msgstr "Tényleg le kíván válni a futó folyamatról?"
+
+# main.c:1631
+#: ../main.c:2144
+msgid "Really kill running process?"
+msgstr "Tényleg kilövi a futó folyamatot?"
+
+# main.c:1661
+#: ../main.c:2179
+msgid "Create new windows for forked processes"
+msgstr "Új ablak létrehozása a 'fork()'-olt folyamatnak"
+
+# main.c:1663
+#: ../main.c:2181
+msgid "Retain windows for processes after exec()"
+msgstr "Folyamat ablakának megtartása exec() után"
+
+#: ../main.c:2183
+msgid "Type of profiling information to collect"
+msgstr "Az összegyűjtendő profilinformációk típusa"
+
+#: ../main.c:2185
+msgid "Number of samples/sec for time profile (1k=1000)"
+msgstr "A másodpercenkénti minták száma az időprofilnál (1k=1000)"
+
+#: ../main.c:2245
+msgid "Argument of --profile must be one of 'memory', 'cycles', or 'time'\n"
+msgstr "A --profile argumentuma a 'memory', 'cycles' vagy 'time' egyike lehet\n"
+
+# main.c:1689
+#: ../main.c:2280
+msgid "Cannot find memprof.glade"
+msgstr "Nem található a memprof.glade"
+
+#: ../memprof.glade.h:1
+msgid "# of Allocations:"
+msgstr "Lefoglalt területek száma:"
+
+#: ../memprof.glade.h:2
+msgid "0"
+msgstr "0"
+
+#: ../memprof.glade.h:3
+msgid "0k"
+msgstr "0k"
+
+#: ../memprof.glade.h:4
+msgid "32k"
+msgstr "32k"
+
+#: ../memprof.glade.h:5
+msgid "<b>Callers</b>"
+msgstr "<b>Hívók</b>"
+
+#: ../memprof.glade.h:6
+msgid "<b>Descendants</b>"
+msgstr "<b>Leszármazottak</b>"
+
+#: ../memprof.glade.h:7
+msgid "Adding Skip Function"
+msgstr "Átugrandó függvény felvétele"
+
+#: ../memprof.glade.h:8
+msgid "Adding Skip Regular Expression"
+msgstr "Átugrandó reguláris kifejezés felvétele"
+
+#: ../memprof.glade.h:9
+msgid "Bytes / Allocation:"
+msgstr "Bájt / Lefoglalt terület:"
+
+#: ../memprof.glade.h:10
+msgid "Check for Leaks"
+msgstr "Szivárgások ellenőrzése"
+
+#: ../memprof.glade.h:11
+msgid "Command to run on double click in stack trace:"
+msgstr "Elindítandó program a veremnyomkövetés valamely során való dupla kattintáskor"
+
+#: ../memprof.glade.h:12
+msgid "Create Profile"
+msgstr "Profil létrehozása"
+
+#: ../memprof.glade.h:13
+msgid "Defaults"
+msgstr "Alapértelmezett"
+
+#: ../memprof.glade.h:14
+msgid "Enter a regular expression of function names to skip when computing profiles"
+msgstr ""
+"Adja meg azokat a függvényneveket (reguláris kifejezéssel), amelyek a "
+"profilok számításánál átugrandók."
+
+#: ../memprof.glade.h:15
+msgid "Enter pathname to an executable"
+msgstr "Végrehajtható elérési útvonala"
+
+#: ../memprof.glade.h:16
+msgid "Enter the name of a function to skip when computing profiles"
+msgstr "Profilszámításkor átugrandó függvény neve"
+
+#: ../memprof.glade.h:17
+msgid "Follow _exec()"
+msgstr "_exec() követése"
+
+# memprof-strings.c:17
+#: ../memprof.glade.h:18
+msgid "Follow _fork()"
+msgstr "_fork() követése"
+
+#: ../memprof.glade.h:19
+msgid "Functions to Skip:"
+msgstr "Átugrandó függvények:"
+
+#: ../memprof.glade.h:20
+msgid "Generate _Leak Report"
+msgstr "_Szivárgásjelentés létrehozása"
+
+# memprof-strings.c:12
+#: ../memprof.glade.h:21
+msgid "Generate _Profile"
+msgstr "_Profil létrehozása"
+
+#: ../memprof.glade.h:22 ../tree.c:109
+msgid "Kill"
+msgstr "Kilövés"
+
+#: ../memprof.glade.h:23
+msgid "Kill Program"
+msgstr "Program kilövése"
+
+#: ../memprof.glade.h:24
+msgid "Leak Detection Options"
+msgstr "Szivárgásérzékelő beállítások"
+
+#: ../memprof.glade.h:25
+msgid "Leaks"
+msgstr "Szivárgások"
+
+#: ../memprof.glade.h:26
+msgid "MemProf - Processes"
+msgstr "MemProf - Folyamatok"
+
+#: ../memprof.glade.h:27
+msgid "Preferences"
+msgstr "Beállítások"
+
+# memprof-strings.c:16
+#: ../memprof.glade.h:28
+msgid "Process _Tree"
+msgstr "Folyamat_fa"
+
+#: ../memprof.glade.h:29
+msgid "Profile"
+msgstr "Profil"
+
+#: ../memprof.glade.h:30
+msgid "Profile Options"
+msgstr "Profil beállítása"
+
+#: ../memprof.glade.h:31
+msgid "Record"
+msgstr "Rekord"
+
+#: ../memprof.glade.h:32
+msgid "Regular expressions to Skip:"
+msgstr "Átugrandó (reguláris) kifejezés"
+
+#: ../memprof.glade.h:33
+msgid "Reset"
+msgstr "Visszaállítás"
+
+#: ../memprof.glade.h:34
+msgid "Run"
+msgstr "Futtatás"
+
+#: ../memprof.glade.h:35
+msgid "Run Executable"
+msgstr "Végrehajtható futtatása"
+
+#: ../memprof.glade.h:36
+msgid "Run Program"
+msgstr "Program futtatása"
+
+#: ../memprof.glade.h:37
+msgid "Save"
+msgstr "Mentés"
+
+#: ../memprof.glade.h:38
+msgid "Save Report"
+msgstr "Jelentés mentése"
+
+#: ../memprof.glade.h:39
+msgid "Save _Leak Info..."
+msgstr "_Szivárgás adatainak mentése..."
+
+#: ../memprof.glade.h:40
+msgid "Save _Profile..."
+msgstr "_Profil mentése..."
+
+#: ../memprof.glade.h:41
+msgid "Stack Trace"
+msgstr "Veremnyomkövetés"
+
+#: ../memprof.glade.h:42
+msgid "Total Bytes:"
+msgstr "Összméret (bájt):"
+
+#: ../memprof.glade.h:43
+msgid "_About"
+msgstr "_Névjegy"
+
+#: ../memprof.glade.h:44
+msgid "_Close"
+msgstr "_Bezárás"
+
+#: ../memprof.glade.h:45
+msgid "_Detach"
+msgstr "_Leválasztás"
+
+#: ../memprof.glade.h:46
+msgid "_File"
+msgstr "_Fájl"
+
+#: ../memprof.glade.h:47
+msgid "_Help"
+msgstr "_Súgó"
+
+#: ../memprof.glade.h:48
+msgid "_Kill"
+msgstr "_Kilövés"
+
+#: ../memprof.glade.h:49
+msgid "_Preferences"
+msgstr "_Beállítások"
+
+# memprof-strings.c:11
+#: ../memprof.glade.h:50
+msgid "_Process"
+msgstr "_Folyamat"
+
+#: ../memprof.glade.h:51
+msgid "_Quit"
+msgstr "_Kilépés"
+
+#: ../memprof.glade.h:52
+msgid "_Run Program..."
+msgstr "_Program futtatása..."
+
+#: ../memprof.glade.h:53
+msgid "_Settings"
+msgstr "_Beállítások"
+
+#: ../process.c:907
+msgid "Initial"
+msgstr "Kiinduló"
+
+#: ../process.c:910
+msgid "Starting"
+msgstr "Indul"
+
+#: ../process.c:913
+msgid "Running"
+msgstr "Fut"
+
+#: ../process.c:916
+msgid "Exiting"
+msgstr "Kilép"
+
+#: ../process.c:919 ../process.c:922
+msgid "Defunct"
+msgstr "Elhunyt"
+
+#: ../server.c:289
+#, c-format
+msgid "Cannot find %s"
+msgstr "%s nem található"
+
+#: ../tree.c:102
+msgid "Show"
+msgstr "Megjelenítés"
+
+#: ../tree.c:105
+msgid "Hide"
+msgstr "Elrejtés"
+
+#: ../tree.c:112
+msgid "Detach"
+msgstr "Leválasztás"
+
+#: ../tree.c:180
+msgid "PID"
+msgstr "PID"
+
+#: ../tree.c:181
+msgid "Command Line"
+msgstr "Parancssor"
+
+#: ../tree.c:182
+msgid "Status"
+msgstr "Állapot"
+

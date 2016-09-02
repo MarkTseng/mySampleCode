@@ -1,0 +1,372 @@
+# translation of memprof.HEAD.es.po to Spanish
+# Memprof' Spanish Translation
+# Copyright (C) 2000-2002 GNOME Foundation, Inc.
+#
+# Pablo Gonzalo del Campo <pablodc@bigfoot.com>, 2002.
+# Francisco Javier F. Serrador <serrador@arrakis.es>, 2003.
+# Jorge González <jorgegonz@svn.gnome.org>, 200, 2008.
+msgid ""
+msgstr ""
+"Project-Id-Version: memprof.HEAD.es\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2007-09-20 15:13+0100\n"
+"PO-Revision-Date: 2008-08-29 15:41+0200\n"
+"Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
+"Language-Team: Español <gnome-es-list@gnome.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type:  text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms:  nplurals=2; plural=(n != 1);\n"
+
+#: ../leakdetect.c:496 ../profile.c:702
+#, c-format
+msgid "Cannot open output file: %s\n"
+msgstr "No se puede abrir el archivo de salida: %s\n"
+
+#: ../main.c:838
+#, c-format
+msgid "Executation of \"%s\" failed: %s"
+msgstr "Ha fallado la ejecución de «%s»: %s"
+
+#: ../main.c:986
+msgid "MemProf"
+msgstr "MemProf"
+
+#: ../main.c:1095
+#, c-format
+msgid "Cannot find executable for \"%s\""
+msgstr "No se puede encontrar el ejecutable para «%s»"
+
+#: ../main.c:1359
+msgid "MemProf Error"
+msgstr "Error de MemProf"
+
+#: ../main.c:1359
+msgid "MemProf Warning"
+msgstr "Advertencia de MemProf"
+
+#: ../main.c:1422
+msgid "Functions"
+msgstr "Funciones"
+
+#: ../main.c:1423 ../main.c:1440 ../main.c:1458
+msgid "Self"
+msgstr "Propio"
+
+#: ../main.c:1424 ../main.c:1459
+msgid "Total"
+msgstr "Total"
+
+#: ../main.c:1439
+msgid "Descendants"
+msgstr "Descendientes"
+
+#: ../main.c:1441
+msgid "Cumulative"
+msgstr "Acumulativo"
+
+#: ../main.c:1457
+msgid "Callers"
+msgstr "Llamadores"
+
+#: ../main.c:1484
+msgid "Address"
+msgstr "Direcciones"
+
+#: ../main.c:1485
+msgid "Size"
+msgstr "Tamaño"
+
+#: ../main.c:1486
+msgid "Caller"
+msgstr "Llamador"
+
+#: ../main.c:1506
+msgid "Function"
+msgstr "Función"
+
+#: ../main.c:1507
+msgid "Line"
+msgstr "Línea"
+
+#: ../main.c:1508
+msgid "File"
+msgstr "Archivo"
+
+#: ../main.c:1710
+msgid "Really detach from finished process?"
+msgstr "¿Realmente desconectarse de los procesos terminados?"
+
+#: ../main.c:1712
+msgid "Really detach from running process?"
+msgstr "¿Realmente desconectarse de los procesos ejecutándose?"
+
+#: ../main.c:1742
+msgid "Really kill running process?"
+msgstr "¿Realmente matar los procesos ejecutándose?"
+
+#: ../main.c:1777
+msgid "Create new windows for forked processes"
+msgstr "Crear nuevas ventanas para los procesos ejecutados (forked processes)"
+
+#: ../main.c:1779
+msgid "Retain windows for processes after exec()"
+msgstr "Retener las ventanas para procesos después de exec()"
+
+#: ../main.c:1781
+msgid "Type of profiling information to collect"
+msgstr "Tipo de información del perfil a recolectar"
+
+#: ../main.c:1783
+msgid "Number of samples/sec for time profile (1k=1000)"
+msgstr "Cantidad de muestras/seg para perfil de tiempo (1k=1000)"
+
+#: ../main.c:1843
+msgid "Argument of --profile must be one of 'memory', 'cycles', or 'time'\n"
+msgstr "El argumento de --profile debe ser «memory», «cycles» o «time»\n"
+
+#: ../main.c:1878
+msgid "Cannot find memprof.glade"
+msgstr "No se puede encontrar memprof.glade"
+
+#: ../memprof.glade.h:1
+msgid "# of Allocations: "
+msgstr "# de Asignaciones: "
+
+#: ../memprof.glade.h:2
+msgid "0"
+msgstr "0"
+
+#: ../memprof.glade.h:3
+msgid "0k"
+msgstr "0k"
+
+#: ../memprof.glade.h:4
+msgid "32k"
+msgstr "32k"
+
+#: ../memprof.glade.h:5
+msgid "Adding Skip Function"
+msgstr "Agregando función ignorada"
+
+#: ../memprof.glade.h:6
+msgid "Adding Skip Regular Expression"
+msgstr "Agregando expresión regular ignorada"
+
+#: ../memprof.glade.h:7
+msgid "Bytes / Allocation: "
+msgstr "Bytes / asignación: "
+
+#: ../memprof.glade.h:8
+msgid "Check for Leaks"
+msgstr "Buscar pérdidas"
+
+#: ../memprof.glade.h:9
+msgid "Command to run on double click in stack trace:"
+msgstr "Comando a ejecutar al hacer doble clic sobre la pila de ejecución:"
+
+#: ../memprof.glade.h:10
+msgid "Create Profile"
+msgstr "Crear perfil"
+
+#: ../memprof.glade.h:11
+msgid "Defaults"
+msgstr "Predeterminados"
+
+#: ../memprof.glade.h:12
+msgid ""
+"Enter a regular expression of function names to skip when computing profiles"
+msgstr ""
+"Ingrese una expresión regular de nombres de función a ignorar cuando se "
+"calculan los perfiles"
+
+#: ../memprof.glade.h:13
+msgid "Enter pathname to an executable"
+msgstr "Ingrese la ruta hacia un ejecutable"
+
+#: ../memprof.glade.h:14
+msgid "Enter the name of a function to skip when computing profiles"
+msgstr ""
+"Ingrese el nombre de una función a ignorar cuando se calculan los perfiles"
+
+#: ../memprof.glade.h:15
+msgid "Functions to Skip:"
+msgstr "Funciones a ignorar:"
+
+#: ../memprof.glade.h:16
+msgid "Generate _Leak Report"
+msgstr "Generar reporte de _pérdidas"
+
+#: ../memprof.glade.h:17
+msgid "Generate _Profile"
+msgstr "Generar _perfil"
+
+#: ../memprof.glade.h:18 ../tree.c:109
+msgid "Kill"
+msgstr "Matar"
+
+#: ../memprof.glade.h:19
+msgid "Kill Program"
+msgstr "Matar programa"
+
+#: ../memprof.glade.h:20
+msgid "Leak Detection Options"
+msgstr "Opciones de detección de pérdidas"
+
+#: ../memprof.glade.h:21
+msgid "Leaks"
+msgstr "Pérdidas"
+
+#: ../memprof.glade.h:22
+msgid "MemProf - Processes"
+msgstr "Procesos de MemProf"
+
+#: ../memprof.glade.h:23
+msgid "Preferences"
+msgstr "Preferencias"
+
+#: ../memprof.glade.h:24
+msgid "Process _Tree"
+msgstr "Árbol de pro_cesos"
+
+#: ../memprof.glade.h:25
+msgid "Profile"
+msgstr "Perfil"
+
+#: ../memprof.glade.h:26
+msgid "Profile Options"
+msgstr "Opciones de perfil"
+
+#: ../memprof.glade.h:27
+msgid "Record"
+msgstr "Registro"
+
+#: ../memprof.glade.h:28
+msgid "Regular expressions to Skip:"
+msgstr "Expresiones regulares a ignorar:"
+
+#: ../memprof.glade.h:29
+msgid "Reset"
+msgstr "Restablecer"
+
+#: ../memprof.glade.h:30
+msgid "Run"
+msgstr "Ejecutar"
+
+#: ../memprof.glade.h:31
+msgid "Run Executable"
+msgstr "Ejecutar ejecutable"
+
+#: ../memprof.glade.h:32
+msgid "Run Program"
+msgstr "Ejecutar programa"
+
+#: ../memprof.glade.h:33
+msgid "Save"
+msgstr "Guardar"
+
+#: ../memprof.glade.h:34
+msgid "Save Report"
+msgstr "Guardar reporte"
+
+#: ../memprof.glade.h:35
+msgid "Save _Leak Info..."
+msgstr "Guardar información de la _pérdida..."
+
+#: ../memprof.glade.h:36
+msgid "Save _Profile..."
+msgstr "Guardar _perfil..."
+
+#: ../memprof.glade.h:37
+msgid "Stack Trace"
+msgstr "Pila de ejecución"
+
+#: ../memprof.glade.h:38
+msgid "Total Bytes: "
+msgstr "Bytes totales: "
+
+#: ../memprof.glade.h:39
+msgid "_About"
+msgstr "Acerca _de"
+
+#: ../memprof.glade.h:40
+msgid "_Close"
+msgstr "_Cerrar"
+
+#: ../memprof.glade.h:41
+msgid "_Detach"
+msgstr "_Desconectar"
+
+#: ../memprof.glade.h:42
+msgid "_File"
+msgstr "_Archivo"
+
+#: ../memprof.glade.h:43
+msgid "_Help"
+msgstr "Ay_uda"
+
+#: ../memprof.glade.h:44
+msgid "_Kill"
+msgstr "_Matar"
+
+#: ../memprof.glade.h:45
+msgid "_Process"
+msgstr "_Procesos"
+
+#: ../memprof.glade.h:46
+msgid "_Quit"
+msgstr "_Salir"
+
+#: ../memprof.glade.h:47
+msgid "_Run Program..."
+msgstr "E_jecutar programa..."
+
+#: ../process.c:843
+msgid "Initial"
+msgstr "Inicial"
+
+#: ../process.c:846
+msgid "Starting"
+msgstr "Comenzando"
+
+#: ../process.c:849
+msgid "Running"
+msgstr "Ejecutando"
+
+#: ../process.c:852
+msgid "Exiting"
+msgstr "Saliendo"
+
+#: ../process.c:855 ../process.c:858
+msgid "Defunct"
+msgstr "Defunct"
+
+#: ../server.c:289
+#, c-format
+msgid "Cannot find %s"
+msgstr "No se puede encontrar %s"
+
+#: ../tree.c:102
+msgid "Show"
+msgstr "Mostrar"
+
+#: ../tree.c:105
+msgid "Hide"
+msgstr "Ocultar"
+
+#: ../tree.c:112
+msgid "Detach"
+msgstr "Desconectar"
+
+#: ../tree.c:180
+msgid "PID"
+msgstr "PID"
+
+#: ../tree.c:181
+msgid "Command Line"
+msgstr "Línea de comando"
+
+#: ../tree.c:182
+msgid "Status"
+msgstr "Estado"

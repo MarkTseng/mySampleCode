@@ -1,0 +1,422 @@
+# memprof ja.po
+# Copyright (C) 1999,2000, 2003 Free Software Foundation, Inc.
+# Riue. SATOH <riue@gnome.gr.jp>, 1999.
+# Yukihiro Nakai <nakai@gnome.gr.jp>, 2000, 2004.
+# KAMAGASAKO Masatoshi <emerald@gnome.gr.jp>, 2003
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: memprof HEAD\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2004-03-09 18:25+0900\n"
+"PO-Revision-Date: 2004-03-17 22:25+0900\n"
+"Last-Translator: Yukihiro Nakai <nakai@gnome.gr.jp>\n"
+"Language-Team: Japanese <translation@gnome.gr.jp>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: leakdetect.c:584
+#, c-format
+msgid "Cannot open output file: %s\n"
+msgstr "出力ファイルが開きません: %s\n"
+
+#: main.c:777
+#, c-format
+msgid "Executation of \"%s\" failed"
+msgstr "\"%s\" が実行できません"
+
+#: main.c:921 memprof.glade.h:29
+msgid "MemProf"
+msgstr "MemProf"
+
+#: main.c:1028
+#, c-format
+msgid "Cannot find executable for \"%s\""
+msgstr "実行ファイルが見つかりません: %s"
+
+#: main.c:1131
+msgid "Saving is disabled at the moment"
+msgstr "保存機能は現在無効になっています"
+
+#: main.c:1704
+msgid "MemProf Error"
+msgstr "MemProf エラー"
+
+#: main.c:1704
+msgid "MemProf Warning"
+msgstr "MemProf 警告"
+
+#: main.c:1773 main.c:1786 main.c:1801
+msgid "Name"
+msgstr "名前"
+
+#: main.c:1774 main.c:1787 main.c:1802
+msgid "Self"
+msgstr "自己"
+
+#: main.c:1775 main.c:1803
+msgid "Total"
+msgstr "合計"
+
+#: main.c:1788
+msgid "Cumulative"
+msgstr "累積"
+
+#: main.c:1825
+msgid "Address"
+msgstr "アドレス"
+
+#: main.c:1826
+msgid "Size"
+msgstr "サイズ"
+
+#: main.c:1827
+msgid "Caller"
+msgstr "呼び出し元"
+
+#: main.c:1845
+msgid "Function"
+msgstr "関数"
+
+#: main.c:1846
+msgid "Line"
+msgstr "行"
+
+#: main.c:1847
+msgid "File"
+msgstr "ファイル"
+
+#: main.c:2057
+msgid "Really detach from finished process?"
+msgstr "終了したプロセスを切り離してよろしいですか?"
+
+#: main.c:2059
+msgid "Really detach from running process?"
+msgstr "実行中のプロセスを切り離してよろしいですか?"
+
+#: main.c:2089
+msgid "Really kill running process?"
+msgstr "実行中のプロセスを強制終了してよろしいですか?"
+
+#: main.c:2126
+msgid "Create new windows for forked processes"
+msgstr "forkされたプロセスの新規ウィンドウを作成"
+
+#: main.c:2128
+msgid "Retain windows for processes after exec()"
+msgstr "exec()後のプロセスのウィンドウの保持"
+
+#: main.c:2130
+msgid "Type of profiling information to collect"
+msgstr "修正すべきプロファイリング情報の型"
+
+#: main.c:2132
+msgid "Number of samples/sec for time profile (1k=1000)"
+msgstr "時間プロファイルで使用する毎秒のサンプル数 (1k=1000)"
+
+#: main.c:2181
+msgid "Argument of --profile must be one of 'memory', 'cycles, or 'time'\n"
+msgstr ""
+"--profile の引数は、'memory', 'cycle', 'time' のうちのいずれかでなければなり"
+"ません\n"
+
+#: main.c:2222
+msgid "Cannot find memprof.glade"
+msgstr "memprof.glade が見つかりません"
+
+#: memprof.glade.h:1
+msgid "# of Allocations:"
+msgstr "アロケーション数:"
+
+#: memprof.glade.h:2
+msgid "*"
+msgstr "*"
+
+#: memprof.glade.h:3
+msgid "0"
+msgstr "0"
+
+#: memprof.glade.h:4
+msgid "0k"
+msgstr "OK"
+
+#: memprof.glade.h:5
+msgid "32k"
+msgstr "32k"
+
+#: memprof.glade.h:6
+msgid "<b>Callers</b>"
+msgstr "<b>呼び出し元</b>"
+
+#: memprof.glade.h:7
+msgid "<b>Descendants</b>"
+msgstr "<b>子</b>"
+
+#: memprof.glade.h:8
+msgid "Adding Skip Function"
+msgstr "スキップする関数の追加"
+
+#: memprof.glade.h:9
+msgid "Adding Skip Regular Expression"
+msgstr "スキップする正規表現の追加"
+
+#: memprof.glade.h:10
+msgid "Bytes / Allocation:"
+msgstr "バイト数 / アロケーション:"
+
+#: memprof.glade.h:11
+msgid "Check for Leaks"
+msgstr "リークのチェック"
+
+#: memprof.glade.h:12
+msgid "Command to run on double click in stack trace:"
+msgstr "スタックトレース中のダブルクリックで実行するコマンド:"
+
+#: memprof.glade.h:13
+msgid ""
+"Copyright 1999, 2000, 2001, Red Hat, Inc.\n"
+"Copyright 2002, Kristian Rietveld"
+msgstr ""
+"Copyright 1999, 2000, 2001, Red Hat, Inc.\n"
+"Copyright 2002, Kristian Rietveld"
+
+#: memprof.glade.h:15
+msgid "Create Profile"
+msgstr "プロファイルの生成"
+
+#: memprof.glade.h:16
+msgid "Defaults"
+msgstr "デフォルト"
+
+#: memprof.glade.h:17
+msgid ""
+"Enter a regular expression of function names to skip when computing profiles"
+msgstr ""
+"プロファイルを作成する時にスキップする関数名の正規表現を入力してください"
+
+#: memprof.glade.h:18
+msgid "Enter pathname to an executable"
+msgstr "実行ファイルのパス名を入力して下さい"
+
+#: memprof.glade.h:19
+msgid "Enter the name of a function to skip when computing profiles"
+msgstr "プロファイル取得時にスキップする関数名を入力して下さい"
+
+#: memprof.glade.h:20
+msgid "Follow _exec()"
+msgstr "exec()を追いかける(_E)"
+
+#: memprof.glade.h:21
+msgid "Follow _fork()"
+msgstr "fork()を追いかける(_F)"
+
+#: memprof.glade.h:22
+msgid "Functions to Skip:"
+msgstr "スキップする関数:"
+
+#: memprof.glade.h:23
+msgid "Generate _Leak Report"
+msgstr "リーク情報の生成(_L)"
+
+#: memprof.glade.h:24
+msgid "Generate _Profile"
+msgstr "プロファイルの生成(_P)"
+
+#: memprof.glade.h:25 tree.c:109
+msgid "Kill"
+msgstr "強制終了"
+
+#: memprof.glade.h:26
+msgid "Kill Program"
+msgstr "プログラムの強制終了"
+
+#: memprof.glade.h:27
+msgid "Leak Detection Options"
+msgstr "リーク検出オプション"
+
+#: memprof.glade.h:28
+msgid "Leaks"
+msgstr "リーク"
+
+#: memprof.glade.h:30
+msgid "MemProf - Processes"
+msgstr "MemProf エラー"
+
+#: memprof.glade.h:31
+msgid "Memory Profiling Tool"
+msgstr "メモリプロファイリングツール"
+
+#: memprof.glade.h:32
+msgid "Preferences"
+msgstr "設定"
+
+#: memprof.glade.h:33
+msgid "Process _Tree"
+msgstr "プロセスツリー(_T)"
+
+#: memprof.glade.h:34
+msgid "Profile"
+msgstr "プロファイル"
+
+#: memprof.glade.h:35
+msgid "Profile Options"
+msgstr "プロファイルオプション"
+
+#: memprof.glade.h:36
+msgid "Regular expressions to Skip:"
+msgstr "スキップする正規表現:"
+
+#: memprof.glade.h:37
+msgid "Reset"
+msgstr "リセット"
+
+#: memprof.glade.h:38
+msgid "Run"
+msgstr "実行"
+
+#: memprof.glade.h:39
+msgid "Run Executable"
+msgstr "実行ファイルの実行"
+
+#: memprof.glade.h:40
+msgid "Run Program"
+msgstr "プログラムの実行"
+
+#: memprof.glade.h:41
+msgid "Save"
+msgstr "保存"
+
+#: memprof.glade.h:42
+msgid "Save Report"
+msgstr "ファイルの保存"
+
+#: memprof.glade.h:43
+msgid "Save _Leak Info..."
+msgstr "リーク情報の保存(_L)..."
+
+#: memprof.glade.h:44
+msgid "Save _Profile..."
+msgstr "プロファイルの保存(_P)..."
+
+#: memprof.glade.h:45
+msgid "Stack Trace"
+msgstr "スタックトレース"
+
+#: memprof.glade.h:46
+msgid "Total Bytes:"
+msgstr "合計バイト数:"
+
+#: memprof.glade.h:47
+msgid "_Detach"
+msgstr "切り離し(_D)"
+
+#: memprof.glade.h:48
+msgid "_File"
+msgstr "ファイル(_F)"
+
+#: memprof.glade.h:49
+msgid "_Help"
+msgstr "ヘルプ(_H)"
+
+#: memprof.glade.h:50
+msgid "_Kill"
+msgstr "強制終了(_K)"
+
+#: memprof.glade.h:51
+msgid "_Process"
+msgstr "プロセス(_P)"
+
+#: memprof.glade.h:52
+msgid "_Run Program..."
+msgstr "プログラムの実行(_R)..."
+
+#: memprof.glade.h:53
+msgid "_Settings"
+msgstr "設定(_S)"
+
+#: memprof.glade.h:54
+msgid "translator_credits"
+msgstr ""
+"Riue. SATOH <riue@gnome.gr.jp>, 1999.\n"
+"中井 幸博 <nakai@gnome.gr.jp>, 2000, 2004.\n"
+"KAMAGASAKO Masatoshi <emerald@gnome.gr.jp>, 2003"
+
+#: process.c:888
+msgid "Initial"
+msgstr "初期"
+
+#: process.c:891
+msgid "Starting"
+msgstr "開始"
+
+#: process.c:894
+msgid "Running"
+msgstr "実行"
+
+#: process.c:897
+msgid "Exiting"
+msgstr "終了"
+
+#: process.c:900 process.c:903
+msgid "Defunct"
+msgstr "ゾンビ"
+
+#: server.c:288
+#, c-format
+msgid "Cannot find %s"
+msgstr "%s が見つかりません"
+
+#: tree.c:102
+msgid "Show"
+msgstr "表示する"
+
+#: tree.c:105
+msgid "Hide"
+msgstr "表示しない"
+
+#: tree.c:112
+msgid "Detach"
+msgstr "切り離し"
+
+#: tree.c:180
+msgid "PID"
+msgstr "プロセスID"
+
+#: tree.c:181
+msgid "Command Line"
+msgstr "コマンドライン"
+
+#: tree.c:182
+msgid "Status"
+msgstr "状態"
+
+#~ msgid "Really quit MemProf?"
+#~ msgstr "MemProfを終了してよろしいですか?"
+
+#~ msgid "Bytes"
+#~ msgstr "バイト数"
+
+#~ msgid "Children"
+#~ msgstr "子"
+
+#~ msgid "Cannot find libmemintercept.so"
+#~ msgstr "libmemintercept.soが見つかりません"
+
+#~ msgid "Add..."
+#~ msgstr "追加..."
+
+#~ msgid "Delete"
+#~ msgstr "削除"
+
+#~ msgid "_Run..."
+#~ msgstr "実行(_R)..."
+
+#~ msgid "Copyright Red Hat, Inc., 1999-2000"
+#~ msgstr "Copyright Red Hat, Inc., 1999-2000"
+
+#~ msgid "label37"
+#~ msgstr "label37"
+
+#~ msgid "Add"
+#~ msgstr "追加"

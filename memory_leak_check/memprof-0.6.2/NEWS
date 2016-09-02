@@ -1,0 +1,88 @@
+Overview of changes in MemProf 0.6
+==================================
+
+* It works again [Michael Meeks]
+* Rewritten profiling module that handles recursion better [Soren Sandmann]
+* Display the call tree of functions [Soren]
+* Many bug fixes [John Gardiner Myers, Owen Taylor, James Henstridge, Soren]
+* New and updated translations:
+	- am (Daniel Yacob)
+	- az (Metin Amiroff)
+	- be (Dmitry G. Mastrukov)
+	- ca (Jordi Mallach)
+	- cs (Miloslav Trmac, Stanislav Brabec)
+	- da (Ole Laursen)
+	- de (Christian Meyer, Christian Neumair, Frank Arnold, 
+		Hendrik Richter)
+	- el (Kostas Papadimas)
+	- en_CA (Adam Weinberger)
+	- en_GB (David Lodge, Gareth Owen)
+	- es (Francisco Javier F. Serrador, Pablo Gonzalo del Campo)
+	- fi (Ilkka Tuohela, Christophe Merlet)
+	- hr (Robert Sedak)
+	- hu (Andras Timar)
+	- it (Alessio Frusciante)
+	- ja (Takeshi AIHANA, Yukihiro Nakai)
+	- lv (Artis Trops)
+	- ml (Guntupalli Karunakar)
+	- ms (Hasbullah Bin Pit)
+	- nb (Kjartan Maraas)
+	- ne (Pawan Chitrakar)
+	- nl (Vincent van Adrighem)
+	- no (Kjartan Maraas)
+	- pl (Artur Flinta, Zbigniew Chyla)
+	- pt_BR (Evandro Fernandes Giovanini, Gustavo Maciel Dias Vieira, 
+		 Gustavo Noronha Silva, Raphael Higino)
+	- pt (Duarte Loreto)
+	- ru (Nickolay V. Shmyrev, Valek Filippov)
+	- rw (Steve Murphy)
+	- sk (Marcel Telka, Stanislav Visnovsky)
+	- sr (Danilo Šegan)
+	- sv (Christian Rose, Daniel Nylander)
+	- ta (Abel Cheung, Fatih Demir)
+	- tr (Baris Cicek)
+	- uk (Yuriy Syrota)
+	- vi (Clytie Siddall, Pablo Saratxaga)
+	- zh_CN (Wang Jian)
+	- zh_TW (Abel Cheung, Wei-Lun Chao)
+
+Overview of changes in MemProf 0.5.1
+====================================
+
+* Redo memintercept.so initialization to fix "Starter malloc size exceeded"
+  C++ problem [Owen Taylor]
+* Miscellaneous memintercept.so fixes [Owen]
+* Use less memory for storing backtraces [Owen]
+* UI tweaks [Kristian Rietveld]
+* Various bug fixes [Soeren Sandmann, Gustavo Giraldez, Alexanders Larsson, Art Haas]
+* New and updated translations:
+	- pl (GNOME PL Team)
+	- sv (Christian Rose)
+	- de (Christian Neumair)
+	- da (Ole Laursen)
+	- es (Pablo Gonzalo del Campo)
+
+Overview of changes in MemProf 0.5.0
+====================================
+
+* Port to GNOME2 platform [Kristian Rietveld]
+* Updated icon and added .desktop file [Anders Carlsson, Seth Nickell]
+* Various bug fixes [Owen Taylor, Soeren Sandmann, Michael Meeks]
+* New and updated translations:
+	- es (Carlos Perello Marin, Pablo del Campo)
+	- zh_CN (Wang Jian, He Qiangqiang)
+	- ms (Hasbullah Bin Pit)
+	- pt (Duarte Loreto)
+	- sk (Stanislav Visnovsky)
+	- vi (pclouds)
+	- de (Christian Meyer, Christian Neumair)
+	- az (Vasif Ismailoglu MD)
+	- ca (SoftcatalA)
+	- da (Ole Laursen)
+	- pl (Zbigniew Chyla)
+	- fr (Christophe Merlet, Laurent Richard)
+	- sv (Christian Rose)
+	- no (Kjartan Maraas)
+	- ru (Valek Filippov)
+	- et (Toivo Leedjarv)
+	- nl (Taco Witte)

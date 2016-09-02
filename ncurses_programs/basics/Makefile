@@ -19,6 +19,7 @@ EXES = \
 	${EXE_DIR}/simple_attr \
 	${EXE_DIR}/simple_color \
 	${EXE_DIR}/simple_key \
+	${EXE_DIR}/acs_vars \
 	${EXE_DIR}/temp_leave \
 	${EXE_DIR}/win_border \
 	${EXE_DIR}/with_chgat

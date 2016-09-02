@@ -1,0 +1,465 @@
+# translation of memprof to Kinyarwanda.
+# Copyright (C) 2005 Free Software Foundation, Inc.
+# This file is distributed under the same license as the memprof package.
+# Steve Murphy <murf@e-tools.com>, 2005
+# Steve performed initial rough translation from compendium built from translations provided by the following translators:
+# Philibert Ndandali  <ndandali@yahoo.fr>, 2005.
+# Viateur MUGENZI <muvia1@yahoo.fr>, 2005.
+# Noëlla Mupole <s24211045@tuks.co.za>, 2005.
+# Carole Karema <karemacarole@hotmail.com>, 2005.
+# JEAN BAPTISTE NGENDAHAYO <ngenda_denis@yahoo.co.uk>, 2005.
+# Augustin KIBERWA  <akiberwa@yahoo.co.uk>, 2005.
+# Donatien NSENGIYUMVA <ndonatienuk@yahoo.co.uk>, 2005..
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: memprof HEAD\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2005-04-01 16:08-0700\n"
+"PO-Revision-Date: 2005-03-31 20:55-0700\n"
+"Last-Translator: Steve Murphy <murf@e-tools.com>\n"
+"Language-Team: Kinyarwanda <translation-team-rw@lists.sourceforge.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"ULL NAME <EMAIL@ADDRESS>\n"
+
+#: leakdetect.c:503
+#, fuzzy, c-format
+msgid "Cannot open output file: %s\n"
+msgstr "Gufungura Ibisohoka IDOSIYE"
+
+#: main.c:777
+#, fuzzy, c-format
+msgid "Executation of \"%s\" failed"
+msgstr "Bya Byanze"
+
+#: main.c:921 memprof.glade.h:29
+msgid "MemProf"
+msgstr ""
+
+#: main.c:1028
+#, fuzzy, c-format
+msgid "Cannot find executable for \"%s\""
+msgstr "Gushaka kugirango"
+
+#: main.c:1131
+#, fuzzy
+msgid "Saving is disabled at the moment"
+msgstr "ni Yahagaritswe ku i"
+
+#: main.c:1708
+msgid "MemProf Error"
+msgstr ""
+
+#: main.c:1708
+msgid "MemProf Warning"
+msgstr ""
+
+#: main.c:1777 main.c:1790 main.c:1805
+msgid "Name"
+msgstr "Izina"
+
+#: main.c:1778 main.c:1791 main.c:1806
+msgid "Self"
+msgstr ""
+
+# #-#-#-#-#  sc.pot (PACKAGE VERSION)  #-#-#-#-#
+# sc/source\ui\src\autofmt.src:RID_SCDLG_AUTOFORMAT.STR_SUM.text
+# #-#-#-#-#  sc.pot (PACKAGE VERSION)  #-#-#-#-#
+# sc/source\ui\src\globstr.src:RID_GLOBSTR.STR_PIVOT_TOTAL.text
+#: main.c:1779 main.c:1807
+msgid "Total"
+msgstr "Igiteranyo"
+
+#: main.c:1792
+msgid "Cumulative"
+msgstr ""
+
+# framework/source\services\logindialog.src:RID_DLG_LOGIN.RID_FT_SECURITYPROXYHOST.text
+#: main.c:1829
+msgid "Address"
+msgstr "Aderesi"
+
+# #-#-#-#-#  goodies.pot (PACKAGE VERSION)  #-#-#-#-#
+# goodies/source\filter.vcl\eos2met\dlgeos2.src:DLG_EXPORT_EMET.GRP_SIZE.text
+# #-#-#-#-#  goodies.pot (PACKAGE VERSION)  #-#-#-#-#
+# goodies/source\filter.vcl\epict\dlgepct.src:DLG_EXPORT_EPCT.GRP_SIZE.text
+#: main.c:1830
+msgid "Size"
+msgstr "Ingano"
+
+#: main.c:1831
+msgid "Caller"
+msgstr ""
+
+# #-#-#-#-#  sc.pot (PACKAGE VERSION)  #-#-#-#-#
+# sc/source\ui\dbgui\pvfundlg.src:RID_SCDLG_PIVOTSUBT.STR_DATAFUNC.text
+# #-#-#-#-#  sc.pot (PACKAGE VERSION)  #-#-#-#-#
+# sc/source\ui\src\scfuncs.src:RID_SC_FUNCTION_DESCRIPTIONS1.SC_OPCODE_SUB_TOTAL.2.text
+# #-#-#-#-#  sc.pot (PACKAGE VERSION)  #-#-#-#-#
+# sc/source\ui\src\toolbox.src:SCSTR_QHELP_BTNEQUAL.text
+#: main.c:1849
+msgid "Function"
+msgstr "Umumaro"
+
+# #-#-#-#-#  sch.pot (PACKAGE VERSION)  #-#-#-#-#
+# sch/source\ui\app\strings.src:STR_LINE.text
+# #-#-#-#-#  sch.pot (PACKAGE VERSION)  #-#-#-#-#
+# sch/source\ui\dlg\attrib2.src:TAB_AXIS.1.RID_SVXPAGE_LINE.text
+# #-#-#-#-#  sch.pot (PACKAGE VERSION)  #-#-#-#-#
+# sch/source\ui\dlg\attrib2.src:TAB_X_AXIS.1.RID_SVXPAGE_LINE.text
+# #-#-#-#-#  sch.pot (PACKAGE VERSION)  #-#-#-#-#
+# sch/source\ui\dlg\attrib2.src:TAB_Y_AXIS.1.RID_SVXPAGE_LINE.text
+# #-#-#-#-#  sch.pot (PACKAGE VERSION)  #-#-#-#-#
+# sch/source\ui\dlg\attrib2.src:TAB_Z_AXIS.1.RID_SVXPAGE_LINE.text
+# #-#-#-#-#  sch.pot (PACKAGE VERSION)  #-#-#-#-#
+# sch/source\ui\dlg\attrib2.src:TAB_GRID.1.RID_SVXPAGE_LINE.text
+# #-#-#-#-#  sch.pot (PACKAGE VERSION)  #-#-#-#-#
+# sch/source\ui\dlg\attrib2.src:TAB_LINE.1.RID_SVXPAGE_LINE.text
+# #-#-#-#-#  sch.pot (PACKAGE VERSION)  #-#-#-#-#
+# sch/source\ui\dlg\attrib.src:TAB_DATA_LINE.1.RID_SVXPAGE_LINE.text
+#: main.c:1850
+msgid "Line"
+msgstr "Umurongo"
+
+# sc/source\ui\src\scfuncs.src:RID_SC_FUNCTION_DESCRIPTIONS2.SC_OPCODE_DDE.4.text
+#: main.c:1851
+msgid "File"
+msgstr "Idosiye"
+
+#: main.c:2061
+#, fuzzy
+msgid "Really detach from finished process?"
+msgstr "Gukuraho... Bivuye Byarangiye"
+
+#: main.c:2063
+#, fuzzy
+msgid "Really detach from running process?"
+msgstr "Gukuraho... Bivuye"
+
+#: main.c:2093
+msgid "Really kill running process?"
+msgstr ""
+
+#: main.c:2130
+#, fuzzy
+msgid "Create new windows for forked processes"
+msgstr "Gishya kugirango"
+
+#: main.c:2132
+#, fuzzy
+msgid "Retain windows for processes after exec()"
+msgstr "kugirango Nyuma"
+
+#: main.c:2134
+#, fuzzy
+msgid "Type of profiling information to collect"
+msgstr "Bya Ibisobanuro Kuri"
+
+#: main.c:2136
+#, fuzzy
+msgid "Number of samples/sec for time profile (1k=1000)"
+msgstr "Bya Ingero- fatizo isogonda kugirango Igihe Ibijyana 1000"
+
+#: main.c:2185
+#, fuzzy
+msgid "Argument of --profile must be one of 'memory', 'cycles', or 'time'\n"
+msgstr "Bya Ibijyana Bya Cyangwa"
+
+#: main.c:2226
+#, fuzzy
+msgid "Cannot find memprof.glade"
+msgstr "Gushaka"
+
+#: memprof.glade.h:1
+#, fuzzy
+msgid "# of Allocations:"
+msgstr "#Bya"
+
+#: memprof.glade.h:2
+msgid "*"
+msgstr "*"
+
+#: memprof.glade.h:3
+msgid "0"
+msgstr "0"
+
+#: memprof.glade.h:4
+msgid "0k"
+msgstr ""
+
+#: memprof.glade.h:5
+msgid "32k"
+msgstr ""
+
+#: memprof.glade.h:6
+#, fuzzy
+msgid "<b>Callers</b>"
+msgstr "<B B"
+
+#: memprof.glade.h:7
+#, fuzzy
+msgid "<b>Descendants</b>"
+msgstr "<B B"
+
+#: memprof.glade.h:8
+msgid "Adding Skip Function"
+msgstr ""
+
+#: memprof.glade.h:9
+msgid "Adding Skip Regular Expression"
+msgstr ""
+
+#: memprof.glade.h:10
+msgid "Bytes / Allocation:"
+msgstr ""
+
+#: memprof.glade.h:11
+#, fuzzy
+msgid "Check for Leaks"
+msgstr "kugirango"
+
+#: memprof.glade.h:12
+#, fuzzy
+msgid "Command to run on double click in stack trace:"
+msgstr "Kuri Gukoresha ku MAHARAKUBIRI Kanda in"
+
+#: memprof.glade.h:13
+msgid ""
+"Copyright 1999, 2000, 2001, Red Hat, Inc.\n"
+"Copyright 2002, Kristian Rietveld"
+msgstr ""
+
+#: memprof.glade.h:15
+#, fuzzy
+msgid "Create Profile"
+msgstr "Rema ikiranga..."
+
+#: memprof.glade.h:16
+msgid "Defaults"
+msgstr ""
+
+#: memprof.glade.h:17
+#, fuzzy
+msgid ""
+"Enter a regular expression of function names to skip when computing profiles"
+msgstr "a Ibisanzwe imvugo Bya Umumaro Amazina Kuri Ryari:"
+
+#: memprof.glade.h:18
+#, fuzzy
+msgid "Enter pathname to an executable"
+msgstr "Kuri"
+
+#: memprof.glade.h:19
+#, fuzzy
+msgid "Enter the name of a function to skip when computing profiles"
+msgstr "i Izina: Bya a Umumaro Kuri Ryari:"
+
+#: memprof.glade.h:20
+msgid "Follow _exec()"
+msgstr ""
+
+#: memprof.glade.h:21
+msgid "Follow _fork()"
+msgstr ""
+
+#: memprof.glade.h:22
+#, fuzzy
+msgid "Functions to Skip:"
+msgstr "Kuri"
+
+#: memprof.glade.h:23
+msgid "Generate _Leak Report"
+msgstr ""
+
+#: memprof.glade.h:24
+msgid "Generate _Profile"
+msgstr ""
+
+#: memprof.glade.h:25 tree.c:109
+msgid "Kill"
+msgstr ""
+
+#: memprof.glade.h:26
+msgid "Kill Program"
+msgstr ""
+
+#: memprof.glade.h:27
+msgid "Leak Detection Options"
+msgstr ""
+
+#: memprof.glade.h:28
+msgid "Leaks"
+msgstr ""
+
+#: memprof.glade.h:30
+msgid "MemProf - Processes"
+msgstr ""
+
+#: memprof.glade.h:31
+msgid "Memory Profiling Tool"
+msgstr ""
+
+# extracted from content/PrefsWindow.xul
+# LOCALIZATION NOTE : FILE UI for the outer parts of the Prefs dialog
+#: memprof.glade.h:32
+msgid "Preferences"
+msgstr "Ibyahisemo"
+
+#: memprof.glade.h:33
+msgid "Process _Tree"
+msgstr ""
+
+#: memprof.glade.h:34
+msgid "Profile"
+msgstr "Ibijyana"
+
+#: memprof.glade.h:35
+msgid "Profile Options"
+msgstr ""
+
+#: memprof.glade.h:36
+#, fuzzy
+msgid "Regular expressions to Skip:"
+msgstr "Kuri"
+
+# sfx2/source\toolbox\tbxpopup.src:RID_SFX_TOOLBOX_POPUP.ITEM_ID_RESET_ITEMS.text
+#: memprof.glade.h:37
+msgid "Reset"
+msgstr "Kugarura"
+
+# #-#-#-#-#  basctl.pot (PACKAGE VERSION)  #-#-#-#-#
+# basctl/source\basicide\basidesh.src:RID_BASICIDE_OBJECTBAR.SID_BASICRUN.text
+# #-#-#-#-#  basctl.pot (PACKAGE VERSION)  #-#-#-#-#
+# basctl/source\basicide\macrodlg.src:RID_STR_RUN.text
+#: memprof.glade.h:38
+msgid "Run"
+msgstr "Gukoresha"
+
+#: memprof.glade.h:39
+msgid "Run Executable"
+msgstr ""
+
+#: memprof.glade.h:40
+#, fuzzy
+msgid "Run Program"
+msgstr "Gutangiza porogaramu"
+
+# basctl/source\basicide\basidesh.src:RID_STR_SAVE.text
+#: memprof.glade.h:41
+msgid "Save"
+msgstr "Kubika"
+
+# wizards/source\formwizard\dbwizres.src:RID_DB_REPORT_WIZARD_START_+_14.text
+#: memprof.glade.h:42
+msgid "Save Report"
+msgstr "Kubika Icyegeranyo"
+
+#: memprof.glade.h:43
+#, fuzzy
+msgid "Save _Leak Info..."
+msgstr "Kubika"
+
+#: memprof.glade.h:44
+#, fuzzy
+msgid "Save _Profile..."
+msgstr "Kubika"
+
+#: memprof.glade.h:45
+msgid "Stack Trace"
+msgstr ""
+
+#: memprof.glade.h:46
+msgid "Total Bytes:"
+msgstr ""
+
+#: memprof.glade.h:47
+#, fuzzy
+msgid "_Detach"
+msgstr "Gukuraho..."
+
+# sc/source\ui\src\globstr.src:RID_GLOBSTR.STR_HFCMD_FILE.text
+#: memprof.glade.h:48
+#, fuzzy
+msgid "_File"
+msgstr "IDOSIYE"
+
+#: memprof.glade.h:49
+#, fuzzy
+msgid "_Help"
+msgstr "Ifashayobora"
+
+#: memprof.glade.h:50
+msgid "_Kill"
+msgstr ""
+
+#: memprof.glade.h:51
+msgid "_Process"
+msgstr ""
+
+#: memprof.glade.h:52
+#, fuzzy
+msgid "_Run Program..."
+msgstr "Gutangiza porogaramu"
+
+#: memprof.glade.h:53
+#, fuzzy
+msgid "_Settings"
+msgstr "Amagenamiterere"
+
+#: memprof.glade.h:54
+msgid "translator_credits"
+msgstr ""
+
+#: process.c:902
+msgid "Initial"
+msgstr ""
+
+#: process.c:905
+msgid "Starting"
+msgstr ""
+
+#: process.c:908
+msgid "Running"
+msgstr ""
+
+#: process.c:911
+msgid "Exiting"
+msgstr ""
+
+#: process.c:914 process.c:917
+msgid "Defunct"
+msgstr ""
+
+#: server.c:288
+#, fuzzy, c-format
+msgid "Cannot find %s"
+msgstr "Gushaka"
+
+# basctl/source\basicide\objdlg.src:RID_BASICIDE_OBJCAT.RID_TB_TOOLBOX.TBITEM_SHOW.text
+#: tree.c:102
+msgid "Show"
+msgstr "Garagaza"
+
+# basctl/source\basicide\basidesh.src:RID_POPUP_TABBAR.SID_BASICIDE_HIDECURPAGE.text
+#: tree.c:105
+msgid "Hide"
+msgstr "Gushisha"
+
+#: tree.c:112
+#, fuzzy
+msgid "Detach"
+msgstr "Gukuraho..."
+
+#: tree.c:180
+msgid "PID"
+msgstr ""
+
+#: tree.c:181
+msgid "Command Line"
+msgstr ""
+
+#: tree.c:182
+msgid "Status"
+msgstr "Imimerere"

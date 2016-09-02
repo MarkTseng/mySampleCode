@@ -1,0 +1,387 @@
+# translation of pa.po to Punjabi
+# This file is distributed under the same license as the PACKAGE package.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
+# Amanpreet Singh Alam <aalam@redhat.com>, 2004.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: pa\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2004-09-01 17:15+0530\n"
+"PO-Revision-Date: 2004-09-01 17:23+0530\n"
+"Last-Translator: Amanpreet Singh Alam <aalam@redhat.com>\n"
+"Language-Team: Punjabi <fedora-trans-pa@redhat.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.3.1\n"
+"Plural-Forms: Plural-Forms: Plural-Forms: nplurals=2; plural=(n != 1);\n\n"
+
+#: leakdetect.c:584
+#, c-format
+msgid "Cannot open output file: %s\n"
+msgstr "ਆਉਟਪੁੱਟ ਫਾਇਲ ਨੂੰ ਖੋਲਿਆ ਨਹੀਂ ਜਾ ਸਕਦਾ ਹੈ: %s\n"
+
+#: main.c:777
+#, c-format
+msgid "Executation of \"%s\" failed"
+msgstr "\"%s\" ਜਾ ਚੱਲਣਾ ਅਸਫਲ"
+
+#: main.c:921 memprof.glade.h:29
+msgid "MemProf"
+msgstr "MemProf"
+
+#: main.c:1028
+#, c-format
+msgid "Cannot find executable for \"%s\""
+msgstr "\"%s\" ਲਈ ਚੱਲਣਯੋਗ ਲੱਭਣ ਤੋਂ ਅਸਫਲ"
+
+#: main.c:1131
+msgid "Saving is disabled at the moment"
+msgstr "ਇਸ ਸਮੇਂ ਸੰਭਾਲਣਾ ਅਯੋਗ ਹੈ"
+
+#: main.c:1706
+msgid "MemProf Error"
+msgstr "MemProf ਗਲਤੀ"
+
+#: main.c:1706
+msgid "MemProf Warning"
+msgstr "MemProf ਚੇਤਾਵਨੀ"
+
+#: main.c:1775 main.c:1788 main.c:1803
+msgid "Name"
+msgstr "ਨਾਂ"
+
+#: main.c:1776 main.c:1789 main.c:1804
+msgid "Self"
+msgstr "ਖੁਦ"
+
+#: main.c:1777 main.c:1805
+msgid "Total"
+msgstr "ਕੁੱਲ"
+
+#: main.c:1790
+msgid "Cumulative"
+msgstr "ਸੰਚਾਵੀਂ"
+
+#: main.c:1827
+msgid "Address"
+msgstr "ਸਿਰਨਾਵਾਂ"
+
+#: main.c:1828
+msgid "Size"
+msgstr "ਆਕਾਰ"
+
+#: main.c:1829
+msgid "Caller"
+msgstr ""
+
+#: main.c:1847
+msgid "Function"
+msgstr "ਫੰਕਸ਼ਨ"
+
+#: main.c:1848
+msgid "Line"
+msgstr "ਸਤਰ"
+
+#: main.c:1849
+msgid "File"
+msgstr "ਫਾਇਲ"
+
+#: main.c:2059
+msgid "Really detach from finished process?"
+msgstr ""
+
+#: main.c:2061
+msgid "Really detach from running process?"
+msgstr ""
+
+#: main.c:2091
+msgid "Really kill running process?"
+msgstr ""
+
+#: main.c:2128
+msgid "Create new windows for forked processes"
+msgstr ""
+
+#: main.c:2130
+msgid "Retain windows for processes after exec()"
+msgstr ""
+
+#: main.c:2132
+msgid "Type of profiling information to collect"
+msgstr ""
+
+#: main.c:2134
+msgid "Number of samples/sec for time profile (1k=1000)"
+msgstr ""
+
+#: main.c:2183
+msgid "Argument of --profile must be one of 'memory', 'cycles, or 'time'\n"
+msgstr ""
+
+#: main.c:2224
+msgid "Cannot find memprof.glade"
+msgstr "memprof.glade ਲੱਭੀ ਨਹੀਂ ਜਾ ਸਕੀ ਹੈ"
+
+#: memprof.glade.h:1
+msgid "# of Allocations:"
+msgstr "# of Allocations:"
+
+#: memprof.glade.h:2
+msgid "*"
+msgstr "*"
+
+#: memprof.glade.h:3
+msgid "0"
+msgstr "0"
+
+#: memprof.glade.h:4
+msgid "0k"
+msgstr "0k"
+
+#: memprof.glade.h:5
+msgid "32k"
+msgstr "32k"
+
+#: memprof.glade.h:6
+msgid "<b>Callers</b>"
+msgstr ""
+
+#: memprof.glade.h:7
+msgid "<b>Descendants</b>"
+msgstr ""
+
+#: memprof.glade.h:8
+msgid "Adding Skip Function"
+msgstr ""
+
+#: memprof.glade.h:9
+msgid "Adding Skip Regular Expression"
+msgstr ""
+
+#: memprof.glade.h:10
+msgid "Bytes / Allocation:"
+msgstr "ਬਾਇਟ / ਜਾਰੀ:"
+
+#: memprof.glade.h:11
+msgid "Check for Leaks"
+msgstr ""
+
+#: memprof.glade.h:12
+msgid "Command to run on double click in stack trace:"
+msgstr ""
+
+#: memprof.glade.h:13
+msgid ""
+"Copyright 1999, 2000, 2001, Red Hat, Inc.\n"
+"Copyright 2002, Kristian Rietveld"
+msgstr ""
+"੧੯੯੯, ੨੦੦੦, ੨੦੦੧ ਲਈ Red Hat, Inc. ਹੱਕ ਰਾਖਵੇ\n"
+"੨੦੦੨ ਲਈ ਕ੍ਰਿਸ਼ਟਨ ਰੀਟਵੀਲਡ"
+
+#: memprof.glade.h:15
+msgid "Create Profile"
+msgstr "ਪ੍ਰੋਫਾਇਲ ਬਣਾਓ"
+
+#: memprof.glade.h:16
+msgid "Defaults"
+msgstr "ਮੂਲ"
+
+#: memprof.glade.h:17
+msgid "Enter a regular expression of function names to skip when computing profiles"
+msgstr ""
+
+#: memprof.glade.h:18
+msgid "Enter pathname to an executable"
+msgstr ""
+
+#: memprof.glade.h:19
+msgid "Enter the name of a function to skip when computing profiles"
+msgstr ""
+
+#: memprof.glade.h:20
+msgid "Follow _exec()"
+msgstr ""
+
+#: memprof.glade.h:21
+msgid "Follow _fork()"
+msgstr ""
+
+#: memprof.glade.h:22
+msgid "Functions to Skip:"
+msgstr ""
+
+#: memprof.glade.h:23
+msgid "Generate _Leak Report"
+msgstr ""
+
+#: memprof.glade.h:24
+msgid "Generate _Profile"
+msgstr ""
+
+#: memprof.glade.h:25 tree.c:109
+msgid "Kill"
+msgstr "ਸਮਾਪਤ"
+
+#: memprof.glade.h:26
+msgid "Kill Program"
+msgstr "ਕਾਰਜ ਸਮਾਪਤ"
+
+#: memprof.glade.h:27
+msgid "Leak Detection Options"
+msgstr ""
+
+#: memprof.glade.h:28
+msgid "Leaks"
+msgstr ""
+
+#: memprof.glade.h:30
+msgid "MemProf - Processes"
+msgstr "MemProf - ਕਾਰਵਾਈਆਂ"
+
+#: memprof.glade.h:31
+msgid "Memory Profiling Tool"
+msgstr ""
+
+#: memprof.glade.h:32
+msgid "Preferences"
+msgstr "ਮੇਰੀ ਪਸੰਦ"
+
+#: memprof.glade.h:33
+msgid "Process _Tree"
+msgstr "ਕਾਰਜ ਲੜੀ"
+
+#: memprof.glade.h:34
+msgid "Profile"
+msgstr "ਪ੍ਰੋਫਾਇਲ"
+
+#: memprof.glade.h:35
+msgid "Profile Options"
+msgstr "ਪ੍ਰੋਫਾਇਲ ਚੋਣ"
+
+#: memprof.glade.h:36
+msgid "Regular expressions to Skip:"
+msgstr ""
+
+#: memprof.glade.h:37
+msgid "Reset"
+msgstr ""
+
+#: memprof.glade.h:38
+msgid "Run"
+msgstr "ਚਲਾਓ"
+
+#: memprof.glade.h:39
+msgid "Run Executable"
+msgstr "ਚੱਲਣਯੋਗ ਚਲਾਓ"
+
+#: memprof.glade.h:40
+msgid "Run Program"
+msgstr "ਕਾਰਜ ਚਲਾਓ"
+
+#: memprof.glade.h:41
+msgid "Save"
+msgstr "ਸੰਭਾਲੋ"
+
+#: memprof.glade.h:42
+msgid "Save Report"
+msgstr "ਰਿਪੋਟ ਸੰਭਾਲੋ"
+
+#: memprof.glade.h:43
+msgid "Save _Leak Info..."
+msgstr ""
+
+#: memprof.glade.h:44
+msgid "Save _Profile..."
+msgstr "_ਪ੍ਰੋਫਾਇਲ ਸੰਭਾਲੋ.."
+
+#: memprof.glade.h:45
+msgid "Stack Trace"
+msgstr ""
+
+#: memprof.glade.h:46
+msgid "Total Bytes:"
+msgstr "ਕੁੱਲ ਬਾਈਟ:"
+
+#: memprof.glade.h:47
+msgid "_Detach"
+msgstr ""
+
+#: memprof.glade.h:48
+msgid "_File"
+msgstr "_ਫਾਇਲ"
+
+#: memprof.glade.h:49
+msgid "_Help"
+msgstr "_ਸਹਾਇਤਾ"
+
+#: memprof.glade.h:50
+msgid "_Kill"
+msgstr "_ਸਮਾਪਤ"
+
+#: memprof.glade.h:51
+msgid "_Process"
+msgstr "_ਕਾਰਜ"
+
+#: memprof.glade.h:52
+msgid "_Run Program..."
+msgstr "ਕਾਰਜ _ਚਲਾਓ..."
+
+#: memprof.glade.h:53
+msgid "_Settings"
+msgstr "_ਵਿਵਸਥਾ"
+
+#: memprof.glade.h:54
+msgid "translator_credits"
+msgstr "ਅਮਨਪ੍ਰੀਤ ਸਿੰਘ ਆਲਮ<aalam@redhat.com> "
+
+#: process.c:888
+msgid "Initial"
+msgstr "ਸ਼ੁਰੂਆਤੀ"
+
+#: process.c:891
+msgid "Starting"
+msgstr "ਸ਼ੁਰੂ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ"
+
+#: process.c:894
+msgid "Running"
+msgstr "ਚੱਲ ਰਿਹਾ ਹੈ"
+
+#: process.c:897
+msgid "Exiting"
+msgstr "ਬੰਦ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ"
+
+#: process.c:900 process.c:903
+msgid "Defunct"
+msgstr ""
+
+#: server.c:288
+#, c-format
+msgid "Cannot find %s"
+msgstr "%s ਲੱਭਿਆ ਨਹੀਂ ਜਾ ਸਕਿਆ ਹੈ"
+
+#: tree.c:102
+msgid "Show"
+msgstr "ਵੇਖਾਓ"
+
+#: tree.c:105
+msgid "Hide"
+msgstr "ਓਹਲੇ"
+
+#: tree.c:112
+msgid "Detach"
+msgstr ""
+
+#: tree.c:180
+msgid "PID"
+msgstr "PID"
+
+#: tree.c:181
+msgid "Command Line"
+msgstr "ਕਮਾਂਡ ਲਾਇਨ"
+
+#: tree.c:182
+msgid "Status"
+msgstr "ਸਥਿਤੀ"
+

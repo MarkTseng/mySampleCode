@@ -1,0 +1,403 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: memprof.HEAD.pot\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2006-12-13 22:10+0100\n"
+"PO-Revision-Date: 2006-12-15 01:58+0530\n"
+"Last-Translator: Jurmey Rabgay <jur_gay@yahoo.com>\n"
+"Language-Team: dzongkha <pgeyleg@dit.gov.bt>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2;plural=(n!=1);\n"
+"X-Poedit-Language: dzongkha\n"
+"X-Poedit-Country: bhutan\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#: ../leakdetect.c:503
+#, c-format
+msgid "Cannot open output file: %s\n"
+msgstr "ཨའུཊི་པུཊི་ཡིག་སྣོད་ཁ་ཕྱེ་མ་ཚུགས་: %s\n"
+
+#: ../main.c:797
+#, c-format
+msgid "Executation of \"%s\" failed: %s"
+msgstr "\"%s\" ལག་ལེན་འཐབ་ནི་ལུ་འཐུས་ཤོར་བྱུང་ཡོདཔ་: %s"
+
+#: ../main.c:945
+msgid "MemProf"
+msgstr "མེམ་པོརོཕ་"
+
+#: ../main.c:1054
+#, c-format
+msgid "Cannot find executable for \"%s\""
+msgstr "\"%s\" གི་དོན་ལུ་ ལག་ལེན་འཐབ་བཏུབ་འཚོལ་མི་ཐོབ་"
+
+#: ../main.c:1157
+msgid "Saving is disabled at the moment"
+msgstr "སྲུང་བཞག་འདི་ ད་ལྟོ་ལྕོགས་མིན་བཟོ་ཡོདཔ་"
+
+#. FIXME: these dialogs pop up below the window. Of course this
+#. * entire piece of UI needs to die anyway
+#.
+#: ../main.c:1348
+msgid "Function names cannot contain spaces"
+msgstr "ལས་འགན་གྱི་མིང་ནང་ལུ་ བར་སྟོང་ཚུ་མེད་"
+
+#: ../main.c:1753
+msgid "MemProf Error"
+msgstr "མེམ་པོརོཕ་ འཛོལ་བ་"
+
+#: ../main.c:1753
+msgid "MemProf Warning"
+msgstr "མེམ་པོརོཕ་ཉེན་བརྡ་"
+
+#: ../main.c:1816
+#: ../main.c:1833
+#: ../main.c:1851
+msgid "Name"
+msgstr "མིང་"
+
+#: ../main.c:1817
+#: ../main.c:1834
+#: ../main.c:1852
+msgid "Self"
+msgstr "རང་ཉིད་"
+
+#: ../main.c:1818
+#: ../main.c:1853
+msgid "Total"
+msgstr "བསྡོམས་"
+
+#: ../main.c:1835
+msgid "Cumulative"
+msgstr "བསྡུ་གསོག་"
+
+#: ../main.c:1878
+msgid "Address"
+msgstr "ཁ་བྱང་"
+
+#: ../main.c:1879
+msgid "Size"
+msgstr "ཚད་"
+
+#: ../main.c:1880
+msgid "Caller"
+msgstr "འབོད་བརྡ་འབད་མི་"
+
+#: ../main.c:1900
+msgid "Function"
+msgstr "ལས་འགན་"
+
+#: ../main.c:1901
+msgid "Line"
+msgstr "གྲལ་ཐིག་"
+
+#: ../main.c:1902
+msgid "File"
+msgstr "ཡིག་སྣོད་"
+
+#: ../main.c:2112
+msgid "Really detach from finished process?"
+msgstr "རྫོགས་སོང་པའི་ལས་སྦྱོར་ལས་ ཐད་རི་འབད་འབའ་རི་ཁ་འཕྱལ་ནི་ཨིན་ན?"
+
+#: ../main.c:2114
+msgid "Really detach from running process?"
+msgstr "གཡོག་བཀོལ་བའི་བསྒང་གི་ལས་སྦྱོར་ལས་ ཐད་རི་འབད་འབའ་རི་ཁ་འཕྱལ་ནི་ཨིན་ན?"
+
+#: ../main.c:2144
+msgid "Really kill running process?"
+msgstr "གཡོག་བཀོལ་བའི་བསྒང་གི་ལས་སྦྱོར་འདི་ ཐད་རི་འབའ་རི་མེདཔ་གཏང་ནི་ཨིན་ན་?"
+
+#: ../main.c:2179
+msgid "Create new windows for forked processes"
+msgstr "ཁ་སྤེལ་ཡོད་པའི་ལས་སྦྱོར་ཚུ་གི་དོན་ལུ་ སྒོ་སྒྲིག་གསརཔ་ཅིག་གསར་བསྐྲུན་འབད་"
+
+#: ../main.c:2181
+msgid "Retain windows for processes after exec()"
+msgstr "ལག་ལེན་()གྱི་ཤུལ་མ་ ལས་སྦྱོར་གྱི་དོན་ལུ་ སྒོ་སྒྲིག་བདག་བཟུང་འབདཝ་ཨིན་"
+
+#: ../main.c:2183
+msgid "Type of profiling information to collect"
+msgstr "བསྡུ་ལེན་འབད་ནི་ལུ་ གསལ་སྡུད་བརྡ་དོན་གྱི་དབྱེ་བ་"
+
+#: ../main.c:2185
+msgid "Number of samples/sec for time profile (1k=1000)"
+msgstr "དཔེ་ཚད་ཨང་གྲངས་/ཆུ་ཚོད་གསལ་སྡུད་ཀྱི་དོན་ལུ་ ཨེསི་ཨི་སི་(༡ཀེ་=༡༠༠༠)"
+
+#: ../main.c:2245
+msgid "Argument of --profile must be one of 'memory', 'cycles', or 'time'\n"
+msgstr "--གསལ་སྡུད་ཀྱི་སྒྲུབ་རྟགས་འདི་ 'memory', 'cycles', ཡང་ན་ 'time'གསུམ་གྱི་ནང་ལས་གཅིག་ཨིན་དགོ་\n"
+
+#: ../main.c:2280
+msgid "Cannot find memprof.glade"
+msgstr "memprof.glade འཚོལ་མི་ཚུགས་"
+
+#: ../memprof.glade.h:1
+msgid "# of Allocations:"
+msgstr "# སྤྲོད་བཞག་:"
+
+#: ../memprof.glade.h:2
+msgid "0"
+msgstr "༠"
+
+#: ../memprof.glade.h:3
+msgid "0k"
+msgstr "བཏུབ་"
+
+#: ../memprof.glade.h:4
+msgid "32k"
+msgstr "༣༢  ཀེ་"
+
+#: ../memprof.glade.h:5
+msgid "<b>Callers</b>"
+msgstr "<b>འབོད་བརྡ་འབད་མི་</b>"
+
+#: ../memprof.glade.h:6
+msgid "<b>Descendants</b>"
+msgstr "<b>བརྒྱུད་པ་</b>"
+
+#: ../memprof.glade.h:7
+msgid "Adding Skip Function"
+msgstr "གོམ་འགྱོ་ལས་འགན་ ཁ་སྐོང་རྐྱབ་དོ་"
+
+#: ../memprof.glade.h:8
+msgid "Adding Skip Regular Expression"
+msgstr "གོམ་འགྱོའི་དུས་རྒྱུན་གསལ་བརྗོད་ ཁ་སྐོང་རྐྱབ་དོ་"
+
+#: ../memprof.glade.h:9
+msgid "Bytes / Allocation:"
+msgstr "བཱའིཊིསི་/སྤྲོད་བཞག་:"
+
+#: ../memprof.glade.h:10
+msgid "Check for Leaks"
+msgstr "གསང་བཤད་ཞིབ་དཔྱད་"
+
+#: ../memprof.glade.h:11
+msgid "Command to run on double click in stack trace:"
+msgstr "བརྩེགས་ཤུལ་ནང་ ཨེབ་གཏང་ཚར་གཉིས་ཀྱི་ཐོག་ལས་གཡོག་བཀོལ་ནིའི་བརྡ་བཀོད་:"
+
+#: ../memprof.glade.h:12
+msgid "Create Profile"
+msgstr "གསལ་སྡུད་གསར་བསྐྲུན་འབད་"
+
+#: ../memprof.glade.h:13
+msgid "Defaults"
+msgstr "སྔོན་སྒྲིག་"
+
+#: ../memprof.glade.h:14
+msgid "Enter a regular expression of function names to skip when computing profiles"
+msgstr "གསལ་སྡུད་རྩིས་རྐྱབ་པའི་སྐབས་ གོམ་འགྱོ་ནི་ལུ་ ལས་འགན་མིང་གི་དུས་རྒྱུན་གསལ་བརྗོད་ཅིག་བཙུགས་"
+
+#: ../memprof.glade.h:15
+msgid "Enter pathname to an executable"
+msgstr "ལག་ལེན་འཐབ་བཏུབ་མི་ལུ་ འགྲུལ་ལམ་མིང་བཙུགས་"
+
+#: ../memprof.glade.h:16
+msgid "Enter the name of a function to skip when computing profiles"
+msgstr "གསལ་སྡུད་རྩིས་རྐྱབ་པའི་བསྒང་ལུ་ གོམ་འགྱོ་ནིའི་ལས་འགན་མིང་ཅིག་བཙུགས་"
+
+#: ../memprof.glade.h:17
+msgid "Follow _exec()"
+msgstr "ལག་ལེན་()རྗེས་སུ་འབྲང་(_e)"
+
+#: ../memprof.glade.h:18
+msgid "Follow _fork()"
+msgstr "ཁ་སྤེལ་() རྗེས་སུ་འབྲང་(_f)"
+
+#: ../memprof.glade.h:19
+msgid "Functions to Skip:"
+msgstr "གོམ་འགྱོ་ནིའི་ལས་འགན་:"
+
+#: ../memprof.glade.h:20
+msgid "Generate _Leak Report"
+msgstr "གསང་བཤད་སྙན་ཞུ་ བཟོ་བཏོན་འབད་(_L)"
+
+#: ../memprof.glade.h:21
+msgid "Generate _Profile"
+msgstr "གསལ་སྡུད་ བཟོ་བཏོན་འབད་(_P)"
+
+#: ../memprof.glade.h:22
+#: ../tree.c:109
+msgid "Kill"
+msgstr "མེདཔ་གཏང་"
+
+#: ../memprof.glade.h:23
+msgid "Kill Program"
+msgstr "ལས་རིམ་མེདཔ་གཏང་"
+
+#: ../memprof.glade.h:24
+msgid "Leak Detection Options"
+msgstr "གསང་བཤད་སྐྱོན་འཛིན་གདམ་ཁ་"
+
+#: ../memprof.glade.h:25
+msgid "Leaks"
+msgstr "གསང་བཤད་ཚུ་"
+
+#: ../memprof.glade.h:26
+msgid "MemProf - Processes"
+msgstr "མེམ་པོརོཕ་ - ལས་སྦྱོར་ཚུ་"
+
+#: ../memprof.glade.h:27
+msgid "Preferences"
+msgstr "དགའ་གདམ་ཚུ་"
+
+#: ../memprof.glade.h:28
+msgid "Process _Tree"
+msgstr "ལས་སྦྱོར་རྩ་འབྲེལ་(_T)"
+
+#: ../memprof.glade.h:29
+msgid "Profile"
+msgstr "གསལ་སྡུད་"
+
+#: ../memprof.glade.h:30
+msgid "Profile Options"
+msgstr "གསལ་སྡུད་གདམ་ཁ་"
+
+#: ../memprof.glade.h:31
+msgid "Record"
+msgstr "དྲན་ཐོ་"
+
+#: ../memprof.glade.h:32
+msgid "Regular expressions to Skip:"
+msgstr "གོམ་འགྱོ་ནི་ལུ་ དུས་རྒྱུན་གྱི་གསལ་བརྗོད་:"
+
+#: ../memprof.glade.h:33
+msgid "Reset"
+msgstr "སླར་སྒྲིག་"
+
+#: ../memprof.glade.h:34
+msgid "Run"
+msgstr "གཡོག་བཀོལ་"
+
+#: ../memprof.glade.h:35
+msgid "Run Executable"
+msgstr "ལག་ལེན་འཐབ་བཏུབ་འདི་ གཡོག་བཀོལ་"
+
+#: ../memprof.glade.h:36
+msgid "Run Program"
+msgstr "ལས་རིམ་གཡོག་བཀོལ་"
+
+#: ../memprof.glade.h:37
+msgid "Save"
+msgstr "སྲུངས་"
+
+#: ../memprof.glade.h:38
+msgid "Save Report"
+msgstr "སྙན་ཞུ་སྲུངས་"
+
+#: ../memprof.glade.h:39
+msgid "Save _Leak Info..."
+msgstr "གསང་བཤད་བརྡ་དོན་སྲུངས་་་་་(_L)"
+
+#: ../memprof.glade.h:40
+msgid "Save _Profile..."
+msgstr "གསལ་སྡུད་སྲུངས་་་་་་(_P)"
+
+#: ../memprof.glade.h:41
+msgid "Stack Trace"
+msgstr "བརྩེགས་བཤུལ་"
+
+#: ../memprof.glade.h:42
+msgid "Total Bytes:"
+msgstr "བཱའིཊིསི་བསྡོམས་:"
+
+#: ../memprof.glade.h:43
+msgid "_About"
+msgstr "སྐོར་ལས་(_A)"
+
+#: ../memprof.glade.h:44
+msgid "_Close"
+msgstr "ཁ་བསྡམས་(_C)"
+
+#: ../memprof.glade.h:45
+msgid "_Detach"
+msgstr "ཁ་འཕྱལ་(_D)"
+
+#: ../memprof.glade.h:46
+msgid "_File"
+msgstr "ཡིག་སྣོད་(_F)"
+
+#: ../memprof.glade.h:47
+msgid "_Help"
+msgstr "གྲོགས་རམ་(_H)"
+
+#: ../memprof.glade.h:48
+msgid "_Kill"
+msgstr "མེདཔ་གཏང་(_K)"
+
+#: ../memprof.glade.h:49
+msgid "_Preferences"
+msgstr "དགའ་གདམ་ཚུ་(_P)"
+
+#: ../memprof.glade.h:50
+msgid "_Process"
+msgstr "ལས་སྦྱོར་(_P)"
+
+#: ../memprof.glade.h:51
+msgid "_Quit"
+msgstr "སྤང་(_Q)"
+
+#: ../memprof.glade.h:52
+msgid "_Run Program..."
+msgstr "ལས་རིམ་གཡོག་བཀོལ་་་་(_R)"
+
+#: ../memprof.glade.h:53
+msgid "_Settings"
+msgstr "སྒྲིག་སྟངས་ཚུ་(_S)"
+
+#: ../process.c:907
+msgid "Initial"
+msgstr "འགོ་ཐོག་"
+
+#: ../process.c:910
+msgid "Starting"
+msgstr "འགོ་བཙུག་དོ་"
+
+#: ../process.c:913
+msgid "Running"
+msgstr "གཡོག་བཀོལ་དོ་"
+
+#: ../process.c:916
+msgid "Exiting"
+msgstr "ཕྱིར་འཐོན་འབད་དོ་"
+
+#: ../process.c:919
+#: ../process.c:922
+msgid "Defunct"
+msgstr "ལས་འགན་མེདཔ་"
+
+#: ../server.c:289
+#, c-format
+msgid "Cannot find %s"
+msgstr "%s འཚོལ་མི་ཐོབ་"
+
+#: ../tree.c:102
+msgid "Show"
+msgstr "སྟོན་"
+
+#: ../tree.c:105
+msgid "Hide"
+msgstr "སྦ་"
+
+#: ../tree.c:112
+msgid "Detach"
+msgstr "ཁ་འཕྱལ་"
+
+#: ../tree.c:180
+msgid "PID"
+msgstr "པི་ཨའི་ཌི་"
+
+#: ../tree.c:181
+msgid "Command Line"
+msgstr "བརྡ་བཀོད་གྲལ་ཐིག་"
+
+#: ../tree.c:182
+msgid "Status"
+msgstr "གནས་ཆད་"
+

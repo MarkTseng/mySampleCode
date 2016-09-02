@@ -2,7 +2,7 @@
 * File Name : test.c
 * Purpose :
 * Creation Date : 01-09-2016
-* Last Modified : Thu 01 Sep 2016 09:13:15 AM CST
+* Last Modified : Thu 01 Sep 2016 03:15:16 PM CST
 * Created By : Mark Tseng  
 **********************************************/
 
@@ -16,6 +16,7 @@
 #include <string.h>
 #include <getopt.h>
 #include <errno.h>
+#include "liba.h"
 
 int main(int argc, char * argv[])
 {
@@ -23,8 +24,9 @@ int main(int argc, char * argv[])
 	printf("calloc addr: %p\n", calloc);
 	printf("free addr: %p\n", free);
 	printf("main addr: %p\n", main);
-	free(malloc(1024));
+	free(calloc(1,1024));
     write(0, "Hello, Kernel!\n", 15);
     printf("Hello, World!\n");
+	TEST_A();
 	return 0;
 }

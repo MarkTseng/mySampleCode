@@ -1,0 +1,376 @@
+# Translations into the Amharic Language.
+# Copyright (C) 2002 Free Software Foundation, Inc.
+# This file is distributed under the same license as the memprof package.
+# Ge'ez Frontier Foundation <locales@geez.org>, 2002.
+#
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: memprof\n"
+"POT-Creation-Date: 2003-06-19 14:09+0200\n"
+"PO-Revision-Date: 2003-02-03 10:16+EDT\n"
+"Last-Translator: Ge'ez Frontier Foundation <locales@geez.org>\n"
+"Language-Team: Amharic <locales@geez.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: leakdetect.c:584
+#, c-format
+msgid "Cannot open output file: %s\n"
+msgstr "የውጤት ፋይልን መክፈት አልተቻለም፦ %s\n"
+
+#: main.c:635
+#, c-format
+msgid "Executation of \"%s\" failed"
+msgstr ""
+
+#: main.c:766
+msgid "Really quit MemProf?"
+msgstr ""
+
+#: main.c:812 memprof.glade.h:35
+msgid "MemProf"
+msgstr "MemProf"
+
+#: main.c:915
+#, c-format
+msgid "Cannot find executable for \"%s\""
+msgstr ""
+
+#: main.c:1018
+msgid "Saving is disabled at the moment"
+msgstr ""
+
+#: main.c:1532
+msgid "MemProf Error"
+msgstr "የMemProf ስህተት"
+
+#: main.c:1532
+msgid "MemProf Warning"
+msgstr "የMemProf ማስጠንቀቂያ"
+
+#: main.c:1913
+msgid "Really detach from finished process?"
+msgstr ""
+
+#: main.c:1915
+msgid "Really detach from running process?"
+msgstr ""
+
+#: main.c:1945
+msgid "Really kill running process?"
+msgstr ""
+
+#: main.c:1982
+msgid "Create new windows for forked processes"
+msgstr ""
+
+#: main.c:1984
+msgid "Retain windows for processes after exec()"
+msgstr ""
+
+#: main.c:1986
+msgid "Type of profiling information to collect"
+msgstr ""
+
+#: main.c:1988
+msgid "Number of samples/sec for time profile (1k=1000)"
+msgstr ""
+
+#: main.c:2037
+msgid "Argument of --profile must be one of 'memory', 'cycles, or 'time'\n"
+msgstr ""
+
+#: main.c:2078
+msgid "Cannot find memprof.glade"
+msgstr ""
+
+#: memprof.glade.h:1
+msgid "# of Allocations:"
+msgstr ""
+
+#: memprof.glade.h:2
+msgid "*"
+msgstr ""
+
+#: memprof.glade.h:3
+msgid "0"
+msgstr "0"
+
+#: memprof.glade.h:4
+msgid "0k"
+msgstr "0k"
+
+#: memprof.glade.h:5
+msgid "32k"
+msgstr "32k"
+
+#: memprof.glade.h:6
+msgid "<b>Callers</b>"
+msgstr ""
+
+#: memprof.glade.h:7
+msgid "<b>Descendants</b>"
+msgstr ""
+
+#: memprof.glade.h:8
+msgid "Adding Skip Function"
+msgstr ""
+
+#: memprof.glade.h:9
+msgid "Adding Skip Regular Expression"
+msgstr ""
+
+#: memprof.glade.h:10
+msgid "Address"
+msgstr "አድራሻ"
+
+#: memprof.glade.h:11
+msgid "Bytes / Allocation:"
+msgstr ""
+
+#: memprof.glade.h:12
+msgid "Caller"
+msgstr ""
+
+#: memprof.glade.h:13
+msgid "Check for Leaks"
+msgstr ""
+
+#: memprof.glade.h:14
+msgid "Command Line"
+msgstr ""
+
+#: memprof.glade.h:15
+msgid "Command to run on double click in stack trace:"
+msgstr ""
+
+#: memprof.glade.h:16
+msgid ""
+"Copyright 1999, 2000, 2001, Red Hat, Inc.\n"
+"Copyright 2002, Kristian Rietveld"
+msgstr ""
+
+#: memprof.glade.h:18
+msgid "Create Profile"
+msgstr "ግለ መግለጫን ፍጠር"
+
+#: memprof.glade.h:19
+msgid "Defaults"
+msgstr "ነባሮች"
+
+#: memprof.glade.h:20
+msgid ""
+"Enter a regular expression of function names to skip when computing profiles"
+msgstr ""
+
+#: memprof.glade.h:21
+msgid "Enter pathname to an executable"
+msgstr ""
+
+#: memprof.glade.h:22
+msgid "Enter the name of a function to skip when computing profiles"
+msgstr ""
+
+#: memprof.glade.h:23
+msgid "File"
+msgstr "ፋይል"
+
+#: memprof.glade.h:24
+msgid "Follow _exec()"
+msgstr ""
+
+#: memprof.glade.h:25
+msgid "Follow _fork()"
+msgstr ""
+
+#: memprof.glade.h:26
+msgid "Function"
+msgstr ""
+
+#: memprof.glade.h:27
+msgid "Functions to Skip:"
+msgstr ""
+
+#: memprof.glade.h:28
+msgid "Generate _Leak Report"
+msgstr ""
+
+#: memprof.glade.h:29
+msgid "Generate _Profile"
+msgstr ""
+
+#: memprof.glade.h:30 tree.c:98
+msgid "Kill"
+msgstr ""
+
+#: memprof.glade.h:31
+msgid "Kill Program"
+msgstr ""
+
+#: memprof.glade.h:32
+msgid "Leak Detection Options"
+msgstr ""
+
+#: memprof.glade.h:33
+msgid "Leaks"
+msgstr ""
+
+#: memprof.glade.h:34
+msgid "Line"
+msgstr "መስመር"
+
+#: memprof.glade.h:36
+msgid "MemProf - Processes"
+msgstr "MemProf - ሂደት"
+
+#: memprof.glade.h:37
+msgid "Memory Profiling Tool"
+msgstr ""
+
+#: memprof.glade.h:38
+msgid "PID"
+msgstr "PID"
+
+#: memprof.glade.h:39
+msgid "Preferences"
+msgstr "ምርጫዎች"
+
+#: memprof.glade.h:40
+msgid "Process _Tree"
+msgstr "የሂደት ዛፍ (_T)"
+
+#: memprof.glade.h:41
+msgid "Profile"
+msgstr "ግለ መግለጫ"
+
+#: memprof.glade.h:42
+msgid "Profile Options"
+msgstr "የግለ መግለጫ ምርጫዎች"
+
+#: memprof.glade.h:43
+msgid "Regular expressions to Skip:"
+msgstr ""
+
+#: memprof.glade.h:44
+msgid "Run"
+msgstr "አስኪድ"
+
+#: memprof.glade.h:45
+msgid "Run Executable"
+msgstr ""
+
+#: memprof.glade.h:46
+msgid "Run Program"
+msgstr "ፕሮግራምን አስኪድ"
+
+#: memprof.glade.h:47
+msgid "Save"
+msgstr "አስቀምጥ"
+
+#: memprof.glade.h:48
+msgid "Save Report"
+msgstr ""
+
+#: memprof.glade.h:49
+msgid "Save _Leak Info..."
+msgstr ""
+
+#: memprof.glade.h:50
+msgid "Save _Profile..."
+msgstr "ግለ መግለጫ አስቀምጥ... (_P)"
+
+#: memprof.glade.h:51
+msgid "Size"
+msgstr "መጠን"
+
+#: memprof.glade.h:52
+msgid "Stack Trace"
+msgstr ""
+
+#: memprof.glade.h:53
+msgid "Status"
+msgstr "ሁኔታ"
+
+#: memprof.glade.h:54
+msgid "Total Bytes:"
+msgstr "አጠቃላይ ባይቶች፦"
+
+#: memprof.glade.h:55
+msgid "_Detach"
+msgstr "አለያይ (_D)"
+
+#: memprof.glade.h:56
+msgid "_File"
+msgstr "ፋይል"
+
+#: memprof.glade.h:57
+msgid "_Help"
+msgstr "መረጃ (_H)"
+
+#: memprof.glade.h:58
+msgid "_Kill"
+msgstr ""
+
+#: memprof.glade.h:59
+msgid "_Process"
+msgstr "ሂደት (_P)"
+
+#: memprof.glade.h:60
+msgid "_Run Program..."
+msgstr "ፕሮግራምን አስኪድ... (_R)"
+
+#: memprof.glade.h:61
+msgid "_Settings"
+msgstr "ምርጫዎች... (_S)"
+
+#: memprof.glade.h:62
+msgid "translator_credits"
+msgstr ""
+
+#: process.c:854
+msgid "Initial"
+msgstr "የመጀመሪያ"
+
+#: process.c:857
+msgid "Starting"
+msgstr "እየጀመረ"
+
+#: process.c:860
+msgid "Running"
+msgstr "በሥራ ላይ"
+
+#: process.c:863
+msgid "Exiting"
+msgstr ""
+
+#: process.c:866 process.c:869
+msgid "Defunct"
+msgstr ""
+
+#: server.c:286
+#, c-format
+msgid "Cannot find %s"
+msgstr ""
+
+#: tree.c:91
+msgid "Show"
+msgstr "አሳይ"
+
+#: tree.c:94
+msgid "Hide"
+msgstr "ደብቅ"
+
+#: tree.c:101
+msgid "Detach"
+msgstr "አለያይ"
+
+#~ msgid "Bytes"
+#~ msgstr "ባይቶች"
+
+#~ msgid "Children"
+#~ msgstr "ልጆች"
+
+#~ msgid "Total"
+#~ msgstr "አጠቃላይ"

@@ -1,0 +1,387 @@
+# English/Canada translation of memprof.
+# Copyright (C) 2004 Adam Weinberger and the GNOME Foundation
+# This file is distributed under the same licence as the memprof package.
+# Adam Weinberger <adamw@gnome.org>, 2004.
+# 
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: memprof\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2004-09-04 00:38-0400\n"
+"PO-Revision-Date: 2004-09-04 13:41-0400\n"
+"Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
+"Language-Team: Canadian English <adamw@gnome.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: leakdetect.c:584
+#, c-format
+msgid "Cannot open output file: %s\n"
+msgstr "Cannot open output file: %s\n"
+
+#: main.c:777
+#, c-format
+msgid "Executation of \"%s\" failed"
+msgstr "Executation of \"%s\" failed"
+
+#: main.c:921 memprof.glade.h:29
+msgid "MemProf"
+msgstr "MemProf"
+
+#: main.c:1028
+#, c-format
+msgid "Cannot find executable for \"%s\""
+msgstr "Cannot find executable for \"%s\""
+
+#: main.c:1131
+msgid "Saving is disabled at the moment"
+msgstr "Saving is disabled at the moment"
+
+#: main.c:1706
+msgid "MemProf Error"
+msgstr "MemProf Error"
+
+#: main.c:1706
+msgid "MemProf Warning"
+msgstr "MemProf Warning"
+
+#: main.c:1775 main.c:1788 main.c:1803
+msgid "Name"
+msgstr "Name"
+
+#: main.c:1776 main.c:1789 main.c:1804
+msgid "Self"
+msgstr "Self"
+
+#: main.c:1777 main.c:1805
+msgid "Total"
+msgstr "Total"
+
+#: main.c:1790
+msgid "Cumulative"
+msgstr "Cumulative"
+
+#: main.c:1827
+msgid "Address"
+msgstr "Address"
+
+#: main.c:1828
+msgid "Size"
+msgstr "Size"
+
+#: main.c:1829
+msgid "Caller"
+msgstr "Caller"
+
+#: main.c:1847
+msgid "Function"
+msgstr "Function"
+
+#: main.c:1848
+msgid "Line"
+msgstr "Line"
+
+#: main.c:1849
+msgid "File"
+msgstr "File"
+
+#: main.c:2059
+msgid "Really detach from finished process?"
+msgstr "Really detach from finished process?"
+
+#: main.c:2061
+msgid "Really detach from running process?"
+msgstr "Really detach from running process?"
+
+#: main.c:2091
+msgid "Really kill running process?"
+msgstr "Really kill running process?"
+
+#: main.c:2128
+msgid "Create new windows for forked processes"
+msgstr "Create new windows for forked processes"
+
+#: main.c:2130
+msgid "Retain windows for processes after exec()"
+msgstr "Retain windows for processes after exec()"
+
+#: main.c:2132
+msgid "Type of profiling information to collect"
+msgstr "Type of profiling information to collect"
+
+#: main.c:2134
+msgid "Number of samples/sec for time profile (1k=1000)"
+msgstr "Number of samples/sec for time profile (1k=1000)"
+
+#: main.c:2183
+msgid "Argument of --profile must be one of 'memory', 'cycles', or 'time'\n"
+msgstr "Argument of --profile must be one of 'memory', 'cycles', or 'time'\n"
+
+#: main.c:2224
+msgid "Cannot find memprof.glade"
+msgstr "Cannot find memprof.glade"
+
+#: memprof.glade.h:1
+msgid "# of Allocations:"
+msgstr "# of Allocations:"
+
+#: memprof.glade.h:2
+msgid "*"
+msgstr "*"
+
+#: memprof.glade.h:3
+msgid "0"
+msgstr "0"
+
+#: memprof.glade.h:4
+msgid "0k"
+msgstr "0k"
+
+#: memprof.glade.h:5
+msgid "32k"
+msgstr "32k"
+
+#: memprof.glade.h:6
+msgid "<b>Callers</b>"
+msgstr "<b>Callers</b>"
+
+#: memprof.glade.h:7
+msgid "<b>Descendants</b>"
+msgstr "<b>Descendants</b>"
+
+#: memprof.glade.h:8
+msgid "Adding Skip Function"
+msgstr "Adding Skip Function"
+
+#: memprof.glade.h:9
+msgid "Adding Skip Regular Expression"
+msgstr "Adding Skip Regular Expression"
+
+#: memprof.glade.h:10
+msgid "Bytes / Allocation:"
+msgstr "Bytes / Allocation:"
+
+#: memprof.glade.h:11
+msgid "Check for Leaks"
+msgstr "Check for Leaks"
+
+#: memprof.glade.h:12
+msgid "Command to run on double click in stack trace:"
+msgstr "Command to run on double click in stack trace:"
+
+#: memprof.glade.h:13
+msgid ""
+"Copyright 1999, 2000, 2001, Red Hat, Inc.\n"
+"Copyright 2002, Kristian Rietveld"
+msgstr ""
+"Copyright 1999, 2000, 2001, Red Hat, Inc.\n"
+"Copyright 2002, Kristian Rietveld"
+
+#: memprof.glade.h:15
+msgid "Create Profile"
+msgstr "Create Profile"
+
+#: memprof.glade.h:16
+msgid "Defaults"
+msgstr "Defaults"
+
+#: memprof.glade.h:17
+msgid ""
+"Enter a regular expression of function names to skip when computing profiles"
+msgstr ""
+"Enter a regular expression of function names to skip when computing profiles"
+
+#: memprof.glade.h:18
+msgid "Enter pathname to an executable"
+msgstr "Enter pathname to an executable"
+
+#: memprof.glade.h:19
+msgid "Enter the name of a function to skip when computing profiles"
+msgstr "Enter the name of a function to skip when computing profiles"
+
+#: memprof.glade.h:20
+msgid "Follow _exec()"
+msgstr "Follow _exec()"
+
+#: memprof.glade.h:21
+msgid "Follow _fork()"
+msgstr "Follow _fork()"
+
+#: memprof.glade.h:22
+msgid "Functions to Skip:"
+msgstr "Functions to Skip:"
+
+#: memprof.glade.h:23
+msgid "Generate _Leak Report"
+msgstr "Generate _Leak Report"
+
+#: memprof.glade.h:24
+msgid "Generate _Profile"
+msgstr "Generate _Profile"
+
+#: memprof.glade.h:25 tree.c:109
+msgid "Kill"
+msgstr "Kill"
+
+#: memprof.glade.h:26
+msgid "Kill Program"
+msgstr "Kill Program"
+
+#: memprof.glade.h:27
+msgid "Leak Detection Options"
+msgstr "Leak Detection Options"
+
+#: memprof.glade.h:28
+msgid "Leaks"
+msgstr "Leaks"
+
+#: memprof.glade.h:30
+msgid "MemProf - Processes"
+msgstr "MemProf - Processes"
+
+#: memprof.glade.h:31
+msgid "Memory Profiling Tool"
+msgstr "Memory Profiling Tool"
+
+#: memprof.glade.h:32
+msgid "Preferences"
+msgstr "Preferences"
+
+#: memprof.glade.h:33
+msgid "Process _Tree"
+msgstr "Process _Tree"
+
+#: memprof.glade.h:34
+msgid "Profile"
+msgstr "Profile"
+
+#: memprof.glade.h:35
+msgid "Profile Options"
+msgstr "Profile Options"
+
+#: memprof.glade.h:36
+msgid "Regular expressions to Skip:"
+msgstr "Regular expressions to Skip:"
+
+#: memprof.glade.h:37
+msgid "Reset"
+msgstr "Reset"
+
+#: memprof.glade.h:38
+msgid "Run"
+msgstr "Run"
+
+#: memprof.glade.h:39
+msgid "Run Executable"
+msgstr "Run Executable"
+
+#: memprof.glade.h:40
+msgid "Run Program"
+msgstr "Run Program"
+
+#: memprof.glade.h:41
+msgid "Save"
+msgstr "Save"
+
+#: memprof.glade.h:42
+msgid "Save Report"
+msgstr "Save Report"
+
+#: memprof.glade.h:43
+msgid "Save _Leak Info..."
+msgstr "Save _Leak Info..."
+
+#: memprof.glade.h:44
+msgid "Save _Profile..."
+msgstr "Save _Profile..."
+
+#: memprof.glade.h:45
+msgid "Stack Trace"
+msgstr "Stack Trace"
+
+#: memprof.glade.h:46
+msgid "Total Bytes:"
+msgstr "Total Bytes:"
+
+#: memprof.glade.h:47
+msgid "_Detach"
+msgstr "_Detach"
+
+#: memprof.glade.h:48
+msgid "_File"
+msgstr "_File"
+
+#: memprof.glade.h:49
+msgid "_Help"
+msgstr "_Help"
+
+#: memprof.glade.h:50
+msgid "_Kill"
+msgstr "_Kill"
+
+#: memprof.glade.h:51
+msgid "_Process"
+msgstr "_Process"
+
+#: memprof.glade.h:52
+msgid "_Run Program..."
+msgstr "_Run Program..."
+
+#: memprof.glade.h:53
+msgid "_Settings"
+msgstr "_Settings"
+
+#: memprof.glade.h:54
+msgid "translator_credits"
+msgstr "Adam Weinberger  <adamw@gnome.org>"
+
+#: process.c:895
+msgid "Initial"
+msgstr "Initial"
+
+#: process.c:898
+msgid "Starting"
+msgstr "Starting"
+
+#: process.c:901
+msgid "Running"
+msgstr "Running"
+
+#: process.c:904
+msgid "Exiting"
+msgstr "Exiting"
+
+#: process.c:907 process.c:910
+msgid "Defunct"
+msgstr "Defunct"
+
+#: server.c:288
+#, c-format
+msgid "Cannot find %s"
+msgstr "Cannot find %s"
+
+#: tree.c:102
+msgid "Show"
+msgstr "Show"
+
+#: tree.c:105
+msgid "Hide"
+msgstr "Hide"
+
+#: tree.c:112
+msgid "Detach"
+msgstr "Detach"
+
+#: tree.c:180
+msgid "PID"
+msgstr "PID"
+
+#: tree.c:181
+msgid "Command Line"
+msgstr "Command Line"
+
+#: tree.c:182
+msgid "Status"
+msgstr "Status"

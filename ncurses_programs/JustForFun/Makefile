@@ -14,6 +14,7 @@ EXES = \
 	${EXE_DIR}/magic \
 	${EXE_DIR}/queens \
 	${EXE_DIR}/shuffle \
+	${EXE_DIR}/curses_app \
 	${EXE_DIR}/tt
 
 ${EXE_DIR}/%: %.o

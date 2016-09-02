@@ -1,0 +1,367 @@
+# Tamil translation of memprof.
+# Copyright (C) 2002
+# This file is distributed under the same license as the memprof package.
+# Elango Sundaram <esundara@yahoo.com>, 2002.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: memprof 1.9.7\n"
+"POT-Creation-Date: 2002-11-04 04:39+0100\n"
+"PO-Revision-Date: 2002-11-04 04:39+0100\n"
+"Last-Translator: Elango Sundaram <esundara@yahoo.com>\n"
+"Language-Team: Tamil <tamilinix@yahoogroups.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: leakdetect.c:584 profile.c:202
+#, c-format
+msgid "Cannot open output file: %s\n"
+msgstr "%s வெளியீட்டு கோப்பையைத் திறக்க இயலவில்லை\n"
+
+#: main.c:536
+#, c-format
+msgid "Executation of \"%s\" failed"
+msgstr "\"%s\" ன் செயல்படுத்தம் தோல்வியாகி விட்டது"
+
+#: main.c:667
+msgid "Really quit MemProf?"
+msgstr "மெம்ப்ராப்பை விட்டு உண்மையாகவே வெளியேற வேண்டுமா ?"
+
+#: main.c:713 memprof.glade.h:34
+msgid "MemProf"
+msgstr "மெம்ப்ராப்"
+
+#: main.c:807
+#, c-format
+msgid "Cannot find executable for \"%s\""
+msgstr "\"%s\" செயல்பாட்டுக்கட்டைக்  கண்டுபிடிக்க இயலவில்லை"
+
+#: main.c:1418
+msgid "MemProf Error"
+msgstr "மெம்ப்ராப் பிழை"
+
+#: main.c:1418
+msgid "MemProf Warning"
+msgstr "மெம்ப்ராப் எச்சரிக்கை"
+
+#: main.c:1678
+msgid "Really detach from finished process?"
+msgstr "உண்மையாகவே முடிந்த செயல்பாட்டை விட்டுப் பிரிய வேண்டுமா ?"
+
+#: main.c:1680
+msgid "Really detach from running process?"
+msgstr "உண்மையாகவே ஒடும் செயல்பாட்டை விட்டுப் பிரிய வேண்டுமா ?"
+
+#: main.c:1710
+msgid "Really kill running process?"
+msgstr "உண்மையாகவே ஒடும் செயல்பாட்டை நிறுத்த வேண்டுமா ?"
+
+#: main.c:1747
+msgid "Create new windows for forked processes"
+msgstr "கிளை செயல்பாடுகளுக்கு புதிய சாளரம் உருவாக்கு"
+
+#: main.c:1749
+msgid "Retain windows for processes after exec()"
+msgstr "எக்சக்() க்கு பிற்கு சாளரங்ளை  மூடாதே"
+
+#: main.c:1751
+msgid "Type of profiling information to collect"
+msgstr "திரட்ட வேண்டிய குறிப்புத் தகவல்களின் வகை"
+
+#: main.c:1753
+msgid "Number of samples/sec for time profile (1k=1000)"
+msgstr "நேர குறிப்புக்கான மாதிரி/வினாடி எண்ணிக்கை  (1k=1000)"
+
+#: main.c:1802
+msgid "Argument of --profile must be one of 'memory', 'cycles, or 'time'\n"
+msgstr "--profile கான ஆர்குமன்ட் 'memory', 'cycles, அல்லது 'time' ஆக இருக்க வேண்டும்\n"
+
+#: main.c:1843
+msgid "Cannot find memprof.glade"
+msgstr "memprof.glade ஐ காணவில்லை"
+
+#: memprof.glade.h:1
+msgid "# of Allocations:"
+msgstr " ஒதுக்கீடுகளின் எண்ணிக்கை"
+
+#: memprof.glade.h:2
+msgid "0"
+msgstr "0"
+
+#: memprof.glade.h:3
+msgid "0k"
+msgstr "சரி"
+
+#: memprof.glade.h:4
+msgid "32k"
+msgstr "32k"
+
+#: memprof.glade.h:5
+msgid "Adding Skip Function"
+msgstr "தவிர் செயல்கூறு சேர்க்கப்படுகிறது"
+
+#: memprof.glade.h:6
+msgid "Adding Skip Regular Expression"
+msgstr "தவிர் ஒழுங்கு கோவை சேர்க்கப்படுகிறது"
+
+#: memprof.glade.h:7
+msgid "Address"
+msgstr "விலாசம்"
+
+#: memprof.glade.h:8
+msgid "Bytes"
+msgstr "பைட்டுகள்"
+
+#: memprof.glade.h:9
+msgid "Bytes / Allocation:"
+msgstr "பைட்டுகள்/ஒதுக்கீடுகள்:"
+
+#: memprof.glade.h:10
+msgid "Caller"
+msgstr "அழைப்பாளர்"
+
+#: memprof.glade.h:11
+msgid "Callers"
+msgstr "அழைப்பாளர்கள்"
+
+#: memprof.glade.h:12
+msgid "Check for Leaks"
+msgstr "கசிவுகளுக்காகன சரிபார்ப்பு"
+
+#: memprof.glade.h:13
+msgid "Children"
+msgstr "குழந்தைகள்"
+
+#: memprof.glade.h:14
+msgid "Command Line"
+msgstr "கட்டளை வரி"
+
+#: memprof.glade.h:15
+msgid "Command to run on double click in stack trace:"
+msgstr "அடுக்குச் சுவடுகளிில் இரட்டை அமுக்கு செய்தால் ஒட்ட வேண்டிய கட்டளை"
+
+#: memprof.glade.h:16
+msgid ""
+"Copyright 1999, 2000, 2001, Red Hat, Inc.&#13;Copyright 2002, Kristian "
+"Rietveld"
+msgstr "காப்புரிமை 1999, 2000, 2001, ரெட் ஹட் இங்க்.&#13;காப்புரிமை 2002,க்ரிஸ்டியன்"
+"ரீட்வெல்ட்"
+
+#: memprof.glade.h:17
+msgid "Create Profile"
+msgstr "குறிப்புத் தொகுப்பை உருவாக்குக"
+
+#: memprof.glade.h:18
+msgid "Defaults"
+msgstr "கொடா நிலைகள்"
+
+#: memprof.glade.h:19
+msgid ""
+"Enter a regular expression of function names to skip when computing profiles"
+msgstr "குறிப்புத் தொகுப்புக்களைக் கணிக்கும் போது தவிர்க்கவேண்டிய  செயல்கூறு பெயர்களின் ஒழுங்குக் கோவையைத் தருக"
+
+#: memprof.glade.h:20
+msgid "Enter pathname to an executable"
+msgstr "செயல்பாட்டுக்கட்டின் பதையைத் தருக"
+
+#: memprof.glade.h:21
+msgid "Enter the name of a function to skip when computing profiles"
+msgstr "குறிப்புத் தொகுப்புக்களைக் கணிக்கும் போது தவிர்க்கவேண்டிய  செயல்கூறின் பெயரைத் தருக"
+
+#: memprof.glade.h:22
+msgid "File"
+msgstr "கோப்பு"
+
+#: memprof.glade.h:23
+msgid "Follow _exec()"
+msgstr "_எக்சக்() ஐத் தொடர்க"
+
+#: memprof.glade.h:24
+msgid "Follow _fork()"
+msgstr "கிளை ஐத் தொடர்க"
+
+#: memprof.glade.h:25
+msgid "Function"
+msgstr "செயல்கூறு"
+
+#: memprof.glade.h:26
+msgid "Functions to Skip:"
+msgstr "தவிர்க்க வேண்டிய செயல்கூறு"
+
+#: memprof.glade.h:27
+msgid "Generate _Leak Report"
+msgstr "கசிவு அறிக்கையைத் தயார் செய்க"
+
+#: memprof.glade.h:28
+msgid "Generate _Profile"
+msgstr "குறிப்புத் தொகுப்புக்களை தயார் செய்க"
+
+#: memprof.glade.h:29 tree.c:98
+msgid "Kill"
+msgstr "கொல்"
+
+#: memprof.glade.h:30
+msgid "Kill Program"
+msgstr "செய்நிரல் கொல்க"
+
+#: memprof.glade.h:31
+msgid "Leak Detection Options"
+msgstr "கசிவு கண்டறிதலுக்கான விருப்பங்கள் "
+
+#: memprof.glade.h:32
+msgid "Leaks"
+msgstr "கசிவுகள்"
+
+#: memprof.glade.h:33
+msgid "Line"
+msgstr "வரி"
+
+#: memprof.glade.h:35
+msgid "MemProf - Processes"
+msgstr "மெம்ப்ராப் - செயல்கள்"
+
+#: memprof.glade.h:36
+msgid "Memory Profiling Tool"
+msgstr "நினைவு குறிப்புத் தொகுப்புக் கருவி "
+
+#: memprof.glade.h:37
+msgid "PID"
+msgstr "PID"
+
+#: memprof.glade.h:38
+msgid "Preferences"
+msgstr "விருப்பங்கள்"
+
+#: memprof.glade.h:39
+msgid "Process _Tree"
+msgstr "செயல் மரம்"
+
+#: memprof.glade.h:40
+msgid "Profile"
+msgstr "குறிப்புத் தொகுப்பு"
+
+#: memprof.glade.h:41
+msgid "Profile Options"
+msgstr "குறிப்புத் தொகுப்பு விருப்பங்கள்"
+
+#: memprof.glade.h:42
+msgid "Regular expressions to Skip:"
+msgstr "தவிர்க்க வேண்டிய ஒழுங்குக் கோவைகள்"
+
+#: memprof.glade.h:43
+msgid "Run"
+msgstr "ஓடுக"
+
+#: memprof.glade.h:44
+msgid "Run Executable"
+msgstr "செயல்கட்டை ஓட்டுக"
+
+#: memprof.glade.h:45
+msgid "Run Program"
+msgstr "செய்நிரலை ஓட்டுக"
+
+#: memprof.glade.h:46
+msgid "Save"
+msgstr "சேமி"
+
+#: memprof.glade.h:47
+msgid "Save Report"
+msgstr "அறிக்கையை சேமி"
+
+#: memprof.glade.h:48
+msgid "Save _Leak Info..."
+msgstr "கசிவு செய்தியை சேமி"
+
+#: memprof.glade.h:49
+msgid "Save _Profile..."
+msgstr "குறிப்புத் தொகுப்பை சேமி..."
+
+#: memprof.glade.h:50
+msgid "Self"
+msgstr "தன்வய"
+
+#: memprof.glade.h:51
+msgid "Size"
+msgstr "அளவு"
+
+#: memprof.glade.h:52
+msgid "Stack Trace"
+msgstr "அடுக்குச் சுவடு"
+
+#: memprof.glade.h:53
+msgid "Status"
+msgstr "நிகழ் நிலை"
+
+#: memprof.glade.h:54
+msgid "Total"
+msgstr "மொத்தம்"
+
+#: memprof.glade.h:55
+msgid "Total Bytes:"
+msgstr "மொதத பைட்டுகள்"
+
+#: memprof.glade.h:56
+msgid "_Detach"
+msgstr "பிரி"
+
+#: memprof.glade.h:57
+msgid "_File"
+msgstr "கோப்பு"
+
+#: memprof.glade.h:58
+msgid "_Help"
+msgstr "உதவி"
+
+#: memprof.glade.h:59
+msgid "_Kill"
+msgstr "கொல்"
+
+#: memprof.glade.h:60
+msgid "_Process"
+msgstr "செயல்"
+
+#: memprof.glade.h:61
+msgid "Run Program..."
+msgstr "செய்நிரலை ஓட்டுக.."
+
+#: memprof.glade.h:62
+msgid "_Settings"
+msgstr "_அமைவுகள்"
+
+#: process.c:854
+msgid "Initial"
+msgstr "தொடக்கம்"
+
+#: process.c:857
+msgid "Starting"
+msgstr "ஆரம்பம்"
+
+#: process.c:860
+msgid "Running"
+msgstr "ஓடிக்கொண்டு உள்ளது"
+
+#: process.c:863
+msgid "Exiting"
+msgstr "வெளியேற்றம்"
+
+#: process.c:866 process.c:869
+msgid "Defunct"
+msgstr "முடிந்தது"
+
+#: server.c:286
+#, c-format
+msgid "Cannot find %s"
+msgstr "%s ஐ காணவில்லை"
+
+#: tree.c:91
+msgid "Show"
+msgstr "காண்பி"
+
+#: tree.c:94
+msgid "Hide"
+msgstr "ஒளி"
+
+#: tree.c:101
+msgid "Detach"
+msgstr "பிரி"

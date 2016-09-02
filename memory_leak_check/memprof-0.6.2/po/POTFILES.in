@@ -1,0 +1,10 @@
+# List of source files containing translatable strings.
+# Please keep this file sorted alphabetically.
+src/leakdetect.c
+src/main.c
+lib/memintercept-utils.c
+memprof.glade
+src/process.c
+src/profile.c
+src/server.c
+src/tree.c

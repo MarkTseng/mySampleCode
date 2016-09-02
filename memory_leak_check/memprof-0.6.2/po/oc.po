@@ -1,0 +1,368 @@
+# Translation of oc.po to Occitan
+# Occitan translation of memprof.
+# Copyright (C) 1999-2007 Free Software Foundation, Inc.
+# This file is distributed under the same license as the memprof package.
+#
+# Yannig Marchegay (Kokoyaya) <yannig@marchegay.org>, 2006-2008.
+msgid ""
+msgstr ""
+"Project-Id-Version: oc\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-06-09 15:21+0200\n"
+"PO-Revision-Date: 2007-12-30 21:52+0100\n"
+"Last-Translator: Yannig Marchegay (Kokoyaya) <yannig@marchegay.org>\n"
+"Language-Team: Occitan <ubuntu-l10n-oci@lists.ubuntu.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: ../leakdetect.c:496 ../profile.c:702
+#, c-format
+msgid "Cannot open output file: %s\n"
+msgstr ""
+
+#: ../main.c:838
+#, c-format
+msgid "Executation of \"%s\" failed: %s"
+msgstr ""
+
+#: ../main.c:986
+msgid "MemProf"
+msgstr "MemProf"
+
+#: ../main.c:1095
+#, c-format
+msgid "Cannot find executable for \"%s\""
+msgstr "Impossible de trobar l'executable per \"%s\""
+
+#: ../main.c:1359
+msgid "MemProf Error"
+msgstr ""
+
+#: ../main.c:1359
+msgid "MemProf Warning"
+msgstr ""
+
+#: ../main.c:1422
+msgid "Functions"
+msgstr "Foncions"
+
+#: ../main.c:1423 ../main.c:1440 ../main.c:1458
+msgid "Self"
+msgstr ""
+
+#: ../main.c:1424 ../main.c:1459
+msgid "Total"
+msgstr "Total"
+
+#: ../main.c:1439
+msgid "Descendants"
+msgstr ""
+
+#: ../main.c:1441
+msgid "Cumulative"
+msgstr ""
+
+#: ../main.c:1457
+msgid "Callers"
+msgstr ""
+
+#: ../main.c:1484
+msgid "Address"
+msgstr "Adreça"
+
+#: ../main.c:1485
+msgid "Size"
+msgstr "Talha"
+
+#: ../main.c:1486
+msgid "Caller"
+msgstr ""
+
+#: ../main.c:1506
+msgid "Function"
+msgstr "Foncion"
+
+#: ../main.c:1507
+msgid "Line"
+msgstr "Linha"
+
+#: ../main.c:1508
+msgid "File"
+msgstr "Fichièr"
+
+#: ../main.c:1710
+msgid "Really detach from finished process?"
+msgstr ""
+
+#: ../main.c:1712
+msgid "Really detach from running process?"
+msgstr ""
+
+#: ../main.c:1742
+msgid "Really kill running process?"
+msgstr ""
+
+#: ../main.c:1777
+msgid "Create new windows for forked processes"
+msgstr ""
+
+#: ../main.c:1779
+msgid "Retain windows for processes after exec()"
+msgstr ""
+
+#: ../main.c:1781
+msgid "Type of profiling information to collect"
+msgstr ""
+
+#: ../main.c:1783
+msgid "Number of samples/sec for time profile (1k=1000)"
+msgstr ""
+
+#: ../main.c:1843
+#, c-format
+msgid "Argument of --profile must be one of 'memory', 'cycles', or 'time'\n"
+msgstr ""
+
+#: ../main.c:1878
+msgid "Cannot find memprof.glade"
+msgstr ""
+
+#: ../memprof.glade.h:1
+msgid "# of Allocations: "
+msgstr ""
+
+#: ../memprof.glade.h:2
+msgid "0"
+msgstr "0"
+
+#: ../memprof.glade.h:3
+msgid "0k"
+msgstr "Validar"
+
+#: ../memprof.glade.h:4
+msgid "32k"
+msgstr "32 k"
+
+#: ../memprof.glade.h:5
+msgid "Adding Skip Function"
+msgstr ""
+
+#: ../memprof.glade.h:6
+msgid "Adding Skip Regular Expression"
+msgstr ""
+
+#: ../memprof.glade.h:7
+msgid "Bytes / Allocation: "
+msgstr ""
+
+#: ../memprof.glade.h:8
+msgid "Check for Leaks"
+msgstr ""
+
+#: ../memprof.glade.h:9
+msgid "Command to run on double click in stack trace:"
+msgstr ""
+
+#: ../memprof.glade.h:10
+msgid "Create Profile"
+msgstr "Crear un perfil"
+
+#: ../memprof.glade.h:11
+msgid "Defaults"
+msgstr "Valors per defaut"
+
+#: ../memprof.glade.h:12
+msgid ""
+"Enter a regular expression of function names to skip when computing profiles"
+msgstr ""
+
+#: ../memprof.glade.h:13
+msgid "Enter pathname to an executable"
+msgstr ""
+
+#: ../memprof.glade.h:14
+msgid "Enter the name of a function to skip when computing profiles"
+msgstr ""
+
+#: ../memprof.glade.h:15
+msgid "Functions to Skip:"
+msgstr ""
+
+#: ../memprof.glade.h:16
+msgid "Generate _Leak Report"
+msgstr ""
+
+#: ../memprof.glade.h:17
+msgid "Generate _Profile"
+msgstr ""
+
+#: ../memprof.glade.h:18 ../tree.c:109
+msgid "Kill"
+msgstr "Tuar"
+
+#: ../memprof.glade.h:19
+msgid "Kill Program"
+msgstr "Tuar lo programa"
+
+#: ../memprof.glade.h:20
+msgid "Leak Detection Options"
+msgstr ""
+
+#: ../memprof.glade.h:21
+msgid "Leaks"
+msgstr ""
+
+#: ../memprof.glade.h:22
+msgid "MemProf - Processes"
+msgstr ""
+
+#: ../memprof.glade.h:23
+msgid "Preferences"
+msgstr "Preferéncias"
+
+#: ../memprof.glade.h:24
+msgid "Process _Tree"
+msgstr ""
+
+#: ../memprof.glade.h:25
+msgid "Profile"
+msgstr "Perfil"
+
+#: ../memprof.glade.h:26
+msgid "Profile Options"
+msgstr "Opcions de perfil"
+
+#: ../memprof.glade.h:27
+msgid "Record"
+msgstr ""
+
+#: ../memprof.glade.h:28
+msgid "Regular expressions to Skip:"
+msgstr ""
+
+#: ../memprof.glade.h:29
+msgid "Reset"
+msgstr ""
+
+#: ../memprof.glade.h:30
+msgid "Run"
+msgstr "Executar"
+
+#: ../memprof.glade.h:31
+msgid "Run Executable"
+msgstr "Aviar un executable"
+
+#: ../memprof.glade.h:32
+msgid "Run Program"
+msgstr "Aviar lo programa"
+
+#: ../memprof.glade.h:33
+msgid "Save"
+msgstr "Enregistrar"
+
+#: ../memprof.glade.h:34
+msgid "Save Report"
+msgstr ""
+
+#: ../memprof.glade.h:35
+msgid "Save _Leak Info..."
+msgstr ""
+
+#: ../memprof.glade.h:36
+msgid "Save _Profile..."
+msgstr ""
+
+#: ../memprof.glade.h:37
+msgid "Stack Trace"
+msgstr ""
+
+#: ../memprof.glade.h:38
+msgid "Total Bytes: "
+msgstr ""
+
+#: ../memprof.glade.h:39
+msgid "_About"
+msgstr "_A prepaus"
+
+#: ../memprof.glade.h:40
+msgid "_Close"
+msgstr "_Tampar"
+
+#: ../memprof.glade.h:41
+msgid "_Detach"
+msgstr ""
+
+#: ../memprof.glade.h:42
+msgid "_File"
+msgstr "_Fichièr"
+
+#: ../memprof.glade.h:43
+msgid "_Help"
+msgstr "_Ajuda"
+
+#: ../memprof.glade.h:44
+msgid "_Kill"
+msgstr "_Tuar"
+
+#: ../memprof.glade.h:45
+msgid "_Process"
+msgstr ""
+
+#: ../memprof.glade.h:46
+msgid "_Quit"
+msgstr "_Sortir"
+
+#: ../memprof.glade.h:47
+msgid "_Run Program..."
+msgstr ""
+
+#: ../process.c:843
+msgid "Initial"
+msgstr ""
+
+#: ../process.c:846
+msgid "Starting"
+msgstr "Aviada"
+
+#: ../process.c:849
+msgid "Running"
+msgstr "En foncionament"
+
+#: ../process.c:852
+msgid "Exiting"
+msgstr ""
+
+#: ../process.c:855 ../process.c:858
+msgid "Defunct"
+msgstr ""
+
+#: ../server.c:289
+#, c-format
+msgid "Cannot find %s"
+msgstr "Impossible de trobar %s"
+
+#: ../tree.c:102
+msgid "Show"
+msgstr "Visualizar"
+
+#: ../tree.c:105
+msgid "Hide"
+msgstr "Amagar"
+
+#: ../tree.c:112
+msgid "Detach"
+msgstr ""
+
+#: ../tree.c:180
+msgid "PID"
+msgstr "PID"
+
+#: ../tree.c:181
+msgid "Command Line"
+msgstr "Linha de comanda"
+
+#: ../tree.c:182
+msgid "Status"
+msgstr "Estatut"

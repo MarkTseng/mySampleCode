@@ -1,0 +1,453 @@
+# Arabic translations for THIS package.
+# Copyright (C) 2007 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as THIS package.
+# Automatically generated, 2007.
+# Djihed Afifi <djihed@gmail.com>, 2007
+msgid ""
+msgstr ""
+"Project-Id-Version: Arabic\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-07-31 11:08+0100\n"
+"PO-Revision-Date: 2007-04-14 18:49+0100\n"
+"Last-Translator: Djihed Afifi <djihed@gmail.com>\n"
+"Language-Team: Arabeyes <doc@arabeyes.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../leakdetect.c:496 ../profile.c:702
+#, fuzzy, c-format
+msgid "Cannot open output file: %s\n"
+msgstr "تعذر فتح ملف البادرات (gestures): %s"
+
+#: ../main.c:838
+#, fuzzy, c-format
+msgid "Executation of \"%s\" failed: %s"
+msgstr "فشل تنشيط %s: %s\n"
+
+#: ../main.c:986
+#, fuzzy
+msgid "MemProf"
+msgstr "تذكير"
+
+#: ../main.c:1095
+#, fuzzy, c-format
+msgid "Cannot find executable for \"%s\""
+msgstr "لا يمكن العثور على شهادة لـ '%s'"
+
+#: ../main.c:1359
+#, fuzzy
+msgid "MemProf Error"
+msgstr "خطأ عند الضم"
+
+#: ../main.c:1359
+#, fuzzy
+msgid "MemProf Warning"
+msgstr "تحذير أمني"
+
+#: ../main.c:1422
+#, fuzzy
+msgid "Functions"
+msgstr "الوظيفة"
+
+#: ../main.c:1423 ../main.c:1440 ../main.c:1458
+msgid "Self"
+msgstr "ذاته"
+
+#: ../main.c:1424 ../main.c:1459
+#, fuzzy
+msgid "Total"
+msgstr "المجموع:"
+
+#: ../main.c:1439
+#, fuzzy
+msgid "Descendants"
+msgstr "<b>تواريخ</b>"
+
+#: ../main.c:1441
+#, fuzzy
+msgid "Cumulative"
+msgstr "متعدد"
+
+#: ../main.c:1457
+#, fuzzy
+msgid "Callers"
+msgstr "أطول"
+
+#: ../main.c:1484
+msgid "Address"
+msgstr "العنوان"
+
+#: ../main.c:1485
+#, fuzzy
+msgid "Size"
+msgstr "الحجم:"
+
+#: ../main.c:1486
+#, fuzzy
+msgid "Caller"
+msgstr "أطول"
+
+#: ../main.c:1506
+msgid "Function"
+msgstr "الوظيفة"
+
+#: ../main.c:1507
+msgid "Line"
+msgstr "خط"
+
+#: ../main.c:1508
+msgid "File"
+msgstr "ملف"
+
+#: ../main.c:1710
+msgid "Really detach from finished process?"
+msgstr ""
+
+#: ../main.c:1712
+msgid "Really detach from running process?"
+msgstr ""
+
+#: ../main.c:1742
+msgid "Really kill running process?"
+msgstr ""
+
+#: ../main.c:1777
+msgid "Create new windows for forked processes"
+msgstr ""
+
+#: ../main.c:1779
+msgid "Retain windows for processes after exec()"
+msgstr ""
+
+#: ../main.c:1781
+#, fuzzy
+msgid "Type of profiling information to collect"
+msgstr "اظهر/إخفي معلوات الصورة في المجموعة."
+
+#: ../main.c:1783
+msgid "Number of samples/sec for time profile (1k=1000)"
+msgstr ""
+
+#: ../main.c:1843
+#, c-format
+msgid "Argument of --profile must be one of 'memory', 'cycles', or 'time'\n"
+msgstr ""
+
+#: ../main.c:1878
+#, fuzzy
+msgid "Cannot find memprof.glade"
+msgstr "لا يمكن ايجاد المشغل"
+
+#: ../memprof.glade.h:1
+#, fuzzy
+msgid "# of Allocations: "
+msgstr "موقع المنطقة"
+
+#: ../memprof.glade.h:2
+msgid "0"
+msgstr "0"
+
+#: ../memprof.glade.h:3
+#, fuzzy
+msgid "0k"
+msgstr "0"
+
+#: ../memprof.glade.h:4
+#, fuzzy
+msgid "32k"
+msgstr "u32"
+
+#: ../memprof.glade.h:5
+#, fuzzy
+msgid "Adding Skip Function"
+msgstr "تعديل الوظائف"
+
+#: ../memprof.glade.h:6
+#, fuzzy
+msgid "Adding Skip Regular Expression"
+msgstr "_عبارة منتظمة"
+
+#: ../memprof.glade.h:7
+#, fuzzy
+msgid "Bytes / Allocation: "
+msgstr "أد_خِل موقع:"
+
+#: ../memprof.glade.h:8
+#, fuzzy
+msgid "Check for Leaks"
+msgstr "فحص بحثاً عن النفاية"
+
+#: ../memprof.glade.h:9
+#, fuzzy
+msgid "Command to run on double click in stack trace:"
+msgstr "الأ_مر الذي سينفذ عند النقر:"
+
+#: ../memprof.glade.h:10
+#, fuzzy
+msgid "Create Profile"
+msgstr "احذف الطور"
+
+#: ../memprof.glade.h:11
+msgid "Defaults"
+msgstr "الإفتراضيّات"
+
+#: ../memprof.glade.h:12
+msgid ""
+"Enter a regular expression of function names to skip when computing profiles"
+msgstr ""
+
+#: ../memprof.glade.h:13
+#, fuzzy
+msgid "Enter pathname to an executable"
+msgstr "المسار الى SHH التنفيدى "
+
+#: ../memprof.glade.h:14
+#, fuzzy
+msgid "Enter the name of a function to skip when computing profiles"
+msgstr "اكتب إسم ملف التعريف الجديد"
+
+#: ../memprof.glade.h:15
+#, fuzzy
+msgid "Functions to Skip:"
+msgstr "دالة جيب تمام"
+
+#: ../memprof.glade.h:16
+#, fuzzy
+msgid "Generate _Leak Report"
+msgstr "ولِّد كلمة سر _عشوائيّة"
+
+#: ../memprof.glade.h:17
+#, fuzzy
+msgid "Generate _Profile"
+msgstr "احذف الطور"
+
+#: ../memprof.glade.h:18 ../tree.c:109
+msgid "Kill"
+msgstr "اقتل"
+
+#: ../memprof.glade.h:19
+#, fuzzy
+msgid "Kill Program"
+msgstr "البرنامج"
+
+#: ../memprof.glade.h:20
+#, fuzzy
+msgid "Leak Detection Options"
+msgstr "خيارات إنتقاء الملف"
+
+#: ../memprof.glade.h:21
+#, fuzzy
+msgid "Leaks"
+msgstr "ليكنس"
+
+#: ../memprof.glade.h:22
+#, fuzzy
+msgid "MemProf - Processes"
+msgstr "_عملياتي"
+
+#: ../memprof.glade.h:23
+#, fuzzy
+msgid "Preferences"
+msgstr "ت_فضيلات"
+
+#: ../memprof.glade.h:24
+#, fuzzy
+msgid "Process _Tree"
+msgstr "المعالج"
+
+#: ../memprof.glade.h:25
+msgid "Profile"
+msgstr "الملف الشخصي"
+
+#: ../memprof.glade.h:26
+#, fuzzy
+msgid "Profile Options"
+msgstr "خيارات التسلسل"
+
+#: ../memprof.glade.h:27
+#, fuzzy
+msgid "Record"
+msgstr "سجل:"
+
+#: ../memprof.glade.h:28
+#, fuzzy
+msgid "Regular expressions to Skip:"
+msgstr "_عبارة منتظمة"
+
+#: ../memprof.glade.h:29
+#, fuzzy
+msgid "Reset"
+msgstr "إعادة ضب_ط"
+
+#: ../memprof.glade.h:30
+msgid "Run"
+msgstr "شغّل"
+
+#: ../memprof.glade.h:31
+#, fuzzy
+msgid "Run Executable"
+msgstr "تنفيذي:"
+
+#: ../memprof.glade.h:32
+msgid "Run Program"
+msgstr "شغّل برنامج"
+
+#: ../memprof.glade.h:33
+msgid "Save"
+msgstr "احفظ"
+
+#: ../memprof.glade.h:34
+#, fuzzy
+msgid "Save Report"
+msgstr "ا_حفظ تقرير العلِّة"
+
+#: ../memprof.glade.h:35
+#, fuzzy
+msgid "Save _Leak Info..."
+msgstr "إحفظ في..."
+
+#: ../memprof.glade.h:36
+#, fuzzy
+msgid "Save _Profile..."
+msgstr "_طور جديد..."
+
+#: ../memprof.glade.h:37
+#, fuzzy
+msgid "Stack Trace"
+msgstr "استخراج المقطوعات"
+
+#: ../memprof.glade.h:38
+#, fuzzy
+msgid "Total Bytes: "
+msgstr "مجموع المقاطع:"
+
+#: ../memprof.glade.h:39
+#, fuzzy
+msgid "_About"
+msgstr "_6 عن البرنامج"
+
+#: ../memprof.glade.h:40
+#, fuzzy
+msgid "_Close"
+msgstr "أغلق"
+
+#: ../memprof.glade.h:41
+#, fuzzy
+msgid "_Detach"
+msgstr "_اخلع اللسان"
+
+#: ../memprof.glade.h:42
+#, fuzzy
+msgid "_File"
+msgstr "/ملف"
+
+#: ../memprof.glade.h:43
+#, fuzzy
+msgid "_Help"
+msgstr "مساعدة"
+
+#: ../memprof.glade.h:44
+#, fuzzy
+msgid "_Kill"
+msgstr "اقتل"
+
+#: ../memprof.glade.h:45
+#, fuzzy
+msgid "_Process"
+msgstr "عمليّة"
+
+#: ../memprof.glade.h:46
+#, fuzzy
+msgid "_Quit"
+msgstr "اخرج"
+
+#: ../memprof.glade.h:47
+#, fuzzy
+msgid "_Run Program..."
+msgstr "شغّل برنامج"
+
+#: ../process.c:843
+#, fuzzy
+msgid "Initial"
+msgstr "وقت أولي"
+
+#: ../process.c:846
+msgid "Starting"
+msgstr "يجري التشغيل"
+
+#: ../process.c:849
+#, fuzzy
+msgid "Running"
+msgstr "يجري تشغيل..."
+
+#: ../process.c:852
+msgid "Exiting"
+msgstr "خروج"
+
+#: ../process.c:855 ../process.c:858
+#, fuzzy
+msgid "Defunct"
+msgstr "الإفتراضيّات"
+
+#: ../server.c:289
+#, fuzzy, c-format
+msgid "Cannot find %s"
+msgstr "لا يمكنني ايجاد المستضيف"
+
+#: ../tree.c:102
+msgid "Show"
+msgstr "اعرض"
+
+#: ../tree.c:105
+msgid "Hide"
+msgstr "إخفاء"
+
+#: ../tree.c:112
+#, fuzzy
+msgid "Detach"
+msgstr "افصل اللسان "
+
+#: ../tree.c:180
+msgid "PID"
+msgstr "PID"
+
+#: ../tree.c:181
+#, fuzzy
+msgid "Command Line"
+msgstr "سطر الأوامر"
+
+#: ../tree.c:182
+msgid "Status"
+msgstr "الحالة"
+
+#, fuzzy
+#~ msgid "Saving is disabled at the moment"
+#~ msgstr "عُطّل الحفظ من قبل مدير النظام."
+
+#, fuzzy
+#~ msgid "Function names cannot contain spaces"
+#~ msgstr "لا يمكن أن يحتوي إسم المجلّد الرمز '/'."
+
+#, fuzzy
+#~ msgid "Name"
+#~ msgstr "الإ_سم"
+
+#, fuzzy
+#~ msgid "<b>Callers</b>"
+#~ msgstr "</b>الألوان<b>"
+
+#, fuzzy
+#~ msgid "Follow _exec()"
+#~ msgstr "اتبع الحالة"
+
+#, fuzzy
+#~ msgid "Follow _fork()"
+#~ msgstr "متابعة"
+
+#, fuzzy
+#~ msgid "_Preferences"
+#~ msgstr "ت_فضيلات"
+
+#~ msgid "_Settings"
+#~ msgstr "_تعيينات"

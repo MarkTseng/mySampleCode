@@ -1,0 +1,405 @@
+# Malay translation of memprof.
+# Copyright (C) 2002 Free Software Foundation, Inc.
+# Hasbullah Bin Pit (sebol) <sebol@ikhlas.com>, 2002
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: memprof HEAD\n"
+"POT-Creation-Date: 2003-06-19 14:09+0200\n"
+"PO-Revision-Date: 2002-03-06 09:06+0800\n"
+"Last-Translator: Hasbullah Bin Pit <sebol@ikhlas.com>\n"
+"Language-Team: ms <sebol@ikhlas.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: leakdetect.c:584
+#, c-format
+msgid "Cannot open output file: %s\n"
+msgstr "Tak dapat buka fail output: %s\n"
+
+#: main.c:635
+#, c-format
+msgid "Executation of \"%s\" failed"
+msgstr "Perlaksanaan \"%s\" gagal"
+
+#: main.c:766
+msgid "Really quit MemProf?"
+msgstr "Benar-benar keluar MemProf?"
+
+#: main.c:812 memprof.glade.h:35
+msgid "MemProf"
+msgstr "MemProf"
+
+#: main.c:915
+#, c-format
+msgid "Cannot find executable for \"%s\""
+msgstr "Gagal menjumpai bolehlaksana bagi \"%s\""
+
+#: main.c:1018
+msgid "Saving is disabled at the moment"
+msgstr ""
+
+#: main.c:1532
+msgid "MemProf Error"
+msgstr "Ralat Memprof"
+
+#: main.c:1532
+msgid "MemProf Warning"
+msgstr "Amaran MemProf"
+
+#: main.c:1913
+msgid "Really detach from finished process?"
+msgstr "Benar-benar lerai dari proses ditamatkan?"
+
+#: main.c:1915
+msgid "Really detach from running process?"
+msgstr "Benar-benar lerai dari proses terlaksana?"
+
+#: main.c:1945
+msgid "Really kill running process?"
+msgstr "Benar-benar bunuh proses terlaksana?"
+
+#: main.c:1982
+msgid "Create new windows for forked processes"
+msgstr "Cipta tetingkap baru bagi proses disepit"
+
+#: main.c:1984
+msgid "Retain windows for processes after exec()"
+msgstr "Kekalkan tetingkap bagi proses selepas exec()"
+
+#: main.c:1986
+msgid "Type of profiling information to collect"
+msgstr "Jenis maklumat pemprofil untuk dikumpul"
+
+#: main.c:1988
+msgid "Number of samples/sec for time profile (1k=1000)"
+msgstr "Bilangan sampel/saat bagi profil masa (1k=1999)"
+
+#: main.c:2037
+msgid "Argument of --profile must be one of 'memory', 'cycles, or 'time'\n"
+msgstr ""
+"Hujah bagu --profile mesti saru daripada 'memori', 'kitaran' atau 'masa'\n"
+
+#: main.c:2078
+msgid "Cannot find memprof.glade"
+msgstr "Gagal menjumpai memprof.glade"
+
+#: memprof.glade.h:1
+msgid "# of Allocations:"
+msgstr "# Peruntukan:"
+
+#: memprof.glade.h:2
+msgid "*"
+msgstr ""
+
+#: memprof.glade.h:3
+msgid "0"
+msgstr "0"
+
+#: memprof.glade.h:4
+msgid "0k"
+msgstr "0k"
+
+#: memprof.glade.h:5
+msgid "32k"
+msgstr "32k"
+
+#: memprof.glade.h:6
+#, fuzzy
+msgid "<b>Callers</b>"
+msgstr "Pemanggil"
+
+#: memprof.glade.h:7
+msgid "<b>Descendants</b>"
+msgstr ""
+
+#: memprof.glade.h:8
+msgid "Adding Skip Function"
+msgstr "Menambah Fungsi langkahan"
+
+#: memprof.glade.h:9
+msgid "Adding Skip Regular Expression"
+msgstr "Tambah Penyataan Regular (regepx) Langkahan"
+
+#: memprof.glade.h:10
+msgid "Address"
+msgstr "Alamat"
+
+#: memprof.glade.h:11
+msgid "Bytes / Allocation:"
+msgstr "Byte / Peruntukan"
+
+#: memprof.glade.h:12
+msgid "Caller"
+msgstr "Pemanggil"
+
+#: memprof.glade.h:13
+msgid "Check for Leaks"
+msgstr "Periksa Kebocoran"
+
+#: memprof.glade.h:14
+msgid "Command Line"
+msgstr "Arahan Baris"
+
+#: memprof.glade.h:15
+msgid "Command to run on double click in stack trace:"
+msgstr "Arahan untuk dilaksanakan pada dwi-klik pada surihan tindanan:"
+
+#: memprof.glade.h:16
+#, fuzzy
+msgid ""
+"Copyright 1999, 2000, 2001, Red Hat, Inc.\n"
+"Copyright 2002, Kristian Rietveld"
+msgstr ""
+"Copyright 1999, 2000, 2001, Red Hat, Inc.&#13;Copyright 2002, Kristian "
+"Rietveld"
+
+#: memprof.glade.h:18
+msgid "Create Profile"
+msgstr "Cipta Profil"
+
+#: memprof.glade.h:19
+msgid "Defaults"
+msgstr "Default"
+
+#: memprof.glade.h:20
+msgid ""
+"Enter a regular expression of function names to skip when computing profiles"
+msgstr ""
+"Masukkan nama fungsi penyataan regular (regexp) untuk dilangkah bila "
+"menkomput profil"
+
+#: memprof.glade.h:21
+msgid "Enter pathname to an executable"
+msgstr "Masukkan namapath ke bolehlaksana"
+
+#: memprof.glade.h:22
+msgid "Enter the name of a function to skip when computing profiles"
+msgstr "Masukkan nama fungsi untuk dilangkah bila mengkomput profil"
+
+#: memprof.glade.h:23
+msgid "File"
+msgstr "Fail"
+
+#: memprof.glade.h:24
+msgid "Follow _exec()"
+msgstr "Ikut _exec()"
+
+#: memprof.glade.h:25
+msgid "Follow _fork()"
+msgstr "Ikut _fork()"
+
+#: memprof.glade.h:26
+msgid "Function"
+msgstr "Fungsi"
+
+#: memprof.glade.h:27
+msgid "Functions to Skip:"
+msgstr "Fungsi untuk dilangkah:"
+
+#: memprof.glade.h:28
+msgid "Generate _Leak Report"
+msgstr "Jana Laporan _Kebocoran"
+
+#: memprof.glade.h:29
+msgid "Generate _Profile"
+msgstr "Jana _Profil"
+
+#: memprof.glade.h:30 tree.c:98
+msgid "Kill"
+msgstr "Bunuh"
+
+#: memprof.glade.h:31
+msgid "Kill Program"
+msgstr "Bunuh Program"
+
+#: memprof.glade.h:32
+msgid "Leak Detection Options"
+msgstr "Opsyen Mengesan Kebocoran"
+
+#: memprof.glade.h:33
+msgid "Leaks"
+msgstr "Kebocoran"
+
+#: memprof.glade.h:34
+msgid "Line"
+msgstr "Baris"
+
+#: memprof.glade.h:36
+msgid "MemProf - Processes"
+msgstr "MemProf - Proses"
+
+#: memprof.glade.h:37
+msgid "Memory Profiling Tool"
+msgstr "Radas Pemprofil Memori"
+
+#: memprof.glade.h:38
+msgid "PID"
+msgstr "PID"
+
+#: memprof.glade.h:39
+msgid "Preferences"
+msgstr "Keutamaan"
+
+#: memprof.glade.h:40
+msgid "Process _Tree"
+msgstr "_Pepohon Proses"
+
+#: memprof.glade.h:41
+msgid "Profile"
+msgstr "Profil"
+
+#: memprof.glade.h:42
+msgid "Profile Options"
+msgstr "Opsyen Profil"
+
+#: memprof.glade.h:43
+msgid "Regular expressions to Skip:"
+msgstr "Penyataan regular (regexp) untuk dilangkah:"
+
+#: memprof.glade.h:44
+msgid "Run"
+msgstr "Laksana"
+
+#: memprof.glade.h:45
+msgid "Run Executable"
+msgstr "Laksanakan bolehlaksana"
+
+#: memprof.glade.h:46
+msgid "Run Program"
+msgstr "Laksanakan Program"
+
+#: memprof.glade.h:47
+msgid "Save"
+msgstr "Simpan"
+
+#: memprof.glade.h:48
+msgid "Save Report"
+msgstr "Simpan Laporan"
+
+#: memprof.glade.h:49
+msgid "Save _Leak Info..."
+msgstr "Simpan laporan _Kebocoran"
+
+#: memprof.glade.h:50
+msgid "Save _Profile..."
+msgstr "Simpan _Profil... "
+
+#: memprof.glade.h:51
+msgid "Size"
+msgstr "Saiz"
+
+#: memprof.glade.h:52
+msgid "Stack Trace"
+msgstr "Surihan tindanan"
+
+#: memprof.glade.h:53
+msgid "Status"
+msgstr "Status"
+
+#: memprof.glade.h:54
+msgid "Total Bytes:"
+msgstr "Jumlah Byte:"
+
+#: memprof.glade.h:55
+msgid "_Detach"
+msgstr "_Leraikan"
+
+#: memprof.glade.h:56
+msgid "_File"
+msgstr "_Fail"
+
+#: memprof.glade.h:57
+msgid "_Help"
+msgstr "_Bantuan"
+
+#: memprof.glade.h:58
+msgid "_Kill"
+msgstr "_Bunuh"
+
+#: memprof.glade.h:59
+msgid "_Process"
+msgstr "_Proses"
+
+#: memprof.glade.h:60
+msgid "_Run Program..."
+msgstr "_Laksana Program..."
+
+#: memprof.glade.h:61
+msgid "_Settings"
+msgstr "_Tetapan"
+
+#: memprof.glade.h:62
+msgid "translator_credits"
+msgstr ""
+
+#: process.c:854
+msgid "Initial"
+msgstr "Awalam"
+
+#: process.c:857
+msgid "Starting"
+msgstr "Memulakan"
+
+#: process.c:860
+msgid "Running"
+msgstr "Terlaksana"
+
+#: process.c:863
+msgid "Exiting"
+msgstr "Keluar"
+
+#: process.c:866 process.c:869
+msgid "Defunct"
+msgstr "Defunct"
+
+#: server.c:286
+#, c-format
+msgid "Cannot find %s"
+msgstr "Gagal menjumpai %s"
+
+#: tree.c:91
+msgid "Show"
+msgstr "Papar"
+
+#: tree.c:94
+msgid "Hide"
+msgstr "Sorok"
+
+#: tree.c:101
+msgid "Detach"
+msgstr "Leraikan"
+
+#~ msgid "Bytes"
+#~ msgstr "Byte"
+
+#~ msgid "Children"
+#~ msgstr "Anak"
+
+#~ msgid "Self"
+#~ msgstr "Diri"
+
+#~ msgid "Total"
+#~ msgstr "Jumlah"
+
+#~ msgid "Cannot find libmemintercept.so"
+#~ msgstr "Gagal menjumpai libmemintercept.so"
+
+#~ msgid "Add..."
+#~ msgstr "Tambah..."
+
+#~ msgid "Delete"
+#~ msgstr "Padam"
+
+#~ msgid "Copyright Red Hat, Inc., 1999-2000"
+#~ msgstr "Hakcipta Red Hat, Inc., 1999-2000"
+
+#~ msgid "_Run..."
+#~ msgstr "_Laksanakan..."
+
+#~ msgid "Add"
+#~ msgstr "Tambah"
+
+#~ msgid "label37"
+#~ msgstr "label37"

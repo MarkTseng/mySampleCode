@@ -1,0 +1,399 @@
+# Dutch translation of Memprof.
+# Copyright (C) 2000 Free Software Foundation, Inc.
+# Almer S. Tigelaar <almer1@dds.nl>, 2000.
+# Taco Witte <T.C.Witte@phys.uu.nl>, 2002.
+# Tino Meinen <a.t.meinen@chello.nl>, 2003.
+# kill: doden vervangen door afsluiten
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: memprof cvs\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2006-10-11 04:46+0200\n"
+"PO-Revision-Date: 2006-10-11 13:09+0200\n"
+"Last-Translator: Tino Meinen <a.t.meinen@chello.nl>\n"
+"Language-Team: Dutch <vertaling@nl.linux.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../leakdetect.c:503
+#, c-format
+msgid "Cannot open output file: %s\n"
+msgstr "Kan uitvoerbestand '%s' niet openen\n"
+
+#: ../main.c:785
+#, c-format
+msgid "Executation of \"%s\" failed"
+msgstr "Uitvoering van \"%s\" mislukt"
+
+#: ../main.c:929 ../memprof.glade.h:28
+msgid "MemProf"
+msgstr "MemProf"
+
+#: ../main.c:1037
+#, c-format
+msgid "Cannot find executable for \"%s\""
+msgstr "Kan uitvoerbaar bestand for \"%s\" niet vinden"
+
+#: ../main.c:1140
+msgid "Saving is disabled at the moment"
+msgstr "Opslaan is momenteel uitgezet"
+
+#: ../main.c:1738
+msgid "MemProf Error"
+msgstr "MemProf fout"
+
+#: ../main.c:1738
+msgid "MemProf Warning"
+msgstr "MemProf waarschuwing"
+
+#: ../main.c:1808 ../main.c:1825 ../main.c:1843
+msgid "Name"
+msgstr "Naam"
+
+#: ../main.c:1809 ../main.c:1826 ../main.c:1844
+msgid "Self"
+msgstr "Zelf"
+
+#: ../main.c:1810 ../main.c:1845
+msgid "Total"
+msgstr "Totaal"
+
+#: ../main.c:1827
+msgid "Cumulative"
+msgstr "Cumulatief"
+
+#: ../main.c:1870
+msgid "Address"
+msgstr "Adres"
+
+#: ../main.c:1871
+msgid "Size"
+msgstr "Grootte"
+
+#: ../main.c:1872
+msgid "Caller"
+msgstr "Aanroeper"
+
+#: ../main.c:1892
+msgid "Function"
+msgstr "Functie"
+
+#: ../main.c:1893
+msgid "Line"
+msgstr "Regel"
+
+#: ../main.c:1894
+msgid "File"
+msgstr "Bestand"
+
+#: ../main.c:2106
+msgid "Really detach from finished process?"
+msgstr "Echt ontkoppelen van voltooid proces?"
+
+#: ../main.c:2108
+msgid "Really detach from running process?"
+msgstr "Echt ontkoppelen van lopend proces?"
+
+#: ../main.c:2138
+msgid "Really kill running process?"
+msgstr "Lopend proces echt afsluiten?"
+
+#: ../main.c:2175
+msgid "Create new windows for forked processes"
+msgstr "Maak nieuw venster voor geforkte processen"
+
+#: ../main.c:2177
+msgid "Retain windows for processes after exec()"
+msgstr "Behoud vensters voor processen na exec()"
+
+#: ../main.c:2179
+msgid "Type of profiling information to collect"
+msgstr "Het soort profileringsinformatie dat wordt verzameld"
+
+#: ../main.c:2181
+msgid "Number of samples/sec for time profile (1k=1000)"
+msgstr "Het aantal samples/sec voor het tijdprofiel (1k=1000)"
+
+#: ../main.c:2230
+msgid "Argument of --profile must be one of 'memory', 'cycles', or 'time'\n"
+msgstr "Het argument van --profile moet zijn: 'memory', 'cycles' of 'time'\n"
+
+#: ../main.c:2271
+msgid "Cannot find memprof.glade"
+msgstr "Kan memprof.glade niet vinden"
+
+#: ../memprof.glade.h:1
+msgid "# of Allocations:"
+msgstr "Aantal Allocaties:"
+
+#: ../memprof.glade.h:2
+msgid "0"
+msgstr "0"
+
+#: ../memprof.glade.h:3
+msgid "0k"
+msgstr "Ok"
+
+#: ../memprof.glade.h:4
+msgid "32k"
+msgstr "32k"
+
+#: ../memprof.glade.h:5
+msgid "<b>Callers</b>"
+msgstr "<b>Aanroepers</b>"
+
+# Nazaten
+#: ../memprof.glade.h:6
+msgid "<b>Descendants</b>"
+msgstr "<b>Afstammelingen</b>"
+
+#: ../memprof.glade.h:7
+msgid "Adding Skip Function"
+msgstr "Functie overslaan wordt toegevoegd"
+
+#: ../memprof.glade.h:8
+msgid "Adding Skip Regular Expression"
+msgstr "Reguliere Expressie overslaan wordt toegevoegd"
+
+#: ../memprof.glade.h:9
+msgid "Bytes / Allocation:"
+msgstr "Byte / Allocatie:"
+
+#: ../memprof.glade.h:10
+msgid "Check for Leaks"
+msgstr "Op lekken controleren"
+
+#: ../memprof.glade.h:11
+msgid "Command to run on double click in stack trace:"
+msgstr "Uit te voeren opdracht na een dubbelklik in \"stack volgen\":"
+
+#: ../memprof.glade.h:12
+msgid ""
+"Copyright 1999, 2000, 2001, Red Hat, Inc.\n"
+"Copyright 2002, Kristian Rietveld"
+msgstr ""
+"Copyright 1999, 2000, 2001, Red Hat, Inc.\n"
+"Copyright 2002, Kristian Rietveld"
+
+#: ../memprof.glade.h:14
+msgid "Create Profile"
+msgstr "Profiel maken"
+
+#: ../memprof.glade.h:15
+msgid "Defaults"
+msgstr "Standaardwaarden"
+
+#: ../memprof.glade.h:16
+msgid ""
+"Enter a regular expression of function names to skip when computing profiles"
+msgstr ""
+"Vul een reguliere expressie of functienaam in om over te slaan wanneer "
+"profielen worden berekend"
+
+#: ../memprof.glade.h:17
+msgid "Enter pathname to an executable"
+msgstr "Het pad naar een uitvoerbaar bestand invoeren"
+
+#: ../memprof.glade.h:18
+msgid "Enter the name of a function to skip when computing profiles"
+msgstr ""
+"Geef de naam van een functie om over te slaan bij het berekenen van profielen"
+
+#: ../memprof.glade.h:19
+msgid "Follow _exec()"
+msgstr "_exec() volgen"
+
+#: ../memprof.glade.h:20
+msgid "Follow _fork()"
+msgstr "_fork() volgen"
+
+#: ../memprof.glade.h:21
+msgid "Functions to Skip:"
+msgstr "Functies overslaan:"
+
+#: ../memprof.glade.h:22
+msgid "Generate _Leak Report"
+msgstr "_Lekrapport genereren"
+
+#: ../memprof.glade.h:23
+msgid "Generate _Profile"
+msgstr "_Profiel genereren"
+
+#: ../memprof.glade.h:24 ../tree.c:109
+msgid "Kill"
+msgstr "Afsluiten"
+
+#: ../memprof.glade.h:25
+msgid "Kill Program"
+msgstr "Programma afsluiten"
+
+#: ../memprof.glade.h:26
+msgid "Leak Detection Options"
+msgstr "Lekdetectie-opties"
+
+#: ../memprof.glade.h:27
+msgid "Leaks"
+msgstr "Lekken"
+
+#: ../memprof.glade.h:29
+msgid "MemProf - Processes"
+msgstr "MemProf - Processen"
+
+#: ../memprof.glade.h:30
+msgid "Memory Profiling Tool"
+msgstr "Geheugen Profiel Hulpmiddel"
+
+#: ../memprof.glade.h:31
+msgid "Preferences"
+msgstr "Voorkeuren"
+
+#: ../memprof.glade.h:32
+msgid "Process _Tree"
+msgstr "Proces-_boom"
+
+#: ../memprof.glade.h:33
+msgid "Profile"
+msgstr "Profiel"
+
+#: ../memprof.glade.h:34
+msgid "Profile Options"
+msgstr "Profiel-opties"
+
+# in welke betekenis is 'record' ?
+# opname/opnemen/record/kaart
+#: ../memprof.glade.h:35
+msgid "Record"
+msgstr "Record"
+
+#: ../memprof.glade.h:36
+msgid "Regular expressions to Skip:"
+msgstr "Reguliere expressie overslaan:"
+
+#: ../memprof.glade.h:37
+msgid "Reset"
+msgstr "Resetten"
+
+#: ../memprof.glade.h:38
+msgid "Run"
+msgstr "Uitvoeren"
+
+#: ../memprof.glade.h:39
+msgid "Run Executable"
+msgstr "Uitvoerbaar bestand starten"
+
+#: ../memprof.glade.h:40
+msgid "Run Program"
+msgstr "Programma uitvoeren"
+
+#: ../memprof.glade.h:41
+msgid "Save"
+msgstr "Opslaan"
+
+#: ../memprof.glade.h:42
+msgid "Save Report"
+msgstr "Rapport opslaan"
+
+#: ../memprof.glade.h:43
+msgid "Save _Leak Info..."
+msgstr "_Lek-informatie opslaan..."
+
+#: ../memprof.glade.h:44
+msgid "Save _Profile..."
+msgstr "_Profiel opslaan..."
+
+#: ../memprof.glade.h:45
+msgid "Stack Trace"
+msgstr "Stack volgen"
+
+#: ../memprof.glade.h:46
+msgid "Total Bytes:"
+msgstr "Totaal aantal Byte:"
+
+# Losmaken is korter dan: Ontkoppelen
+#: ../memprof.glade.h:47
+msgid "_Detach"
+msgstr "_Losmaken"
+
+#: ../memprof.glade.h:48
+msgid "_File"
+msgstr "_Bestand"
+
+#: ../memprof.glade.h:49
+msgid "_Help"
+msgstr "_Hulp"
+
+#: ../memprof.glade.h:50
+msgid "_Kill"
+msgstr "_Afsluiten"
+
+#: ../memprof.glade.h:51
+msgid "_Process"
+msgstr "_Proces"
+
+#: ../memprof.glade.h:52
+msgid "_Run Program..."
+msgstr "Programma _uitvoeren..."
+
+#: ../memprof.glade.h:53
+msgid "_Settings"
+msgstr "_Instellingen"
+
+#: ../memprof.glade.h:54
+msgid "translator_credits"
+msgstr "Vincent van Adrighem"
+
+#: ../process.c:908
+msgid "Initial"
+msgstr "Begin"
+
+#: ../process.c:911
+msgid "Starting"
+msgstr "Startend"
+
+#: ../process.c:914
+msgid "Running"
+msgstr "Lopend"
+
+#: ../process.c:917
+msgid "Exiting"
+msgstr "Stoppend"
+
+# was eerst: Overleden. eigenlijke betekenis: Niet meer bestaand,
+# wordt goed verwoord door: Afgelopen
+#: ../process.c:920 ../process.c:923
+msgid "Defunct"
+msgstr "Afgelopen"
+
+#: ../server.c:289
+#, c-format
+msgid "Cannot find %s"
+msgstr "Kan %s niet vinden"
+
+#: ../tree.c:102
+msgid "Show"
+msgstr "Weergeven"
+
+#: ../tree.c:105
+msgid "Hide"
+msgstr "Verbergen"
+
+#: ../tree.c:112
+msgid "Detach"
+msgstr "Ontkoppelen"
+
+#: ../tree.c:180
+msgid "PID"
+msgstr "PID"
+
+#: ../tree.c:181
+msgid "Command Line"
+msgstr "Opdrachtregel"
+
+#: ../tree.c:182
+msgid "Status"
+msgstr "Status"
+
+#~ msgid "*"
+#~ msgstr "*"

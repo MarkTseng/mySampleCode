@@ -1,0 +1,424 @@
+# Danish translation of memprof.
+# Copyright (C) 2000-07 Free Software Foundation, Inc.
+# Kenneth Christiansen <kenneth@gnome.dk>, 2000.
+# Keld Simonsen <keld@dkuug.dk>, 2000.
+# Ole Laursen <olau@hardworking.dk>, 2001-04.
+# Peter Bach <bach.peter@gmail.com>, 2007.
+#
+# Konventioner:
+#
+#   Memprof -> Hukommelsesprofilering
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: memprof 0.4.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2007-02-23 11:42+0200\n"
+"PO-Revision-Date: 2007-02-23 11:45+0200\n"
+"Last-Translator: Peter Bach <bach.peter@gmail.com>\n"
+"Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../leakdetect.c:503
+#, c-format
+msgid "Cannot open output file: %s\n"
+msgstr "Kan ikke åbne filen: %s\n"
+
+#: ../main.c:797
+#, c-format
+msgid "Executation of \"%s\" failed: %s"
+msgstr "Kørsel af \"%s\" mislykkedes: %s"
+
+#: ../main.c:945
+msgid "MemProf"
+msgstr "Hukommelsesprofilering"
+
+#: ../main.c:1054
+#, c-format
+msgid "Cannot find executable for \"%s\""
+msgstr "Kunne ikke finde kørbar fil for '%s'"
+
+#: ../main.c:1157
+msgid "Saving is disabled at the moment"
+msgstr "Gemning er deaktiveret i øjeblikket"
+
+#. FIXME: these dialogs pop up below the window. Of course this
+#. * entire piece of UI needs to die anyway
+#.
+#: ../main.c:1348
+msgid "Function names cannot contain spaces"
+msgstr "Funktionsnavne kan ikke indeholde mellemrum"
+
+#: ../main.c:1753
+msgid "MemProf Error"
+msgstr "Hukommelsesprofilering - fejl"
+
+#: ../main.c:1753
+msgid "MemProf Warning"
+msgstr "Hukommelsesprofilering - advarsel"
+
+#: ../main.c:1816
+#: ../main.c:1833
+#: ../main.c:1851
+msgid "Name"
+msgstr "Navn"
+
+#: ../main.c:1817
+#: ../main.c:1834
+#: ../main.c:1852
+msgid "Self"
+msgstr "Egen"
+
+#: ../main.c:1818
+#: ../main.c:1853
+msgid "Total"
+msgstr "Totalt"
+
+#: ../main.c:1835
+msgid "Cumulative"
+msgstr "Kumulativ"
+
+#: ../main.c:1878
+msgid "Address"
+msgstr "Adresse"
+
+#: ../main.c:1879
+msgid "Size"
+msgstr "Størrelse"
+
+#: ../main.c:1880
+msgid "Caller"
+msgstr "Kalder"
+
+#: ../main.c:1900
+msgid "Function"
+msgstr "Funktion"
+
+#: ../main.c:1901
+msgid "Line"
+msgstr "Linje"
+
+#: ../main.c:1902
+msgid "File"
+msgstr "Fil"
+
+#: ../main.c:2112
+msgid "Really detach from finished process?"
+msgstr "Vil du virkelig frigøre den afsluttede proces?"
+
+#: ../main.c:2114
+msgid "Really detach from running process?"
+msgstr "Vil du virkelig frigøre den kørende proces?"
+
+#: ../main.c:2144
+msgid "Really kill running process?"
+msgstr "Vil du virkelig dræbe den kørende proces?"
+
+#: ../main.c:2179
+msgid "Create new windows for forked processes"
+msgstr "Opret nye vinduer for fraspaltede processer"
+
+#: ../main.c:2181
+msgid "Retain windows for processes after exec()"
+msgstr "Behold vinduer for processer efter exec()"
+
+#: ../main.c:2183
+msgid "Type of profiling information to collect"
+msgstr "Type af profileringsoplysninger der skal indsamles"
+
+#: ../main.c:2185
+msgid "Number of samples/sec for time profile (1k=1000)"
+msgstr "Antal prøver/sek. for tidsprofilering (1k=1000)"
+
+#: ../main.c:2245
+msgid "Argument of --profile must be one of 'memory', 'cycles', or 'time'\n"
+msgstr "Parameteren til --profile skal være 'memory', 'cycles' eller 'time'\n"
+
+#: ../main.c:2280
+msgid "Cannot find memprof.glade"
+msgstr "Kan ikke finde memprof.glade"
+
+#: ../memprof.glade.h:1
+msgid "# of Allocations:"
+msgstr "Antal allokeringer: "
+
+#: ../memprof.glade.h:2
+msgid "0"
+msgstr "0"
+
+#: ../memprof.glade.h:3
+msgid "0k"
+msgstr "0 k"
+
+#: ../memprof.glade.h:4
+msgid "32k"
+msgstr "32 k"
+
+#: ../memprof.glade.h:5
+msgid "<b>Callers</b>"
+msgstr "<b>Kaldere</b>"
+
+#: ../memprof.glade.h:6
+msgid "<b>Descendants</b>"
+msgstr "<b>Efterkommere</b>"
+
+#: ../memprof.glade.h:7
+msgid "Adding Skip Function"
+msgstr "Tilføjer oversprunget funktion"
+
+#: ../memprof.glade.h:8
+msgid "Adding Skip Regular Expression"
+msgstr "Tilføjer oversprunget regulært udtryk"
+
+#: ../memprof.glade.h:9
+msgid "Bytes / Allocation:"
+msgstr "Byte/allokering: "
+
+#: ../memprof.glade.h:10
+msgid "Check for Leaks"
+msgstr "Tjek for lækager"
+
+#: ../memprof.glade.h:11
+msgid "Command to run on double click in stack trace:"
+msgstr "Kommando som skal køres ved dobbelklik i stakefterfølgning:"
+
+#: ../memprof.glade.h:12
+msgid "Create Profile"
+msgstr "Opret profil"
+
+#: ../memprof.glade.h:13
+msgid "Defaults"
+msgstr "Standardværdier"
+
+#: ../memprof.glade.h:14
+msgid "Enter a regular expression of function names to skip when computing profiles"
+msgstr "Indtast et regulært udtryk med navne på funktioner der skal springes over ved beregning af profiler"
+
+#: ../memprof.glade.h:15
+msgid "Enter pathname to an executable"
+msgstr "Indtast sti til en kørbar fil"
+
+#: ../memprof.glade.h:16
+msgid "Enter the name of a function to skip when computing profiles"
+msgstr "Indtast navnet på en funktion der skal overspringes ved beregning af profiler"
+
+#: ../memprof.glade.h:17
+msgid "Follow _exec()"
+msgstr "Følg _exec()"
+
+#: ../memprof.glade.h:18
+msgid "Follow _fork()"
+msgstr "Følg _fork()"
+
+#: ../memprof.glade.h:19
+msgid "Functions to Skip:"
+msgstr "Funktioner der springes over:"
+
+#: ../memprof.glade.h:20
+msgid "Generate _Leak Report"
+msgstr "Generér _lægkagerapport"
+
+#: ../memprof.glade.h:21
+msgid "Generate _Profile"
+msgstr "Generér _profil"
+
+#: ../memprof.glade.h:22
+#: ../tree.c:109
+msgid "Kill"
+msgstr "Dræb"
+
+#: ../memprof.glade.h:23
+msgid "Kill Program"
+msgstr "Dræb program"
+
+#: ../memprof.glade.h:24
+msgid "Leak Detection Options"
+msgstr "Lækagefindingsindstillinger"
+
+#: ../memprof.glade.h:25
+msgid "Leaks"
+msgstr "Lækager"
+
+#: ../memprof.glade.h:26
+msgid "MemProf - Processes"
+msgstr "Hukommelsesprofilering - processer"
+
+#: ../memprof.glade.h:27
+msgid "Preferences"
+msgstr "Indstillinger"
+
+#: ../memprof.glade.h:28
+msgid "Process _Tree"
+msgstr "Proces_træ"
+
+#: ../memprof.glade.h:29
+msgid "Profile"
+msgstr "Profil"
+
+#: ../memprof.glade.h:30
+msgid "Profile Options"
+msgstr "Profileringsindstillinger"
+
+#: ../memprof.glade.h:31
+msgid "Record"
+msgstr "Optag"
+
+#: ../memprof.glade.h:32
+msgid "Regular expressions to Skip:"
+msgstr "Regulære udtryk der springes over:"
+
+#: ../memprof.glade.h:33
+msgid "Reset"
+msgstr "Nulstil"
+
+#: ../memprof.glade.h:34
+msgid "Run"
+msgstr "Kør"
+
+#: ../memprof.glade.h:35
+msgid "Run Executable"
+msgstr "Kør fil"
+
+#: ../memprof.glade.h:36
+msgid "Run Program"
+msgstr "Kør program"
+
+#: ../memprof.glade.h:37
+msgid "Save"
+msgstr "Gem"
+
+#: ../memprof.glade.h:38
+msgid "Save Report"
+msgstr "Gem rapport"
+
+#: ../memprof.glade.h:39
+msgid "Save _Leak Info..."
+msgstr "Gem _lægkageinfo..."
+
+#: ../memprof.glade.h:40
+msgid "Save _Profile..."
+msgstr "Gem _profil..."
+
+#: ../memprof.glade.h:41
+msgid "Stack Trace"
+msgstr "Stakudskrift"
+
+#: ../memprof.glade.h:42
+msgid "Total Bytes:"
+msgstr "Totalt antal byte: "
+
+#: ../memprof.glade.h:43
+msgid "_About"
+msgstr "_Om"
+
+#: ../memprof.glade.h:44
+msgid "_Close"
+msgstr "_Luk"
+
+#: ../memprof.glade.h:45
+msgid "_Detach"
+msgstr "_Frigør"
+
+#: ../memprof.glade.h:46
+msgid "_File"
+msgstr "_Fil"
+
+#: ../memprof.glade.h:47
+msgid "_Help"
+msgstr "_Hjælp"
+
+#: ../memprof.glade.h:48
+msgid "_Kill"
+msgstr "_Dræb"
+
+#: ../memprof.glade.h:49
+msgid "_Preferences"
+msgstr "_Indstillinger"
+
+#: ../memprof.glade.h:50
+msgid "_Process"
+msgstr "_Proces"
+
+#: ../memprof.glade.h:51
+msgid "_Quit"
+msgstr "_Afslut"
+
+#: ../memprof.glade.h:52
+msgid "_Run Program..."
+msgstr "_Kør program"
+
+#: ../memprof.glade.h:53
+msgid "_Settings"
+msgstr "_Indstillinger"
+
+#: ../process.c:907
+msgid "Initial"
+msgstr "Begyndelse"
+
+#: ../process.c:910
+msgid "Starting"
+msgstr "Starter"
+
+#: ../process.c:913
+msgid "Running"
+msgstr "Kører"
+
+#: ../process.c:916
+msgid "Exiting"
+msgstr "Afslutter"
+
+#: ../process.c:919
+#: ../process.c:922
+msgid "Defunct"
+msgstr "Ude af drift"
+
+#: ../server.c:289
+#, c-format
+msgid "Cannot find %s"
+msgstr "Kan ikke finde %s"
+
+#: ../tree.c:102
+msgid "Show"
+msgstr "Vis"
+
+#: ../tree.c:105
+msgid "Hide"
+msgstr "Skjul"
+
+#: ../tree.c:112
+msgid "Detach"
+msgstr "Frigør"
+
+#: ../tree.c:180
+msgid "PID"
+msgstr "PID"
+
+#: ../tree.c:181
+msgid "Command Line"
+msgstr "Kommandolinje"
+
+#: ../tree.c:182
+msgid "Status"
+msgstr "Status"
+
+#~ msgid "*"
+#~ msgstr "*"
+#~ msgid ""
+#~ "Copyright 1999, 2000, 2001, Red Hat, Inc.\n"
+#~ "Copyright 2002, Kristian Rietveld"
+#~ msgstr ""
+#~ "Copyright 1999, 2000, 2001, Red Hat, Inc.\n"
+#~ "Copyright 2002, Kristian Rietveld"
+#~ msgid "Memory Profiling Tool"
+#~ msgstr "Værktøj til hukommelsesprofilering."
+#~ msgid "translator_credits"
+#~ msgstr "Ole Laursen <olau@hardworking.dk>"
+#~ msgid "Really quit MemProf?"
+#~ msgstr "Vil du virkelig afslutte Hukommelsesprofilering?"
+#~ msgid "Bytes"
+#~ msgstr "Byte"
+#~ msgid "Children"
+#~ msgstr "Afkom"
+

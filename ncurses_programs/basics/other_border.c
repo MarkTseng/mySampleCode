@@ -84,7 +84,7 @@ void init_win_params(WIN *p_win)
 }
 void print_win_params(WIN *p_win)
 {
-#ifdef _DEBUG
+#if 1
 	mvprintw(25, 0, "%d %d %d %d", p_win->startx, p_win->starty, 
 				p_win->width, p_win->height);
 	refresh();

@@ -1,0 +1,90 @@
+dnl Process this file with autoconf to produce a configure script.
+
+AC_PREREQ(2.52)
+
+AC_INIT(memprof, 0.6.2)
+AC_CONFIG_SRCDIR(memprof.glade)
+
+dnl $Format: "AM_INIT_AUTOMAKE(MemProf, $ReleaseVersion$)" $
+AM_INIT_AUTOMAKE(AC_PACKAGE_NAME, AC_PACKAGE_VERSION)
+
+dnl Specify a configuration file
+AM_CONFIG_HEADER(config.h)
+
+m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
+
+dnl Initialize libtool
+AM_PROG_LIBTOOL
+
+dnl Initialize maintainer mode
+AM_MAINTAINER_MODE
+
+AC_PROG_CC
+AM_PROG_CC_STDC
+AC_PROG_INSTALL
+
+AC_PROG_INTLTOOL
+
+changequote(,)dnl
+if test "x$GCC" = "xyes"; then
+  case " $CFLAGS " in
+  *[\ \	]-Wall[\ \	]*) ;;
+  *) CFLAGS="$CFLAGS -Wall" ;;
+  esac
+fi
+changequote([,])dnl
+
+debugdir=${libdir}/debug
+	 
+AC_ARG_WITH(separate-debug-dir,
+[  --with-separate-debug-dir=path   Look for global separate debug info in this path [LIBDIR/debug]],
+[debugdir="${withval}"])
+	
+AC_DEFINE_DIR(DEBUGDIR, debugdir,
+              [Look for global separate debug info in this path])
+	
+dnl GNOME checks (using pkg-config macros) and getting cflags and libs
+GTK_REQUIRED=2.6.0
+LIBGLADE_REQUIRED=1.99.9
+
+PKG_CHECK_MODULES(MEMPROF,
+[
+	gtk+-2.0 >= $GTK_REQUIRED
+        libglade-2.0 >= $LIBGLADE_REQUIRED
+])
+
+AC_SUBST(MEMPROF_CFLAGS)
+
+AC_CHECK_HEADER([bfd.h],[],
+                [AC_MSG_ERROR([Cannot continue: bfd.h not found. Do you have binutils-dev installed?])])
+
+if ! uname | grep Linux > /dev/null ; then
+  AC_MSG_ERROR([*** MemProf only works on linux])
+fi
+
+AC_SUBST(MEMPROF_LIBS)
+
+dnl Initialize gettext
+GETTEXT_PACKAGE=memprof
+AC_SUBST(GETTEXT_PACKAGE)
+AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE, "$GETTEXT_PACKAGE",
+                   [Identifier for message catalog files])
+
+ALL_LINGUAS="am ar az be ca cs da de dz el en_CA en_GB es et eu fi fr hr hu it ja ko lv mk ml ms nb ne nl oc pa pl pt pt_BR ru rw sk sl sr sr@Latn sv ta tr uk vi zh_CN zh_TW"
+AM_GLIB_GNU_GETTEXT
+
+AC_HAVE_HEADERS(execinfo.h)
+AC_CHECK_FUNCS(bind_textdomain_codeset backtrace)
+
+
+dnl Remember ACLOCAL_FLAGS for automatic reautogen.
+ACLOCAL="$ACLOCAL $ACLOCAL_FLAGS"
+
+dnl Output the Makefiles
+
+AC_CONFIG_FILES([
+Makefile
+po/Makefile.in
+memprof.spec
+])
+AC_OUTPUT

@@ -1,0 +1,387 @@
+# memprof translation to Catalan.
+# Copyright © 2000, 2001, 2003 Free Software Foundation, Inc.
+# Softcatalà <info@softcatala.org>, 2000, 2001.
+# Xavier Conde Rueda <xaviconde@eresmas.com>, 2003.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: memprof\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2003-11-19 15:23+0100\n"
+"PO-Revision-Date: 2003-11-19 01:36+0100\n"
+"Last-Translator: Xavier Conde Rueda <xaviconde@eresmas.com\n"
+"Language-Team: Catalan <tradgnome@softcatala.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: leakdetect.c:584
+#, c-format
+msgid "Cannot open output file: %s\n"
+msgstr "No es pot obrir el fitxer de sortida: %s\n"
+
+#: main.c:777
+#, c-format
+msgid "Executation of \"%s\" failed"
+msgstr "No s'ha pogut executar \"%s\""
+
+#: main.c:921 memprof.glade.h:29
+msgid "MemProf"
+msgstr "MemProf"
+
+#: main.c:1028
+#, c-format
+msgid "Cannot find executable for \"%s\""
+msgstr "No es pot trobar l'executable de \"%s\""
+
+#: main.c:1131
+msgid "Saving is disabled at the moment"
+msgstr "En aquest moment no es pot desar"
+
+#: main.c:1704
+msgid "MemProf Error"
+msgstr "Error del MemProf"
+
+#: main.c:1704
+msgid "MemProf Warning"
+msgstr "Avís del MemProf"
+
+#: main.c:1773 main.c:1786 main.c:1801
+msgid "Name"
+msgstr "Nom"
+
+#: main.c:1774 main.c:1787 main.c:1802
+msgid "Self"
+msgstr "Auto"
+
+#: main.c:1775 main.c:1803
+msgid "Total"
+msgstr "Total"
+
+#: main.c:1788
+msgid "Cumulative"
+msgstr "Acumulatiu"
+
+#: main.c:1825
+msgid "Address"
+msgstr "Adreça"
+
+#: main.c:1826
+msgid "Size"
+msgstr "Mida"
+
+#: main.c:1827
+msgid "Caller"
+msgstr "Cridador"
+
+#: main.c:1845
+msgid "Function"
+msgstr "Funció"
+
+#: main.c:1846
+msgid "Line"
+msgstr "Línia"
+
+#: main.c:1847
+msgid "File"
+msgstr "Fitxer"
+
+#: main.c:2057
+msgid "Really detach from finished process?"
+msgstr "Esteu segur que voleu desacoblar-vos del procés finalitzat?"
+
+#: main.c:2059
+msgid "Really detach from running process?"
+msgstr "Esteu segur que voleu desacoblar-vos del procés en execució?"
+
+#: main.c:2089
+msgid "Really kill running process?"
+msgstr "Segur que voleu finalitzar el procés en curs?"
+
+#: main.c:2126
+msgid "Create new windows for forked processes"
+msgstr "Crea noves finestres per als processos bifurcats"
+
+#: main.c:2128
+msgid "Retain windows for processes after exec()"
+msgstr "Conserva les finestres per als processos posteriors a l'exec()"
+
+#: main.c:2130
+msgid "Type of profiling information to collect"
+msgstr "Tipus d'informació sobre rendiment que s'ha de recollir"
+
+#: main.c:2132
+msgid "Number of samples/sec for time profile (1k=1000)"
+msgstr "Número de mostres/seg per al rendiment temporal (1k=1000)"
+
+#: main.c:2181
+msgid "Argument of --profile must be one of 'memory', 'cycles, or 'time'\n"
+msgstr "L'argument de --profile ha de ser o bé 'memory', 'cycles' o 'time'\n"
+
+#: main.c:2222
+msgid "Cannot find memprof.glade"
+msgstr "No es pot trobar memprof.glade"
+
+#: memprof.glade.h:1
+msgid "# of Allocations:"
+msgstr "Nombre d'assignacions:"
+
+#: memprof.glade.h:2
+msgid "*"
+msgstr "*"
+
+#: memprof.glade.h:3
+msgid "0"
+msgstr "0"
+
+#: memprof.glade.h:4
+msgid "0k"
+msgstr "D'acord"
+
+#: memprof.glade.h:5
+msgid "32k"
+msgstr "32k"
+
+#: memprof.glade.h:6
+msgid "<b>Callers</b>"
+msgstr "<b>Cridadors</b>"
+
+#: memprof.glade.h:7
+msgid "<b>Descendants</b>"
+msgstr "<b>Descendents</b>"
+
+#: memprof.glade.h:8
+msgid "Adding Skip Function"
+msgstr "S'està afegint una funció d'ignorar"
+
+#: memprof.glade.h:9
+msgid "Adding Skip Regular Expression"
+msgstr "S'està afegint expressió regular per ignorar"
+
+#: memprof.glade.h:10
+msgid "Bytes / Allocation:"
+msgstr "Bytes / Assignació:"
+
+#: memprof.glade.h:11
+msgid "Check for Leaks"
+msgstr "Comprova si hi ha pèrdues de memòria"
+
+#: memprof.glade.h:12
+msgid "Command to run on double click in stack trace:"
+msgstr "Ordre per executar en fer doble clic al seguiment de la pila:"
+
+#: memprof.glade.h:13
+msgid ""
+"Copyright 1999, 2000, 2001, Red Hat, Inc.\n"
+"Copyright 2002, Kristian Rietveld"
+msgstr ""
+"Copyright 1999, 2000, 2001, Red Hat, Inc.\n"
+"Copyright 2002, Kristian Rietveld"
+
+#: memprof.glade.h:15
+msgid "Create Profile"
+msgstr "Crea mesura de rendiment"
+
+#: memprof.glade.h:16
+msgid "Defaults"
+msgstr "Valors predeterminats"
+
+#: memprof.glade.h:17
+msgid ""
+"Enter a regular expression of function names to skip when computing profiles"
+msgstr ""
+"Introduïu una expressió regular de noms de funció que s'han d'ignorar quan "
+"es computin els rendiments"
+
+#: memprof.glade.h:18
+msgid "Enter pathname to an executable"
+msgstr "Introduïu el camí a l'executable"
+
+#: memprof.glade.h:19
+msgid "Enter the name of a function to skip when computing profiles"
+msgstr "Introduïu el nom de funció que s'ha d'ignorar quan es computin els rendiments"
+
+#: memprof.glade.h:20
+msgid "Follow _exec()"
+msgstr "Segueix _exec()"
+
+#: memprof.glade.h:21
+msgid "Follow _fork()"
+msgstr "Segueix _fork()"
+
+#: memprof.glade.h:22
+msgid "Functions to Skip:"
+msgstr "Funcions per ignorar:"
+
+#: memprof.glade.h:23
+msgid "Generate _Leak Report"
+msgstr "Genera un informe de _pèrdues de memòria"
+
+#: memprof.glade.h:24
+msgid "Generate _Profile"
+msgstr "Genera _mesura de rendiment"
+
+#: memprof.glade.h:25 tree.c:109
+msgid "Kill"
+msgstr "Finalitza"
+
+#: memprof.glade.h:26
+msgid "Kill Program"
+msgstr "Finalitza programa"
+
+#: memprof.glade.h:27
+msgid "Leak Detection Options"
+msgstr "Opcions de detecció de pèrdues de memòria"
+
+#: memprof.glade.h:28
+msgid "Leaks"
+msgstr "Pèrdues de memòria"
+
+#: memprof.glade.h:30
+msgid "MemProf - Processes"
+msgstr "MemProf - Processos"
+
+#: memprof.glade.h:31
+msgid "Memory Profiling Tool"
+msgstr "Eina per mesurar el rendiment de memòria"
+
+#: memprof.glade.h:32
+msgid "Preferences"
+msgstr "Preferències"
+
+#: memprof.glade.h:33
+msgid "Process _Tree"
+msgstr "Arbre de _processos"
+
+#: memprof.glade.h:34
+msgid "Profile"
+msgstr "Mesura de rendiment"
+
+#: memprof.glade.h:35
+msgid "Profile Options"
+msgstr "Opcions de mesura de rendiment"
+
+#: memprof.glade.h:36
+msgid "Regular expressions to Skip:"
+msgstr "Expressions regulars per ignorar:"
+
+#: memprof.glade.h:37
+msgid "Reset"
+msgstr "Reinicia"
+
+#: memprof.glade.h:38
+msgid "Run"
+msgstr "Executa"
+
+#: memprof.glade.h:39
+msgid "Run Executable"
+msgstr "Executa"
+
+#: memprof.glade.h:40
+msgid "Run Program"
+msgstr "Executa el programa"
+
+#: memprof.glade.h:41
+msgid "Save"
+msgstr "Desa"
+
+#: memprof.glade.h:42
+msgid "Save Report"
+msgstr "Desa l'informe"
+
+#: memprof.glade.h:43
+msgid "Save _Leak Info..."
+msgstr "Desa _la informació de pèrdues de memòria..."
+
+#: memprof.glade.h:44
+msgid "Save _Profile..."
+msgstr "Desa _mesura de rendiment..."
+
+#: memprof.glade.h:45
+msgid "Stack Trace"
+msgstr "Seguiment de la pila"
+
+#: memprof.glade.h:46
+msgid "Total Bytes:"
+msgstr "Bytes totals:"
+
+#: memprof.glade.h:47
+msgid "_Detach"
+msgstr "_Desacobla"
+
+#: memprof.glade.h:48
+msgid "_File"
+msgstr "_Fitxer"
+
+#: memprof.glade.h:49
+msgid "_Help"
+msgstr "_Ajuda"
+
+#: memprof.glade.h:50
+msgid "_Kill"
+msgstr "_Finalitza"
+
+#: memprof.glade.h:51
+msgid "_Process"
+msgstr "_Procés"
+
+#: memprof.glade.h:52
+msgid "_Run Program..."
+msgstr "Executa p_rograma..."
+
+#: memprof.glade.h:53
+msgid "_Settings"
+msgstr "Configuracion_s"
+
+#: memprof.glade.h:54
+msgid "translator_credits"
+msgstr "Xavier Conde Rueda <tradgnome@softcatala.org>"
+
+#: process.c:886
+msgid "Initial"
+msgstr "Inicial"
+
+#: process.c:889
+msgid "Starting"
+msgstr "S'està iniciant"
+
+#: process.c:892
+msgid "Running"
+msgstr "S'està executant"
+
+#: process.c:895
+msgid "Exiting"
+msgstr "S'està sortint"
+
+#: process.c:898 process.c:901
+msgid "Defunct"
+msgstr "Difunt"
+
+#: server.c:288
+#, c-format
+msgid "Cannot find %s"
+msgstr "No es pot trobar %s"
+
+#: tree.c:102
+msgid "Show"
+msgstr "Mostra"
+
+#: tree.c:105
+msgid "Hide"
+msgstr "Amaga"
+
+#: tree.c:112
+msgid "Detach"
+msgstr "Desacobla"
+
+#: tree.c:180
+msgid "PID"
+msgstr "PID"
+
+#: tree.c:181
+msgid "Command Line"
+msgstr "Línia d'ordres"
+
+#: tree.c:182
+msgid "Status"
+msgstr "Estat"

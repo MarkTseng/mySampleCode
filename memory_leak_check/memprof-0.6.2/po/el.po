@@ -1,0 +1,391 @@
+# memprof greek translation
+# Copyright (C) 2001 Free Software Foundation, Inc.
+# Simos Xenitellis <simos@hellug.gr>, 2001.
+#
+# profile = κατατομή
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: memprof 0.4.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2005-02-10 15:17+0200\n"
+"PO-Revision-Date: 2005-02-10 12:28+0200\n"
+"Last-Translator: Kostas <pkst@gmx.net>\n"
+"Language-Team: Greek <nls@tux.hellug.gr>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: leakdetect.c:503
+#, c-format
+msgid "Cannot open output file: %s\n"
+msgstr "Αδυναμία ανοίγματος αρχείου εξόδου: %s\n"
+
+#: main.c:777
+#, c-format
+msgid "Executation of \"%s\" failed"
+msgstr "Αποτυχία εκτέλεσης του \"%s\""
+
+#: main.c:921 memprof.glade.h:29
+msgid "MemProf"
+msgstr "MemProf"
+
+#: main.c:1028
+#, c-format
+msgid "Cannot find executable for \"%s\""
+msgstr "Δε μπορεί να βρεθεί το εκτελέσιμο \"%s\""
+
+#: main.c:1131
+msgid "Saving is disabled at the moment"
+msgstr "Η αποθήκευση είναι προς το παρόν ανενεργ'η"
+
+#: main.c:1708
+msgid "MemProf Error"
+msgstr "Σφάλμα MemProf"
+
+#: main.c:1708
+msgid "MemProf Warning"
+msgstr "Προειδοποίηση MemProf"
+
+#: main.c:1777 main.c:1790 main.c:1805
+msgid "Name"
+msgstr "Όνομα"
+
+#: main.c:1778 main.c:1791 main.c:1806
+msgid "Self"
+msgstr "Εαυτός"
+
+#: main.c:1779 main.c:1807
+msgid "Total"
+msgstr "Σύνολο"
+
+#: main.c:1792
+msgid "Cumulative"
+msgstr ""
+
+#: main.c:1829
+msgid "Address"
+msgstr "Διεύθυνση"
+
+#: main.c:1830
+msgid "Size"
+msgstr "Μέγεθος"
+
+#: main.c:1831
+msgid "Caller"
+msgstr "Γονική διεργασία"
+
+#: main.c:1849
+msgid "Function"
+msgstr "Συνάρτηση"
+
+#: main.c:1850
+msgid "Line"
+msgstr "Γραμμή"
+
+#: main.c:1851
+msgid "File"
+msgstr "Αρχείο"
+
+#: main.c:2061
+msgid "Really detach from finished process?"
+msgstr "Θέλετε πραγματικά να αποσυνδεθείτε από την τερματισμένη διεργασία;"
+
+#: main.c:2063
+msgid "Really detach from running process?"
+msgstr "Θέλετε πραγματικά να αποσυνδεθείτε από την εκτελούμενη διεργασία;"
+
+#: main.c:2093
+msgid "Really kill running process?"
+msgstr "Θέλετε πραγματικά να σκοτώσετε την εκτελούμενη διεργασία;"
+
+#: main.c:2130
+msgid "Create new windows for forked processes"
+msgstr "Δημιουργία νέων παραθύρων για τις δικρανωμένες διεργασίες"
+
+#: main.c:2132
+msgid "Retain windows for processes after exec()"
+msgstr "Διατήρηση παραθύρων για διεργασίες μετά από exec()"
+
+#: main.c:2134
+msgid "Type of profiling information to collect"
+msgstr ""
+
+#: main.c:2136
+msgid "Number of samples/sec for time profile (1k=1000)"
+msgstr "Αριθμός δειγμάτων ανά δευτερόλεπτο για time profile (1k=1000)"
+
+#: main.c:2185
+msgid "Argument of --profile must be one of 'memory', 'cycles', or 'time'\n"
+msgstr ""
+
+#: main.c:2226
+msgid "Cannot find memprof.glade"
+msgstr "Αδυναμία εύρεσης του memprof.glade"
+
+#: memprof.glade.h:1
+msgid "# of Allocations:"
+msgstr "# από Εκχωρήσεις:"
+
+#: memprof.glade.h:2
+msgid "*"
+msgstr "*"
+
+#: memprof.glade.h:3
+msgid "0"
+msgstr "0"
+
+#: memprof.glade.h:4
+msgid "0k"
+msgstr "0k"
+
+#: memprof.glade.h:5
+msgid "32k"
+msgstr "32k"
+
+#: memprof.glade.h:6
+#, fuzzy
+msgid "<b>Callers</b>"
+msgstr "Γονικές διεργασίες"
+
+#: memprof.glade.h:7
+msgid "<b>Descendants</b>"
+msgstr ""
+
+#: memprof.glade.h:8
+msgid "Adding Skip Function"
+msgstr "Προσθήκη Συνάρτησης προς Παράκαμψη"
+
+#: memprof.glade.h:9
+msgid "Adding Skip Regular Expression"
+msgstr "Προσθήκη Κανονικής Έκφρασης προς Παράκαμψη"
+
+#: memprof.glade.h:10
+msgid "Bytes / Allocation:"
+msgstr "Bytes / Εκχώρηση:"
+
+#: memprof.glade.h:11
+msgid "Check for Leaks"
+msgstr "Έλεγχος για Διαρροές"
+
+#: memprof.glade.h:12
+msgid "Command to run on double click in stack trace:"
+msgstr "Εντολή προς εκτέλεση κατά το διπλό κλικ στην παρακολούθηση στοίβας:"
+
+#: memprof.glade.h:13
+msgid ""
+"Copyright 1999, 2000, 2001, Red Hat, Inc.\n"
+"Copyright 2002, Kristian Rietveld"
+msgstr ""
+"Πνευματικά δικαιώματα 1999, 2000, 2001, Red Hat, Inc.\n"
+"Πνευματικά δικαιώματα 2002, Kristian Rietveld"
+
+#: memprof.glade.h:15
+msgid "Create Profile"
+msgstr "Δημιουργία Κατατομής"
+
+#: memprof.glade.h:16
+msgid "Defaults"
+msgstr "Εξ' ορισμού"
+
+#: memprof.glade.h:17
+msgid ""
+"Enter a regular expression of function names to skip when computing profiles"
+msgstr ""
+"Εισάγετε μια κανονική έκφραση για ονόματα συναρτήσεων για να παραμφθούν κατά "
+"τον υπολογισμό της κατατόμησης"
+
+#: memprof.glade.h:18
+msgid "Enter pathname to an executable"
+msgstr "Εισαγωγή της διαδρομής για ένα εκτελέσιμο"
+
+#: memprof.glade.h:19
+msgid "Enter the name of a function to skip when computing profiles"
+msgstr ""
+"Εισάγετε το όνομα της συνάρτησης για παράκαμψη κατά τον υπολογισμό των "
+"κατατομών"
+
+#: memprof.glade.h:20
+msgid "Follow _exec()"
+msgstr "Ακολούθηση των _exec()"
+
+#: memprof.glade.h:21
+msgid "Follow _fork()"
+msgstr "Ακολούθηση των _fork()"
+
+#: memprof.glade.h:22
+msgid "Functions to Skip:"
+msgstr "Συναρτήσεις προς Παράκαμψη:"
+
+#: memprof.glade.h:23
+msgid "Generate _Leak Report"
+msgstr "Παραγωγή Αναφοράς _Διαρροών"
+
+#: memprof.glade.h:24
+msgid "Generate _Profile"
+msgstr "Δημιουργία _Κατατόμησης"
+
+#: memprof.glade.h:25 tree.c:109
+msgid "Kill"
+msgstr "Σκότωμα"
+
+#: memprof.glade.h:26
+msgid "Kill Program"
+msgstr "Βιαίος τερματισμός προγράμματος"
+
+#: memprof.glade.h:27
+msgid "Leak Detection Options"
+msgstr "Επιλογές Ανίχνευσης Στοίβας"
+
+#: memprof.glade.h:28
+msgid "Leaks"
+msgstr "Διαρροές"
+
+#: memprof.glade.h:30
+msgid "MemProf - Processes"
+msgstr "MemProf - Διεργασίες"
+
+#: memprof.glade.h:31
+msgid "Memory Profiling Tool"
+msgstr "Εργαλείο Κατατόμησης Μνήμης"
+
+#: memprof.glade.h:32
+msgid "Preferences"
+msgstr "Προτιμήσεις"
+
+#: memprof.glade.h:33
+msgid "Process _Tree"
+msgstr "_Δέντρο Διεργασιών"
+
+#: memprof.glade.h:34
+msgid "Profile"
+msgstr "Κατατομή"
+
+#: memprof.glade.h:35
+msgid "Profile Options"
+msgstr "Επιλογές Κατατόμησης"
+
+#: memprof.glade.h:36
+msgid "Regular expressions to Skip:"
+msgstr "Κανονικές εκφράσεις προς Παράκαμψη:"
+
+#: memprof.glade.h:37
+msgid "Reset"
+msgstr "Επαναφορά"
+
+#: memprof.glade.h:38
+msgid "Run"
+msgstr "Εκτέλεση"
+
+#: memprof.glade.h:39
+msgid "Run Executable"
+msgstr "Εκτέλεση Εκτελέσιμου"
+
+#: memprof.glade.h:40
+msgid "Run Program"
+msgstr "Εκτέλεση Προγράμματος"
+
+#: memprof.glade.h:41
+msgid "Save"
+msgstr "Αποθήκευση"
+
+#: memprof.glade.h:42
+msgid "Save Report"
+msgstr "Αποθήκευση Αναφοράς"
+
+#: memprof.glade.h:43
+msgid "Save _Leak Info..."
+msgstr "Αποθήκευση Πληροφοριών _Διαρροής..."
+
+#: memprof.glade.h:44
+msgid "Save _Profile..."
+msgstr "Αποθήκευση _Κατατόμησης..."
+
+#: memprof.glade.h:45
+msgid "Stack Trace"
+msgstr "Παρακολούθηση Στοίβας"
+
+#: memprof.glade.h:46
+msgid "Total Bytes:"
+msgstr "Συνολικά Bytes:"
+
+#: memprof.glade.h:47
+msgid "_Detach"
+msgstr "_Αποσύνδεση"
+
+#: memprof.glade.h:48
+msgid "_File"
+msgstr "Αρ_χείο"
+
+#: memprof.glade.h:49
+msgid "_Help"
+msgstr "_Βοήθεια"
+
+#: memprof.glade.h:50
+msgid "_Kill"
+msgstr "_Σκότωμα"
+
+#: memprof.glade.h:51
+msgid "_Process"
+msgstr "_Διεργασία"
+
+#: memprof.glade.h:52
+msgid "_Run Program..."
+msgstr "Ε_κτέλεση Προγράμματος..."
+
+#: memprof.glade.h:53
+msgid "_Settings"
+msgstr "_Ρυθμίσεις"
+
+#: memprof.glade.h:54
+msgid "translator_credits"
+msgstr "Σίμος Ξενιτέλλης <simos74@gmx.net>"
+
+#: process.c:902
+msgid "Initial"
+msgstr "Αρχικό"
+
+#: process.c:905
+msgid "Starting"
+msgstr "Προς εκκίνηση"
+
+#: process.c:908
+msgid "Running"
+msgstr "Σε εκτέλεση"
+
+#: process.c:911
+msgid "Exiting"
+msgstr "Σε τερματισμό"
+
+#: process.c:914 process.c:917
+msgid "Defunct"
+msgstr "Εκλιπών"
+
+#: server.c:288
+#, c-format
+msgid "Cannot find %s"
+msgstr "Αδυναμία εύρεσης  %s"
+
+#: tree.c:102
+msgid "Show"
+msgstr "Εμφάνιση"
+
+#: tree.c:105
+msgid "Hide"
+msgstr "Απόκρυψη"
+
+#: tree.c:112
+msgid "Detach"
+msgstr "Απόσπαση"
+
+#: tree.c:180
+msgid "PID"
+msgstr "ΤΑΥΤΔΙΕΡΓ"
+
+#: tree.c:181
+msgid "Command Line"
+msgstr "Γραμμή Εντολών"
+
+#: tree.c:182
+msgid "Status"
+msgstr "Κατάσταση"

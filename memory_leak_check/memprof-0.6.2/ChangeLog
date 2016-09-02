@@ -1,0 +1,1149 @@
+2008-03-11  Inaki Larranaga Murgoitio  <dooteo@euskalgnu.org>
+
+        * configure.in: Added 'eu' to ALL_LINGUAS.
+
+2007-10-14  Yannig Marchegay  <yannig@marchegay.org>
+
+	* configure.in: Added 'oc' to ALL_LINGUAS.
+
+2007-09-16  Soren Sandmann <sandmann@daimi.au.dk>
+
+	* main.c: Get rid of TOTAL column. Merge calls to
+	gtk_tree_store_set().
+
+2007-09-16  Soren Sandmann <sandmann@daimi.au.dk>
+
+	* memprof.glade: Rearrange the treeviews. Delete bold labels.
+	
+	* main.c: More descriptive names for treeview columns.
+
+2007-09-15  Soren Sandmann <sandmann@daimi.au.dk>
+
+	Replace symbol resolution code with sysprof code. Remove
+	dependency on libbfd and libiberty.
+
+	* binparser.[ch], elfparser.[ch], binfile.[ch], demangle.c: New
+	files.
+
+	* bfdutils.c: delete
+
+2007-09-15  Soren Sandmann <sandmann@daimi.au.dk>
+
+	* memprof.h (struct): Move Symbol struct into process.c
+
+	* profile.c: Use strings instead of symbol structs
+
+2007-09-15  Soren Sandmann <sandmann@daimi.au.dk>
+
+	* stackstash.c: Replace with the one from Sysprof.
+
+	* main.c, profile.c: Update to new API
+	
+2007-09-15  Soren Sandmann <sandmann@daimi.au.dk>
+
+	* memprof.glade: Remove follow-fork/follow-exec/preferences menu
+	items.
+
+	* configure.in, Makefile.am, main.c: Remove gconf dependency
+
+2007-09-14  Jonathan Pryor  <jpryor@novell.com>
+
+	* main.c, profile.c: Add support to save the memory profile to a file.
+	  Patch reviewed by Michael Meeks.
+
+2007-08-11  Soren Sandmann <sandmann@daimi.au.dk>
+
+	* Makefile.am (install-exec-hook): Install speedprof in
+	DESTDIR. Bug 377176 - patch from Patrick Williams. 
+
+2007-08-11  Soren Sandmann <sandmann@daimi.au.dk>
+
+	* autogen.sh: Run intltoolize in autogen.sh
+
+2007-02-19  Soren Sandmann <sandmann@redhat.com>
+
+	* autogen.sh: Copy this from somewhere else since that makes it
+	work on my system.
+
+2006-12-15  Pema Geyleg  <pgeyleg@gmail.com>
+
+	* configure.in: Added 'dz' to ALL_LINGUAS
+
+2006-11-19  Soren Sandmann <sandmann@redhat.com>
+
+	* configure.in: Remove popt dependency, bump gtk+
+	requirement to 2.6
+
+	* main.c: Port to GOption
+
+2006-11-19  Soren Sandmann <sandmann@redhat.com>
+
+	* autogen.sh, Makefile.am, configure.in, leakdetect.c, main.c,
+	* memprof.glade, process.c, server.c, tree.c: 
+	Remove dependency on libgnome and libgnomeui. 
+	Improve default window size
+	Break option parsing.
+
+2006-11-18  Soren Sandmann <sandmann@redhat.com>
+
+	* main.c, memprof.glade: Replace GnomeCanvas with GtkDrawingArea
+
+Mon Aug  7 19:03:38 2006  Søren Sandmann  <sandmann@redhat.com>
+
+	* NEWS: Updates
+
+	* configure.in: Set version number to 0.6
+
+	* main.c (about_cb): Set "name" to PACKAGE_NAME
+
+2006-07-26  Michael Meeks  <michael.meeks@novell.com>
+
+	* merge sled-fixes.
+
+	* main.c, treeviewutils.c: fix auto-elipsizing,
+	and column sizing evilness - particularly useful for
+	C++ with -huge- symbol names.
+
+2006-07-26  Michael Meeks  <michael.meeks@novell.com>
+
+	* stack-frame.c (mi_call_with_backtrace): add
+	guard to avoid rtld related deadlock from allocation
+	from inside 'backtrace' itself.
+
+	* process.c (input_func): blank info before read,
+	add assertions,
+
+	* memprof.glade: add record button.
+
+	* main.c: fix treeview selection crashers.
+	(record_button_toggled_cb): add record button so
+	you can stop recording events and read the profile.
+	(string_view_init): set column renderer to be
+	ellipsizing and resizeable.
+
+	* bfdutils.c (process_map_sections): assume we
+	have a modern libbfd - with bfd_section_size by
+	default.
+
+	* autogen.sh: require automake 1.8 to play nicely
+	on modern systems.
+
+	* intercept.c (mi_write_stack): if n_frames is
+	negative (uh-huh) then drop the stack rather than
+	breaking the protocol. Add protocol mi_debug.
+
+2005-06-14  Michael Meeks  <michael.meeks@novell.com>
+
+	* intercept.c (allocate_thread, find_thread):
+	update signatures and re-work for NPTL which gives
+	the same getpid() for each process: fixes all the
+	threading problems.
+
+	* process.c (input_func): reset the info structure
+	between messages; defensively.
+
+2005-06-13  Michael Meeks  <michael.meeks@novell.com>
+
+	* server.c (ensure_cleanup, mp_server_init),
+	* process.c (process_start_input): use a fuller set
+	of G_IO_ flags for various conditions.
+
+	* intercept.c (exit_wait, mi_write_stack): use atomic
+	increment for seqno - if we get out of step process.c
+	bombs with an ever-growing sorted GList.
+
+	* Tag SLED_FIXES_ANCHOR & branch: sled-fixes
+
+2006-04-18  Kjartan Maraas  <kmaraas@gnome.org>
+
+	* configure.in: Remove obsolete entry for no_NO
+	* po/no.po: And the translation.
+
+2006-01-24  Ilkka Tuohela  <hile@iki.fi>
+
+	* configure.in: Added fi to ALL_LINGUAS
+
+2005-08-28  Pawan Chitrakar  <pchitrakar@gmail.com>
+
+	* configure.in: Added ne in ALL_LINGUAS
+
+2005-04-01  Steve Murphy  <murf@e-tools.com>
+
+        * configure.in: Added "rw" to ALL_LINGUAS.
+
+2005-03-04  Abel Cheung  <maddog@linuxhall.org>
+
+	* configure.in: Added "mk" "zh_TW" to ALL_LINGUAS.
+
+2004-09-13  John Myers  <jgmyers@localhost.localdomain>
+
+2004-09-13  John Gardiner Myers  <jgmyers@proofpoint.com>
+
+	* process.c (input_func): Process detach makes the input channel
+	unreadable.  (Fixes #64690)
+
+	* leakdetect.c (process_status): Avoid infinite loop when trying
+	to leak detect a nonexistent process.  (Fixes #93173)
+
+2004-09-10  John Gardiner Myers  <jgmyers@proofpoint.com>
+
+	* process.c (process_duplicate): Don't try to copy NULL block table.
+
+	* process.c (input_func): Keep processing while buffers still have
+	data.
+
+	* leakdetect.c (leaks_find, process_data_root, add_stack_root) 
+	(prepare_block): 
+	* process.c (block_unref): 
+	* main.c (generate_leak_cb): 
+	Fix invalid freeing of blocks in the leak detection code.  (Fixes
+	#97756)
+	
+2004-09-03  John Gardiner Myers  <jgmyers@proofpoint.com>
+
+	* intercept.c (clone __clone clone_thunk): Add extra arguments to
+	clone intercept functions.  (Fixes #122460)
+
+	* process.c (process_read_maps): 
+	* leakdetect.c (read_stack_maps): 
+	Parse device numbers as hex.  Fix from Ian McKellar.  (Fixes #120457)
+
+	* main.c (main): Fix typo.  (Fixes #139682)
+
+	* intercept.c (memprof_init): Make a copy of the socket path so we
+	don't rely on the profiled program leaving the environment alone.
+	(Fixes #148603)
+
+	* process.c (process_duplicate): When following fork, create the
+	copy block hash table before trying to insert into it.  (Fixes #148606)
+
+	* memprof.h:
+	* process.c (process_locate_symbol): Addresses within shared
+	libraries without symbols reported under the name of the shared
+	library.  (Fixes #148616)
+	
+	* process.c (prepare_map): Kludge to support position independent
+	executables.  (Fixes #148622)
+
+2004-09-02  Kjartan Maraas  <kmaraas@gnome.org>
+
+	* configure.in: Add «nb» to ALL_LINGUAS.
+
+2004-09-01 Amanpreet Singh Alam  <aalam@redhat.com>
+	
+	* configure.in: Added Punjabi<pa> to ALL_LINGUAS.
+
+2004-06-30  Narayana Pattipati  <narayana.pattipati@wipro.com>
+
+	* main.c (stack_command_entry_focus_out): Return FALSE to enable
+	entry handle the focus out event. Fixes the crash reported in
+	bugzilla bug#145198.
+
+2004-05-01  Adam Weinberger  <adamw@gnome.org>
+
+	* configure.in: Added en_CA to ALL_LINGUAS.
+
+2004-04-09  Gareth Owen  <gowen72@yahoo.com>
+
+	* configure.in: Added en_GB to ALL_LINGUAS
+
+2004-02-07  Robert Sedak  <robert.sedak@sk.htnet.hr>
+ 
+         * configure.in: Added "hr" (Croatian) to ALL_LINGUAS.
+
+Fri Jan 23 12:20:47 2004  Soeren Sandmann  <sandmann@daimi.au.dk>
+
+	* profile.c (profile_func_create_caller_list): Fix yet another
+	"symbol_equal() instead of ==" bug.
+
+Fri Dec 19 16:41:00 2003  Soeren Sandmann  <sandmann@daimi.au.dk>
+
+	* process.c (prepare_map): Only report symbols in the ".text" segment.
+
+	* main.c (profile_func_list_goto_symbol): Use symbol_equal()
+	instead of comparing addresses.
+
+	* profile.c (add_trace_to_tree): Missed one hashtable still using
+	g_direct_hash() instead of symbol_hash()
+
+	* profile.h: Add comments to some fields in struct ProfileNode.
+
+ri Dec 19 00:00:30 2003  Soeren Sandmann  <sandmann@daimi.au.dk>
+
+	* profile.c: Don't assume that symbols can be compared by
+	comparing their addresses.
+	* memprof.h: declare functions
+	* process.c (symbol_equal, symbol_hash, symbol_copy, symbol_free):
+	new functions
+	(process_locate_symbol): make returned Symbol const
+
+Sun Sep 21 11:02:27 2003  Owen Taylor  <otaylor@redhat.com>
+
+	* main.c: Open the toplevel node in the descendants tree.
+
+Sat Sep 20 16:43:42 2003  Owen Taylor  <otaylor@redhat.com>
+
+	* main.c process.c tree.c: Clean up deprecated usages.
+
+Sat Sep 20 16:30:00 2003  Owen Taylor  <otaylor@redhat.com>
+
+	* treeviewutils.[ch]: Move tree view utilities from main.c to here.
+
+	* main.c: Fix a bug where all memory values were displayed multiplied by 100.
+
+	* tree.c: Convert GtkCTree to tree view.
+
+Sat Sep 20 13:24:38 2003  Owen Taylor  <otaylor@redhat.com>
+
+	* main.c: Convert leak clists to tree views; clean up and simplify
+	profile tree views a bit.
+
+Sat Sep 20 11:28:43 2003  Owen Taylor  <otaylor@redhat.com>
+
+	* main.c (process_window_new): Use a helper function to check
+	all calls to glade_xml_get_widget().
+
+	* main.c memprof.glade: Convert preferences dialog from GtkTreeView
+	to GtkCList.
+
+Sat Sep 20 10:52:06 2003  Owen Taylor  <otaylor@redhat.com>
+
+	* intercept.c): Switch to atexit() as the primary means 
+	of intercepting exiting. It isn't as good as interposing _exit, 
+	but interposing _exit doesn't work with newer versions of
+	GNU libc.
+
+Wed Jul  9 22:00:01 2003  Soeren Sandmann  <sandmann@daimi.au.dk>
+
+	* Lots of new stuff. Highlights:
+
+		- Rewritten profiling module, that handles 
+		  recursion better 
+		- Profle view ported to GtkTreeView
+		- New leak icon
+		- New reset button
+
+2003-06-17  Guntupalli Karunakar  <karunakar@freedomink.org>
+
+	* configure.in: Added "ml" to ALL_LINGUAS.
+
+2003-05-06  Danilo Šegan  <dsegan@gmx.net>
+
+	* configure.in: Added "sr" and "sr@Latn" to ALL_LINGUAS.
+
+2003-04-24  Abel Cheung  <maddog@linux.org.hk>
+
+	* configure.in: Fix broken configure.in caused by previous commit.
+
+2003-02-20  Dmitry G. Mastrukov  <dmitry@taurussoft.org>
+
+	* configure.in: Added Belarusian to ALL_LINGUAS.
+
+2003-02-03  Daniel Yacob  <locales@geez.org>
+
+	* configure.ac: Added "am" (Amharic) to ALL_LINGUAS.
+
+Fri Jan 24 15:18:24 2003  Owen Taylor  <otaylor@redhat.com>
+
+	* bfdutils.c (read_bfd): Fix a memory leak.
+
+Fri Jan 24 12:31:47 2003  Owen Taylor  <otaylor@redhat.com>
+
+	* bfdutils.c (find_separate_debug_file): Add support
+	for separate debug info files pointed to be 
+	.gnu.debuglink sections, as supported by current GDB.
+
+	* configure.in: Add --with-separate-debug-dir.
+
+	* acinclude.m4: AC_DEFINE_DIR()
+
+	* acconfig.h: Remove.
+
+2002-12-23  Artis Trops  <hornet@navigator.lv>
+
+	* configure.in: Added Latvian (lv) to ALL_LINGUAS.
+
+2002-11-12  Kjartan Maraas  <kmaraas@gnome.org>
+
+	* main.c (set_white_bg): Don't leak the style.
+	
+2002-11-09  Fatih Demir <kabalak@gtranslator.org>
+
+	* configure.in: Added "ta" (Tamil) language to the languages' list.
+
+2002-10-01  Stanislav Brabec  <sbrabec@suse.cz>
+
+	* configure.in: Added cs to ALL_LINGUAS.
+
+Thu Sep 19 14:30:31 2002  Owen Taylor  <otaylor@redhat.com>
+
+	* memintercept-utils.c (mi_atomic_[increment/decrement]): Fix
+	wrong in the non-atomic fallback case. (#93670, 
+	Christian Marillat)
+
+2002-09-10  James Henstridge  <james@daa.com.au>
+
+	* server.c (find_lib_location): variable definitions need to go at
+	the top of the function.
+
+Thu Sep  5 14:54:33 2002  Owen Taylor  <otaylor@redhat.com>
+
+	* Makefile.am server.c: Move libmemintercept.so into
+	/usr/lib/memprof.
+
+	* Makefile.am main.c server.[ch]: Add options for 
+	turning on and controlling speed profiling, install
+	'speedprof' as a symlink, change behavior when
+	run as speedprof.
+	
+	* memprof.glade main.c: Hide the leak detection
+	UI when in 'speedprof' mode.
+
+	* memintercept.c intercept.[ch]: Move the intercept-library
+	stuff that is shared between memory and speed profiling
+	into intercept.[ch].
+
+	* speedintercept.c: Intercept library for speed profiling.
+
+	* memprof.h process.c: Add a MI_TIME operation.
+
+	* mi-perfctr.[ch] perfctr.h: Speed profiling via the
+	PIII performance monitoring counters and the perfctr
+	driver.
+
+	* memprof.spec: Update.
+
+Sat Aug 31 22:24:22 2002  Kristian Rietveld  <kris@gtk.org>
+
+	* Release 0.5.1
+
+Wed Aug 21 19:26:24 2002  Kristian Rietveld  <kris@gtk.org>
+
+	* memprof.glade: simple typo fix
+
+Tue Aug 19 02:28:34 2002  Kristian Rietveld  <kris@gtk.org>
+
+	* main.c (run_cb), (skip_add_cb), (skip_regexes_add_cb): conversion
+	to GtkDialog.
+
+	* memprof.glade (fileentry1): GnomeFileEntry in the run dialog should
+	be modal, so the file selector there also responds (pointed out
+	by Dennis Smit),
+	(SkipAddDialog, RunDialog, SkipRegexesAddDialog): conversion to
+	GtkDialog and enable has_default again on the appropriate buttons,
+	set activates_default to true on the entries,
+	(Preferences dialog): use stock buttons for add and delete.
+
+	* process.c (process_find_exec): prepend "./" to non-absolute paths,
+	so running programs in the current directory works without hassle,
+	(process_run): also pass path to program to mp_server_instrument.
+
+	* server.[ch] (mp_server_instrument): use program value processed by
+	process_find_exec and not args[0].
+
+Tue Aug 20 11:03:11 2002  Owen Taylor  <otaylor@redhat.com>
+
+	* configure.in: Patch from Art Haas to use AC_CONFIG_FILES.
+
+Mon Aug 19 14:25:39 2002  Owen Taylor  <otaylor@redhat.com>
+
+	* memintercept.c: Fix leftover commenting out of code.
+
+Mon Aug 19 14:12:28 2002  Owen Taylor  <otaylor@redhat.com>
+
+	* stackstash.[ch]: Get rid of the "allocate everything
+	in one block" optimization, since that caused problems
+	if we want to be able to keep pointers to interior
+	nodes of the tree.
+
+	* Makefile.am stack-frame.[ch]: Add John Harper's
+	stack trace code from eazel-tools/prof, since it is
+	cleaner/nicer than what we were using, with some
+	modifications for accurate stack traces from signal
+	handlers.
+
+	* memintercept.c: Use stack-frame.[ch], deal with
+	differing stack frame depths from different code
+	paths to the place where we make the stack trace.
+
+Sat Aug 17 15:33:36 2002  Owen Taylor  <otaylor@redhat.com>
+
+	* stackstash.c (stack_element_free): Fix accounting
+	error in test statistics.
+
+Sat Aug 17 14:54:46 2002  Owen Taylor  <otaylor@redhat.com>
+
+	* stackstash.[ch] Makefile.am: Data structure for storing
+	stack traces in a tree.
+
+	* leakdetect.c main.c memprof.h process.[ch] profile.c:
+	Switch MemProf over to using StackStash.
+
+	* testmemprof.c: Defeat tail-function optimization
+	that was producing confusing stack traces.
+
+2002-08-13  Alexander Larsson  <alexl@redhat.com>
+
+	* memintercept-utils.c (mi_debug):
+	Move va_list variable declaration to top of function.
+
+Sat Aug 10 23:38:52 2002  Owen Taylor  <otaylor@redhat.com>
+
+	* memintercept-utils.[ch] Makefile.am: Split off part of 
+	memintercept.c (the stuff that doesn't really have anything 
+	to do with memory interception) into a separate file.
+
+	* memintercept.c: Use a trick from libc's memusage
+	to avoid the need for the starter malloc stuff, which
+	should make MemProf work with C++. (Fixes #53991)
+
+	* memintercept.c: Redo thread creation using 
+	atomic-increment/decrement to allocate from a fixed
+	number of slots 
+
+	* memintercept.c: Override fork() clone() as well
+	as __fork(), __clone(). (Fixes #66512, Soeren Sandmann)
+
+	* process.c (process_dump_stack): If the filename/line
+	wasn't found, don't try to print it.
+
+	* server.c process.c: A couple of debugging enhancements.
+
+	* server.c (control_func): Remove the 
+	"Unexpected connection from PID" warning - it occurs in
+	in legitimate cases when we aren't following forks.
+
+	* server.c (mp_server_class_init): Use VOID__OBJECT
+	for the marshaller (#86874, Gustavo Giraldez)
+
+	* server.c: When "following exec", set the pid on
+	the new process. (#86874, Gustavo Giraldez)
+
+	* server.c (mp_server_remove_process): Account for
+	the process being overwritten for --follow-exec.
+
+	* testmemprof.c (main): Remove the sleep; the fact that
+	we catch programs on exit means that it isn't needed.
+
+Sun Aug 11 15:29:54 2002  Kristian Rietveld  <kris@gtk.org>
+
+	* Release 0.5.0
+
+Sun Aug 11 15:28:24 2002  Kristian Rietveld  <kris@gtk.org>
+
+	* NEWS: one last update.
+
+Sun Aug 11 15:02:48 2002  Kristian Rietveld  <kris@gtk.org>
+
+	* Makefile.am: add intltool-{extract,merge,update} to DISTCLEANFILES,
+	get gconf schemas installation rule right.
+
+	* configure.in: add some lines to detect gconftool-2.
+
+Sat Aug 10 14:15:06 2002  Owen Taylor  <otaylor@redhat.com>
+
+	* memprof.spec.in: Cleanups, one few fixes.
+
+	* Makefile.am: Remove memprof-strings.c from EXTRA_DIST,
+	add intltool-*.in, make dist-hook depend on memprof.spec,
+	so we get an up-to-date version.
+	
+Sat Aug 10 20:14:11 2002  Kristian Rietveld  <kris@gtk.org>
+
+	* NEWS: a few tweaks
+
+	* memprof.spec.in: an attempt to update it.
+
+Sat Aug 10 13:45:18 2002  Owen Taylor  <otaylor@redhat.com>
+
+	* README: Few tweaks, add a mini-FAQ.
+
+Sat Aug 10 19:39:59 2002  Kristian Rietveld  <kris@gtk.org>
+
+	* README, NEWS: updates for 0.5.0.
+
+Tue Aug  6 21:14:00 2002  Owen Taylor  <otaylor@redhat.com>
+
+	* memintercept.c (debug): Add a mini-printf implementation, use
+	it for debugging messages.
+
+	* main.c (show_error_response): Fix cast.
+
+2002-08-07  Michael Meeks  <michael@ximian.com>
+
+	* profile.c (profile_create): insert each member of the list,
+	not just the first repeatedly.
+
+Tue Jul 16 01:43:30 2002  Kristian Rietveld  <kris@gtk.org>
+
+	* copyright-header, bfdutils.c, gui.h, inode.c, leakdetect.[ch],
+	main.c, memintercept.[ch], memprof.h, process.[ch], profile.[ch],
+	server.[ch], tree.c: update copyrights
+
+	* configure.in: version already to 0.5.0.
+
+	* memprof.glade: update copyrights in about window
+
+	* AUTHORS: add myself.
+
+Tue Jul 16 01:17:10 2002  Kristian Rietveld  <kris@gtk.org>
+
+	* main.c (about_cb): set version number in about dialog,
+	(show_error_response): new function,
+	(show_error): destroy message dialog after showing it, get message	
+	types right.
+
+	* memprof.glade: rename "Execute" menu item to "Run Program" to
+	maintain consistency with the toolbar item, don't set the
+	toolbar-style, so it follows the user-defined setting, remove
+	statusbar from main window as it was unused.
+
+Tue Jun 11 01:22:30 2002  Kristian Rietveld  <kris@gtk.org>
+
+	Finished the GNOME2 port.
+
+	* Makefile.am: install memprof.glade and not memprof.glade2,
+	remove glade file conversion, removed gnome-question.png from
+	EXTRA_DIST
+
+	* acconfig.h: added line for HAVE_BIND_TEXTDOMAIN_CODESET
+
+	* configure.in: check for bind_textdomain_codeset, remove check for
+	libglade-convert
+
+	* main.c (leak_stack_run_commmand), (run_file):
+	fixup call to show_error,
+	(exit_cb), (run_cb), (skip_add_cb), (skip_regexes_add_cb),
+	(show_error), (process_window_maybe_detach),
+	(process_window_maybe_kill): make message dialog use GtkDialog
+	(includes button swap), 
+	(preferences_cb): add nice close stock icon to close button,
+	(about_cb): don't make about dialog modal,
+	(show_error): add parent_window parameter,
+	(process_window_new): give the main window an icon,
+	(main): init using GnomeProgram, load memprof.glade and not	
+	memprof.glade2, fix show_error call
+
+	* memprof.h: add parent_window parameter to show_error.
+	
+	* leakdetect.c (leaks_print): fixup call to show_error
+	* profile.c (profile_write): ditto
+	* server.c (mp_server_instrument), (find_lib_location): ditto
+
+	* memprof.glade: loads of small tweaks, added icons, etc. This is
+	now a glade2 file.
+
+	* po/POTFILES.in: removed memprof-strings.c, added memprof.glade
+
+	* po/*po: converted to UTF8.
+
+	* gnome-question.png, memprof-strings.c: removed
+
+Fri May 17 01:47:55 2002  Kristian Rietveld  <kris@gtk.org>
+
+	* memintercept.c (stack_trace): fix typo (patch from Michael Meeks)
+
+2002-05-14  Pablo Saratxaga  <pablo@mandrakesoft.com>
+
+	* configure.in: Added Vietnamese (vi) to ALL_LINGUAS
+
+Tue Mar 12 18:59:11 2002  Kristian Rietveld  <kris@gtk.org>
+
+	Summary: support for gconf
+
+	* main.c: include gconf/gconf-client.h, remove hardcoded default
+	values (those are now in the schema), uses GSLists instead of
+	chararrays for skip_funcs and skip_regexes, put preferences dialog
+	XML global, change everything to handle the GSLists, changed
+	pref dialog to be an 'instant-apply-dialog'
+
+	* memprof-strings.c, memprof.glade: updates, remove the PropertyBox,
+	pack it in a GtkWindow
+
+	* profile.[ch]: change profile_create to use GSList
+
+	* configure.in: add check for GConf, not required, but for
+	cleanliness, require newer versions
+
+	* Makefile.am: install schema
+
+	* memprof.schemas: new file
+
+2002-03-07  Stanislav Visnovsky  <visnovsky@nenya.ms.mff.cuni.cz>
+
+	* configure.in: Added "sk" to ALL_LINGUAS.
+
+2002-03-07  Duarte Loreto <happyguy_pt@hotmail.com>
+
+        * configure.in: Added Portuguese (pt) to ALL_LINGUAS.
+
+2002-03-06  Hasbullah Bin Pit <sebol@ikhlas.com>
+
+	* configure.in: Added Malay (ms)to ALL_LINGUAS.
+	* po/ms.po: Added Malay Translation.
+
+2002-03-05  Carlos Perello Marin <carlos@gnome-db.org>
+
+	* configure.in: Added "es" to ALL_LINGUAS
+
+2002-02-19  Anders Carlsson  <andersca@gnu.org>
+
+	* memprof.png: Update icon.
+
+2002-02-02  Seth Nickell  <snickell@stanford.edu>
+
+	* Makefile.am:
+	* memprof.desktop:
+
+	Install .desktop file into the GNOME2 location,
+	tweak the Name and Comments fields, add a
+	Categories field.
+	
+Sat Dec 15 17:38:23 2001  Owen Taylor  <otaylor@redhat.com>
+
+	* configure.in (ACLOCAL): Remember ACLOCAL_FLAGS.
+
+	* profile.c (profile_free): Fix memory leak.
+	
+2001-12-13  Wang Jian  <lark@linux.net.cn>
+
+	* configure.in(ALL_LINGUAS): Added zh_CN for Simplified Chinese.
+
+Tue Dec 11 21:31:57 2001  Owen Taylor  <otaylor@redhat.com>
+
+	* leakdetect.c (leaks_find): Don't kill -CONT before
+	detaching -- apparently this isn't necessary any
+	more and prevents us from detaching.
+
+Tue Dec 11 20:53:52 2001  Owen Taylor  <otaylor@redhat.com>
+
+	* profile.c (profile_write): Sort child and inherited
+	lists in the output for better 'diff -u' ability.
+
+Tue Dec 11 20:40:37 2001  Owen Taylor  <otaylor@redhat.com>
+
+	* process.c (process_command): Check for duplicate
+	allocations of a same block, since realloc apparently
+	calls malloc in some cases.
+
+	* main.c server.c memintercept.c: Warning cleanups.
+
+	* server.c process.c: Use g_object_new(), not g_type_create_instance.
+
+	* process.c (process_command): Don't access block->size 
+	after unrefing block.
+
+Tue Dec 11 00:41:13  Kristian Rietveld  <kris@gtk.org>
+
+	Port to gnome2 platform.
+
+	* Makefile.am: remove intl from SUBDIRS, pkgdata_DATA:
+	s/glade/glade2/, add memprof.glade2 build rule, add -export-dynamic
+	as LDFLAG
+
+	* acconfig.h: add GETTEXT_PACKAGE
+
+	* autogen.sh: replace with 'gnome2 generic app autogen.sh'
+
+	* configure.in: require autoconf 2.52, require intltool,
+	require libglade-convert, use pkg-config instead of gnome-config,
+	don't generate intl/Makefile
+
+	* main.c: change to GObject where needed, ported glade_xml code,
+	various other porting, get NLS support right and read
+	memprof.glade2 instead of memprof.glade
+
+	* memprof-strings.c: updated by glade
+
+	* memprof.desktop: add Dutch Name and Comment
+
+	* memprof.glade: remove invalid UTF-8
+
+	* process.[ch], server.[ch]: port to new object system
+
+	* tree.c: small porting action
+
+2001-12-01  Soeren Sandmann  <sandmann@daimi.au.dk>
+
+	* memintercept.c (memalign): Fix typo (name should be memalign(),
+	not memealign())
+
+Thu Jul 19 18:19:52 2001  Owen Taylor  <otaylor@redhat.com>
+
+	* memprof.glade: Fix wrong tooltip on Kill button. (#55413)
+	
+2001-02-26  Carlos Perelló Marín <carlos@gnome-db.org>
+
+	* configure.in (ALL_LINGUAS): Added es.
+
+Fri Feb  9 14:54:08 2001  Owen Taylor  <otaylor@redhat.com>
+
+	* configure.in: Another attempt at 0.4.1. 
+
+	* server.c (create_control_socket): Added #ifdef'd out
+	code for creating entries in /tmp/memprof.UID/server.PID
+	if the warnings about mktemp() disturb you -- they shouldn't.
+
+	* server.c: Catch SIGTERM/SIGINT to clean up temporary file correctly.
+
+Fri Feb  9 11:49:10 2001  Owen Taylor  <otaylor@redhat.com>
+
+	* configure.in: Release 0.4.1
+
+	* main.c (pwin_from_widget): Fix segfault with running accelerators
+	on menus that have never been popped up by using
+	gtk_menu_get_attach_widget() instead of ->parent_menu_shell.
+
+Fri Feb  9 10:40:31 2001  Owen Taylor  <otaylor@redhat.com>
+
+	* Makefile.am (dist-hook): Add some magic to make
+	sure spec file always has an entry for the current
+	version.
+
+Fri Feb  9 10:13:43 2001  Owen Taylor  <otaylor@redhat.com>
+
+	* memintercept.c: Handle __fork, __vfork, so that
+	popen() is handled correctly. 
+
+	* memintercept.c: Unset _MEMPROF_SOCKET when disabling
+	tracing.
+
+Sun Feb  4 14:01:45 2001  Owen Taylor  <otaylor@redhat.com>
+
+	* configure.in (ALL_LINGUAS): Add pt_BR.
+
+2001-01-23  Simos Xenitellis  <simos@hellug.gr>
+
+	* configure.in: Added el to ALL_LINGUAS.
+
+	* memprof.desktop: Added Greek translation. 
+
+2000-11-07 Elliot Lee <sopwith@redhat.com>
+
+	* process.c: Initialize variable to NULL to avoid some funky crash.
+
+2000-10-31  Zbigniew Chyla  <cyba@gnome.pl>
+
+	* configure.in: Added pl to ALL_LINGUAS.
+
+2000-10-18  Christophe Merlet  <christophe@merlet.net>
+
+	* memprof.desktop: Added French strings.
+
+2000-10-14  Almer S. Tigelaar  <almer1@dds.nl>
+
+	* configure.in: Add 'nl' to ALL_LINGUAS.
+
+2000-10-11  Almer S. Tigelaar  <almer1@dds.nl>
+
+	* memprof.glade: Add history id for the run dialog, this way
+	previously run files will be remembered and don't have to be
+	re-entered everytime.
+
+	* memprof-strings.c: Fix the typo previously found by Kjartan
+	Maraas on 2000-08-21 in the glade file.
+
+2000-09-08  Szabolcs BAN <shooby@gnome.hu>
+
+	* configure.in,po/hu.po: Added Hungarian translations from 
+	Greg Nagy <greg@gnome.hu>
+
+2000-08-21  Kjartan Maraas  <kmaraas@gnome.org>
+
+	* memprof_strings.c: Fix typo.
+	
+2000-08-10  Pablo Saratxaga <pablo@mandrakesoft.com>
+
+	* configure.in,po/ca.po: added Catalan file
+
+2000-08-05  Martin Baulig  <baulig@suse.de>
+
+	* main.c: Added regex-based exclusion of functions.
+	* memprof.glade: Added section where you can edit a list
+	of regexes of functions to be ignored.
+
+Sun Jul  9 19:23:21 2000  Owen Taylor  <otaylor@redhat.com>
+
+	* leakdetect.c: Add <string.h>
+
+	* memintercept.c: Allow in a small way for frees from
+	starter block - allow last block to be freed, otherwise 
+	ignore the free. Also, better code for debugging problems
+	at startup.
+
+Fri Jul  7 16:24:53 2000  Owen Taylor  <otaylor@redhat.com>
+
+	* configure.in: Release 0.4.0
+
+	* memprof.spec.in: Some cleanups
+
+Fri Jul  7 16:18:31 2000  Owen Taylor  <otaylor@redhat.com>
+
+	* process.c (input_func): Fix a couple of bugs with
+	process exit.
+
+	* memintercept.c (_exit): Increment seqno, and close
+	outfds[i] - to deal with case of threading.
+
+	* server.c (mp_server_get_type): Reindent.
+
+	* memintercept.c: Make outbuf non-static to avoid 
+	keeping last block around for leak detection to find.
+
+Thu Jul  6 10:52:42 2000  Owen Taylor  <otaylor@redhat.com>
+
+	* leakdetect.c (find_block): Handle case where no
+	blocks at all exist. (Problem pointed out by
+	Christof Petig.)
+
+2000-06-27  Yuri Syrota  <rasta@renome.rovno.ua>
+
+	* configure.in: Add "uk" to ALL_LINGUAS.
+
+Mon Jun  5 10:46:32 2000  Owen Taylor  <otaylor@redhat.com>
+
+	* configure.in: Add de to ALL_LINGUAS.
+
+Sun May 28 15:22:51 2000  Fatih Demir	<kabalak@gmx.net>
+	
+	* configure.in: Added tr to ALL_LINGUAS.
+
+Fri May 26 12:55:35 2000  Owen Taylor  <otaylor@redhat.com>
+
+	* bfdutils.c (find_line): For a sufficiently screwed up
+	object file, bfd_find_nearest_line can return TRUE but
+	leave name NULL. Account for this.
+
+	* bfdutils.c: Reindent.
+
+	* process.c (process_exec_reset): Fix problem where
+	signal was being emitted on finalize.
+
+Wed May 24 23:30:02 2000  Owen Taylor  <otaylor@redhat.com>
+
+	* process.c (mp_process_finalize): Add a finalize
+	function.
+
+Wed May 24 23:18:12 2000  Owen Taylor  <otaylor@redhat.com>
+
+	* process.c (mp_process_init): 
+	* server.c (mp_server_init):
+
+	Ref and sink objects to make them strictly reference
+	counted.
+
+Wed May 24 05:26:18 2000  Owen Taylor  <otaylor@redhat.com>
+
+        * tree.c main.c: Always confirm when killing or
+	detaching from a process.
+	
+	* main.c (run_file): When running a new process, and we
+	have an existing process, create a new window for the
+	new process.
+
+	* main.c: Add a SIGCHLD handler so we don't have to
+	worry about waiting for processes we've detached from.
+
+Wed May 24 04:22:28 2000  Owen Taylor  <otaylor@redhat.com>
+
+	* main.c gui.h (process_window_maybe_kill) process.[ch]
+	  (process_kill): Add functions for killing processes.
+
+	* memprof.glade main.c: Menu reorganization, replace detach
+	toolbar item with kill.
+
+Wed Jan 12 10:42:35 2000  Owen Taylor  <otaylor@redhat.com>
+
+	* configure.in (MEMPROF_LIBS): Link against -lbfd and
+	-liberty statically, since the so's change with every
+	release of binutils.
+
+	* testmemprof.c: Make a bit more interesting.
+
+Tue May 23 20:06:57 2000  Owen Taylor  <otaylor@redhat.com>
+
+        * process.c main.c memprof.glade: Start of support for detaching from
+	running or exited processes.
+
+	* tree.c main.c gui.h: Add popup menu to tree for show/hide/detach.
+
+Tue May 23 18:47:54 2000  Owen Taylor  <otaylor@redhat.com>
+
+	* memintercept.c: Avoid overwriting errno.
+
+Tue May 23 16:40:17 2000  Owen Taylor  <otaylor@redhat.com>
+
+	* process.[ch]: Add functions to get the command line and 
+	status of the process.
+
+	* Makefile.am tree.c gui.h memprof.glade: Add tree window to display
+	all current traced processes.
+
+Tue May 23 14:19:44 2000  Owen Taylor  <otaylor@redhat.com>
+
+	* server.[ch] process.[ch]: Add process and server GtkObject's
+	with signals for process creation, status changes, exit.
+
+	* memintercept.[ch] process.c: Trap _exit() and wait for a
+	response from the server. Add a MI_EXIT command.
+
+	* inode.c memprof.h: Separate out the inode-finding code from process.c
+	
+Tue May 23 05:05:10 2000  Owen Taylor  <otaylor@redhat.com>
+
+	* main.c process.c memintercept.c: Hook up the follow-fork
+	and follow-exec options.
+
+	* main.c: Quit when all windows are closed.
+
+	* main.c: Catch windows being closed from the window manager
+	and remove timeouts properly.
+
+2000-05-07  Valek Filippov  <frob@df.ru>
+
+	* ru.po: Added "ru" to ALL_LINGUAS.
+
+2000-05-03  Kjartan Maraas  <kmaraas@online.no>
+
+	* no.po: Added "no" to ALL_LINGUAS.
+	
+2000-02-23  Peter Hawkins	<peterhawkins@ozemail.com.au>
+
+	* main.c: Stopped preferences dialog from being opened multiple times at once.
+
+2000-02-21  Lauris Kaplinski  <lauris@ariman.ee>
+
+       * configure.in: Added et to ALL_LINGUAS
+	
+Tue Jan  4 02:41:28 2000  Owen Taylor  <otaylor@redhat.com>
+
+	* README: Added note telling Debian users about more
+	splitty	little packages they need.
+
+	* configure.in (MEMPROF_LIBS): Added check for -lglade-gnome
+
+Sat Nov 20 17:14:40 1999  Owen Taylor  <otaylor@redhat.com>
+
+	* bfdutils.c (process_map_sections): Try accessing
+	section->_cooked_size to deal with bug(?) in older
+	binutils.
+
+	* memintercept.c (STACK_MAX_SIZE): Change PIPE_BUF to
+	#define constant since we no longer use pipes.
+
+Sat Nov 20 10:40:48 1999  Owen Taylor  <otaylor@redhat.com>
+
+        [ Sync CVS with my current tree. This commit destabilizes
+	  things a bit, but adds neat new features like
+	  correct tracing of threaded programs; some options like
+	  turning off following forks not yet implemented ]
+	
+	* memintercept.[ch]: Major reworking of the way we handle
+	intercepting malloc() and friends - the __malloc_hook
+	functionality is inherently not thread safe. So
+	directly override the functions in our LD_PRELOAD.
+	Also, override fork(), clone() and exec() and report these
+	back to our parent to allow tracing of threads and
+	forking programs.
+
+	* process.c memintercept.c: Change the mechanism for
+	communicating with subprocesses from a single pipe to
+	a Unix domain socket with accepts connections for
+	new subprocesses.
+	
+	* process.c: Completely rework handling of getting input
+	from multiple processes. Add a command-queue to deal
+	with recieving out-of-order input from multiple threads
+	within a single process.
+	
+	* main.c: Allow multiple process windows, create new
+	process windows when a fork or exec occurs.
+	
+	* Makefile.am: add -ldl to LIBADD for libmemintercept.so,
+	since we now use DL functions to get original symbols. 
+
+        * process.c bfdutils.c memprof.h: Add an exported demangle function,
+	store symbol names demangled.
+
+	* README: Add note for Debian users telling them to
+	install binutils-dev.
+
+1999-11-17  Elker Cavina <e.cavina@ra.nettuno.it>
+
+       * configure.in: Added it to ALL_LINGUAS
+	
+Thu Nov  4 13:14:36 1999  Owen Taylor  <otaylor@redhat.com>
+
+	* process.c: Re-indent to Linux style.
+
+	* memprof.glade main.c (process_window_destroy): Add ability
+	to close windows.
+
+1999-11-15  Martin Norbäck  <d95mback@dtek.chalmers.se>
+
+	* configure.in: Added sv to ALL_LINGUAS
+
+Thu Oct 28 09:22:42 1999  Owen Taylor  <otaylor@redhat.com>
+
+	* process.c (process_find_exec): Fix extra free
+	in case where executable is not found. 
+	(Pointed out by Sven Neumann <neumann@simul.biophys.uni-duesseldorf.de>)
+
+Wed Oct 27 20:58:03 1999  George Lebl  <jirka@5z.com>
+
+	* main.c: (update_status) if current_process->n_allocations,
+	  don't divide by it and just strdup a "-"
+
+Wed Oct 27 16:22:03 1999  Owen Taylor  <otaylor@redhat.com>
+
+	* Released 0.3.0
+
+Wed Oct 27 15:17:08 1999  Owen Taylor  <otaylor@redhat.com>
+
+	* process.c (input_func): Remove a bunch of duplicate
+	code - we don't need separate malloc/realloc/free cases.
+
+	* process.c (input_func): Fix stupid unitialized
+	variable.
+
+Wed Oct 27 12:26:02 1999  Owen Taylor  <otaylor@redhat.com>
+
+	* memintercept.c: Reindent to linux style
+
+	* memintercept.c (stack_trace): Write out output in
+	single write() call to ensure atomicity.
+
+	* memintercept.c (my_free_hook): Changed hooks
+	to match glibc-2.1 prototypes
+
+	* *.[ch]: Added copyrights to source files.
+
+	* main.c process.c process.h: Pass pre-split args
+	into process_run(), add functions for splitting
+	args and finding the executable.
+
+	* main.c: Add code from Michael Meeks <michael@nuclecu.unam.mx>
+	for specifying the program to debug from the command
+	line.
+
+Mon Oct 25 15:17:38 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* configure.in: add a -ldl fallback test for libiberty
+
+Wed Oct 20 19:59:16 1999  Owen Taylor  <otaylor@redhat.com>
+
+	* main.c (DEFAULT_STACK_COMMAND): Use emacsclient instead of 
+	gnudoit because emacsclient is standard.
+
+	* process.c (read_inode): Fix mem leak found by MemProf.
+
+Wed Oct 20 18:46:22 1999  Owen Taylor  <otaylor@redhat.com>
+
+	* process.c (process_init): Look in libdir, not pkgdatadir
+	for libmemintercept.so
+
+	* process.c (process_init): Look in .libs for libmemintercept.so
+	so things work in the non-installed case.
+
+	* configure.in (MEMPROF_LIBS): Use right -l flags when
+	checking for -lbfd.

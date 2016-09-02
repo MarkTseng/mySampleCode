@@ -1,0 +1,383 @@
+# translation of memprof.HEAD.be.po to belarusian
+# This file is distributed under the same license as the PACKAGE package.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# Vital Khilko <dojlid@mova.org>, 2003.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: memprof.HEAD.be\n"
+"POT-Creation-Date: 2003-06-19 14:09+0200\n"
+"PO-Revision-Date: 2003-02-21 22:51GMT+2\n"
+"Last-Translator: Vital Khilko <dojlid@mova.org>\n"
+"Language-Team: belarusian <i18n@mova.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.0\n"
+
+#: leakdetect.c:584
+#, c-format
+msgid "Cannot open output file: %s\n"
+msgstr "Немагчыма адкрыць файл вывада: %s\n"
+
+#: main.c:635
+#, c-format
+msgid "Executation of \"%s\" failed"
+msgstr "Выкананьне \"%s\" неадбылося"
+
+#: main.c:766
+msgid "Really quit MemProf?"
+msgstr "Сапраўды выйсьці з MemProf?"
+
+#: main.c:812 memprof.glade.h:35
+msgid "MemProf"
+msgstr "MemProf"
+
+#: main.c:915
+#, c-format
+msgid "Cannot find executable for \"%s\""
+msgstr "Немагчыма адшукаць выкананьне для \"%s\""
+
+#: main.c:1018
+msgid "Saving is disabled at the moment"
+msgstr ""
+
+#: main.c:1532
+msgid "MemProf Error"
+msgstr "Памылка MemProf"
+
+#: main.c:1532
+msgid "MemProf Warning"
+msgstr "Папярэджаньне MemProf"
+
+#: main.c:1913
+msgid "Really detach from finished process?"
+msgstr "Сапраўды адлучыцца ад скончанага працеса?"
+
+#: main.c:1915
+msgid "Really detach from running process?"
+msgstr "Сапраўды адлучыцца ад актыўнага працэса?"
+
+#: main.c:1945
+msgid "Really kill running process?"
+msgstr "Сапраўды забіць актыўны працэс?"
+
+#: main.c:1982
+msgid "Create new windows for forked processes"
+msgstr "Стварыць новыя вокны для форкнутых працэсаў"
+
+#: main.c:1984
+msgid "Retain windows for processes after exec()"
+msgstr "Утрымліваць вокны для працэсаў пасьля exec()"
+
+#: main.c:1986
+msgid "Type of profiling information to collect"
+msgstr "Тып профіляванае інфармацыі для калекцыі"
+
+#: main.c:1988
+msgid "Number of samples/sec for time profile (1k=1000)"
+msgstr "Колькасьць узораў у сэкунду для часу прафіляваньня (1k=1000)"
+
+#: main.c:2037
+msgid "Argument of --profile must be one of 'memory', 'cycles, or 'time'\n"
+msgstr "Аргумэнт --profile мусіць быць адным з 'memory', 'cycles, ці 'time'\n"
+
+#: main.c:2078
+msgid "Cannot find memprof.glade"
+msgstr "Немагчыма адшукаць memprof.glade"
+
+#: memprof.glade.h:1
+msgid "# of Allocations:"
+msgstr "# разьмеркаваньня:"
+
+#: memprof.glade.h:2
+msgid "*"
+msgstr ""
+
+#: memprof.glade.h:3
+msgid "0"
+msgstr "0"
+
+#: memprof.glade.h:4
+msgid "0k"
+msgstr "0k"
+
+#: memprof.glade.h:5
+msgid "32k"
+msgstr "32k"
+
+#: memprof.glade.h:6
+#, fuzzy
+msgid "<b>Callers</b>"
+msgstr "Выклікі"
+
+#: memprof.glade.h:7
+msgid "<b>Descendants</b>"
+msgstr ""
+
+#: memprof.glade.h:8
+msgid "Adding Skip Function"
+msgstr "Дадаць пропуск функцыі"
+
+#: memprof.glade.h:9
+msgid "Adding Skip Regular Expression"
+msgstr "Дадаць пропуск сталага выраза"
+
+#: memprof.glade.h:10
+msgid "Address"
+msgstr "Адрэса"
+
+#: memprof.glade.h:11
+msgid "Bytes / Allocation:"
+msgstr "Байты / Разьмеркаваньне:"
+
+#: memprof.glade.h:12
+msgid "Caller"
+msgstr "Выклік"
+
+#: memprof.glade.h:13
+msgid "Check for Leaks"
+msgstr "Праверыць уцечку"
+
+#: memprof.glade.h:14
+msgid "Command Line"
+msgstr "Камандны радок"
+
+#: memprof.glade.h:15
+msgid "Command to run on double click in stack trace:"
+msgstr "Каманда якая выконваецца па двух кліках у трассіроўцы стэка:"
+
+#: memprof.glade.h:16
+#, fuzzy
+msgid ""
+"Copyright 1999, 2000, 2001, Red Hat, Inc.\n"
+"Copyright 2002, Kristian Rietveld"
+msgstr ""
+"Аўтарскае права 1999, 2000, 2001, Red Hat, Inc.&#13;Аўтарскае права 2002, "
+"Крысьціян Рытвілд"
+
+#: memprof.glade.h:18
+msgid "Create Profile"
+msgstr "Стварыць профіль"
+
+#: memprof.glade.h:19
+msgid "Defaults"
+msgstr "Дапомна"
+
+#: memprof.glade.h:20
+msgid ""
+"Enter a regular expression of function names to skip when computing profiles"
+msgstr "Пазначце сталы выраз каб прапускаць пад час прафіляваньня"
+
+#: memprof.glade.h:21
+msgid "Enter pathname to an executable"
+msgstr "Пазначце шлях да выкананьня"
+
+#: memprof.glade.h:22
+msgid "Enter the name of a function to skip when computing profiles"
+msgstr "Пазначце назву функцыі каб прапусьціць пад час прафіляваньня"
+
+#: memprof.glade.h:23
+msgid "File"
+msgstr "Файл"
+
+#: memprof.glade.h:24
+msgid "Follow _exec()"
+msgstr "Сачыць за _exec()"
+
+#: memprof.glade.h:25
+msgid "Follow _fork()"
+msgstr "Сачыць за _fork()"
+
+#: memprof.glade.h:26
+msgid "Function"
+msgstr "Функцыя"
+
+#: memprof.glade.h:27
+msgid "Functions to Skip:"
+msgstr "Прапускаць функцыі:"
+
+#: memprof.glade.h:28
+msgid "Generate _Leak Report"
+msgstr "Згенераваць справаздачу аб _уцечцы"
+
+#: memprof.glade.h:29
+msgid "Generate _Profile"
+msgstr "Згенераваць _профіль"
+
+#: memprof.glade.h:30 tree.c:98
+msgid "Kill"
+msgstr "Забіць"
+
+#: memprof.glade.h:31
+msgid "Kill Program"
+msgstr "Забіць праграму"
+
+#: memprof.glade.h:32
+msgid "Leak Detection Options"
+msgstr "Выбары вызначэньня уцечкі"
+
+#: memprof.glade.h:33
+msgid "Leaks"
+msgstr "Уцечкі"
+
+#: memprof.glade.h:34
+msgid "Line"
+msgstr "Радок"
+
+#: memprof.glade.h:36
+msgid "MemProf - Processes"
+msgstr "MemProf - працэсы"
+
+#: memprof.glade.h:37
+msgid "Memory Profiling Tool"
+msgstr "Інструмэнт прафіляваньня памяці"
+
+#: memprof.glade.h:38
+msgid "PID"
+msgstr "PID"
+
+#: memprof.glade.h:39
+msgid "Preferences"
+msgstr "Перавагі"
+
+#: memprof.glade.h:40
+msgid "Process _Tree"
+msgstr "_Дрэва працэса"
+
+#: memprof.glade.h:41
+msgid "Profile"
+msgstr "Профіль"
+
+#: memprof.glade.h:42
+msgid "Profile Options"
+msgstr "Выбары профілю:"
+
+#: memprof.glade.h:43
+msgid "Regular expressions to Skip:"
+msgstr "Прапускаць сталыя выразы:"
+
+#: memprof.glade.h:44
+msgid "Run"
+msgstr "Запусьціць"
+
+#: memprof.glade.h:45
+msgid "Run Executable"
+msgstr "Запусьціць выкананьне"
+
+#: memprof.glade.h:46
+msgid "Run Program"
+msgstr "Запусьціць праграму"
+
+#: memprof.glade.h:47
+msgid "Save"
+msgstr "Захаваць"
+
+#: memprof.glade.h:48
+msgid "Save Report"
+msgstr "Захаваць справаздачу"
+
+#: memprof.glade.h:49
+msgid "Save _Leak Info..."
+msgstr "Захаваць інфармацыю аб у_цечцы..."
+
+#: memprof.glade.h:50
+msgid "Save _Profile..."
+msgstr "Захаваць _профіль..."
+
+#: memprof.glade.h:51
+msgid "Size"
+msgstr "Памер"
+
+#: memprof.glade.h:52
+msgid "Stack Trace"
+msgstr "Трассыроўка стэка"
+
+#: memprof.glade.h:53
+msgid "Status"
+msgstr "Стан"
+
+#: memprof.glade.h:54
+msgid "Total Bytes:"
+msgstr "Агулам байтаў:"
+
+#: memprof.glade.h:55
+msgid "_Detach"
+msgstr "_Адлучыць"
+
+#: memprof.glade.h:56
+msgid "_File"
+msgstr "_Файл"
+
+#: memprof.glade.h:57
+msgid "_Help"
+msgstr "_Дапамога"
+
+#: memprof.glade.h:58
+msgid "_Kill"
+msgstr "_Забіць"
+
+#: memprof.glade.h:59
+msgid "_Process"
+msgstr "_Працэс"
+
+#: memprof.glade.h:60
+msgid "_Run Program..."
+msgstr "_Запуск праграмы..."
+
+#: memprof.glade.h:61
+msgid "_Settings"
+msgstr "_Усталёўкі"
+
+#: memprof.glade.h:62
+msgid "translator_credits"
+msgstr ""
+
+#: process.c:854
+msgid "Initial"
+msgstr "Распачынаецца"
+
+#: process.c:857
+msgid "Starting"
+msgstr "Запускаецца"
+
+#: process.c:860
+msgid "Running"
+msgstr "Выконваецца"
+
+#: process.c:863
+msgid "Exiting"
+msgstr "Завяршэньне"
+
+#: process.c:866 process.c:869
+msgid "Defunct"
+msgstr "Памерлы"
+
+#: server.c:286
+#, c-format
+msgid "Cannot find %s"
+msgstr "Немагчыма адшукаць %s"
+
+#: tree.c:91
+msgid "Show"
+msgstr "Адлюстраць"
+
+#: tree.c:94
+msgid "Hide"
+msgstr "Схаваць"
+
+#: tree.c:101
+msgid "Detach"
+msgstr "Адлучыць"
+
+#~ msgid "Bytes"
+#~ msgstr "Байты"
+
+#~ msgid "Children"
+#~ msgstr "Нашчадак"
+
+#~ msgid "Self"
+#~ msgstr "Асабіста"
+
+#~ msgid "Total"
+#~ msgstr "Агулам"
