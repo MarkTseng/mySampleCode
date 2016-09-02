@@ -1,0 +1,4 @@
+*.o
+*.tar.gz
+memleax
+Makefile
