@@ -5,7 +5,7 @@
 ###############################################################################
 
 # default root installation directory
-prefix = /usr/local
+prefix = /home/mark/myResearch/mySampleCode/memory_leak_check/dmalloc-5.5.2
 exec_prefix = ${prefix}
 
 srcdir = .
@@ -43,51 +43,51 @@ LIBRARY	= lib$(MODULE).a
 # thread version of the library
 LIB_TH	= lib$(MODULE)th.a
 LIB_TH_SL = lib$(MODULE)th.so.5.5.2
-#BUILD_ALL_1 = threads
-#INSTALL_LIB_1 = installth
-#BUILD_THREADS_1 = $(LIB_TH_SL)
-#INSTALL_THREADS_1 = installthsl
-##BUILD_ALL_2 = $(LIB_TH_SL)
-##INSTALL_LIB_2 = installthsl
+BUILD_ALL_1 = threads
+INSTALL_LIB_1 = installth
+BUILD_THREADS_1 = $(LIB_TH_SL)
+INSTALL_THREADS_1 = installthsl
+BUILD_ALL_2 = $(LIB_TH_SL)
+INSTALL_LIB_2 = installthsl
 
 # C++ version of the library
 LIB_CXX	= lib$(MODULE)cxx.a
 LIB_CXX_SL = lib$(MODULE)cxx.so.5.5.2
 #BUILD_ALL_3 = $(LIB_CXX)
 #INSTALL_LIB_3 = installcxx
-#BUILD_CXX_3 = $(LIB_CXX_SL)
-#INSTALL_CXX_3 = installcxxsl
-##BUILD_ALL_4 = $(LIB_CXX_SL)
-##INSTALL_LIB_4 = installcxxsl
+BUILD_CXX_3 = $(LIB_CXX_SL)
+INSTALL_CXX_3 = installcxxsl
+#BUILD_ALL_4 = $(LIB_CXX_SL)
+#INSTALL_LIB_4 = installcxxsl
 
 # threads + C++
 LIB_TH_CXX = lib$(MODULE)thcxx.a
 LIB_TH_CXX_SL = lib$(MODULE)thcxx.so.5.5.2
-##BUILD_ALL_5 = $(LIB_TH_CXX)
-##INSTALL_LIB_5 = installthcxx
-#BUILD_CXX_5 = $(LIB_TH_CXX)
-#INSTALL_CXX_5 = installthcxx
+#BUILD_ALL_5 = $(LIB_TH_CXX)
+#INSTALL_LIB_5 = installthcxx
+BUILD_CXX_5 = $(LIB_TH_CXX)
+INSTALL_CXX_5 = installthcxx
 #BUILD_THREADS_5 = $(LIB_TH_CXX)
 #INSTALL_THREADS_5 = installthcxx
-###BUILD_ALL_6 = $(LIB_TH_CXX_SL)
-###INSTALL_LIB_6 = installthcxxsl
-##BUILD_CXX_6 = $(LIB_TH_CXX_SL)
-##INSTALL_CXX_6 = installthcxxsl
-##BUILD_THREADS_6 = $(LIB_TH_CXX_SL)
-##INSTALL_THREADS_6 = installthcxxsl
+#BUILD_ALL_6 = $(LIB_TH_CXX_SL)
+#INSTALL_LIB_6 = installthcxxsl
+BUILD_CXX_6 = $(LIB_TH_CXX_SL)
+INSTALL_CXX_6 = installthcxxsl
+#BUILD_THREADS_6 = $(LIB_TH_CXX_SL)
+#INSTALL_THREADS_6 = installthcxxsl
 
 # shared versions of the libraries
 LIB_SL = lib$(MODULE).so.5.5.2
-#BUILD_ALL_7 = $(LIB_SL)
-#INSTALL_LIB_7 = installsl
-#BUILD_TH_CXX_7 = $(LIB_TH_CXX_SL)
-#INSTALL_TH_CXX_7 = installthcxxsl
-#BUILD_SL_7 = $(LIB_TH_SL)
-#INSTALL_SL_7 = installthsl
+BUILD_ALL_7 = $(LIB_SL)
+INSTALL_LIB_7 = installsl
+BUILD_TH_CXX_7 = $(LIB_TH_CXX_SL)
+INSTALL_TH_CXX_7 = installthcxxsl
+BUILD_SL_7 = $(LIB_TH_SL)
+INSTALL_SL_7 = installthsl
 #BUILD_SL_8 = $(LIB_CXX_SL)
 #INSTALL_SL_8 = installcxxsl
-##BUILD_SL_9 = $(LIB_TH_CXX_SL)
-##INSTALL_SL_9 = installthcxxsl
+#BUILD_SL_9 = $(LIB_TH_CXX_SL)
+#INSTALL_SL_9 = installthcxxsl
 
 # now construct our build and install targets
 BUILD_ALL = dmalloc.h $(LIBRARY) $(UTIL) \
@@ -131,7 +131,7 @@ TEXIFILE = $(MODULE).texi
 PDFFILE = $(MODULE).pdf
 DOCFILES = $(HTMLFILE) $(TEXIFILE) $(PDFFILE)
 
-CCFLAGS = -g -O2
+CCFLAGS = -U_FORTIFY_SOURCE
 LDFLAGS = 
 
 INSTALL = /usr/bin/install -c
@@ -159,9 +159,9 @@ TEST = $(MODULE)_t
 TEST_FC = $(MODULE)_fc_t
 
 all : $(BUILD_ALL)
-	@echo "To make the thread version of the library type 'make threads'"
+#	@echo "To make the thread version of the library type 'make threads'"
 	@echo "To make the C++ version of the library type 'make cxx'"
-	@echo "To make the shared version of the library type 'make shlib'"
+#	@echo "To make the shared version of the library type 'make shlib'"
 
 clean :
 	rm -f $(A_OUT) core *.o *.t
@@ -193,7 +193,7 @@ installth : $(INSTALL_THREADS)
 	$(srcdir)/mkinstalldirs $(libdir)
 	$(INSTALL) $(LIB_TH) $(libdir)
 	@echo "Enter 'make installthcxx' to install the threaded C++ library"
-	@echo "Enter 'make installthsl' to install the threaded shared-library"
+#	@echo "Enter 'make installthsl' to install the threaded shared-library"
 
 installthcxxsl : $(LIB_TH_CXX_SL)
 	$(srcdir)/mkinstalldirs $(shlibdir)
@@ -202,7 +202,7 @@ installthcxxsl : $(LIB_TH_CXX_SL)
 installthcxx : $(INSTALL_TH_CXX)
 	$(srcdir)/mkinstalldirs $(libdir)
 	$(INSTALL) $(LIB_TH_CXX) $(libdir)
-	@echo "Enter 'make installthcxxsl' to install the threaded C++ shared-library"
+#	@echo "Enter 'make installthcxxsl' to install the threaded C++ shared-library"
 
 installcxxsl : $(LIB_CXX_SL)
 	$(srcdir)/mkinstalldirs $(shlibdir)
@@ -211,22 +211,22 @@ installcxxsl : $(LIB_CXX_SL)
 installcxx : $(INSTALL_CXX)
 	$(srcdir)/mkinstalldirs $(libdir)
 	$(INSTALL) $(LIB_CXX) $(libdir)
-	@echo "Enter 'make installthcxx' to install the threaded C++ library"
-	@echo "Enter 'make installcxxsl' to install the C++ shared-library"
+#	@echo "Enter 'make installthcxx' to install the threaded C++ library"
+#	@echo "Enter 'make installcxxsl' to install the C++ shared-library"
 
 installsl : $(LIB_SL)
 	$(srcdir)/mkinstalldirs $(shlibdir)
 	$(INSTALL) $(LIB_SL) $(shlibdir)
 	@echo "Enter 'make installcxxsl' to install the C++ shared-library"
-	@echo "Enter 'make installthsl' to install thread shared-library"
+#	@echo "Enter 'make installthsl' to install thread shared-library"
 
 installlib : $(INSTALL_LIB)
 	$(srcdir)/mkinstalldirs $(libdir)
 	$(INSTALL) $(LIBRARY) $(libdir)
 	arm-linux-gnueabihf-ranlib $(libdir)/$(LIBRARY)
-	@echo "Enter 'make installsl' to install $(LIB_SL) in $(shlibdir)"
+#	@echo "Enter 'make installsl' to install $(LIB_SL) in $(shlibdir)"
 	@echo "Enter 'make installcxx' to install the C++ library"
-	@echo "Enter 'make installth' to install thread library"
+#	@echo "Enter 'make installth' to install thread library"
 
 installdocs : $(srcdir)/docs/$(HTMLFILE) $(srcdir)/docs/$(TEXIFILE) \
 		$(srcdir)/docs/$(PDFFILE)
@@ -254,7 +254,7 @@ dmalloc.h : $(srcdir)/dmalloc.h.1 dmalloc.h.2 $(srcdir)/dmalloc.h.3
 	mv $@.t $@
 
 shlib : $(BUILD_SL)
-	@echo "To make the thread version of the library type 'make threads'"
+#	@echo "To make the thread version of the library type 'make threads'"
 	@echo "To make the C++ version of the library type 'make cxx'"
 
 # NOTE: you may have to edit the configure.ac script to get this to
@@ -293,16 +293,16 @@ threadssl : $(LIB_TH_SL)$(ver)
 threadscxxsl : $(LIB_TH_CXX_SL)$(ver)
 
 threadscxx : $(BUILD_TH_CXX)
-	@echo "Enter 'make threadscxxsl' to build the threaded C++ shared-library"
+#	@echo "Enter 'make threadscxxsl' to build the threaded C++ shared-library"
 
 threads : $(BUILD_THREADS)
 	@echo "Enter 'make threadscxx' to build the threaded C++ library"
-	@echo "Enter 'make threadssl' to build the threaded shared library"
+#	@echo "Enter 'make threadssl' to build the threaded shared library"
 
 cxxsl :  $(LIB_CXX_SL)$(ver)
 
 cxx : $(BUILD_CXX)
-	@echo "Enter 'make cxxsl' to build the cxx shared library"
+#	@echo "Enter 'make cxxsl' to build the cxx shared library"
 
 utils : $(UTIL)
 
