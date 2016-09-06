@@ -1,0 +1,11 @@
+--- a/malloc.c
++++ b/malloc.c
+@@ -1908,7 +1908,7 @@ int	dmalloc_tag_pnt(const DMALLOC_PNT pn
+ {
+ 	DMALLOC_PNT p=(DMALLOC_PNT)pnt;
+ 	if (! dmalloc_in(DMALLOC_DEFAULT_FILE, DMALLOC_DEFAULT_LINE, 1)) {
+-		return;
++		return 0;
+ 	}
+ 	_dmalloc_chunk_tag_pnt(p,file,line);
+ 	dmalloc_out();

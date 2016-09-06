@@ -1,0 +1,7 @@
+libdmalloc5 for Debian
+----------------------
+
+The manual page for dmalloc is based on an older version of the info file, refer
+to the info or html documents for uptodate information.
+
+ -- Daniel Baumann <daniel@debian.org>  Thu, 26 Jul 2005 17:49:00 +0200

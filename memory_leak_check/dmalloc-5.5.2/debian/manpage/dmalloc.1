@@ -1,0 +1,232 @@
+.TH DMALLOC 1
+.SH NAME
+dmalloc \- program used to set the environment for debugging using the
+dmalloc debugging library.
+.SH SYNOPSIS
+.B dmalloc
+.I [options]
+.SH "DESCRIPTION"
+This manual page documents the
+.BR dmalloc
+command.
+It was written for the Debian GNU/Linux distribution based, almost verbatim,
+on the original documentation provided by the library in GNU Info format;
+see below.
+.PP
+The
+.B dmalloc
+program is designed to assist in the setting of the
+environment variable
+.B DMALLOC_OPTIONS.
+It is designed to print the shell commands necessary to make the
+appropriate changes to the environment.  Unfortunately, it cannot make
+the changes on its own so the output from dmalloc should be sent
+through the `eval' shell command which will do the commands.
+
+With shells that have aliasing or macro capabilities: csh, bash, ksh,
+tcsh, zsh, etc., setting up an alias to dmalloc to do the eval call is
+recommended.  Csh/tcsh users (for example) should put the following in
+their `.cshrc' file:
+
+alias dmalloc 'eval `\\dmalloc \-C \!*`'
+
+Bash and Zsh users on the other hand should put the following in
+their `.zshrc' file:
+
+function dmalloc { eval `command dmalloc \-b $*` }
+
+This allows the user to execute the dmalloc command as `dmalloc
+arguments'.
+
+The most basic usage for the program is
+.B `dmalloc [\-bC] tag'.
+ The
+.B `\-b'
+or
+.B `\-C'
+(either but not both flags used at a time) are for
+generating Bourne or C shell type commands respectively.  dmalloc will
+try and use the
+.B `SHELL'
+environment variable to determine whether
+bourne or C shell commands should be generated but you may want to
+explicitly specify the correct flag.
+
+The
+.I tag
+argument to dmalloc should match a line from the user's
+run-time configuration file or should be one of the built-in tags.
+If no tag is specified and no other option-commands
+used, dmalloc will display the current settings of the environment
+variable.  It is useful to specify one of the verbose options when doing
+this.
+
+To find out the usage for the debug malloc program try
+.B dmalloc \-\-usage\-long.
+The standardized usage message that will be displayed is
+one of the many features of the argv library included with this package.
+It is available via ftp from `ftp.letters.com' in the `/src/argv'
+directory.  See `argv.info' there for more information.
+
+.SH OPTIONS
+.TP
+.B \-a
+.I address
+Set the `addr' part of the
+.B DMALLOC_OPTIONS
+variable to address (or alternatively address:number).
+.TP
+.B \-b
+Output Bourne shell type commands.
+.TP
+.B \-C
+Output C shell type commands.
+.TP
+.B \-c
+Clear/unset all of the settings not specified with other arguments.
+Clear will never unset the `debug' setting.  Use
+.B \-d 0
+or a tag to `none' to achieve this.
+.TP
+.B \-d
+.I bitmask
+Set the `debug' part of the
+.B DMALLOC_OPTIONS
+env variable to the
+bitmask value which should be in hex.  This is overridden (and
+unnecessary) if a tag is specified.
+.TP
+.B \-D
+List all of the debug-tokens.  Useful for finding a token to be
+used with the
+.B \-p
+or
+.B \-m
+options.  Use with
+.B \-v
+or
+.B \-V
+verbose options.
+.TP
+.B \-e
+.I errno
+Print the dmalloc error string that corresponds to the error number
+errno.
+.TP
+.B \-f
+.I filename
+Use this configuration file instead of the RC file
+.I ~/.dmallocrc.
+.TP
+.B \-i
+.I number
+Set the checking interval to number.
+.TP
+.B \-k
+Keep the settings when using a tag.  This overrides
+.B \-r .
+.TP
+.B \-l
+.I filename
+Set the log-file to filename.
+.TP
+.B \-L
+Output the debug-value not in hex but by individual debug-tokens
+in long form.
+.TP
+.B \-m
+.I token(s)
+Remove (minus) the debug capabilities of token(s) from the current
+debug setting or from the selected tag (or
+.B \-d
+value).  Multiple
+.B \-m's
+can be specified.
+.TP
+.B \-n
+Without changing the environment, output the commands resulting
+from the supplied options.
+.TP
+.B \-p
+.I token(s)
+Add (plus) the debug capabilities of token(s) to the current debug
+setting or to the selected tag (or
+.B \-d
+value).  Multiple
+.B \-p's
+can be
+specified.
+.TP
+.B \-r
+Remove (unset) all settings when using a tag.  This is useful when
+you are returning to a standard development tag and want the
+logfile, address, and interval settings to be cleared
+automatically.  If you want this behavior by default, this can be
+put into the dmalloc alias.
+.TP
+.B \-s
+.I number
+Set the `start' part of the
+.B DMALLOC_OPTIONS
+env variable to
+number (alternatively `file:line').
+.TP
+.B \-S
+Output the debug-value not in hex but by individual debug-tokens
+in short form.
+.TP
+.B \-t
+List all of the tags in the rc-file.  Use with
+.B \-v
+or
+.B \-V
+verbose options.
+.TP
+.B \-v
+Give verbose output.  Especially useful when dumping current
+settings or listing all of the tags.
+.PP
+If no arguments are specified, dmalloc dumps out the current settings
+that you have for the environment variable.  For example:
+
+     Debug-Flags  '0x40005c7' (runtime)
+     Address      0x1f008, count = 3
+     Interval     100
+     Logpath      'malloc'
+     Start-File   not-set
+
+With a
+.B \-v
+option and no arguments, dmalloc dumps out the current
+settings in a verbose manner.  For example:
+
+     Debug-Flags  '0x40005c7' (runtime)
+        log-stats, log-non-free, log-blocks, log-unknown,
+        log-bad-space, check-fence, catch-null
+     Address      0x1f008, count = 10
+     Interval     100
+     Logpath      'malloc'
+     Start-File   not-set
+
+.SH "SEE ALSO"
+The documetation for the library is in GNU Info format. Please check the
+file
+.IR /usr/share/info/dmalloc.info.gz
+for more details.
+
+.SH FILES
+.TP
+.I /usr/share/info/dmalloc.info.gz
+The real documentation for the dmalloc library.
+.TP
+.I ~/.dmallocrc
+User's configuration file.
+.SH AUTHOR
+This manual page was written by Luis Francisco Gonz\['a]lez <luisgh@debian.org>,
+for the Debian GNU/Linux system (but may be used by others).
+The library was written by
+.B Gray Watson.
+Please see the copyright
+file in
+.I /usr/share/doc/libdmalloc-dev
+for details.

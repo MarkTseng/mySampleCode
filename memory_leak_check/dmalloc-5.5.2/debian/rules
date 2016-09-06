@@ -1,0 +1,50 @@
+#!/usr/bin/make -f
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+DPKG_EXPORT_BUILDFLAGS=1
+include /usr/share/dpkg/buildflags.mk
+
+ver=$(shell dpkg-parsechangelog | sed -ne '/^Version:/s/^.*:[        ]*\([^-]*\).*/\1/p')
+ver_major=$(shell dpkg-parsechangelog | sed -ne '/^Version:/s/^.*:[        ]*\([^\.]*\).*/\1/p')
+
+%:
+	dh $@
+
+override_dh_auto_configure:
+	mv -f configure configure.orig
+	autoconf
+	dh_auto_configure -- --enable-threads --enable-shlib
+	mv -f configure.orig configure
+
+override_dh_auto_build:
+	dh_auto_build
+	cd docs && $(MAKE) dmalloc.info
+
+override_dh_auto_test:
+	# special tests are known to fail
+	-$(MAKE) heavy
+
+override_dh_auto_install:
+	$(MAKE) install prefix=$(CURDIR)/debian/tmp/usr
+
+	# Creating symlinks
+	cd $(CURDIR)/debian/tmp/usr/lib/* && \
+		ln -s libdmalloc.so.$(ver) libdmalloc.so.$(ver_major) && \
+		ln -s libdmalloc.so.$(ver) libdmalloc.so
+	cd $(CURDIR)/debian/tmp/usr/lib/* && \
+		ln -s libdmallocth.so.$(ver) libdmallocth.so.$(ver_major) && \
+		ln -s libdmallocth.so.$(ver) libdmallocth.so
+	cd $(CURDIR)/debian/tmp/usr/lib/* && \
+		ln -s libdmalloccxx.so.$(ver) libdmalloccxx.so.$(ver_major) && \
+		ln -s libdmalloccxx.so.$(ver) libdmalloccxx.so
+	cd $(CURDIR)/debian/tmp/usr/lib/* && \
+		ln -s libdmallocthcxx.so.$(ver) libdmallocthcxx.so.$(ver_major) && \
+		ln -s libdmallocthcxx.so.$(ver) libdmallocthcxx.so
+
+override_dh_installchangelogs:
+	dh_installchangelogs ChangeLog.1
+
+override_dh_compress:
+	dh_compress -Xusr/share/doc/libdmalloc-dev/examples

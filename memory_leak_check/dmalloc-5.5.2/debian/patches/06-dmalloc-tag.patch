@@ -1,0 +1,233 @@
+Description: added dmalloc_tag()
+ A macro and functions that allow setting the pointer's
+ file and line number information. Useful for pointers
+ from outside like curses' item_new().
+ .
+ dmalloc (5.5.2-3) unstable; urgency=low
+ .
+   *Added dmalloc_tag()
+
+Author: Johann Klammer <klammerj@a1.net>
+
+Index: dmalloc-5.5.2/malloc.c
+===================================================================
+--- dmalloc-5.5.2.orig/malloc.c	2012-06-08 11:58:10.000000000 +0200
++++ dmalloc-5.5.2/malloc.c	2012-06-10 13:19:34.000000000 +0200
+@@ -2039,6 +2039,47 @@
+ }
+ 
+ /*
++ * int dmalloc_tag_pnt
++ *
++ * DESCRIPTION:
++ *
++ * Look for a specific address in the skip list.  If it exist 
++ * set the file and line fields to given value. Handy for tagging
++ * pointers from external libraries whithout dmalloc macros.
++ * Do _not_ use this function directly, use the dmalloc_tag #define instead.
++ * As it can be transparently disabled using DMALLOC_DISABLE.
++ *
++ * RETURNS:
++ *
++ * Success - 1
++ *
++ * Failure - 0
++ *
++ * ARGUMENTS:
++ *
++ * pnt -> Address we are looking for.
++ *
++ * file -> should typically point to filename of source file. String is _not_
++ *         copied.
++ *
++ * line -> source file line number
++ *
++ */
++extern
++int	dmalloc_tag_pnt(const DMALLOC_PNT pnt,char *file,int line)
++{
++	DMALLOC_PNT p;
++	p=_dmalloc_chunk_get_baseptr((DMALLOC_PNT)pnt);
++	if (! dmalloc_in(DMALLOC_DEFAULT_FILE, DMALLOC_DEFAULT_LINE, 1)) {
++		return;
++	}
++	_dmalloc_chunk_tag_pnt(p,1,file,line);
++	dmalloc_out();
++
++}
++
++
++/*
+  * void dmalloc_track
+  *
+  * DESCRIPTION:
+Index: dmalloc-5.5.2/chunk.c
+===================================================================
+--- dmalloc-5.5.2.orig/chunk.c	2012-06-08 11:58:10.000000000 +0200
++++ dmalloc-5.5.2/chunk.c	2012-06-10 13:20:09.000000000 +0200
+@@ -1898,6 +1898,68 @@
+ }
+ 
+ /*
++ * int _dmalloc_chunk_tag_pnt
++ *
++ * DESCRIPTION:
++ *
++ * Look for a specific address in the skip list.  If it exist 
++ * set the file and line fields to given value. Handy for tagging
++ * pointers from external libraries whithout dmalloc macros.
++ *
++ * RETURNS:
++ *
++ * Success - 1
++ *
++ * Failure - 0
++ *
++ * ARGUMENTS:
++ *
++ * user_pnt -> Address we are looking for.
++ *
++ * exact_b -> Set to 1 to find the exact pointer.  If 0 then the
++ * address could be inside a block.
++ *
++ * file -> should typically point to filename of source file. String is _not_
++ *         copied.
++ *
++ * line -> source file line number
++ *
++ */
++int _dmalloc_chunk_tag_pnt(const void * user_pnt,int exact_b,char *file,int line)
++{
++	skip_alloc_t *slot_p;
++  char * u_p=user_pnt;
++  
++  if (BIT_IS_SET(_dmalloc_flags, DEBUG_LOG_TRANS)) {
++    dmalloc_message("tagging pointer '%#lx'",
++		    (unsigned long)user_pnt);
++  }
++  
++  if(exact_b) {
++  /*
++  of course this may fail, if _dmalloc_flags is changed at certain points
++  */
++    if (BIT_IS_SET(_dmalloc_flags, DEBUG_CHECK_FENCE)) {
++      u_p-=FENCE_BOTTOM_SIZE;
++    }
++  }
++
++  /* find the pointer with loose checking for fence */
++  slot_p = find_address(u_p, 0 /* used list */, exact_b,
++			skip_update);
++  if (slot_p == NULL) {
++    dmalloc_errno = ERROR_NOT_FOUND;
++    log_error_info(NULL, 0, user_pnt, NULL, "finding address in heap", "_dmalloc_chunk_tag_pnt");
++    return 0;
++  }
++
++  slot_p->sa_file = file;
++  slot_p->sa_line = line;
++
++  return 1;
++}
++
++/*
+  * char *_dmalloc_chunk_desc_pnt
+  *
+  * DESCRIPTION:
+Index: dmalloc-5.5.2/dmalloc.h.3
+===================================================================
+--- dmalloc-5.5.2.orig/dmalloc.h.3	2012-06-08 11:58:10.000000000 +0200
++++ dmalloc-5.5.2/dmalloc.h.3	2012-06-10 13:19:34.000000000 +0200
+@@ -612,6 +612,40 @@
+ 				   const int min_size);
+ 
+ /*
++ * int dmalloc_tag_pnt
++ *
++ * DESCRIPTION:
++ *
++ * Look for a specific address in the skip list.  If it exist 
++ * set the file and line fields to given value. Handy for tagging
++ * pointers from external libraries whithout dmalloc macros.
++ * Do _not_ use this function directly, use the dmalloc_tag #define instead.
++ * As it can be transparently disabled using DMALLOC_DISABLE.
++ *
++ * RETURNS:
++ *
++ * Success - 1
++ *
++ * Failure - 0
++ *
++ * ARGUMENTS:
++ *
++ * pnt -> Address we are looking for.
++ *
++ * file -> should typically point to filename of source file. String is _not_
++ *         copied.
++ *
++ * line -> source file line number
++ *
++ */
++extern
++int	dmalloc_tag_pnt(const DMALLOC_PNT pnt,char *file,int line);
++
++/* The other (real) one is further below. This one always succeeds */
++#define dmalloc_tag(p_,f_,l_) (1)
++
++
++/*
+  * int dmalloc_verify_pnt
+  *
+  * DESCRIPTION:
+@@ -1068,6 +1102,9 @@
+ 
+ #ifndef DMALLOC_DISABLE
+ 
++#undef dmalloc_tag
++#define dmalloc_tag(p_,f_,l_) dmalloc_tag_pnt(p_,f_,l_)
++
+ #undef malloc
+ #define malloc(size) \
+   dmalloc_malloc(__FILE__, __LINE__, (size), DMALLOC_FUNC_MALLOC, 0, 0)
+Index: dmalloc-5.5.2/chunk.h
+===================================================================
+--- dmalloc-5.5.2.orig/chunk.h	2007-05-14 19:26:14.000000000 +0200
++++ dmalloc-5.5.2/chunk.h	2012-06-10 13:19:34.000000000 +0200
+@@ -55,6 +55,37 @@
+ int	_dmalloc_chunk_startup(void);
+ 
+ /*
++ * int _dmalloc_chunk_tag_pnt
++ *
++ * DESCRIPTION:
++ *
++ * Look for a specific address in the skip list.  If it exist 
++ * set the file and line fields to given value. Handy for tagging
++ * pointers from external libraries whithout dmalloc macros.
++ *
++ * RETURNS:
++ *
++ * Success - 1
++ *
++ * Failure - 0
++ *
++ * ARGUMENTS:
++ *
++ * user_pnt -> Address we are looking for.
++ *
++ * exact_b -> Set to 1 to find the exact pointer.  If 0 then the
++ * address could be inside a block.
++ *
++ * file -> should typically point to filename of source file. String is _not_
++ *         copied.
++ *
++ * line -> source file line number
++ *
++ */
++extern
++int	_dmalloc_chunk_tag_pnt(const void * user_pnt,int exact_b,char *file,int line);
++ 
++/*
+  * char *_dmalloc_chunk_desc_pnt
+  *
+  * DESCRIPTION:

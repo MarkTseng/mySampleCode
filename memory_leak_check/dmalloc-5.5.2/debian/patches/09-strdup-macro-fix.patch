@@ -1,0 +1,19 @@
+Description: undefined strdup macro
+ compilation on sid fails due to strdup define in string2.h
+ system header. Added #undef to dmalloc.h.3 to fix
+ .
+ dmalloc (5.5.2-2) unstable; urgency=low
+ .
+    * Undefined strdup
+Author: Johann Klammer <klammerj@a1.net>
+
+--- dmalloc-5.5.2.orig/dmalloc.h.3
++++ dmalloc-5.5.2/dmalloc.h.3
+@@ -459,6 +459,7 @@ DMALLOC_PNT	valloc(DMALLOC_SIZE size);
+  *
+  * string -> String we are duplicating.
+  */
++#undef strdup
+ extern
+ char	*strdup(const char *string);
+ #endif /* ifndef DMALLOC_STRDUP_MACRO */

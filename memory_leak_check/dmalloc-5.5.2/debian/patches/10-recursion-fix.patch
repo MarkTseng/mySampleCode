@@ -1,0 +1,25 @@
+Description: fix a recursion error
+ libc6-2.13-33 causes an infinite recursion in vfprintf 
+ which calls free(0).
+ This patch disables error reporting on free(0).
+ As a consequence it will fail one of the special tests, 
+ but it fixes the segfaults.
+ .
+ dmalloc (5.5.2-3) unstable; urgency=low
+ .
+   * fix recursion in libc
+Author: Johann Klammer <klammerj@a1.net>
+
+--- dmalloc-5.5.2.orig/malloc.c
++++ dmalloc-5.5.2/malloc.c
+@@ -1030,7 +1030,9 @@ int	dmalloc_free(const char *file, const
+ 		     const int func_id)
+ {
+   int		ret;
+-  
++  if(NULL==pnt)
++    return FREE_NOERROR;
++
+   if (! dmalloc_in(file, line, 1)) {
+     if (tracking_func != NULL) {
+       tracking_func(file, line, func_id, 0, 0, pnt, NULL);

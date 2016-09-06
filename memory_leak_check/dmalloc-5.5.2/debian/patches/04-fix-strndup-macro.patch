@@ -1,0 +1,12 @@
+Index: dmalloc-5.5.2/dmalloc.h.3
+===================================================================
+--- dmalloc-5.5.2.orig/dmalloc.h.3	2007-05-14 19:26:14.000000000 +0200
++++ dmalloc-5.5.2/dmalloc.h.3	2012-03-26 11:42:45.000000000 +0200
+@@ -429,6 +429,7 @@
+  *
+  * len -> Length of the string to duplicate.
+  */
++#undef strndup
+ extern
+ char	*strndup(const char *string, const DMALLOC_SIZE len);
+ 

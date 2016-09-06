@@ -1,0 +1,5 @@
+usr/bin
+usr/include/*
+usr/lib/*/*.a
+usr/lib/*/*.so
+dmallocc.cc usr/share/doc/libdmalloc-dev/examples/

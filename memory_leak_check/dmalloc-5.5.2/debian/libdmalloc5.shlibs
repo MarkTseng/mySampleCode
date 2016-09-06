@@ -1,0 +1,4 @@
+libdmalloc 5 libdmalloc5 (>= 5.5.1)
+libdmalloccxx 5 libdmalloc5 (>= 5.5.1)
+libdmallocth 5 libdmalloc5 (>= 5.5.1)
+libdmallocthcxx 5 libdmalloc5 (>= 5.5.1)

@@ -1,0 +1,21 @@
+Description: minor fix to pointer information
+ Realloc is a tad more efficient that way.
+ .
+ dmalloc (5.5.2-2) unstable; urgency=low
+ .
+    *Fix pointer information
+Author: Johann Klammer <klammerj@a1.net>
+
+Index: dmalloc-5.5.2/chunk.c
+===================================================================
+--- dmalloc-5.5.2.orig/chunk.c	2012-06-10 13:21:14.000000000 +0200
++++ dmalloc-5.5.2/chunk.c	2012-06-14 22:32:06.000000000 +0200
+@@ -934,7 +934,7 @@
+   
+   if (info_p->pi_fence_b) {
+     info_p->pi_fence_top = info_p->pi_user_bounds;
+-    info_p->pi_upper_bounds = (char *)info_p->pi_fence_top;
++    info_p->pi_upper_bounds = (char *)info_p->pi_alloc_bounds - FENCE_TOP_SIZE;
+   }
+   else {
+     info_p->pi_fence_top = NULL;

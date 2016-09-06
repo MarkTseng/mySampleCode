@@ -1,0 +1,16 @@
+Document: dmalloc
+Title: Debian dmalloc Manual
+Author: Gray Watson
+Abstract: This manual describes dmalloc, the debugging memmory allocator
+Section: Programming
+
+Format: info
+Index: /usr/share/info/dmalloc.info.gz
+Files: /usr/share/info/dmalloc.info.gz
+
+Format: HTML
+Index: /usr/share/doc/libdmalloc-dev/dmalloc.html
+Files: /usr/share/doc/libdmalloc-dev/*.html
+
+Format: PDF
+Files: /usr/share/doc/libdmalloc-dev/dmalloc.pdf.gz

@@ -1,0 +1,13 @@
+01-configure.ac.patch
+02-Makefile.in.patch
+03-threads.patch
+04-fix-strndup-macro.patch
+05-posix-memalign.patch
+06-dmalloc-tag.patch
+07-doc-update.patch
+08-align2.patch
+09-strdup-macro-fix.patch
+10-recursion-fix.patch
+11-pnt-info-fix.patch
+12-clang-ftbfs.diff
+13-fix-ldflags-in-makefile.patch

@@ -1,0 +1,349 @@
+dmalloc (5.5.2-6) unstable; urgency=medium
+
+  * Added patch by Arthur Marble to fix FTBFS w/ clang because of non-void
+    return (Closes: #741133)
+  * debian/control: Standards-Version: 3.9.5
+  * debian/rules: Fixed LDFLAGS hardening, together with patching Makefile.in
+    to actually use it
+
+ -- Roland Stigge <stigge@antcom.de>  Fri, 11 Apr 2014 09:51:26 +0200
+
+dmalloc (5.5.2-5) unstable; urgency=low
+
+  * Re-upload to unstable
+
+ -- Roland Stigge <stigge@antcom.de>  Sun, 24 Jun 2012 18:03:03 +0200
+
+dmalloc (5.5.2-4) experimental; urgency=low
+
+  * Added patches fixing "make heavy" test (Closes: #676862)
+    - 06-dmalloc-tag.patch
+    - 07-doc-update.patch
+    - 08-align2.patch
+    - 09-strdup-macro-fix.patch
+    - 10-recursion-fix.patch
+    - 11-pnt-info-fix.patch
+
+ -- Roland Stigge <stigge@antcom.de>  Sun, 10 Jun 2012 13:24:36 +0200
+
+dmalloc (5.5.2-3) experimental; urgency=low
+
+  * Added patch 05-posix-memalign.patch by Johann Klammer to fix test program
+    and add missing symbol (Closes: #676585, #676587)
+
+ -- Roland Stigge <stigge@antcom.de>  Fri, 08 Jun 2012 12:13:38 +0200
+
+dmalloc (5.5.2-2) unstable; urgency=low
+
+  * Added patch to fix strndup-as-macro issue (Closes: #633945)
+  * debian/control: Standards-Version: 3.9.3
+  * debian/compat: 9
+
+ -- Roland Stigge <stigge@antcom.de>  Mon, 26 Mar 2012 11:42:55 +0200
+
+dmalloc (5.5.2-1) unstable; urgency=low
+
+  * New upstream release
+  * New maintainer
+  * debian/control: Standards-Version: 3.9.2
+  * Install dmallocc.cc to /usr/share/doc/libdmalloc-dev/examples/
+    (Closes: #580620)
+  * debian/rules: new debhelper dh rules
+  * debian/source/format: 3.0 (quilt)
+
+ -- Roland Stigge <stigge@antcom.de>  Sat, 06 Aug 2011 20:30:13 +0200
+
+dmalloc (5.5.1-1.1) unstable; urgency=low
+
+  * Non-maintainer upload.
+  * Add ${shlibs:Depends} on -dev package. (Closes: #553232).
+  * Add ${misc:Depends} on -dev package.
+  * Fix doc-base section for -dev package.
+  * Move URL from package description to Homepage field.
+  * Minor clean-up to debian/copyright.
+  * Make clean not ignore errors.
+
+ -- Barry deFreese <bdefreese@debian.org>  Sat, 31 Oct 2009 14:06:48 -0400
+
+dmalloc (5.5.1-1) unstable; urgency=low
+
+  * New maintainer (Closes: #407637).
+  * New upstream release.
+  * debian/patches/01-configure.ac.dpatch: new dpatch file.
+  * debian/patches/02-Makefile.in.dpatch: new dpatch file.
+  * debian/patches/02-threads.dpatch: renamed to 03-threads.dpatch, to be the
+  3rd patch applied.
+  * debian/patches/03-info.dpatch: removed, fixed in upstream.
+  * debian/patches/00list: delete entry for 03-info and 04-inline-asm. 
+    Upstream source related with 04-inline-asm patch has changed.
+
+ -- Daniel Rus Morales <danirus@tol-project.org>  Sat,  5 May 2007 10:36:54 +0200
+
+dmalloc (5.4.2-8) unstable; urgency=medium
+
+  * QA upload.
+  * debian/libdmalloc-dev.doc-base: Add Index field to info stanza.
+    Closes: #418799.
+  * debian/rules: Don't copy config.{guess,sub} from autotools-dev
+    since configure doesn't actually use them.
+  * debian/watch: Update upstream URL.
+  * Change priority to extra, catching up with the override file.
+
+ -- Matej Vela <vela@debian.org>  Thu, 12 Apr 2007 08:38:54 +0200
+
+dmalloc (5.4.2-7) unstable; urgency=low
+
+  * Orphaning package.
+
+ -- Daniel Baumann <daniel@debian.org>  Sat, 20 Jan 2007 11:02:00 +0100
+
+dmalloc (5.4.2-6) unstable; urgency=low
+
+  * Minor cleanups.
+
+ -- Daniel Baumann <daniel@debian.org>  Fri, 19 Jan 2007 12:02:00 +0100
+
+dmalloc (5.4.2-5) unstable; urgency=low
+
+  * New email address.
+  * Bumped policy version.
+  * Broken out remaining patches from diff.gz into dedicated dpatches.
+  * Removed texinfo from doc-base.
+
+ -- Daniel Baumann <daniel@debian.org>  Tue, 15 Aug 2006 20:44:00 +0200
+
+dmalloc (5.4.2-4) unstable; urgency=low
+
+  * Don't compress examples, moving contrib to examples, keep permissions
+    (Closes: #349499).
+
+ -- Daniel Baumann <daniel.baumann@panthera-systems.net>  Fri, 24 Feb 2006 11:50:00 +0100
+
+dmalloc (5.4.2-3) unstable; urgency=low
+
+  * Added patch to fix bad inline asm (Closes: #343061).
+
+ -- Daniel Baumann <daniel.baumann@panthera-systems.net>  Mon, 12 Dec 2005 13:20:00 +0100
+
+dmalloc (5.4.2-2) unstable; urgency=low
+
+  * New maintainer (Closes: #317427).
+  * Changed priority to optional.
+  * Changed package name of libdmalloc4-dev to libdmalloc-dev.
+  * Removed old dmalloc transitional package.
+  * Bumped policy version.
+  * debian/ redone.
+
+ -- Daniel Baumann <daniel.baumann@panthera-systems.net>  Tue, 26 Jul 2005 17:49:00 +0200
+
+dmalloc (5.4.2-1) unstable; urgency=low
+
+  * New upstream release
+  * settings.dist: #define LOCK_THREADS 1 (Closes: #276457)
+  * debian/watch: better match and added ftp2.sf.net
+
+ -- Luk Claes <luk.claes@ugent.be>  Sat,  6 Nov 2004 13:04:26 +0100
+
+dmalloc (5.3.0-5) unstable; urgency=high
+
+  * Provide a smooth upgrade path (Closes: #271119)
+
+ -- Luk Claes <luk.claes@ugent.be>  Tue, 14 Sep 2004 09:01:46 +0200
+
+dmalloc (5.3.0-4) unstable; urgency=high
+  * Urgency high because of uninstallable in sarge
+  * debian/control: removed Conflicts (Closes: #267743)
+  * debian/control: dmalloc in oldlibs
+  * debian/rules: dmalloc in binary-indep (Closes: #265019)
+
+ -- Luk Claes <luk.claes@ugent.be>  Mon, 30 Aug 2004 14:52:22 +0200
+
+dmalloc (5.3.0-3) unstable; urgency=low
+
+  * No changes. This is to sort out the fubar made while uploading
+    without -sa the first time
+    (Closes: #238633) - fixed in -2
+
+ -- Luk Claes <luk.claes@ugent.be>  Wed, 28 Jul 2004 13:22:32 +0100
+
+dmalloc (5.3.0-2) unstable; urgency=low
+
+  * Fixed grammatical and spelling errors in dmalloc.texi
+  	(Closes: #238633)
+
+ -- Luk Claes <luk.claes@ugent.be>  Thu, 20 May 2004 16:11:27 +0200
+
+dmalloc (5.3.0-1) unstable; urgency=low
+
+  * New upstream release
+  * Split in libdmalloc4 and libdmalloc4-dev
+  * Rectified paths in manpage
+  * Documentation in the right places (Closes: #229201)
+  * Fixed autoconf stuff
+  * Exported CFLAGS in debian/rules
+  * Added me to debian/copyright
+  * Corrected debian/watch
+
+ -- Luk Claes <luk.claes@ugent.be>  Tue, 10 Feb 2004 10:19:39 +0100
+
+dmalloc (5.2.3-1) unstable; urgency=low
+
+  * New upstream release (Closes: #216622).
+  * Updated to standards version 3.6.1
+  * ANSI compliant __STDC__ handling
+
+ -- Luk Claes <luk.claes@ugent.be>  Mon, 20 Oct 2003 09:39:35 +0200
+
+dmalloc (5.2.1-3) unstable; urgency=low
+
+  * Shareld libs in correct format (Closes: #206453). 
+
+ -- Luk Claes <luk.claes@ugent.be>  Thu, 21 Aug 2003 19:16:46 +0200
+
+dmalloc (5.2.1-2) unstable; urgency=low
+
+  * New maintainer (Closes: #202571)
+  * Shared lib compiled with -fPIC (Closes: #202777)
+  * Readded dmalloc manpage as it is required by policy an users want it (Closes: #62692)
+  * Updated to standards version 3.6.0
+
+ -- Luk Claes <luk.claes@ugent.be>  Mon, 11 Aug 2003 17:05:16 +0200
+
+dmalloc (5.2.1-1) unstable; urgency=low
+
+  * New upstream release (Closes: #199257)
+  * dmalloc_logpath is fixed in this release (Closes: #113688)
+  * Remove dmalloc man page, dmalloc doesnt have an official man page,
+    the offical documentation is in texi format. 
+
+ -- Glenn McGrath <bug1@debian.org>  Mon, 21 Jul 2003 14:27:29 +0000
+
+dmalloc (4.8.2-7) unstable; urgency=low
+
+  * Fix doc-base (Closes: #149541)
+  * Bump standards version to 3.5.8
+  * Build depend on higher debhelper version to prevent lintian warning
+
+ -- Glenn McGrath <bug1@debian.org>  Mon, 30 Dec 2002 18:37:01 +1100
+
+dmalloc (4.8.2-6) unstable; urgency=low
+
+  * Recompile against a newer glibc
+  * Remove pthread avoidance code for GNU/Hurd, GNU/Hurd has pthreads now!
+
+ -- Glenn McGrath <bug1@debian.org>  Sun, 24 Nov 2002 11:28:18 +1100
+
+dmalloc (4.8.2-5) unstable; urgency=low
+
+  * Rename docbase title (Closes: #146998)
+  * Fix man page (Closes: #138291) 
+
+ -- Glenn McGrath <bug1@debian.org>  Thu, 16 May 2002 16:06:25 +1000
+
+dmalloc (4.8.2-4) unstable; urgency=low
+
+  * Fix docbase section, remove extra space (Closes: #133218) 
+
+ -- Glenn McGrath <bug1@optushome.com.au>  Thu, 14 Feb 2002 15:12:21 +1100
+
+dmalloc (4.8.2-3) unstable; urgency=low
+
+  * Use gcc as a linker in preference to ld (Closes: #131871)
+  * I am now the debian dmalloc maintainer
+
+ -- Glenn McGrath <bug1@debian.org>  Tue,  5 Feb 2002 15:55:31 +1100
+
+dmalloc (4.8.2-2) unstable; urgency=low
+
+  * pass CFLAGS ./configure to compile with -fPIC (closes #131222) 
+
+ -- Glenn McGrath <bug1@debian.org>  Fri,  1 Feb 2002 00:32:18 +1100
+
+dmalloc (4.8.2-1) unstable; urgency=low
+
+  * New upstream version (Closes #76773)
+  * Version 4.8.x includes DMALLOC_VERIFY_NOERROR (Closes #89711)
+  * Declare build dependencies (Closes #122429)
+  * Use doc-base instead of dhelp (Closes #63928)
+  * Fix doc-base html declaration (Closes #85203) 
+  * Include dmalloc_loc.h for c++ example (Closes #89768)
+
+ -- Glenn McGrath <bug1@debian.org>  Sat, 26 Jan 2002 04:06:44 +1100
+
+dmalloc (4.6.0-2) unstable; urgency=low
+
+  * Fixed compilation error for architectures that are not supported for
+    GET_RET_ADDR() (Closes#66394)
+ -- Luis Francisco Gonzalez <luisgh@debian.org>  Sun,  2 Jul 2000 16:07:20 +0100
+
+dmalloc (4.6.0-1) unstable; urgency=low
+
+  * New upstream source
+
+ -- Luis Francisco Gonzalez <luisgh@debian.org>  Mon, 26 Jun 2000 21:21:35 +0100
+
+dmalloc (4.3.0-1) unstable; urgency=low
+
+  * New upstream source
+  * Bumped up standards
+  * Moved docs to /usr/share
+
+ -- Luis Francisco Gonzalez <luisgh@debian.org>  Wed, 22 Dec 1999 21:40:51 +0000
+
+dmalloc (4.2.0-2.1) unstable; urgency=low
+
+  * NMU
+  * link ordering glibc2.1 stuff, closes: #49376 
+
+ -- Brian M. Almeida <bma@debian.org>  Sat, 20 Nov 1999 13:33:13 -0500
+
+dmalloc (4.2.0-2) unstable; urgency=low
+
+  * Fixed symbols problem. Fixes Bug#40371
+  
+ -- Luis Francisco Gonzalez <luisgh@debian.org>  Thu,  8 Jul 1999 17:20:44 +0100
+
+dmalloc (4.2.0-1) unstable; urgency=low
+
+  * New upstream version. Fixes Bug#32115
+
+ -- Luis Francisco Gonzalez <luisgh@debian.org>  Mon,  7 Jun 1999 22:39:00 +0100
+
+dmalloc (3.3.1-3) frozen unstable; urgency=low
+
+  * Fixed the manpage for dmalloc ".SH NAME". Fixes Bug#20387
+
+ -- Luis Francisco Gonzalez <luisgh@debian.org>  Sun, 29 Mar 1998 18:12:33 +0100
+
+dmalloc (3.3.1-2) frozen unstable; urgency=low
+
+  * Moved build process to shared and static directories to force recompile
+    of object files. (Bug#20023).
+
+ -- Luis Francisco Gonzalez <luisgh@debian.org>  Sun, 22 Mar 1998 15:52:52 +0000
+
+dmalloc (3.3.1-1) unstable; urgency=low
+
+  * New upstream source
+  * Added a symlink from libdmalloc.so.3 to libdmalloc.so
+  * Added Conflicts, Replaces in order to upgrade from the previous dmalloc
+    packages (Bug#16372) and (Bug#17921).
+  * Explicitly linked against libc (Bug#16526)
+  * Changed the maintainer address to <luisgh@debian.org>
+
+ -- Luis Francisco Gonzalez <luisgh@debian.org>  Fri, 27 Feb 1998 18:54:35 +0000
+
+dmalloc (3.2.1-2) unstable; urgency=low
+
+  * Corrected some problems with the library names.
+  * Changed dmalloc.h to dmalloc1-dev.
+  * Added the content of the contrib directory to usr/doc/dmalloc/contrib.
+
+ -- Luis Francisco Gonzalez <luisgh@cogs.susx.ac.uk>  Tue, 25 Nov 1997 17:41:54 +0000
+
+dmalloc (3.2.1-1) unstable; urgency=low
+
+  * New upstream source
+  * New maintainer
+
+ -- Luis Francisco Gonzalez <luisgh@cogs.susx.ac.uk>  Mon, 10 Nov 1997 11:38:57 +0000
