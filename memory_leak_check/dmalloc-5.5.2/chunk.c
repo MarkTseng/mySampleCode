@@ -1994,6 +1994,24 @@ int _dmalloc_chunk_tag_pnt(const void * user_pnt,char *file,int line)
   return 1;
 }
 
+#define __USE_GNU
+#include <dlfcn.h>
+
+void identify_function_ptr( const char *func, char *buf, const int buf_size)  {
+	Dl_info info;
+	int rc;
+
+	rc = dladdr(func, &info);
+
+	if (!rc)  {
+		//printf("Problem retrieving program information for %x:  %s\n", func, dlerror());
+		(void)loc_snprintf(buf, buf_size, "ra=%#lx", (unsigned long)func);
+	}
+
+	//printf("lib name %s, function name %s\n", info.dli_fname, info.dli_sname);
+    (void)loc_snprintf(buf, buf_size, "%s", info.dli_sname);
+}
+
 /*
  * char *_dmalloc_chunk_desc_pnt
  *
@@ -2024,7 +2042,9 @@ char	*_dmalloc_chunk_desc_pnt(char *buf, const int buf_size,
     (void)loc_snprintf(buf, buf_size, "unknown");
   }
   else if (line == DMALLOC_DEFAULT_LINE) {
-    (void)loc_snprintf(buf, buf_size, "ra=%#lx", (unsigned long)file);
+    //(void)loc_snprintf(buf, buf_size, "ra=%#lx", (unsigned long)file);
+    //(void)loc_snprintf(buf, buf_size, "ra=%s", identify_function_ptr(file));
+	identify_function_ptr(file, buf, buf_size);
   }
   else if (file == DMALLOC_DEFAULT_FILE) {
     (void)loc_snprintf(buf, buf_size, "ra=ERROR(line=%u)", line);

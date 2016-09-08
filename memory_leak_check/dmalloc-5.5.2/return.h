@@ -369,7 +369,7 @@ static	void	aix_c_get_ret_addr(int i, int *file)
 /* for all others, do nothing */
 #ifndef GET_RET_ADDR
 #ifdef DMALLOC_DEFAULT_FILE
-#define GET_RET_ADDR(file)	file = DMALLOC_DEFAULT_FILE
+#define GET_RET_ADDR(file)	file = (char *) __builtin_return_address(0)
 #else
 #define GET_RET_ADDR(file)	file = 0L
 #endif
