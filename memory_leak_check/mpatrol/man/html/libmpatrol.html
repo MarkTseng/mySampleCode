@@ -1,0 +1,1468 @@
+Content-type: text/html
+
+<HTML><HEAD><TITLE>Manpage of LIBMPATROL</TITLE>
+</HEAD><BODY>
+<H1>LIBMPATROL</H1>
+Section: mpatrol library (3)<BR>Updated: 8 January 2002<BR><A HREF="#index">Index</A>
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+libmpatrol - dynamic memory allocation and tracing library
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<PRE>
+#include &lt;<A HREF="file:/usr/include/mpatrol.h">mpatrol.h</A>&gt;
+
+void *malloc(size_t size);
+void *calloc(size_t nelem, size_t size);
+void *memalign(size_t align, size_t size);
+void *valloc(size_t size);
+void *pvalloc(size_t size);
+void *alloca(size_t size);
+char *strdup(const char *str);
+char *strndup(const char *str, size_t size);
+char *strsave(const char *str);
+char *strnsave(const char *str, size_t size);
+char *strdupa(const char *str);
+char *strndupa(const char *str, size_t size);
+void *realloc(void *ptr, size_t size);
+void *reallocf(void *ptr, size_t size);
+void *recalloc(void *ptr, size_t nelem, size_t size);
+void *expand(void *ptr, size_t size);
+void free(void *ptr);
+void cfree(void *ptr, size_t nelem, size_t size);
+void dealloca(void *ptr);
+
+void *xmalloc(size_t size);
+void *xcalloc(size_t nelem, size_t size);
+char *xstrdup(const char *str);
+void *xrealloc(void *ptr, size_t size);
+void xfree(void *ptr);
+
+void *operator new(size_t size) throw(std::bad_alloc);
+void *operator new(size_t size, const std::nothrow_t&amp;)
+      throw();
+void *operator new[](size_t size) throw(std::bad_alloc);
+void *operator new[](size_t size, const std::nothrow_t&amp;)
+      throw();
+void operator delete(void *ptr) throw();
+void operator delete(void *ptr, const std::nothrow_t&amp;)
+     throw();
+void operator delete[](void *ptr) throw();
+void operator delete[](void *ptr, const std::nothrow_t&amp;)
+     throw();
+std::new_handler std::set_new_handler(std::new_handler func)
+                 throw();
+
+void *memset(void *ptr, int byte, size_t size);
+void bzero(void *ptr, size_t size);
+void *memccpy(void *dest, const void *src, int byte,
+              size_t size);
+void *memcpy(void *dest, const void *src, size_t size);
+void *memmove(void *dest, const void *src, size_t size);
+void bcopy(const void *src, void *dest, size_t size);
+int memcmp(const void *ptr1, const void *ptr2,
+           size_t size);
+int bcmp(const void *ptr1, const void *ptr2, size_t size);
+void *memchr(const void *ptr, int byte, size_t size);
+void *memmem(const void *ptr1, size_t size1,
+             const void *ptr2, size_t size2);
+
+int __mp_atexit(void (*func)(void));
+unsigned long __mp_setoption(long opt, unsigned long val);
+int __mp_getoption(long opt, unsigned long *val);
+unsigned long __mp_libversion(void);
+const char *__mp_strerror(__mp_errortype err);
+const char *__mp_function(__mp_alloctype func);
+int __mp_setuser(const void *ptr, const void *data);
+int __mp_setmark(const void *ptr);
+int __mp_info(const void *ptr, __mp_allocinfo *info);
+int __mp_syminfo(const void *ptr, __mp_symbolinfo *info);
+const char *__mp_symbol(const void *ptr);
+int __mp_printinfo(const void *ptr);
+unsigned long __mp_snapshot(void);
+size_t __mp_iterate(int (*func)(const void *, void *),
+                    void *data, unsigned long event);
+size_t __mp_iterateall(int (*func)(const void *, void *),
+                       void *data);
+int __mp_addallocentry(const char *file, unsigned long line,
+                       size_t size);
+int __mp_addfreeentry(const char *file, unsigned long line,
+                      size_t size);
+void __mp_clearleaktable(void);
+int __mp_startleaktable(void);
+int __mp_stopleaktable(void);
+void __mp_leaktable(size_t size, int opt,
+                    unsigned char flags);
+void __mp_memorymap(int stats);
+void __mp_summary(void);
+int __mp_stats(__mp_heapinfo *info);
+void __mp_check(void);
+__mp_prologuehandler __mp_prologue(const
+                                   __mp_prologuehandler);
+__mp_epiloguehandler __mp_epilogue(const
+                                   __mp_epiloguehandler);
+__mp_nomemoryhandler __mp_nomemory(const
+                                   __mp_nomemoryhandler);
+int __mp_printf(const char *fmt, ...);
+int __mp_vprintf(const char *fmt, va_list args);
+void __mp_locprintf(const char *fmt, ...);
+void __mp_vlocprintf(const char *fmt, va_list args);
+void __mp_logmemory(const void *ptr, size_t size);
+int __mp_logstack(size_t frames);
+int __mp_logaddr(const void *ptr);
+int __mp_edit(const char *file, unsigned long line);
+int __mp_list(const char *file, unsigned long line);
+int __mp_view(const char *file, unsigned long line);
+int __mp_readcontents(const char *file, void *ptr);
+int __mp_writecontents(const char *file, const void *ptr);
+long __mp_cmpcontents(const char *file, const void *ptr);
+int __mp_remcontents(const char *file, const void *ptr);
+
+__mp_errortype __mp_errno;
+</PRE>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+The <I>mpatrol library</I> contains implementations of dynamic memory
+allocation functions for C and C++ suitable for tracing and debugging, and is
+available on UNIX, AmigaOS, Windows and Netware platforms.  The library is
+intended to be used without requiring any changes to existing user source code
+except the inclusion of the <I>mpatrol.h</I> header file, although additional
+functions are supplied for extra tracing and control.  Note that the current
+version of the mpatrol library is contained in the <B>MPATROL_VERSION</B>
+preprocessor macro.
+<P>
+
+All of the function definitions in <I>mpatrol.h</I> can be disabled by defining
+the <B>NDEBUG</B> preprocessor macro, which is the same macro used to control
+the behaviour of the <B>assert</B> function.  If <B>NDEBUG</B> is defined then
+no macro redefinition of functions will take place and all special mpatrol
+library functions will evaluate to empty statements.  The <I>mpalloc.h</I> header
+file will also be included in this case.  It is intended that the <B>NDEBUG</B>
+preprocessor macro be defined in release builds.
+<P>
+
+The <B>MP_MALLOC</B> family of functions that are defined in <I>mpalloc.h</I> are
+also defined in <I>mpatrol.h</I> when <B>NDEBUG</B> is not defined.  The mpatrol
+versions of these functions contain more debugging information than the mpalloc
+versions do, but they do not call the allocation failure handler when no more
+memory is available (they cause the <I>OUTMEM</I> error message to be given
+instead).  See <B><A HREF="http://localhost/cgi-bin/man/man2html?3+mpalloc">mpalloc</A></B>(3) for the descriptions of the <B>MP_MALLOC</B>
+family of functions.
+<P>
+
+All diagnostics are sent to the file <I>mpatrol.log</I> in the current directory
+by default but this can be changed at run-time.  Additional configuration
+options can also be changed at run-time by setting and altering the
+<B>MPATROL_OPTIONS</B> environment variable.  In addition, the <B>LOGFILE</B>,
+<B>PROFFILE</B> and <B>TRACEFILE</B> options are affected by the <B>LOGDIR</B>,
+<B>PROFDIR</B> and <B>TRACEDIR</B> environment variables respectively.  See
+<B>ENVIRONMENT</B> below for more details.
+<P>
+
+Details of memory allocations and free memory are stored internally as a tree
+structure for speed and also to allow the best fit allocation algorithm to be
+used.  This also enables the library to perform intelligent resizing of memory
+allocations and can be used to quickly determine if an address has been
+allocated on the heap.
+<P>
+
+On systems that support memory protection, the library attempts to detect any
+illegal memory accesses and display as much information as it can obtain about
+the address in question and where the illegal memory access occurred.
+<P>
+
+Stack traceback information for every memory allocation is available on some
+supported platforms, which is useful for determining exactly where a memory
+allocation was performed or for adding meaning to tracing.  Symbol names are
+read from the executable file and also possibly from any required shared
+libraries, and if the <B>USEDEBUG</B> option is used and is available then the
+debugging section in the executable file will be read to determine additional
+source-level information.
+<P>
+
+On systems that support it, global functions (with C linkage) in an executable
+file or shared library whose names begin with <B>__mp_init_</B> will be noted
+when the mpatrol library first starts up and is reading the symbols.  Such
+functions will then be called as soon as the mpatrol library is initialised,
+which can be useful if the initialisation occurs before <B>main</B> is called.
+These functions must accept no arguments and must return no value.  Similar
+behaviour exists for global functions whose names begin with <B>__mp_fini_</B>,
+except that such functions will be executed when the mpatrol library terminates.
+Note that this feature will have no effect if the symbol table is stripped from
+the executable file or shared library before the program is run, and the order
+in which such functions will be called if there are more than one is
+unspecified.
+<P>
+
+On UNIX platforms, the <B>fork</B> function can cause problems if it is used
+to make a copy of the parent process without immediately calling one of the
+<B>exec</B> family of functions.  This is because the child process inherits
+all of the memory allocations of the parent process, but also inherits the log,
+profile and trace files as well.  If both the parent and child processes make
+subsequent memory allocations there will be multiple entries with the same
+allocation indices written to the log, profile or trace files.  This can be
+most confusing when processing these files afterwards!  As a workaround, the
+mpatrol library will always check the current process identifier every time one
+of its functions is called if the <B>CHECKFORK</B> option is used and will open
+new log, profile or trace files if it has determined that the process has been
+forked.  If the <B>CHECKFORK</B> option is not used then a call to
+<B>__mp_reinit</B> should be added as the first function call in the child
+process in order to duplicate the behaviour of the <B>CHECKFORK</B> option.
+<P>
+
+Memory allocation profiling is supported, with statistics about every memory
+allocation and deallocation that was made during the execution of a program
+being written to a file at program termination if the <B>PROF</B> option is
+used.  The information stored in this file can then be used by the <B>mprof</B>
+command to display various tables summarising the memory allocation behaviour
+of the program that produced it.  Memory allocation tracing is also supported,
+where a trace of all memory allocations, reallocations and deallocations can be
+written to a tracing output file in a concise encoded format for later
+processing by the <B>mptrace</B> command.  This is controlled with the
+<B>TRACE</B> option.
+<A NAME="lbAE">&nbsp;</A>
+<H2>FUNCTIONS</H2>
+
+The following 19 functions are available as replacements for existing C library
+functions.  To use these you must include <I>mpatrol.h</I> before all other
+header files, although on UNIX and Windows platforms (and AmigaOS when using
+<B>gcc</B>) they will be used anyway, albeit with slightly less tracing
+information.  If <B>alloca</B> is being used and <I>alloca.h</I> is included then
+<I>mpatrol.h</I> must appear after <I>alloca.h</I> otherwise the debugging version
+of <B>alloca</B> will not be used:
+<DL COMPACT>
+<DT><B>malloc</B><DD>
+Allocates <I>size</I> uninitialised bytes from the heap and returns a pointer to
+the first byte of the allocation.  The pointer returned will be suitably
+aligned for casting to any type and can be used to store data of up to
+<I>size</I> bytes in length.  If <I>size</I> is <I>0</I> then the memory allocated
+will be implicitly rounded up to <I>1</I> byte.  If there is not enough space in
+the heap then the null pointer will be returned and <B>errno</B> will be set to
+<B>ENOMEM</B>.  The allocated memory must be deallocated with <B>free</B> or
+reallocated with <B>realloc</B>.
+<DT><B>calloc</B><DD>
+Allocates <I>nelem</I> elements of <I>size</I> zero-initialised bytes from the
+heap and returns a pointer to the first byte of the allocation.  The pointer
+returned will be suitably aligned for casting to any type and can be used to
+store data of up to <I>nelem * size</I> bytes in length.  If <I>nelem * size</I>
+is <I>0</I> then the amount of memory allocated will be implicitly rounded up to
+<I>1</I> byte.  If there is not enough space in the heap then the null pointer
+will be returned and <B>errno</B> will be set to <B>ENOMEM</B>.  The allocated
+memory must be deallocated with <B>free</B> or reallocated with <B>realloc</B>.
+<DT><B>memalign</B><DD>
+Allocates <I>size</I> uninitialised bytes from the heap and returns a pointer to
+the first byte of the allocation.  The pointer returned will be aligned to
+<I>align</I> bytes and can be used to store data of up to <I>size</I> bytes in
+length.  If <I>align</I> is zero then the default system alignment will be used.
+If <I>align</I> is not a power of two then it will be rounded up to the nearest
+power of two.  If <I>align</I> is greater than the system page size then it will
+be truncated to that value.  If <I>size</I> is <I>0</I> then the memory allocated
+will be implicitly rounded up to <I>1</I> byte.  If there is not enough space in
+the heap then the null pointer will be returned and <B>errno</B> will be set to
+<B>ENOMEM</B>.  The allocated memory must be deallocated with <B>free</B> or
+reallocated with <B>realloc</B>, although the latter will not guarantee the
+preservation of alignment.
+<DT><B>valloc</B><DD>
+Allocates <I>size</I> uninitialised bytes from the heap and returns a pointer to
+the first byte of the allocation.  The pointer returned will be aligned to the
+system page size and can be used to store data of up to <I>size</I> bytes in
+length.  If <I>size</I> is <I>0</I> then the memory allocated will be implicitly
+rounded up to <I>1</I> byte.  If there is not enough space in the heap then the
+null pointer will be returned and <B>errno</B> will be set to <B>ENOMEM</B>.  The
+allocated memory must be deallocated with <B>free</B> or reallocated with
+<B>realloc</B>, although the latter will not guarantee the preservation of
+alignment.
+<DT><B>pvalloc</B><DD>
+Allocates <I>size</I> uninitialised bytes from the heap and returns a pointer to
+the first byte of the allocation.  The pointer returned will be aligned to the
+system page size and can be used to store data of up to <I>size</I> bytes in
+length.  If <I>size</I> is <I>0</I> then the memory allocated will be implicitly
+rounded up to <I>1</I> page, otherwise <I>size</I> will be implicitly rounded up
+to a multiple of the system page size.  If there is not enough space in the heap
+then the null pointer will be returned and <B>errno</B> will be set to
+<B>ENOMEM</B>.  The allocated memory must be deallocated with <B>free</B> or
+reallocated with <B>realloc</B>, although the latter will not guarantee the
+preservation of alignment.
+<DT><B>alloca</B><DD>
+Allocates <I>size</I> temporary uninitialised bytes from the heap and returns a
+pointer to the first byte of the allocation.  The pointer returned will be
+suitably aligned for casting to any type and can be used to store data of up to
+<I>size</I> bytes in length.  If <I>size</I> is <I>0</I> then the memory allocated
+will be implicitly rounded up to <I>1</I> byte.  If there is not enough space in
+the heap then the program will be terminated and the <I>OUTMEM</I> error will be
+given.  The <B>alloca</B> function normally allocates its memory from the stack,
+with the result that all such allocations will be freed when the function
+returns.  This version of <B>alloca</B> allocates its memory from the heap in
+order to provide better debugging, but the allocations may not necessarily be
+freed immediately when the function returns.  The allocated memory can be
+deallocated explicitly with <B>dealloca</B>, but may not be reallocated or
+deallocated in any other way.  This function is available for backwards
+compatibility with older C source code and should not be used in new code.
+<DT><B>strdup</B><DD>
+Allocates exactly enough memory from the heap to duplicate <I>str</I> (including
+the terminating nul character) and returns a pointer to the first byte of the
+allocation after copying <I>str</I> to the newly-allocated memory.  The pointer
+returned will have no alignment constraints and can be used to store character
+data up to the length of <I>str</I>.  If <I>str</I> is <B>NULL</B> then an error
+will be given and the null pointer will be returned.  If there is not enough
+space in the heap then the null pointer will be returned and <B>errno</B> will
+be set to <B>ENOMEM</B>.  The allocated memory must be deallocated with
+<B>free</B> or reallocated with <B>realloc</B>.
+<DT><B>strndup</B><DD>
+Allocates exactly enough memory from the heap to duplicate <I>str</I> (including
+the terminating nul character) and returns a pointer to the first byte of the
+allocation after copying <I>str</I> to the newly-allocated memory.  The pointer
+returned will have no alignment constraints and can be used to store character
+data up to the length of <I>str</I>.  If <I>str</I> is <B>NULL</B> and <I>size</I>
+is non-zero then an error will be given and the null pointer will be returned.
+If the length of <I>str</I> is greater than <I>size</I> then only <I>size</I>
+characters will be allocated and copied, with one additional byte for the nul
+character.  If there is not enough space in the heap then the null pointer will
+be returned and <B>errno</B> will be set to <B>ENOMEM</B>.  The allocated memory
+must be deallocated with <B>free</B> or reallocated with <B>realloc</B>.  This
+function is available for backwards compatibility with older C libraries and
+should not be used in new code.
+<DT><B>strsave</B><DD>
+Allocates exactly enough memory from the heap to duplicate <I>str</I> (including
+the terminating nul character) and returns a pointer to the first byte of the
+allocation after copying <I>str</I> to the newly-allocated memory.  The pointer
+returned will have no alignment constraints and can be used to store character
+data up to the length of <I>str</I>.  If <I>str</I> is <B>NULL</B> then an error
+will be given and the null pointer will be returned.  If there is not enough
+space in the heap then the null pointer will be returned and <B>errno</B> will
+be set to <B>ENOMEM</B>.  The allocated memory must be deallocated with
+<B>free</B> or reallocated with <B>realloc</B>.  This function is available for
+backwards compatibility with older C libraries and should not be used in new
+code.
+<DT><B>strnsave</B><DD>
+Allocates exactly enough memory from the heap to duplicate <I>str</I> (including
+the terminating nul character) and returns a pointer to the first byte of the
+allocation after copying <I>str</I> to the newly-allocated memory.  The pointer
+returned will have no alignment constraints and can be used to store character
+data up to the length of <I>str</I>.  If <I>str</I> is <B>NULL</B> and <I>size</I>
+is non-zero then an error will be given and the null pointer will be returned.
+If the length of <I>str</I> is greater than <I>size</I> then only <I>size</I>
+characters will be allocated and copied, with one additional byte for the nul
+character.  If there is not enough space in the heap then the null pointer will
+be returned and <B>errno</B> will be set to <B>ENOMEM</B>.  The allocated memory
+must be deallocated with <B>free</B> or reallocated with <B>realloc</B>.  This
+function is available for backwards compatibility with older C libraries and
+should not be used in new code.
+<DT><B>strdupa</B><DD>
+Allocates exactly enough temporary memory from the heap to duplicate <I>str</I>
+(including the terminating nul character) and returns a pointer to the first
+byte of the allocation after copying <I>str</I> to the newly-allocated memory.
+The pointer returned will have no alignment constraints and can be used to store
+character data up to the length of <I>str</I>.  If <I>str</I> is <B>NULL</B> then
+an error will be given and the null pointer will be returned.  If there is not
+enough space in the heap then the program will be terminated and the
+<I>OUTMEM</I> error will be given.  The <B>strdupa</B> function normally allocates
+its memory from the stack, with the result that all such allocations will be
+freed when the function returns.  This version of <B>strdupa</B> allocates its
+memory from the heap in order to provide better debugging, but the allocations
+may not necessarily be freed immediately when the function returns.  The
+allocated memory can be deallocated explicitly with <B>dealloca</B>, but may not
+be reallocated or deallocated in any other way.  This function is available for
+backwards compatibility with older C source code and should not be used in new
+code.
+<DT><B>strndupa</B><DD>
+Allocates exactly enough temporary memory from the heap to duplicate <I>str</I>
+(including the terminating nul character) and returns a pointer to the first
+byte of the allocation after copying <I>str</I> to the newly-allocated memory.
+The pointer returned will have no alignment constraints and can be used to store
+character data up to the length of <I>str</I>.  If <I>str</I> is <B>NULL</B> and
+<I>size</I> is non-zero then an error will be given and the null pointer will be
+returned.  If the length of <I>str</I> is greater than <I>size</I> then only
+<I>size</I> characters will be allocated and copied, with one additional byte for
+the nul character.  If there is not enough space in the heap then the program
+will be terminated and the <I>OUTMEM</I> error will be given.  The <B>strndupa</B>
+function normally allocates its memory from the stack, with the result that all
+such allocations will be freed when the function returns.  This version of
+<B>strndupa</B> allocates its memory from the heap in order to provide better
+debugging, but the allocations may not necessarily be freed immediately when the
+function returns.  The allocated memory can be deallocated explicitly with
+<B>dealloca</B>, but may not be reallocated or deallocated in any other way.
+This function is available for backwards compatibility with older C source code
+and should not be used in new code.
+<DT><B>realloc</B><DD>
+Resizes the memory allocation beginning at <I>ptr</I> to <I>size</I> bytes and
+returns a pointer to the first byte of the new allocation after copying
+<I>ptr</I> to the newly-allocated memory, which will be truncated if <I>size</I>
+is smaller than the original allocation.  The pointer returned will be suitably
+aligned for casting to any type and can be used to store data of up to
+<I>size</I> bytes in length.  If <I>ptr</I> is <B>NULL</B> then the call will be
+equivalent to <B>malloc</B>.  If <I>size</I> is <I>0</I> then the existing memory
+allocation will be freed and the null pointer will be returned.  If <I>size</I>
+is greater than the original allocation then the extra space will be filled with
+uninitialised bytes.  If there is not enough space in the heap then the null
+pointer will be returned and <B>errno</B> will be set to <B>ENOMEM</B>.  The
+allocated memory must be deallocated with <B>free</B> and can be reallocated
+again with <B>realloc</B>.
+<DT><B>reallocf</B><DD>
+Resizes the memory allocation beginning at <I>ptr</I> to <I>size</I> bytes and
+returns a pointer to the first byte of the new allocation after copying
+<I>ptr</I> to the newly-allocated memory, which will be truncated if <I>size</I>
+is smaller than the original allocation.  The pointer returned will be suitably
+aligned for casting to any type and can be used to store data of up to
+<I>size</I> bytes in length.  If <I>ptr</I> is <B>NULL</B> then the call will be
+equivalent to <B>malloc</B>.  If <I>size</I> is <I>0</I> then the existing memory
+allocation will be freed and the null pointer will be returned.  If <I>size</I>
+is greater than the original allocation then the extra space will be filled with
+uninitialised bytes.  If there is not enough space in the heap then the null
+pointer will be returned, the original allocation will be freed and <B>errno</B>
+will be set to <B>ENOMEM</B>.  The allocated memory must be deallocated with
+<B>free</B> and can be reallocated again with <B>realloc</B>.  This function is
+available for backwards compatibility with older C libraries and should not be
+used in new code.
+<DT><B>recalloc</B><DD>
+Resizes the memory allocation beginning at <I>ptr</I> to <I>nelem</I> elements of
+<I>size</I> bytes and returns a pointer to the first byte of the new allocation
+after copying <I>ptr</I> to the newly-allocated memory, which will be truncated
+if <I>nelem</I> * <I>size</I> is smaller than the original allocation.  The
+pointer returned will be suitably aligned for casting to any type and can be
+used to store data of up to <I>nelem</I> * <I>size</I> bytes in length.  If
+<I>ptr</I> is <B>NULL</B> then the call will be equivalent to <B>calloc</B>.  If
+<I>nelem</I> * <I>size</I> is <I>0</I> then the existing memory allocation will be
+freed and the null pointer will be returned.  If <I>nelem</I> * <I>size</I> is
+greater than the original allocation then the extra space will be filled with
+zero-initialised bytes.  If there is not enough space in the heap then the null
+pointer will be returned and <B>errno</B> will be set to <B>ENOMEM</B>.  The
+allocated memory must be deallocated with <B>free</B> and can be reallocated
+again with <B>realloc</B>.  This function is available for backwards
+compatibility with older C libraries and <B>calloc</B> and should not be used in
+new code.
+<DT><B>expand</B><DD>
+Attempts to resize the memory allocation beginning at <I>ptr</I> to <I>size</I>
+bytes and either returns <I>ptr</I> if there was enough space to resize it, or
+<B>NULL</B> if the block could not be resized for a particular reason.  If
+<I>ptr</I> is <B>NULL</B> then the call will be equivalent to <B>malloc</B>.  If
+<I>size</I> is <B>0</B> then the existing memory allocation will be freed and the
+<B>NULL</B> pointer will be returned.  If <I>size</I> is greater than the original
+allocation then the extra space will be filled with uninitialised bytes and if
+<I>size</I> is less than the original allocation then the memory block will be
+truncated.  If there is not enough space in the heap then the <B>NULL</B> pointer
+will be returned and <B>errno</B> will be set to <B>ENOMEM</B>.  The allocated
+memory must be deallocated with <B>free</B> and can be reallocated again with
+<B>realloc</B>.  This function is available for backwards compatibility with
+older C libraries and should not be used in new code.
+<DT><B>free</B><DD>
+Frees the memory allocation beginning at <I>ptr</I> so the memory can be reused
+by another call to allocate memory.  If <I>ptr</I> is <B>NULL</B> then no memory
+will be freed.  All of the previous contents will be destroyed.
+<DT><B>cfree</B><DD>
+Frees the memory allocation beginning at <I>ptr</I> so the memory can be reused
+by another call to allocate memory.  If <I>ptr</I> is <B>NULL</B> then no memory
+will be freed.  All of the previous contents will be destroyed.  The <I>nelem</I>
+and <I>size</I> parameters are ignored in this implementation.  This function is
+available for backwards compatibility with older C libraries and <B>calloc</B>
+and should not be used in new code.
+<DT><B>dealloca</B><DD>
+Explicitly frees the temporary memory allocation beginning at <I>ptr</I> so the
+memory can be reused by another call to allocate memory.  If <I>ptr</I> is
+<B>NULL</B> then no memory will be explicitly freed.  All of the previous
+contents will be destroyed.  This function can only be used to free memory that
+was allocated with the <B>alloca</B>, <B>strdupa</B> and <B>strndupa</B> functions,
+but is only really required if the mpatrol library does not automatically free
+such memory allocations when the allocating function returns.  This function is
+mpatrol-specific and should not be used in release code.
+</DL>
+<P>
+
+The following 5 functions are available as replacements for existing C library
+extension functions that always abort and never return <B>NULL</B> if there is
+insufficient memory to fulfil a request.  To use these you must include
+<I>mpatrol.h</I> before all other header files, although on UNIX and Windows
+platforms (and AmigaOS when using <B>gcc</B>) they will be used anyway, albeit
+with slightly less tracing information:
+<DL COMPACT>
+<DT><B>xmalloc</B><DD>
+Allocates <I>size</I> uninitialised bytes from the heap and returns a pointer to
+the first byte of the allocation.  The pointer returned will be suitably
+aligned for casting to any type and can be used to store data of up to
+<I>size</I> bytes in length.  If <I>size</I> is <I>0</I> then the memory allocated
+will be implicitly rounded up to <I>1</I> byte.  If there is not enough space in
+the heap then the program will be terminated and the <I>OUTMEM</I> error will be
+given.  The allocated memory must be deallocated with <B>xfree</B> or reallocated
+with <B>xrealloc</B>.
+<DT><B>xcalloc</B><DD>
+Allocates <I>nelem</I> elements of <I>size</I> zero-initialised bytes from the
+heap and returns a pointer to the first byte of the allocation.  The pointer
+returned will be suitably aligned for casting to any type and can be used to
+store data of up to <I>nelem * size</I> bytes in length.  If <I>nelem * size</I>
+is <I>0</I> then the amount of memory allocated will be implicitly rounded up to
+<I>1</I> byte.  If there is not enough space in the heap then the program will be
+terminated and the <I>OUTMEM</I> error will be given.  The allocated memory must
+be deallocated with <B>xfree</B> or reallocated with <B>xrealloc</B>.
+<DT><B>xstrdup</B><DD>
+Allocates exactly enough memory from the heap to duplicate <I>str</I> (including
+the terminating nul character) and returns a pointer to the first byte of the
+allocation after copying <I>str</I> to the newly-allocated memory.  The pointer
+returned will have no alignment constraints and can be used to store character
+data up to the length of <I>str</I>.  If <I>str</I> is <B>NULL</B> then an error
+will be given and the null pointer will be returned.  If there is not enough
+space in the heap then the program will be terminated and the <I>OUTMEM</I> error
+will be given.  The allocated memory must be deallocated with <B>xfree</B> or
+reallocated with <B>xrealloc</B>.
+<DT><B>xrealloc</B><DD>
+Resizes the memory allocation beginning at <I>ptr</I> to <I>size</I> bytes and
+returns a pointer to the first byte of the new allocation after copying
+<I>ptr</I> to the newly-allocated memory, which will be truncated if <I>size</I>
+is smaller than the original allocation.  The pointer returned will be suitably
+aligned for casting to any type and can be used to store data of up to
+<I>size</I> bytes in length.  If <I>ptr</I> is <B>NULL</B> then the call will be
+equivalent to <B>xmalloc</B>.  If <I>size</I> is <I>0</I> then it will be implictly
+rounded up to <I>1</I>.  If <I>size</I> is greater than the original allocation
+then the extra space will be filled with uninitialised bytes.  If there is not
+enough space in the heap then the program will be terminated and the
+<I>OUTMEM</I> error will be given.  The allocated memory must be deallocated with
+<B>xfree</B> and can be reallocated again with <B>xrealloc</B>.
+<DT><B>xfree</B><DD>
+Frees the memory allocation beginning at <I>ptr</I> so the memory can be reused
+by another call to allocate memory.  If <I>ptr</I> is <B>NULL</B> then no memory
+will be freed.  All of the previous contents will be destroyed.
+</DL>
+<P>
+
+The following 5 functions are available as replacements for existing C++ library
+functions, but the replacements in <I>mpatrol.h</I> will only be used if the
+<B>MP_NOCPLUSPLUS</B> preprocessor macro is not defined.  The replacement
+operators make use of the preprocessor in order to obtain source-level
+information.  If this causes problems then you should define the
+<B>MP_NONEWDELETE</B> preprocessor macro and use the <B>MP_NEW</B>,
+<B>MP_NEW_NOTHROW</B> and <B>MP_DELETE</B> macros instead of <B>new</B> and
+<B>delete</B> directly.  To use these C++ features you must include
+<I>mpatrol.h</I> before all other header files, although on UNIX and Windows
+platforms (and AmigaOS when using <B>gcc</B>) they will be used anyway, albeit
+with slightly less tracing information:
+<DL COMPACT>
+<DT><B>operator new</B><DD>
+Allocates <I>size</I> uninitialised bytes from the heap and returns a pointer to
+the first byte of the allocation.  The pointer returned will be suitably
+aligned for casting to any type and can be used to store data of up to
+<I>size</I> bytes in length.  If <I>size</I> is <I>0</I> then the memory allocated
+will be implicitly rounded up to <I>1</I> byte.  If there is not enough space in
+the heap then either the <I>std::bad_alloc</I> exception will be thrown or the
+null pointer will be returned and <B>errno</B> will be set to <B>ENOMEM</B> - the
+behaviour depends on whether the nothrow version of the operator is used.  The
+allocated memory must be deallocated with <B>operator delete</B>.
+<DT><B>operator new[]</B><DD>
+Allocates <I>size</I> uninitialised bytes from the heap and returns a pointer to
+the first byte of the allocation.  The pointer returned will be suitably
+aligned for casting to any type and can be used to store data of up to
+<I>size</I> bytes in length.  If <I>size</I> is <I>0</I> then the memory allocated
+will be implicitly rounded up to <I>1</I> byte.  If there is not enough space in
+the heap then either the <I>std::bad_alloc</I> exception will be thrown or the
+null pointer will be returned and <B>errno</B> will be set to <B>ENOMEM</B> - the
+behaviour depends on whether the nothrow version of the operator is used.  The
+allocated memory must be deallocated with <B>operator delete[]</B>.
+<DT><B>operator delete</B><DD>
+Frees the memory allocation beginning at <I>ptr</I> so the memory can be reused
+by another call to allocate memory.  If <I>ptr</I> is <B>NULL</B> then no memory
+will be freed.  All of the previous contents will be destroyed.  This function
+must only be used with memory allocated by <B>operator new</B>.
+<DT><B>operator delete[]</B><DD>
+Frees the memory allocation beginning at <I>ptr</I> so the memory can be reused
+by another call to allocate memory.  If <I>ptr</I> is <B>NULL</B> then no memory
+will be freed.  All of the previous contents will be destroyed.  This function
+must only be used with memory allocated by <B>operator new[]</B>.
+<DT><B>set_new_handler</B><DD>
+Installs a low-memory handler specifically for use with <B>operator new</B> and
+<B>operator new[]</B> and returns a pointer to the previously installed handler,
+or the null pointer if no handler had been previously installed.  This will be
+called repeatedly by both functions when they would normally return <B>NULL</B>,
+and this loop will continue until they manage to allocate the requested space.
+Note that this function is equivalent to <B>__mp_nomemory</B> and will replace
+the handler installed by that function.
+</DL>
+<P>
+
+The following 10 functions are available as replacements for existing C library
+memory operation functions.  To use these you must include <I>mpatrol.h</I>
+before all other header files, although on UNIX and Windows platforms (and
+AmigaOS when using <B>gcc</B>) they will be used anyway, albeit with slightly
+less tracing information:
+<DL COMPACT>
+<DT><B>memset</B><DD>
+Writes <I>size</I> bytes of value <I>byte</I> to the memory location beginning at
+<I>ptr</I> and returns <I>ptr</I>.  If <I>size</I> is <B>0</B> then no bytes will
+be written.  If the operation would affect an existing memory allocation in the
+heap but would straddle that allocation's boundaries then an error message will
+be generated in the log file and no bytes will be written.
+<DT><B>bzero</B><DD>
+Writes <I>size</I> zero bytes to the memory location beginning at <I>ptr</I>.  If
+<I>size</I> is <B>0</B> then no bytes will be written.  If the operation would
+affect an existing memory allocation in the heap but would straddle that
+allocation's boundaries then an error message will be generated in the log file
+and no bytes will be written.  This function is available for backwards
+compatibility with older C libraries and should not be used in new code.
+<DT><B>memccpy</B><DD>
+Copies <I>size</I> bytes from <I>src</I> to <I>dest</I> and returns <B>NULL</B>, or
+copies the number of bytes up to and including the first occurrence of
+<I>byte</I> if <I>byte</I> exists within the specified range and returns a pointer
+to the first byte after <I>byte</I>.  If <I>size</I> is <B>0</B> or <I>src</I> is
+the same as <I>dest</I> then no bytes will be copied.  The source and destination
+ranges should not overlap, otherwise a warning will be written to the log file.
+If the operation would affect an existing memory allocation in the heap but
+would straddle that allocation's boundaries then an error message will be
+generated in the log file and no bytes will be copied.
+<DT><B>memcpy</B><DD>
+Copies <I>size</I> bytes from <I>src</I> to <I>dest</I> and returns <I>dest</I>.  If
+<I>size</I> is <B>0</B> or <I>src</I> is the same as <I>dest</I> then no bytes will
+be copied.  The source and destination ranges should not overlap, otherwise a
+warning will be written to the log file.  If the operation would affect an
+existing memory allocation in the heap but would straddle that allocation's
+boundaries then an error message will be generated in the log file and no bytes
+will be copied.
+<DT><B>memmove</B><DD>
+Copies <I>size</I> bytes from <I>src</I> to <I>dest</I> and returns <I>dest</I>.  If
+<I>size</I> is <B>0</B> or <I>src</I> is the same as <I>dest</I> then no bytes will
+be copied.  If the operation would affect an existing memory allocation in the
+heap but would straddle that allocation's boundaries then an error message will
+be generated in the log file and no bytes will be copied.
+<DT><B>bcopy</B><DD>
+Copies <I>size</I> bytes from <I>src</I> to <I>dest</I>.  If <I>size</I> is <B>0</B>
+or <I>src</I> is the same as <I>dest</I> then no bytes will be copied.  If the
+operation would affect an existing memory allocation in the heap but would
+straddle that allocation's boundaries then an error message will be generated in
+the log file and no bytes will be copied.  This function is available for
+backwards compatibility with older C libraries and should not be used in new
+code.
+<DT><B>memcmp</B><DD>
+Compares <I>size</I> bytes from <I>ptr1</I> and <I>ptr2</I> and returns <B>0</B> if
+all of the bytes are identical, or returns the byte difference of the first
+differing bytes.  If <I>size</I> is <B>0</B> or <I>ptr1</I> is the same as
+<I>ptr2</I> then no bytes will be compared.  If the operation would read from an
+existing memory allocation in the heap but would straddle that allocation's
+boundaries then an error message will be generated in the log file and no bytes
+will be compared.
+<DT><B>bcmp</B><DD>
+Compares <I>size</I> bytes from <I>ptr1</I> and <I>ptr2</I> and returns <B>0</B> if
+all of the bytes are identical, or returns the byte difference of the first
+differing bytes.  If <I>size</I> is <B>0</B> or <I>ptr1</I> is the same as
+<I>ptr2</I> then no bytes will be compared.  If the operation would read from an
+existing memory allocation in the heap but would straddle that allocation's
+boundaries then an error message will be generated in the log file and no bytes
+will be compared.  This function is available for backwards compatibility with
+older C libraries and should not be used in new code.
+<DT><B>memchr</B><DD>
+Searches up to <I>size</I> bytes in <I>ptr</I> for the first occurrence of
+<I>byte</I> and returns a pointer to it or <B>NULL</B> if no such byte occurs.  If
+<I>size</I> is <B>0</B> then no bytes will be searched.  If the operation would
+affect an existing memory allocation in the heap but would straddle that
+allocation's boundaries then an error message will be generated in the log file
+and no bytes will be searched.
+<DT><B>memmem</B><DD>
+Searches up to <I>size1</I> bytes in <I>ptr1</I> for the first occurrence of
+<I>ptr2</I> (which is exactly <I>size2</I> bytes in length) and returns a pointer
+to it or <B>NULL</B> if no such sequence of bytes occur.  If <I>size1</I> or
+<I>size2</I> is <B>0</B> then no bytes will be searched.  If the operation would
+affect an existing memory allocation in the heap but would straddle that
+allocation's boundaries then an error message will be generated in the log file
+and no bytes will be searched.
+</DL>
+<P>
+
+The following 42 functions are available as support routines for additional
+control and tracing in the mpatrol library.  Although they are documented here
+as being prefixed by <B>__mp_</B>, their equivalent functions that are prefixed
+by <B>mpatrol_</B> are also defined as aliases in the <I>mpatrol.h</I> header
+file.  To use these you should include the <I>mpatrol.h</I> header file:
+<DL COMPACT>
+<DT><B>__mp_atexit</B><DD>
+Installs a function to be called when the mpatrol library terminates.  Up to 32
+such functions can be registered and will be called in reverse order of
+registration.  Returns <I>1</I> on success or 0 if <I>func</I> could not be
+registered.
+<DT><B>__mp_setoption</B><DD>
+Sets the value of an mpatrol option after the library has been initialised.
+Options that require values are listed in <I>mpatrol.h</I> prefixed with
+<I>MP_OPT_*</I>.  The <I>opt</I> argument should be set to one of these macros,
+and the <I>val</I> argument should be set to the option value, cast to an
+unsigned integer.  The return value will be <I>0</I> on success and <I>1</I> on
+failure.  Options that are flags are listed in <I>mpatrol.h</I> prefixed with
+<I>MP_FLG_*</I>.  Multiple flags can be set or unset at once using the
+<I>MP_OPT_SETFLAGS</I> and <I>MP_OPT_UNSETFLAGS</I> options respectively, with the
+necessary flags specified in <I>val</I>.  The return value will be <I>0</I> on
+success and a combination of all of the flags that could not be set or unset on
+failure.
+<DT><B>__mp_getoption</B><DD>
+Gets the value of an mpatrol option after the library has been initialised.
+If <I>opt</I> is a valid option listed in <I>mpatrol.h</I> then <I>1</I> will be
+returned and the associated value will be returned in <I>val</I> and cast to an
+unsigned integer, otherwise <I>0</I> will be returned.  If <I>opt</I> is
+<I>MP_OPT_SETFLAGS</I> then all of the mpatrol library flags that are set will be
+returned in <I>val</I>.  If <I>opt</I> is <I>MP_OPT_UNSETFLAGS</I> then all of the
+mpatrol library flags that are not set will be returned in <I>val</I>.
+<DT><B>__mp_libversion</B><DD>
+Returns the version number of the mpatrol library.  This can be useful for
+verifying that the version of the mpatrol library that a program is linked with
+is the one expected at compile-time.
+<DT><B>__mp_strerror</B><DD>
+Returns the error message corresponding to the error code <I>err</I> or
+<B>NULL</B> if no such error code exists.  The most recent error code recorded by
+the mpatrol library can be obtained by examining <B>__mp_errno</B>.
+<DT><B>__mp_function</B><DD>
+Returns the name of the function corresponding to the allocation type <I>func</I>
+or <B>NULL</B> if no such allocation type exists.
+<DT><B>__mp_setuser</B><DD>
+Sets the user data for the memory allocation containing <I>ptr</I>.  The contents
+of <I>data</I> are entirely application-specific as user data will never be
+examined by the mpatrol library.  Such data is associated with a memory
+allocation for its entire lifetime unless overridden by a subsequent call to
+<B>__mp_setuser</B>.  As such, the user data must be valid for the entire
+lifetime of the memory allocation, perhaps even after the allocation has been
+freed if the <B>NOFREE</B> option is being used.  This function returns <I>1</I>
+if there is an allocated memory block containing <I>ptr</I>, and <I>0</I>
+otherwise.
+<DT><B>__mp_setmark</B><DD>
+Sets the marked flag for the memory allocation containing <I>ptr</I>, indicating
+that the memory allocation cannot be freed (but can be reallocated) and thus
+will not be listed as a memory leak.  This function returns <I>1</I> if there is
+an allocated memory block containing <I>ptr</I>, and <I>0</I> otherwise.  Note
+that a memory allocation made by <B>alloca</B>, <B>strdupa</B> or <B>strndupa</B>
+may not be marked.
+<DT><B>__mp_info</B><DD>
+Obtains information about a specific memory allocation by placing statistics
+about <I>ptr</I> in <I>info</I>.  If <I>ptr</I> does not belong to a previously
+allocated memory allocation or free memory block then <I>0</I> will be returned,
+otherwise <I>1</I> will be returned and <I>info</I> will contain the following
+information (note that a free memory block will only contain the <I>block</I> and
+<I>size</I> fields and can be identified by not having the <I>allocated</I> flag
+set):
+<P>
+<TABLE>
+<TR VALIGN=top><TD><B>Field</B></TD><TD><B>Description</B><BR></TD></TR>
+<TR VALIGN=top><TD></TD><TD><BR></TD></TR>
+<TR VALIGN=top><TD><B>block</B></TD><TD>Pointer to first byte of alloc.<BR></TD></TR>
+<TR VALIGN=top><TD><B>size</B></TD><TD>Size of alloc in bytes.<BR></TD></TR>
+<TR VALIGN=top><TD><B>type</B></TD><TD>Type of function which allocated memory.<BR></TD></TR>
+<TR VALIGN=top><TD><B>alloc</B></TD><TD>Allocation index.<BR></TD></TR>
+<TR VALIGN=top><TD><B>realloc</B></TD><TD>Number of times reallocated.<BR></TD></TR>
+<TR VALIGN=top><TD><B>thread</B></TD><TD>Thread identifier.<BR></TD></TR>
+<TR VALIGN=top><TD><B>event</B></TD><TD>Event of last modification.<BR></TD></TR>
+<TR VALIGN=top><TD><B>func</B></TD><TD>Function in which alloc took place.<BR></TD></TR>
+<TR VALIGN=top><TD><B>file</B></TD><TD>File in which alloc took place.<BR></TD></TR>
+<TR VALIGN=top><TD><B>line</B></TD><TD>Line number at which alloc took place.<BR></TD></TR>
+<TR VALIGN=top><TD><B>stack</B></TD><TD>Pointer to function call stack.<BR></TD></TR>
+<TR VALIGN=top><TD><B>typestr</B></TD><TD>Type stored in allocation.<BR></TD></TR>
+<TR VALIGN=top><TD><B>typesize</B></TD><TD>Size of type stored in allocation.<BR></TD></TR>
+<TR VALIGN=top><TD><B>userdata</B></TD><TD>User data associated with allocation.<BR></TD></TR>
+<TR VALIGN=top><TD><B>allocated</B></TD><TD>Indicates if alloc was allocated.<BR></TD></TR>
+<TR VALIGN=top><TD><B>freed</B></TD><TD>Indicates if alloc has been freed.<BR></TD></TR>
+<TR VALIGN=top><TD><B>marked</B></TD><TD>Indicates if alloc has been marked.<BR></TD></TR>
+<TR VALIGN=top><TD><B>profiled</B></TD><TD>Indicates if alloc has been profiled.<BR></TD></TR>
+<TR VALIGN=top><TD><B>traced</B></TD><TD>Indicates if alloc has been traced.<BR></TD></TR>
+<TR VALIGN=top><TD><B>internal</B></TD><TD>Indicates if alloc is internal.<BR></TD></TR>
+</TABLE>
+
+<DT><B>__mp_syminfo</B><DD>
+Obtains symbolic information about a specific code address by placing statistics
+about <I>ptr</I> in <I>info</I>.  If <I>ptr</I> does not belong to a function
+symbol then <I>0</I> will be returned, otherwise <I>1</I> will be returned and
+<I>info</I> will contain the following information:
+<P>
+<TABLE>
+<TR VALIGN=top><TD><B>Field</B></TD><TD><B>Description</B><BR></TD></TR>
+<TR VALIGN=top><TD></TD><TD><BR></TD></TR>
+<TR VALIGN=top><TD><B>name</B></TD><TD>Name of symbol.<BR></TD></TR>
+<TR VALIGN=top><TD><B>object</B></TD><TD>File containing symbol.<BR></TD></TR>
+<TR VALIGN=top><TD><B>addr</B></TD><TD>Start address of symbol.<BR></TD></TR>
+<TR VALIGN=top><TD><B>size</B></TD><TD>Size of symbol.<BR></TD></TR>
+<TR VALIGN=top><TD><B>file</B></TD><TD>Filename corresponding to address.<BR></TD></TR>
+<TR VALIGN=top><TD><B>line</B></TD><TD>Line number corresponding to address.<BR></TD></TR>
+</TABLE>
+
+<DT><B>__mp_symbol</B><DD>
+Obtains the name of a function symbol containing the code address specified in
+<I>ptr</I>.  If <I>ptr</I> does not belong to a function symbol then <B>NULL</B>
+will be returned.
+<DT><B>__mp_printinfo</B><DD>
+Displays information about a specific memory allocation containing <I>ptr</I> to
+the standard error file stream.  If <I>ptr</I> does not belong to a previously
+allocated memory allocation or free memory block then <I>0</I> will be returned,
+otherwise <I>1</I> will be returned.  This function is intended to be called from
+within a debugger.
+<DT><B>__mp_snapshot</B><DD>
+Returns the current event number, effectively taking a snapshot of the heap.
+This number can then be used in later calls to <B>__mp_iterate</B>.
+<DT><B>__mp_iterate</B><DD>
+Iterates over all of the current allocated and freed memory allocations,
+calling <I>func</I> with the start address of every memory allocation that has
+been modified since event number <I>event</I>.  If <I>func</I> is <B>NULL</B> then
+<B>__mp_printinfo</B> will be used as the callback function.  If <B>event</B> is
+<I>0</I> then <I>func</I> will be called with the start address of every memory
+allocation.  If <I>func</I> returns a negative number then the iteration process
+will be stopped immediately.  If <I>func</I> returns a positive number above zero
+then <B>__mp_iterate</B> will return the number of times <I>func</I> returned a
+non-zero number after the iteration process has stopped.  The <I>data</I>
+argument is passed directly to <I>func</I> as its second argument and is not
+read by the mpatrol library.
+<DT><B>__mp_iterateall</B><DD>
+Iterates over all of the current allocated and freed memory allocations and any
+free memory blocks, calling <I>func</I> with the start address of every memory
+allocation or free block.  If <I>func</I> is <B>NULL</B> then <B>__mp_printinfo</B>
+will be used as the callback function.  If <I>func</I> returns a negative number
+then the iteration process will be stopped immediately.  If <I>func</I> returns a
+positive number above zero then <B>__mp_iterate</B> will return the number of
+times <I>func</I> returned a non-zero number after the iteration process has
+stopped.  The <I>data</I> argument is passed directly to <I>func</I> as its second
+argument and is not read by the mpatrol library.  Note that unlike
+<B>__mp_iterate</B>, this function will also include internal memory allocations
+made by the mpatrol library and is intended for walking the entire heap.
+<DT><B>__mp_addallocentry</B><DD>
+Adds an entry representing an allocation of size <I>size</I> to the leak table.
+The allocation will be associated with a source filename of <I>file</I> and a
+line number of <I>line</I> if the former is non-<B>NULL</B> and the latter is
+non-zero.  If <I>file</I> is non-<B>NULL</B> and <I>line</I> is <I>0</I> then
+<I>file</I> represents the name of the function that made the allocation.  If
+<I>file</I> is <B>NULL</B> and <I>line</I> is non-zero then <I>line</I> represents
+the code address at which the allocation was made.  If <I>file</I> is <B>NULL</B>
+and <I>line</I> is <I>0</I> then the location of the allocation is unknown.
+Returns <I>1</I> on success and <I>0</I> if there was no more memory available to
+add another entry to the leak table.
+<DT><B>__mp_addfreeentry</B><DD>
+Adds an entry representing a deallocation of size <I>size</I> to the leak table.
+The deallocation will be associated with a source filename of <I>file</I> and a
+line number of <I>line</I> if the former is non-<B>NULL</B> and the latter is
+non-zero.  If <I>file</I> is non-<B>NULL</B> and <I>line</I> is <I>0</I> then
+<I>file</I> represents the name of the function that made the deallocation.  If
+<I>file</I> is <B>NULL</B> and <I>line</I> is non-zero then <I>line</I> represents
+the code address at which the deallocation was made.  If <I>file</I> is
+<B>NULL</B> and <I>line</I> is <I>0</I> then the location of the deallocation is
+unknown.  Returns <I>1</I> on success and <I>0</I> if there was no existing
+allocation from the same location in the leak table.
+<DT><B>__mp_clearleaktable</B><DD>
+Deletes all of the existing entries in the leak table, making it empty.  This
+will also affect the behaviour of the <B>LEAKTABLE</B> option since that option
+will then only be able to show a summary of the entries in the leak table that
+were collected after the last call to this function rather than from the start
+of program execution.
+<DT><B>__mp_startleaktable</B><DD>
+Starts the automatic logging of all memory allocations, reallocations and
+deallocations to the leak table.  Returns <I>1</I> if such logging was already
+being performed and <I>0</I> otherwise.
+<DT><B>__mp_stopleaktable</B><DD>
+Stops the automatic logging of all memory allocations, reallocations and
+deallocations to the leak table.  Returns <I>1</I> if such logging was already
+being performed and <I>0</I> otherwise.
+<DT><B>__mp_leaktable</B><DD>
+Displays a summary of up to <I>size</I> entries from the leak table, or all
+entries if <I>size</I> is <I>0</I>.  If <I>opt</I> is <I>MP_LT_ALLOCATED</I> then
+all allocated entries will be displayed, if <I>opt</I> is <I>MP_LT_FREED</I> then
+all freed entries will be displayed and if <I>opt</I> is <I>MP_LT_UNFREED</I> then
+all unfreed entries will be displayed.  The summary is normally sorted in
+descending order of total bytes from each entry, but this can be changed by
+setting <I>flags</I> to any combination of <I>MP_LT_COUNTS</I> (to sort by the
+number of occurrences in each entry) and <I>MP_LT_BOTTOM</I> (to sort in
+ascending order).
+<DT><B>__mp_memorymap</B><DD>
+If <I>stats</I> is non-zero then the current statistics of the mpatrol library
+will be displayed.  If the heap contains at least one allocated, freed or free
+block then a map of the current heap will also be displayed.
+<DT><B>__mp_summary</B><DD>
+Displays information about the current state of the mpatrol library, including
+its settings and any relevant statistics.
+<DT><B>__mp_stats</B><DD>
+Obtains statistics about the current state of the heap and places them in
+<I>info</I>.  If this information could not be determined then <I>0</I> will be
+returned, otherwise <I>1</I> will be returned and <I>info</I> will contain the
+following information:
+<P>
+<TABLE>
+<TR VALIGN=top><TD><B>Field</B></TD><TD><B>Description</B><BR></TD></TR>
+<TR VALIGN=top><TD></TD><TD><BR></TD></TR>
+<TR VALIGN=top><TD><B>acount</B></TD><TD>Total number of allocated blocks.<BR></TD></TR>
+<TR VALIGN=top><TD><B>atotal</B></TD><TD>Total size of allocated blocks.<BR></TD></TR>
+<TR VALIGN=top><TD><B>fcount</B></TD><TD>Total number of free blocks.<BR></TD></TR>
+<TR VALIGN=top><TD><B>ftotal</B></TD><TD>Total size of free blocks.<BR></TD></TR>
+<TR VALIGN=top><TD><B>gcount</B></TD><TD>Total number of freed blocks.<BR></TD></TR>
+<TR VALIGN=top><TD><B>gtotal</B></TD><TD>Total size of freed blocks.<BR></TD></TR>
+<TR VALIGN=top><TD><B>icount</B></TD><TD>Total number of internal blocks.<BR></TD></TR>
+<TR VALIGN=top><TD><B>itotal</B></TD><TD>Total size of internal blocks.<BR></TD></TR>
+<TR VALIGN=top><TD><B>mcount</B></TD><TD>Total number of marked blocks.<BR></TD></TR>
+<TR VALIGN=top><TD><B>mtotal</B></TD><TD>Total size of marked blocks.<BR></TD></TR>
+</TABLE>
+
+<DT><B>__mp_check</B><DD>
+Forces the library to perform an immediate check of the overflow buffers of
+every memory allocation and to ensure that nothing has overwritten any free
+blocks.  If any memory allocations made by the <B>alloca</B> family of functions
+are out of scope then this function will also cause them to be freed.
+<DT><B>__mp_prologue</B><DD>
+Installs a prologue function to be called before any memory allocation,
+reallocation or deallocation function.  This function will return a pointer to
+the previously installed prologue function, or the null pointer if no prologue
+function had been previously installed.  The following arguments will be used
+to call the prologue function (the last four arguments contain the function
+name, file name, line number and the return address of the calling function, or
+null pointers and zero if they cannot be determined):
+<P>
+<TABLE>
+<TR VALIGN=top><TD ALIGN=center><B>Argument 1</B></TD><TD ALIGN=center><B>Argument 2</B></TD><TD ALIGN=center><B>Argument 3</B></TD><TD><B>Called by</B><BR></TD></TR>
+<TR VALIGN=top><TD ALIGN=center></TD><TD ALIGN=center></TD><TD ALIGN=center></TD><TD><BR></TD></TR>
+<TR VALIGN=top><TD ALIGN=center><I>-1</I></TD><TD ALIGN=center><I>size</I></TD><TD ALIGN=center><I>align</I></TD><TD><B>malloc</B>, etc.<BR></TD></TR>
+<TR VALIGN=top><TD ALIGN=center><I>ptr</I></TD><TD ALIGN=center><I>size</I></TD><TD ALIGN=center><I>align</I></TD><TD><B>realloc</B>, etc.<BR></TD></TR>
+<TR VALIGN=top><TD ALIGN=center><I>ptr</I></TD><TD ALIGN=center><I>-1</I></TD><TD ALIGN=center><I>0</I></TD><TD><B>free</B>, etc.<BR></TD></TR>
+<TR VALIGN=top><TD ALIGN=center><I>ptr</I></TD><TD ALIGN=center><I>-2</I></TD><TD ALIGN=center><I>1</I></TD><TD><B>strdup</B>, etc.<BR></TD></TR>
+</TABLE>
+
+<DT><B>__mp_epilogue</B><DD>
+Installs an epilogue function to be called after any memory allocation,
+reallocation or deallocation function.  This function will return a pointer to
+the previously installed epilogue function, or the null pointer if no epilogue
+function had been previously installed.  The following arguments will be used
+to call the epilogue function (the last four arguments contain the function
+name, file name, line number and the return address of the calling function, or
+null pointers and zero if they cannot be determined):
+<P>
+<TABLE>
+<TR VALIGN=top><TD ALIGN=center><B>Argument</B></TD><TD><B>Called by</B><BR></TD></TR>
+<TR VALIGN=top><TD ALIGN=center></TD><TD><BR></TD></TR>
+<TR VALIGN=top><TD ALIGN=center><I>ptr</I></TD><TD><B>malloc</B>, <B>realloc</B>, <B>strdup</B>, etc.<BR></TD></TR>
+<TR VALIGN=top><TD ALIGN=center><I>-1</I></TD><TD><B>free</B>, etc.<BR></TD></TR>
+</TABLE>
+
+<DT><B>__mp_nomemory</B><DD>
+Installs a low-memory handler and returns a pointer to the previously installed
+handler, or the null pointer if no handler had been previously installed.  This
+will be called once by C memory allocation functions, and repeatedly by C++
+memory allocation functions, when they would normally return <B>NULL</B>.  The
+four arguments contain the function name, file name, line number and the return
+address of the calling function, or null pointers and zero if they cannot be
+determined.  Note that this function is equivalent to <B>set_new_handler</B> and
+will replace the handler installed by that function.
+<DT><B>__mp_printf</B><DD>
+Writes format string <I>fmt</I> with variable arguments to the log file, with
+each line prefixed by <I>&gt;</I>.  The final length of the string that is written
+to the log file must not exceed 1024 characters.  Returns the number of
+characters written, or a negative number upon error.
+<DT><B>__mp_vprintf</B><DD>
+Writes format string <I>fmt</I> with variable argument list <I>args</I> to the log
+file, with each line prefixed by <I>&gt;</I>.  The final length of the string that
+is written to the log file must not exceed 1024 characters.  Returns the number
+of characters written, or a negative number upon error.
+<DT><B>__mp_locprintf</B><DD>
+Writes format string <I>fmt</I> with variable arguments to the log file, with
+each line prefixed by <I>&gt;</I>.  The final length of the string that is written
+to the log file must not exceed 1024 characters.  It also writes information to
+the log file about where the call to this function was made, which includes the
+source file location and the call stack if they are available.
+<DT><B>__mp_vlocprintf</B><DD>
+Writes format string <I>fmt</I> with variable argument list <I>args</I> to the log
+file, with each line prefixed by <I>&gt;</I>.  The final length of the string that
+is written to the log file must not exceed 1024 characters.  It also writes
+information to the log file about where the call to this function was made,
+which includes the source file location and the call stack if they are
+available.
+<DT><B>__mp_logmemory</B><DD>
+Displays the contents of a block of memory beginning at <I>ptr</I>, dumping
+<I>size</I> consecutive bytes to the log file in hexadecimal format.
+<DT><B>__mp_logstack</B><DD>
+Displays the current call stack, skipping <I>frames</I> stack frames from the
+current stack frame before writing the symbolic stack trace to the log file.
+Returns <I>1</I> if successful, or <I>0</I> if the call stack could not be
+determined or if <I>frames</I> was too large for the current call stack.
+<DT><B>__mp_logaddr</B><DD>
+Displays information about a specific memory allocation containing <I>ptr</I> to
+the log file.  If <I>ptr</I> does not belong to a previously allocated memory
+allocation then <I>0</I> will be returned, otherwise <I>1</I> will be returned.
+<DT><B>__mp_edit</B><DD>
+Invokes a text editor to edit <I>file</I> at line number <I>line</I> via the
+<B>mpedit</B> command.  Returns <I>1</I> if the text editor was successfully
+invoked, <I>-1</I> if there was an error, or <I>0</I> if there is no support for
+this feature.  This function will only work on a system where the <B>EDIT</B>
+option works.
+<DT><B>__mp_list</B><DD>
+Displays a context listing of <I>file</I> at line number <I>line</I> via the
+<B>mpedit</B> command.  Returns <I>1</I> if the listing was successfully
+performed, <I>-1</I> if there was an error, or <I>0</I> if there is no support for
+this feature.  This function will only work on a system where the <B>LIST</B>
+option works.
+<DT><B>__mp_view</B><DD>
+Either invokes a text editor to edit <I>file</I> at line number <I>line</I> or
+displays a context listing of <I>file</I> at line number <I>line</I> depending
+on the setting of the <B>EDIT</B> and <B>LIST</B> options.  This is done via the
+<B>mpedit</B> command and will have no effect if the <B>EDIT</B> and <B>LIST</B>
+options are not set or if these options are not supported on the system.
+Returns <I>1</I> if the edit or listing was successfully performed, <I>-1</I> if
+there was an error, or <I>0</I> if neither of the options were set or if there is
+no support for this feature.
+<DT><B>__mp_readcontents</B><DD>
+Reads the contents of a memory allocation contents file into the memory
+allocation containing <I>ptr</I>.  The name of the file is composed of the
+<I>file</I> string followed by the allocation index of the memory allocation
+separated by a dot.  If <I>file</I> is <B>NULL</B> then it is assumed to be
+<I>.mpatrol</I>.  Returns <I>1</I> if the contents were read successfully and
+<I>0</I> otherwise.
+<DT><B>__mp_writecontents</B><DD>
+Writes the contents of the memory allocation containing <I>ptr</I> to an
+allocation contents file.  The name of the file is composed of the <I>file</I>
+string followed by the allocation index of the memory allocation separated by
+a dot.  If <I>file</I> is <B>NULL</B> then it is assumed to be <I>.mpatrol</I>.
+Returns <I>1</I> if the contents were written successfully and <I>0</I> otherwise.
+<DT><B>__mp_cmpcontents</B><DD>
+Compares the contents of the memory allocation containing <I>ptr</I> with the
+contents of a previously written allocation contents file.  The name of the file
+is composed of the <I>file</I> string followed by the allocation index of the
+memory allocation separated by a dot.  If <I>file</I> is <B>NULL</B> then it is
+assumed to be <I>.mpatrol</I>.  Any differences are written to the mpatrol log
+file.  Returns the number of differences found, or <I>-1</I> if there was an
+error.
+<DT><B>__mp_remcontents</B><DD>
+Removes the memory allocation contents file that corresponds to the memory
+allocation containing <I>ptr</I>.  The name of the file is composed of the
+<I>file</I> string followed by the allocation index of the memory allocation
+separated by a dot.  If <I>file</I> is <B>NULL</B> then it is assumed to be
+<I>.mpatrol</I>.  Returns <I>1</I> if the file was removed successfully and
+<I>0</I> otherwise.
+</DL>
+<P>
+
+The following global variable is available for additional control in the mpatrol
+library.  To use it you should include the <I>mpatrol.h</I> header file:
+<DL COMPACT>
+<DT><B>__mp_errno</B><DD>
+Contains the most recent error code encountered by the mpatrol library.  Its
+value can be reset to <I>MP_ET_NONE</I> before calling an mpatrol library
+function, and then examined afterwards, either by comparison with the known
+error codes in the <I>__mp_errortype</I> enumeration, or with
+<B>__mp_strerror</B>.
+</DL>
+<A NAME="lbAF">&nbsp;</A>
+<H2>LINKING</H2>
+
+In order to use the mpatrol library on UNIX platforms, the following libraries
+must be linked in before any other library that defines dynamic memory
+allocation functions with the same names:
+<P>
+<TABLE>
+<TR VALIGN=top><TD><B>Library</B></TD><TD><B>Reason</B><BR></TD></TR>
+<TR VALIGN=top><TD></TD><TD><BR></TD></TR>
+<TR VALIGN=top><TD><I>-lmpatrol</I></TD><TD>To use this library.<BR></TD></TR>
+<TR VALIGN=top><TD><I>-lmpatrolmt</I></TD><TD>To use the thread-safe mpatrol library.<BR></TD></TR>
+<TR VALIGN=top><TD><I>-lmpalloc</I></TD><TD>To use the release library.<BR></TD></TR>
+<TR VALIGN=top><TD><I>-lmptools</I></TD><TD>To use the mpatrol tools library.<BR></TD></TR>
+<TR VALIGN=top><TD><I>-lld</I></TD><TD>If built with COFF or XCOFF support.<BR></TD></TR>
+<TR VALIGN=top><TD><I>-lelf</I></TD><TD>If built with ELF support.<BR></TD></TR>
+<TR VALIGN=top><TD><I>-lbfd</I> &amp; <I>-liberty</I></TD><TD>If built with BFD support.<BR></TD></TR>
+<TR VALIGN=top><TD><I>-lcl</I></TD><TD>If built on HP/UX.<BR></TD></TR>
+<TR VALIGN=top><TD><I>-lexc</I></TD><TD>If built on IRIX or Tru64.<BR></TD></TR>
+<TR VALIGN=top><TD><I>-limagehlp</I></TD><TD>If built on Windows.<BR></TD></TR>
+<TR VALIGN=top><TD><I>-lpthreads</I></TD><TD>If built on AIX with threads support.<BR></TD></TR>
+<TR VALIGN=top><TD><I>-lthread</I></TD><TD>If built on DG/UX with threads support.<BR></TD></TR>
+<TR VALIGN=top><TD><I>-lpthread</I></TD><TD>If built on UNIX with threads support.<BR></TD></TR>
+</TABLE>
+
+<P>
+
+On UNIX platforms, if there were no calls to memory allocation functions before
+<I>-lmpatrol</I> or <I>-lmpatrolmt</I> appears on the link line then the mpatrol
+library will not be linked in if it is an archive library.  However, this can be
+overridden by placing <I>-umalloc</I> just before that point.
+<P>
+
+You may also wish to set your core file size limit to be zero before running
+any programs linked with the mpatrol library as the extra memory that the
+library uses can make such files much larger than normal, and if you are
+planning on using a symbolic debugger then you won't need the core files anyway.
+<A NAME="lbAG">&nbsp;</A>
+<H2>ENVIRONMENT</H2>
+
+The library can read certain options at run-time from an environment variable
+called <B>MPATROL_OPTIONS</B>.  This variable must contain one or more valid
+option keywords from the list below and must be no longer than 1024 characters
+in length.  If <B>MPATROL_OPTIONS</B> is unset or empty then the default settings
+will be used.
+<P>
+
+The syntax for options specified within the <B>MPATROL_OPTIONS</B> environment
+variable is <B>OPTION</B> or <B>OPTION</B>=<I>VALUE</I>, where <B>OPTION</B> is a
+keyword from the list below and <I>VALUE</I> is the setting for that option.  If
+<I>VALUE</I> is numeric then it may be specified using binary, octal, decimal or
+hexadecimal notation, with binary notation beginning with either <I>0b</I> or
+<I>0B</I>.  If <I>VALUE</I> is a character string containing spaces then it may be
+quoted using double quotes.  No whitespace may appear between the <I>=</I> sign,
+but whitespace must appear between different options.  Note that option keywords
+can be given in lowercase as well as uppercase, or a mixture of both.
+<DL COMPACT>
+<DT><B>ALLOCBYTE</B>=<I>unsigned integer</I><DD>
+Specifies an 8-bit byte pattern with which to prefill newly-allocated memory.
+This can be used to detect the use of memory which has not been initialised
+after allocation.  Note that this setting will not affect memory allocated with
+<B>calloc</B> or <B>recalloc</B> as these functions always prefill allocated
+memory with an 8-bit byte pattern of zero.  Default value:
+<B>ALLOCBYTE</B>=<I>0xFF</I>.
+<DT><B>ALLOCSTOP</B>=<I>unsigned integer</I><DD>
+Specifies an allocation index at which to stop the program when it is being
+allocated.  When the number of memory allocations reaches this number the
+program will be halted, and its state may be examined at that point by using
+a suitable debugger.  Note that this setting will be ignored if its value is
+zero.  Default value: <B>ALLOCSTOP</B>=<I>0</I>.
+<DT><B>ALLOWOFLOW</B><DD>
+Specifies that a warning rather than an error should be produced if any memory
+operation function overflows the boundaries of a memory allocation, and that
+the operation should still be performed.  This option is provided for
+circumstances where it is desirable for the memory operation to be performed,
+regardless of whether it is erroneous or not.
+<DT><B>AUTOSAVE</B>=<I>unsigned integer</I><DD>
+Specifies the frequency at which to periodically write the profiling data to
+the profiling output file.  When the total number of profiled memory allocations
+and deallocations is a multiple of this number then the current profiling
+information will be written to the profiling output file.  This option can be
+used to instruct the mpatrol library to dump out any profiling information just
+before a fatal error occurs in a program, for example.  Note that this setting
+will be ignored if its value is zero.  Default value: <B>AUTOSAVE</B>=<I>0</I>.
+<DT><B>CHECK</B>=<I>unsigned range</I><DD>
+Specifies a range of allocation indices at which to check the integrity of free
+memory and overflow buffers.  The range must be specified as no more than two
+unsigned integers separated by a dash, followed by an optional forward slash and
+an unsigned integer specifying an event checking frequency.  If numbers on
+either the left side or the right side of the dash are omitted then they will be
+assumed to be <I>0</I> and <I>infinity</I> respectively.  If the event checking
+frequency is omitted then it is assumed to be <I>1</I>.  A value of <I>0</I> on
+its own indicates that no such checking will ever be performed.  This option can
+be used to speed up the execution speed of the library at the expense of
+checking.  Default value: <B>CHECK</B>=<I>0</I>.
+<DT><B>CHECKALL</B><DD>
+Equivalent to the <B>CHECKALLOCS</B>, <B>CHECKREALLOCS</B>, <B>CHECKFREES</B> and
+<B>CHECKMEMORY</B> options specified together.
+<DT><B>CHECKALLOCS</B><DD>
+Checks that no attempt is made to allocate a block of memory of size zero.  A
+warning will be issued for every such case.
+<DT><B>CHECKFORK</B><DD>
+Checks at every call to see if the process has been forked in case new log,
+profiling and tracing output files need to be started.  This option only has an
+effect on UNIX platforms, but should not be used in multithreaded programs if
+each thread has a different process identifier.
+<DT><B>CHECKFREES</B><DD>
+Checks that no attempt is made to deallocate a <B>NULL</B> pointer.  A warning
+will be issued for every such case.
+<DT><B>CHECKMEMORY</B><DD>
+Checks that no attempt is made to perform a zero-length memory operation on a
+<B>NULL</B> pointer.
+<DT><B>CHECKREALLOCS</B><DD>
+Checks that no attempt is made to reallocate a <B>NULL</B> pointer or resize an
+existing block of memory to size zero.  Warnings will be issued for every such
+case.
+<DT><B>DEFALIGN</B>=<I>unsigned integer</I><DD>
+Specifies the default alignment for general-purpose memory allocations, which
+must be a power of two (and will be rounded up to the nearest power of two if it
+is not).  The default alignment for a particular system is calculated at
+run-time.
+<DT><B>EDIT</B><DD>
+Specifies that a text editor should be invoked to edit any relevant source files
+that are associated with any warnings or errors when they occur.  Only
+diagnostics which occur at source lines in the program will be affected and only
+then if they contain source-level information.  This option is currently only
+available on UNIX platforms as it makes use of the <B>mpedit</B> command.  It
+also overrides the behaviour of the <B>LIST</B> option and affects the behaviour
+of the <B>__mp_view</B> function.
+<DT><B>FAILFREQ</B>=<I>unsigned integer</I><DD>
+Specifies the frequency at which all memory allocations will randomly fail.  For
+example, a value of <I>10</I> will mean that roughly 1 in 10 memory allocations
+will fail, but a value of <I>0</I> will disable all random failures.  This option
+can be useful for stress-testing an application.  Default value:
+<B>FAILFREQ</B>=<I>0</I>.
+<DT><B>FAILSEED</B>=<I>unsigned integer</I><DD>
+Specifies the random number seed which will be used when determining which
+memory allocations will randomly fail.  A value of <I>0</I> will instruct the
+library to pick a random seed every time it is run.  Any other value will mean
+that the random failures will be the same every time the program is run, but
+only as long as the seed stays the same.  Default value: <B>FAILSEED</B>=<I>0</I>.
+<DT><B>FREEBYTE</B>=<I>unsigned integer</I><DD>
+Specifies an 8-bit byte pattern with which to prefill newly-freed memory.  This
+can be used to detect the use of memory which has just been freed.  It is also
+used internally to ensure that freed memory has not been overwritten.  Note that
+the freed memory may be reused the next time a block of memory is allocated and
+so once memory has been freed its contents are not guaranteed to remain the same
+as the specified byte pattern.  Default value: <B>FREEBYTE</B>=<I>0x55</I>.
+<DT><B>FREESTOP</B>=<I>unsigned integer</I><DD>
+Specifies an allocation index at which to stop the program when it is being
+freed.  When the memory allocation with the specified allocation index is to be
+freed the program will be halted, and its state may be examined at that point
+using a suitable debugger.  Note that this setting will be ignored if its value
+is zero.  Default value: <B>FREESTOP</B>=<I>0</I>.
+<DT><B>HELP</B><DD>
+Displays a quick-reference option summary to the <B>stderr</B> file stream.
+<DT><B>LARGEBOUND</B>=<I>unsigned integer</I><DD>
+Specifies the limit in bytes up to which memory allocations should be classified
+as large allocations for profiling purposes.  This limit must be greater than
+the small and medium bounds.  Default value: <B>LARGEBOUND</B>=<I>2048</I>.
+<DT><B>LEAKTABLE</B><DD>
+Specifies that the leak table should be automatically used and a leak table
+summary should be displayed at the end of program execution.  The summary shows
+a flat profile of all unfreed memory allocations since the start of the program,
+or since the last call to <B>__mp_clearleaktable</B> if that function was called.
+<DT><B>LIMIT</B>=<I>unsigned integer</I><DD>
+Specifies the limit in bytes at which all memory allocations should fail if the
+total allocated memory should increase beyond this.  This can be used to
+stress-test software to see how it behaves in low memory conditions.  The
+internal memory used by the library itself will not be counted as part of the
+total heap size, but on some systems there may be a small amount of memory
+required to initialise the library itself.  Note that this setting will be
+ignored if its value is zero.  Default value: <B>LIMIT</B>=<I>0</I>.
+<DT><B>LIST</B><DD>
+Specifies that a context listing should be shown for any relevant source files
+that are associated with any warnings or errors when they occur.  Only
+diagnostics which occur at source lines in the program will be affected and only
+then if they contain source-level information.  This option is currently only
+available on UNIX platforms as it makes use of the <B>mpedit</B> command.  It
+also overrides the behaviour of the <B>EDIT</B> option and affects the behaviour
+of the <B>__mp_view</B> function.
+<DT><B>LOGALL</B><DD>
+Equivalent to the <B>LOGALLOCS</B>, <B>LOGREALLOCS</B>, <B>LOGFREES</B> and
+<B>LOGMEMORY</B> options specified together.
+<DT><B>LOGALLOCS</B><DD>
+Specifies that all memory allocations are to be logged and sent to the log file.
+Note that any memory allocations made internally by the library will not be
+logged.
+<DT><B>LOGFILE</B>=<I>string</I><DD>
+Specifies an alternative file in which to place all diagnostics from the mpatrol
+library.  If the <B>LOGDIR</B> environment variable is set and the specified file
+does not contain a path component in its filename then the log file will be
+located in the directory specified in <B>LOGDIR</B>.  A filename of <I>stderr</I>
+will send all diagnostics to the <B>stderr</B> file stream and a filename of
+<I>stdout</I> will do the equivalent with the <B>stdout</B> file stream.  Note
+that if a problem occurs while opening the log file or if any diagnostics
+require to be displayed before the log file has had a chance to be opened then
+they will be sent to the <B>stderr</B> file stream.  Default value:
+<B>LOGFILE</B>=<I>mpatrol.log</I> or <B>LOGFILE</B>=<I>%n.%p.log</I> if the
+<B>LOGDIR</B> environment variable is set.
+<DT><B>LOGFREES</B><DD>
+Specifies that all memory deallocations are to be logged and sent to the log
+file.  Note that any memory deallocations made internally by the library will
+not be logged.
+<DT><B>LOGMEMORY</B><DD>
+Specifies that all memory operations are to be logged and sent to the log file.
+These operations will be made by calls to functions such as <B>memset</B> and
+<B>memcpy</B>.  Note that any memory operations made internally by the library
+will not be logged.
+<DT><B>LOGREALLOCS</B><DD>
+Specifies that all memory reallocations are to be logged and sent to the log
+file.  Note that any memory reallocations made internally by the library will
+not be logged.
+<DT><B>MEDIUMBOUND</B>=<I>unsigned integer</I><DD>
+Specifies the limit in bytes up to which memory allocations should be classified
+as medium allocations for profiling purposes.  This limit must be greater than
+the small bound but less than the large bound.  Default value:
+<B>MEDIUMBOUND</B>=<I>256</I>.
+<DT><B>NOFREE</B>=<I>unsigned integer</I><DD>
+Specifies that a number of recently-freed memory allocations should be prevented
+from being returned to the free memory pool.  Such freed memory allocations will
+then be flagged as freed and can be used by the library to provide better
+diagnostics.  If the size of the freed queue is specified as zero then all
+freed memory will be immediately reused by the mpatrol library.  Note that if
+this option is given a non-zero value then the mpatrol library will always force
+a memory reallocation to return a pointer to newly-allocated memory, but the
+<B>expand</B> function will never be affected by this option.  Default value:
+<B>NOFREE</B>=<I>0</I>.
+<DT><B>NOPROTECT</B><DD>
+Specifies that the mpatrol library's internal data structures should not be made
+read-only after every memory allocation, reallocation or deallocation.  This may
+significantly speed up execution but this will be at the expense of less safety
+if the program accidentally overwrites some of the library's internal data
+structures.  Note that this option has no effect on systems that do not support
+memory protection.
+<DT><B>OFLOWBYTE</B>=<I>unsigned integer</I><DD>
+Specifies an 8-bit byte pattern with which to fill the overflow buffers of all
+memory allocations.  This is used internally to ensure that nothing has been
+written beyond the beginning or the end of a block of allocated memory.  Note
+that this setting will only have an effect if the <B>OFLOWSIZE</B> option is in
+use.  Default value: <B>OFLOWBYTE</B>=<I>0xAA</I>.
+<DT><B>OFLOWSIZE</B>=<I>unsigned integer</I><DD>
+Specifies the size in bytes to use for all overflow buffers, which must be a
+power of two (and will be rounded up to the nearest power of two if it is not).
+This is used internally to ensure that nothing has been written beyond the
+beginning or the end of a block of allocated memory.  Note that this setting
+specifies the size for only one of the overflow buffers given to each memory
+allocation; the other overflow buffer will have an identical size.  No overflow
+buffers will be used if this setting is zero.  Default value:
+<B>OFLOWSIZE</B>=<I>0</I>.
+<DT><B>OFLOWWATCH</B><DD>
+Specifies that watch point areas should be used for overflow buffers rather than
+filling with the overflow byte.  This can significantly reduce the speed of
+program execution.  Note that this option has no effect on systems that do not
+support watch point areas.
+<DT><B>PAGEALLOC</B>=<I>LOWER</I>|<I>UPPER</I><DD>
+Specifies that each individual memory allocation should occupy at least one
+page of virtual memory and should be placed at the lowest or highest point
+within these pages.  This allows the library to place an overflow buffer of one
+page on either side of every memory allocation and write-protect these pages as
+well as all free and freed memory.  Note that this option has no effect on
+systems that do not support memory protection, and is disabled by default on
+other systems as it can slow down the speed of program execution.
+<DT><B>PRESERVE</B><DD>
+Specifies that any reallocated or freed memory allocations should preserve their
+original contents.  This option must be used with the <B>NOFREE</B> option and
+has no effect otherwise.
+<DT><B>PROF</B><DD>
+Specifies that all memory allocations and deallocations are to be profiled and
+sent to the profiling output file.  Memory reallocations are treated as a
+memory deallocation immediately followed by a memory allocation.
+<DT><B>PROFFILE</B>=<I>string</I><DD>
+Specifies an alternative file in which to place all memory allocation profiling
+information from the mpatrol library.  If the <B>PROFDIR</B> environment variable
+is set and the specified file does not contain a path component in its filename
+then the profiling output file will be located in the directory specified in
+<B>PROFDIR</B>.  A filename of <I>stderr</I> will send this information to the
+<B>stderr</B> file stream and a filename of <I>stdout</I> will do the equivalent
+with the <B>stdout</B> file stream.  Note that if a problem occurs while opening
+the profiling output file then the profiling information will not be output.
+Default value: <B>PROFFILE</B>=<I>mpatrol.out</I> or
+<B>PROFFILE</B>=<I>%n.%p.out</I> if the <B>PROFDIR</B> environment variable is set.
+<DT><B>PROGFILE</B>=<I>string</I><DD>
+Specifies an alternative filename with which to locate the executable file
+containing the program's symbols.  On most systems, the library will
+automatically be able to determine this filename, but on a few systems this
+option may have to be used before any or all symbols can be read.
+<DT><B>REALLOCSTOP</B>=<I>unsigned integer</I><DD>
+Specifies a reallocation index at which to stop the program when a memory
+allocation is being reallocated.  If the <B>ALLOCSTOP</B> option is non-zero
+then the program will be halted when the allocation matching that allocation
+index is reallocated the specified number of times.  Otherwise the program will
+be halted the first time any allocation is reallocated the specified number of
+times.  Note that this setting will be ignored if its value is zero.  Default
+value: <B>REALLOCSTOP</B>=<I>0</I>.
+<DT><B>SAFESIGNALS</B><DD>
+Instructs the library to save and replace certain signal handlers during the
+execution of library code and to restore them afterwards.  This was the default
+behaviour in version 1.0 of the mpatrol library and was changed since some
+memory-intensive programs became very hard to interrupt using the keyboard,
+thus giving the impression that the program or system had hung.
+<DT><B>SHOWALL</B><DD>
+Equivalent to the <B>SHOWFREE</B>, <B>SHOWFREED</B>, <B>SHOWUNFREED</B>,
+<B>SHOWMAP</B> and <B>SHOWSYMBOLS</B> options specified together.
+<DT><B>SHOWFREE</B><DD>
+Specifies that a summary of all of the free memory blocks should be displayed at
+the end of program execution.  This step will not be performed if an abnormal
+termination occurs or if there were no free memory blocks.
+<DT><B>SHOWFREED</B><DD>
+Specifies that a summary of all of the freed memory allocations should be
+displayed at the end of program execution.  This option must be used in
+conjunction with the <B>NOFREE</B> option and this step will not be performed if
+an abnormal termination occurs or if there were no freed allocations.
+<DT><B>SHOWMAP</B><DD>
+Specifies that a memory map of the entire heap should be displayed at the end of
+program execution.  This step will not be performed if an abnormal termination
+occurs or if the heap is empty.
+<DT><B>SHOWSYMBOLS</B><DD>
+Specifies that a summary of all of the function symbols read from the program's
+executable file should be displayed at the end of program execution.  This step
+will not be performed if an abnormal termination occurs or if no symbols could
+be read from the executable file.
+<DT><B>SHOWUNFREED</B><DD>
+Specifies that a summary of all of the unfreed memory allocations should be
+displayed at the end of program execution.  This step will not be performed if
+an abnormal termination occurs or if there are no unfreed allocations.  Note
+that any marked memory allocations will not be listed.
+<DT><B>SMALLBOUND</B>=<I>unsigned integer</I><DD>
+Specifies the limit in bytes up to which memory allocations should be classified
+as small allocations for profiling purposes.  This limit must be greater than
+zero but less than the medium and large bounds.  Default value:
+<B>SMALLBOUND</B>=<I>32</I>.
+<DT><B>TRACE</B><DD>
+Specifies that all memory allocations, reallocations and deallocations are to be
+traced and sent to the tracing output file.
+<DT><B>TRACEFILE</B>=<I>string</I><DD>
+Specifies an alternative file in which to place all memory allocation tracing
+information from the mpatrol library.  If the <B>TRACEDIR</B> environment
+variable is set and the specified file does not contain a path component in its
+filename then the tracing output file will be located in the directory specified
+in <B>TRACEDIR</B>.  A filename of <I>stderr</I> will send this information to the
+<B>stderr</B> file stream and a filename of <I>stdout</I> will do the equivalent
+with the <B>stdout</B> file stream.  Note that if a problem occurs while opening
+the tracing output file then the tracing information will not be output.
+Default value: <B>TRACEFILE</B>=<I>mpatrol.trace</I> or
+<B>TRACEFILE</B>=<I>%n.%p.trace</I> if the <B>TRACEDIR</B> environment variable is
+set.
+<DT><B>UNFREEDABORT</B>=<I>unsigned integer</I><DD>
+Specifies the minimum number of unfreed allocations at which to abort the
+program just before program termination.  A summary of all the allocations will
+be displayed on the standard error file stream before aborting.  This option may
+be handy for use in batch tests as it can force tests to fail if they do not
+free up a minimum number of memory allocations, although marked allocations will
+not be considered as unfreed allocations.  Note that this setting will be
+ignored if its value is zero.  Default value: <B>UNFREEDABORT</B>=<I>0</I>.
+<DT><B>USEDEBUG</B><DD>
+Specifies that any debugging information in the executable file should be used
+to obtain additional source-level information.  This option will only have an
+effect if the executable file contains a compiler-generated line number table
+and will be ignored if the mpatrol library was built to support an object file
+access library that cannot read line tables from object files.
+<DT><B>USEMMAP</B><DD>
+Specifies that the library should use <B>mmap</B> instead of <B>sbrk</B> to
+allocate user memory on UNIX platforms.  This option should be used if there
+are problems when using the mpatrol library in combination with another malloc
+library which uses <B>sbrk</B> to allocate its memory.  Memory internal to the
+mpatrol library is allocated with <B>mmap</B> on systems where it is supported in
+order to segregate it from user memory, and this behaviour is reversed with the
+<B>USEMMAP</B> option.  It is ignored on systems that do not support the
+<B>mmap</B> system call.
+</DL>
+<A NAME="lbAH">&nbsp;</A>
+<H2>SEE ALSO</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+mpatrol">mpatrol</A></B>(1), <B><A HREF="http://localhost/cgi-bin/man/man2html?1+mprof">mprof</A></B>(1), <B><A HREF="http://localhost/cgi-bin/man/man2html?1+mptrace">mptrace</A></B>(1), <B><A HREF="http://localhost/cgi-bin/man/man2html?1+mleak">mleak</A></B>(1),
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+mpsym">mpsym</A></B>(1), <B><A HREF="http://localhost/cgi-bin/man/man2html?1+mpedit">mpedit</A></B>(1), <B><A HREF="http://localhost/cgi-bin/man/man2html?1+hexwords">hexwords</A></B>(1), <B><A HREF="http://localhost/cgi-bin/man/man2html?2+mmap">mmap</A></B>(2),
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+sbrk">sbrk</A></B>(2), <B><A HREF="http://localhost/cgi-bin/man/man2html?3+libmpalloc">libmpalloc</A></B>(3), <B><A HREF="http://localhost/cgi-bin/man/man2html?3+malloc">malloc</A></B>(3), <B>new</B>(3c++),
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+alloca">alloca</A></B>(3), <B><A HREF="http://localhost/cgi-bin/man/man2html?3+memory">memory</A></B>(3), <B><A HREF="http://localhost/cgi-bin/man/man2html?3+string">string</A></B>(3), <B><A HREF="http://localhost/cgi-bin/man/man2html?3+assert">assert</A></B>(3),
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3e+elf">elf</A></B>(3e), <B><A HREF="http://localhost/cgi-bin/man/man2html?3+bfd">bfd</A></B>(3).
+<P>
+
+The mpatrol manual and reference card.
+<P>
+
+<A HREF="http://www.cbmamiga.demon.co.uk/mpatrol/">http://www.cbmamiga.demon.co.uk/mpatrol/</A>
+<A NAME="lbAI">&nbsp;</A>
+<H2>AUTHOR</H2>
+
+Graeme S. Roy &lt;<A HREF="mailto:graeme.roy@analog.com">graeme.roy@analog.com</A>&gt;
+<A NAME="lbAJ">&nbsp;</A>
+<H2>COPYRIGHT</H2>
+
+Copyright (C) 1997-2002 Graeme S. Roy &lt;<A HREF="mailto:graeme.roy@analog.com">graeme.roy@analog.com</A>&gt;
+<P>
+
+This library is free software; you can redistribute it and/or modify it under
+the terms of the GNU Library General Public License as published by the Free
+Software Foundation; either version 2 of the License, or (at your option) any
+later version.
+<P>
+
+This library is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU Library General Public License for more
+details.
+<P>
+
+You should have received a copy of the GNU Library General Public License
+along with this library; if not, write to the Free Software Foundation, Inc.,
+59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAE">FUNCTIONS</A><DD>
+<DT><A HREF="#lbAF">LINKING</A><DD>
+<DT><A HREF="#lbAG">ENVIRONMENT</A><DD>
+<DT><A HREF="#lbAH">SEE ALSO</A><DD>
+<DT><A HREF="#lbAI">AUTHOR</A><DD>
+<DT><A HREF="#lbAJ">COPYRIGHT</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 23:42:08 GMT, January 08, 2002
+</BODY>
+</HTML>

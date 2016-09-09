@@ -1,0 +1,229 @@
+#!/bin/sh
+
+
+# mpatrol
+# A library for controlling and tracing dynamic memory allocations.
+# Copyright (C) 1997-2002 Graeme S. Roy <graeme.roy@analog.com>
+#
+# This library is free software; you can redistribute it and/or
+# modify it under the terms of the GNU Library General Public
+# License as published by the Free Software Foundation; either
+# version 2 of the License, or (at your option) any later version.
+#
+# This library is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# Library General Public License for more details.
+#
+# You should have received a copy of the GNU Library General Public
+# License along with this library; if not, write to the Free
+# Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+# MA 02111-1307, USA.
+
+
+# UNIX shell script to construct the directory structure that is required by
+# GNU autoconf, automake and libtool.
+
+
+# $Id: setup,v 1.14 2002/01/08 20:18:08 graeme Exp $
+
+
+uselinks=0
+generate=0
+
+
+# Create a new directory if it does not already exist.
+
+makedir()
+{
+    if [ ! -d "$1" ]
+    then
+        mkdir -p "$1"
+    fi
+}
+
+
+# Copy a file to the current directory if it does not already exist, possibly
+# using a symbolic link.
+
+copyfile()
+{
+    if [ ! -f "$2" ]
+    then
+        if [ $uselinks = 1 ]
+        then
+            rm -f "$2"
+            ln -s "$1" "$2"
+        else
+            cp -p "$1" "$2"
+        fi
+    fi
+}
+
+
+# Copy the required top-level files.
+
+echo "Copying top-level files" >&2
+files="../../README ../../AUTHORS ../../THANKS ../../COPYING ../../COPYING.LIB
+       ../../NEWS ../../ChangeLog"
+for file in $files
+do
+    copyfile "$file" `basename "$file"`
+done
+copyfile ../../config/acconfig.h acconfig.h
+copyfile ../../config/configure.in configure.in
+copyfile ../../config/top.am Makefile.am
+if [ $generate = 0 ]
+then
+    files="../../config/INSTALL ../../config/install-sh ../../config/missing
+           ../../config/mkinstalldirs ../../config/config.guess
+           ../../config/config.sub ../../config/ltconfig ../../config/ltmain.sh
+           ../../config/aclocal.m4 ../../config/configure"
+    for file in $files
+    do
+        copyfile "$file" `basename "$file"`
+    done
+    copyfile ../../config/configure.h.in configure.h.in
+    copyfile ../../config/top.in Makefile.in
+fi
+
+
+# Create the bin directory for holding the mpatrol shell scripts.
+
+echo "Creating bin directory" >&2
+makedir bin
+cd bin
+files="../../../bin/mpsym ../../../bin/mpedit ../../../bin/hexwords"
+for file in $files
+do
+    copyfile "$file" `basename "$file"`
+done
+copyfile ../../../config/bin.am Makefile.am
+if [ $generate = 0 ]
+then
+    copyfile ../../../config/bin.in Makefile.in
+fi
+cd ..
+
+
+# Create the doc directory for holding the mpatrol texinfo manual.
+
+echo "Creating doc directory" >&2
+makedir doc
+cd doc
+copyfile ../../../doc/mpatrol.texi mpatrol.texi
+copyfile ../../../doc/texinfo.tex texinfo.tex
+copyfile ../../../config/doc.am Makefile.am
+makedir images
+cd images
+for file in ../../../../doc/images/*.eps
+do
+    copyfile "$file" `basename "$file"`
+done
+copyfile ../../../../doc/images/mpatrol.txt mpatrol.txt
+copyfile ../../../../config/images.am Makefile.am
+if [ $generate = 0 ]
+then
+    copyfile ../../../../config/images.in Makefile.in
+fi
+cd ..
+if [ $generate = 0 ]
+then
+    copyfile ../../../config/doc.in Makefile.in
+fi
+cd ..
+
+
+# Create the extra directory for holding any additional data files.
+
+echo "Creating extra directory" >&2
+makedir extra
+cd extra
+copyfile ../../../extra/mpatrol.m4 mpatrol.m4
+copyfile ../../../config/extra.am Makefile.am
+if [ $generate = 0 ]
+then
+    copyfile ../../../config/extra.in Makefile.in
+fi
+cd ..
+
+
+# Create the man directory for holding the mpatrol manual pages.
+
+echo "Creating man directory" >&2
+makedir man
+cd man
+for file in ../../../man/man1/*.1 ../../../man/man3/*.3
+do
+    copyfile "$file" `basename "$file"`
+done
+copyfile ../../../config/man.am Makefile.am
+if [ $generate = 0 ]
+then
+    copyfile ../../../config/man.in Makefile.in
+fi
+cd ..
+
+
+# Create the src directory for building the non-threadsafe libmpatrol and
+# libmpalloc libraries, as well as the mpatrol utility commands.
+
+echo "Creating src directory" >&2
+makedir src
+cd src
+for file in ../../../src/*.[ch]
+do
+    copyfile "$file" `basename "$file"`
+done
+copyfile ../../../config/src.am Makefile.am
+if [ $generate = 0 ]
+then
+    copyfile ../../../config/src.in Makefile.in
+fi
+cd ..
+
+
+# Create the tsrc directory for building the threadsafe libmpatrolmt library.
+
+echo "Creating tsrc directory" >&2
+makedir tsrc
+cd tsrc
+for file in ../../../src/*.[ch]
+do
+    copyfile "$file" `basename "$file"`
+done
+copyfile ../../../config/tsrc.am Makefile.am
+if [ $generate = 0 ]
+then
+    copyfile ../../../config/tsrc.in Makefile.in
+fi
+cd ..
+
+
+# Create the tools directory for building the libmptools library.
+
+echo "Creating tools directory" >&2
+makedir tools
+cd tools
+for file in ../../../tools/*.[ch]
+do
+    copyfile "$file" `basename "$file"`
+done
+copyfile ../../../config/tools.am Makefile.am
+if [ $generate = 0 ]
+then
+    copyfile ../../../config/tools.in Makefile.in
+fi
+cd ..
+
+
+# Regenerate the configure script and associated files if this is required.
+
+if [ $generate = 1 ]
+then
+    echo "Regenerating configuration files" >&2
+    aclocal
+    autoheader
+    automake --add-missing
+    autoconf
+fi

@@ -1,0 +1,264 @@
+% mpatrol
+% A library for controlling and tracing dynamic memory allocations.
+% Copyright (C) 1997-2002 Graeme S. Roy <graeme.roy@analog.com>
+%
+% This library is free software; you can redistribute it and/or
+% modify it under the terms of the GNU Library General Public
+% License as published by the Free Software Foundation; either
+% version 2 of the License, or (at your option) any later version.
+%
+% This library is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+% Library General Public License for more details.
+%
+% You should have received a copy of the GNU Library General Public
+% License along with this library; if not, write to the Free
+% Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+% MA 02111-1307, USA.
+
+% LaTeX document containing the complete mpatrol source code
+
+% $Id: source.tex,v 1.7 2002/01/08 20:45:08 graeme Exp $
+
+\documentclass[a4paper,final]{report}
+
+\usepackage{a4wide}
+\usepackage{lgrind}
+
+\ifx\pdfoutput\undefined
+\else
+    \pdfcompresslevel=9
+    \pdfoutput=1
+    \usepackage{thumbpdf}
+    \usepackage[pdftex]{hyperref}
+\fi
+
+\newcommand{\version}[0]{1.4.8}
+\newcommand{\srcfile}[2]{\section{\texttt{#2}} \lgrindfile{#1/#2}}
+
+\begin{document}
+
+\title{\textbf{mpatrol source code} \\ version \version}
+
+\author{Graeme S. Roy $<$graeme.roy@analog.com$>$}
+
+\maketitle
+
+\begin{abstract}
+The mpatrol library is yet another link library that attempts to diagnose
+run-time errors that are caused by the wrong use of dynamically allocated
+memory.  If you don't know what the \texttt{malloc()} function or
+\texttt{operator new[]} do then this library is probably not for you.  You
+have to have a certain amount of programming expertise and a knowledge of
+how to run a command line compiler and linker before you should attempt to
+use this.
+
+Along with providing a comprehensive and configurable log of all dynamic
+memory operations that occurred during the lifetime of a program, the
+mpatrol library performs extensive checking to detect any misuse of
+dynamically allocated memory.  All of this functionality can be integrated
+into existing code through the inclusion of a single header file at
+compile-time.  On UNIX and Windows platforms (and AmigaOS when using
+\textbf{gcc}) this may not even be necessary as the mpatrol library can be
+linked with existing object files at link-time or, on some platforms, even
+dynamically linked with existing programs at run-time.
+
+All logging and tracing output from the mpatrol library is sent to a
+separate log file in order to keep its diagnostics separate from any that
+the program being tested might generate.  A wide variety of library settings
+can also be changed at run-time via an environment variable, thus removing
+the need to recompile or relink in order to change the library's behaviour.
+\end{abstract}
+
+\pagenumbering{roman}
+
+\tableofcontents
+
+\chapter{mpatrol library source files}
+
+\markright{mpatrol library source files}
+
+\pagestyle{myheadings}
+
+\pagenumbering{arabic}
+
+\srcfile{src}{target.h}
+\newpage
+\srcfile{src}{config.h}
+\newpage
+\srcfile{src}{list.h}
+\newpage
+\srcfile{src}{list.c}
+\newpage
+\srcfile{src}{tree.h}
+\newpage
+\srcfile{src}{tree.c}
+\newpage
+\srcfile{src}{slots.h}
+\newpage
+\srcfile{src}{slots.c}
+\newpage
+\srcfile{src}{utils.h}
+\newpage
+\srcfile{src}{utils.c}
+\newpage
+\srcfile{src}{memory.h}
+\newpage
+\srcfile{src}{memory.c}
+\newpage
+\srcfile{src}{heap.h}
+\newpage
+\srcfile{src}{heap.c}
+\newpage
+\srcfile{src}{alloc.h}
+\newpage
+\srcfile{src}{alloc.c}
+\newpage
+\srcfile{src}{info.h}
+\newpage
+\srcfile{src}{info.c}
+\newpage
+\srcfile{src}{stack.h}
+\newpage
+\srcfile{src}{stack.c}
+\newpage
+\srcfile{src}{addr.h}
+\newpage
+\srcfile{src}{addr.c}
+\newpage
+\srcfile{src}{strtab.h}
+\newpage
+\srcfile{src}{strtab.c}
+\newpage
+\srcfile{src}{symbol.h}
+\newpage
+\srcfile{src}{symbol.c}
+\newpage
+\srcfile{src}{signals.h}
+\newpage
+\srcfile{src}{signals.c}
+\newpage
+\srcfile{src}{mutex.h}
+\newpage
+\srcfile{src}{mutex.c}
+\newpage
+\srcfile{src}{diag.h}
+\newpage
+\srcfile{src}{diag.c}
+\newpage
+\srcfile{src}{option.h}
+\newpage
+\srcfile{src}{option.c}
+\newpage
+\srcfile{src}{leaktab.h}
+\newpage
+\srcfile{src}{leaktab.c}
+\newpage
+\srcfile{src}{profile.h}
+\newpage
+\srcfile{src}{profile.c}
+\newpage
+\srcfile{src}{trace.h}
+\newpage
+\srcfile{src}{trace.c}
+\newpage
+\srcfile{src}{inter.h}
+\newpage
+\srcfile{src}{inter.c}
+\newpage
+\srcfile{src}{malloc.c}
+\newpage
+\srcfile{src}{cplus.c}
+\newpage
+\srcfile{src}{sbrk.h}
+\newpage
+\srcfile{src}{sbrk.c}
+\newpage
+\srcfile{src}{machine.h}
+\newpage
+\srcfile{src}{machine.c}
+\newpage
+\srcfile{src}{version.h}
+\newpage
+\srcfile{src}{version.c}
+\newpage
+\srcfile{src}{mpatrol.h}
+\newpage
+\srcfile{src}{library.c}
+
+\chapter{mpalloc library source files}
+
+\markright{mpalloc library source files}
+
+\srcfile{src}{mpalloc.c}
+\newpage
+\srcfile{src}{mpfailure.c}
+\newpage
+\srcfile{src}{mpsetfail.c}
+\newpage
+\srcfile{src}{mpmalloc.c}
+\newpage
+\srcfile{src}{mpcalloc.c}
+\newpage
+\srcfile{src}{mpstrdup.c}
+\newpage
+\srcfile{src}{mprealloc.c}
+\newpage
+\srcfile{src}{mpalloc.h}
+\newpage
+\srcfile{src}{mpdebug.h}
+\newpage
+\srcfile{src}{library2.c}
+
+\chapter{mpatrol tool source files}
+
+\markright{mpatrol tool source files}
+
+\srcfile{tools}{dbmalloc.h}
+\newpage
+\srcfile{tools}{dbmalloc.c}
+\newpage
+\srcfile{tools}{dmalloc.h}
+\newpage
+\srcfile{tools}{dmalloc.c}
+\newpage
+\srcfile{tools}{heapdiff.h}
+\newpage
+\srcfile{tools}{heapdiff.c}
+\newpage
+\srcfile{tools}{mgauge.h}
+\newpage
+\srcfile{tools}{mgauge.c}
+\newpage
+\srcfile{tools}{mtrace.h}
+\newpage
+\srcfile{tools}{mtrace.c}
+
+\chapter{mpatrol utility source files}
+
+\markright{mpatrol utility source files}
+
+\srcfile{src}{graph.h}
+\newpage
+\srcfile{src}{graph.c}
+\newpage
+\srcfile{src}{getopt.h}
+\newpage
+\srcfile{src}{getopt.c}
+\newpage
+\srcfile{src}{mpatrol.c}
+\newpage
+\srcfile{src}{mprof.c}
+\newpage
+\srcfile{src}{mptrace.c}
+\newpage
+\srcfile{src}{mleak.c}
+\newpage
+\srcfile{bin}{mpsym}
+\newpage
+\srcfile{bin}{mpedit}
+\newpage
+\srcfile{bin}{hexwords}
+
+\end{document}

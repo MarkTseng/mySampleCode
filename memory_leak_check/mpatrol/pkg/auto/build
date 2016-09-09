@@ -1,0 +1,49 @@
+#!/bin/sh
+
+
+# mpatrol
+# A library for controlling and tracing dynamic memory allocations.
+# Copyright (C) 1997-2002 Graeme S. Roy <graeme.roy@analog.com>
+#
+# This library is free software; you can redistribute it and/or
+# modify it under the terms of the GNU Library General Public
+# License as published by the Free Software Foundation; either
+# version 2 of the License, or (at your option) any later version.
+#
+# This library is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# Library General Public License for more details.
+#
+# You should have received a copy of the GNU Library General Public
+# License along with this library; if not, write to the Free
+# Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+# MA 02111-1307, USA.
+
+
+# UNIX shell script to build source and binary tar distribution files
+
+
+# $Id: build,v 1.2 2002/01/08 20:18:08 graeme Exp $
+
+
+arch=i386
+version=1.4.8
+
+
+# Build a binary distribution by installing to a subdirectory of this directory
+# and then creating an archive from it.  Then build a source distribution as
+# well.  You may need to change the definition of arch depending on your system.
+
+./setup
+./configure --prefix=`pwd`/mpatrol
+rm -rf mpatrol
+make install
+rm -f mpatrol-$version-$arch.tar
+tar cf mpatrol-$version-$arch.tar mpatrol
+rm -f mpatrol-$version-$arch.tar.gz
+gzip mpatrol-$version-$arch.tar
+rm -rf mpatrol
+make dist
+make distclean
+./cleanup

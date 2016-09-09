@@ -1,0 +1,909 @@
+% mpatrol
+% A library for controlling and tracing dynamic memory allocations.
+% Copyright (C) 1997-2002 Graeme S. Roy <graeme.roy@analog.com>
+%
+% This library is free software; you can redistribute it and/or
+% modify it under the terms of the GNU Library General Public
+% License as published by the Free Software Foundation; either
+% version 2 of the License, or (at your option) any later version.
+%
+% This library is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+% Library General Public License for more details.
+%
+% You should have received a copy of the GNU Library General Public
+% License along with this library; if not, write to the Free
+% Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+% MA 02111-1307, USA.
+
+% LaTeX reference card for mpatrol
+
+% $Id: refcard.tex,v 1.33 2002/01/08 20:45:08 graeme Exp $
+
+\documentclass[a4paper,landscape,final]{article}
+
+\usepackage{multicol}
+
+% Adapt the page dimensions to the paper size.
+
+\setlength{\textwidth}{\paperwidth}
+\addtolength{\textwidth}{-1in}
+\setlength{\textheight}{\paperheight}
+\addtolength{\textheight}{-1in}
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+\setlength{\footskip}{0in}
+\setlength{\parindent}{0in}
+\setlength{\columnsep}{.5in}
+\setlength{\oddsidemargin}{-.5in}
+\setlength{\evensidemargin}{-.5in}
+\setlength{\topmargin}{-.5in}
+
+% Define new commands for formatting the headings and options.
+
+\newcommand{\heading}[1]{\textbf{\normalsize #1}}
+\newcommand{\command}[1]{\textbf{#1}}
+\newcommand{\function}[1]{\texttt{#1()}}
+\newcommand{\variable}[1]{\texttt{#1}}
+\newcommand{\error}[1]{\texttt{#1}}
+\newcommand{\flag}[1]{\textbf{---#1}}
+\newcommand{\flagpar}[2]{\flag{#1} \texttt{<}\textit{#2}\texttt{>}}
+\newcommand{\option}[1]{\texttt{#1}}
+\newcommand{\optionarg}[2]{\option{#1}\texttt{=<#2>}}
+\newcommand{\optionpar}[2]{\option{#1}\texttt{=<}\textit{#2}\texttt{>}}
+
+\begin{document}
+
+\pagestyle{empty}
+
+\footnotesize
+
+\begin{multicols}{3}{\textbf{\Large mpatrol reference card}}
+
+\vskip 12pt
+
+The mpatrol library can read certain options at run-time from an environment
+variable called \texttt{MPATROL\_OPTIONS}.  This variable must contain one or
+more valid option keywords from the list below and must be no longer than 1024
+characters in length.  If \texttt{MPATROL\_OPTIONS} is unset or empty then the
+default settings will be used.
+
+The \texttt{LOGDIR}, \texttt{PROFDIR} and \texttt{TRACEDIR} environment
+variables are also read in order to determine where the log file, profiling
+output file and tracing output file should go.  Note that if they are set then
+the default filenames for the log file, profiling output file and tracing output
+file will also be changed.
+
+\vskip 12pt
+\heading{Library behaviour}
+\vskip 6pt
+
+\begin{description}
+\item[\option{HELP}]
+Displays a quick-reference option summary.
+\item[\optionpar{PROGFILE}{string}]
+Specifies an alternative filename with which to locate the executable file
+containing the program's symbols.
+\item[\optionpar{CHECK}{unsigned range}]
+Specifies a range of allocation indices at which to check the integrity of free
+memory and overflow buffers.
+\item[\option{EDIT}]
+Specifies that a text editor should be invoked to edit any relevant source files
+that are associated with any warnings or errors when they occur.
+\item[\option{LIST}]
+Specifies that a context listing should be shown for any relevant source files
+that are associated with any warnings or errors when they occur.
+\item[\optionpar{DEFALIGN}{unsigned integer}]
+Specifies the default alignment for general-purpose memory allocations, which
+must be a power of two.
+\item[\option{NOPROTECT}]
+Specifies that the mpatrol library's internal data structures should not be made
+read-only after every memory allocation, reallocation or deallocation.
+\item[\option{SAFESIGNALS}]
+Instructs the library to save and replace certain signal handlers during the
+execution of library code and to restore them afterwards.
+\item[\option{CHECKFORK}]
+Checks at every call to see if the process has been forked in case new log,
+profiling and tracing output files need to be started.
+\item[\option{USEMMAP}]
+Specifies that the library should use \function{mmap} instead of \function{sbrk}
+to allocate user memory on UNIX platforms.
+\end{description}
+
+\vskip 12pt
+\heading{Logging and tracing}
+\vskip 6pt
+
+\begin{description}
+\item[\optionpar{LOGFILE}{string}]
+Specifies an alternative file in which to place all diagnostics from the mpatrol
+library.
+\item[\option{LOGALLOCS}]
+Specifies that all memory allocations are to be logged and sent to the log file.
+\item[\option{LOGREALLOCS}]
+Specifies that all memory reallocations are to be logged and sent to the log
+file.
+\item[\option{LOGFREES}]
+Specifies that all memory deallocations are to be logged and sent to the log
+file.
+\item[\option{LOGMEMORY}]
+Specifies that all memory operations are to be logged and sent to the log file.
+\item[\option{LOGALL}]
+Equivalent to the \option{LOGALLOCS}, \option{LOGREALLOCS}, \option{LOGFREES}
+and \option{LOGMEMORY} options specified together.
+\item[\option{TRACE}]
+Specifies that all memory allocations are to be traced and sent to the tracing
+output file.
+\item[\optionpar{TRACEFILE}{string}]
+Specifies an alternative file in which to place all memory allocation tracing
+information from the mpatrol library.
+\item[\option{LEAKTABLE}]
+Specifies that the leak table should be automatically used and a leak table
+summary should be displayed at the end of program execution.
+\item[\option{SHOWFREE}]
+Specifies that a summary of all of the free memory blocks should be displayed at
+the end of program execution.
+\item[\option{SHOWFREED}]
+Specifies that a summary of all of the freed memory allocations should be
+displayed at the end of program execution.
+\item[\option{SHOWUNFREED}]
+Specifies that a summary of all of the unfreed memory allocations should be
+displayed at the end of program execution.
+\item[\option{SHOWMAP}]
+Specifies that a memory map of the entire heap should be displayed at the end of
+program execution.
+\item[\option{SHOWSYMBOLS}]
+Specifies that a summary of all of the function symbols read from the program's
+executable file should be displayed at the end of program execution.
+\item[\option{SHOWALL}]
+Equivalent to the \option{SHOWFREE}, \option{SHOWFREED}, \option{SHOWUNFREED},
+\option{SHOWMAP} and \option{SHOWSYMBOLS} options specified together.
+\item[\option{USEDEBUG}]
+Specifies that any debugging information in the executable file should be used
+to obtain additional source-level information.
+\end{description}
+
+\vskip 12pt
+\heading{General errors}
+\vskip 6pt
+
+\begin{description}
+\item[\option{CHECKALLOCS}]
+Checks that no attempt is made to allocate a block of memory of size zero.
+\item[\option{CHECKREALLOCS}]
+Checks that no attempt is made to reallocate a \texttt{NULL} pointer or resize
+an existing block of memory to size zero.
+\item[\option{CHECKFREES}]
+Checks that no attempt is made to deallocate a \texttt{NULL} pointer.
+\item[\option{CHECKMEMORY}]
+Checks that no attempt is made to perform a zero-length memory operation on a
+\texttt{NULL} pointer.
+\item[\option{CHECKALL}]
+Equivalent to the \option{CHECKALLOCS}, \option{CHECKREALLOCS},
+\option{CHECKFREES} and \option{CHECKMEMORY} options specified together.
+\item[\optionpar{ALLOCBYTE}{unsigned integer}]
+Specifies an 8-bit byte pattern with which to prefill newly-allocated memory.
+\item[\optionpar{FREEBYTE}{unsigned integer}]
+Specifies an 8-bit byte pattern with which to prefill newly-freed memory.
+\item[\optionpar{NOFREE}{unsigned integer}]
+Specifies that a number of recently-freed memory allocations should be prevented
+from being returned to the free memory pool.
+\item[\option{PRESERVE}]
+Specifies that any reallocated or freed memory allocations should preserve their
+original contents.
+\end{description}
+
+\vskip 12pt
+\heading{Overwrites and underwrites}
+\vskip 6pt
+
+\begin{description}
+\item[\optionpar{OFLOWSIZE}{unsigned integer}]
+Specifies the size in bytes to use for all overflow buffers, which must be a
+power of two.
+\item[\optionpar{OFLOWBYTE}{unsigned integer}]
+Specifies an 8-bit byte pattern with which to fill the overflow buffers of all
+memory allocations.
+\item[\option{OFLOWWATCH}]
+Specifies that watch point areas should be used for overflow buffers rather than
+filling with the overflow byte.
+\item[\optionarg{PAGEALLOC}{LOWER|UPPER}]
+Specifies that each individual memory allocation should occupy at least one page
+of virtual memory and should be placed at the lowest or highest point within
+these pages.
+\item[\option{ALLOWOFLOW}]
+Specifies that a warning rather than an error should be produced if any memory
+operation function overflows the boundaries of a memory allocation, and that
+the operation should still be performed.
+\end{description}
+
+\vskip 12pt
+\heading{Using with a debugger}
+\vskip 6pt
+
+\begin{description}
+\item[\optionpar{ALLOCSTOP}{unsigned integer}]
+Specifies an allocation index at which to stop the program when it is being
+allocated.
+\item[\optionpar{REALLOCSTOP}{unsigned integer}]
+Specifies an allocation index at which to stop the program when a memory
+allocation is being reallocated.
+\item[\optionpar{FREESTOP}{unsigned integer}]
+Specifies an allocation index at which to stop the program when it is being
+freed.
+\end{description}
+
+\vskip 12pt
+\heading{Testing}
+\vskip 6pt
+
+\begin{description}
+\item[\optionpar{LIMIT}{unsigned integer}]
+Specifies the limit in bytes at which all memory allocations should fail if the
+total allocated memory should increase beyond this.
+\item[\optionpar{FAILFREQ}{unsigned integer}]
+Specifies the frequency at which all memory allocations will randomly fail.
+\item[\optionpar{FAILSEED}{unsigned integer}]
+Specifies the random number seed which will be used when determining which
+memory allocations will randomly fail.
+\item[\optionpar{UNFREEDABORT}{unsigned integer}]
+Specifies the minimum number of unfreed allocations at which to abort the
+program just before program termination.
+\end{description}
+
+\vskip 12pt
+\heading{Profiling}
+\vskip 6pt
+
+\begin{description}
+\item[\option{PROF}]
+Specifies that all memory allocations are to be profiled and sent to the
+profiling output file.
+\item[\optionpar{PROFFILE}{string}]
+Specifies an alternative file in which to place all memory allocation profiling
+information from the mpatrol library.
+\item[\optionpar{AUTOSAVE}{unsigned integer}]
+Specifies the frequency at which to periodically write the profiling data to the
+profiling output file.
+\item[\optionpar{SMALLBOUND}{unsigned integer}]
+Specifies the limit in bytes up to which memory allocations should be classified
+as small allocations for profiling purposes.
+\item[\optionpar{MEDIUMBOUND}{unsigned integer}]
+Specifies the limit in bytes up to which memory allocations should be classified
+as medium allocations for profiling purposes.
+\item[\optionpar{LARGEBOUND}{unsigned integer}]
+Specifies the limit in bytes up to which memory allocations should be classified
+as large allocations for profiling purposes.
+\end{description}
+
+\vskip 12pt
+
+All of the function definitions in \texttt{mpatrol.h} can be disabled by
+defining the \texttt{NDEBUG} preprocessor macro, which is the same macro used
+to control the behaviour of the \function{assert} function.  If \texttt{NDEBUG}
+is defined then no macro redefinition of functions will take place and all
+special mpatrol library functions will evaluate to empty statements.  The
+\texttt{mpalloc.h} header file will also be included in this case.  It is
+intended that the \texttt{NDEBUG} preprocessor macro be defined in release
+builds.
+
+The \function{MP\_MALLOC} family of functions that are defined in
+\texttt{mpalloc.h} are also defined in \texttt{mpatrol.h} when \texttt{NDEBUG}
+is not defined.  The mpatrol versions of these functions contain more debugging
+information than the mpalloc versions do, but they do not call the allocation
+failure handler when no more memory is available (they cause the \error{OUTMEM}
+error message to be given instead).
+
+There may be problems during preprocessing when the preprocessor macros defining
+the replacement C$++$ operators in \texttt{mpatrol.h} are used.  If this is the
+case then either the \texttt{MP\_NOCPLUSPLUS} preprocessor macro can be defined
+to disable all C$++$ support, or the \texttt{MP\_NONEWDELETE} preprocessor macro
+can be defined to prevent the debugging versions of \texttt{operator new} and
+\texttt{operator delete} from being used by default.  The preprocessor macros
+\texttt{MP\_NEW}, \texttt{MP\_NEW\_NOTHROW} and \texttt{MP\_DELETE} will then
+have to be used instead.
+
+On systems that support it, global functions (with C linkage) in an executable
+file or shared library whose names begin with \texttt{\_\_mp\_init\_} will be
+noted when the mpatrol library first starts up and is reading the symbols.  Such
+functions will then be called as soon as the mpatrol library is initialised,
+which can be useful if the initialisation occurs before \function{main} is
+called.  These functions must accept no arguments and must return no value.
+Similar behaviour exists for global functions whose names begin with
+\texttt{\_\_mp\_fini\_}, except that such functions will be executed when the
+mpatrol library terminates.
+
+\vskip 12pt
+\heading{C dynamic memory allocation functions}
+\vskip 6pt
+
+\begin{description}
+\item[\function{malloc}]
+\hfill Allocates memory.
+\item[\function{calloc}]
+\hfill Allocates zero-filled memory.
+\item[\function{memalign}]
+\hfill Allocates memory with a specified alignment.
+\item[\function{valloc}]
+\hfill Allocates page-aligned memory.
+\item[\function{pvalloc}]
+\hfill Allocates a number of pages.
+\item[\function{alloca}]
+\hfill Allocates temporary memory.
+\item[\function{strdup}]
+\hfill Duplicates a string.
+\item[\function{strndup}]
+\hfill Duplicates a string with a maximum length.
+\item[\function{strsave}]
+\hfill Duplicates a string.
+\item[\function{strnsave}]
+\hfill Duplicates a string with a maximum length.
+\item[\function{strdupa}]
+\hfill Duplicates a string.
+\item[\function{strndupa}]
+\hfill Duplicates a string with a maximum length.
+\item[\function{realloc}]
+\hfill Resizes memory.
+\item[\function{reallocf}]
+\hfill Resizes memory and frees on failure.
+\item[\function{recalloc}]
+\hfill Resizes memory allocated by \function{calloc}.
+\item[\function{expand}]
+\hfill Resizes memory but does not relocate it.
+\item[\function{free}]
+\hfill Frees memory.
+\item[\function{cfree}]
+\hfill Frees memory allocated by \function{calloc}.
+\item[\function{dealloca}]
+\hfill Explicitly frees temporary memory.
+\end{description}
+
+\vskip 12pt
+\heading{C dynamic memory extension functions}
+\vskip 6pt
+
+\begin{description}
+\item[\function{xmalloc}]
+\hfill Allocates memory without failure.
+\item[\function{xcalloc}]
+\hfill Allocates zero-filled memory without failure.
+\item[\function{xstrdup}]
+\hfill Duplicates a string without failure.
+\item[\function{xrealloc}]
+\hfill Resizes memory without failure.
+\item[\function{xfree}]
+\hfill Frees memory.
+\end{description}
+
+\vskip 12pt
+\heading{C dynamic memory alternative functions}
+\vskip 6pt
+
+\begin{description}
+\item[\function{MP\_MALLOC}]
+\hfill Allocates memory without failure.
+\item[\function{MP\_CALLOC}]
+\hfill Allocates zero-filled memory without failure.
+\item[\function{MP\_STRDUP}]
+\hfill Duplicates a string without failure.
+\item[\function{MP\_REALLOC}]
+\hfill Resizes memory without failure.
+\item[\function{MP\_FREE}]
+\hfill Frees memory.
+\item[\function{MP\_FAILURE}]
+\hfill Sets the allocation failure handler.
+\end{description}
+
+\vskip 12pt
+\heading{C$++$ dynamic memory allocation functions}
+\vskip 6pt
+
+\begin{description}
+\item[\texttt{operator new}]
+\hfill Allocates memory.
+\item[\texttt{operator new[]}]
+\hfill Allocates memory for an array.
+\item[\texttt{operator delete}]
+\hfill Frees memory.
+\item[\texttt{operator delete[]}]
+\hfill Frees memory allocated by \texttt{new[]}.
+\item[\function{set\_new\_handler}]
+\hfill Sets up an allocation failure handler.
+\end{description}
+
+\vskip 12pt
+\heading{C memory operation functions}
+\vskip 6pt
+
+\begin{description}
+\item[\function{memset}]
+\hfill Fills memory with a specific byte.
+\item[\function{bzero}]
+\hfill Fills memory with the zero byte.
+\item[\function{memccpy}]
+\hfill Copies memory up to a specific byte.
+\item[\function{memcpy}]
+\hfill Copies non-overlapping memory.
+\item[\function{memmove}]
+\hfill Copies possibly-overlapping memory.
+\item[\function{bcopy}]
+\hfill Copies possibly-overlapping memory.
+\item[\function{memcmp}]
+\hfill Compares two blocks of memory.
+\item[\function{bcmp}]
+\hfill Compares two blocks of memory.
+\item[\function{memchr}]
+\hfill Searches memory for a specific byte.
+\item[\function{memmem}]
+\hfill Searches memory for specific bytes.
+\end{description}
+
+\vskip 12pt
+\heading{mpatrol library functions}
+\vskip 6pt
+
+\begin{description}
+\item[\function{\_\_mp\_atexit}]
+\hfill Registers termination functions.
+\item[\function{\_\_mp\_setoption}]
+\hfill Sets an mpatrol library option.
+\item[\function{\_\_mp\_getoption}]
+\hfill Returns an mpatrol library option.
+\item[\function{\_\_mp\_libversion}]
+\hfill Returns the mpatrol library version.
+\item[\function{\_\_mp\_strerror}]
+\hfill Returns an error message string.
+\item[\function{\_\_mp\_function}]
+\hfill Returns an allocation type function name.
+\item[\function{\_\_mp\_setuser}]
+\hfill Sets the user data for an allocation.
+\item[\function{\_\_mp\_setmark}]
+\hfill Sets the marked flag for an allocation.
+\item[\function{\_\_mp\_info}]
+\hfill Returns information for an allocation.
+\item[\function{\_\_mp\_syminfo}]
+\hfill Returns symbol information for an address.
+\item[\function{\_\_mp\_symbol}]
+\hfill Returns symbol name for an address.
+\item[\function{\_\_mp\_printinfo}]
+\hfill Displays information for an allocation.
+\item[\function{\_\_mp\_snapshot}]
+\hfill Returns the current heap event number.
+\item[\function{\_\_mp\_iterate}]
+\hfill Iterates over allocations in the heap.
+\item[\function{\_\_mp\_iterateall}]
+\hfill Iterates over all allocations in the heap.
+\item[\function{\_\_mp\_addallocentry}]
+\hfill Adds an allocation to the leak table.
+\item[\function{\_\_mp\_addfreeentry}]
+\hfill Adds a deallocation to the leak table.
+\item[\function{\_\_mp\_clearleaktable}]
+\hfill Clears the leak table.
+\item[\function{\_\_mp\_startleaktable}]
+\hfill Starts automatic leak table entries.
+\item[\function{\_\_mp\_stopleaktable}]
+\hfill Stops automatic leak table entries.
+\item[\function{\_\_mp\_leaktable}]
+\hfill Displays the leak table.
+\item[\function{\_\_mp\_memorymap}]
+\hfill Displays a map of memory in the heap.
+\item[\function{\_\_mp\_summary}]
+\hfill Displays a summary of library statistics.
+\item[\function{\_\_mp\_stats}]
+\hfill Returns statistics about the heap.
+\item[\function{\_\_mp\_check}]
+\hfill Validates memory in the heap.
+\item[\function{\_\_mp\_prologue}]
+\hfill Sets up an allocation prologue handler.
+\item[\function{\_\_mp\_epilogue}]
+\hfill Sets up an allocation epilogue handler.
+\item[\function{\_\_mp\_nomemory}]
+\hfill Sets up an allocation failure handler.
+\item[\function{\_\_mp\_printf}]
+\hfill Writes user data to the log file.
+\item[\function{\_\_mp\_vprintf}]
+\hfill Writes user data to the log file.
+\item[\function{\_\_mp\_locprintf}]
+\hfill Logs user data and the location.
+\item[\function{\_\_mp\_vlocprintf}]
+\hfill Logs user data and the location.
+\item[\function{\_\_mp\_logmemory}]
+\hfill Displays a hex dump of memory.
+\item[\function{\_\_mp\_logstack}]
+\hfill Displays the current call stack.
+\item[\function{\_\_mp\_logaddr}]
+\hfill Displays information for an allocation.
+\item[\function{\_\_mp\_edit}]
+\hfill Invokes a text editor on a source file.
+\item[\function{\_\_mp\_list}]
+\hfill Lists a source file at a specific line.
+\item[\function{\_\_mp\_view}]
+\hfill Edits or lists a source file.
+\item[\function{\_\_mp\_readcontents}]
+\hfill Reads the contents of a memory allocation.
+\item[\function{\_\_mp\_writecontents}]
+\hfill Writes the contents of a memory allocation.
+\item[\function{\_\_mp\_cmpcontents}]
+\hfill Compares the contents of a memory allocation.
+\item[\function{\_\_mp\_remcontents}]
+\hfill Removes the contents of a memory allocation.
+\end{description}
+
+\vskip 12pt
+\heading{mpatrol library variables}
+\vskip 6pt
+
+\begin{description}
+\item[\variable{\_\_mp\_errno}]
+\hfill Contains the most recent error code.
+\end{description}
+
+\vskip 12pt
+
+The following table lists the warnings and errors that are likely to appear in
+the mpatrol log file when problems with dynamic memory allocations and memory
+operations occur.  Other types of warnings and errors may also appear in the log
+file, but they are likely to be associated with parsing options and reading
+symbols from executable files and so should be self-explanatory.
+
+\vskip 12pt
+\heading{Error abbreviation codes}
+\vskip 6pt
+
+\begin{description}
+\item[\error{ALLOVF}]
+\hfill Allocation has a corrupted overflow buffer.
+\item[\error{ALLZER}]
+\hfill Attempt to create an allocation of size 0.
+\item[\error{BADALN}]
+\hfill Alignment is not a power of two.
+\item[\error{FRDCOR}]
+\hfill Freed allocation has memory corruption.
+\item[\error{FRDOPN}]
+\hfill Attempt to perform operation on freed memory.
+\item[\error{FRDOVF}]
+\hfill Freed allocation has a corrupted overflow buffer.
+\item[\error{FRECOR}]
+\hfill Free memory corruption.
+\item[\error{FREMRK}]
+\hfill Attempt to free a marked memory allocation.
+\item[\error{FRENUL}]
+\hfill Attempt to free a \texttt{NULL} pointer.
+\item[\error{FREOPN}]
+\hfill Attempt to perform operation on free memory.
+\item[\error{ILLMEM}]
+\hfill Illegal memory access.
+\item[\error{INCOMP}]
+Attempt to resize or free memory allocated with an incompatible function.
+\item[\error{MAXALN}]
+\hfill Alignment is greater than the system page size.
+\item[\error{MISMAT}]
+Attempt to resize or free memory not pointing to the start of a memory
+allocation.
+\item[\error{NOTALL}]
+\hfill Pointer has not been allocated.
+\item[\error{NULOPN}]
+\hfill Attempt to perform operation on a \texttt{NULL} pointer.
+\item[\error{OUTMEM}]
+\hfill Out of memory.
+\item[\error{PRVFRD}]
+Attempt to resize of free memory that has previously been freed.
+\item[\error{RNGOVF}]
+Attempt to perform a memory operation that overflows a memory allocation.
+\item[\error{RNGOVL}]
+Attempt to perform a non-overlapping memory operation that overlaps.
+\item[\error{RSZNUL}]
+\hfill Attempt to resize a \texttt{NULL} pointer.
+\item[\error{RSZZER}]
+\hfill Attempt to resize an allocation to size 0.
+\item[\error{STROVF}]
+Attempt to perform a string operation that overflows a memory allocation.
+\item[\error{ZERALN}]
+\hfill Alignment 0 is invalid.
+\end{description}
+
+\vskip 12pt
+
+The commands that are distributed with the mpatrol library all parse their
+command line options in a similar way to the UNIX \function{getopt} function.
+Only the long names of the options are shown here.  If an option has a single
+character equivalent it will be listed in the \flag{help} output.  Options that
+accept numeric arguments can have their value specified in binary, octal,
+decimal or hexadecimal notation.
+
+\vskip 12pt
+\heading{mpatrol command options}
+\vskip 6pt
+
+\begin{description}
+\item[\flagpar{alloc-byte}{unsigned integer}]
+\hfill See \option{ALLOCBYTE}.
+\item[\flagpar{alloc-stop}{unsigned integer}]
+\hfill See \option{ALLOCSTOP}.
+\item[\flag{allow-oflow}]
+\hfill See \option{ALLOWOFLOW}.
+\item[\flagpar{auto-save}{unsigned integer}]
+\hfill See \option{AUTOSAVE}.
+\item[\flagpar{check}{unsigned range}]
+\hfill See \option{CHECK}.
+\item[\flag{check-all}]
+\hfill See \option{CHECKALL}.
+\item[\flag{check-allocs}]
+\hfill See \option{CHECKALLOCS}.
+\item[\flag{check-fork}]
+\hfill See \option{CHECKFORK}.
+\item[\flag{check-frees}]
+\hfill See \option{CHECKFREES}.
+\item[\flag{check-memory}]
+\hfill See \option{CHECKMEMORY}.
+\item[\flag{check-reallocs}]
+\hfill See \option{CHECKREALLOCS}.
+\item[\flagpar{def-align}{unsigned integer}]
+\hfill See \option{DEFALIGN}.
+\item[\flag{dynamic}]
+Specifies that programs which were not linked with the mpatrol library should
+also be traced, but only if they were dynamically linked.
+\item[\flag{edit}]
+\hfill See \option{EDIT}.
+\item[\flagpar{fail-freq}{unsigned integer}]
+\hfill See \option{FAILFREQ}.
+\item[\flagpar{fail-seed}{unsigned integer}]
+\hfill See \option{FAILSEED}.
+\item[\flagpar{free-byte}{unsigned integer}]
+\hfill See \option{FREEBYTE}.
+\item[\flagpar{free-stop}{unsigned integer}]
+\hfill See \option{FREESTOP}.
+\item[\flag{help}]
+Displays a quick-reference option summary.
+\item[\flagpar{large-bound}{unsigned integer}]
+\hfill See \option{LARGEBOUND}.
+\item[\flag{leak-table}]
+\hfill See \option{LEAKTABLE}.
+\item[\flagpar{limit}{unsigned integer}]
+\hfill See \option{LIMIT}.
+\item[\flag{list}]
+\hfill See \option{LIST}.
+\item[\flag{log-all}]
+\hfill See \option{LOGALL}.
+\item[\flag{log-allocs}]
+\hfill See \option{LOGALLOCS}.
+\item[\flagpar{log-file}{string}]
+\hfill See \option{LOGFILE}.
+\item[\flag{log-frees}]
+\hfill See \option{LOGFREES}.
+\item[\flag{log-memory}]
+\hfill See \option{LOGMEMORY}.
+\item[\flag{log-reallocs}]
+\hfill See \option{LOGREALLOCS}.
+\item[\flagpar{medium-bound}{unsigned integer}]
+\hfill See \option{MEDIUMBOUND}.
+\item[\flagpar{no-free}{unsigned integer}]
+\hfill See \option{NOFREE}.
+\item[\flag{no-protect}]
+\hfill See \option{NOPROTECT}.
+\item[\flagpar{oflow-byte}{unsigned integer}]
+\hfill See \option{OFLOWBYTE}.
+\item[\flagpar{oflow-size}{unsigned integer}]
+\hfill See \option{OFLOWSIZE}.
+\item[\flag{oflow-watch}]
+\hfill See \option{OFLOWWATCH}.
+\item[\flag{page-alloc-lower}]
+\hfill See \option{PAGEALLOC=LOWER}.
+\item[\flag{page-alloc-upper}]
+\hfill See \option{PAGEALLOC=UPPER}.
+\item[\flag{preserve}]
+\hfill See \option{PRESERVE}.
+\item[\flag{prof}]
+\hfill See \option{PROF}.
+\item[\flagpar{prof-file}{string}]
+\hfill See \option{PROFFILE}.
+\item[\flagpar{prog-file}{string}]
+\hfill See \option{PROGFILE}.
+\item[\flag{read-env}]
+Reads and passes through the contents of the \texttt{MPATROL\_OPTIONS}
+environment variable.
+\item[\flagpar{realloc-stop}{unsigned integer}]
+\hfill See \option{REALLOCSTOP}.
+\item[\flag{safe-signals}]
+\hfill See \option{SAFESIGNALS}.
+\item[\flag{show-all}]
+\hfill See \option{SHOWALL}.
+\item[\flag{show-env}]
+Displays the contents of the \texttt{MPATROL\_OPTIONS} environment variable.
+\item[\flag{show-free}]
+\hfill See \option{SHOWFREE}.
+\item[\flag{show-freed}]
+\hfill See \option{SHOWFREED}.
+\item[\flag{show-map}]
+\hfill See \option{SHOWMAP}.
+\item[\flag{show-symbols}]
+\hfill See \option{SHOWSYMBOLS}.
+\item[\flag{show-unfreed}]
+\hfill See \option{SHOWUNFREED}.
+\item[\flagpar{small-bound}{unsigned integer}]
+\hfill See \option{SMALLBOUND}.
+\item[\flag{threads}]
+Specifies that the program to be run is multithreaded if the \flag{dynamic}
+option is used.
+\item[\flag{trace}]
+\hfill See \option{TRACE}.
+\item[\flagpar{trace-file}{string}]
+\hfill See \option{TRACEFILE}.
+\item[\flagpar{unfreed-abort}{unsigned integer}]
+\hfill See \option{UNFREEDABORT}.
+\item[\flag{use-debug}]
+\hfill See \option{USEDEBUG}.
+\item[\flag{use-mmap}]
+\hfill See \option{USEMMAP}.
+\item[\flag{version}]
+Displays the version number of the \command{mpatrol} command.
+\end{description}
+
+\vskip 12pt
+\heading{mprof command options}
+\vskip 6pt
+
+\begin{description}
+\item[\flag{addresses}]
+Specifies that different call sites from within the same function are to be
+differentiated and that the names of all functions should be displayed with
+their call site offset in bytes.
+\item[\flag{call-graph}]
+Specifies that the allocation call graph should be displayed.
+\item[\flag{counts}]
+Specifies that certain tables should be sorted by the number of allocations or
+deallocations rather than the total number of bytes allocated or deallocated.
+\item[\flagpar{graph-file}{file}]
+Specifies that the allocation call graph should also be written to a graph
+specification file for later visualisation with \command{dot}.
+\item[\flag{help}]
+Displays a quick-reference option summary.
+\item[\flag{leaks}]
+Specifies that memory leaks rather than memory allocations are to be written to
+the graph specification file.
+\item[\flagpar{stack-depth}{depth}]
+Specifies the maximum stack depth to use when calculating if one call site has
+the same call stack as another call site.  This also specifies the maximum
+number of functions to display in a call stack.
+\item[\flag{version}]
+Displays the version number of the \command{mprof} command.
+\end{description}
+
+\vskip 12pt
+\heading{mptrace command options}
+\vskip 6pt
+
+The \command{mptrace} command can be built with GUI support on certain
+platforms.  Any of the following options that are marked as being specific to
+the GUI version of \command{mptrace} will be read by the X command line parser
+rather than directly by \command{mptrace}.  As a result they are parsed
+according to X toolkit rules and do not appear in the quick-reference option
+summary produced by the \flag{--help} option.  The application class for setting
+\command{mptrace} X resources is called \texttt{MPTrace}.
+
+\begin{description}
+\item[\flagpar{alloc}{colour}]
+Specifies the colour to use for displaying allocated memory (GUI only).
+\item[\flagpar{base}{address}]
+Specifies the base address of the visible address space displayed in the memory
+map (GUI only).
+\item[\flagpar{delay}{length}]
+Specifies that a small delay of a certain length should be added after drawing
+each memory allocation event (GUI only).
+\item[\flagpar{free}{colour}]
+Specifies the colour to use for displaying free memory (GUI only).
+\item[\flag{gui}]
+Displays the GUI (if supported).
+\item[\flagpar{height}{size}]
+Specifies the height (in pixels) of the drawing area (GUI only).
+\item[\flagpar{hatf-file}{file}]
+Specifies that the trace should also be written to a file in Heap Allocation
+Trace Format (HATF).
+\item[\flag{help}]
+Displays a quick-reference option summary.
+\item[\flagpar{internal}{colour}]
+Specifies the colour to use for displaying internal heap memory (GUI only).
+\item[\flagpar{sim-file}{file}]
+Specifies that a trace-driven memory allocation simulation program written in C
+should be written to a file.
+\item[\flag{source}]
+Displays source-level information for each event in the tracing table, if
+available.
+\item[\flagpar{space}{size}]
+Specifies the size (in megabytes) of the visible address space displayed in the
+memory map (GUI only).
+\item[\flagpar{unalloc}{colour}]
+Specifies the colour to use for displaying unallocated heap memory (GUI only).
+\item[\flagpar{view-height}{size}]
+Specifies the height (in pixels) of the window (GUI only).
+\item[\flagpar{view-width}{size}]
+Specifies the width (in pixels) of the window (GUI only).
+\item[\flagpar{width}{size}]
+Specifies the width (in pixels) of the drawing area (GUI only).
+\item[\flag{verbose}]
+Specifies that the tracing table should be displayed.
+\item[\flag{version}]
+Displays the version number of the \command{mptrace} command.
+\end{description}
+
+\vskip 12pt
+\heading{mleak command options}
+\vskip 6pt
+
+\begin{description}
+\item[\flag{help}]
+Displays a quick-reference option summary.
+\item[\flag{ignore}]
+Specifies that the list of unfreed allocations in the log file should be
+ignored.
+\item[\flagpar{max-stack}{depth}]
+Specifies the maximum stack depth to display.
+\item[\flag{version}]
+Displays the version number of the \command{mleak} command.
+\end{description}
+
+\vskip 12pt
+\heading{mpsym command options}
+\vskip 6pt
+
+\begin{description}
+\item[\flag{help}]
+Displays a quick-reference option summary.
+\item[\flag{skip}]
+Skip symbols marked as \texttt{???} in the log file.
+\item[\flag{version}]
+Displays the version number of the \command{mpsym} command.
+\end{description}
+
+\vskip 12pt
+\heading{mpedit command options}
+\vskip 6pt
+
+The \command{mpedit} command recognises the \texttt{EDITOR} environment variable
+which can be used to specify the text editor that it should use to edit source
+files.  It also recognises the \texttt{MPATROL\_SOURCEPATH} environment variable
+which can be used to specify a colon-separated list of directories that should
+be used to help search for source files.
+
+\begin{description}
+\item[\flagpar{editor}{filename}]
+Specifies the text editor to use.
+\item[\flag{help}]
+Displays a quick-reference option summary.
+\item[\flag{listing}]
+Displays a context listing of the source line instead of invoking the text
+editor.
+\item[\flagpar{source-dir}{directory}]
+Adds a directory to the search path used to locate the source file.
+\item[\flag{version}]
+Displays the version number of the \command{mpedit} command.
+\end{description}
+
+\vskip 12pt
+\heading{hexwords command options}
+\vskip 6pt
+
+\begin{description}
+\item[\flag{help}]
+Displays a quick-reference option summary.
+\item[\flagpar{match}{exact\texttt{|}lower\texttt{|}upper\texttt{|}any}]
+Sets the type of case-sensitivity to use.
+\item[\flagpar{maximum}{count}]
+Sets the maximum number of letters to match.
+\item[\flagpar{minimum}{count}]
+Sets the minimum number of letters to match.
+\item[\flag{version}]
+Displays the version number of the \command{hexwords} command.
+\end{description}
+
+\vskip 12pt
+Copyright \copyright 1997-2002 Graeme S. Roy.
+\vskip 6pt
+
+This reference card may be freely distributed under the terms of the GNU General
+Public License.
+
+\end{multicols}
+
+\end{document}

@@ -1,0 +1,6 @@
+This is a slightly modified version of the mpatrol Debian package that is
+maintained by Jerome Marant <jerome@debian.org>.  This is not intended to
+replace the official Debian package and although it might fix a few
+installation issues here and there, it may well introduce some more.
+I have included these files in the mpatrol distribution for completeness
+and in case the official Debian package maintainer orphans the package.

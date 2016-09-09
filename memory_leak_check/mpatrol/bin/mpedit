@@ -1,0 +1,352 @@
+#!/bin/sh
+
+
+# mpatrol
+# A library for controlling and tracing dynamic memory allocations.
+# Copyright (C) 1997-2002 Graeme S. Roy <graeme.roy@analog.com>
+#
+# This library is free software; you can redistribute it and/or
+# modify it under the terms of the GNU Library General Public
+# License as published by the Free Software Foundation; either
+# version 2 of the License, or (at your option) any later version.
+#
+# This library is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# Library General Public License for more details.
+#
+# You should have received a copy of the GNU Library General Public
+# License along with this library; if not, write to the Free
+# Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+# MA 02111-1307, USA.
+
+
+# UNIX shell script to invoke a text editor on a given source file and
+# optionally jump to a specific line number
+
+
+# $Id: mpedit,v 1.10 2002/01/08 22:18:25 graeme Exp $
+
+
+# Program version.
+
+VERSION="1.2"
+
+
+# Set the filename of the text editor to use.
+
+editor=""
+
+seteditor()
+{
+    if [ "$2" = "" ]
+    then
+        echo "$progname: Option \`$1' requires an argument" >&2
+        error=1
+    else
+        editor="$2"
+    fi
+}
+
+
+# Add a source directory to the list of command line source directories.
+
+sourcepath=""
+
+addsourcedir()
+{
+    if [ "$2" = "" ]
+    then
+        echo "$progname: Option \`$1' requires an argument" >&2
+        error=1
+    elif [ "$sourcepath" = "" ]
+    then
+        sourcepath="$2"
+    else
+        sourcepath="$sourcepath:$2"
+    fi
+}
+
+
+# Parse the command line options.
+
+error=0
+help=0
+listing=0
+skip=0
+version=0
+progname=`basename "$0"`
+
+for option in "$@"
+do
+    if [ $skip = 1 ]
+    then
+        skip=0
+        shift
+        continue
+    fi
+    case "$option" in
+      -e|--editor)
+        if [ $# = 1 ]
+        then
+            optarg=""
+        else
+            optarg="$2"
+        fi
+        seteditor "$option" "$optarg"
+        skip=1
+        shift;;
+      -e*)
+        optarg=`expr "$option" : '-e\(.*\)'`
+        seteditor "-e" "$optarg"
+        shift;;
+      --editor=*)
+        optarg=`expr "$option" : '.*=\(.*\)'`
+        seteditor "--editor" "$optarg"
+        shift;;
+      -h|--help)
+        help=1
+        shift;;
+      -I|--source-dir)
+        if [ $# = 1 ]
+        then
+            optarg=""
+        else
+            optarg="$2"
+        fi
+        addsourcedir "$option" "$optarg"
+        skip=1
+        shift;;
+      -I*)
+        optarg=`expr "$option" : '-I\(.*\)'`
+        addsourcedir "-I" "$optarg"
+        shift;;
+      --source-dir=*)
+        optarg=`expr "$option" : '.*=\(.*\)'`
+        addsourcedir "--source-dir" "$optarg"
+        shift;;
+      -l|--listing)
+        listing=1
+        shift;;
+      -V|--version)
+        version=1
+        shift;;
+      -hV|-Vh)
+        help=1
+        version=1
+        shift;;
+      --)
+        shift
+        break;;
+      -)
+        break;;
+      -*)
+        echo "$progname: Illegal option \`$option'" >&2
+        error=1
+        shift;;
+      *)
+        break;;
+    esac
+done
+
+
+# Parse the command line arguments.
+
+if [ $# != 0 ]
+then
+    sourcefile="$1"
+    shift
+
+    if [ $# != 0 ]
+    then
+        linenumber="$1"
+        shift
+    else
+        linenumber=1
+    fi
+
+    if [ $# != 0 ]
+    then
+        error=1
+    fi
+else
+    error=1
+fi
+
+
+# Display the program version.
+
+if [ $version = 1 ]
+then
+    echo "$progname $VERSION"
+    echo "Copyright (C) 1997-2002 Graeme S. Roy"
+    echo
+    echo "This is free software, and you are welcome to redistribute it under certain"
+    echo "conditions; see the GNU Library General Public License for details."
+    echo
+    echo "For the latest mpatrol release and documentation,"
+    echo "visit http://www.cbmamiga.demon.co.uk/mpatrol."
+    echo
+fi
+
+
+# Display the program usage.
+
+if [ $error = 1 -o $help = 1 ]
+then
+    echo "Usage: $progname [options] sourcefile [linenumber]"
+    echo
+    if [ $help = 0 ]
+    then
+        echo "Type \`$progname --help' for a complete list of options."
+    else
+cat <<EOF
+Options:
+  -e  --editor=<filename>
+        Specifies the text editor to use.
+  -h  --help
+        Displays this quick-reference option summary.
+  -l  --listing
+        Displays a context listing of the source line instead of invoking the
+        text editor.
+  -I  --source-dir=<directory>
+        Adds a directory to the search path used to locate the source file.
+  -V  --version
+        Displays the version number of this program.
+EOF
+    fi
+    if [ $error = 1 ]
+    then
+        exit 1
+    fi
+    exit
+fi
+
+
+# Join the search path specified on the command line to the default search
+# path given in the MPATROL_SOURCEPATH environment variable.
+
+if [ "$MPATROL_SOURCEPATH" = "" ]
+then
+    if [ "$sourcepath" = "" ]
+    then
+        MPATROL_SOURCEPATH="."
+    else
+        MPATROL_SOURCEPATH="$sourcepath"
+    fi
+elif [ "$sourcepath" != "" ]
+then
+    MPATROL_SOURCEPATH="$sourcepath:$MPATROL_SOURCEPATH"
+fi
+export MPATROL_SOURCEPATH
+
+
+# Check that the input file exists.  If not, check for the file in the source
+# file search path.
+
+if [ ! -f "$sourcefile" ]
+then
+    sourcedirs=`echo "$MPATROL_SOURCEPATH" | sed -e 's/::/:.:/g' \
+                -e 's/::/:.:/g' -e 's/^:/.:/g' -e 's/:$//g' -e 's/:/ /g'`
+
+    found=0
+    for sourcedir in $sourcedirs
+    do
+        if [ -f "$sourcedir/$sourcefile" ]
+        then
+            sourcefile="$sourcedir/$sourcefile"
+            found=1
+            break
+        fi
+    done
+
+    if [ $found = 0 ]
+    then
+        echo "$progname: Cannot open file \`$sourcefile'" >&2
+        exit 1
+    fi
+fi
+
+
+# Either produce a context listing of the source line or invoke the text editor
+# on the source file.
+
+if [ $listing = 1 ]
+then
+    # If the --listing option was given on the command line then display the
+    # contents of the source file surrounding the relevant line number.
+
+    linecount=`wc -l "$sourcefile" | awk '{ print $1; }'`
+
+    if [ $linecount = 0 ]
+    then
+        exit 1
+    elif [ $linecount -lt 11 ]
+    then
+        lowerline=1
+        upperline=$linecount
+    else
+        newnumber=$linenumber
+        maxnumber=`expr $linecount - 5`
+        if [ $newnumber -lt 6 ]
+        then
+            newnumber=6
+        elif [ $newnumber -gt $maxnumber ]
+        then
+            newnumber=$maxnumber
+        fi
+        lowerline=`expr $newnumber - 5`
+        upperline=`expr $newnumber + 5`
+    fi
+
+    echo "    $sourcefile at line $linenumber:" >&2
+
+
+    # If the nl command is available then use it to number the lines in the
+    # source file, otherwise fall back to using awk.
+
+    which nl >/dev/null 2>&1
+    if [ $? = 0 ]
+    then
+        nl -ba "$sourcefile" | sed -n "${lowerline},${upperline}p" >&2
+    else
+        awk '{ printf("%6d\t%s\n", ++line, $0); }' "$sourcefile" |
+        sed -n "${lowerline},${upperline}p" >&2
+    fi
+else
+    # If the --editor option was given on the command line then use the text
+    # editor that was specified, otherwise look to the EDITOR environment
+    # variable.  If that is not set then default to using vi.
+
+    if [ "$editor" != "" ]
+    then
+        EDITOR="$editor"
+    elif [ "$EDITOR" = "" ]
+    then
+        EDITOR="vi"
+    fi
+    export EDITOR
+
+
+    # Run the text editor in a new window and wait for it to finish.  To add
+    # support for a new text editor, simply add an extra case statement.
+
+    case `basename "$EDITOR"` in
+      emacs|xemacs)
+        # Both emacs and xemacs normally come with built-in support for X, so
+        # assume that they open their own windows.
+        "$EDITOR" +$linenumber "$sourcefile";;
+      vi|view|vedit|elvis|pico|nano)
+        # The vi editor (and its related commands) does not open a window, so
+        # we need to open an xterm for use by the editor.
+        xterm -e "$EDITOR" +$linenumber "$sourcefile";;
+      vim|gvim|gview|rvim|rview|rgvim|rgview)
+        # The vim editor (and its related commands) opens a window if the -g
+        # option is specified, but we must also ensure that the editor is run
+        # in the foreground so that we can wait until it is finished.
+        "$EDITOR" -f -g +$linenumber "$sourcefile";;
+      *)
+        echo "$progname: Unknown text editor \`$EDITOR'" >&2
+        exit 1;;
+    esac
+fi

@@ -1,0 +1,47 @@
+## mpatrol
+## A library for controlling and tracing dynamic memory allocations.
+## Copyright (C) 1997-2002 Graeme S. Roy <graeme.roy@analog.com>
+##
+## This library is free software; you can redistribute it and/or
+## modify it under the terms of the GNU Library General Public
+## License as published by the Free Software Foundation; either
+## version 2 of the License, or (at your option) any later version.
+##
+## This library is distributed in the hope that it will be useful,
+## but WITHOUT ANY WARRANTY; without even the implied warranty of
+## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+## Library General Public License for more details.
+##
+## You should have received a copy of the GNU Library General Public
+## License along with this library; if not, write to the Free
+## Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+## MA 02111-1307, USA.
+
+
+## Process this file with automake to produce Makefile.in
+
+
+## $Id: tsrc.am,v 1.5 2002/01/08 20:42:53 graeme Exp $
+
+
+INCLUDES = -DMP_THREADS_SUPPORT
+
+libmpatrolmt_la_LDFLAGS = -release @VERSION@
+
+lib_LTLIBRARIES = libmpatrolmt.la
+
+noinst_HEADERS = config.h target.h list.h tree.h slots.h utils.h memory.h \
+		 heap.h alloc.h info.h stack.h addr.h strtab.h symbol.h \
+		 signals.h mutex.h diag.h option.h leaktab.h profile.h trace.h \
+		 inter.h machine.h version.h
+
+libmpatrolmt_la_SOURCES = list.c tree.c slots.c utils.c memory.c heap.c \
+			  alloc.c info.c stack.c addr.c strtab.c symbol.c \
+			  signals.c mutex.c diag.c option.c leaktab.c \
+			  profile.c trace.c inter.c malloc.c cplus.c \
+			  machine.c version.c $(noinst_HEADERS)
+
+machine.lo: machine.c config.h target.h
+	$(COMPILE) -E -P $< >machine.s
+	$(LIBTOOL) --mode=compile $(COMPILE) -c machine.s
+	rm -f machine.s

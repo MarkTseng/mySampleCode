@@ -1,0 +1,13 @@
+Document: mpatrol
+Title: mpatrol manual
+Author: Graeme S. Roy <graeme.roy@analog.com>
+Abstract: This manual describes mpatrol, a library for
+ controlling and tracing dynamic memory allocations.
+Section: Apps/Programming
+
+Format: PDF
+Files: /usr/share/doc/mpatrol/*.pdf
+
+Format: HTML
+Index: /usr/share/doc/mpatrol/html/mpatrol.html
+Files: /usr/share/doc/mpatrol/html/images/*.jpg

@@ -1,0 +1,286 @@
+Content-type: text/html
+
+<HTML><HEAD><TITLE>Manpage of MPATROL</TITLE>
+</HEAD><BODY>
+<H1>MPATROL</H1>
+Section: mpatrol library (1)<BR>Updated: 8 January 2002<BR><A HREF="#index">Index</A>
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+mpatrol - runs programs using the mpatrol library
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<B>mpatrol</B> [<I>options</I>] &lt;<I>command</I>&gt; [<I>arguments</I>]
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+The <B>mpatrol</B> command is used to set various mpatrol library <I>options</I>
+when running <I>command</I> with its <I>arguments</I>.  In most cases,
+<I>command</I> must have been linked with the mpatrol library, unless the
+<I>--dynamic</I> option is used in which case <I>command</I> need only have been
+dynamically linked.
+<P>
+
+All mpatrol library diagnostics are sent to the file <I>mpatrol.%n.log</I> in the
+current directory by default (where <I>%n</I> is the current process id) but this
+can be changed using the <B>--log-file</B> option.  Similarly, the default
+profiling output filename is <I>mpatrol.%n.out</I> and the default tracing output
+filename is <I>mpatrol.%n.trace</I>.
+<A NAME="lbAE">&nbsp;</A>
+<H2>OPTIONS</H2>
+
+All of the following options (except <B>--dynamic</B>, <B>--help</B>,
+<B>--read-env</B>, <B>--show-env</B>, <B>--threads</B> and
+<B>--version</B>) correspond to their listed mpatrol library option.  See
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+libmpatrol">libmpatrol</A></B>(3) for more details on these options.
+<DL COMPACT>
+<DT><B>--alloc-byte</B> &lt;<I>unsigned integer</I>&gt; [<B>-a</B>]<DD>
+[<B>ALLOCBYTE</B>]  Specifies an 8-bit byte pattern with which to prefill
+newly-allocated memory.
+<DT><B>--alloc-stop</B> &lt;<I>unsigned integer</I>&gt; [<B>-A</B>]<DD>
+[<B>ALLOCSTOP</B>]  Specifies an allocation index at which to stop the program
+when it is being allocated.
+<DT><B>--allow-oflow</B> [<B>-M</B>]<DD>
+[<B>ALLOWOFLOW</B>]  Specifies that a warning rather than an error should be
+produced if any memory operation function overflows the boundaries of a memory
+allocation, and that the operation should still be performed.
+<DT><B>--auto-save</B> &lt;<I>unsigned integer</I>&gt; [<B>-s</B>]<DD>
+[<B>AUTOSAVE</B>]  Specifies the frequency at which to periodically write the
+profiling data to the profiling output file.
+<DT><B>--check</B> &lt;<I>unsigned range</I>&gt; [<B>-c</B>]<DD>
+[<B>CHECK</B>]  Specifies a range of allocation indices at which to check the
+integrity of free memory and overflow buffers.
+<DT><B>--check-all</B> [<B>-C</B>]<DD>
+[<B>CHECKALL</B>]  Equivalent to the <B>--check-allocs</B>,
+<B>--check-reallocs</B>, <B>--check-frees</B> and <B>--check-memory</B>
+options specified together.
+<DT><B>--check-allocs</B><DD>
+[<B>CHECKALLOCS</B>]  Checks that no attempt is made to allocate a block of
+memory of size zero.
+<DT><B>--check-fork</B><DD>
+[<B>CHECKFORK</B>]  Checks at every call to see if the process has been forked in
+case new log, profiling and tracing output files need to be started.
+<DT><B>--check-frees</B><DD>
+[<B>CHECKFREES</B>]  Checks that no attempt is made to deallocate a <B>NULL</B>
+pointer.
+<DT><B>--check-memory</B><DD>
+[<B>CHECKMEMORY</B>]  Checks that no attempt is made to perform a zero-length
+memory operation on a <B>NULL</B> pointer.
+<DT><B>--check-reallocs</B><DD>
+[<B>CHECKREALLOCS</B>]  Checks that no attempt is made to reallocate a <B>NULL</B>
+pointer or resize an existing block of memory to size zero.
+<DT><B>--def-align</B> &lt;<I>unsigned integer</I>&gt; [<B>-D</B>]<DD>
+[<B>DEFALIGN</B>]  Specifies the default alignment for general-purpose memory
+allocations, which must be a power of two.
+<DT><B>--dynamic</B> [<B>-d</B>]<DD>
+Specifies that programs which were not linked with the mpatrol library should
+also be traced, but only if they were dynamically linked.  This option will
+only work if the system dynamic linker has the ability to preload a set of
+user-specified shared libraries via a special environment variable.
+<DT><B>--edit</B> [<B>-e</B>]<DD>
+[<B>EDIT</B>]  Specifies that a text editor should be invoked to edit any
+relevant source files that are associated with any warnings or errors when they
+occur.
+<DT><B>--fail-freq</B> &lt;<I>unsigned integer</I>&gt; [<B>-q</B>]<DD>
+[<B>FAILFREQ</B>]  Specifies the frequency at which all memory allocations will
+randomly fail.
+<DT><B>--fail-seed</B> &lt;<I>unsigned integer</I>&gt; [<B>-Q</B>]<DD>
+[<B>FAILSEED</B>]  Specifies the random number seed which will be used when
+determining which memory allocations will randomly fail.
+<DT><B>--free-byte</B> &lt;<I>unsigned integer</I>&gt; [<B>-f</B>]<DD>
+[<B>FREEBYTE</B>]  Specifies an 8-bit byte pattern with which to prefill
+newly-freed memory.
+<DT><B>--free-stop</B> &lt;<I>unsigned integer</I>&gt; [<B>-F</B>]<DD>
+[<B>FREESTOP</B>]  Specifies an allocation index at which to stop the program
+when it is being freed.
+<DT><B>--help</B> [<B>-h</B>]<DD>
+Displays a quick-reference option summary.
+<DT><B>--large-bound</B> &lt;<I>unsigned integer</I>&gt;<DD>
+[<B>LARGEBOUND</B>]  Specifies the limit in bytes up to which memory allocations
+should be classified as large allocations for profiling purposes.
+<DT><B>--leak-table</B><DD>
+[<B>LEAKTABLE</B>] Specifies that the leak table should be automatically used
+and a leak table summary should be displayed at the end of program execution.
+<DT><B>--limit</B> &lt;<I>unsigned integer</I>&gt; [<B>-u</B>]<DD>
+[<B>LIMIT</B>]  Specifies the limit in bytes at which all memory allocations
+should fail if the total allocated memory should increase beyond this.
+<DT><B>--list</B> [<B>-i</B>]<DD>
+[<B>LIST</B>]  Specifies that a context listing should be shown for any relevant
+source files that are associated with any warnings or errors when they occur.
+<DT><B>--log-all</B> [<B>-L</B>]<DD>
+[<B>LOGALL</B>]  Equivalent to the <B>--log-allocs</B>,
+<B>--log-reallocs</B>, <B>--log-frees</B> and <B>--log-memory</B> options
+specified together.
+<DT><B>--log-allocs</B><DD>
+[<B>LOGALLOCS</B>]  Specifies that all memory allocations are to be logged and
+sent to the log file.
+<DT><B>--log-file</B> &lt;<I>string</I>&gt; [<B>-l</B>]<DD>
+[<B>LOGFILE</B>]  Specifies an alternative file in which to place all diagnostics
+from the mpatrol library.
+<DT><B>--log-frees</B><DD>
+[<B>LOGFREES</B>]  Specifies that all memory deallocations are to be logged and
+sent to the log file.
+<DT><B>--log-memory</B><DD>
+[<B>LOGMEMORY</B>]  Specifies that all memory operations are to be logged and
+sent to the log file.
+<DT><B>--log-reallocs</B><DD>
+[<B>LOGREALLOCS</B>]  Specifies that all memory reallocations are to be logged
+and sent to the log file.
+<DT><B>--medium-bound</B> &lt;<I>unsigned integer</I>&gt;<DD>
+[<B>MEDIUMBOUND</B>]  Specifies the limit in bytes up to which memory allocations
+should be classified as medium allocations for profiling purposes.
+<DT><B>--no-free</B> &lt;<I>unsigned integer</I>&gt; [<B>-n</B>]<DD>
+[<B>NOFREE</B>]  Specifies that a number of recently-freed memory allocations
+should be prevented from being returned to the free memory pool.
+<DT><B>--no-protect</B> [<B>-N</B>]<DD>
+[<B>NOPROTECT</B>]  Specifies that the mpatrol library's internal data structures
+should not be made read-only after every memory allocation, reallocation or
+deallocation.
+<DT><B>--oflow-byte</B> &lt;<I>unsigned integer</I>&gt; [<B>-o</B>]<DD>
+[<B>OFLOWBYTE</B>]  Specifies an 8-bit byte pattern with which to fill the
+overflow buffers of all memory allocations.
+<DT><B>--oflow-size</B> &lt;<I>unsigned integer</I>&gt; [<B>-O</B>]<DD>
+[<B>OFLOWSIZE</B>]  Specifies the size in bytes to use for all overflow buffers,
+which must be a power of two.
+<DT><B>--oflow-watch</B> [<B>-w</B>]<DD>
+[<B>OFLOWWATCH</B>]  Specifies that watch point areas should be used for overflow
+buffers rather than filling with the overflow byte.
+<DT><B>--page-alloc-lower</B> [<B>-b</B>]<DD>
+[<B>PAGEALLOC</B>=<I>LOWER</I>]  Specifies that each individual memory allocation
+should occupy at least one page of virtual memory and should be placed at the
+lowest point within these pages.
+<DT><B>--page-alloc-upper</B> [<B>-B</B>]<DD>
+[<B>PAGEALLOC</B>=<I>UPPER</I>]  Specifies that each individual memory allocation
+should occupy at least one page of virtual memory and should be placed at the
+highest point within these pages.
+<DT><B>--preserve</B> [<B>-v</B>]<DD>
+[<B>PRESERVE</B>]  Specifies that any reallocated or freed memory allocations
+should preserve their original contents.
+<DT><B>--prof</B> [<B>-p</B>]<DD>
+[<B>PROF</B>]  Specifies that all memory allocations are to be profiled and sent
+to the profiling output file.
+<DT><B>--prof-file</B> &lt;<I>string</I>&gt; [<B>-P</B>]<DD>
+[<B>PROFFILE</B>]  Specifies an alternative file in which to place all memory
+allocation profiling information from the mpatrol library.
+<DT><B>--prog-file</B> &lt;<I>string</I>&gt; [<B>-r</B>]<DD>
+[<B>PROGFILE</B>]  Specifies an alternative filename with which to locate the
+executable file containing the program's symbols.
+<DT><B>--read-env</B> [<B>-I</B>]<DD>
+Reads and passes through the contents of the <B>MPATROL_OPTIONS</B> environment
+variable.  Such contents will be placed before any of the options resulting from
+<B>mpatrol</B> command line options so that they can be overridden and will only
+be parsed by the mpatrol library, <I>not</I> the <B>mpatrol</B> command.
+<DT><B>--realloc-stop</B> &lt;<I>unsigned integer</I>&gt; [<B>-R</B>]<DD>
+[<B>REALLOCSTOP</B>]  Specifies an allocation index at which to stop the program
+when a memory allocation is being reallocated.
+<DT><B>--safe-signals</B> [<B>-G</B>]<DD>
+[<B>SAFESIGNALS</B>]  Instructs the library to save and replace certain signal
+handlers during the execution of library code and to restore them afterwards.
+<DT><B>--show-all</B> [<B>-S</B>]<DD>
+[<B>SHOWALL</B>]  Equivalent to the <B>--show-free</B>, <B>--show-freed</B>,
+<B>--show-unfreed</B>, <B>--show-map</B> and <B>--show-symbols</B> options
+specified together.
+<DT><B>--show-env</B> [<B>-E</B>]<DD>
+Displays the contents of the <B>MPATROL_OPTIONS</B> environment variable.  This
+will be shown after all of the other command line options have been processed
+and will prevent the specified command from being run.
+<DT><B>--show-free</B><DD>
+[<B>SHOWFREE</B>]  Specifies that a summary of all of the free memory blocks
+should be displayed at the end of program execution.
+<DT><B>--show-freed</B><DD>
+[<B>SHOWFREED</B>]  Specifies that a summary of all of the freed memory
+allocations should be displayed at the end of program execution.
+<DT><B>--show-map</B><DD>
+[<B>SHOWMAP</B>]  Specifies that a memory map of the entire heap should be
+displayed at the end of program execution.
+<DT><B>--show-symbols</B><DD>
+[<B>SHOWSYMBOLS</B>]  Specifies that a summary of all of the function symbols
+read from the program's executable file should be displayed at the end of
+program execution.
+<DT><B>--show-unfreed</B><DD>
+[<B>SHOWUNFREED</B>]  Specifies that a summary of all of the unfreed memory
+allocations should be displayed at the end of program execution.
+<DT><B>--small-bound</B> &lt;<I>unsigned integer</I>&gt;<DD>
+[<B>SMALLBOUND</B>]  Specifies the limit in bytes up to which memory allocations
+should be classified as small allocations for profiling purposes.
+<DT><B>--threads</B> [<B>-j</B>]<DD>
+Specifies that the program to be run is multithreaded if the <B>--dynamic</B>
+option is used.  This option is required if the multithreaded version of the
+mpatrol library should be preloaded instead of the normal version.
+<DT><B>--trace</B> [<B>-t</B>]<DD>
+Specifies that all memory allocations are to be traced and sent to the tracing
+output file.
+<DT><B>--trace-file</B> &lt;<I>string</I>&gt; [<B>-T</B>]<DD>
+Specifies an alternative file in which to place all memory allocation tracing
+information from the mpatrol library.
+<DT><B>--unfreed-abort</B> &lt;<I>unsigned integer</I>&gt; [<B>-U</B>]<DD>
+[<B>UNFREEDABORT</B>]  Specifies the minimum number of unfreed allocations at
+which to abort the program just before program termination.
+<DT><B>--use-debug</B> [<B>-g</B>]<DD>
+[<B>USEDEBUG</B>]  Specifies that any debugging information in the executable
+file should be used to obtain additional source-level information.
+<DT><B>--use-mmap</B> [<B>-m</B>]<DD>
+[<B>USEMMAP</B>]  Specifies that the library should use <B>mmap()</B> instead of
+<B>sbrk()</B> to allocate user memory.
+<DT><B>--version</B> [<B>-V</B>]<DD>
+Displays the version number of the <B>mpatrol</B> command.
+</DL>
+<A NAME="lbAF">&nbsp;</A>
+<H2>SEE ALSO</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+mprof">mprof</A></B>(1), <B><A HREF="http://localhost/cgi-bin/man/man2html?1+mptrace">mptrace</A></B>(1), <B><A HREF="http://localhost/cgi-bin/man/man2html?1+mleak">mleak</A></B>(1), <B><A HREF="http://localhost/cgi-bin/man/man2html?1+mpsym">mpsym</A></B>(1),
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+mpedit">mpedit</A></B>(1), <B><A HREF="http://localhost/cgi-bin/man/man2html?1+hexwords">hexwords</A></B>(1), <B><A HREF="http://localhost/cgi-bin/man/man2html?3+libmpatrol">libmpatrol</A></B>(3), <B><A HREF="http://localhost/cgi-bin/man/man2html?3+libmpalloc">libmpalloc</A></B>(3).
+<P>
+
+The mpatrol manual and reference card.
+<P>
+
+<A HREF="http://www.cbmamiga.demon.co.uk/mpatrol/">http://www.cbmamiga.demon.co.uk/mpatrol/</A>
+<A NAME="lbAG">&nbsp;</A>
+<H2>AUTHOR</H2>
+
+Graeme S. Roy &lt;<A HREF="mailto:graeme.roy@analog.com">graeme.roy@analog.com</A>&gt;
+<A NAME="lbAH">&nbsp;</A>
+<H2>COPYRIGHT</H2>
+
+Copyright (C) 1997-2002 Graeme S. Roy &lt;<A HREF="mailto:graeme.roy@analog.com">graeme.roy@analog.com</A>&gt;
+<P>
+
+This library is free software; you can redistribute it and/or modify it under
+the terms of the GNU Library General Public License as published by the Free
+Software Foundation; either version 2 of the License, or (at your option) any
+later version.
+<P>
+
+This library is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU Library General Public License for more
+details.
+<P>
+
+You should have received a copy of the GNU Library General Public License
+along with this library; if not, write to the Free Software Foundation, Inc.,
+59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAE">OPTIONS</A><DD>
+<DT><A HREF="#lbAF">SEE ALSO</A><DD>
+<DT><A HREF="#lbAG">AUTHOR</A><DD>
+<DT><A HREF="#lbAH">COPYRIGHT</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 23:42:08 GMT, January 08, 2002
+</BODY>
+</HTML>

@@ -1,0 +1,133 @@
+* mpatrol
+* A library for controlling and tracing dynamic memory allocations.
+* Copyright (C) 1997-2002 Graeme S. Roy <graeme.roy@analog.com>
+*
+* This library is free software; you can redistribute it and/or
+* modify it under the terms of the GNU Library General Public
+* License as published by the Free Software Foundation; either
+* version 2 of the License, or (at your option) any later version.
+*
+* This library is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+* Library General Public License for more details.
+*
+* You should have received a copy of the GNU Library General Public
+* License along with this library; if not, write to the Free
+* Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+* MA 02111-1307, USA.
+
+
+* AIX Shared Library Exports
+
+
+__mp_errno
+__mp_init
+__mp_reinit
+__mp_fini
+__mp_trap
+__mp_atexit
+__mp_setoption
+__mp_getoption
+__mp_memhead
+__mp_alloc
+__mp_strdup
+__mp_realloc
+__mp_free
+__mp_setmem
+__mp_copymem
+__mp_comparemem
+__mp_locatemem
+__mp_libversion
+__mp_strerror
+__mp_function
+__mp_setuser
+__mp_setmark
+__mp_info
+__mp_syminfo
+__mp_symbol
+__mp_printinfo
+__mp_snapshot
+__mp_iterate
+__mp_iterateall
+__mp_addallocentry
+__mp_addfreeentry
+__mp_clearleaktable
+__mp_startleaktable
+__mp_stopleaktable
+__mp_leaktable
+__mp_memorymap
+__mp_summary
+__mp_stats
+__mp_checkheap
+__mp_check
+__mp_prologue
+__mp_epilogue
+__mp_nomemory
+__mp_pushdelstack
+__mp_popdelstack
+__mp_printf
+__mp_vprintf
+__mp_printfwithloc
+__mp_vprintfwithloc
+__mp_logmemory
+__mp_logstack
+__mp_logaddr
+__mp_edit
+__mp_list
+__mp_view
+__mp_readcontents
+__mp_writecontents
+__mp_cmpcontents
+__mp_remcontents
+__mp_libld
+__cyg_profile_func_enter
+__cyg_profile_func_exit
+chkr_set_right
+chkr_copy_bitmap
+chkr_check_addr
+chkr_check_str
+chkr_check_exec
+malloc
+calloc
+memalign
+valloc
+pvalloc
+alloca
+strdup
+strndup
+strsave
+strnsave
+strdupa
+strndupa
+realloc
+reallocf
+recalloc
+expand
+free
+cfree
+dealloca
+xmalloc
+xcalloc
+xstrdup
+xrealloc
+xfree
+memset
+bzero
+memccpy
+memcpy
+memmove
+bcopy
+memchr
+memmem
+memcmp
+bcmp
+set_new_handler__3stdFPFv_v
+__nw__FUi
+__nw__FUiRCQ2_3std9nothrow_t
+__nwa__FUi
+__nwa__FUiRCQ2_3std9nothrow_t
+__dl__FPv
+__dl__FPvRCQ2_3std9nothrow_t
+__dla__FPv
+__dla__FPvRCQ2_3std9nothrow_t

@@ -1,0 +1,762 @@
+%!PS-Adobe-2.0 EPSF-1.2
+%%Title: allocation call graph
+%%Creator: dot version gviz1.5.1 (09-29-99)
+%%BoundingBox: 35 36 312 253
+%%Pages: 1
+%%DocumentFonts: Times-Roman
+
+save
+countdictstack
+mark
+newpath
+/showpage {} def
+
+%%EndProlog
+
+%%Page 1 1
+
+save
+/DotDict 200 dict def
+DotDict begin
+
+/coord-font-family /Times-Roman def
+/default-font-family /Times-Roman def
+/coordfont coord-font-family findfont 8 scalefont def
+
+/InvScaleFactor 1.0 def
+/set_scale {
+	dup 1 exch div /InvScaleFactor exch def
+	dup scale
+} bind def
+
+% styles
+/solid { } bind def
+/dashed { [9 InvScaleFactor mul dup ] 0 setdash } bind def
+/dotted { [1 InvScaleFactor mul 6 InvScaleFactor mul] 0 setdash } bind def
+/invis {/fill {newpath} def /stroke {newpath} def /show {pop newpath} def} bind def
+/bold { 2 setlinewidth } bind def
+/filled { } bind def
+/unfilled { } bind def
+/rounded { } bind def
+/diagonals { } bind def
+
+% hooks for setting color
+/nodecolor { sethsbcolor } bind def
+/edgecolor { sethsbcolor } bind def
+/graphcolor { sethsbcolor } bind def
+/nopcolor {pop pop pop} bind def
+
+/beginpage {	% i j npages
+	/npages exch def
+	/j exch def
+	/i exch def
+	/str 10 string def
+	npages 1 gt {
+		gsave
+			coordfont setfont
+			0 0 moveto
+			(\() show i str cvs show (,) show j str cvs show (\)) show
+		grestore
+	} if
+} bind def
+
+/set_font {
+	findfont exch
+	scalefont setfont
+} def
+
+% draw aligned label in bounding box aligned to current point
+% alignfactor tells what fraction to place on the left.
+% -.5 is centered.
+/alignedtext {			% text labelwidth fontsz alignfactor
+	/alignfactor exch def
+	/fontsz exch def
+	/width exch def
+	/text exch def
+	gsave
+		% even if node or edge is dashed, don't paint text with dashes
+		[] 0 setdash
+		currentpoint newpath moveto
+		text stringwidth pop
+		alignfactor mul fontsz -.3 mul rmoveto
+		text show
+	grestore
+} def
+
+/boxprim {				% xcorner ycorner xsize ysize
+		4 2 roll
+		moveto
+		2 copy
+		exch 0 rlineto
+		0 exch rlineto
+		pop neg 0 rlineto
+		closepath
+} bind def
+
+/ellipse_path {
+	/ry exch def
+	/rx exch def
+	/y exch def
+	/x exch def
+	matrix currentmatrix
+	newpath
+	x y translate
+	rx ry scale
+	0 0 1 0 360 arc
+	setmatrix
+} bind def
+
+/endpage { showpage } bind def
+
+/layercolorseq
+	[	% layer color sequence - darkest to lightest
+		[0 0 0]
+		[.2 .8 .8]
+		[.4 .8 .8]
+		[.6 .8 .8]
+		[.8 .8 .8]
+	]
+def
+
+/setlayer {/maxlayer exch def /curlayer exch def
+	layercolorseq curlayer get
+	aload pop sethsbcolor
+	/nodecolor {nopcolor} def
+	/edgecolor {nopcolor} def
+	/graphcolor {nopcolor} def
+} bind def
+
+/onlayer { curlayer ne {invis} if } def
+
+/onlayers {
+	/myupper exch def
+	/mylower exch def
+	curlayer mylower lt
+	curlayer myupper gt
+	or
+	{invis} if
+} def
+
+/curlayer 0 def
+
+14 default-font-family set_font
+1 setmiterlimit
+% /arrowlength 10 def
+% /arrowwidth 5 def
+gsave
+35 35 279 217 boxprim clip newpath
+36 36 translate
+0 0 1 beginpage
+0.2379 set_scale
+0 0 translate 0 rotate
+0.000 0.000 0.000 graphcolor
+14.00 /Times-Roman set_font
+
+%	START
+gsave 10 dict begin
+327 890 32 18 ellipse_path
+stroke
+gsave 10 dict begin
+327 891 moveto (START) 44 14.00 -0.50 alignedtext
+end grestore
+end grestore
+
+%	_start
+gsave 10 dict begin
+327 802 27 18 ellipse_path
+stroke
+gsave 10 dict begin
+327 803 moveto (_start) 31 14.00 -0.50 alignedtext
+end grestore
+end grestore
+
+%	START -> _start
+newpath 327 872 moveto
+327 860 327 843 327 829 curveto
+stroke
+newpath 325 830 moveto
+327 820 lineto
+330 830 lineto
+closepath
+gsave 0 setgray stroke grestore fill
+gsave 10 dict begin
+352 847 moveto (52168) 35 14.00 -0.50 alignedtext
+end grestore
+
+%	main
+gsave 10 dict begin
+327 714 27 18 ellipse_path
+stroke
+gsave 10 dict begin
+327 715 moveto (main) 28 14.00 -0.50 alignedtext
+end grestore
+end grestore
+
+%	_start -> main
+newpath 327 784 moveto
+327 772 327 755 327 741 curveto
+stroke
+newpath 325 742 moveto
+327 732 lineto
+330 742 lineto
+closepath
+gsave 0 setgray stroke grestore fill
+gsave 10 dict begin
+352 759 moveto (52168) 35 14.00 -0.50 alignedtext
+end grestore
+
+%	xcalloc
+gsave 10 dict begin
+30 572 30 18 ellipse_path
+stroke
+gsave 10 dict begin
+30 573 moveto (xcalloc) 40 14.00 -0.50 alignedtext
+end grestore
+end grestore
+
+%	main -> xcalloc
+newpath 300 713 moveto
+253 710 157 701 108 678 curveto
+83 665 58 625 43 598 curveto
+stroke
+newpath 41 600 moveto
+39 590 lineto
+46 598 lineto
+closepath
+gsave 0 setgray stroke grestore fill
+gsave 10 dict begin
+126 671 moveto (396) 21 14.00 -0.50 alignedtext
+end grestore
+
+%	_obstack_begin
+gsave 10 dict begin
+745 194 54 18 ellipse_path
+stroke
+gsave 10 dict begin
+745 195 moveto (_obstack_begin) 87 14.00 -0.50 alignedtext
+end grestore
+end grestore
+
+%	main -> _obstack_begin
+newpath 352 706 moveto
+372 699 399 689 414 678 curveto
+447 654 478 624 502 590 curveto
+573 485 691 286 731 218 curveto
+stroke
+newpath 727 220 moveto
+734 212 lineto
+732 222 lineto
+closepath
+gsave 0 setgray stroke grestore fill
+gsave 10 dict begin
+613 465 moveto (8144) 28 14.00 -0.50 alignedtext
+end grestore
+
+%	prefix_from_env
+gsave 10 dict begin
+433 572 57 18 ellipse_path
+stroke
+gsave 10 dict begin
+433 573 moveto (prefix_from_env) 94 14.00 -0.50 alignedtext
+end grestore
+end grestore
+
+%	main -> prefix_from_env
+newpath 339 698 moveto
+358 673 394 625 416 596 curveto
+stroke
+newpath 412 597 moveto
+420 590 lineto
+417 600 lineto
+closepath
+gsave 0 setgray stroke grestore fill
+gsave 10 dict begin
+386 671 moveto (2027) 28 14.00 -0.50 alignedtext
+end grestore
+
+%	find_a_file
+gsave 10 dict begin
+144 464 41 18 ellipse_path
+stroke
+gsave 10 dict begin
+144 465 moveto (find_a_file) 61 14.00 -0.50 alignedtext
+end grestore
+end grestore
+
+%	main -> find_a_file
+newpath 303 705 moveto
+274 693 228 670 215 644 curveto
+194 603 167 529 153 490 curveto
+stroke
+newpath 151 492 moveto
+150 482 lineto
+156 490 lineto
+closepath
+gsave 0 setgray stroke grestore fill
+gsave 10 dict begin
+233 627 moveto (677) 21 14.00 -0.50 alignedtext
+end grestore
+
+%	make_temp_file
+gsave 10 dict begin
+267 356 55 18 ellipse_path
+stroke
+gsave 10 dict begin
+267 357 moveto (make_temp_file) 90 14.00 -0.50 alignedtext
+end grestore
+end grestore
+
+%	main -> make_temp_file
+newpath 311 699 moveto
+293 681 266 649 267 626 curveto
+267 626 267 626 267 464 curveto
+266 442 267 407 267 383 curveto
+stroke
+newpath 265 384 moveto
+267 374 lineto
+270 384 lineto
+closepath
+gsave 0 setgray stroke grestore fill
+gsave 10 dict begin
+281 573 moveto (64) 14 14.00 -0.50 alignedtext
+end grestore
+
+%	do_tlink
+gsave 10 dict begin
+766 626 33 18 ellipse_path
+stroke
+gsave 10 dict begin
+766 627 moveto (do_tlink) 46 14.00 -0.50 alignedtext
+end grestore
+end grestore
+
+%	main -> do_tlink
+newpath 354 712 moveto
+416 707 570 694 656 678 curveto
+678 674 711 657 735 644 curveto
+stroke
+newpath 733 642 moveto
+743 639 lineto
+736 646 lineto
+closepath
+gsave 0 setgray stroke grestore fill
+gsave 10 dict begin
+719 671 moveto (40860) 35 14.00 -0.50 alignedtext
+end grestore
+
+%	ALLOC
+gsave 10 dict begin
+443 18 33 18 ellipse_path
+stroke
+gsave 10 dict begin
+443 19 moveto (ALLOC) 46 14.00 -0.50 alignedtext
+end grestore
+end grestore
+
+%	xcalloc -> ALLOC
+newpath 27 554 moveto
+24 530 19 489 19 464 curveto
+19 464 19 464 19 106 curveto
+19 47 293 26 401 20 curveto
+stroke
+newpath 400 18 moveto
+410 20 lineto
+400 23 lineto
+closepath
+gsave 0 setgray stroke grestore fill
+gsave 10 dict begin
+37 303 moveto (396) 21 14.00 -0.50 alignedtext
+end grestore
+
+%	xmalloc
+gsave 10 dict begin
+443 106 33 18 ellipse_path
+stroke
+gsave 10 dict begin
+443 107 moveto (xmalloc) 45 14.00 -0.50 alignedtext
+end grestore
+end grestore
+
+%	_obstack_begin -> xmalloc
+newpath 704 182 moveto
+646 165 536 133 480 117 curveto
+stroke
+newpath 481 120 moveto
+472 115 lineto
+482 115 lineto
+closepath
+gsave 0 setgray stroke grestore fill
+gsave 10 dict begin
+646 151 moveto (28396) 35 14.00 -0.50 alignedtext
+end grestore
+
+%	xmalloc -> ALLOC
+newpath 443 88 moveto
+443 76 443 59 443 45 curveto
+stroke
+newpath 441 46 moveto
+443 36 lineto
+446 46 lineto
+closepath
+gsave 0 setgray stroke grestore fill
+gsave 10 dict begin
+468 63 moveto (43572) 35 14.00 -0.50 alignedtext
+end grestore
+
+%	prefix_from_string
+gsave 10 dict begin
+433 410 63 18 ellipse_path
+stroke
+gsave 10 dict begin
+433 411 moveto (prefix_from_string) 106 14.00 -0.50 alignedtext
+end grestore
+end grestore
+
+%	prefix_from_env -> prefix_from_string
+newpath 433 554 moveto
+433 525 433 472 433 438 curveto
+stroke
+newpath 431 438 moveto
+433 428 lineto
+436 438 lineto
+closepath
+gsave 0 setgray stroke grestore fill
+gsave 10 dict begin
+454 519 moveto (2027) 28 14.00 -0.50 alignedtext
+end grestore
+
+%	prefix_from_string -> xmalloc
+newpath 431 392 moveto
+430 372 427 339 426 320 curveto
+424 302 423 284 423 266 curveto
+422 254 421 241 423 230 curveto
+427 203 433 161 438 133 curveto
+stroke
+newpath 435 133 moveto
+440 124 lineto
+440 134 lineto
+closepath
+gsave 0 setgray stroke grestore fill
+gsave 10 dict begin
+441 249 moveto (863) 21 14.00 -0.50 alignedtext
+end grestore
+
+%	add_prefix
+gsave 10 dict begin
+478 302 40 18 ellipse_path
+stroke
+gsave 10 dict begin
+478 303 moveto (add_prefix) 60 14.00 -0.50 alignedtext
+end grestore
+end grestore
+
+%	prefix_from_string -> add_prefix
+newpath 441 392 moveto
+448 375 459 348 467 328 curveto
+stroke
+newpath 464 328 moveto
+471 320 lineto
+469 330 lineto
+closepath
+gsave 0 setgray stroke grestore fill
+gsave 10 dict begin
+484 357 moveto (1164) 28 14.00 -0.50 alignedtext
+end grestore
+
+%	add_prefix -> xmalloc
+newpath 475 284 moveto
+468 249 455 172 448 132 curveto
+stroke
+newpath 446 134 moveto
+446 124 lineto
+451 133 lineto
+closepath
+gsave 0 setgray stroke grestore fill
+gsave 10 dict begin
+479 195 moveto (280) 21 14.00 -0.50 alignedtext
+end grestore
+
+%	xstrdup
+gsave 10 dict begin
+579 194 31 18 ellipse_path
+stroke
+gsave 10 dict begin
+579 195 moveto (xstrdup) 42 14.00 -0.50 alignedtext
+end grestore
+end grestore
+
+%	add_prefix -> xstrdup
+newpath 494 285 moveto
+511 267 539 237 558 216 curveto
+stroke
+newpath 555 215 moveto
+564 210 lineto
+559 219 lineto
+closepath
+gsave 0 setgray stroke grestore fill
+gsave 10 dict begin
+563 249 moveto (884) 21 14.00 -0.50 alignedtext
+end grestore
+
+%	xstrdup -> xmalloc
+newpath 558 180 moveto
+536 166 498 142 473 125 curveto
+stroke
+newpath 472 127 moveto
+465 120 lineto
+475 123 lineto
+closepath
+gsave 0 setgray stroke grestore fill
+gsave 10 dict begin
+541 151 moveto (884) 21 14.00 -0.50 alignedtext
+end grestore
+
+%	find_a_file -> xmalloc
+newpath 141 446 moveto
+138 422 132 381 133 356 curveto
+133 356 133 356 133 194 curveto
+132 152 319 122 404 111 curveto
+stroke
+newpath 401 109 moveto
+411 110 lineto
+401 114 lineto
+closepath
+gsave 0 setgray stroke grestore fill
+gsave 10 dict begin
+151 303 moveto (677) 21 14.00 -0.50 alignedtext
+end grestore
+
+%	make_temp_file -> xmalloc
+newpath 271 338 moveto
+280 295 308 184 352 142 curveto
+364 130 386 122 407 115 curveto
+stroke
+newpath 403 114 moveto
+413 113 lineto
+404 119 lineto
+closepath
+gsave 0 setgray stroke grestore fill
+gsave 10 dict begin
+316 249 moveto (64) 14 14.00 -0.50 alignedtext
+end grestore
+
+%	tlink_init
+gsave 10 dict begin
+766 518 36 18 ellipse_path
+stroke
+gsave 10 dict begin
+766 519 moveto (tlink_init) 51 14.00 -0.50 alignedtext
+end grestore
+end grestore
+
+%	do_tlink -> tlink_init
+newpath 766 608 moveto
+766 591 766 565 766 545 curveto
+stroke
+newpath 764 546 moveto
+766 536 lineto
+769 546 lineto
+closepath
+gsave 0 setgray stroke grestore fill
+gsave 10 dict begin
+791 573 moveto (32660) 35 14.00 -0.50 alignedtext
+end grestore
+
+%	dump_file
+gsave 10 dict begin
+947 518 39 18 ellipse_path
+stroke
+gsave 10 dict begin
+947 519 moveto (dump_file) 57 14.00 -0.50 alignedtext
+end grestore
+end grestore
+
+%	do_tlink -> dump_file
+newpath 789 613 moveto
+821 593 879 558 916 536 curveto
+stroke
+newpath 913 535 moveto
+923 532 lineto
+916 539 lineto
+closepath
+gsave 0 setgray stroke grestore fill
+gsave 10 dict begin
+907 573 moveto (8200) 28 14.00 -0.50 alignedtext
+end grestore
+
+%	tlink_init -> _obstack_begin
+newpath 765 500 moveto
+761 446 751 284 747 220 curveto
+stroke
+newpath 745 222 moveto
+746 212 lineto
+750 222 lineto
+closepath
+gsave 0 setgray stroke grestore fill
+gsave 10 dict begin
+777 357 moveto (8144) 28 14.00 -0.50 alignedtext
+end grestore
+
+%	hash_table_init
+gsave 10 dict begin
+886 410 53 18 ellipse_path
+stroke
+gsave 10 dict begin
+886 411 moveto (hash_table_init) 85 14.00 -0.50 alignedtext
+end grestore
+end grestore
+
+%	tlink_init -> hash_table_init
+newpath 784 502 moveto
+804 484 837 455 860 434 curveto
+stroke
+newpath 858 432 moveto
+867 427 lineto
+862 436 lineto
+closepath
+gsave 0 setgray stroke grestore fill
+gsave 10 dict begin
+871 465 moveto (24516) 35 14.00 -0.50 alignedtext
+end grestore
+
+%	hash_table_init_n
+gsave 10 dict begin
+891 302 60 18 ellipse_path
+stroke
+gsave 10 dict begin
+891 303 moveto (hash_table_init_n) 99 14.00 -0.50 alignedtext
+end grestore
+end grestore
+
+%	hash_table_init -> hash_table_init_n
+newpath 887 392 moveto
+888 375 889 349 890 329 curveto
+stroke
+newpath 888 330 moveto
+890 320 lineto
+893 330 lineto
+closepath
+gsave 0 setgray stroke grestore fill
+gsave 10 dict begin
+914 357 moveto (24516) 35 14.00 -0.50 alignedtext
+end grestore
+
+%	hash_table_init_n -> _obstack_begin
+newpath 868 285 moveto
+843 267 803 238 776 217 curveto
+stroke
+newpath 773 218 moveto
+767 210 lineto
+776 214 lineto
+closepath
+gsave 0 setgray stroke grestore fill
+gsave 10 dict begin
+867 249 moveto (12108) 35 14.00 -0.50 alignedtext
+end grestore
+
+%	_obstack_newchunk
+gsave 10 dict begin
+970 194 67 18 ellipse_path
+stroke
+gsave 10 dict begin
+970 195 moveto (_obstack_newchunk) 114 14.00 -0.50 alignedtext
+end grestore
+end grestore
+
+%	hash_table_init_n -> _obstack_newchunk
+newpath 904 284 moveto
+916 266 937 239 952 219 curveto
+stroke
+newpath 949 219 moveto
+957 212 lineto
+953 222 lineto
+closepath
+gsave 0 setgray stroke grestore fill
+gsave 10 dict begin
+968 249 moveto (12408) 35 14.00 -0.50 alignedtext
+end grestore
+
+%	_obstack_newchunk -> xmalloc
+newpath 915 184 moveto
+849 172 741 153 677 142 curveto
+623 133 533 119 482 112 curveto
+stroke
+newpath 485 115 moveto
+475 111 lineto
+485 110 lineto
+closepath
+gsave 0 setgray stroke grestore fill
+gsave 10 dict begin
+793 151 moveto (12408) 35 14.00 -0.50 alignedtext
+end grestore
+
+%	__filbuf
+gsave 10 dict begin
+1088 410 33 18 ellipse_path
+stroke
+gsave 10 dict begin
+1088 411 moveto (__filbuf) 45 14.00 -0.50 alignedtext
+end grestore
+end grestore
+
+%	dump_file -> __filbuf
+newpath 967 503 moveto
+992 483 1036 450 1063 429 curveto
+stroke
+newpath 1059 428 moveto
+1069 425 lineto
+1062 433 lineto
+closepath
+gsave 0 setgray stroke grestore fill
+gsave 10 dict begin
+1062 465 moveto (8200) 28 14.00 -0.50 alignedtext
+end grestore
+
+%	_findbuf
+gsave 10 dict begin
+1123 248 34 18 ellipse_path
+stroke
+gsave 10 dict begin
+1123 249 moveto (_findbuf) 48 14.00 -0.50 alignedtext
+end grestore
+end grestore
+
+%	__filbuf -> _findbuf
+newpath 1092 392 moveto
+1099 363 1110 305 1118 273 curveto
+stroke
+newpath 1115 276 moveto
+1119 266 lineto
+1120 276 lineto
+closepath
+gsave 0 setgray stroke grestore fill
+gsave 10 dict begin
+1124 357 moveto (8200) 28 14.00 -0.50 alignedtext
+end grestore
+
+%	_findbuf -> ALLOC
+newpath 1110 231 moveto
+1096 212 1070 183 1049 176 curveto
+889 122 590 51 483 27 curveto
+stroke
+newpath 483 30 moveto
+474 25 lineto
+484 25 lineto
+closepath
+gsave 0 setgray stroke grestore fill
+gsave 10 dict begin
+1004 151 moveto (8200) 28 14.00 -0.50 alignedtext
+end grestore
+
+endpage
+grestore
+end
+restore
+
+%%Trailer
+
+cleartomark
+countdictstack exch sub { end } repeat
+restore
+
+%%EOF

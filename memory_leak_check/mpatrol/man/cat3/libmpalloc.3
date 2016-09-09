@@ -1,0 +1,198 @@
+
+
+
+LIBMPALLOC(3)            mpatrol library            LIBMPALLOC(3)
+
+
+NNAAMMEE
+       libmpalloc - dynamic memory allocation replacement library
+
+SSYYNNOOPPSSIISS
+       #include <mpalloc.h>
+
+       void *MP_MALLOC(void *ptr, size_t count, typename type);
+       void *MP_CALLOC(void *ptr, size_t count, typename type);
+       char *MP_STRDUP(char *ptr, const char *str);
+       void *MP_REALLOC(void *ptr, size_t count, typename type);
+       void MP_FREE(void *ptr);
+       __mp_failhandler MP_FAILURE(__mp_failhandler func);
+
+DDEESSCCRRIIPPTTIIOONN
+       The _m_p_a_l_l_o_c _l_i_b_r_a_r_y contains  release  implementations  of
+       all  of  the  mpatrol  library  functions, with all of its
+       checking, debugging and tracing features disabled.  It  is
+       fully  link-compatible with the mpatrol library and so can
+       be linked in instead of the mpatrol library  in  order  to
+       quickly  disable  all  of its features without requiring a
+       complete recompilation of all of the  source  files  in  a
+       project.   It also contains implementations of the MMPP__MMAALL--
+       LLOOCC family of functions that can  be  used  in  a  release
+       environment.
+
+       All  of  the function definitions in _m_p_a_t_r_o_l_._h can be dis-
+       abled by defining the NNDDEEBBUUGG preprocessor macro, which  is
+       the same macro used to control the behaviour of the aasssseerrtt
+       function.  If NNDDEEBBUUGG is defined then no macro redefinition
+       of  functions  will  take  place  and  all special mpatrol
+       library functions will evaluate to empty statements.   The
+       _m_p_a_l_l_o_c_._h  header file will also be included in this case.
+       It is intended  that  the  NNDDEEBBUUGG  preprocessor  macro  be
+       defined in release builds.
+
+       The  mpalloc  library contains functional replacements for
+       all of the mpatrol library's dynamic memory allocation and
+       memory  operation  functions, mainly for use in situations
+       where not all of the source files in a project  have  been
+       recompiled  with the NNDDEEBBUUGG preprocessor macro in order to
+       remove mpatrol.  However, not all of these  functions  can
+       be  fully implemented using ANSI C and so may contain some
+       limitations.  The only recommended solution  for  a  final
+       release  is  to  perform  a complete recompile with NNDDEEBBUUGG
+       defined.
+
+FFUUNNCCTTIIOONNSS
+       The following  6  functions  are  provided  as  convenient
+       alternatives to the ANSI C dynamic memory allocation func-
+       tions (although ssttrrdduupp is not strictly  an  ANSI  C  func-
+       tion).   They  are implemented as preprocessor macro func-
+       tions which may evaluate their arguments more  than  once,
+       so  extra  care should be taken to avoid passing arguments
+       with side-effects.  None of the functions return  NNUULLLL  if
+       no  memory is available and instead abort the program with
+       a useful error message indicating where the call to  allo-
+       cate  memory  came  from and what was being allocated.  To
+       use these you should include the _m_p_a_l_l_o_c_._h header file:
+
+
+       MMPP__MMAALLLLOOCC
+              Allocates _c_o_u_n_t uninitialised items  of  type  _t_y_p_e
+              from the heap, sets _p_t_r to the result and returns a
+              suitably-cast pointer to  the  first  item  of  the
+              allocation.   The pointer returned will be suitably
+              aligned for holding items of type _t_y_p_e.   If  _c_o_u_n_t
+              is  _0  then  it will be implicitly rounded up to _1.
+              If there is not enough space in the heap  then  the
+              program  will  be aborted after calling the alloca-
+              tion failure handler, which by  default  writes  an
+              appropriate  error  message  to  the standard error
+              file stream.  The allocated memory in _p_t_r  must  be
+              deallocated   with   MMPP__FFRREEEE  or  reallocated  with
+              MMPP__RREEAALLLLOOCC.
+
+       MMPP__CCAALLLLOOCC
+              Allocates _c_o_u_n_t zero-initialised items of type _t_y_p_e
+              from the heap, sets _p_t_r to the result and returns a
+              suitably-cast pointer to  the  first  item  of  the
+              allocation.   The pointer returned will be suitably
+              aligned for holding items of type _t_y_p_e.   If  _c_o_u_n_t
+              is  _0  then  it will be implicitly rounded up to _1.
+              If there is not enough space in the heap  then  the
+              program  will  be aborted after calling the alloca-
+              tion failure handler, which by  default  writes  an
+              appropriate  error  message  to  the standard error
+              file stream.  The allocated memory in _p_t_r  must  be
+              deallocated   with   MMPP__FFRREEEE  or  reallocated  with
+              MMPP__RREEAALLLLOOCC.
+
+       MMPP__SSTTRRDDUUPP
+              Allocates exactly enough memory from  the  heap  to
+              duplicate  _s_t_r (including the terminating nul char-
+              acter), sets _p_t_r to the result and returns a  suit-
+              ably-cast  pointer to the first byte of the alloca-
+              tion after copying _s_t_r to the newly-allocated  mem-
+              ory.   The  pointer returned will have no alignment
+              constraints and can be used to store character data
+              up  to  the  length of _s_t_r.  If there is not enough
+              space in the heap then the program will be  aborted
+              after calling the allocation failure handler, which
+              by default writes an appropriate error  message  to
+              the standard error file stream.  The allocated mem-
+              ory in _p_t_r must  be  deallocated  with  MMPP__FFRREEEE  or
+              reallocated with MMPP__RREEAALLLLOOCC.
+
+       MMPP__RREEAALLLLOOCC
+              Resizes  the  memory allocation beginning at _p_t_r to
+              _c_o_u_n_t items of type _t_y_p_e and  returns  a  suitably-
+              cast  pointer  to the first item of the new alloca-
+              tion after copying _p_t_r to the newly-allocated  mem-
+              ory,  which  will  be truncated if _c_o_u_n_t is smaller
+              than the original number  of  items.   The  pointer
+              returned will be suitably aligned for holding items
+              of type _t_y_p_e.  If _p_t_r is NNUULLLL then the call will be
+              equivalent  to  MMPP__MMAALLLLOOCC.   If  _c_o_u_n_t is _0 then it
+              will be implicitly rounded up to _1.   If  _c_o_u_n_t  is
+              greater  than the original number of items then the
+              extra  space  will  be  filled  with  uninitialised
+              bytes.   If  there  is not enough space in the heap
+              then the program will be aborted after calling  the
+              allocation failure handler, which by default writes
+              an appropriate error message to the standard  error
+              file  stream.  The allocated memory must be deallo-
+              cated with MMPP__FFRREEEE and  can  be  reallocated  again
+              with MMPP__RREEAALLLLOOCC.
+
+       MMPP__FFRREEEE
+              Frees the memory allocation beginning at _p_t_r so the
+              memory can be reused by another  call  to  allocate
+              memory, and sets _p_t_r to NNUULLLL after freeing the mem-
+              ory.  If _p_t_r is NNUULLLL then no memory will be  freed.
+
+       MMPP__FFAAIILLUURREE
+              Installs an allocation failure handler specifically
+              for use with MMPP__MMAALLLLOOCC,  MMPP__CCAALLLLOOCC,  MMPP__SSTTRRDDUUPP  and
+              MMPP__RREEAALLLLOOCC  and returns a pointer to the previously
+              installed handler, normally the default handler  if
+              no  handler  had  been  previously installed.  This
+              will be called by the above functions when there is
+              not  enough  space  in the heap for them to satisfy
+              their allocation request.  The  default  allocation
+              failure  handler  will  terminate the program after
+              writing an error message to the standard error file
+              stream  indicating  where  the  original allocation
+              request took place and what was being allocated.
+
+SSEEEE AALLSSOO
+       mmppaattrrooll(1),  mmpprrooff(1),  mmppttrraaccee(1),  mmlleeaakk(1),   mmppssyymm(1),
+       mmppeeddiitt(1),    hheexxwwoorrddss(1),    lliibbmmppaattrrooll(3),    mmaalllloocc(3),
+       aasssseerrtt(3).
+
+       The mpatrol manual and reference card.
+
+       http://www.cbmamiga.demon.co.uk/mpatrol/
+
+AAUUTTHHOORR
+       Graeme S. Roy <graeme.roy@analog.com>
+
+CCOOPPYYRRIIGGHHTT
+       Copyright (C) 1997-2002  Graeme  S.  Roy  <graeme.roy@ana-
+       log.com>
+
+       This  library  is  free  software; you can redistribute it
+       and/or modify it under the terms of the GNU  Library  Gen-
+       eral  Public  License  as  published  by the Free Software
+       Foundation; either version 2 of the License, or  (at  your
+       option) any later version.
+
+       This  library  is  distributed in the hope that it will be
+       useful, but WITHOUT ANY WARRANTY; without even the implied
+       warranty  of  MERCHANTABILITY  or FITNESS FOR A PARTICULAR
+       PURPOSE.  See the GNU Library General Public  License  for
+       more details.
+
+       You should have received a copy of the GNU Library General
+       Public License along with this library; if not,  write  to
+       the Free Software Foundation, Inc., 59 Temple Place, Suite
+       330, Boston, MA 02111-1307, USA.
+
+
+
+Release 1.4               8 January 2002                        1
+
+
+
+
+
+
+
+
+

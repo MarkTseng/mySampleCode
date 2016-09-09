@@ -1,0 +1,162 @@
+.\" mpatrol
+.\" A library for controlling and tracing dynamic memory allocations.
+.\" Copyright (C) 1997-2002 Graeme S. Roy <graeme.roy@analog.com>
+.\"
+.\" This library is free software; you can redistribute it and/or
+.\" modify it under the terms of the GNU Library General Public
+.\" License as published by the Free Software Foundation; either
+.\" version 2 of the License, or (at your option) any later version.
+.\"
+.\" This library is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+.\" Library General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU Library General Public
+.\" License along with this library; if not, write to the Free
+.\" Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+.\" MA 02111-1307, USA.
+.\"
+.\" UNIX Manual Page
+.\"
+.\" $Id: libmpalloc.3,v 1.4 2002/01/08 20:28:42 graeme Exp $
+.\"
+.TH LIBMPALLOC 3 "8 January 2002" "Release 1.4" "mpatrol library"
+.SH NAME
+libmpalloc \- dynamic memory allocation replacement library
+.SH SYNOPSIS
+.nf
+#include <mpalloc.h>
+
+void *MP_MALLOC(void *ptr, size_t count, typename type);
+void *MP_CALLOC(void *ptr, size_t count, typename type);
+char *MP_STRDUP(char *ptr, const char *str);
+void *MP_REALLOC(void *ptr, size_t count, typename type);
+void MP_FREE(void *ptr);
+__mp_failhandler MP_FAILURE(__mp_failhandler func);
+.fi
+.SH DESCRIPTION
+The \fImpalloc library\fP contains release implementations of all of the mpatrol
+library functions, with all of its checking, debugging and tracing features
+disabled.  It is fully link-compatible with the mpatrol library and so can be
+linked in instead of the mpatrol library in order to quickly disable all of its
+features without requiring a complete recompilation of all of the source files
+in a project.  It also contains implementations of the \fBMP_MALLOC\fP family
+of functions that can be used in a release environment.
+.PP
+All of the function definitions in \fImpatrol.h\fP can be disabled by defining
+the \fBNDEBUG\fP preprocessor macro, which is the same macro used to control
+the behaviour of the \fBassert\fP function.  If \fBNDEBUG\fP is defined then
+no macro redefinition of functions will take place and all special mpatrol
+library functions will evaluate to empty statements.  The \fImpalloc.h\fP header
+file will also be included in this case.  It is intended that the \fBNDEBUG\fP
+preprocessor macro be defined in release builds.
+.PP
+The mpalloc library contains functional replacements for all of the mpatrol
+library's dynamic memory allocation and memory operation functions, mainly for
+use in situations where not all of the source files in a project have been
+recompiled with the \fBNDEBUG\fP preprocessor macro in order to remove mpatrol.
+However, not all of these functions can be fully implemented using ANSI C and so
+may contain some limitations.  The only recommended solution for a final release
+is to perform a complete recompile with \fBNDEBUG\fP defined.
+.SH FUNCTIONS
+The following 6 functions are provided as convenient alternatives to the ANSI C
+dynamic memory allocation functions (although \fBstrdup\fP is not strictly an
+ANSI C function).  They are implemented as preprocessor macro functions which
+may evaluate their arguments more than once, so extra care should be taken to
+avoid passing arguments with side-effects.  None of the functions return
+\fBNULL\fP if no memory is available and instead abort the program with a useful
+error message indicating where the call to allocate memory came from and what
+was being allocated.  To use these you should include the \fImpalloc.h\fP header
+file:
+.TP
+\fBMP_MALLOC\fP
+Allocates \fIcount\fP uninitialised items of type \fItype\fP from the heap, sets
+\fIptr\fP to the result and returns a suitably-cast pointer to the first item of
+the allocation.  The pointer returned will be suitably aligned for holding items
+of type \fItype\fP.  If \fIcount\fP is \fI0\fP then it will be implicitly
+rounded up to \fI1\fP.  If there is not enough space in the heap then the
+program will be aborted after calling the allocation failure handler, which by
+default writes an appropriate error message to the standard error file stream.
+The allocated memory in \fIptr\fP must be deallocated with \fBMP_FREE\fP or
+reallocated with \fBMP_REALLOC\fP.
+.TP
+\fBMP_CALLOC\fP
+Allocates \fIcount\fP zero-initialised items of type \fItype\fP from the heap,
+sets \fIptr\fP to the result and returns a suitably-cast pointer to the first
+item of the allocation.  The pointer returned will be suitably aligned for
+holding items of type \fItype\fP.  If \fIcount\fP is \fI0\fP then it will be
+implicitly rounded up to \fI1\fP.  If there is not enough space in the heap then
+the program will be aborted after calling the allocation failure handler, which
+by default writes an appropriate error message to the standard error file
+stream.  The allocated memory in \fIptr\fP must be deallocated with
+\fBMP_FREE\fP or reallocated with \fBMP_REALLOC\fP.
+.TP
+\fBMP_STRDUP\fP
+Allocates exactly enough memory from the heap to duplicate \fIstr\fP (including
+the terminating nul character), sets \fIptr\fP to the result and returns a
+suitably-cast pointer to the first byte of the allocation after copying
+\fIstr\fP to the newly-allocated memory.  The pointer returned will have no
+alignment constraints and can be used to store character data up to the length
+of \fIstr\fP.  If there is not enough space in the heap then the program will be
+aborted after calling the allocation failure handler, which by default writes an
+appropriate error message to the standard error file stream.  The allocated
+memory in \fIptr\fP must be deallocated with \fBMP_FREE\fP or reallocated with
+\fBMP_REALLOC\fP.
+.TP
+\fBMP_REALLOC\fP
+Resizes the memory allocation beginning at \fIptr\fP to \fIcount\fP items of
+type \fItype\fP and returns a suitably-cast pointer to the first item of the new
+allocation after copying \fIptr\fP to the newly-allocated memory, which will be
+truncated if \fIcount\fP is smaller than the original number of items.  The
+pointer returned will be suitably aligned for holding items of type \fItype\fP.
+If \fIptr\fP is \fBNULL\fP then the call will be equivalent to \fBMP_MALLOC\fP.
+If \fIcount\fP is \fI0\fP then it will be implicitly rounded up to \fI1\fP.  If
+\fIcount\fP is greater than the original number of items then the extra space
+will be filled with uninitialised bytes.  If there is not enough space in the
+heap then the program will be aborted after calling the allocation failure
+handler, which by default writes an appropriate error message to the standard
+error file stream.  The allocated memory must be deallocated with \fBMP_FREE\fP
+and can be reallocated again with \fBMP_REALLOC\fP.
+.TP
+\fBMP_FREE\fP
+Frees the memory allocation beginning at \fIptr\fP so the memory can be reused
+by another call to allocate memory, and sets \fIptr\fP to \fBNULL\fP after
+freeing the memory.  If \fIptr\fP is \fBNULL\fP then no memory will be freed.
+.TP
+\fBMP_FAILURE\fP
+Installs an allocation failure handler specifically for use with
+\fBMP_MALLOC\fP, \fBMP_CALLOC\fP, \fBMP_STRDUP\fP and \fBMP_REALLOC\fP and
+returns a pointer to the previously installed handler, normally the default
+handler if no handler had been previously installed.  This will be called by
+the above functions when there is not enough space in the heap for them to
+satisfy their allocation request.  The default allocation failure handler will
+terminate the program after writing an error message to the standard error file
+stream indicating where the original allocation request took place and what was
+being allocated.
+.SH SEE ALSO
+\fBmpatrol\fP(1), \fBmprof\fP(1), \fBmptrace\fP(1), \fBmleak\fP(1),
+\fBmpsym\fP(1), \fBmpedit\fP(1), \fBhexwords\fP(1), \fBlibmpatrol\fP(3),
+\fBmalloc\fP(3), \fBassert\fP(3).
+.PP
+The mpatrol manual and reference card.
+.PP
+http://www.cbmamiga.demon.co.uk/mpatrol/
+.SH AUTHOR
+Graeme S. Roy <graeme.roy@analog.com>
+.SH COPYRIGHT
+Copyright (C) 1997-2002 Graeme S. Roy <graeme.roy@analog.com>
+.PP
+This library is free software; you can redistribute it and/or modify it under
+the terms of the GNU Library General Public License as published by the Free
+Software Foundation; either version 2 of the License, or (at your option) any
+later version.
+.PP
+This library is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU Library General Public License for more
+details.
+.PP
+You should have received a copy of the GNU Library General Public License
+along with this library; if not, write to the Free Software Foundation, Inc.,
+59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.

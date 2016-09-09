@@ -1,0 +1,11 @@
+/* produced by mprof 1.1 from test.out */
+
+digraph "allocation call graph"
+{
+    "START" -> "_start+100" [label = "2970"];
+    "_start+100" -> "main+120" [label = "2970"];
+    "main+120" -> "new_pair+20" [label = "2048"];
+    "new_pair+20" -> "ALLOC" [label = "2048"];
+    "main+120" -> "new_pair+140" [label = "922"];
+    "new_pair+140" -> "ALLOC" [label = "922"];
+}

@@ -1,0 +1,13 @@
+INSTALL FOR THE MPATROL LIBRARY
+
+
+For instructions on how to build and install the mpatrol library and its tools
+please see the mpatrol manual located in the doc directory.
+
+If you wish to use GNU autoconf, automake and libtool to build and install
+mpatrol you may do so by entering the pkg/auto directory and typing `./setup'.
+This will construct the directory structure that is required by these tools and
+will also create a configure script.  Please see the INSTALL file in that
+directory for information on how to proceed.  Note that you can clean up the
+pkg/auto directory by typing `make distclean' (if the configure script has
+already been run) followed by `./cleanup'.

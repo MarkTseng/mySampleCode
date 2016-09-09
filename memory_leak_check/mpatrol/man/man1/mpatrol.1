@@ -1,0 +1,319 @@
+.\" mpatrol
+.\" A library for controlling and tracing dynamic memory allocations.
+.\" Copyright (C) 1997-2002 Graeme S. Roy <graeme.roy@analog.com>
+.\"
+.\" This library is free software; you can redistribute it and/or
+.\" modify it under the terms of the GNU Library General Public
+.\" License as published by the Free Software Foundation; either
+.\" version 2 of the License, or (at your option) any later version.
+.\"
+.\" This library is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+.\" Library General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU Library General Public
+.\" License along with this library; if not, write to the Free
+.\" Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+.\" MA 02111-1307, USA.
+.\"
+.\" UNIX Manual Page
+.\"
+.\" $Id: mpatrol.1,v 1.42 2002/01/08 20:28:41 graeme Exp $
+.\"
+.TH MPATROL 1 "8 January 2002" "Release 1.4" "mpatrol library"
+.SH NAME
+mpatrol \- runs programs using the mpatrol library
+.SH SYNOPSIS
+\fBmpatrol\fP [\fIoptions\fP] <\fIcommand\fP> [\fIarguments\fP]
+.SH DESCRIPTION
+The \fBmpatrol\fP command is used to set various mpatrol library \fIoptions\fP
+when running \fIcommand\fP with its \fIarguments\fP.  In most cases,
+\fIcommand\fP must have been linked with the mpatrol library, unless the
+\fI\-\-dynamic\fP option is used in which case \fIcommand\fP need only have been
+dynamically linked.
+.PP
+All mpatrol library diagnostics are sent to the file \fImpatrol.%n.log\fP in the
+current directory by default (where \fI%n\fP is the current process id) but this
+can be changed using the \fB\-\-log\-file\fP option.  Similarly, the default
+profiling output filename is \fImpatrol.%n.out\fP and the default tracing output
+filename is \fImpatrol.%n.trace\fP.
+.SH OPTIONS
+All of the following options (except \fB\-\-dynamic\fP, \fB\-\-help\fP,
+\fB\-\-read\-env\fP, \fB\-\-show\-env\fP, \fB\-\-threads\fP and
+\fB\-\-version\fP) correspond to their listed mpatrol library option.  See
+\fBlibmpatrol\fP(3) for more details on these options.
+.TP
+\fB\-\-alloc\-byte\fP <\fIunsigned integer\fP> [\fB\-a\fP]
+[\fBALLOCBYTE\fP]  Specifies an 8-bit byte pattern with which to prefill
+newly-allocated memory.
+.TP
+\fB\-\-alloc\-stop\fP <\fIunsigned integer\fP> [\fB\-A\fP]
+[\fBALLOCSTOP\fP]  Specifies an allocation index at which to stop the program
+when it is being allocated.
+.TP
+\fB\-\-allow\-oflow\fP [\fB\-M\fP]
+[\fBALLOWOFLOW\fP]  Specifies that a warning rather than an error should be
+produced if any memory operation function overflows the boundaries of a memory
+allocation, and that the operation should still be performed.
+.TP
+\fB\-\-auto\-save\fP <\fIunsigned integer\fP> [\fB\-s\fP]
+[\fBAUTOSAVE\fP]  Specifies the frequency at which to periodically write the
+profiling data to the profiling output file.
+.TP
+\fB\-\-check\fP <\fIunsigned range\fP> [\fB\-c\fP]
+[\fBCHECK\fP]  Specifies a range of allocation indices at which to check the
+integrity of free memory and overflow buffers.
+.TP
+\fB\-\-check\-all\fP [\fB\-C\fP]
+[\fBCHECKALL\fP]  Equivalent to the \fB\-\-check\-allocs\fP,
+\fB\-\-check\-reallocs\fP, \fB\-\-check\-frees\fP and \fB\-\-check\-memory\fP
+options specified together.
+.TP
+\fB\-\-check\-allocs\fP
+[\fBCHECKALLOCS\fP]  Checks that no attempt is made to allocate a block of
+memory of size zero.
+.TP
+\fB\-\-check\-fork\fP
+[\fBCHECKFORK\fP]  Checks at every call to see if the process has been forked in
+case new log, profiling and tracing output files need to be started.
+.TP
+\fB\-\-check\-frees\fP
+[\fBCHECKFREES\fP]  Checks that no attempt is made to deallocate a \fBNULL\fP
+pointer.
+.TP
+\fB\-\-check\-memory\fP
+[\fBCHECKMEMORY\fP]  Checks that no attempt is made to perform a zero-length
+memory operation on a \fBNULL\fP pointer.
+.TP
+\fB\-\-check\-reallocs\fP
+[\fBCHECKREALLOCS\fP]  Checks that no attempt is made to reallocate a \fBNULL\fP
+pointer or resize an existing block of memory to size zero.
+.TP
+\fB\-\-def\-align\fP <\fIunsigned integer\fP> [\fB\-D\fP]
+[\fBDEFALIGN\fP]  Specifies the default alignment for general-purpose memory
+allocations, which must be a power of two.
+.TP
+\fB\-\-dynamic\fP [\fB\-d\fP]
+Specifies that programs which were not linked with the mpatrol library should
+also be traced, but only if they were dynamically linked.  This option will
+only work if the system dynamic linker has the ability to preload a set of
+user-specified shared libraries via a special environment variable.
+.TP
+\fB\-\-edit\fP [\fB\-e\fP]
+[\fBEDIT\fP]  Specifies that a text editor should be invoked to edit any
+relevant source files that are associated with any warnings or errors when they
+occur.
+.TP
+\fB\-\-fail\-freq\fP <\fIunsigned integer\fP> [\fB\-q\fP]
+[\fBFAILFREQ\fP]  Specifies the frequency at which all memory allocations will
+randomly fail.
+.TP
+\fB\-\-fail\-seed\fP <\fIunsigned integer\fP> [\fB\-Q\fP]
+[\fBFAILSEED\fP]  Specifies the random number seed which will be used when
+determining which memory allocations will randomly fail.
+.TP
+\fB\-\-free\-byte\fP <\fIunsigned integer\fP> [\fB\-f\fP]
+[\fBFREEBYTE\fP]  Specifies an 8-bit byte pattern with which to prefill
+newly-freed memory.
+.TP
+\fB\-\-free\-stop\fP <\fIunsigned integer\fP> [\fB\-F\fP]
+[\fBFREESTOP\fP]  Specifies an allocation index at which to stop the program
+when it is being freed.
+.TP
+\fB\-\-help\fP [\fB\-h\fP]
+Displays a quick-reference option summary.
+.TP
+\fB\-\-large\-bound\fP <\fIunsigned integer\fP>
+[\fBLARGEBOUND\fP]  Specifies the limit in bytes up to which memory allocations
+should be classified as large allocations for profiling purposes.
+.TP
+\fB\-\-leak\-table\fP
+[\fBLEAKTABLE\fP] Specifies that the leak table should be automatically used
+and a leak table summary should be displayed at the end of program execution.
+.TP
+\fB\-\-limit\fP <\fIunsigned integer\fP> [\fB\-u\fP]
+[\fBLIMIT\fP]  Specifies the limit in bytes at which all memory allocations
+should fail if the total allocated memory should increase beyond this.
+.TP
+\fB\-\-list\fP [\fB\-i\fP]
+[\fBLIST\fP]  Specifies that a context listing should be shown for any relevant
+source files that are associated with any warnings or errors when they occur.
+.TP
+\fB\-\-log\-all\fP [\fB\-L\fP]
+[\fBLOGALL\fP]  Equivalent to the \fB\-\-log\-allocs\fP,
+\fB\-\-log\-reallocs\fP, \fB\-\-log\-frees\fP and \fB\-\-log\-memory\fP options
+specified together.
+.TP
+\fB\-\-log\-allocs\fP
+[\fBLOGALLOCS\fP]  Specifies that all memory allocations are to be logged and
+sent to the log file.
+.TP
+\fB\-\-log\-file\fP <\fIstring\fP> [\fB\-l\fP]
+[\fBLOGFILE\fP]  Specifies an alternative file in which to place all diagnostics
+from the mpatrol library.
+.TP
+\fB\-\-log\-frees\fP
+[\fBLOGFREES\fP]  Specifies that all memory deallocations are to be logged and
+sent to the log file.
+.TP
+\fB\-\-log\-memory\fP
+[\fBLOGMEMORY\fP]  Specifies that all memory operations are to be logged and
+sent to the log file.
+.TP
+\fB\-\-log\-reallocs\fP
+[\fBLOGREALLOCS\fP]  Specifies that all memory reallocations are to be logged
+and sent to the log file.
+.TP
+\fB\-\-medium\-bound\fP <\fIunsigned integer\fP>
+[\fBMEDIUMBOUND\fP]  Specifies the limit in bytes up to which memory allocations
+should be classified as medium allocations for profiling purposes.
+.TP
+\fB\-\-no\-free\fP <\fIunsigned integer\fP> [\fB\-n\fP]
+[\fBNOFREE\fP]  Specifies that a number of recently-freed memory allocations
+should be prevented from being returned to the free memory pool.
+.TP
+\fB\-\-no\-protect\fP [\fB\-N\fP]
+[\fBNOPROTECT\fP]  Specifies that the mpatrol library's internal data structures
+should not be made read-only after every memory allocation, reallocation or
+deallocation.
+.TP
+\fB\-\-oflow\-byte\fP <\fIunsigned integer\fP> [\fB\-o\fP]
+[\fBOFLOWBYTE\fP]  Specifies an 8-bit byte pattern with which to fill the
+overflow buffers of all memory allocations.
+.TP
+\fB\-\-oflow\-size\fP <\fIunsigned integer\fP> [\fB\-O\fP]
+[\fBOFLOWSIZE\fP]  Specifies the size in bytes to use for all overflow buffers,
+which must be a power of two.
+.TP
+\fB\-\-oflow\-watch\fP [\fB\-w\fP]
+[\fBOFLOWWATCH\fP]  Specifies that watch point areas should be used for overflow
+buffers rather than filling with the overflow byte.
+.TP
+\fB\-\-page\-alloc\-lower\fP [\fB\-b\fP]
+[\fBPAGEALLOC\fP=\fILOWER\fP]  Specifies that each individual memory allocation
+should occupy at least one page of virtual memory and should be placed at the
+lowest point within these pages.
+.TP
+\fB\-\-page\-alloc\-upper\fP [\fB\-B\fP]
+[\fBPAGEALLOC\fP=\fIUPPER\fP]  Specifies that each individual memory allocation
+should occupy at least one page of virtual memory and should be placed at the
+highest point within these pages.
+.TP
+\fB\-\-preserve\fP [\fB\-v\fP]
+[\fBPRESERVE\fP]  Specifies that any reallocated or freed memory allocations
+should preserve their original contents.
+.TP
+\fB\-\-prof\fP [\fB\-p\fP]
+[\fBPROF\fP]  Specifies that all memory allocations are to be profiled and sent
+to the profiling output file.
+.TP
+\fB\-\-prof\-file\fP <\fIstring\fP> [\fB\-P\fP]
+[\fBPROFFILE\fP]  Specifies an alternative file in which to place all memory
+allocation profiling information from the mpatrol library.
+.TP
+\fB\-\-prog\-file\fP <\fIstring\fP> [\fB\-r\fP]
+[\fBPROGFILE\fP]  Specifies an alternative filename with which to locate the
+executable file containing the program's symbols.
+.TP
+\fB\-\-read\-env\fP [\fB\-I\fP]
+Reads and passes through the contents of the \fBMPATROL_OPTIONS\fP environment
+variable.  Such contents will be placed before any of the options resulting from
+\fBmpatrol\fP command line options so that they can be overridden and will only
+be parsed by the mpatrol library, \fInot\fP the \fBmpatrol\fP command.
+.TP
+\fB\-\-realloc\-stop\fP <\fIunsigned integer\fP> [\fB\-R\fP]
+[\fBREALLOCSTOP\fP]  Specifies an allocation index at which to stop the program
+when a memory allocation is being reallocated.
+.TP
+\fB\-\-safe\-signals\fP [\fB\-G\fP]
+[\fBSAFESIGNALS\fP]  Instructs the library to save and replace certain signal
+handlers during the execution of library code and to restore them afterwards.
+.TP
+\fB\-\-show\-all\fP [\fB\-S\fP]
+[\fBSHOWALL\fP]  Equivalent to the \fB\-\-show\-free\fP, \fB\-\-show\-freed\fP,
+\fB\-\-show\-unfreed\fP, \fB\-\-show\-map\fP and \fB\-\-show\-symbols\fP options
+specified together.
+.TP
+\fB\-\-show\-env\fP [\fB\-E\fP]
+Displays the contents of the \fBMPATROL_OPTIONS\fP environment variable.  This
+will be shown after all of the other command line options have been processed
+and will prevent the specified command from being run.
+.TP
+\fB\-\-show\-free\fP
+[\fBSHOWFREE\fP]  Specifies that a summary of all of the free memory blocks
+should be displayed at the end of program execution.
+.TP
+\fB\-\-show\-freed\fP
+[\fBSHOWFREED\fP]  Specifies that a summary of all of the freed memory
+allocations should be displayed at the end of program execution.
+.TP
+\fB\-\-show\-map\fP
+[\fBSHOWMAP\fP]  Specifies that a memory map of the entire heap should be
+displayed at the end of program execution.
+.TP
+\fB\-\-show\-symbols\fP
+[\fBSHOWSYMBOLS\fP]  Specifies that a summary of all of the function symbols
+read from the program's executable file should be displayed at the end of
+program execution.
+.TP
+\fB\-\-show\-unfreed\fP
+[\fBSHOWUNFREED\fP]  Specifies that a summary of all of the unfreed memory
+allocations should be displayed at the end of program execution.
+.TP
+\fB\-\-small\-bound\fP <\fIunsigned integer\fP>
+[\fBSMALLBOUND\fP]  Specifies the limit in bytes up to which memory allocations
+should be classified as small allocations for profiling purposes.
+.TP
+\fB\-\-threads\fP [\fB\-j\fP]
+Specifies that the program to be run is multithreaded if the \fB\-\-dynamic\fP
+option is used.  This option is required if the multithreaded version of the
+mpatrol library should be preloaded instead of the normal version.
+.TP
+\fB\-\-trace\fP [\fB\-t\fP]
+Specifies that all memory allocations are to be traced and sent to the tracing
+output file.
+.TP
+\fB\-\-trace\-file\fP <\fIstring\fP> [\fB\-T\fP]
+Specifies an alternative file in which to place all memory allocation tracing
+information from the mpatrol library.
+.TP
+\fB\-\-unfreed\-abort\fP <\fIunsigned integer\fP> [\fB\-U\fP]
+[\fBUNFREEDABORT\fP]  Specifies the minimum number of unfreed allocations at
+which to abort the program just before program termination.
+.TP
+\fB\-\-use\-debug\fP [\fB\-g\fP]
+[\fBUSEDEBUG\fP]  Specifies that any debugging information in the executable
+file should be used to obtain additional source-level information.
+.TP
+\fB\-\-use\-mmap\fP [\fB\-m\fP]
+[\fBUSEMMAP\fP]  Specifies that the library should use \fBmmap()\fP instead of
+\fBsbrk()\fP to allocate user memory.
+.TP
+\fB\-\-version\fP [\fB\-V\fP]
+Displays the version number of the \fBmpatrol\fP command.
+.SH SEE ALSO
+\fBmprof\fP(1), \fBmptrace\fP(1), \fBmleak\fP(1), \fBmpsym\fP(1),
+\fBmpedit\fP(1), \fBhexwords\fP(1), \fBlibmpatrol\fP(3), \fBlibmpalloc\fP(3).
+.PP
+The mpatrol manual and reference card.
+.PP
+http://www.cbmamiga.demon.co.uk/mpatrol/
+.SH AUTHOR
+Graeme S. Roy <graeme.roy@analog.com>
+.SH COPYRIGHT
+Copyright (C) 1997-2002 Graeme S. Roy <graeme.roy@analog.com>
+.PP
+This library is free software; you can redistribute it and/or modify it under
+the terms of the GNU Library General Public License as published by the Free
+Software Foundation; either version 2 of the License, or (at your option) any
+later version.
+.PP
+This library is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU Library General Public License for more
+details.
+.PP
+You should have received a copy of the GNU Library General Public License
+along with this library; if not, write to the Free Software Foundation, Inc.,
+59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.

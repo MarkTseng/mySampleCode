@@ -1,0 +1,32 @@
+Source: mpatrol
+Section: devel
+Priority: optional
+Maintainer: Jerome Marant <jerome@debian.org>
+Build-Depends: debhelper (>> 3.0.0), binutils-dev
+Standards-Version: 3.5.2
+
+Package: mpatrol
+Architecture: any
+Depends: ${shlibs:Depends}
+Description: A powerful library for debugging memory allocations
+ The mpatrol library is a powerful debugging tool that attempts to
+ diagnose run-time errors that are caused by the wrong use of
+ dynamically allocated memory.
+ .
+ Along with providing a comprehensive and configurable log of all
+ dynamic memory operations that occurred during the lifetime of a
+ program, the mpatrol library performs extensive checking to detect
+ any misuse of dynamically allocated memory.
+ .
+ All of this functionality can be integrated into existing code
+ through the inclusion of a single header file at compile-time.
+ .
+ All logging and tracing output from the mpatrol library is sent
+ to a separate log file in order to keep its diagnostics separate
+ from any that the program being tested might generate.
+ .
+ A wide variety of library settings can also be changed at
+ run-time via an environment variable, thus removing the need to
+ recompile or relink in order to change the library's behaviour.
+ .
+ http://www.cbmamiga.demon.co.uk/mpatrol/

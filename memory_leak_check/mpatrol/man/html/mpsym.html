@@ -1,0 +1,122 @@
+Content-type: text/html
+
+<HTML><HEAD><TITLE>Manpage of MPSYM</TITLE>
+</HEAD><BODY>
+<H1>MPSYM</H1>
+Section: mpatrol library (1)<BR>Updated: 8 January 2002<BR><A HREF="#index">Index</A>
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+mpsym - locates missing symbolic information in an mpatrol log file
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<B>mpsym</B> [<I>options</I>] [<I>progfile</I> [<I>logfile</I>]]
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+The <B>mpsym</B> command is used to parse a log file produced by the mpatrol
+library and uses a debugger to append symbol names and source level information
+to code addresses in stack tracebacks.  This should be used if the
+<B>USEDEBUG</B> option is not supported on a particular platform or does not work
+properly with a specific program.  It will replace all existing symbols and
+source level information associated with the stack tracebacks in the mpatrol log
+file and will display the resulting log file on the standard output file stream.
+<P>
+
+The <I>progfile</I> argument must be the filename of the executable file that
+produced the mpatrol log file but if <I>progfile</I> is omitted then <B>mpsym</B>
+will use <I>a.out</I> as the name of the executable file to use.  The <B>mpsym</B>
+command will read the symbol table and debugging sections from this file in
+order to map the code addresses that appear in the mpatrol log file into symbol
+names and source level information.  If the executable file does not contain a
+symbol table then no symbol names will be available and if it does not contain
+the appropriate debugging sections then no source level information will be
+available either.  Obviously, if the executable file is not the same as the one
+that created the mpatrol log file then the final output will be wrong.
+<P>
+
+The <I>logfile</I> argument must be a valid mpatrol log filename but if
+<I>logfile</I> is omitted then <B>mpsym</B> will use <I>mpatrol.log</I> as the
+name of the log file to use, or <I>progfile.log</I> if it can't find that.  The
+<B>mpsym</B> command makes two passes over the log file so the file must be
+randomly-accessable.
+<P>
+
+The <B>mpsym</B> command currently uses <B>gdb</B> as the debugger with which to
+obtain the additional information about the code addresses in the mpatrol log
+file.  It also makes use of several UNIX text processing commands, including
+<B>perl</B> if it is installed, in order to extract information from the
+debugger's output and from the log file.  As a result, the <B>mpsym</B> command
+is only likely to work on UNIX platforms or on systems which have the necessary
+commands installed.
+<A NAME="lbAE">&nbsp;</A>
+<H2>OPTIONS</H2>
+
+<DL COMPACT>
+<DT><B>--help</B> [<B>-h</B>]<DD>
+Displays a quick-reference option summary.
+<DT><B>--skip</B> [<B>-s</B>]<DD>
+Skip symbols marked as <I>???</I> in the log file.
+<DT><B>--version</B> [<B>-V</B>]<DD>
+Displays the version number of the <B>mpsym</B> command.
+</DL>
+<A NAME="lbAF">&nbsp;</A>
+<H2>SEE ALSO</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+mpatrol">mpatrol</A></B>(1), <B><A HREF="http://localhost/cgi-bin/man/man2html?1+mprof">mprof</A></B>(1), <B><A HREF="http://localhost/cgi-bin/man/man2html?1+mptrace">mptrace</A></B>(1), <B><A HREF="http://localhost/cgi-bin/man/man2html?1+mleak">mleak</A></B>(1),
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+mpedit">mpedit</A></B>(1), <B><A HREF="http://localhost/cgi-bin/man/man2html?1+hexwords">hexwords</A></B>(1), <B><A HREF="http://localhost/cgi-bin/man/man2html?1+gdb">gdb</A></B>(1), <B><A HREF="http://localhost/cgi-bin/man/man2html?1+perl">perl</A></B>(1),
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+libmpatrol">libmpatrol</A></B>(3), <B><A HREF="http://localhost/cgi-bin/man/man2html?3+libmpalloc">libmpalloc</A></B>(3).
+<P>
+
+The mpatrol manual and reference card.
+<P>
+
+<A HREF="http://www.cbmamiga.demon.co.uk/mpatrol/">http://www.cbmamiga.demon.co.uk/mpatrol/</A>
+<A NAME="lbAG">&nbsp;</A>
+<H2>AUTHOR</H2>
+
+Graeme S. Roy &lt;<A HREF="mailto:graeme.roy@analog.com">graeme.roy@analog.com</A>&gt;
+<A NAME="lbAH">&nbsp;</A>
+<H2>COPYRIGHT</H2>
+
+Copyright (C) 1997-2002 Graeme S. Roy &lt;<A HREF="mailto:graeme.roy@analog.com">graeme.roy@analog.com</A>&gt;
+<P>
+
+This library is free software; you can redistribute it and/or modify it under
+the terms of the GNU Library General Public License as published by the Free
+Software Foundation; either version 2 of the License, or (at your option) any
+later version.
+<P>
+
+This library is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU Library General Public License for more
+details.
+<P>
+
+You should have received a copy of the GNU Library General Public License
+along with this library; if not, write to the Free Software Foundation, Inc.,
+59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAE">OPTIONS</A><DD>
+<DT><A HREF="#lbAF">SEE ALSO</A><DD>
+<DT><A HREF="#lbAG">AUTHOR</A><DD>
+<DT><A HREF="#lbAH">COPYRIGHT</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 23:42:08 GMT, January 08, 2002
+</BODY>
+</HTML>

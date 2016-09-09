@@ -1,0 +1,154 @@
+Content-type: text/html
+
+<HTML><HEAD><TITLE>Manpage of MPROF</TITLE>
+</HEAD><BODY>
+<H1>MPROF</H1>
+Section: mpatrol library (1)<BR>Updated: 8 January 2002<BR><A HREF="#index">Index</A>
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+mprof - displays profiling information produced by the mpatrol library
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<B>mprof</B> [<I>options</I>] [<I>file</I>]
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+The <B>mprof</B> command is a tool designed to read a profiling output file
+produced by the mpatrol library and display the profiling information that
+was obtained.  The profiling information includes summaries of all of the
+memory allocations listed by size and the function that allocated them and a
+list of memory leaks with the call stack of the allocating function.  It also
+includes a graph of all memory allocations listed in tabular form, and an
+optional graph specification file for later processing by the <B>dot</B> graph
+visualisation package.
+<P>
+
+When the <B>PROF</B> option is used with the mpatrol library, statistics for
+all dynamic memory allocations and deallocations are written to a profiling
+output file.  The name of this file can be changed with the <B>PROFFILE</B>
+option and the frequency at which the file is written can be specified with
+the <B>AUTOSAVE</B> option.  The bounds for small allocations, medium
+allocations, large allocations and extra large allocations can be set with
+the <B>SMALLBOUND</B>, <B>MEDIUMBOUND</B> and <B>LARGEBOUND</B> options.
+<P>
+
+Only allocations and deallocations are recorded, with each reallocation being
+treated as a deallocation immediately followed by an allocation.  For full
+memory allocation profiling support, call stack traversal must be supported in
+the mpatrol library and all of the program's symbols must have been successfully
+read by the mpatrol library before the program was run.  The <B>mprof</B> command
+will attempt to compensate if either of these requirements are not met, but the
+displayed tables may contain less meaningful information.
+<P>
+
+The <I>file</I> argument must be a valid mpatrol profiling output filename but
+if <I>file</I> is omitted then <B>mprof</B> will use <I>mpatrol.out</I> as the
+name of the profiling output file to use.  If <I>file</I> is given as <I>-</I>
+then the standard input file stream will be used as the profiling output file.
+<P>
+
+Much of the functionality of this tool is based upon <B>mprof</B> by Benjamin
+Zorn and Paul Hilfinger, which was written as a research project and ran on
+MIPS, SPARC and VAX machines.  However, the profiling output files are
+incompatible, the tables displayed have a different format, and the way they
+are implemented is entirely different.
+<A NAME="lbAE">&nbsp;</A>
+<H2>OPTIONS</H2>
+
+<DL COMPACT>
+<DT><B>--addresses</B> [<B>-a</B>]<DD>
+Specifies that different call sites from within the same function are to be
+differentiated and that the names of all functions should be displayed with
+their call site offset in bytes.  This affects the direct allocation and
+memory leak tables, as well as the allocation call graph and the graph
+specification file.
+<DT><B>--call-graph</B> [<B>-v</B>]<DD>
+Specifies that the allocation call graph should be displayed.  This is not
+displayed by default as it can get very large for even a moderately sized
+profiling output file.
+<DT><B>--counts</B> [<B>-c</B>]<DD>
+Specifies that certain tables should be sorted by the number of allocations or
+deallocations rather than the total number of bytes allocated or deallocated.
+This affects the direct allocation and memory leak tables, as well as the
+allocation call graph and the graph specification file.
+<DT><B>--graph-file</B> <I>file</I> [<B>-g</B>]<DD>
+Specifies that the allocation call graph should also be written to a graph
+specification file for later visualisation with <B>dot</B>.  If <I>file</I> is
+given as <I>stdout</I> or <I>stderr</I> then the corresponding file stream will
+be used as the target for the graph specification file.
+<DT><B>--help</B> [<B>-h</B>]<DD>
+Displays a quick-reference option summary.
+<DT><B>--leaks</B> [<B>-l</B>]<DD>
+Specifies that memory leaks rather than memory allocations are to be written to
+the graph specification file.  This option only affects the output from the
+<B>--graph-file</B> option.
+<DT><B>--stack-depth</B> <I>depth</I> [<B>-n</B>]<DD>
+Specifies the maximum stack depth to use when calculating if one call site has
+the same call stack as another call site.  This also specifies the maximum
+number of functions to display in a call stack.  If <I>depth</I> is <I>0</I> then
+the call stack depth will be unlimited in size.  The default call stack depth
+is <I>1</I>.  This affects the memory leak table.
+<DT><B>--version</B> [<B>-V</B>]<DD>
+Displays the version number of the <B>mprof</B> command.
+</DL>
+<A NAME="lbAF">&nbsp;</A>
+<H2>SEE ALSO</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+mpatrol">mpatrol</A></B>(1), <B><A HREF="http://localhost/cgi-bin/man/man2html?1+mptrace">mptrace</A></B>(1), <B><A HREF="http://localhost/cgi-bin/man/man2html?1+mleak">mleak</A></B>(1), <B><A HREF="http://localhost/cgi-bin/man/man2html?1+mpsym">mpsym</A></B>(1),
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+mpedit">mpedit</A></B>(1), <B><A HREF="http://localhost/cgi-bin/man/man2html?1+hexwords">hexwords</A></B>(1), <B><A HREF="http://localhost/cgi-bin/man/man2html?1+prof">prof</A></B>(1), <B><A HREF="http://localhost/cgi-bin/man/man2html?1+gprof">gprof</A></B>(1), <B><A HREF="http://localhost/cgi-bin/man/man2html?1+dot">dot</A></B>(1),
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+libmpatrol">libmpatrol</A></B>(3), <B><A HREF="http://localhost/cgi-bin/man/man2html?3+libmpalloc">libmpalloc</A></B>(3).
+<P>
+
+The mpatrol manual and reference card.
+<P>
+
+<A HREF="http://www.cbmamiga.demon.co.uk/mpatrol/">http://www.cbmamiga.demon.co.uk/mpatrol/</A>
+<A NAME="lbAG">&nbsp;</A>
+<H2>AUTHOR</H2>
+
+Graeme S. Roy &lt;<A HREF="mailto:graeme.roy@analog.com">graeme.roy@analog.com</A>&gt;
+<A NAME="lbAH">&nbsp;</A>
+<H2>COPYRIGHT</H2>
+
+Copyright (C) 1997-2002 Graeme S. Roy &lt;<A HREF="mailto:graeme.roy@analog.com">graeme.roy@analog.com</A>&gt;
+<P>
+
+This library is free software; you can redistribute it and/or modify it under
+the terms of the GNU Library General Public License as published by the Free
+Software Foundation; either version 2 of the License, or (at your option) any
+later version.
+<P>
+
+This library is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU Library General Public License for more
+details.
+<P>
+
+You should have received a copy of the GNU Library General Public License
+along with this library; if not, write to the Free Software Foundation, Inc.,
+59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAE">OPTIONS</A><DD>
+<DT><A HREF="#lbAF">SEE ALSO</A><DD>
+<DT><A HREF="#lbAG">AUTHOR</A><DD>
+<DT><A HREF="#lbAH">COPYRIGHT</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 23:42:08 GMT, January 08, 2002
+</BODY>
+</HTML>

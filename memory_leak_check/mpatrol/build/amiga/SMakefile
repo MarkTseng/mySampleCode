@@ -1,0 +1,321 @@
+# mpatrol
+# A library for controlling and tracing dynamic memory allocations.
+# Copyright (C) 1997-2002 Graeme S. Roy <graeme.roy@analog.com>
+#
+# This library is free software; you can redistribute it and/or
+# modify it under the terms of the GNU Library General Public
+# License as published by the Free Software Foundation; either
+# version 2 of the License, or (at your option) any later version.
+#
+# This library is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# Library General Public License for more details.
+#
+# You should have received a copy of the GNU Library General Public
+# License along with this library; if not, write to the Free
+# Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+# MA 02111-1307, USA.
+
+
+# SAS/C Makefile to compile on AmigaOS with SAS/C
+
+
+# $Id: SMakefile,v 1.62 2002/01/08 20:40:00 graeme Exp $
+
+
+# Definitions
+
+CC = SC
+AR = OML
+
+SOURCE = //src
+TOOLS  = //tools
+
+CFLAGS = STKEXT NOVER IDIR $(SOURCE) IDIR $(TOOLS)
+OFLAGS = OPT STRMER
+TFLAGS = DEF MP_THREADS_SUPPORT=1
+
+MPATROL	= mpatrol
+MPALLOC	= mpalloc
+MPTOOLS	= mptools
+
+ARCHIVE_MPTOBJS	= list.o tree.o slots.o utils.o memory.o heap.o alloc.o info.o \
+		  stack.o addr.o strtab.o symbol.o signals.o diag.o option.o \
+		  leaktab.o profile.o trace.o inter.o version.o
+ARCHTS_MPTOBJS	= list.t.o tree.t.o slots.t.o utils.t.o memory.t.o heap.t.o \
+		  alloc.t.o info.t.o stack.t.o addr.t.o strtab.t.o symbol.t.o \
+		  signals.t.o mutex.t.o diag.t.o option.t.o leaktab.t.o \
+		  profile.t.o trace.t.o inter.t.o version.t.o
+ARCHIVE_MPAOBJS	= mpalloc.o mpfailure.o mpsetfail.o mpmalloc.o mpcalloc.o \
+		  mpstrdup.o mprealloc.o
+ARCHIVE_MPLOBJS	= dbmalloc.o dmalloc.o heapdiff.o mgauge.o mtrace.o
+
+ARCHIVE_MPATROL	= $(MPATROL).lib
+OBJECT_MPATROL	= lib$(MPATROL).o
+ARCHTS_MPATROL	= $(MPATROL)mt.lib
+OBJTS_MPATROL	= lib$(MPATROL)mt.o
+
+ARCHIVE_MPALLOC	= $(MPALLOC).lib
+OBJECT_MPALLOC	= lib$(MPALLOC).o
+
+ARCHIVE_MPTOOLS	= $(MPTOOLS).lib
+
+
+# Rules
+
+.SUFFIXES: .c .o .t.o
+
+.c.o:
+	$(CC) $(CFLAGS) $(OFLAGS) OBJNAME $@ $<
+
+.c.t.o:
+	$(CC) $(CFLAGS) $(OFLAGS) $(TFLAGS) OBJNAME $@ $<
+
+$(ARCHIVE_MPATROL): $(ARCHIVE_MPTOBJS)
+	$(AR) -n $@ REPLACE $(ARCHIVE_MPTOBJS)
+
+$(OBJECT_MPATROL): $(SOURCE)/library.c
+	$(CC) $(CFLAGS) $(OFLAGS) OBJNAME $@ $(SOURCE)/library.c
+
+$(ARCHTS_MPATROL): $(ARCHTS_MPTOBJS)
+	$(AR) -n $@ REPLACE $(ARCHTS_MPTOBJS)
+
+$(OBJTS_MPATROL): $(SOURCE)/library.c
+	$(CC) $(CFLAGS) $(OFLAGS) $(TFLAGS) OBJNAME $@ $(SOURCE)/library.c
+
+$(ARCHIVE_MPALLOC): $(ARCHIVE_MPAOBJS)
+	$(AR) -n $@ REPLACE $(ARCHIVE_MPAOBJS)
+
+$(OBJECT_MPALLOC): $(SOURCE)/library2.c
+	$(CC) $(CFLAGS) $(OFLAGS) OBJNAME $@ $(SOURCE)/library2.c
+
+$(ARCHIVE_MPTOOLS): $(ARCHIVE_MPLOBJS)
+	$(AR) -n $@ REPLACE $(ARCHIVE_MPLOBJS)
+
+mpatrol: mpatrol.o getopt.o version.o
+	$(CC) $(CFLAGS) $(OFLAGS) LINK PNAME $@ mpatrol.o getopt.o version.o
+
+mprof: mprof.o graph.o getopt.o list.o tree.o version.o
+	$(CC) $(CFLAGS) $(OFLAGS) LINK PNAME $@ mprof.o graph.o getopt.o list.o tree.o version.o LIB LIB:scm.lib
+
+mptrace: mptrace.o getopt.o tree.o slots.o utils.o version.o
+	$(CC) $(CFLAGS) $(OFLAGS) LINK PNAME $@ mptrace.o getopt.o tree.o slots.o utils.o version.o
+
+mleak: mleak.o getopt.o tree.o version.o
+	$(CC) $(CFLAGS) $(OFLAGS) LINK PNAME $@ mleak.o getopt.o tree.o version.o
+
+all: $(ARCHIVE_MPATROL) $(ARCHTS_MPATROL) $(ARCHIVE_MPALLOC) \
+	$(ARCHIVE_MPTOOLS) mpatrol mprof mptrace mleak
+
+clean:
+	-@ Delete $(ARCHIVE_MPTOBJS) $(ARCHTS_MPTOBJS) FORCE >NIL:
+	-@ Delete $(ARCHIVE_MPAOBJS) $(ARCHIVE_MPLOBJS) FORCE >NIL:
+	-@ Delete mpatrol.o mprof.o mptrace.o mleak.o graph.o getopt.o FORCE >NIL:
+
+clobber: clean
+	-@ Delete $(ARCHIVE_MPATROL) $(ARCHTS_MPATROL) FORCE >NIL:
+	-@ Delete $(OBJECT_MPATROL) $(OBJTS_MPATROL) FORCE >NIL:
+	-@ Delete $(ARCHIVE_MPALLOC) $(OBJECT_MPALLOC) FORCE >NIL:
+	-@ Delete $(ARCHIVE_MPTOOLS) FORCE >NIL:
+	-@ Delete mpatrol mpatrol.lnk mprof mprof.lnk mptrace mptrace.lnk mleak mleak.lnk FORCE >NIL:
+
+
+# Dependencies
+
+list.o list.t.o: $(SOURCE)/list.c $(SOURCE)/list.h $(SOURCE)/config.h \
+	$(SOURCE)/target.h
+tree.o tree.t.o: $(SOURCE)/tree.c $(SOURCE)/tree.h $(SOURCE)/config.h \
+	$(SOURCE)/target.h
+slots.o slots.t.o: $(SOURCE)/slots.c $(SOURCE)/slots.h $(SOURCE)/config.h \
+	$(SOURCE)/target.h $(SOURCE)/utils.h
+utils.o utils.t.o: $(SOURCE)/utils.c $(SOURCE)/utils.h $(SOURCE)/config.h \
+	$(SOURCE)/target.h
+memory.o memory.t.o: $(SOURCE)/memory.c $(SOURCE)/memory.h $(SOURCE)/config.h \
+	$(SOURCE)/target.h $(SOURCE)/stack.h $(SOURCE)/utils.h
+heap.o heap.t.o: $(SOURCE)/heap.c $(SOURCE)/heap.h $(SOURCE)/config.h \
+	$(SOURCE)/target.h $(SOURCE)/memory.h $(SOURCE)/slots.h \
+	$(SOURCE)/tree.h $(SOURCE)/trace.h $(SOURCE)/utils.h
+alloc.o alloc.t.o: $(SOURCE)/alloc.c $(SOURCE)/alloc.h $(SOURCE)/config.h \
+	$(SOURCE)/target.h $(SOURCE)/heap.h $(SOURCE)/memory.h \
+	$(SOURCE)/slots.h $(SOURCE)/tree.h $(SOURCE)/list.h $(SOURCE)/utils.h
+info.o: $(SOURCE)/info.c $(SOURCE)/info.h $(SOURCE)/config.h \
+	$(SOURCE)/target.h $(SOURCE)/addr.h $(SOURCE)/heap.h \
+	$(SOURCE)/memory.h $(SOURCE)/slots.h $(SOURCE)/tree.h $(SOURCE)/list.h \
+	$(SOURCE)/stack.h $(SOURCE)/alloc.h $(SOURCE)/signals.h \
+	$(SOURCE)/symbol.h $(SOURCE)/strtab.h $(SOURCE)/diag.h \
+	$(SOURCE)/utils.h $(SOURCE)/profile.h $(SOURCE)/trace.h \
+	$(SOURCE)/leaktab.h
+info.t.o: $(SOURCE)/info.c $(SOURCE)/info.h $(SOURCE)/config.h \
+	$(SOURCE)/target.h $(SOURCE)/addr.h $(SOURCE)/heap.h \
+	$(SOURCE)/memory.h $(SOURCE)/slots.h $(SOURCE)/tree.h $(SOURCE)/list.h \
+	$(SOURCE)/stack.h $(SOURCE)/alloc.h $(SOURCE)/signals.h \
+	$(SOURCE)/symbol.h $(SOURCE)/strtab.h $(SOURCE)/diag.h \
+	$(SOURCE)/mutex.h $(SOURCE)/utils.h $(SOURCE)/profile.h \
+	$(SOURCE)/trace.h $(SOURCE)/leaktab.h
+stack.o stack.t.o: $(SOURCE)/stack.c $(SOURCE)/stack.h $(SOURCE)/memory.h \
+	$(SOURCE)/machine.h $(SOURCE)/config.h $(SOURCE)/target.h
+addr.o addr.t.o: $(SOURCE)/addr.c $(SOURCE)/addr.h $(SOURCE)/config.h \
+	$(SOURCE)/target.h $(SOURCE)/heap.h $(SOURCE)/memory.h \
+	$(SOURCE)/slots.h $(SOURCE)/tree.h $(SOURCE)/list.h $(SOURCE)/stack.h \
+	$(SOURCE)/utils.h
+strtab.o strtab.t.o: $(SOURCE)/strtab.c $(SOURCE)/strtab.h $(SOURCE)/config.h \
+	$(SOURCE)/target.h $(SOURCE)/heap.h $(SOURCE)/memory.h \
+	$(SOURCE)/slots.h $(SOURCE)/tree.h $(SOURCE)/list.h $(SOURCE)/utils.h
+symbol.o symbol.t.o: $(SOURCE)/symbol.c $(SOURCE)/symbol.h $(SOURCE)/config.h \
+	$(SOURCE)/target.h $(SOURCE)/heap.h $(SOURCE)/memory.h \
+	$(SOURCE)/slots.h $(SOURCE)/tree.h $(SOURCE)/strtab.h $(SOURCE)/diag.h \
+	$(SOURCE)/info.h $(SOURCE)/addr.h $(SOURCE)/list.h $(SOURCE)/stack.h \
+	$(SOURCE)/alloc.h $(SOURCE)/signals.h $(SOURCE)/utils.h \
+	$(SOURCE)/profile.h $(SOURCE)/trace.h $(SOURCE)/leaktab.h
+signals.o: $(SOURCE)/signals.c $(SOURCE)/signals.h $(SOURCE)/config.h \
+	$(SOURCE)/target.h $(SOURCE)/diag.h $(SOURCE)/info.h $(SOURCE)/addr.h \
+	$(SOURCE)/heap.h $(SOURCE)/memory.h $(SOURCE)/slots.h $(SOURCE)/tree.h \
+	$(SOURCE)/list.h $(SOURCE)/stack.h $(SOURCE)/alloc.h \
+	$(SOURCE)/symbol.h $(SOURCE)/strtab.h $(SOURCE)/inter.h \
+	$(SOURCE)/profile.h $(SOURCE)/trace.h $(SOURCE)/leaktab.h
+signals.t.o: $(SOURCE)/signals.c $(SOURCE)/signals.h $(SOURCE)/config.h \
+	$(SOURCE)/target.h $(SOURCE)/diag.h $(SOURCE)/info.h $(SOURCE)/addr.h \
+	$(SOURCE)/heap.h $(SOURCE)/memory.h $(SOURCE)/slots.h $(SOURCE)/tree.h \
+	$(SOURCE)/list.h $(SOURCE)/stack.h $(SOURCE)/alloc.h \
+	$(SOURCE)/symbol.h $(SOURCE)/strtab.h $(SOURCE)/inter.h \
+	$(SOURCE)/profile.h $(SOURCE)/trace.h $(SOURCE)/leaktab.h \
+	$(SOURCE)/mutex.h
+mutex.t.o: $(SOURCE)/mutex.c $(SOURCE)/mutex.h $(SOURCE)/config.h \
+	$(SOURCE)/target.h
+diag.o: $(SOURCE)/diag.c $(SOURCE)/diag.h $(SOURCE)/config.h \
+	$(SOURCE)/target.h $(SOURCE)/info.h $(SOURCE)/addr.h $(SOURCE)/heap.h \
+	$(SOURCE)/memory.h $(SOURCE)/slots.h $(SOURCE)/tree.h $(SOURCE)/list.h \
+	$(SOURCE)/stack.h $(SOURCE)/alloc.h $(SOURCE)/signals.h \
+	$(SOURCE)/symbol.h $(SOURCE)/strtab.h $(SOURCE)/utils.h \
+	$(SOURCE)/profile.h $(SOURCE)/trace.h $(SOURCE)/leaktab.h \
+	$(SOURCE)/version.h
+diag.t.o: $(SOURCE)/diag.c $(SOURCE)/diag.h $(SOURCE)/config.h \
+	$(SOURCE)/target.h $(SOURCE)/info.h $(SOURCE)/addr.h $(SOURCE)/heap.h \
+	$(SOURCE)/memory.h $(SOURCE)/slots.h $(SOURCE)/tree.h $(SOURCE)/list.h \
+	$(SOURCE)/stack.h $(SOURCE)/alloc.h $(SOURCE)/signals.h \
+	$(SOURCE)/mutex.h $(SOURCE)/symbol.h $(SOURCE)/strtab.h \
+	$(SOURCE)/utils.h $(SOURCE)/profile.h $(SOURCE)/trace.h \
+	$(SOURCE)/leaktab.h $(SOURCE)/version.h
+option.o option.t.o: $(SOURCE)/option.c $(SOURCE)/option.h $(SOURCE)/config.h \
+	$(SOURCE)/target.h $(SOURCE)/info.h $(SOURCE)/addr.h $(SOURCE)/heap.h \
+	$(SOURCE)/memory.h $(SOURCE)/slots.h $(SOURCE)/tree.h $(SOURCE)/list.h \
+	$(SOURCE)/stack.h $(SOURCE)/alloc.h $(SOURCE)/signals.h \
+	$(SOURCE)/symbol.h $(SOURCE)/strtab.h $(SOURCE)/diag.h \
+	$(SOURCE)/utils.h $(SOURCE)/profile.h $(SOURCE)/trace.h \
+	$(SOURCE)/leaktab.h
+leaktab.o leaktab.t.o: $(SOURCE)/leaktab.c $(SOURCE)/leaktab.h \
+	$(SOURCE)/config.h $(SOURCE)/target.h $(SOURCE)/list.h \
+	$(SOURCE)/heap.h $(SOURCE)/memory.h $(SOURCE)/slots.h $(SOURCE)/tree.h \
+	$(SOURCE)/utils.h
+profile.o profile.t.o: $(SOURCE)/profile.c $(SOURCE)/profile.h \
+	$(SOURCE)/config.h $(SOURCE)/target.h $(SOURCE)/alloc.h \
+	$(SOURCE)/heap.h $(SOURCE)/memory.h $(SOURCE)/slots.h $(SOURCE)/tree.h \
+	$(SOURCE)/list.h $(SOURCE)/info.h $(SOURCE)/addr.h $(SOURCE)/stack.h \
+	$(SOURCE)/signals.h $(SOURCE)/symbol.h $(SOURCE)/strtab.h \
+	$(SOURCE)/diag.h $(SOURCE)/utils.h $(SOURCE)/trace.h \
+	$(SOURCE)/leaktab.h $(SOURCE)/version.h
+trace.o trace.t.o: $(SOURCE)/trace.c $(SOURCE)/trace.h $(SOURCE)/config.h \
+	$(SOURCE)/target.h $(SOURCE)/memory.h $(SOURCE)/diag.h \
+	$(SOURCE)/info.h $(SOURCE)/alloc.h $(SOURCE)/heap.h $(SOURCE)/slots.h \
+	$(SOURCE)/tree.h $(SOURCE)/list.h $(SOURCE)/addr.h $(SOURCE)/stack.h \
+	$(SOURCE)/profile.h $(SOURCE)/symbol.h $(SOURCE)/strtab.h \
+	$(SOURCE)/signals.h $(SOURCE)/leaktab.h $(SOURCE)/utils.h \
+	$(SOURCE)/version.h
+inter.o: $(SOURCE)/inter.c $(SOURCE)/inter.h $(SOURCE)/config.h \
+	$(SOURCE)/target.h $(SOURCE)/info.h $(SOURCE)/addr.h $(SOURCE)/heap.h \
+	$(SOURCE)/memory.h $(SOURCE)/slots.h $(SOURCE)/tree.h $(SOURCE)/list.h \
+	$(SOURCE)/stack.h $(SOURCE)/alloc.h $(SOURCE)/signals.h \
+	$(SOURCE)/symbol.h $(SOURCE)/strtab.h $(SOURCE)/diag.h \
+	$(SOURCE)/option.h $(SOURCE)/profile.h $(SOURCE)/trace.h \
+	$(SOURCE)/leaktab.h $(SOURCE)/machine.h $(SOURCE)/version.h
+inter.t.o: $(SOURCE)/inter.c $(SOURCE)/inter.h $(SOURCE)/config.h \
+	$(SOURCE)/target.h $(SOURCE)/info.h $(SOURCE)/addr.h $(SOURCE)/heap.h \
+	$(SOURCE)/memory.h $(SOURCE)/slots.h $(SOURCE)/tree.h $(SOURCE)/list.h \
+	$(SOURCE)/stack.h $(SOURCE)/alloc.h $(SOURCE)/signals.h \
+	$(SOURCE)/symbol.h $(SOURCE)/strtab.h $(SOURCE)/diag.h \
+	$(SOURCE)/mutex.h $(SOURCE)/option.h $(SOURCE)/profile.h \
+	$(SOURCE)/trace.h $(SOURCE)/leaktab.h $(SOURCE)/machine.h \
+	$(SOURCE)/version.h
+version.o version.t.o: $(SOURCE)/version.c $(SOURCE)/version.h \
+	$(SOURCE)/config.h $(SOURCE)/target.h
+mpalloc.o: $(SOURCE)/mpalloc.c $(SOURCE)/inter.h $(SOURCE)/config.h \
+	$(SOURCE)/target.h $(SOURCE)/info.h $(SOURCE)/alloc.h $(SOURCE)/heap.h \
+	$(SOURCE)/memory.h $(SOURCE)/slots.h $(SOURCE)/tree.h $(SOURCE)/list.h \
+	$(SOURCE)/addr.h $(SOURCE)/stack.h $(SOURCE)/profile.h \
+	$(SOURCE)/symbol.h $(SOURCE)/strtab.h $(SOURCE)/trace.h \
+	$(SOURCE)/leaktab.h $(SOURCE)/signals.h $(SOURCE)/diag.h \
+	$(SOURCE)/mpalloc.h $(SOURCE)/version.h
+mpfailure.o: $(SOURCE)/mpfailure.c $(SOURCE)/mpalloc.h $(SOURCE)/config.h \
+	$(SOURCE)/target.h
+mpsetfail.o: $(SOURCE)/mpsetfail.c $(SOURCE)/mpalloc.h $(SOURCE)/config.h \
+	$(SOURCE)/target.h
+mpmalloc.o: $(SOURCE)/mpmalloc.c $(SOURCE)/mpalloc.h $(SOURCE)/config.h \
+	$(SOURCE)/target.h
+mpcalloc.o: $(SOURCE)/mpcalloc.c $(SOURCE)/mpalloc.h $(SOURCE)/config.h \
+	$(SOURCE)/target.h
+mpstrdup.o: $(SOURCE)/mpstrdup.c $(SOURCE)/mpalloc.h $(SOURCE)/config.h \
+	$(SOURCE)/target.h
+mprealloc.o: $(SOURCE)/mprealloc.c $(SOURCE)/mpalloc.h $(SOURCE)/config.h \
+	$(SOURCE)/target.h
+$(OBJECT_MPATROL): $(SOURCE)/library.c $(SOURCE)/config.h $(SOURCE)/target.h \
+	$(SOURCE)/list.c $(SOURCE)/list.h $(SOURCE)/tree.c $(SOURCE)/tree.h \
+	$(SOURCE)/slots.c $(SOURCE)/slots.h $(SOURCE)/utils.h \
+	$(SOURCE)/utils.c $(SOURCE)/memory.c $(SOURCE)/memory.h \
+	$(SOURCE)/stack.h $(SOURCE)/heap.c $(SOURCE)/heap.h $(SOURCE)/alloc.c \
+	$(SOURCE)/alloc.h $(SOURCE)/info.c $(SOURCE)/info.h $(SOURCE)/addr.h \
+	$(SOURCE)/signals.h $(SOURCE)/symbol.h $(SOURCE)/strtab.h \
+	$(SOURCE)/diag.h $(SOURCE)/stack.c $(SOURCE)/addr.c $(SOURCE)/strtab.c \
+	$(SOURCE)/symbol.c $(SOURCE)/signals.c $(SOURCE)/inter.h \
+	$(SOURCE)/diag.c $(SOURCE)/version.h $(SOURCE)/option.c \
+	$(SOURCE)/option.h $(SOURCE)/inter.c $(SOURCE)/leaktab.c \
+	$(SOURCE)/leaktab.h $(SOURCE)/profile.c $(SOURCE)/profile.h \
+	$(SOURCE)/trace.c $(SOURCE)/trace.h $(SOURCE)/machine.h \
+	$(SOURCE)/version.c
+$(OBJTS_MPATROL): $(SOURCE)/library.c $(SOURCE)/config.h $(SOURCE)/target.h \
+	$(SOURCE)/list.c $(SOURCE)/list.h $(SOURCE)/tree.c $(SOURCE)/tree.h \
+	$(SOURCE)/slots.c $(SOURCE)/slots.h $(SOURCE)/utils.h \
+	$(SOURCE)/utils.c $(SOURCE)/memory.c $(SOURCE)/memory.h \
+	$(SOURCE)/stack.h $(SOURCE)/heap.c $(SOURCE)/heap.h $(SOURCE)/alloc.c \
+	$(SOURCE)/alloc.h $(SOURCE)/info.c $(SOURCE)/info.h $(SOURCE)/addr.h \
+	$(SOURCE)/signals.h $(SOURCE)/symbol.h $(SOURCE)/strtab.h \
+	$(SOURCE)/diag.h $(SOURCE)/mutex.h $(SOURCE)/stack.c $(SOURCE)/addr.c \
+	$(SOURCE)/strtab.c $(SOURCE)/symbol.c $(SOURCE)/signals.c \
+	$(SOURCE)/inter.h $(SOURCE)/mutex.c $(SOURCE)/diag.c \
+	$(SOURCE)/version.h $(SOURCE)/option.c $(SOURCE)/option.h \
+	$(SOURCE)/inter.c $(SOURCE)/leaktab.c $(SOURCE)/leaktab.h \
+	$(SOURCE)/profile.c $(SOURCE)/profile.h $(SOURCE)/trace.c \
+	$(SOURCE)/trace.h $(SOURCE)/machine.h $(SOURCE)/version.c
+$(OBJECT_MPALLOC): $(SOURCE)/library2.c $(SOURCE)/config.h $(SOURCE)/target.h \
+	$(SOURCE)/mpalloc.c $(SOURCE)/inter.h $(SOURCE)/info.h \
+	$(SOURCE)/alloc.h $(SOURCE)/heap.h $(SOURCE)/memory.h \
+	$(SOURCE)/slots.h $(SOURCE)/tree.h $(SOURCE)/list.h $(SOURCE)/addr.h \
+	$(SOURCE)/stack.h $(SOURCE)/profile.h $(SOURCE)/symbol.h \
+	$(SOURCE)/strtab.h $(SOURCE)/trace.h $(SOURCE)/signals.h \
+	$(SOURCE)/diag.h $(SOURCE)/leaktab.h $(SOURCE)/mpalloc.h \
+	$(SOURCE)/mpfailure.c $(SOURCE)/mpsetfail.c $(SOURCE)/mpmalloc.c \
+	$(SOURCE)/mpcalloc.c $(SOURCE)/mpstrdup.c $(SOURCE)/mprealloc.c
+mpatrol.o: $(SOURCE)/mpatrol.c $(SOURCE)/getopt.h $(SOURCE)/config.h \
+	$(SOURCE)/target.h $(SOURCE)/version.h
+mprof.o: $(SOURCE)/mprof.c $(SOURCE)/getopt.h $(SOURCE)/tree.h \
+	$(SOURCE)/graph.h $(SOURCE)/list.h $(SOURCE)/config.h \
+	$(SOURCE)/target.h $(SOURCE)/version.h
+mptrace.o: $(SOURCE)/mptrace.c $(SOURCE)/getopt.h $(SOURCE)/tree.h \
+	$(SOURCE)/slots.h $(SOURCE)/config.h $(SOURCE)/target.h \
+	$(SOURCE)/utils.h $(SOURCE)/version.h
+mleak.o: $(SOURCE)/mleak.c $(SOURCE)/getopt.h $(SOURCE)/tree.h \
+	$(SOURCE)/config.h $(SOURCE)/target.h $(SOURCE)/version.h
+graph.o: $(SOURCE)/graph.c $(SOURCE)/graph.h $(SOURCE)/list.h \
+	$(SOURCE)/config.h $(SOURCE)/target.h
+getopt.o: $(SOURCE)/getopt.c $(SOURCE)/getopt.h $(SOURCE)/config.h \
+	$(SOURCE)/target.h
+dbmalloc.o: $(TOOLS)/dbmalloc.c $(TOOLS)/dbmalloc.h $(SOURCE)/mpatrol.h \
+	$(SOURCE)/config.h $(SOURCE)/target.h
+dmalloc.o: $(TOOLS)/dmalloc.c $(TOOLS)/dmalloc.h $(SOURCE)/mpatrol.h \
+	$(SOURCE)/config.h $(SOURCE)/target.h
+heapdiff.o: $(TOOLS)/heapdiff.c $(TOOLS)/heapdiff.h $(SOURCE)/mpatrol.h \
+	$(SOURCE)/config.h $(SOURCE)/target.h
+mgauge.o: $(TOOLS)/mgauge.c $(TOOLS)/mgauge.h $(SOURCE)/mpatrol.h \
+	$(SOURCE)/config.h $(SOURCE)/target.h
+mtrace.o: $(TOOLS)/mtrace.c $(TOOLS)/mtrace.h $(SOURCE)/mpatrol.h \
+	$(SOURCE)/config.h $(SOURCE)/target.h

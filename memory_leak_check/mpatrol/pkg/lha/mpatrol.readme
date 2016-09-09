@@ -1,0 +1,27 @@
+Short:    Memory allocation debug library. V1.4.8.
+Uploader: graeme.roy@analog.com (Graeme Roy)
+Author:   graeme.roy@analog.com (Graeme Roy)
+Type:     dev/debug
+
+The mpatrol library is yet another link library that attempts to diagnose
+run-time errors that are caused by the wrong use of dynamically allocated
+memory.  If you don't know what the malloc() function or operator new[] do
+then this library is probably not for you.  You have to have a certain
+amount of programming expertise and a knowledge of how to run a command
+line compiler and linker before you should attempt to use this.
+
+Along with providing a comprehensive and configurable log of all dynamic
+memory operations that occurred during the lifetime of a program, the
+mpatrol library performs extensive checking to detect any misuse of
+dynamically allocated memory.  All of this functionality can be integrated
+into existing code through the inclusion of a single header file at
+compile-time.  On UNIX and Windows platforms (and AmigaOS when using gcc)
+this may not even be necessary as the mpatrol library can be linked with
+existing object files at link-time or, on some platforms, even dynamically
+linked with existing programs at run-time.
+
+All logging and tracing output from the mpatrol library is sent to a
+separate log file in order to keep its diagnostics separate from any that
+the program being tested might generate.  A wide variety of library settings
+can also be changed at run-time via an environment variable, thus removing
+the need to recompile or relink in order to change the library's behaviour.

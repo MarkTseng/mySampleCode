@@ -1,0 +1,50 @@
+#!/bin/sh
+
+
+# mpatrol
+# A library for controlling and tracing dynamic memory allocations.
+# Copyright (C) 1997-2002 Graeme S. Roy <graeme.roy@analog.com>
+#
+# This library is free software; you can redistribute it and/or
+# modify it under the terms of the GNU Library General Public
+# License as published by the Free Software Foundation; either
+# version 2 of the License, or (at your option) any later version.
+#
+# This library is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# Library General Public License for more details.
+#
+# You should have received a copy of the GNU Library General Public
+# License along with this library; if not, write to the Free
+# Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+# MA 02111-1307, USA.
+
+
+# UNIX shell script to build a Debian package file
+
+
+# $Id: build,v 1.3 2002/01/08 20:19:01 graeme Exp $
+
+
+arch=i386
+version=1.4.8
+revision=1
+
+
+# Build the binary and source package files.  The debuild command expects
+# the debian subdirectory to be located at the top level directory of the
+# distribution, so we create a symbolic link to this directory.  It also
+# expects the original mpatrol distribution archive to be located in the
+# directory above.
+
+cd ../..
+ln -s -f pkg/debian debian
+debuild -rfakeroot -sa -tc
+rm -f debian
+cd pkg/debian
+mv ../../../mpatrol_$version.orig.tar.gz .
+mv ../../../mpatrol_$version-$revision.dsc .
+mv ../../../mpatrol_$version-$revision.diff.gz .
+mv ../../../mpatrol_$version-$revision_$arch.deb .
+mv ../../../mpatrol_$version-$revision_$arch.changes .

@@ -1,0 +1,22 @@
+## DTDname: Heap Allocation Trace Format (HATF) 1.0
+## MetaTF: 1.2 http://www.cs.ukc.ac.uk/people/staff/rej/mtf/
+
+int size = none;
+int address = none;
+int time = default 0;
+int thread = default 0;
+int heap = default 0;
+string attributes = default "";
+
+section heap 1 {
+  alloc :            {tag, size, address, time, thread, heap, attributes}          { tag = 1; }
+  free :             {tag, address, time, thread, heap, attributes}                { tag = 2; }
+  reallocNoAlloc :   {tag, size, address, address, time, thread, heap, attributes} { tag = 3; }
+  reallocAllocFree : {tag, size, address, address, time, thread, heap, attributes} { tag = 4; }
+  reallocAlloc :     {tag, size, address, address, time, thread, heap, attributes} { tag = 5; }
+  reallocFree :      {tag, size, address, address, time, thread, heap, attributes} { tag = 6; }
+  createHeap :       {tag, thread, heap, attributes}                               { tag = 7; }
+  destroyHeap :      {tag, thread, heap, attributes}                               { tag = 8; }
+  createThread :     {tag, thread, attributes}                                     { tag = 9; }
+  destroyThread :    {tag, thread, attributes}                                     { tag = 10; }
+}

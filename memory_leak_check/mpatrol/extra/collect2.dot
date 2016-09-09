@@ -1,0 +1,35 @@
+/* produced by mprof 1.1 from collect2.out */
+
+digraph "allocation call graph"
+{
+    "START" -> "_start" [label = "52168"];
+    "_start" -> "main" [label = "52168"];
+    "main" -> "xcalloc" [label = "396"];
+    "xcalloc" -> "ALLOC" [label = "396"];
+    "main" -> "_obstack_begin" [label = "8144"];
+    "_obstack_begin" -> "xmalloc" [label = "28396"];
+    "xmalloc" -> "ALLOC" [label = "43572"];
+    "main" -> "prefix_from_env" [label = "2027"];
+    "prefix_from_env" -> "prefix_from_string" [label = "2027"];
+    "prefix_from_string" -> "xmalloc" [label = "863"];
+    "prefix_from_string" -> "add_prefix" [label = "1164"];
+    "add_prefix" -> "xmalloc" [label = "280"];
+    "add_prefix" -> "xstrdup" [label = "884"];
+    "xstrdup" -> "xmalloc" [label = "884"];
+    "main" -> "find_a_file" [label = "677"];
+    "find_a_file" -> "xmalloc" [label = "677"];
+    "main" -> "make_temp_file" [label = "64"];
+    "make_temp_file" -> "xmalloc" [label = "64"];
+    "main" -> "do_tlink" [label = "40860"];
+    "do_tlink" -> "tlink_init" [label = "32660"];
+    "tlink_init" -> "hash_table_init" [label = "24516"];
+    "hash_table_init" -> "hash_table_init_n" [label = "24516"];
+    "hash_table_init_n" -> "_obstack_begin" [label = "12108"];
+    "hash_table_init_n" -> "_obstack_newchunk" [label = "12408"];
+    "_obstack_newchunk" -> "xmalloc" [label = "12408"];
+    "tlink_init" -> "_obstack_begin" [label = "8144"];
+    "do_tlink" -> "dump_file" [label = "8200"];
+    "dump_file" -> "__filbuf" [label = "8200"];
+    "__filbuf" -> "_findbuf" [label = "8200"];
+    "_findbuf" -> "ALLOC" [label = "8200"];
+}

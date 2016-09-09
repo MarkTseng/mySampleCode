@@ -1,0 +1,64 @@
+/* produced by mprof 1.1 from gcc.out */
+
+digraph "allocation call graph"
+{
+    "START" -> "_start" [label = "34793"];
+    "_start" -> "main" [label = "34793"];
+    "main" -> "xmalloc" [label = "2766"];
+    "xmalloc" -> "ALLOC" [label = "33575"];
+    "main" -> "_obstack_begin" [label = "12216"];
+    "_obstack_begin" -> "xmalloc" [label = "12216"];
+    "main" -> "process_command" [label = "695"];
+    "process_command" -> "save_string" [label = "26"];
+    "save_string" -> "xmalloc" [label = "12346"];
+    "process_command" -> "set_std_prefix" [label = "16"];
+    "set_std_prefix" -> "save_string" [label = "16"];
+    "save_string" -> "xmalloc" [label = "16"];
+    "process_command" -> "add_prefix" [label = "458"];
+    "add_prefix" -> "xmalloc" [label = "224"];
+    "add_prefix" -> "save_string" [label = "282"];
+    "add_prefix" -> "update_path" [label = "122"];
+    "update_path" -> "concat" [label = "46"];
+    "concat" -> "ALLOC" [label = "298"];
+    "update_path" -> "translate_name" [label = "76"];
+    "translate_name" -> "get_key_value" [label = "18"];
+    "get_key_value" -> "concat" [label = "18"];
+    "translate_name" -> "concat" [label = "58"];
+    "process_command" -> "translate_options" [label = "40"];
+    "translate_options" -> "xmalloc" [label = "40"];
+    "process_command" -> "xmalloc" [label = "48"];
+    "process_command" -> "concat" [label = "107"];
+    "main" -> "find_a_file" [label = "143"];
+    "find_a_file" -> "xmalloc" [label = "856"];
+    "main" -> "read_specs" [label = "10866"];
+    "read_specs" -> "xmalloc" [label = "3740"];
+    "read_specs" -> "save_string" [label = "3669"];
+    "read_specs" -> "set_spec" [label = "3457"];
+    "set_spec" -> "save_string" [label = "3121"];
+    "set_spec" -> "xmalloc" [label = "336"];
+    "main" -> "add_prefix" [label = "170"];
+    "main" -> "lookup_compiler" [label = "20"];
+    "lookup_compiler" -> "xmalloc" [label = "20"];
+    "main" -> "do_spec" [label = "6946"];
+    "do_spec" -> "do_spec_1" [label = "6946"];
+    "do_spec_1" -> "handle_braces" [label = "5239", style = dotted];
+    "handle_braces" -> "save_string" [label = "5239"];
+    "handle_braces" -> "do_spec_1" [label = "1611", style = dotted];
+    "do_spec_1" -> "do_spec_1" [label = "0", style = dotted];
+    "do_spec_1" -> "xmalloc" [label = "772"];
+    "do_spec_1" -> "save_string" [label = "9"];
+    "do_spec_1" -> "make_temp_file" [label = "63"];
+    "make_temp_file" -> "xmalloc" [label = "63"];
+    "do_spec_1" -> "store_arg" [label = "132"];
+    "store_arg" -> "record_temp_file" [label = "132"];
+    "record_temp_file" -> "xmalloc" [label = "132"];
+    "do_spec_1" -> "execute" [label = "276"];
+    "execute" -> "find_a_file" [label = "276"];
+    "do_spec_1" -> "find_file" [label = "437"];
+    "find_file" -> "find_a_file" [label = "437"];
+    "do_spec_1" -> "is_directory" [label = "18"];
+    "is_directory" -> "concat" [label = "18"];
+    "main" -> "concat" [label = "51"];
+    "main" -> "_putenv" [label = "920"];
+    "_putenv" -> "ALLOC" [label = "920"];
+}

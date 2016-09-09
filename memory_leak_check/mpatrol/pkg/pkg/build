@@ -1,0 +1,150 @@
+#!/bin/sh
+
+
+# mpatrol
+# A library for controlling and tracing dynamic memory allocations.
+# Copyright (C) 1997-2002 Graeme S. Roy <graeme.roy@analog.com>
+#
+# This library is free software; you can redistribute it and/or
+# modify it under the terms of the GNU Library General Public
+# License as published by the Free Software Foundation; either
+# version 2 of the License, or (at your option) any later version.
+#
+# This library is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# Library General Public License for more details.
+#
+# You should have received a copy of the GNU Library General Public
+# License along with this library; if not, write to the Free
+# Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+# MA 02111-1307, USA.
+
+
+# UNIX shell script to build a PKG package file
+
+
+# $Id: build,v 1.75 2002/01/08 20:21:18 graeme Exp $
+
+
+version=1.4.8
+libversion=1.4
+
+
+# Build the mpatrol library.
+
+cd ../../build/unix
+make clobber
+make libmpatrol.a libmpatrol.so.$libversion
+make libmpatrolmt.a libmpatrolmt.so.$libversion
+make libmpalloc.a libmpalloc.so.$libversion
+make libmptools.a
+make lint
+make mpatrol mprof mptrace mleak GUISUP=true
+strip mpatrol
+strip mprof
+strip mptrace
+strip mleak
+cd ../../pkg/pkg
+
+
+# Create the installation directory structure and copy the necessary
+# files into it.  This assumes that the Texinfo manual, reference card
+# and manual pages have already been processed into the different
+# documentation formats.
+
+rm -rf bin doc include info lib man share
+mkdir -p bin
+cp ../../build/unix/mpatrol bin
+cp ../../build/unix/mprof bin
+cp ../../build/unix/mptrace bin
+cp ../../build/unix/mleak bin
+cp ../../bin/mpsym bin
+cp ../../bin/mpedit bin
+cp ../../bin/hexwords bin
+mkdir -p doc/mpatrol/images
+cp ../../README doc/mpatrol
+cp ../../doc/README doc/mpatrol/README.DOC
+cp ../../man/README doc/mpatrol/README.MAN
+cp ../../AUTHORS doc/mpatrol
+cp ../../THANKS doc/mpatrol
+cp ../../COPYING doc/mpatrol
+cp ../../COPYING.LIB doc/mpatrol
+cp ../../NEWS doc/mpatrol
+cp ../../ChangeLog doc/mpatrol
+cp ../../doc/mpatrol.txt doc/mpatrol
+cp ../../doc/mpatrol.guide doc/mpatrol
+cp ../../doc/mpatrol.html doc/mpatrol
+cp ../../doc/mpatrol.dvi doc/mpatrol
+cp ../../doc/mpatrol.ps doc/mpatrol
+cp ../../doc/mpatrol.pdf doc/mpatrol
+cp ../../doc/refcard.dvi doc/mpatrol
+cp ../../doc/refcard.ps doc/mpatrol
+cp ../../doc/refcard.pdf doc/mpatrol
+cp ../../doc/images/*.txt doc/mpatrol/images
+cp ../../doc/images/*.jpg doc/mpatrol/images
+cp ../../doc/images/*.eps doc/mpatrol/images
+cp ../../doc/images/*.pdf doc/mpatrol/images
+mkdir -p doc/mpatrol/html
+cp ../../man/html/*.html doc/mpatrol/html
+mkdir -p doc/mpatrol/dvi
+cp ../../man/dvi/*.dvi doc/mpatrol/dvi
+mkdir -p doc/mpatrol/ps
+cp ../../man/ps/*.ps doc/mpatrol/ps
+mkdir -p doc/mpatrol/pdf
+cp ../../man/pdf/*.pdf doc/mpatrol/pdf
+mkdir -p doc/mpatrol/tests/pass
+cp ../../tests/pass/test*.c doc/mpatrol/tests/pass
+mkdir -p doc/mpatrol/tests/fail
+cp ../../tests/fail/test*.c doc/mpatrol/tests/fail
+mkdir -p doc/mpatrol/tests/profile
+cp ../../tests/profile/test*.c doc/mpatrol/tests/profile
+mkdir -p doc/mpatrol/tests/tutorial
+cp ../../tests/tutorial/test*.c doc/mpatrol/tests/tutorial
+mkdir -p include
+cp ../../src/mpatrol.h include
+cp ../../src/mpalloc.h include
+cp ../../src/mpdebug.h include
+mkdir -p include/mpatrol
+cp ../../tools/*.h include/mpatrol
+mkdir -p info
+cp ../../doc/mpatrol.info info
+mkdir -p lib
+cp ../../build/unix/libmpatrol.a lib
+cp ../../build/unix/libmpatrol.so.$libversion lib
+cp ../../build/unix/libmpatrolmt.a lib
+cp ../../build/unix/libmpatrolmt.so.$libversion lib
+cp ../../build/unix/llib-lmpatrol.ln lib
+cp ../../build/unix/llib-lmpatrolmt.ln lib
+cp ../../build/unix/libmpalloc.a lib
+cp ../../build/unix/libmpalloc.so.$libversion lib
+cp ../../build/unix/llib-lmpalloc.ln lib
+cp ../../build/unix/libmptools.a lib
+cp ../../build/unix/llib-lmptools.ln lib
+mkdir -p man/man1
+cp ../../man/man1/*.1 man/man1
+mkdir -p man/man3
+cp ../../man/man3/*.3 man/man3
+mkdir -p share/aclocal
+cp ../../extra/mpatrol.m4 share/aclocal
+
+
+# Create the package within a package directory structure.
+
+rm -rf GSRmptrl
+pkgmk -d`pwd` -r`pwd` GSRmptrl
+rm -rf bin doc include info lib man share
+
+
+# Convert the package directory structure to a package file.
+
+rm -f mpatrol-$version.pkg
+pkgtrans -s `pwd` mpatrol-$version.pkg GSRmptrl
+rm -rf GSRmptrl
+
+
+# Clean up the build directory.
+
+cd ../../build/unix
+make clobber
+cd ../../pkg/pkg

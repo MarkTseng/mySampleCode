@@ -1,0 +1,199 @@
+.\" mpatrol
+.\" A library for controlling and tracing dynamic memory allocations.
+.\" Copyright (C) 1997-2002 Graeme S. Roy <graeme.roy@analog.com>
+.\"
+.\" This library is free software; you can redistribute it and/or
+.\" modify it under the terms of the GNU Library General Public
+.\" License as published by the Free Software Foundation; either
+.\" version 2 of the License, or (at your option) any later version.
+.\"
+.\" This library is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+.\" Library General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU Library General Public
+.\" License along with this library; if not, write to the Free
+.\" Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+.\" MA 02111-1307, USA.
+.\"
+.\" UNIX Manual Page
+.\"
+.\" $Id: mptrace.1,v 1.13 2002/01/08 20:28:41 graeme Exp $
+.\"
+.TH MPTRACE 1 "8 January 2002" "Release 1.4" "mpatrol library"
+.SH NAME
+mptrace \- displays tracing information produced by the mpatrol library
+.SH SYNOPSIS
+\fBmptrace\fP [\fIoptions\fP] [\fIfile\fP]
+.SH DESCRIPTION
+The \fBmptrace\fP command is a tool designed to read a tracing output file
+produced by the mpatrol library and display the tracing information that was
+obtained.  The tracing information is a concise encoded trace of all of the
+memory allocation events that occurred during a program's execution, and can be
+decoded into tabular or graphical form, along with any relevant statistics that
+can be calculated.
+.PP
+When the \fBTRACE\fP option is used with the mpatrol library, statistics for all
+dynamic memory allocations, reallocations and deallocations are written to a
+tracing output file.  The name of this file can be changed with the
+\fBTRACEFILE\fP option.
+.PP
+Only allocations, reallocations and deallocations are recorded.  The intention
+of tracing is to gather concise details about each memory allocation event
+rather than complete information about some or all memory allocations.  As a
+result, the mpatrol log files and profiling output files contain more detailed
+information about individual memory allocations, whereas the tracing output
+files contain a broader view of allocation behaviour throughout the entire
+program.
+.PP
+The \fIfile\fP argument must be a valid mpatrol tracing output filename but if
+\fIfile\fP is omitted then \fBmptrace\fP will use \fImpatrol.trace\fP as the
+name of the tracing output file to use.  If \fIfile\fP is given as \fI\-\fP then
+the standard input file stream will be used as the tracing output file.
+.PP
+A C source file containing a trace-driven memory allocation simulation program
+can be written with the \fB\-\-sim\-file\fP option.  This program will have the
+identical memory allocation behaviour to the program which produced the original
+trace file.  This option can be useful to use if you wish to determine which
+malloc library is most suitable to use for a specific application.
+.PP
+A trace file in Heap Allocation Trace Format (HATF) can also be written out by
+the \fBmptrace\fP command by using the \fB\-\-hatf\-file\fP option.  It takes
+the name of the HATF trace file to be written as an argument and writes out the
+HATF version of the mpatrol tracing output file given as input when it is being
+processed.  The HATF file format is an attempt to standardise trace file formats
+for memory allocation tracing, and is being developed by Benjamin Zorn and
+Richard Jones.  There is a HATF DTD located in the \fIextra\fP directory in the
+mpatrol distribution.
+.PP
+The \fBmptrace\fP command will normally be built with GUI support on UNIX
+platforms that are running X Windows.  This means that a graphical memory map
+display of the heap will be shown in a window every time \fBmptrace\fP is run
+with the \fB\-\-gui\fP option.  This display is updated every time a new event
+is read from the tracing output file and by default uses the colour red for
+internal heap memory (used by the mpatrol library), blue for unallocated heap
+memory, black for allocated memory and white for free memory.  Options exist to
+change this colour scheme, as well as the dimensions of the drawing area and the
+window.
+.PP
+By default, it is assumed that the start address of the first event that appears
+in the tracing output file is the base address of the memory map displayed in
+the window.  If the heap grows downwards then this assumption will be incorrect
+(since nothing will be displayed) and so the \fB\-\-base\fP option must be used
+to specify a reasonable lower bound for the final memory map.  In addition, the
+visible address space displayed in the memory map is fixed to a certain size (4
+megabytes by default), but this can be changed with the \fB\-\-space\fP option.
+A small delay can also be added after drawing each memory allocation event
+through the use of the \fB\-\-delay\fP option.
+.PP
+Note that any options that are specific to the GUI version of \fBmptrace\fP are
+read by the X command line parser rather than directly by \fBmptrace\fP.  As a
+result they are parsed according to X toolkit rules and do not appear in the
+quick-reference option summary produced by the \fB\-\-help\fP option.  The
+application class for setting \fBmptrace\fP X resources is called \fIMPTrace\fP.
+.PP
+The idea for graphically displaying a memory map of the heap comes from the
+\fBxmem\fP tool supplied with the University of Toronto Computer Systems
+Research Institute malloc library, written by Mark Moraes.  However, the
+documentation for that tool remarks that it was written as a quick and dirty
+hack.  The \fBmptrace\fP command is hopefully more stable and contains a lot
+more functionality.
+.SH OPTIONS
+.TP
+\fB\-\-gui\fP [\fB\-w\fP]
+Displays the GUI (if supported).
+.TP
+\fB\-\-hatf\-file\fP \fIfile\fP [\fB\-H\fP]
+Specifies that the trace should also be written to a file in Heap Allocation
+Trace Format (HATF).
+.TP
+\fB\-\-help\fP [\fB\-h\fP]
+Displays a quick-reference option summary.
+.TP
+\fB\-\-sim\-file\fP \fIfile\fP [\fB\-S\fP]
+Specifies that a trace-driven memory allocation simulation program written in C
+should be written to a file.
+.TP
+\fB\-\-source\fP [\fB\-s\fP]
+Displays source-level information for each event in the tracing table, if
+available.
+.TP
+\fB\-\-verbose\fP [\fB\-v\fP]
+Specifies that the tracing table should be displayed.
+.TP
+\fB\-\-version\fP [\fB\-V\fP]
+Displays the version number of the \fBmptrace\fP command.
+.SH GUI OPTIONS
+.TP
+\fB\-\-alloc\fP \fIcolour\fP
+Specifies the colour to use for displaying allocated memory.  The default colour
+is \fIblack\fP.
+.TP
+\fB\-\-base\fP \fIaddress\fP
+Specifies the base address of the visible address space displayed in the memory
+map.  The default address is calculated at run-time from the start address of
+the first memory allocation event in the tracing output file.
+.TP
+\fB\-\-delay\fP \fIlength\fP
+Specifies that a small delay of a certain length should be added after drawing
+each memory allocation event.  The delay does not correspond to a specific unit
+of time, but experimentation with the length should yield satisfactory results.
+The default delay is \fI0\fP.
+.TP
+\fB\-\-free\fP \fIcolour\fP
+Specifies the colour to use for displaying free memory.  The default colour is
+\fIwhite\fP.
+.TP
+\fB\-\-height\fP \fIsize\fP
+Specifies the height (in pixels) of the drawing area.  The default height is
+\fI512\fP.
+.TP
+\fB\-\-internal\fP \fIcolour\fP
+Specifies the colour to use for displaying internal heap memory.  The default
+colour is \fIred\fP.
+.TP
+\fB\-\-space\fP \fIsize\fP
+Specifies the size (in megabytes) of the visible address space displayed in the
+memory map.  The default size is \fI4\fP.
+.TP
+\fB\-\-unalloc\fP \fIcolour\fP
+Specifies the colour to use for displaying unallocated heap memory.  The default
+colour is \fIblue\fP.
+.TP
+\fB\-\-view\-height\fP \fIsize\fP
+Specifies the height (in pixels) of the window.  The default height is
+\fI256\fP.
+.TP
+\fB\-\-view\-width\fP \fIsize\fP
+Specifies the width (in pixels) of the window.  The default width is \fI256\fP.
+.TP
+\fB\-\-width\fP \fIsize\fP
+Specifies the width (in pixels) of the drawing area.  The default width is
+\fI512\fP.
+.SH SEE ALSO
+\fBmpatrol\fP(1), \fBmprof\fP(1), \fBmleak\fP(1), \fBmpsym\fP(1),
+\fBmpedit\fP(1), \fBhexwords\fP(1), \fBX\fP(1), \fBlibmpatrol\fP(3),
+\fBlibmpalloc\fP(3).
+.PP
+The mpatrol manual and reference card.
+.PP
+http://www.cbmamiga.demon.co.uk/mpatrol/
+.SH AUTHOR
+Graeme S. Roy <graeme.roy@analog.com>
+.SH COPYRIGHT
+Copyright (C) 1997-2002 Graeme S. Roy <graeme.roy@analog.com>
+.PP
+This library is free software; you can redistribute it and/or modify it under
+the terms of the GNU Library General Public License as published by the Free
+Software Foundation; either version 2 of the License, or (at your option) any
+later version.
+.PP
+This library is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU Library General Public License for more
+details.
+.PP
+You should have received a copy of the GNU Library General Public License
+along with this library; if not, write to the Free Software Foundation, Inc.,
+59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.

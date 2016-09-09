@@ -1,0 +1,145 @@
+; mpatrol
+; A library for controlling and tracing dynamic memory allocations.
+; Copyright (C) 1997-2002 Graeme S. Roy <graeme.roy@analog.com>
+;
+; This library is free software; you can redistribute it and/or
+; modify it under the terms of the GNU Library General Public
+; License as published by the Free Software Foundation; either
+; version 2 of the License, or (at your option) any later version.
+;
+; This library is distributed in the hope that it will be useful,
+; but WITHOUT ANY WARRANTY; without even the implied warranty of
+; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+; Library General Public License for more details.
+;
+; You should have received a copy of the GNU Library General Public
+; License along with this library; if not, write to the Free
+; Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+; MA 02111-1307, USA.
+
+
+; Amiga shell script to build an LhA distribution file
+
+
+; $Id: build,v 1.48 2002/01/08 20:19:42 graeme Exp $
+
+
+; Build both the GCC and SAS/C versions of the mpatrol library.
+
+CD //build/amiga
+Make clobber
+Make libmpatrol.a libmpatrolmt.a libmpalloc.a libmptools.a
+Make clean
+SMake mpatrol.lib mpatrolmt.lib mpalloc.lib mptools.lib
+SMake mpatrol mprof mptrace mleak
+CD //pkg/lha
+
+
+; Create the distribution directory structure and copy the necessary
+; files into it.  This assumes that the Texinfo manual, reference card
+; and manual pages have already been processed into the different
+; documentation formats.
+
+Delete mpatrol ALL FORCE QUIET >NIL:
+MakeDir mpatrol
+Copy //README mpatrol
+Copy //AUTHORS mpatrol
+Copy //THANKS mpatrol
+Copy //COPYING mpatrol
+Copy //COPYING.LIB mpatrol
+Copy //NEWS mpatrol
+Copy //ChangeLog mpatrol
+MakeDir mpatrol/bin
+Copy //build/amiga/mpatrol mpatrol/bin
+Copy //build/amiga/mprof mpatrol/bin
+Copy //build/amiga/mptrace mpatrol/bin
+Copy //build/amiga/mleak mpatrol/bin
+Copy //bin/mpsym mpatrol/bin
+Copy //bin/mpedit mpatrol/bin
+Copy //bin/hexwords mpatrol/bin
+MakeDir mpatrol/doc
+Copy //doc/README mpatrol/doc
+Copy //doc/mpatrol.txt mpatrol/doc
+Copy //doc/mpatrol.html mpatrol/doc
+Copy //doc/mpatrol.dvi mpatrol/doc
+Copy //doc/mpatrol.ps mpatrol/doc
+Copy //doc/mpatrol.pdf mpatrol/doc
+Copy //doc/refcard.dvi mpatrol/doc
+Copy //doc/refcard.ps mpatrol/doc
+Copy //doc/refcard.pdf mpatrol/doc
+MakeDir mpatrol/doc/images
+Copy //doc/images/#?.txt mpatrol/doc/images
+Copy //doc/images/#?.jpg mpatrol/doc/images
+Copy //doc/images/#?.eps mpatrol/doc/images
+Copy //doc/images/#?.pdf mpatrol/doc/images
+MakeDir mpatrol/doc/man
+Copy //man/README mpatrol/doc/man
+MakeDir mpatrol/doc/man/html
+Copy //man/html/#?.html mpatrol/doc/man/html
+MakeDir mpatrol/doc/man/dvi
+Copy //man/dvi/#?.dvi mpatrol/doc/man/dvi
+MakeDir mpatrol/doc/man/ps
+Copy //man/ps/#?.ps mpatrol/doc/man/ps
+MakeDir mpatrol/doc/man/pdf
+Copy //man/pdf/#?.pdf mpatrol/doc/man/pdf
+MakeDir mpatrol/extra
+Copy //extra/.profile mpatrol/extra
+Copy //extra/.cshrc mpatrol/extra
+Copy //extra/.gdbinit mpatrol/extra
+Copy //extra/magic mpatrol/extra
+MakeDir mpatrol/help
+Copy //doc/mpatrol.guide mpatrol/help
+MakeDir mpatrol/include
+Copy //src/mpatrol.h mpatrol/include
+Copy //src/mpalloc.h mpatrol/include
+Copy //src/mpdebug.h mpatrol/include
+MakeDir mpatrol/include/mpatrol
+Copy //tools/#?.h mpatrol/include/mpatrol
+MakeDir mpatrol/info
+Copy //doc/mpatrol.info mpatrol/info
+MakeDir mpatrol/lib
+Copy //build/amiga/libmpatrol.a mpatrol/lib
+Copy //build/amiga/libmpatrolmt.a mpatrol/lib
+Copy //build/amiga/libmpalloc.a mpatrol/lib
+Copy //build/amiga/libmptools.a mpatrol/lib
+Copy //build/amiga/mpatrol.lib mpatrol/lib
+Copy //build/amiga/mpatrolmt.lib mpatrol/lib
+Copy //build/amiga/mpalloc.lib mpatrol/lib
+Copy //build/amiga/mptools.lib mpatrol/lib
+MakeDir mpatrol/man
+MakeDir mpatrol/man/cat1
+Copy //man/cat1/#?.1 mpatrol/man/cat1
+MakeDir mpatrol/man/man1
+Copy //man/man1/#?.1 mpatrol/man/man1
+MakeDir mpatrol/man/cat3
+Copy //man/cat3/#?.3 mpatrol/man/cat3
+MakeDir mpatrol/man/man3
+Copy //man/man3/#?.3 mpatrol/man/man3
+MakeDir mpatrol/share
+MakeDir mpatrol/share/aclocal
+Copy //extra/mpatrol.m4 mpatrol/share/aclocal
+MakeDir mpatrol/tests
+MakeDir mpatrol/tests/pass
+Copy //tests/pass/test#?.c mpatrol/tests/pass
+MakeDir mpatrol/tests/fail
+Copy //tests/fail/test#?.c mpatrol/tests/fail
+MakeDir mpatrol/tests/profile
+Copy //tests/profile/test#?.c mpatrol/tests/profile
+MakeDir mpatrol/tests/tutorial
+Copy //tests/tutorial/test#?.c mpatrol/tests/tutorial
+
+
+; Create the LhA distribution archive.
+
+Protect mpatrol GROUPFLAGS -rwed OTHERFLAGS -rwed ALL QUIET
+Delete mpatrol.lha FORCE QUIET >NIL:
+LhA -a -e -m -r -x a mpatrol.lha mpatrol
+Delete mpatrol ALL FORCE QUIET >NIL:
+
+
+; Clean up the build directory.
+
+CD //build/amiga
+Make clobber
+SMake clobber
+CD //pkg/lha

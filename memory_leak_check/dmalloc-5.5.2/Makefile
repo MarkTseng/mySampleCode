@@ -5,7 +5,7 @@
 ###############################################################################
 
 # default root installation directory
-prefix = /home/mark/myResearch/mySampleCode/memory_leak_check/dmalloc-5.5.2
+prefix = /home/mark/myResearch/mySampleCode/memory_leak_check/dmalloc-5.5.2/DMALLOC
 exec_prefix = ${prefix}
 
 srcdir = .
@@ -42,7 +42,7 @@ LIBRARY	= lib$(MODULE).a
 
 # thread version of the library
 LIB_TH	= lib$(MODULE)th.a
-LIB_TH_SL = lib$(MODULE)th.so.5.5.2
+LIB_TH_SL = lib$(MODULE)th.so
 BUILD_ALL_1 = threads
 INSTALL_LIB_1 = installth
 BUILD_THREADS_1 = $(LIB_TH_SL)
@@ -52,7 +52,7 @@ INSTALL_LIB_2 = installthsl
 
 # C++ version of the library
 LIB_CXX	= lib$(MODULE)cxx.a
-LIB_CXX_SL = lib$(MODULE)cxx.so.5.5.2
+LIB_CXX_SL = lib$(MODULE)cxx.so
 #BUILD_ALL_3 = $(LIB_CXX)
 #INSTALL_LIB_3 = installcxx
 BUILD_CXX_3 = $(LIB_CXX_SL)
@@ -62,7 +62,7 @@ INSTALL_CXX_3 = installcxxsl
 
 # threads + C++
 LIB_TH_CXX = lib$(MODULE)thcxx.a
-LIB_TH_CXX_SL = lib$(MODULE)thcxx.so.5.5.2
+LIB_TH_CXX_SL = lib$(MODULE)thcxx.so
 #BUILD_ALL_5 = $(LIB_TH_CXX)
 #INSTALL_LIB_5 = installthcxx
 BUILD_CXX_5 = $(LIB_TH_CXX)
@@ -77,7 +77,7 @@ INSTALL_CXX_6 = installthcxxsl
 #INSTALL_THREADS_6 = installthcxxsl
 
 # shared versions of the libraries
-LIB_SL = lib$(MODULE).so.5.5.2
+LIB_SL = lib$(MODULE).so
 BUILD_ALL_7 = $(LIB_SL)
 INSTALL_LIB_7 = installsl
 BUILD_TH_CXX_7 = $(LIB_TH_CXX_SL)
@@ -131,7 +131,7 @@ TEXIFILE = $(MODULE).texi
 PDFFILE = $(MODULE).pdf
 DOCFILES = $(HTMLFILE) $(TEXIFILE) $(PDFFILE)
 
-CCFLAGS = -U_FORTIFY_SOURCE
+CCFLAGS = -U_FORTIFY_SOURCE -fPIC
 LDFLAGS = 
 
 INSTALL = /usr/bin/install -c
@@ -261,7 +261,7 @@ shlib : $(BUILD_SL)
 # work on your operating system.  Please send feedback to the author
 # via: http://256.com/gray/email.html
 $(LIB_SL) : $(OBJS_SL) $(NORMAL_OBJS_SL)
-	$(CC) $(LDFLAGS) -shared -Wl,-soname,libdmalloc.so.5 -o $@ $(OBJS_SL) $(NORMAL_OBJS_SL)
+	$(CC) $(LDFLAGS) -shared -Wl,-soname,libdmalloc.so -o $@ $(OBJS_SL) $(NORMAL_OBJS_SL)
 
 $(LIBRARY) : $(OBJS) $(NORMAL_OBJS)
 	ar cr $@ $?
@@ -272,21 +272,21 @@ $(LIB_TH) : $(OBJS) $(THREAD_OBJS)
 	arm-linux-gnueabihf-ranlib $@
 
 $(LIB_TH_SL) : $(OBJS_SL) $(THREAD_OBJS_SL)
-	$(CC) $(LDFLAGS) -shared -Wl,-soname,libdmallocth.so.5 -o $@ $(OBJS_SL) $(THREAD_OBJS_SL)
+	$(CC) $(LDFLAGS) -shared -Wl,-soname,libdmallocth.so -o $@ $(OBJS_SL) $(THREAD_OBJS_SL)
 
 $(LIB_CXX) : $(OBJS) $(NORMAL_OBJS) $(CXX_OBJS)
 	ar cr $@ $?
 	arm-linux-gnueabihf-ranlib $@
 
 $(LIB_CXX_SL) : $(OBJS_SL) $(NORMAL_OBJS_SL) $(CXX_OBJS_SL)
-	$(CC) $(LDFLAGS) -shared -Wl,-soname,libdmalloccxx.so.5 -o $@ $(OBJS_SL) $(NORMAL_OBJS_SL) $(CXX_OBJS_SL)
+	$(CC) $(LDFLAGS) -shared -Wl,-soname,libdmalloccxx.so -o $@ $(OBJS_SL) $(NORMAL_OBJS_SL) $(CXX_OBJS_SL)
 
 $(LIB_TH_CXX) : $(OBJS) $(THREAD_OBJS) $(CXX_OBJS)
 	ar cr $@ $?
 	arm-linux-gnueabihf-ranlib $@
 
 $(LIB_TH_CXX_SL) : $(OBJS_SL) $(THREAD_OBJS_SL) $(CXX_OBJS_SL)
-	$(CC) $(LDFLAGS) -shared -Wl,-soname,libdmallocthcxx.so.5 -o $@ $(OBJS_SL) $(THREAD_OBJS_SL) $(CXX_OBJS_SL)
+	$(CC) $(LDFLAGS) -shared -Wl,-soname,libdmallocthcxx.so -o $@ $(OBJS_SL) $(THREAD_OBJS_SL) $(CXX_OBJS_SL)
 
 threadssl : $(LIB_TH_SL)$(ver)
 

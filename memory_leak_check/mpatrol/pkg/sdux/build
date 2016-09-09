@@ -1,0 +1,135 @@
+#!/bin/sh
+
+
+# mpatrol
+# A library for controlling and tracing dynamic memory allocations.
+# Copyright (C) 1997-2002 Graeme S. Roy <graeme.roy@analog.com>
+#
+# This library is free software; you can redistribute it and/or
+# modify it under the terms of the GNU Library General Public
+# License as published by the Free Software Foundation; either
+# version 2 of the License, or (at your option) any later version.
+#
+# This library is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# Library General Public License for more details.
+#
+# You should have received a copy of the GNU Library General Public
+# License along with this library; if not, write to the Free
+# Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+# MA 02111-1307, USA.
+
+
+# UNIX shell script to build a SD/UX package file
+
+
+# $Id: build,v 1.36 2002/01/08 20:22:47 graeme Exp $
+
+
+version=1.4.8
+
+
+# Build the mpatrol library.
+
+cd ../../build/unix
+make clobber
+make libmpatrol.a libmpatrol.sl
+make libmpalloc.a libmpalloc.sl
+make libmptools.a
+make mpatrol mprof mptrace mleak GUISUP=true
+strip mpatrol
+strip mprof
+strip mptrace
+strip mleak
+cd ../../pkg/sdux
+
+
+# Create the installation directory structure and copy the necessary
+# files into it.  This assumes that the Texinfo manual, reference card
+# and manual pages have already been processed into the different
+# documentation formats.
+
+rm -rf mpatrol
+mkdir -p mpatrol/bin
+cp ../../build/unix/mpatrol mpatrol/bin
+cp ../../build/unix/mprof mpatrol/bin
+cp ../../build/unix/mptrace mpatrol/bin
+cp ../../build/unix/mleak mpatrol/bin
+cp ../../bin/mpsym mpatrol/bin
+cp ../../bin/mpedit mpatrol/bin
+cp ../../bin/hexwords mpatrol/bin
+mkdir -p mpatrol/doc/mpatrol/images
+cp ../../README mpatrol/doc/mpatrol
+cp ../../doc/README mpatrol/doc/mpatrol/README.DOC
+cp ../../man/README mpatrol/doc/mpatrol/README.MAN
+cp ../../AUTHORS mpatrol/doc/mpatrol
+cp ../../THANKS mpatrol/doc/mpatrol
+cp ../../COPYING mpatrol/doc/mpatrol
+cp ../../COPYING.LIB mpatrol/doc/mpatrol
+cp ../../NEWS mpatrol/doc/mpatrol
+cp ../../ChangeLog mpatrol/doc/mpatrol
+cp ../../doc/mpatrol.txt mpatrol/doc/mpatrol
+cp ../../doc/mpatrol.guide mpatrol/doc/mpatrol
+cp ../../doc/mpatrol.html mpatrol/doc/mpatrol
+cp ../../doc/mpatrol.dvi mpatrol/doc/mpatrol
+cp ../../doc/mpatrol.ps mpatrol/doc/mpatrol
+cp ../../doc/mpatrol.pdf mpatrol/doc/mpatrol
+cp ../../doc/refcard.dvi mpatrol/doc/mpatrol
+cp ../../doc/refcard.ps mpatrol/doc/mpatrol
+cp ../../doc/refcard.pdf mpatrol/doc/mpatrol
+cp ../../doc/images/*.txt mpatrol/doc/mpatrol/images
+cp ../../doc/images/*.jpg mpatrol/doc/mpatrol/images
+cp ../../doc/images/*.eps mpatrol/doc/mpatrol/images
+cp ../../doc/images/*.pdf mpatrol/doc/mpatrol/images
+mkdir -p mpatrol/doc/mpatrol/html
+cp ../../man/html/*.html mpatrol/doc/mpatrol/html
+mkdir -p mpatrol/doc/mpatrol/dvi
+cp ../../man/dvi/*.dvi mpatrol/doc/mpatrol/dvi
+mkdir -p mpatrol/doc/mpatrol/ps
+cp ../../man/ps/*.ps mpatrol/doc/mpatrol/ps
+mkdir -p mpatrol/doc/mpatrol/pdf
+cp ../../man/pdf/*.pdf mpatrol/doc/mpatrol/pdf
+mkdir -p mpatrol/doc/mpatrol/tests/pass
+cp ../../tests/pass/test*.c mpatrol/doc/mpatrol/tests/pass
+mkdir -p mpatrol/doc/mpatrol/tests/fail
+cp ../../tests/fail/test*.c mpatrol/doc/mpatrol/tests/fail
+mkdir -p mpatrol/doc/mpatrol/tests/profile
+cp ../../tests/profile/test*.c mpatrol/doc/mpatrol/tests/profile
+mkdir -p mpatrol/doc/mpatrol/tests/tutorial
+cp ../../tests/tutorial/test*.c mpatrol/doc/mpatrol/tests/tutorial
+mkdir -p mpatrol/include
+cp ../../src/mpatrol.h mpatrol/include
+cp ../../src/mpalloc.h mpatrol/include
+cp ../../src/mpdebug.h mpatrol/include
+mkdir -p mpatrol/include/mpatrol
+cp ../../tools/*.h mpatrol/include/mpatrol
+mkdir -p mpatrol/info
+cp ../../doc/mpatrol.info mpatrol/info
+mkdir -p mpatrol/lib
+cp ../../build/unix/libmpatrol.a mpatrol/lib
+cp ../../build/unix/libmpatrol.sl mpatrol/lib
+cp ../../build/unix/libmpalloc.a mpatrol/lib
+cp ../../build/unix/libmpalloc.sl mpatrol/lib
+cp ../../build/unix/libmptools.a mpatrol/lib
+mkdir -p mpatrol/man/man1
+cp ../../man/man1/*.1 mpatrol/man/man1
+mkdir -p mpatrol/man/man3
+cp ../../man/man3/*.3 mpatrol/man/man3
+mkdir -p mpatrol/share/aclocal
+cp ../../extra/mpatrol.m4 mpatrol/share/aclocal
+
+
+# Create the package file.  You must have root permission or be able to
+# modify the Access Control Lists in order to perform this step.
+
+rm -f mpatrol-$version.depot.gz
+swpackage -d "| gzip >mpatrol-$version.depot.gz" -x target_type=tape -s mpatrol.psf
+rm -rf mpatrol
+
+
+# Clean up the build directory.
+
+cd ../../build/unix
+make clobber
+cd ../../pkg/sdux

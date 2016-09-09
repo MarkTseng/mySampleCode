@@ -1,0 +1,141 @@
+#!/usr/bin/make -f
+
+# mpatrol
+# A library for controlling and tracing dynamic memory allocations.
+# Copyright (C) 1997-2002 Graeme S. Roy <graeme.roy@analog.com>
+#
+# This library is free software; you can redistribute it and/or
+# modify it under the terms of the GNU Library General Public
+# License as published by the Free Software Foundation; either
+# version 2 of the License, or (at your option) any later version.
+#
+# This library is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# Library General Public License for more details.
+#
+# You should have received a copy of the GNU Library General Public
+# License along with this library; if not, write to the Free
+# Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+# MA 02111-1307, USA.
+
+# $Id: rules,v 1.2 2002/01/08 20:19:01 graeme Exp $
+
+# Uncomment this to turn on verbose mode.
+# export DH_VERBOSE=1
+
+# This is the debhelper compatibility version to use.
+export DH_COMPAT=3
+
+MPATROL=$(shell pwd)/debian/mpatrol
+
+configure: configure-stamp
+configure-stamp:
+	dh_testdir
+
+	# Add here commands to configure the package.
+
+	touch configure-stamp
+
+build: configure-stamp build-stamp
+build-stamp:
+	dh_testdir
+
+	# Add here commands to compile the package.
+
+	# Build the libraries and commands.
+	( cd build/unix && $(MAKE) all && cd - )
+
+	touch build-stamp
+
+clean:
+	dh_testdir
+	dh_testroot
+	rm -f build-stamp configure-stamp
+
+	# Add here commands to clean up after the build process.
+
+	# Clean up the libraries and commands.
+	( cd build/unix && $(MAKE) clobber && cd - )
+
+	dh_clean
+
+install: build
+	dh_testdir
+	dh_testroot
+	dh_clean -k
+	dh_installdirs
+
+	# Add here commands to install the package into debian/mpatrol.
+
+	# Install the commands.
+	install -m755 -s build/unix/mpatrol $(MPATROL)/usr/bin
+	install -m755 -s build/unix/mprof $(MPATROL)/usr/bin
+	install -m755 -s build/unix/mptrace $(MPATROL)/usr/bin
+	install -m755 -s build/unix/mleak $(MPATROL)/usr/bin
+	install -m755 bin/mpsym $(MPATROL)/usr/bin
+	install -m755 bin/mpedit $(MPATROL)/usr/bin
+	install -m755 bin/hexwords $(MPATROL)/usr/bin
+
+	# Install the documentation.
+	install -m644 doc/mpatrol.html $(MPATROL)/usr/share/doc/mpatrol/html
+	install -m644 doc/images/*.jpg $(MPATROL)/usr/share/doc/mpatrol/html/images
+	install -m644 doc/mpatrol.pdf $(MPATROL)/usr/share/doc/mpatrol
+	install -m644 doc/refcard.pdf $(MPATROL)/usr/share/doc/mpatrol
+
+	# Install the headers.
+	install -m644 src/mpatrol.h $(MPATROL)/usr/include
+	install -m644 src/mpalloc.h $(MPATROL)/usr/include
+	install -m644 src/mpdebug.h $(MPATROL)/usr/include
+	install -m644 tools/*.h $(MPATROL)/usr/include/mpatrol
+
+	# Install the info file.
+	install -m644 doc/mpatrol.info* $(MPATROL)/usr/share/info
+
+	# Install the libraries.
+	install -m644 build/unix/lib*.a $(MPATROL)/usr/lib
+	install -m755 build/unix/lib*.so.* $(MPATROL)/usr/lib
+
+	# Install the manual pages.
+	install -m644 man/man1/*.1 $(MPATROL)/usr/share/man/man1
+	install -m644 man/man3/*.3 $(MPATROL)/usr/share/man/man3
+
+	# Install the extra files.
+	install -m644 extra/mpatrol.m4 $(MPATROL)/usr/share/aclocal
+
+# Build architecture-independent files here.
+binary-indep: build install
+
+# Build architecture-dependent files here.
+binary-arch: build install
+#	dh_testversion
+	dh_testdir
+	dh_testroot
+#	dh_installdebconf
+	dh_installdocs
+#	dh_installexamples
+#	dh_installmenu
+#	dh_installemacsen
+#	dh_installpam
+#	dh_installinit
+#	dh_installcron
+	dh_installmanpages
+	dh_installinfo
+#	dh_undocumented
+	dh_installchangelogs ChangeLog
+	dh_link
+	dh_strip
+	dh_compress
+	dh_fixperms
+#	dh_suidregister
+	dh_makeshlibs
+	dh_installdeb
+#	dh_perl
+	dh_shlibdeps
+	dh_gencontrol
+	dh_md5sums
+	dh_builddeb
+
+binary: binary-indep binary-arch
+
+.PHONY: configure build clean install binary-indep binary-arch binary

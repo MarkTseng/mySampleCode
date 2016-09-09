@@ -1,0 +1,156 @@
+#!/bin/sh
+
+
+# mpatrol
+# A library for controlling and tracing dynamic memory allocations.
+# Copyright (C) 1997-2002 Graeme S. Roy <graeme.roy@analog.com>
+#
+# This library is free software; you can redistribute it and/or
+# modify it under the terms of the GNU Library General Public
+# License as published by the Free Software Foundation; either
+# version 2 of the License, or (at your option) any later version.
+#
+# This library is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# Library General Public License for more details.
+#
+# You should have received a copy of the GNU Library General Public
+# License along with this library; if not, write to the Free
+# Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+# MA 02111-1307, USA.
+
+
+# UNIX shell script to build a tar distribution file
+
+
+# $Id: build,v 1.68 2002/01/08 20:23:24 graeme Exp $
+
+
+version=1.4.8
+libversion=1.4
+
+
+# Build the mpatrol library.
+
+cd ../../build/unix
+make clobber
+make libmpatrol.a libmpatrol.so.$libversion
+make libmpatrolmt.a libmpatrolmt.so.$libversion
+make libmpalloc.a libmpalloc.so.$libversion
+make libmptools.a
+make mpatrol mprof mptrace mleak
+strip mpatrol
+strip mprof
+strip mptrace
+strip mleak
+cd ../../pkg/tar
+
+
+# Create the distribution directory structure and copy the necessary
+# files into it.  This assumes that the Texinfo manual, reference card
+# and manual pages have already been processed into the different
+# documentation formats.
+
+rm -rf mpatrol
+mkdir -p mpatrol
+cp ../../README mpatrol
+cp ../../AUTHORS mpatrol
+cp ../../THANKS mpatrol
+cp ../../COPYING mpatrol
+cp ../../COPYING.LIB mpatrol
+cp ../../NEWS mpatrol
+cp ../../ChangeLog mpatrol
+mkdir -p mpatrol/bin
+cp ../../build/unix/mpatrol mpatrol/bin
+cp ../../build/unix/mprof mpatrol/bin
+cp ../../build/unix/mptrace mpatrol/bin
+cp ../../build/unix/mleak mpatrol/bin
+cp ../../bin/mpsym mpatrol/bin
+cp ../../bin/mpedit mpatrol/bin
+cp ../../bin/hexwords mpatrol/bin
+mkdir -p mpatrol/doc/images
+cp ../../doc/README mpatrol/doc
+cp ../../doc/mpatrol.txt mpatrol/doc
+cp ../../doc/mpatrol.guide mpatrol/doc
+cp ../../doc/mpatrol.html mpatrol/doc
+cp ../../doc/mpatrol.dvi mpatrol/doc
+cp ../../doc/mpatrol.ps mpatrol/doc
+cp ../../doc/mpatrol.pdf mpatrol/doc
+cp ../../doc/refcard.dvi mpatrol/doc
+cp ../../doc/refcard.ps mpatrol/doc
+cp ../../doc/refcard.pdf mpatrol/doc
+cp ../../doc/images/*.txt mpatrol/doc/images
+cp ../../doc/images/*.jpg mpatrol/doc/images
+cp ../../doc/images/*.eps mpatrol/doc/images
+cp ../../doc/images/*.pdf mpatrol/doc/images
+mkdir -p mpatrol/doc/man
+cp ../../man/README mpatrol/doc/man
+mkdir -p mpatrol/doc/man/html
+cp ../../man/html/*.html mpatrol/doc/man/html
+mkdir -p mpatrol/doc/man/dvi
+cp ../../man/dvi/*.dvi mpatrol/doc/man/dvi
+mkdir -p mpatrol/doc/man/ps
+cp ../../man/ps/*.ps mpatrol/doc/man/ps
+mkdir -p mpatrol/doc/man/pdf
+cp ../../man/pdf/*.pdf mpatrol/doc/man/pdf
+mkdir -p mpatrol/extra
+cp ../../extra/.profile mpatrol/extra
+cp ../../extra/.cshrc mpatrol/extra
+cp ../../extra/.gdbinit mpatrol/extra
+cp ../../extra/magic mpatrol/extra
+mkdir -p mpatrol/include
+cp ../../src/mpatrol.h mpatrol/include
+cp ../../src/mpalloc.h mpatrol/include
+cp ../../src/mpdebug.h mpatrol/include
+mkdir -p mpatrol/include/mpatrol
+cp ../../tools/*.h mpatrol/include/mpatrol
+mkdir -p mpatrol/info
+cp ../../doc/mpatrol.info mpatrol/info
+mkdir -p mpatrol/lib
+cp ../../build/unix/libmpatrol.a mpatrol/lib
+cp ../../build/unix/libmpatrol.so.$libversion mpatrol/lib
+cp ../../build/unix/libmpatrolmt.a mpatrol/lib
+cp ../../build/unix/libmpatrolmt.so.$libversion mpatrol/lib
+cp ../../build/unix/libmpalloc.a mpatrol/lib
+cp ../../build/unix/libmpalloc.so.$libversion mpatrol/lib
+cp ../../build/unix/libmptools.a mpatrol/lib
+cd mpatrol/lib
+ln -s libmpatrol.so.$libversion libmpatrol.so
+ln -s libmpatrolmt.so.$libversion libmpatrolmt.so
+ln -s libmpalloc.so.$libversion libmpalloc.so
+cd ../..
+mkdir -p mpatrol/man/cat1
+cp ../../man/cat1/*.1 mpatrol/man/cat1
+mkdir -p mpatrol/man/man1
+cp ../../man/man1/*.1 mpatrol/man/man1
+mkdir -p mpatrol/man/cat3
+cp ../../man/cat3/*.3 mpatrol/man/cat3
+mkdir -p mpatrol/man/man3
+cp ../../man/man3/*.3 mpatrol/man/man3
+mkdir -p mpatrol/share/aclocal
+cp ../../extra/mpatrol.m4 mpatrol/share/aclocal
+mkdir -p mpatrol/tests/pass
+cp ../../tests/pass/test*.c mpatrol/tests/pass
+mkdir -p mpatrol/tests/fail
+cp ../../tests/fail/test*.c mpatrol/tests/fail
+mkdir -p mpatrol/tests/profile
+cp ../../tests/profile/test*.c mpatrol/tests/profile
+mkdir -p mpatrol/tests/tutorial
+cp ../../tests/tutorial/test*.c mpatrol/tests/tutorial
+
+
+# Create the compressed tar distribution archive.
+
+rm -f mpatrol_$version.tar
+tar cf mpatrol_$version.tar mpatrol
+rm -f mpatrol_$version.tar.gz
+gzip mpatrol_$version.tar
+rm -rf mpatrol
+
+
+# Clean up the build directory.
+
+cd ../../build/unix
+make clobber
+cd ../../pkg/tar

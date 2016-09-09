@@ -1,0 +1,202 @@
+# mpatrol
+# A library for controlling and tracing dynamic memory allocations.
+# Copyright (C) 1997-2002 Graeme S. Roy <graeme.roy@analog.com>
+#
+# This library is free software; you can redistribute it and/or
+# modify it under the terms of the GNU Library General Public
+# License as published by the Free Software Foundation; either
+# version 2 of the License, or (at your option) any later version.
+#
+# This library is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# Library General Public License for more details.
+#
+# You should have received a copy of the GNU Library General Public
+# License along with this library; if not, write to the Free
+# Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+# MA 02111-1307, USA.
+
+
+# SD/UX package specification file
+
+
+# $Id: mpatrol.psf,v 1.38 2002/01/08 20:22:47 graeme Exp $
+
+
+product
+    tag				mpatrol
+    title			"mpatrol library"
+    revision			1.4.8
+    category			language
+    category_title		"Languages"
+    description			"The mpatrol library for controlling and tracing dynamic memory allocations."
+    copyright			"Copyright (C) 1997-2002 Graeme S. Roy <graeme.roy@analog.com>"
+    fileset
+	tag			mpatrol
+	file_permissions	-m 0664 -o bin -g bin
+	directory		mpatrol=/usr/local
+	directory		mpatrol/bin=/usr/local/bin
+	file -m 0775		mpatrol
+	file -m 0775		mprof
+	file -m 0775		mptrace
+	file -m 0775		mleak
+	file -m 0775		mpsym
+	file -m 0775		mpedit
+	file -m 0775		hexwords
+	directory		mpatrol/doc=/usr/local/doc
+	directory		mpatrol/doc/mpatrol=/usr/local/doc/mpatrol
+	file			README
+	file			README.DOC
+	file			README.MAN
+	file			AUTHORS
+	file			THANKS
+	file			COPYING
+	file			COPYING.LIB
+	file			NEWS
+	file			ChangeLog
+	file			mpatrol.txt
+	file			mpatrol.guide
+	file			mpatrol.html
+	file			mpatrol.dvi
+	file			mpatrol.ps
+	file			mpatrol.pdf
+	file			refcard.dvi
+	file			refcard.ps
+	file			refcard.pdf
+	directory		mpatrol/doc/mpatrol/images=/usr/local/doc/mpatrol/images
+	file			mpatrol.txt
+	file			mpatrol.jpg
+	file			mpatrol.eps
+	file			mpatrol.pdf
+	file			test.jpg
+	file			test.eps
+	file			test.pdf
+	file			gcc.jpg
+	file			gcc.eps
+	file			gcc.pdf
+	file			cpp.jpg
+	file			cpp.eps
+	file			cpp.pdf
+	file			cc1.jpg
+	file			cc1.eps
+	file			cc1.pdf
+	file			collect2.jpg
+	file			collect2.eps
+	file			collect2.pdf
+	file			trace.jpg
+	file			trace.eps
+	file			trace.pdf
+	directory		mpatrol/doc/mpatrol/html=/usr/local/doc/mpatrol/html
+	file			mpatrol.html
+	file			mprof.html
+	file			mptrace.html
+	file			mleak.html
+	file			mpsym.html
+	file			mpedit.html
+	file			hexwords.html
+	file			libmpatrol.html
+	file			libmpalloc.html
+	directory		mpatrol/doc/mpatrol/dvi=/usr/local/doc/mpatrol/dvi
+	file			mpatrol.dvi
+	file			mprof.dvi
+	file			mptrace.dvi
+	file			mleak.dvi
+	file			mpsym.dvi
+	file			mpedit.dvi
+	file			hexwords.dvi
+	file			libmpatrol.dvi
+	file			libmpalloc.dvi
+	directory		mpatrol/doc/mpatrol/ps=/usr/local/doc/mpatrol/ps
+	file			mpatrol.ps
+	file			mprof.ps
+	file			mptrace.ps
+	file			mleak.ps
+	file			mpsym.ps
+	file			mpedit.ps
+	file			hexwords.ps
+	file			libmpatrol.ps
+	file			libmpalloc.ps
+	directory		mpatrol/doc/mpatrol/pdf=/usr/local/doc/mpatrol/pdf
+	file			mpatrol.pdf
+	file			mprof.pdf
+	file			mptrace.pdf
+	file			mleak.pdf
+	file			mpsym.pdf
+	file			mpedit.pdf
+	file			hexwords.pdf
+	file			libmpatrol.pdf
+	file			libmpalloc.pdf
+	directory		mpatrol/doc/mpatrol/tests=/usr/local/doc/mpatrol/tests
+	directory		mpatrol/doc/mpatrol/tests/pass=/usr/local/doc/mpatrol/tests/pass
+	file			test1.c
+	file			test2.c
+	file			test3.c
+	file			test4.c
+	file			test5.c
+	file			test6.c
+	file			test7.c
+	file			test8.c
+	file			test9.c
+	file			test10.c
+	directory		mpatrol/doc/mpatrol/tests/fail=/usr/local/doc/mpatrol/tests/fail
+	file			test1.c
+	file			test2.c
+	file			test3.c
+	file			test4.c
+	file			test5.c
+	file			test6.c
+	file			test7.c
+	file			test8.c
+	file			test9.c
+	file			test10.c
+	file			test11.c
+	file			test12.c
+	file			test13.c
+	file			test14.c
+	file			test15.c
+	file			test16.c
+	file			test17.c
+	file			test18.c
+	directory		mpatrol/doc/mpatrol/tests/profile=/usr/local/doc/mpatrol/tests/profile
+	file			test1.c
+	file			test2.c
+	directory		mpatrol/doc/mpatrol/tests/tutorial=/usr/local/doc/mpatrol/tests/tutorial
+	file			test1.c
+	file			test2.c
+	file			test3.c
+	directory		mpatrol/info=/usr/local/info
+	file			mpatrol.info
+	directory		mpatrol/include=/usr/local/include
+	file			mpatrol.h
+	file			mpalloc.h
+	file			mpdebug.h
+	directory		mpatrol/include/mpatrol=/usr/local/include/mpatrol
+	file			dbmalloc.h
+	file			dmalloc.h
+	file			heapdiff.h
+	file			mgauge.h
+	file			mtrace.h
+	directory		mpatrol/lib=/usr/local/lib
+	file			libmpatrol.a
+	file -m 0775		libmpatrol.sl
+	file			libmpalloc.a
+	file -m 0775		libmpalloc.sl
+	file			libmptools.a
+	directory		mpatrol/man=/usr/local/man
+	directory		mpatrol/man/man1=/usr/local/man/man1
+	file			mpatrol.1
+	file			mprof.1
+	file			mptrace.1
+	file			mleak.1
+	file			mpsym.1
+	file			mpedit.1
+	file			hexwords.1
+	directory		mpatrol/man/man3=/usr/local/man/man3
+	file			libmpatrol.3
+	file			libmpalloc.3
+	directory		mpatrol/share=/usr/local/share
+	directory		mpatrol/share/aclocal=/usr/local/share/aclocal
+	file			mpatrol.m4
+    end
+end

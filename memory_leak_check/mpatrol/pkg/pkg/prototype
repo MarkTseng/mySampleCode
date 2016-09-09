@@ -1,0 +1,197 @@
+# mpatrol
+# A library for controlling and tracing dynamic memory allocations.
+# Copyright (C) 1997-2002 Graeme S. Roy <graeme.roy@analog.com>
+#
+# This library is free software; you can redistribute it and/or
+# modify it under the terms of the GNU Library General Public
+# License as published by the Free Software Foundation; either
+# version 2 of the License, or (at your option) any later version.
+#
+# This library is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# Library General Public License for more details.
+#
+# You should have received a copy of the GNU Library General Public
+# License along with this library; if not, write to the Free
+# Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+# MA 02111-1307, USA.
+
+
+# PKG package file list
+
+
+# $Id: prototype,v 1.52 2002/01/08 20:21:18 graeme Exp $
+
+
+d none bin 0775 bin bin
+f none bin/mpatrol 0775 bin bin
+f none bin/mprof 0775 bin bin
+f none bin/mptrace 0775 bin bin
+f none bin/mleak 0775 bin bin
+f none bin/mpsym 0775 bin bin
+f none bin/mpedit 0775 bin bin
+f none bin/hexwords 0775 bin bin
+d none doc 0775 bin bin
+d none doc/mpatrol 0775 bin bin
+f none doc/mpatrol/README 0664 bin bin
+f none doc/mpatrol/README.DOC 0664 bin bin
+f none doc/mpatrol/README.MAN 0664 bin bin
+f none doc/mpatrol/AUTHORS 0664 bin bin
+f none doc/mpatrol/THANKS 0664 bin bin
+f none doc/mpatrol/COPYING 0664 bin bin
+f none doc/mpatrol/COPYING.LIB 0664 bin bin
+f none doc/mpatrol/NEWS 0664 bin bin
+f none doc/mpatrol/ChangeLog 0664 bin bin
+f none doc/mpatrol/mpatrol.txt 0664 bin bin
+f none doc/mpatrol/mpatrol.guide 0664 bin bin
+f none doc/mpatrol/mpatrol.html 0664 bin bin
+f none doc/mpatrol/mpatrol.dvi 0664 bin bin
+f none doc/mpatrol/mpatrol.ps 0664 bin bin
+f none doc/mpatrol/mpatrol.pdf 0664 bin bin
+f none doc/mpatrol/refcard.dvi 0664 bin bin
+f none doc/mpatrol/refcard.ps 0664 bin bin
+f none doc/mpatrol/refcard.pdf 0664 bin bin
+d none doc/mpatrol/images 0775 bin bin
+f none doc/mpatrol/images/mpatrol.txt 0664 bin bin
+f none doc/mpatrol/images/mpatrol.jpg 0664 bin bin
+f none doc/mpatrol/images/mpatrol.eps 0664 bin bin
+f none doc/mpatrol/images/mpatrol.pdf 0664 bin bin
+f none doc/mpatrol/images/test.jpg 0664 bin bin
+f none doc/mpatrol/images/test.eps 0664 bin bin
+f none doc/mpatrol/images/test.pdf 0664 bin bin
+f none doc/mpatrol/images/gcc.jpg 0664 bin bin
+f none doc/mpatrol/images/gcc.eps 0664 bin bin
+f none doc/mpatrol/images/gcc.pdf 0664 bin bin
+f none doc/mpatrol/images/cpp.jpg 0664 bin bin
+f none doc/mpatrol/images/cpp.eps 0664 bin bin
+f none doc/mpatrol/images/cpp.pdf 0664 bin bin
+f none doc/mpatrol/images/cc1.jpg 0664 bin bin
+f none doc/mpatrol/images/cc1.eps 0664 bin bin
+f none doc/mpatrol/images/cc1.pdf 0664 bin bin
+f none doc/mpatrol/images/collect2.jpg 0664 bin bin
+f none doc/mpatrol/images/collect2.eps 0664 bin bin
+f none doc/mpatrol/images/collect2.pdf 0664 bin bin
+f none doc/mpatrol/images/trace.jpg 0664 bin bin
+f none doc/mpatrol/images/trace.eps 0664 bin bin
+f none doc/mpatrol/images/trace.pdf 0664 bin bin
+d none doc/mpatrol/html 0775 bin bin
+f none doc/mpatrol/html/mpatrol.html 0664 bin bin
+f none doc/mpatrol/html/mprof.html 0664 bin bin
+f none doc/mpatrol/html/mptrace.html 0664 bin bin
+f none doc/mpatrol/html/mleak.html 0664 bin bin
+f none doc/mpatrol/html/mpsym.html 0664 bin bin
+f none doc/mpatrol/html/mpedit.html 0664 bin bin
+f none doc/mpatrol/html/hexwords.html 0664 bin bin
+f none doc/mpatrol/html/libmpatrol.html 0664 bin bin
+f none doc/mpatrol/html/libmpalloc.html 0664 bin bin
+d none doc/mpatrol/dvi 0775 bin bin
+f none doc/mpatrol/dvi/mpatrol.dvi 0664 bin bin
+f none doc/mpatrol/dvi/mprof.dvi 0664 bin bin
+f none doc/mpatrol/dvi/mptrace.dvi 0664 bin bin
+f none doc/mpatrol/dvi/mleak.dvi 0664 bin bin
+f none doc/mpatrol/dvi/mpsym.dvi 0664 bin bin
+f none doc/mpatrol/dvi/mpedit.dvi 0664 bin bin
+f none doc/mpatrol/dvi/hexwords.dvi 0664 bin bin
+f none doc/mpatrol/dvi/libmpatrol.dvi 0664 bin bin
+f none doc/mpatrol/dvi/libmpalloc.dvi 0664 bin bin
+d none doc/mpatrol/ps 0775 bin bin
+f none doc/mpatrol/ps/mpatrol.ps 0664 bin bin
+f none doc/mpatrol/ps/mprof.ps 0664 bin bin
+f none doc/mpatrol/ps/mptrace.ps 0664 bin bin
+f none doc/mpatrol/ps/mleak.ps 0664 bin bin
+f none doc/mpatrol/ps/mpsym.ps 0664 bin bin
+f none doc/mpatrol/ps/mpedit.ps 0664 bin bin
+f none doc/mpatrol/ps/hexwords.ps 0664 bin bin
+f none doc/mpatrol/ps/libmpatrol.ps 0664 bin bin
+f none doc/mpatrol/ps/libmpalloc.ps 0664 bin bin
+d none doc/mpatrol/pdf 0775 bin bin
+f none doc/mpatrol/pdf/mpatrol.pdf 0664 bin bin
+f none doc/mpatrol/pdf/mprof.pdf 0664 bin bin
+f none doc/mpatrol/pdf/mptrace.pdf 0664 bin bin
+f none doc/mpatrol/pdf/mleak.pdf 0664 bin bin
+f none doc/mpatrol/pdf/mpsym.pdf 0664 bin bin
+f none doc/mpatrol/pdf/mpedit.pdf 0664 bin bin
+f none doc/mpatrol/pdf/hexwords.pdf 0664 bin bin
+f none doc/mpatrol/pdf/libmpatrol.pdf 0664 bin bin
+f none doc/mpatrol/pdf/libmpalloc.pdf 0664 bin bin
+d none doc/mpatrol/tests 0775 bin bin
+d none doc/mpatrol/tests/pass 0775 bin bin
+f none doc/mpatrol/tests/pass/test1.c 0664 bin bin
+f none doc/mpatrol/tests/pass/test2.c 0664 bin bin
+f none doc/mpatrol/tests/pass/test3.c 0664 bin bin
+f none doc/mpatrol/tests/pass/test4.c 0664 bin bin
+f none doc/mpatrol/tests/pass/test5.c 0664 bin bin
+f none doc/mpatrol/tests/pass/test6.c 0664 bin bin
+f none doc/mpatrol/tests/pass/test7.c 0664 bin bin
+f none doc/mpatrol/tests/pass/test8.c 0664 bin bin
+f none doc/mpatrol/tests/pass/test9.c 0664 bin bin
+f none doc/mpatrol/tests/pass/test10.c 0664 bin bin
+d none doc/mpatrol/tests/fail 0775 bin bin
+f none doc/mpatrol/tests/fail/test1.c 0664 bin bin
+f none doc/mpatrol/tests/fail/test2.c 0664 bin bin
+f none doc/mpatrol/tests/fail/test3.c 0664 bin bin
+f none doc/mpatrol/tests/fail/test4.c 0664 bin bin
+f none doc/mpatrol/tests/fail/test5.c 0664 bin bin
+f none doc/mpatrol/tests/fail/test6.c 0664 bin bin
+f none doc/mpatrol/tests/fail/test7.c 0664 bin bin
+f none doc/mpatrol/tests/fail/test8.c 0664 bin bin
+f none doc/mpatrol/tests/fail/test9.c 0664 bin bin
+f none doc/mpatrol/tests/fail/test10.c 0664 bin bin
+f none doc/mpatrol/tests/fail/test11.c 0664 bin bin
+f none doc/mpatrol/tests/fail/test12.c 0664 bin bin
+f none doc/mpatrol/tests/fail/test13.c 0664 bin bin
+f none doc/mpatrol/tests/fail/test14.c 0664 bin bin
+f none doc/mpatrol/tests/fail/test15.c 0664 bin bin
+f none doc/mpatrol/tests/fail/test16.c 0664 bin bin
+f none doc/mpatrol/tests/fail/test17.c 0664 bin bin
+f none doc/mpatrol/tests/fail/test18.c 0664 bin bin
+d none doc/mpatrol/tests/profile 0775 bin bin
+f none doc/mpatrol/tests/profile/test1.c 0664 bin bin
+f none doc/mpatrol/tests/profile/test2.c 0664 bin bin
+d none doc/mpatrol/tests/tutorial 0775 bin bin
+f none doc/mpatrol/tests/tutorial/test1.c 0664 bin bin
+f none doc/mpatrol/tests/tutorial/test2.c 0664 bin bin
+f none doc/mpatrol/tests/tutorial/test3.c 0664 bin bin
+d none info 0775 bin bin
+f none info/mpatrol.info 0664 bin bin
+d none include 0775 bin bin
+f none include/mpatrol.h 0664 bin bin
+f none include/mpalloc.h 0664 bin bin
+f none include/mpdebug.h 0664 bin bin
+d none include/mpatrol 0775 bin bin
+f none include/mpatrol/dbmalloc.h 0664 bin bin
+f none include/mpatrol/dmalloc.h 0664 bin bin
+f none include/mpatrol/heapdiff.h 0664 bin bin
+f none include/mpatrol/mgauge.h 0664 bin bin
+f none include/mpatrol/mtrace.h 0664 bin bin
+d none lib 0775 bin bin
+f none lib/libmpatrol.a 0664 bin bin
+f none lib/libmpatrol.so.1.4 0775 bin bin
+s none lib/libmpatrol.so=libmpatrol.so.1.4
+f none lib/libmpatrolmt.a 0664 bin bin
+f none lib/libmpatrolmt.so.1.4 0775 bin bin
+s none lib/libmpatrolmt.so=libmpatrolmt.so.1.4
+f none lib/llib-lmpatrol.ln 0664 bin bin
+f none lib/llib-lmpatrolmt.ln 0664 bin bin
+f none lib/libmpalloc.a 0664 bin bin
+f none lib/libmpalloc.so.1.4 0775 bin bin
+s none lib/libmpalloc.so=libmpalloc.so.1.4
+f none lib/llib-lmpalloc.ln 0664 bin bin
+f none lib/libmptools.a 0664 bin bin
+f none lib/llib-lmptools.ln 0664 bin bin
+d none man 0775 bin bin
+d none man/man1 0775 bin bin
+f none man/man1/mpatrol.1 0664 bin bin
+f none man/man1/mprof.1 0664 bin bin
+f none man/man1/mptrace.1 0664 bin bin
+f none man/man1/mleak.1 0664 bin bin
+f none man/man1/mpsym.1 0664 bin bin
+f none man/man1/mpedit.1 0664 bin bin
+f none man/man1/hexwords.1 0664 bin bin
+d none man/man3 0775 bin bin
+f none man/man3/libmpatrol.3 0664 bin bin
+f none man/man3/libmpalloc.3 0664 bin bin
+d none share/aclocal 0775 bin bin
+f none share/aclocal/mpatrol.m4 0664 bin bin
+i pkginfo

@@ -1,0 +1,95 @@
+.\" mpatrol
+.\" A library for controlling and tracing dynamic memory allocations.
+.\" Copyright (C) 1997-2002 Graeme S. Roy <graeme.roy@analog.com>
+.\"
+.\" This library is free software; you can redistribute it and/or
+.\" modify it under the terms of the GNU Library General Public
+.\" License as published by the Free Software Foundation; either
+.\" version 2 of the License, or (at your option) any later version.
+.\"
+.\" This library is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+.\" Library General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU Library General Public
+.\" License along with this library; if not, write to the Free
+.\" Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+.\" MA 02111-1307, USA.
+.\"
+.\" UNIX Manual Page
+.\"
+.\" $Id: mleak.1,v 1.17 2002/01/08 20:28:41 graeme Exp $
+.\"
+.TH MLEAK 1 "8 January 2002" "Release 1.4" "mpatrol library"
+.SH NAME
+mleak \- locates memory leaks in an mpatrol log file
+.SH SYNOPSIS
+\fBmleak\fP [\fIoptions\fP] [\fIfile\fP]
+.SH DESCRIPTION
+The \fBmleak\fP command is used to display all unfreed memory allocations
+from a log file produced by the mpatrol library.  This should be used if the
+mpatrol library could not finish writing the log file due to abnormal program
+termination (which would prevent the \fBSHOWUNFREED\fP option from working),
+but note that some of the unfreed allocations might have been freed if the
+program had terminated successfully.
+.PP
+The \fBmleak\fP command scans through an mpatrol log file looking for lines
+beginning with \fIALLOC:\fP and \fIFREE:\fP but ignores lines beginning with
+\fIREALLOC:\fP, so only the \fBLOGALLOCS\fP and \fBLOGFREES\fP options are
+necessary when running a program linked with the mpatrol library.  Note that
+as a result of this, no attempt is made to account for resizing of memory
+allocations and so the total amount of memory used by the resulting unfreed
+allocations may not be entirely accurate.
+.PP
+This command will also read the unfreed allocations table produced by the
+\fBSHOWUNFREED\fP option in the log file if one is present.  The entries in the
+table will be compared with the currently allocated entries and will be added
+if not already present.
+.PP
+The \fIfile\fP argument must be a valid mpatrol log filename but if \fIfile\fP
+is omitted then \fBmleak\fP will use \fImpatrol.log\fP as the name of the log
+file to use.  The \fBmleak\fP command makes two passes over the log file so
+the file must be randomly-accessable.  If \fIfile\fP is given as \fI\-\fP then
+the standard input file stream will be used as the log file.
+.SH OPTIONS
+.TP
+\fB\-\-help\fP [\fB\-h\fP]
+Displays a quick-reference option summary.
+.TP
+\fB\-\-ignore\fP [\fB\-i\fP]
+Specifies that the list of unfreed allocations in the log file should be
+ignored.
+.TP
+\fB\-\-max\-stack\fP \fIdepth\fP [\fB\-n\fP]
+Specifies the maximum stack depth to display for each unfreed memory allocation.
+If \fIdepth\fP is \fI0\fP then the call stack depth will be unlimited in size.
+The default call stack depth is \fI0\fP.
+.TP
+\fB\-\-version\fP [\fB\-V\fP]
+Displays the version number of the \fBmleak\fP command.
+.SH SEE ALSO
+\fBmpatrol\fP(1), \fBmprof\fP(1), \fBmptrace\fP(1), \fBmpsym\fP(1),
+\fBmpedit\fP(1), \fBhexwords\fP(1), \fBlibmpatrol\fP(3), \fBlibmpalloc\fP(3).
+.PP
+The mpatrol manual and reference card.
+.PP
+http://www.cbmamiga.demon.co.uk/mpatrol/
+.SH AUTHOR
+Graeme S. Roy <graeme.roy@analog.com>
+.SH COPYRIGHT
+Copyright (C) 1997-2002 Graeme S. Roy <graeme.roy@analog.com>
+.PP
+This library is free software; you can redistribute it and/or modify it under
+the terms of the GNU Library General Public License as published by the Free
+Software Foundation; either version 2 of the License, or (at your option) any
+later version.
+.PP
+This library is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU Library General Public License for more
+details.
+.PP
+You should have received a copy of the GNU Library General Public License
+along with this library; if not, write to the Free Software Foundation, Inc.,
+59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.

@@ -1,0 +1,24 @@
+README FOR THE MPATROL LIBRARY TOOLS
+
+
+This directory contains the source code for tools that are built on top of the
+mpatrol library.  The functions that are defined in these files are intended to
+be useful for specific applications as well as providing real-world examples of
+how to extend mpatrol.  If you wish to use one of the source files in this
+directory then you should first compile it and then link it into your program
+along with the mpatrol library.
+
+Alternatively, if you've already installed mpatrol on your system then there
+should be an mpatrol subdirectory within the include directory where mpatrol.h
+is installed that contains all of the header files in this directory.  There
+should also be a libmptools library within the library directory where
+libmpatrol is installed that contains an object file for each of the source
+files in this directory.  You can then make use of a particular tool by
+including its header file from the mpatrol include subdirectory and then linking
+with the libmptools library.
+
+If you've written a useful extension to mpatrol then you might wish to submit
+it for inclusion in the next release of mpatrol.  Even if it's just for a
+specific application, there might be other users out there that may benefit
+from it.  You'll even get a credit in the manual!  Note that any documentation
+should be written in the associated header file.

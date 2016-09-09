@@ -1,0 +1,138 @@
+README FOR THE MPATROL LIBRARY DOCUMENTATION
+
+
+This directory may contain preformatted documentation for the mpatrol library.
+The documents will have been generated from the TeXinfo source (or from the
+LaTeX source of the reference card) using a variety of tools and are provided
+partly for convenience and partly for people who do not have suitable formatting
+tools installed on their system.  In all cases these documents can be
+regenerated from the source, although there may be slight changes in some files
+due to differences in the systems that they were generated on.  Note that the
+UNIX manual pages are not considered part of this documentation (although they
+are kept up to date) and are located in a separate directory.
+
+
+The following files contain all of the information necessary to generate each of
+the preformatted files.
+
+  * mpatrol.texi
+        Format:    GNU TeXinfo
+                   http://texinfo.org/
+        Notes:     The unprocessed source of the mpatrol manual.
+
+  * refcard.tex
+        Format:    LaTeX
+                   http://www.tug.org/
+        Notes:     The unprocessed source of the reference card.
+
+  * source.tex
+        Format:    LaTeX
+                   http://www.tug.org/
+                   The unprocessed source of the source code documentation.
+
+  * texinfo.tex
+        Format:    TeX
+                   http://texinfo.org/
+        Notes:     The TeXinfo macro package required by the DVI and PDF
+                   versions of the mpatrol manual.
+
+  * images/mpatrol.txt
+        Format:    ASCII text
+                   http://www.bbsinc.com/iso8859.html
+        Notes:     The mpatrol logo required by the ASCII text, GNU Info and
+                   AmigaGuide versions of the mpatrol manual.
+
+  * images/mpatrol.jpg, images/test.jpg, images/gcc.jpg, images/cpp.jpg,
+    images/cc1.jpg, images/collect2.jpg & images/trace.jpg
+        Format:    Joint Photographic Experts Group (JPEG) colour image
+                   http://www.jpeg.org/
+        Notes:     The mpatrol logo and graph files required by the HTML version
+                   of the mpatrol manual.
+
+  * images/mpatrol.eps, images/test.eps, images/gcc.eps, images/cpp.eps,
+    images/cc1.eps, images/collect2.eps & images/trace.eps
+        Format:    Adobe Encapsulated Postscript (EPS) greyscale image
+                   http://www.adobe.com/
+        Notes:     The mpatrol logo and graph files required by the DVI and
+                   Postscript versions of the mpatrol manual.
+
+  * images/mpatrol.pdf, images/test.pdf, images/gcc.pdf, images/cpp.pdf,
+    images/cc1.pdf, images/collect2.pdf & images/trace.pdf
+        Format:    Adobe Portable Document Format (PDF) colour image
+                   http://www.adobe.com/
+        Notes:     The mpatrol logo and graph files required by the PDF version
+                   of the mpatrol manual.
+
+
+The following files are all formatted for on-line documentation.  They generally
+contain little or no formatting codes, leaving the final formatting up to the
+viewer program.
+
+  * mpatrol.txt
+        Format:    ASCII text
+                   http://www.bbsinc.com/iso8859.html
+        Generator: GNU MakeInfo
+                   http://texinfo.org/
+        Viewer:    Any text viewer
+        Notes:     Plain text with no formatting codes.
+
+  * mpatrol.info
+        Format:    GNU Info
+                   http://texinfo.org/
+        Generator: GNU MakeInfo
+                   http://texinfo.org/
+        Viewer:    GNU Info
+        Notes:     Contains hypertext links but no formatting codes.
+
+  * mpatrol.guide
+        Format:    AmigaGuide
+                   http://www.lysator.liu.se/amiga/code/guide/amigaguide.guide
+        Generator: GNU MakeGuide
+                   http://www.aminet.org/~aminet/dirs/aminet/dev/gg/
+        Viewer:    AmigaGuide or MultiView
+        Notes:     Contains hypertext links with basic formatting codes.
+
+  * mpatrol.html
+        Format:    Hypertext Markup Language (HTML)
+                   http://www.w3c.org/MarkUp/
+        Generator: GNU MakeInfo
+                   http://texinfo.org/
+        Viewer:    Any web browser
+        Notes:     Contains hypertext links with formatting codes, but contains
+                   links to JPEG images rather than embedding them.
+
+
+The following files are all formatted for printed manuals.  All can be viewed
+with a variety of programs, not just the ones listed here.
+
+  * mpatrol.dvi, refcard.dvi & source.dvi
+        Format:    Device Independent format (DVI)
+                   http://www.tug.org/
+        Generator: TeX
+                   http://www.tug.org/
+        Viewer:    XDVI
+                   http://www.math.berkeley.edu/~vojta/xdvi.html
+        Notes:     Contains links to EPS images rather than embedding them.
+                   Bitmapped fonts are built on demand to a suitable resolution
+                   when viewing or printing.
+
+  * mpatrol.ps, refcard.ps & source.ps
+        Format:    Adobe Postscript
+                   http://www.adobe.com/
+        Generator: DVIPS
+                   http://www.radicaleye.com/dvips.html
+        Viewer:    Ghostview
+                   http://www.cs.wisc.edu/~ghost/ghostview/
+        Notes:     Contains embedded EPS images and Postscript Type 1 fonts.
+
+  * mpatrol.pdf, refcard.pdf & source.pdf
+        Format:    Adobe Portable Document Format (PDF)
+                   http://www.adobe.com/
+        Generator: PDFTeX
+                   http://www.tug.org/applications/pdftex/
+                   PStill
+                   http://www.this.net/~frank/pstill.html
+        Viewer:    XPDF
+                   http://www.foolabs.com/xpdf/
+        Notes:     Contains hypertext links along with embedded PDF images and
+                   Postscript Type 1 fonts.
