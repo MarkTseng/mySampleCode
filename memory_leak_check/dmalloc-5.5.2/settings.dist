@@ -275,7 +275,7 @@
  *
  * NOTE: This creates a certain amount of memory overhead.
  */
-#define LOG_PNT_ITERATION 0
+#define LOG_PNT_ITERATION 1
 
 /*
  * At the front of each log message, print the output from the ctime()
@@ -443,7 +443,7 @@
  * value is translated to the string necessary to be included with the
  * ``t'' in the logfile.
  */
-#define LOG_PNT_THREAD_ID		0
+#define LOG_PNT_THREAD_ID		1
 #define THREAD_TYPE			pthread_t
 #define THREAD_GET_ID()			pthread_self()
 #if HAVE_SNPRINTF

@@ -1016,7 +1016,8 @@ static	char	*display_pnt(const void *user_pnt, const skip_alloc_t *alloc_p,
     char	thread_id[256];
     
     buf_p += loc_snprintf(buf_p, bounds_p - buf_p, "|t");
-    THREAD_ID_TO_STRING(thread_id, sizeof(thread_id), alloc_p->sa_thread_id);
+    //THREAD_ID_TO_STRING(thread_id, sizeof(thread_id), alloc_p->sa_thread_id);
+	pthread_getname_np(alloc_p->sa_thread_id, thread_id, sizeof(thread_id));
     buf_p += loc_snprintf(buf_p, bounds_p - buf_p, "%s", thread_id);
   }
 #endif
@@ -2009,7 +2010,10 @@ void identify_function_ptr( const char *func, char *buf, const int buf_size)  {
 	}
 
 	//printf("lib name %s, function name %s\n", info.dli_fname, info.dli_sname);
-    (void)loc_snprintf(buf, buf_size, "%s", info.dli_sname);
+	if(info.dli_sname != NULL)
+		(void)loc_snprintf(buf, buf_size, "%s", info.dli_sname);
+	else
+		(void)loc_snprintf(buf, buf_size, "%s, ra=%#lx", info.dli_fname ,(unsigned long)func);
 }
 
 /*
