@@ -3110,8 +3110,17 @@ void	_dmalloc_chunk_log_changed(const unsigned long mark,
   char		out[DUMP_SPACE * 4], *which_str;
   char		where_buf[MAX_FILE_LENGTH + 64], disp_buf[64];
   int		unknown_size_c = 0, unknown_block_c = 0, out_len;
-  int		size_c = 0, block_c = 0, checking_list_c = 0;
+  int		size_c = 0, block_c = 0, checking_list_c = 0, i =0;
   
+  // dump mmap_trace array
+  dmalloc_message("Dumping Not-munmap Pointers:");
+  for(i=0;i< MAX_MMAP_RECORD_NUMBER;i++)
+  {
+	  if(mmap_trace[i].mmap_addr != NULL)
+	  {
+		  dmalloc_message("No munmap: caller: %p, mmap_addr: %p, length:0x%08x, funcName: %s\n", mmap_trace[i].caller, mmap_trace[i].mmap_addr, mmap_trace[i].length, mmap_trace[i].funcName);
+	  }
+  }
   if (log_not_freed_b && log_freed_b) {
     which_str = "Not-Freed and Freed";
   }

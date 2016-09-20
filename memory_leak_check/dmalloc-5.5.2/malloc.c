@@ -26,6 +26,8 @@
  * routines.  It handles a lot of the miscellaneous support garbage for
  * chunk.c which is the real heap manager.
  */
+#define _GNU_SOURCE
+#include <dlfcn.h>
 
 #include <stdio.h>				/* for sprintf sometimes */
 #if HAVE_STDLIB_H
@@ -128,6 +130,7 @@ char		*dmalloc_logpath = NULL;
 
 /* local variables */
 static	int		enabled_b = 0;		/* have we started yet? */
+static	int		enabled_mmap = 0;		/* have we started mmap yet? */
 static	int		in_alloc_b = 0;		/* can't be here twice */
 static	int		do_shutdown_b = 0;	/* execute shutdown soon */
 static	int		memalign_warn_b = 0;	/* memalign warning printed?*/
@@ -139,6 +142,7 @@ static	int		start_line = 0;		/* line to start */
 static	unsigned long	start_iter = 0;		/* start after X iterations */
 static	unsigned long	start_size = 0;		/* start after X bytes */
 static	int		thread_lock_c = 0;	/* lock counter */
+static	int		thread_lock_mmap = 0;	/* lock counter */
 
 /****************************** thread locking *******************************/
 
@@ -156,6 +160,7 @@ static	int		thread_lock_c = 0;	/* lock counter */
  * pthread_mute_init.
  */
 static THREAD_MUTEX_T dmalloc_mutex;
+static THREAD_MUTEX_T dmalloc_mmap_mutex;
 #else
 #error We need to have THREAD_MUTEX_T defined by the configure script
 #endif
@@ -210,6 +215,17 @@ static	void	lock_thread(void)
   }
 }
 
+static	void	lock_mmap_thread(void)
+{
+  /* we only lock if the lock-on counter has reached 0 */
+  if (thread_lock_mmap == 0) {
+#if HAVE_PTHREAD_MUTEX_LOCK
+    pthread_mutex_lock(&dmalloc_mmap_mutex);
+#endif
+  }
+}
+
+
 /*
  * mutex unlock the malloc library
  */
@@ -246,6 +262,41 @@ static	void	unlock_thread(void)
 #endif
   }
 }
+
+static	void	unlock_mmap_thread(void)
+{
+  /* if the lock-on counter has not reached 0 then count it down */
+  if (thread_lock_mmap > 0) {
+    thread_lock_mmap--;
+    /*
+     * As we approach the time when we start mutex locking the
+     * library, we need to init the mutex variable.  This sets how
+     * many times before we start locking should we init the variable
+     * taking in account that the init itself might generate a call
+     * into the library.  Ugh.
+     */
+    if (thread_lock_mmap == THREAD_INIT_LOCK) {
+#if HAVE_PTHREAD_MUTEX_INIT
+      /*
+       * NOTE: we do not use the PTHREAD_MUTEX_INITIALIZER since this
+       * basically delays the pthread_mutex_init call to when
+       * pthread_mutex_lock is called for the first time (at least on
+       * freebsd).  Since we don't want to go recursive into the
+       * pthread library when we go to lock our mutex variable, we
+       * want to force the initialization to happen beforehand with a
+       * call to pthread_mute_init.
+       */
+      pthread_mutex_init(&dmalloc_mmap_mutex, THREAD_LOCK_INIT_VAL);
+#endif
+    }
+  }
+  else if (thread_lock_mmap == 0) {
+#if HAVE_PTHREAD_MUTEX_UNLOCK
+    pthread_mutex_unlock(&dmalloc_mmap_mutex);
+#endif
+  }
+}
+
 #endif
 
 /****************************** local utilities ******************************/
@@ -339,6 +390,32 @@ static	RETSIGTYPE	signal_handler(const int sig)
   }
 }
 #endif
+
+mmap_record mmap_trace[MAX_MMAP_RECORD_NUMBER];
+
+static int mmap_count = 0;
+static void* (*real_mmap)(void *addr, size_t length, int prot, int flags, int fd, off_t offset);
+static int (*real_munmap)(void *addr, size_t length);
+
+static	int	dmalloc_mmap_startup(void)
+{
+  int i;
+  /* have we started already? */
+  if (enabled_mmap) {
+    return 0;
+  }
+
+  real_mmap = dlsym(RTLD_NEXT, "mmap");
+  real_munmap = dlsym(RTLD_NEXT, "munmap");
+  /* initial array */
+  for(i=0;i<MAX_MMAP_RECORD_NUMBER;i++)
+  {
+	mmap_trace[i].caller = NULL;
+	mmap_trace[i].mmap_addr = NULL;
+	memset(mmap_trace[i].funcName, 0, sizeof(mmap_trace[i].funcName));
+  }
+  enabled_mmap = 1; 
+}
 
 /*
  * startup the memory-allocation module
@@ -733,6 +810,112 @@ void	__fini_dmalloc(void)
 }
 #endif
 
+int identify2_function_ptr( const char *func)  {
+	Dl_info info;
+	int rc;
+
+	rc = dladdr(func, &info);
+
+	if (!rc)  {
+		dmalloc_message("Problem retrieving program information for %x:  %s\n", func, dlerror());
+	}
+
+	//dmalloc_message("lib name %s, function name %s\n", info.dli_fname, info.dli_sname);
+	snprintf(mmap_trace[mmap_count].funcName,sizeof(mmap_trace[mmap_count].funcName) - 1 ,"%s",info.dli_sname);	
+	return 0;
+}
+
+/*
+ * DMALLOC_PNT dmalloc_mmap
+ *
+ * DESCRIPTION:
+ *
+ * mmap
+ *
+ * RETURNS:
+ *
+ * Success - Valid pointer.
+ *
+ * Failure - 0L
+ *
+ */
+DMALLOC_PNT	dmalloc_mmap(const char *file, const int line, void *addr, size_t length, int prot, int flags, int fd, off_t offset)
+{
+	void *mmap_addr;
+
+	if (! enabled_mmap) {
+		(void)dmalloc_mmap_startup();
+	}
+
+#if LOCK_THREADS
+  lock_mmap_thread();
+#endif 
+
+	if(mmap_count > MAX_MMAP_RECORD_NUMBER)
+		dmalloc_message("WARN: over mmap record array size : %d\n", MAX_MMAP_RECORD_NUMBER);
+
+	if (file == DMALLOC_DEFAULT_FILE && line == DMALLOC_DEFAULT_LINE) {
+		snprintf(mmap_trace[mmap_count].funcName,sizeof(mmap_trace[mmap_count].funcName) - 1 ,"unknown");	
+	}
+	else if (line == DMALLOC_DEFAULT_LINE) {
+		identify2_function_ptr( file );
+	}
+	else if (file == DMALLOC_DEFAULT_FILE) {
+		snprintf(mmap_trace[mmap_count].funcName,sizeof(mmap_trace[mmap_count].funcName) - 1 ,"ra=ERROR(line=%u)", line);	
+	}
+	else {
+		snprintf(mmap_trace[mmap_count].funcName,sizeof(mmap_trace[mmap_count].funcName) - 1 ,"%.*s:%u",sizeof(mmap_trace[mmap_count].funcName) - 1 ,file, line);	
+	}
+
+	mmap_addr = real_mmap(addr, length, prot, flags, fd, offset);
+	//dmalloc_message("mmap call %d, addr: %p, length: %#x, prot: %d, flags: %d, fd: %d, offset: %lx\n", mmap_count, mmap_addr, length, prot, flags, fd, offset);
+	mmap_trace[mmap_count].caller = (void *)file;
+	mmap_trace[mmap_count].mmap_addr = mmap_addr;
+	mmap_trace[mmap_count].length = length;
+	mmap_count++;
+
+#if LOCK_THREADS
+  unlock_mmap_thread();
+#endif
+ 
+	return mmap_addr;
+}
+
+/*
+ * int dmalloc_munmap
+ *
+ * DESCRIPTION:
+ *
+ * munmap
+ *
+ * RETURNS:
+ *
+ * Success - Valid pointer.
+ *
+ * Failure - 0L
+ *
+ */
+int	dmalloc_munmap(const char *file, const int line, void *addr, size_t length)
+{
+	int i;
+#if LOCK_THREADS
+  lock_mmap_thread();
+#endif 
+	//dmalloc_message("munmap call, addr: %p, length: %#x\n", addr, length);
+	for(i=0;i< MAX_MMAP_RECORD_NUMBER;i++)
+	{
+		if(mmap_trace[i].mmap_addr == addr && addr != NULL)
+		{
+			//dmalloc_message("munmap caller: %p, mmap_addr: %p, funcName: %s\n", mmap_trace[i].caller, mmap_trace[i].mmap_addr, mmap_trace[i].funcName);
+			mmap_trace[i].mmap_addr = NULL;
+			mmap_trace[i].caller = NULL;
+		}
+	}
+#if LOCK_THREADS
+  unlock_mmap_thread();
+#endif
+	return real_munmap(addr, length);
+}
 
 /*
  * DMALLOC_PNT dmalloc_malloc
@@ -1122,7 +1305,52 @@ char	*dmalloc_strndup(const char *file, const int line,
 }
 
 /*************************** external memory calls ***************************/
+/*
+ * DMALLOC_PNT mmap
+ *
+ * DESCRIPTION:
+ *
+ * Overloading the mmap(2) function.  
+ *
+ * RETURNS:
+ *
+ * Success - Valid pointer.
+ *
+ * Failure - 0L
+ *
+ */
+#undef mmap
+DMALLOC_PNT mmap(void *addr, size_t length, int prot, int flags, int fd, off_t offset)
+{
+  char	*file;
+  
+  GET_RET_ADDR(file);
+  return dmalloc_mmap(file, DMALLOC_DEFAULT_LINE, addr, length, prot, flags, fd, offset);
+}
 
+/*************************** external memory calls ***************************/
+/*
+ * int munmap
+ *
+ * DESCRIPTION:
+ *
+ * Overloading the munmap(2) function.  
+ *
+ * RETURNS:
+ *
+ * Success - Valid pointer.
+ *
+ * Failure - 0L
+ *
+ */
+#undef munmap
+int munmap(void *addr, size_t length)
+{
+  char	*file;
+  
+  GET_RET_ADDR(file);
+  return dmalloc_munmap(file, DMALLOC_DEFAULT_LINE, addr, length);
+}
 /*
  * DMALLOC_PNT malloc
  *

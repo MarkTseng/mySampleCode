@@ -51,6 +51,15 @@
 #define DMALLOC_FUNC_NEW_ARRAY	22	/* new[] function called */
 #define DMALLOC_FUNC_DELETE	23	/* delete function called */
 #define DMALLOC_FUNC_DELETE_ARRAY 24	/* delete[] function called */
+#define MAX_MMAP_RECORD_NUMBER (128)
+typedef struct {
+	void *caller;
+	void *mmap_addr;
+	char funcName[56];
+	unsigned int length;
+}mmap_record;
+
+extern mmap_record mmap_trace[MAX_MMAP_RECORD_NUMBER];
 
 #ifdef __cplusplus
 extern "C" {
@@ -112,6 +121,40 @@ void	dmalloc_shutdown(void);
 extern
 void	__fini_dmalloc(void);
 #endif /* if FINI_DMALLOC */
+
+/*
+ * DMALLOC_PNT dmalloc_mmap
+ *
+ * DESCRIPTION:
+ *
+ * mmap
+ *
+ * RETURNS:
+ *
+ * Success - Valid pointer.
+ *
+ * Failure - 0L
+ *
+ */
+extern
+DMALLOC_PNT	dmalloc_mmap(const char *file, const int line, void *addr, size_t length, int prot, int flags, int fd, off_t offset);
+
+/*
+ * int dmalloc_munmap
+ *
+ * DESCRIPTION:
+ *
+ * munmap
+ *
+ * RETURNS:
+ *
+ * Success - Valid pointer.
+ *
+ * Failure - 0L
+ *
+ */
+extern
+int	dmalloc_munmap(const char *file, const int line, void *addr, size_t length);
 
 /*
  * DMALLOC_PNT dmalloc_malloc
@@ -1106,6 +1149,12 @@ const char	*dmalloc_strerror(const int error_num);
 #undef dmalloc_tag
 #define dmalloc_tag(p_,f_,l_) dmalloc_tag_pnt(p_,f_,l_)
 
+#undef mmap
+#define mmap(addr, length, prot, flags, fd, offset) \
+  dmalloc_mmap(__FILE__,__LINE__, addr, length, prot, flags, fd, offset)
+#undef munmap
+#define munmap(addr, length) \
+  dmalloc_munmap(__FILE__,__LINE__, addr, length)
 #undef malloc
 #define malloc(size) \
   dmalloc_malloc(__FILE__, __LINE__, (size), DMALLOC_FUNC_MALLOC, 0, 0)
