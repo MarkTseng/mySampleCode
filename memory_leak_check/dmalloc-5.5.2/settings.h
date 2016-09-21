@@ -196,8 +196,8 @@
  * be displayed.  Thanks Marty.
  */
 #if SIGNAL_OKAY
-#define SIGNAL1		SIGHUP
-#define SIGNAL2		SIGINT
+#define SIGNAL1		SIGUSR1
+#define SIGNAL2		SIGUSR2
 #define SIGNAL3		SIGTERM
 #undef SIGNAL4
 #undef SIGNAL5

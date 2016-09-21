@@ -842,6 +842,7 @@ int identify2_function_ptr( const char *func)  {
 DMALLOC_PNT	dmalloc_mmap(const char *file, const int line, void *addr, size_t length, int prot, int flags, int fd, off_t offset)
 {
 	void *mmap_addr;
+	char *basename;
 
 	if (! enabled_mmap) {
 		(void)dmalloc_mmap_startup();
@@ -864,7 +865,11 @@ DMALLOC_PNT	dmalloc_mmap(const char *file, const int line, void *addr, size_t le
 		snprintf(mmap_trace[mmap_count].funcName,sizeof(mmap_trace[mmap_count].funcName) - 1 ,"ra=ERROR(line=%u)", line);	
 	}
 	else {
-		snprintf(mmap_trace[mmap_count].funcName,sizeof(mmap_trace[mmap_count].funcName) - 1 ,"%.*s:%u",sizeof(mmap_trace[mmap_count].funcName) - 1 ,file, line);	
+		basename = strrchr(file,'/');
+		if(basename == NULL)
+			snprintf(mmap_trace[mmap_count].funcName,sizeof(mmap_trace[mmap_count].funcName) - 1 ,"%.*s:%u",sizeof(mmap_trace[mmap_count].funcName) - 1 ,file, line);	
+		else
+			snprintf(mmap_trace[mmap_count].funcName,sizeof(mmap_trace[mmap_count].funcName) - 1 ,"%.*s:%u",sizeof(mmap_trace[mmap_count].funcName) - 1 ,basename + 1, line);	
 	}
 
 	mmap_addr = real_mmap(addr, length, prot, flags, fd, offset);
