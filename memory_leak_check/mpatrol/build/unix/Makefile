@@ -1,33 +1,32 @@
 # mpatrol
 # A library for controlling and tracing dynamic memory allocations.
-# Copyright (C) 1997-2002 Graeme S. Roy <graeme.roy@analog.com>
+# Copyright (C) 1997-2008 Graeme S. Roy <graemeroy@users.sourceforge.net>
 #
-# This library is free software; you can redistribute it and/or
-# modify it under the terms of the GNU Library General Public
-# License as published by the Free Software Foundation; either
-# version 2 of the License, or (at your option) any later version.
+# This program is free software: you can redistribute it and/or modify it
+# under the terms of the GNU Lesser General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or (at
+# your option) any later version.
 #
-# This library is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-# Library General Public License for more details.
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser
+# General Public License for more details.
 #
-# You should have received a copy of the GNU Library General Public
-# License along with this library; if not, write to the Free
-# Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
-# MA 02111-1307, USA.
+# You should have received a copy of the GNU Lesser General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
 # GNU Makefile to compile on UNIX with GNU C++
 
 
-# $Id: Makefile,v 1.80 2002/01/08 20:41:01 graeme Exp $
+# $Id$
 
 
 # Definitions
 
 SHELL = /bin/sh
-CC    = g++
+CC    = gcc
+CXX   = g++
 AR    = ar
 LD    = $(CC)
 LINT  = lint
@@ -39,9 +38,9 @@ VPATH  = $(SOURCE):$(TOOLS)
 GUISUP	= false
 
 ifeq ($(GUISUP),true)
-CFLAGS	= -I$(SOURCE) -I$(TOOLS) -I/usr/X11R6/include -I/usr/X11R5/include -I/usr/X11/include -I/usr/X/include -DMP_GUI_SUPPORT=1
+CFLAGS	= -I$(SOURCE) -I$(TOOLS) -I/usr/X11R6/include -I/usr/X11R5/include -I/usr/X11/include -I/usr/X/include $(UNWIND_CFLAGS) -DMP_GUI_SUPPORT=1
 else
-CFLAGS	= -I$(SOURCE) -I$(TOOLS)
+CFLAGS	= -I$(SOURCE) -I$(TOOLS) $(UNWIND_CFLAGS)
 endif
 OFLAGS	= -O3 -fno-inline-functions
 SFLAGS	= -fPIC
@@ -52,7 +51,7 @@ MPATROL	 = mpatrol
 MPALLOC	 = mpalloc
 MPTOOLS	 = mptools
 VERSION	 = 1
-REVISION = 4
+REVISION = 5
 
 MPTOBJS	 = list.o tree.o slots.o utils.o memory.o heap.o alloc.o info.o \
 	   stack.o addr.o strtab.o symbol.o signals.o diag.o option.o \
@@ -190,6 +189,18 @@ machine.s.t.o: $(SOURCE)/machine.c
 	$(CC) $(CFLAGS) $(SFLAGS) $(TFLAGS) -E -P $< >machine.s
 	$(CC) $(CFLAGS) $(OFLAGS) $(SFLAGS) $(TFLAGS) -c -o $@ machine.s
 	-@ rm -f machine.s 2>&1 >/dev/null
+
+cplus.o:
+	$(CXX) $(CFLAGS) $(OFLAGS) -c $<
+
+cplus.s.o:
+	$(CXX) $(CFLAGS) $(OFLAGS) $(SFLAGS) -c -o $@ $<
+
+cplus.t.o:
+	$(CXX) $(CFLAGS) $(OFLAGS) $(TFLAGS) -c -o $@ $<
+
+cplus.s.t.o:
+	$(CXX) $(CFLAGS) $(OFLAGS) $(SFLAGS) $(TFLAGS) -c -o $@ $<
 
 mpatrol: mpatrol.o getopt.o version.o
 	$(CC) $(CFLAGS) $(OFLAGS) -o $@ mpatrol.o getopt.o version.o

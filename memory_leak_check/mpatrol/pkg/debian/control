@@ -29,4 +29,4 @@ Description: A powerful library for debugging memory allocations
  run-time via an environment variable, thus removing the need to
  recompile or relink in order to change the library's behaviour.
  .
- http://www.cbmamiga.demon.co.uk/mpatrol/
+ http://sourceforge.net/projects/mpatrol/

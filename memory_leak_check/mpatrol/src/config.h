@@ -5,22 +5,20 @@
 /*
  * mpatrol
  * A library for controlling and tracing dynamic memory allocations.
- * Copyright (C) 1997-2002 Graeme S. Roy <graeme.roy@analog.com>
+ * Copyright (C) 1997-2008 Graeme S. Roy <graemeroy@users.sourceforge.net>
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Library General Public
- * License as published by the Free Software Foundation; either
- * version 2 of the License, or (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or (at
+ * your option) any later version.
  *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Library General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser
+ * General Public License for more details.
  *
- * You should have received a copy of the GNU Library General Public
- * License along with this library; if not, write to the Free
- * Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
- * MA 02111-1307, USA.
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 
@@ -31,7 +29,7 @@
 
 
 /*
- * $Id: config.h,v 1.87 2002/01/08 20:13:59 graeme Exp $
+ * $Id$
  */
 
 
@@ -307,11 +305,12 @@
 #if SYSTEM == SYSTEM_AIX || SYSTEM == SYSTEM_CYGWIN || \
     SYSTEM == SYSTEM_DGUX || SYSTEM == SYSTEM_DRSNX || \
     SYSTEM == SYSTEM_DYNIX || SYSTEM == SYSTEM_FREEBSD || \
-    SYSTEM == SYSTEM_HPUX || SYSTEM == SYSTEM_IRIX || \
-    SYSTEM == SYSTEM_LINUX || SYSTEM == SYSTEM_NETBSD || \
-    SYSTEM == SYSTEM_OPENBSD || SYSTEM == SYSTEM_SINIX || \
-    SYSTEM == SYSTEM_SOLARIS || SYSTEM == SYSTEM_SUNOS || \
-    SYSTEM == SYSTEM_TRU64 || SYSTEM == SYSTEM_UNIXWARE
+    SYSTEM == SYSTEM_HPUX || SYSTEM == SYSTEM_INTERIX || \
+    SYSTEM == SYSTEM_IRIX || SYSTEM == SYSTEM_LINUX || \
+    SYSTEM == SYSTEM_NETBSD || SYSTEM == SYSTEM_OPENBSD || \
+    SYSTEM == SYSTEM_SINIX || SYSTEM == SYSTEM_SOLARIS || \
+    SYSTEM == SYSTEM_SUNOS || SYSTEM == SYSTEM_TRU64 || \
+    SYSTEM == SYSTEM_UNIXWARE
 #define MP_MMAP_SUPPORT 1
 #else /* SYSTEM */
 #define MP_MMAP_SUPPORT 0
@@ -329,9 +328,10 @@
 #ifndef MP_MMAP_ANONYMOUS
 #if SYSTEM == SYSTEM_AIX || SYSTEM == SYSTEM_CYGWIN || \
     SYSTEM == SYSTEM_DYNIX || SYSTEM == SYSTEM_FREEBSD || \
-    SYSTEM == SYSTEM_HPUX || SYSTEM == SYSTEM_LINUX || \
-    SYSTEM == SYSTEM_NETBSD || SYSTEM == SYSTEM_OPENBSD || \
-    SYSTEM == SYSTEM_TRU64 || SYSTEM == SYSTEM_UNIXWARE
+    SYSTEM == SYSTEM_HPUX || SYSTEM == SYSTEM_INTERIX || \
+    SYSTEM == SYSTEM_LINUX || SYSTEM == SYSTEM_NETBSD || \
+    SYSTEM == SYSTEM_OPENBSD || SYSTEM == SYSTEM_TRU64 || \
+    SYSTEM == SYSTEM_UNIXWARE
 #define MP_MMAP_ANONYMOUS 1
 #else /* SYSTEM */
 #define MP_MMAP_ANONYMOUS 0
@@ -462,10 +462,10 @@
 
 #ifndef MP_PROCFS_SUPPORT
 #if SYSTEM == SYSTEM_DRSNX || SYSTEM == SYSTEM_FREEBSD || \
-    SYSTEM == SYSTEM_IRIX || SYSTEM == SYSTEM_LINUX || \
-    SYSTEM == SYSTEM_NETBSD || SYSTEM == SYSTEM_OPENBSD || \
-    SYSTEM == SYSTEM_SOLARIS || SYSTEM == SYSTEM_TRU64 || \
-    SYSTEM == SYSTEM_UNIXWARE
+    SYSTEM == SYSTEM_INTERIX || SYSTEM == SYSTEM_IRIX || \
+    SYSTEM == SYSTEM_LINUX || SYSTEM == SYSTEM_NETBSD || \
+    SYSTEM == SYSTEM_OPENBSD || SYSTEM == SYSTEM_SOLARIS || \
+    SYSTEM == SYSTEM_TRU64 || SYSTEM == SYSTEM_UNIXWARE
 #define MP_PROCFS_SUPPORT 1
 #else /* SYSTEM */
 #define MP_PROCFS_SUPPORT 0
@@ -491,8 +491,9 @@
 
 #if MP_PROCFS_SUPPORT
 #ifndef MP_PROCFS_CMDNAME
-#if SYSTEM == SYSTEM_FREEBSD || SYSTEM == SYSTEM_LINUX || \
-    SYSTEM == SYSTEM_NETBSD || SYSTEM == SYSTEM_OPENBSD
+#if SYSTEM == SYSTEM_FREEBSD || SYSTEM == SYSTEM_INTERIX || \
+    SYSTEM == SYSTEM_LINUX || SYSTEM == SYSTEM_NETBSD || \
+    SYSTEM == SYSTEM_OPENBSD
 #define MP_PROCFS_CMDNAME MP_PROCFS_DIRNAME "/%lu/cmdline"
 #endif /* SYSTEM */
 #endif /* MP_PROCFS_CMDNAME */
@@ -547,42 +548,83 @@
 #endif /* MP_BUILTINSTACK_SUPPORT */
 
 
-/* The maximum number of call stack traversals per function if builtin
- * frame address and return address support is being used.  This number must
- * be supported by the required number of macro functions in stack.c.
+/* Indicates if the backtrace() routine in glibc should be used to traverse
+ * call stacks.  Note that this method only allows a finite number of call
+ * stack traversals per function and that MP_BUILTINSTACK_SUPPORT takes
+ * precedence.
  */
 
-#if MP_BUILTINSTACK_SUPPORT
+#ifndef MP_GLIBCBACKTRACE_SUPPORT
+#if !MP_BUILTINSTACK_SUPPORT
+#if TARGET == TARGET_UNIX && SYSTEM == SYSTEM_LINUX && ARCH == ARCH_IX86 && \
+    ENVIRON == ENVIRON_64
+#define MP_GLIBCBACKTRACE_SUPPORT 1
+#else /* TARGET && SYSTEM && ARCH && ENVIRON */
+#define MP_GLIBCBACKTRACE_SUPPORT 0
+#endif /* TARGET && SYSTEM && ARCH && ENVIRON */
+#else /* MP_BUILTINSTACK_SUPPORT */
+#define MP_GLIBCBACKTRACE_SUPPORT 0
+#endif /* MP_BUILTINSTACK_SUPPORT */
+#endif /* MP_GLIBCBACKTRACE_SUPPORT */
+
+
+/* The maximum number of call stack traversals per function if builtin
+ * frame address and return address (or backtrace() in glibc) support is being
+ * used.  For the builtin functions, this number must be supported by the
+ * required number of macro functions in stack.c.
+ */
+
 #ifndef MP_MAXSTACK
+#if MP_BUILTINSTACK_SUPPORT
 #if TARGET == TARGET_AMIGA && defined(__GNUC__)
 #define MP_MAXSTACK 3
 #else /* TARGET && __GNUC__ */
 #define MP_MAXSTACK 8
 #endif /* TARGET && __GNUC__ */
+#elif MP_GLIBCBACKTRACE_SUPPORT
+#define MP_MAXSTACK 64
+#endif /* MP_BUILTINSTACK_SUPPORT && MP_GLIBCBACKTRACE_SUPPORT */
 #endif /* MP_MAXSTACK */
-#endif /* MP_BUILTINSTACK_SUPPORT */
+
+
+/* Indicates if the routines in libunwind should be used to traverse call
+ * stacks.  Note that MP_BUILTINSTACK_SUPPORT and MP_GLIBCBACKTRACE_SUPPORT
+ * take precedence.
+ */
+
+#ifndef MP_LIBUNWIND_SUPPORT
+#if !MP_BUILTINSTACK_SUPPORT && !MP_GLIBCBACKTRACE_SUPPORT
+#if TARGET == TARGET_UNIX && (ARCH == ARCH_ARM || ARCH == ARCH_IA64)
+#define MP_LIBUNWIND_SUPPORT 1
+#else /* TARGET && ARCH */
+#define MP_LIBUNWIND_SUPPORT 0
+#endif /* TARGET && ARCH */
+#else /* MP_BUILTINSTACK_SUPPORT && MP_GLIBCBACKTRACE_SUPPORT */
+#define MP_LIBUNWIND_SUPPORT 0
+#endif /* MP_BUILTINSTACK_SUPPORT && MP_GLIBCBACKTRACE_SUPPORT */
+#endif /* MP_LIBUNWIND_SUPPORT */
 
 
 /* Indicates if the operating system provides support routines for traversing
  * call stacks in an external library.  This is currently only available for
  * HP/UX, IRIX, Tru64 and Windows, but the IRIX unwind() library routine calls
  * malloc() and free() so the non-library method of call stack traversal is
- * used instead as it is much faster.  Note that MP_BUILTINSTACK_SUPPORT takes
- * precedence.
+ * used instead as it is much faster.  Note that MP_BUILTINSTACK_SUPPORT,
+ * MP_GLIBCBACKTRACE_SUPPORT and MP_LIBUNWIND_SUPPORT take precedence.
  */
 
 #ifndef MP_LIBRARYSTACK_SUPPORT
-#if !MP_BUILTINSTACK_SUPPORT
+#if !MP_BUILTINSTACK_SUPPORT && !MP_GLIBCBACKTRACE_SUPPORT && \
+    !MP_LIBUNWIND_SUPPORT
 #if (TARGET == TARGET_UNIX && (SYSTEM == SYSTEM_HPUX || \
-      SYSTEM == SYSTEM_TRU64)) || (TARGET == TARGET_WINDOWS && \
-     !defined(__GNUC__))
+      SYSTEM == SYSTEM_TRU64)) || TARGET == TARGET_WINDOWS
 #define MP_LIBRARYSTACK_SUPPORT 1
 #else /* TARGET && SYSTEM */
 #define MP_LIBRARYSTACK_SUPPORT 0
 #endif /* TARGET && SYSTEM */
-#else /* MP_BUILTINSTACK_SUPPORT */
+#else /* MP_BUILTINSTACK_SUPPORT && MP_GLIBCBACKTRACE_SUPPORT && ... */
 #define MP_LIBRARYSTACK_SUPPORT 0
-#endif /* MP_BUILTINSTACK_SUPPORT */
+#endif /* MP_BUILTINSTACK_SUPPORT && MP_GLIBCBACKTRACE_SUPPORT && ... */
 #endif /* MP_LIBRARYSTACK_SUPPORT */
 
 
@@ -594,17 +636,19 @@
  */
 
 #ifndef MP_FULLSTACK
-#if MP_BUILTINSTACK_SUPPORT
+#if MP_BUILTINSTACK_SUPPORT || MP_GLIBCBACKTRACE_SUPPORT
 #define MP_FULLSTACK 0
-#elif MP_LIBRARYSTACK_SUPPORT || (TARGET == TARGET_UNIX && \
-       (ARCH == ARCH_IX86 || ARCH == ARCH_M68K || ARCH == ARCH_M88K || \
-        ARCH == ARCH_MIPS || ARCH == ARCH_POWER || ARCH == ARCH_POWERPC || \
-        ARCH == ARCH_SPARC)) || ((TARGET == TARGET_WINDOWS || \
-        TARGET == TARGET_NETWARE) && ARCH == ARCH_IX86)
+#elif MP_LIBUNWIND_SUPPORT || MP_LIBRARYSTACK_SUPPORT
 #define MP_FULLSTACK 1
-#else /* MP_BUILTINSTACK_SUPPORT && MP_LIBRARYSTACK_SUPPORT && ... */
+#elif (TARGET == TARGET_UNIX && (ARCH == ARCH_IX86 || ARCH == ARCH_M68K || \
+        ARCH == ARCH_M88K || ARCH == ARCH_MIPS || ARCH == ARCH_POWER || \
+        ARCH == ARCH_POWERPC || ARCH == ARCH_SPARC)) || \
+      ((TARGET == TARGET_WINDOWS || TARGET == TARGET_NETWARE) && \
+       ARCH == ARCH_IX86)
+#define MP_FULLSTACK 1
+#else /* MP_BUILTINSTACK_SUPPORT && MP_GLIBCBACKTRACE_SUPPORT && ... */
 #define MP_FULLSTACK 0
-#endif /* MP_BUILTINSTACK_SUPPORT && MP_LIBRARYSTACK_SUPPORT && ... */
+#endif /* MP_BUILTINSTACK_SUPPORT && MP_GLIBCBACKTRACE_SUPPORT && ... */
 #endif /* MP_FULLSTACK */
 
 
@@ -614,10 +658,10 @@
 
 #ifndef MP_PRELOAD_SUPPORT
 #if SYSTEM == SYSTEM_DGUX || SYSTEM == SYSTEM_DYNIX || \
-    SYSTEM == SYSTEM_FREEBSD || SYSTEM == SYSTEM_IRIX || \
-    SYSTEM == SYSTEM_LINUX || SYSTEM == SYSTEM_NETBSD || \
-    SYSTEM == SYSTEM_OPENBSD || SYSTEM == SYSTEM_SOLARIS || \
-    SYSTEM == SYSTEM_TRU64
+    SYSTEM == SYSTEM_FREEBSD || SYSTEM == SYSTEM_INTERIX || \
+    SYSTEM == SYSTEM_IRIX || SYSTEM == SYSTEM_LINUX || \
+    SYSTEM == SYSTEM_NETBSD || SYSTEM == SYSTEM_OPENBSD || \
+    SYSTEM == SYSTEM_SOLARIS || SYSTEM == SYSTEM_TRU64
 #define MP_PRELOAD_SUPPORT 1
 #else /* SYSTEM */
 #define MP_PRELOAD_SUPPORT 0
@@ -683,8 +727,8 @@
 #elif FORMAT == FORMAT_ELF32 || FORMAT == FORMAT_ELF64
 #define MP_SYMBOL_LIBS , MP_LIBNAME(elf)
 #elif FORMAT == FORMAT_BFD
-#define MP_SYMBOL_LIBS , MP_LIBNAME(bfd), MP_LIBNAME(iberty)
-#elif FORMAT == FORMAT_PE
+#define MP_SYMBOL_LIBS , MP_LIBNAME(bfd), MP_LIBNAME(iberty), MP_LIBNAME(intl)
+#elif FORMAT == FORMAT_IMGHLP
 #define MP_SYMBOL_LIBS , MP_LIBNAME(imagehlp)
 #else /* FORMAT */
 #define MP_SYMBOL_LIBS
@@ -705,21 +749,27 @@
 #endif /* MP_THREADS_LIBS */
 
 #ifndef MP_SYSTEM_LIBS
+#if MP_LIBUNWIND_SUPPORT
+#if SYSTEM == SYSTEM_IRIX || SYSTEM == SYSTEM_TRU64
+#define MP_SYSTEM_LIBS , MP_LIBNAME(unwind), "DEFAULT"
+#else /* SYSTEM */
+#define MP_SYSTEM_LIBS , MP_LIBNAME(unwind)
+#endif /* SYSTEM */
+#elif MP_LIBRARYSTACK_SUPPORT
 #if SYSTEM == SYSTEM_HPUX
-#if MP_LIBRARYSTACK_SUPPORT
 #define MP_SYSTEM_LIBS , MP_LIBNAME(cl)
-#else /* MP_LIBRARYSTACK_SUPPORT */
-#define MP_SYSTEM_LIBS
-#endif /* MP_LIBRARYSTACK_SUPPORT */
 #elif SYSTEM == SYSTEM_IRIX || SYSTEM == SYSTEM_TRU64
-#if MP_LIBRARYSTACK_SUPPORT
 #define MP_SYSTEM_LIBS , MP_LIBNAME(exc), "DEFAULT"
-#else /* MP_LIBRARYSTACK_SUPPORT */
-#define MP_SYSTEM_LIBS , "DEFAULT"
-#endif /* MP_LIBRARYSTACK_SUPPORT */
 #else /* SYSTEM */
 #define MP_SYSTEM_LIBS
 #endif /* SYSTEM */
+#else /* MP_LIBUNWIND_SUPPORT && MP_LIBRARYSTACK_SUPPORT */
+#if SYSTEM == SYSTEM_IRIX || SYSTEM == SYSTEM_TRU64
+#define MP_SYSTEM_LIBS "DEFAULT"
+#else /* SYSTEM */
+#define MP_SYSTEM_LIBS
+#endif /* SYSTEM */
+#endif /* MP_LIBUNWIND_SUPPORT && MP_LIBRARYSTACK_SUPPORT */
 #endif /* MP_SYSTEM_LIBS */
 #endif /* MP_PRELOAD_SUPPORT */
 
@@ -843,8 +893,8 @@
  */
 
 #ifndef MP_USE_ATEXIT
-#if MP_INIT_SUPPORT || SYSTEM == SYSTEM_TRU64 || defined(__GNUC__) || \
-    defined(__cplusplus)
+#if MP_INIT_SUPPORT || SYSTEM == SYSTEM_TRU64 || ((defined(__GNUC__) || \
+      defined(__cplusplus)) && SYSTEM != SYSTEM_INTERIX)
 #define MP_USE_ATEXIT 0
 #else /* MP_INIT_SUPPORT && SYSTEM && __GNUC__ && __cplusplus */
 #define MP_USE_ATEXIT 1
@@ -860,9 +910,10 @@
 #ifndef MP_IDENT_SUPPORT
 #if SYSTEM == SYSTEM_CYGWIN || SYSTEM == SYSTEM_DGUX || \
     SYSTEM == SYSTEM_DRSNX || SYSTEM == SYSTEM_DYNIX || \
-    SYSTEM == SYSTEM_IRIX || SYSTEM == SYSTEM_LINUX || \
-    SYSTEM == SYSTEM_SINIX || SYSTEM == SYSTEM_SOLARIS || \
-    SYSTEM == SYSTEM_TRU64 || SYSTEM == SYSTEM_UNIXWARE
+    SYSTEM == SYSTEM_INTERIX || SYSTEM == SYSTEM_IRIX || \
+    SYSTEM == SYSTEM_LINUX || SYSTEM == SYSTEM_SINIX || \
+    SYSTEM == SYSTEM_SOLARIS || SYSTEM == SYSTEM_TRU64 || \
+    SYSTEM == SYSTEM_UNIXWARE
 #define MP_IDENT_SUPPORT 1
 #elif SYSTEM == SYSTEM_FREEBSD || SYSTEM == SYSTEM_NETBSD || \
       SYSTEM == SYSTEM_OPENBSD || SYSTEM == SYSTEM_SUNOS

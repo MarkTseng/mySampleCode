@@ -2,24 +2,22 @@
 
 @c mpatrol
 @c A library for controlling and tracing dynamic memory allocations.
-@c Copyright (C) 1997-2002 Graeme S. Roy <graeme.roy@analog.com>
+@c Copyright (C) 1997-2008 Graeme S. Roy <graemeroy@users.sourceforge.net>
 @c
-@c This library is free software; you can redistribute it and/or
-@c modify it under the terms of the GNU Library General Public
-@c License as published by the Free Software Foundation; either
-@c version 2 of the License, or (at your option) any later version.
+@c This program is free software: you can redistribute it and/or modify it
+@c under the terms of the GNU Lesser General Public License as published by
+@c the Free Software Foundation, either version 3 of the License, or (at
+@c your option) any later version.
 @c
-@c This library is distributed in the hope that it will be useful,
-@c but WITHOUT ANY WARRANTY; without even the implied warranty of
-@c MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-@c Library General Public License for more details.
+@c This program is distributed in the hope that it will be useful, but
+@c WITHOUT ANY WARRANTY; without even the implied warranty of
+@c MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser
+@c General Public License for more details.
 @c
-@c You should have received a copy of the GNU Library General Public
-@c License along with this library; if not, write to the Free
-@c Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
-@c MA 02111-1307, USA.
+@c You should have received a copy of the GNU Lesser General Public License
+@c along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-@c $Id: mpatrol.texi,v 1.256 2002/01/08 22:07:02 graeme Exp $
+@c $Id$
 
 @c %**start of header
 @setfilename mpatrol.info
@@ -35,15 +33,25 @@
 @end direntry
 
 @c Remember to change these after each revision!
-@set EDITION 2.13
-@set VERSION 1.4.8
-@set UPDATED 8th January, 2002
+@set EDITION 2.15
+@set VERSION 1.5.1
+@set UPDATED 16th December, 2008
+
+@c Flags to determine when images should be included
+@clear TITLEIMAGES
+@ifnottex
+@set TITLEIMAGES
+@end ifnottex
+@clear EXAMPLEIMAGES
+@ifnotinfo
+@set EXAMPLEIMAGES
+@end ifnotinfo
 
 @ifinfo
 This file documents mpatrol, a library for controlling and tracing dynamic
 memory allocations.
 
-Copyright @copyright{} 1997-2002 Graeme S. Roy @email{graeme.roy@@analog.com}
+Copyright @copyright{} 1997-2008 Graeme S. Roy @email{graemeroy@@users.sourceforge.net}
 
 This is edition @value{EDITION} of the mpatrol manual for version
 @value{VERSION}, @value{UPDATED}.
@@ -83,7 +91,7 @@ library are the trademarks of their respective owners.
 @author Graeme S. Roy
 @page
 @vskip 0pt plus 1filll
-Copyright @copyright{} 1997-2002 Graeme S. Roy <@email{graeme.roy@@analog.com}>
+Copyright @copyright{} 1997-2008 Graeme S. Roy <@email{graemeroy@@users.sourceforge.net}>
 
 Permission is granted to make and distribute verbatim copies of this manual
 provided the copyright notice and this permission notice are preserved on all
@@ -108,13 +116,9 @@ library are the trademarks of their respective owners.
 @node Top, Foreword, , (dir)
 @top mpatrol
 
-@ifinfo
+@ifset TITLEIMAGES
 @image{images/mpatrol}
-@end ifinfo
-
-@ifhtml
-@image{images/mpatrol}
-@end ifhtml
+@end ifset
 
 This document describes mpatrol, a library for controlling and tracing dynamic
 memory allocations.
@@ -154,7 +158,7 @@ This is edition @value{EDITION} of the mpatrol manual for version
 * Related software::            Similar programs.
 * References::                  Additional information.
 * About the author::            Information about me.
-* Copying::                     GNU Library General Public License.
+* Copying::                     GNU GPL and GNU Lesser GPL.
 * Function index::              Library functions.
 * Index::                       Main index.
 @end menu
@@ -218,46 +222,46 @@ about mpatrol.
 @cindex FreshMeat
 @cindex SourceForge
 The latest version of the mpatrol library and this manual can always be found at
-@uref{http://www.cbmamiga.demon.co.uk/mpatrol/}, and any correspondence relating
+@uref{http://sourceforge.net/projects/mpatrol/}, and any correspondence relating
 to mpatrol (bug reports, enhancement requests, compliments, etc.@:) should be
-sent to @email{mpatrol@@cbmamiga.demon.co.uk}.  I'd be very interested in
+sent to @email{graemeroy@@users.sourceforge.net}.  I'd be very interested in
 hearing any success stories with using mpatrol to debug programs, since I get
 very little feedback apart from the occasional bug report.  The mpatrol library
 is also registered at FreshMeat (@uref{http://freshmeat.net/projects/mpatrol/})
 and SourceForge (@uref{http://sourceforge.net/projects/mpatrol/}) and several
 other software sites so you can receive notification of updates there as well.
 I normally only check my e-mail about once or twice a week, so don't expect an
-immediate response.  I can also be reached at @email{graeme.roy@@analog.com} but
-that is my work e-mail address.  There is also a discussion group at
+immediate response.  There is also a discussion group at
 @uref{http://groups.yahoo.com/group/mpatrol/} where you can post mpatrol-related
 questions but you must first subscribe to the group before you can send mail to
 it.
 
 @cindex acknowledgements
 @cindex contributors
-Finally, I'd like to thank Stephan Springl (@email{springl@@bfw-online.de}) for
-his help on reading debugging information from object files via the GNU BFD
-library, and Adam Zell (@email{zell@@best.com}) for helping with patching the
-dynamic linker support functions for loading shared libraries.  Both Alexander
-Barton (@email{abarton@@innotrac.com}) and Dave Gibson
-(@email{david.gibson@@analog.com}) helped to make mpatrol thread-safe.  Roger
-Keane (@email{rgr@@bcs-inc.com}) provided the perl code in the @command{mpsym}
-command and also the idea for the @code{MP_USE_ATEXIT} feature macro.  Steve
-McIntyre (@email{smcintyre@@allstor-sw.co.uk}) helped by diagnosing the
-@code{fork()} problem and provided example code on how to fix it.  Peter
-Zijlstra (@email{peter@@xlnt-software.com}) contributed code to enhance stack
-traces for errors.
+Finally, I'd like to thank Stephan Springl for his help on reading debugging
+information from object files via the GNU BFD library, and Adam Zell for
+helping with patching the dynamic linker support functions for loading shared
+libraries.  Both Alexander Barton and Dave Gibson helped to make mpatrol
+thread-safe.  Roger Keane provided the perl code in the @command{mpsym} command
+and also the idea for the @code{MP_USE_ATEXIT} feature macro.  Steve McIntyre
+helped by diagnosing the @code{fork()} problem and provided example code on how
+to fix it.  Peter Zijlstra contributed code to enhance stack traces for errors.
 
-Boris Makushkin (@email{oberon@@antibiotic.ru}) requested, helped with, and
-provided initial testing for the FreeBSD port, and Ivan Finch
-(@email{i.finch@@rl.ac.uk}), Gerrit Bruchhaeuser
-(@email{gbruchhaeuser@@orga.com}) and Andreas Schallenberg
-(@email{andreas.schallenberg@@informatik.uni-oldenburg.de}) did the same for the
-Tru64 and SuSE ports.  Both Aleksandar Donev (@email{donev@@pa.msu.edu}) and Van
-Snyder (@email{vsnyder@@math.jpl.nasa.gov}) provided suggestions and code for
-using mpatrol with FORTRAN.  Michael Anthony (@email{m@@xyzfind.com}) wrote the
-profdiff tool and Jerome Marant (@email{jerome@@debian.org}) did the Debian
-GNU/Linux port.
+Boris Makushkin requested, helped with, and provided initial testing for the
+FreeBSD port, and Ivan Finch, Gerrit Bruchhaeuser and Andreas Schallenberg did
+the same for the Tru64 and SuSE ports.  Both Aleksandar Donev and Van Snyder
+provided suggestions and code for using mpatrol with FORTRAN.  Michael Anthony
+wrote the profdiff tool and Jerome Marant did the Debian GNU/Linux port.  Robert
+Schmitt wrote a tutorial on how to use mpatrol on Windows platforms, located at
+@uref{http://www.codeguru.com/cpp/w-p/win32/tutorials/print.php/c12231}.
+
+If your native language is a language other than English, you can make use of
+the many web-based translation tools that are now available for free on the
+internet.  These can be used to translate pages of the on-line mpatrol manual
+from English to your chosen language, and although they may not be perfect, they
+should be able to translate most of the important text and convey the general
+ideas across.  Note that Gerrit Bruchhaeuser has written a tutorial on mpatrol
+in German which is available from @uref{http://www.c-handbuch.org/mpatrol.html}.
 
 In addition, after spending well over 2000 hours designing and programming
 mpatrol, my sanity would not have been preserved in the state it is in today
@@ -343,8 +347,8 @@ does is to read the documentation and try it out.
 @item
 Written for 32-bit and 64-bit UNIX, AmigaOS, Windows and Netware platforms.
 Contains direct support for (and takes advantage of most of the features of)
-AIX, DG/UX, DRS/NX, DYNIX/ptx, FreeBSD, HP/UX, IRIX, Linux, LynxOS, NetBSD,
-OpenBSD, SINIX, Solaris, SunOS, Tru64 and UnixWare.  Also contains
+AIX, DG/UX, DRS/NX, DYNIX/ptx, FreeBSD, HP/UX, Interix, IRIX, Linux, LynxOS,
+NetBSD, OpenBSD, SINIX, Solaris, SunOS, Tru64 and UnixWare.  Also contains
 target-specific code to take advantage of Alpha, Intel 80x86, Motorola 680x0
 and 88xx0, MIPS, HP PA/RISC, IBM RS/6000, PowerPC and SPARC processors.
 
@@ -353,8 +357,8 @@ Has the ability to read symbols from executable files and shared libraries in
 the @file{a.out}, COFF, XCOFF, ELF32, ELF64 and Windows Portable Executable file
 formats, and if the GNU BFD library is available then the mpatrol library can
 read symbols from all of the file formats that it has support for as well.  Can
-also liase with AIX, BSD-based, HP/UX, IRIX, OSF, SVR4-based and Windows dynamic
-linkers in order to find out information about shared libraries.
+also liase with AIX, BSD-based, HP/UX, Interix, IRIX, OSF, SVR4-based and
+Windows dynamic linkers in order to find out information about shared libraries.
 
 @item
 Can be built to allocate memory from a fixed-sized static array rather than
@@ -889,15 +893,14 @@ tools can also be formatted for a printed manual.
 @cindex library, building
 
 @cindex Amiga 4000/040
-@cindex Dell Inspiron 7500
 The mpatrol library was initially developed on an Amiga 4000/040 running AmigaOS
 3.1.  I then installed Red Hat Linux 5.1 on my Amiga and added support for
-Linux/m68k.  I've now just recently purchased a Dell Inspiron 7500 Notebook PC
-and put my Amiga in retirement, so development will now continue on Red Hat
-Linux 6.2 and above on the Intel platform.  I've tried my best to make it as
-easy as possible to build and install mpatrol on any system, but it isn't
-likely to run smoothly for everybody.  However, there shouldn't be any major
-problems if you perform the following steps.
+Linux/m68k.  Just after mpatrol was first released I purchased a Windows 98
+laptop and put my Amiga in retirement, so development continued on Windows and
+Linux on the Intel x68 platform.  I've tried my best to make it as easy as
+possible to build and install mpatrol on any system, but it isn't likely to run
+smoothly for everybody.  However, there shouldn't be any major problems if you
+perform the following steps.
 
 @cindex CHECKSUMS
 @cindex md5sum
@@ -921,6 +924,13 @@ by these tools and will also create a @file{configure} script.  Please see the
 that you can clean up the @file{pkg/auto} directory by typing @samp{make
 distclean} (if the @file{configure} script has already been run) followed by
 @samp{./cleanup}.
+
+If you have problems building with the @file{configure} script then you may
+need to regenerate the autoconf, automake and libtool configuration files to
+suit your particular system.  To do this, edit the @file{setup} file and change
+the setting of @samp{generate} from @samp{0} to @samp{1}.  Then re-execute
+the @file{setup} script, making sure that you have deleted the old files
+beforehand.
 
 For a manual installation, perform the following steps.
 
@@ -1125,11 +1135,11 @@ of all your code.
 
 @enumerate 1
 @item
-This step is currently only available on DYNIX/ptx, FreeBSD, IRIX, Linux,
-NetBSD, OpenBSD, Solaris and Tru64 platforms and on DG/UX 4.20MU07@footnote{Also
-available on DG/UX 4.20MU05 with patch dgux_R4.20MU05.p59 and DG/UX 4.20MU06
-with patch dgux_R4.20MU06.p08.} or later platforms with the @env{LD_PRELOAD}
-feature.
+This step is currently only available on DYNIX/ptx, FreeBSD, Interix, IRIX,
+Linux, NetBSD, OpenBSD, Solaris and Tru64 platforms and on
+DG/UX 4.20MU07@footnote{Also available on DG/UX 4.20MU05 with patch
+dgux_R4.20MU05.p59 and DG/UX 4.20MU06 with patch dgux_R4.20MU06.p08.} or later
+platforms with the @env{LD_PRELOAD} feature.
 
 If your program or application has been dynamically linked with the system C
 library (@file{libc.so}) or an alternative malloc shared library then you can
@@ -1239,6 +1249,11 @@ the @option{USEDEBUG} option or the @command{mpsym} command.  In addition, more
 symbolic information will be available if the executable files have not had
 their symbol tables stripped from them, although mpatrol can also fall back to
 using the dynamic symbol table from dynamically linked executable files.
+
+@cindex JNI
+The mpatrol library can also be used with JNI applications.  To do this, simply
+link the archive form of the thread-safe mpatrol library with your JNI
+application.  That way you won't end up profiling the entire JVM.
 
 @cindex AM_WITH_MPATROL
 Note that an automake macro is now provided to allow you to integrate mpatrol
@@ -1700,21 +1715,30 @@ since the address of the instruction must lie between the start and end of one
 of the functions in the process.
 
 @cindex MP_BUILTINSTACK_SUPPORT
+@cindex MP_GLIBCBACKTRACE_SUPPORT
 @cindex MP_LIBRARYSTACK_SUPPORT
+@cindex MP_LIBUNWIND_SUPPORT
+@cindex libunwind
 There are several different ways to perform stack unwinding.  The first requires
 compiler support and uses builtin functions to determine the next stack frame
 and the return address.  The GNU C compiler, @command{gcc}, supports this but
 unfortunately the number of stack frames to traverse must be known at
-compile-time rather than run-time.  The second method requires operating system
-support, with a library of routines provided to perform call stack traversal.
-Unfortunately, such routines can be quite time consuming and may require a lot
-of resources, but on the other hand they are likely to be very reliable at
-obtaining the necessary information.  The mpatrol library can be built to
-support either of these methods, with the @code{MP_BUILTINSTACK_SUPPORT} and
-the @code{MP_LIBRARYSTACK_SUPPORT} preprocessor macros.
+compile-time rather than run-time.  The second method uses the glibc
+@code{backtrace()} function to perform the stack traversal but has a finite
+limit on the number of stack frames that can be traversed and does not return
+any frame pointers.  The third method requires operating system support, with a
+library of routines provided to perform call stack traversal.  Unfortunately,
+such routines can be quite time consuming and may require a lot of resources,
+but on the other hand they are likely to be very reliable at obtaining the
+necessary information.  There is also support for using the libunwind library
+instead of such operating system libraries, which will be valuable as libunwind
+gradually supports more processor architectures.  The mpatrol library can be
+built to support any of these methods, with the @code{MP_BUILTINSTACK_SUPPORT},
+@code{MP_GLIBCBACKTRACE_SUPPORT}, @code{MP_LIBRARYSTACK_SUPPORT} and the
+@code{MP_LIBUNWIND_SUPPORT} preprocessor macros.
 
 @cindex RISC
-A third way to perform stack unwinding involves reading (or effectively
+A fourth way to perform stack unwinding involves reading (or effectively
 disassembling) the instructions that are being executed in order to determine
 the size of the stack frame being used and the address of the instruction at
 which execution will resume when the function returns.  This can also be quite
@@ -2124,8 +2148,9 @@ similar functions with a size of zero, the @option{CHECKREALLOCS} option warns
 only about calls to @code{realloc()} and similar functions with either a null
 pointer or a size of zero, and the @option{CHECKFREES} option warns only about
 calls to @code{free()} and similar functions with a null pointer.  The
-@option{CHECKMEMORY} option gives an error if a zero-size memory operation is
-performed on a @samp{NULL} pointer --- this is normally allowed by default.
+@option{CHECKMEMORY} option gives a warning if a zero-size memory operation is
+performed or an error if a memory operation is performed on a @samp{NULL}
+pointer --- this is normally allowed by default.
 
 @cindex allocation byte
 @cindex free byte
@@ -3461,6 +3486,98 @@ then this option can require a substantial amount of disk space.  All of the
 allocation contents files will be deleted when the matching call to
 @code{heapdiffend()} is made.
 
+@smallexample
+ 1  /*
+ 2   * Illustrates the use of mpatrol's heap difference tool.
+ 3   */
+
+
+ 6  #include "mpatrol/heapdiff.h"
+
+
+ 9  int main(void)
+10  @{
+11      char *p, *q;
+12      heapdiff h;
+
+14      p = (char *) calloc(8, 1);
+15      q = (char *) calloc(8, 1);
+16      heapdiffstart(h, HD_FREED | HD_UNFREED | HD_FULL | HD_CONTENTS);
+17      p = (char *) realloc(p, 16);
+18      q[4] = ' ';
+19      heapdiffend(h);
+20      return EXIT_SUCCESS;
+21  @}
+@end smallexample
+
+Running with the @option{LOGALL} option should produce something similar to the
+following in the mpatrol log file.
+
+@smallexample
+ALLOC: calloc (23, 8 bytes, 8 bytes) [main|test.c|14]
+        0x00012BD4 main+56
+        0x00012A68 _start+100
+
+returns 0x0002A570
+
+ALLOC: calloc (24, 8 bytes, 8 bytes) [main|test.c|15]
+        0x00012C0C main+112
+        0x00012A68 _start+100
+
+returns 0x0002A578
+
+> HEAPDIFF 1 STARTING at test.c line 16 @{
+        0x00012C30 main+148
+        0x00012A68 _start+100
+
+REALLOC: realloc (0x0002A570, 16 bytes, 8 bytes) [main|test.c|17]
+        0x00012C6C main+208
+        0x00012A68 _start+100
+
+    0x0002A570 (8 bytes) @{calloc:23:0@} [main|test.c|14]
+        0x00012BD4 main
+        0x00012A68 _start
+
+returns 0x0002E590
+
+> @} HEAPDIFF 1 ENDING at test.c line 19
+        0x00012CA0 main+260
+        0x00012A68 _start+100
+
+> allocation differences:
+
+allocation 24 (0x0002A578) differences:
+        0x0002A57C  00 -> 20 (offset 4)
+
+    0x0002A578 (8 bytes) @{calloc:24:0@} [main|test.c|15]
+        0x00012C0C main
+        0x00012A68 _start
+
+allocation 23 (0x0002E590) has increased in size
+
+    0x0002E590 (16 bytes) @{realloc:23:1@} [main|test.c|17]
+        0x00012C6C main
+        0x00012A68 _start
+
+> total differences: 2 (2 allocations)
+
+> freed allocations:
+
+    0x0002A570 (8 bytes) @{realloc:23:0@} [main|test.c|17]
+        0x00012C6C main
+        0x00012A68 _start
+
+> total freed: 1 (8 bytes)
+
+> unfreed allocations:
+
+    0x0002E590 (16 bytes) @{realloc:23:1@} [main|test.c|17]
+        0x00012C6C main
+        0x00012A68 _start
+
+> total unfreed: 1 (16 bytes)
+@end smallexample
+
 @node mgauge, mtrace, heapdiff, Tools
 @section Memory allocation gauge
 @cindex mgauge
@@ -3487,6 +3604,40 @@ specifies the frequency of memory allocation events at which the gauge should be
 updated.  If it is specified as zero then all events will cause the gauge to be
 updated.
 
+@smallexample
+ 1  /*
+ 2   * Illustrates the use of mpatrol's memory allocation gauge
+ 3   * tool.
+ 4   */
+
+
+ 7  #include "mpatrol/mgauge.h"
+
+
+10  int main(void)
+11  @{
+12      void *a[1024];
+13      size_t i;
+
+15      mgaugestart(NULL, '#', 8192, 0);
+16      mgaugeon();
+17      for (i = 0; i < 1024; i++)
+18          a[i] = malloc(6);
+19      for (i = 0; i < 1024; i++)
+20          free(a[i]);
+21      mgaugeoff();
+22      mgaugeend();
+23      return EXIT_SUCCESS;
+24  @}
+@end smallexample
+
+This produces an animated gauge similar to the one displayed below.
+
+@smallexample
+0                                                           8192
+| ###################################                          |
+@end smallexample
+
 @node mtrace, , mgauge, Tools
 @section Memory allocation tracing
 @cindex mtrace
@@ -3497,6 +3648,41 @@ called in matching pairs but will have no effect unless the @env{MALLOC_TRACE}
 environment variable is set to the filename of the trace file to use.  The
 resulting trace files can be processed by the @command{mtrace} perl script which
 is distributed with the GNU C library.
+
+@smallexample
+ 1  /*
+ 2   * Illustrates the use of mpatrol's memory allocation tracing
+ 3   * tool.
+ 4   */
+
+
+ 7  #include "mpatrol/mtrace.h"
+
+
+10  int main(void)
+11  @{
+12      void *p;
+
+14      mtrace();
+15      p = malloc(16);
+16      free(p);
+17      p = malloc(8);
+18      muntrace();
+19      return EXIT_SUCCESS;
+20  @}
+@end smallexample
+
+If this is run with the @env{MALLOC_TRACE} environment variable set to a valid
+filename then the resulting trace file should look something like that displayed
+below, which can then be processed by the @command{mtrace} perl script.
+
+@smallexample
+= Start
+@@ ./a.out:(main+0x40)[12a94] + 2c578 0x10
+@@ ./a.out:(main+0x6c)[12ac0] - 2c578
+@@ ./a.out:(main+0xa0)[12af4] + 2c578 0x8
+= End
+@end smallexample
 
 @node Utilities, Profiling, Tools, Top
 @chapter Utilities
@@ -3567,14 +3753,15 @@ support then it must be told to preload the ELF access library (normally
 @file{libelf.so})@footnote{A freely available version of the ELF access library,
 libelf, can be downloaded from @uref{ftp://sunsite.unc.edu/pub/Linux/libs/}.}.
 If it was built with @code{FORMAT=FORMAT_BFD} support then it must be told to
-preload the GNU BFD access libraries (normally @file{libbfd.so} and
-@file{libiberty.so})@footnote{The GNU BFD access library can be downloaded from
-@uref{ftp://ftp.gnu.org/}.}.  However, if these libraries only exist on your
-system in archive form then you must build @file{libmpatrol.so} with these extra
-libraries incorporated into it so that there are no dependencies on them at
-run-time.  However, there may well be problems if the resulting shared library
-contains position-dependent code from the archive libraries you incorporated.
-The only way to find out is for you to try it and see.
+preload the GNU BFD access libraries (normally @file{libbfd.so},
+@file{libiberty.so} and @file{libintl.so})@footnote{The GNU BFD access library
+can be downloaded from @uref{ftp://ftp.gnu.org/}.}.  However, if these libraries
+only exist on your system in archive form then you must build
+@file{libmpatrol.so} with these extra libraries incorporated into it so that
+there are no dependencies on them at run-time.  However, there may well be
+problems if the resulting shared library contains position-dependent code from
+the archive libraries you incorporated.  The only way to find out is for you to
+try it and see.
 
 If you have access to the GNU linker on your system then there may be a way to
 convert archive libraries into shared libraries if position-independent code is
@@ -3702,7 +3889,7 @@ command line tools.
 
 @cindex condenseleaklog
 Note that mpatrol patch 5 (which can be downloaded from
-@uref{http://www.cbmamiga.demon.co.uk/mpatrol/patches/mpatrol_patch5.tar.gz})
+@uref{http://heanet.dl.sourceforge.net/sourceforge/mpatrol/mpatrol_patch5.tar.gz})
 contains the source code to a FORTRAN 90 program called
 @command{condenseleaklog} which offers similar facilities to the @command{mleak}
 command, as well as the ability to trim and filter stack traces.
@@ -4437,17 +4624,17 @@ is used@footnote{Cycles in the graph are marked by dashed lines along the
 relevant edges instead of solid lines.}.  A call graph showing unfreed memory
 instead of allocated memory can be generated by adding the @option{--leaks}
 option.
-@ifinfo
+@ifclear EXAMPLEIMAGES
 The HTML, DVI, postscript and PDF versions of this manual contain graphical
 examples of these options.
-@end ifinfo
-@ifnotinfo
+@end ifclear
+@ifset EXAMPLEIMAGES
 The following graph illustrates the use of these options with the above example.
 It was generated using the @option{--addresses} and @option{--graph-file}
 options.
 
 @image{images/test}
-@end ifnotinfo
+@end ifset
 
 As a final demonstration of mpatrol's profiling features we will attempt to
 profile a real application in order to see where the memory allocations come
@@ -4518,14 +4705,14 @@ various image formats with the @command{dot} command.  However, this presumes
 that you already have the GraphViz graph visualisation package installed.  If
 you have then you can convert the graph specification files to GIF and
 postscript images using the following commands.
-@ifinfo
+@ifclear EXAMPLEIMAGES
 If not, you can still view the graphs produced in the HTML, DVI, postscript and
 PDF versions of this manual, or you can look at the relevant files in the
 @file{doc/images} directory in the mpatrol distribution.
-@end ifinfo
-@ifnotinfo
+@end ifclear
+@ifset EXAMPLEIMAGES
 If not, you can still view the graphs produced in the following figures.
-@end ifnotinfo
+@end ifset
 
 @smallexample
 bash$ dot -Tgif -Gsize="6,3" -Gratio=fill -o gcc.gif gcc.dot
@@ -4538,7 +4725,7 @@ bash$ dot -Tps -Gsize="9,6" -Gratio=fill -Grotate=90 -o cc1.ps cc1.dot
 bash$ dot -Tps -Gsize="4,3" -Gratio=fill -o collect2.ps collect2.dot
 @end smallexample
 
-@ifnotinfo
+@ifset EXAMPLEIMAGES
 @image{images/gcc}
 
 The figure above shows the allocation call graph for the @command{gcc} compiler
@@ -4579,11 +4766,7 @@ can also see the parser module at the top left of the graph, initiated with
 @code{yyparse()}, and the code generator module in the rest of the graph,
 initiated with @code{rest_of_compilation()}.
 
-@page
-
 @image{images/cc1}
-
-@page
 
 @image{images/collect2}
 
@@ -4599,13 +4782,13 @@ graph.  In addition, different graphs can be produced to show call counts
 instead of allocated bytes (via the @option{--counts} option), and graphs of
 unfreed memory can be produced to detect where memory leaks come from (via the
 @option{--leaks} option).
-@end ifnotinfo
+@end ifset
 
 @cindex profdiff
 Although @command{mprof} does not currently offer this facility, a small tool
 called @command{profdiff} which reports differences between two mpatrol
 profiling output files can be downloaded from
-@uref{http://www.cbmamiga.demon.co.uk/mpatrol/patches/mpatrol_patch3.tar.gz}.
+@uref{http://heanet.dl.sourceforge.net/sourceforge/mpatrol/mpatrol_patch3.tar.gz}.
 
 @cindex VAX
 Much of the functionality of this implementation of memory allocation profiling
@@ -5008,12 +5191,12 @@ between each of the memory allocations.
 If you were running a GUI version of @command{mptrace}, information about all of
 these events can be displayed in graphical form inside a window if the
 @option{--gui} option is used.
-@ifinfo
+@ifclear EXAMPLEIMAGES
 The HTML, DVI, postscript and PDF versions of this manual contain a screenshot
 of the @command{mptrace} display window when it is run with the @option{--gui}
 option and @file{cc1.trace} as input.
-@end ifinfo
-@ifnotinfo
+@end ifclear
+@ifset EXAMPLEIMAGES
 The following screenshot shows the @command{mptrace} display window when it is
 run with the @option{--gui} option and @file{cc1.trace} as input.  It was
 generated using the @option{--space 2} option.
@@ -5036,7 +5219,7 @@ still allocated at program termination.  While this is a substantial amount
 compared to the amount of free memory, it does not necessary indicate memory
 leaks as the memory could be being used right up until the end of the program,
 and is implicitly freed at program termination anyway.
-@end ifnotinfo
+@end ifset
 
 @cindex pipe
 @cindex command pipe
@@ -5844,7 +6027,16 @@ access library:
 
 @smallexample
 cc -I/usr/local/include <file> -L/usr/local/lib -lmpatrol -lbfd
-   -liberty
+   -liberty -lintl
+@end smallexample
+
+@item
+If the mpatrol library was built with support for the GNU BFD object file format
+access library and the libunwind stack traversal library:
+
+@smallexample
+cc -I/usr/local/include <file> -L/usr/local/lib -lmpatrol -lbfd
+   -liberty -lintl -lunwind
 @end smallexample
 
 @item
@@ -5853,7 +6045,7 @@ file format access library:
 
 @smallexample
 cc -I/usr/local/include <file> -L/usr/local/lib -lmpatrol -lbfd
-   -liberty -lcl
+   -liberty -lintl -lcl
 @end smallexample
 @end itemize
 
@@ -5954,15 +6146,15 @@ and the program should be executed, generating the following output in
 @file{mpatrol.log}.
 
 @smallexample
-@@(#) mpatrol 1.4.8 (02/01/08)
-Copyright (C) 1997-2002 Graeme S. Roy
+@@(#) mpatrol 1.5.1 (08/12/16)
+Copyright (C) 1997-2008 Graeme S. Roy
 
 This is free software, and you are welcome to redistribute it under
-certain conditions; see the GNU Library General Public License for
+certain conditions; see the GNU Lesser General Public License for
 details.
 
 For the latest mpatrol release and documentation,
-visit http://www.cbmamiga.demon.co.uk/mpatrol.
+visit http://sourceforge.net/projects/mpatrol.
 
 operating system:       UNIX
 system variant:         Linux
@@ -5971,9 +6163,9 @@ processor word size:    32-bit
 object file format:     BFD
 dynamic linker type:    SVR4
 
-Log file generated on Tue Jan  8 19:47:24 2002
+Log file generated on Tue Dec 16 10:10:12 2008
 
-read 310 symbols from /usr/lib/libmpatrol.so.1.4
+read 310 symbols from /usr/lib/libmpatrol.so.1.5
 read 647 symbols from /usr/lib/libbfd-2.9.5.0.22.so
 read 2634 symbols from /lib/libc.so.6
 read 1142 symbols from /usr/lib/libstdc++-libc6.1-1.so.2
@@ -9610,8 +9802,8 @@ will be issued for every such case.
 
 @cindex CHECKMEMORY
 @item @option{CHECKMEMORY}
-Checks that no attempt is made to perform a zero-length memory operation on a
-@samp{NULL} pointer.
+Checks that no attempt is made to perform a zero-length memory operation or a
+memory operation on a @samp{NULL} pointer.
 
 @cindex CHECKREALLOCS
 @item @option{CHECKREALLOCS}
@@ -10068,7 +10260,7 @@ in case new log, profiling and tracing output files need to be started.
 @cindex --check-memory
 @item @option{--check-memory}
 [@option{CHECKMEMORY}]  Checks that no attempt is made to perform a zero-length
-memory operation on a @code{NULL} pointer.
+memory operation or a memory operation on a @code{NULL} pointer.
 
 @cindex --check-reallocs
 @item @option{--check-reallocs}
@@ -10878,6 +11070,25 @@ The log file entry.
 @item Result
 The alignment is set to the default system alignment and execution continues.
 @end table
+
+@cindex ZEROPN
+@item
+@samp{ZEROPN}
+@table @asis
+@item Message
+@samp{attempt to perform a zero-sized operation}
+@item Type
+Warning
+@item Cause
+A memory operation function was called with a length of zero.  This warning
+will only occur when the @option{CHECKALL} or @option{CHECKMEMORY} options were
+used as the ANSI C/C++ standards allow this behaviour, and it is really only a
+portability issue.
+@item Additional
+The log file entry.
+@item Result
+The operation will not be performed and execution continues.
+@end table
 @end itemize
 
 @node Library performance, File formats, Diagnostic messages, Top
@@ -11334,6 +11545,29 @@ The @option{OFLOWWATCH} option has no effect.
 The @option{--dynamic} option to the @command{mpatrol} command has no effect.
 @end itemize
 
+@cindex Interix, Intel 80x86
+@cindex Windows Services for UNIX
+@cindex OpenNT
+@item
+Interix 3.5, Intel Pentium 4, PE-COFF, @command{gcc}
+@itemize @bullet
+@item
+The @option{OFLOWWATCH} option has no effect.
+@item
+The @option{USEMMAP} option must be used in order for the @option{PAGEALLOC}
+option to detect illegal memory accesses.
+@item
+The @option{USEDEBUG} option has no effect.
+@item
+The @option{-fPIC} option for @command{gcc} should not be used when building
+the mpatrol shared libraries as it currently doesn't generate correct code.
+@item
+The shared libraries @file{libmpatrol.so} and @file{libmpatrolmt.so} must be
+linked with the dynamic linker @file{/lib/ld.so} at build time in order for the
+@option{--dynamic} option to the @command{mpatrol} command to be able to find
+the symbols for any dependent shared libraries.
+@end itemize
+
 @cindex IRIX, MIPS
 @item
 IRIX 5.3, MIPS R4000, ELF32, @command{cc}
@@ -11364,7 +11598,7 @@ The @option{CHECKFORK} option does not work properly in multithreaded programs
 due to each thread having different process identifiers.
 @item
 The @option{--dynamic} option to the @command{mpatrol} command does not work
-unless @file{libiberty.so} is available.
+unless @file{libiberty.so} and @file{libintl.so} are available.
 @end itemize
 
 @item
@@ -11380,7 +11614,7 @@ The @option{CHECKFORK} option does not work properly in multithreaded programs
 due to each thread having different process identifiers.
 @item
 The @option{--dynamic} option to the @command{mpatrol} command does not work
-unless @file{libiberty.so} is available.
+unless @file{libiberty.so} and @file{libintl.so} are available.
 @end itemize
 
 @item
@@ -11393,7 +11627,7 @@ The @option{CHECKFORK} option does not work properly in multithreaded programs
 due to each thread having different process identifiers.
 @item
 The @option{--dynamic} option to the @command{mpatrol} command does not work
-unless @file{libiberty.so} is available.
+unless @file{libiberty.so} and @file{libintl.so} are available.
 @end itemize
 
 @item
@@ -11406,7 +11640,7 @@ The @option{CHECKFORK} option does not work properly in multithreaded programs
 due to each thread having different process identifiers.
 @item
 The @option{--dynamic} option to the @command{mpatrol} command does not work
-unless @file{libiberty.so} is available.
+unless @file{libiberty.so} and @file{libintl.so} are available.
 @end itemize
 
 @cindex Linux, Motorola 680x0
@@ -11423,7 +11657,7 @@ The @option{CHECKFORK} option does not work properly in multithreaded programs
 due to each thread having different process identifiers.
 @item
 The @option{--dynamic} option to the @command{mpatrol} command does not work
-unless @file{libiberty.so} is available.
+unless @file{libiberty.so} and @file{libintl.so} are available.
 @end itemize
 
 @item
@@ -11455,7 +11689,7 @@ The @option{CHECKFORK} option does not work properly in multithreaded programs
 due to each thread having different process identifiers.
 @item
 The @option{--dynamic} option to the @command{mpatrol} command does not work
-unless @file{libiberty.so} is available.
+unless @file{libiberty.so} and @file{libintl.so} are available.
 @end itemize
 
 @cindex LynxOS, Intel 80x86
@@ -11634,9 +11868,8 @@ The @option{OFLOWWATCH} option has no effect.
 The system exception-handling library (libexc) is used for call stack traversal.
 Unfortunately, this library makes several calls to @code{malloc()} when
 initialising itself and this can sometimes result in a recursive loop when used
-in combination with the mpatrol library.  If this occurs, either
-@code{MP_BUILTINSTACK_SUPPORT=1} must be defined or the mpatrol library must
-be built without the @file{malloc.o} module.
+in combination with the mpatrol library.  If this occurs, the mpatrol library
+must be built without the @file{malloc.o} module.
 @item
 The mpatrol library can be compiled and run in a 64-bit environment.
 @end itemize
@@ -11732,7 +11965,7 @@ work.
 @cindex Microsoft
 @cindex Windows, Intel 80x86
 @item
-Microsoft Windows NT 4.0, Intel Pentium III, PE, Microsoft Visual C++
+Microsoft Windows NT 4.0, Intel Pentium III, IMAGEHLP, Microsoft Visual C++
 @itemize @bullet
 @item
 The @option{OFLOWWATCH} option has no effect.
@@ -11942,7 +12175,9 @@ can be set by changing the @code{MP_MAXSTACK} macro in the same file.  The
 @code{MP_FULLSTACK} macro in @file{src/config.h} should be set for stack
 traversal implementations that have no limit to the maximum size of the call
 stack that can be traversed.  Obviously that is not the case for
-@code{MP_BUILTINSTACK_SUPPORT}.
+@code{MP_BUILTINSTACK_SUPPORT}.  A similar method can be used to traverse the
+stack using the @code{backtrace()} function from glibc with the
+@code{MP_GLIBCBACKTRACE_SUPPORT} preprocessor macro.
 
 Some operating systems have library functions that provide stack traversal
 facilities and so you may wish to make use of them by defining
@@ -11950,6 +12185,9 @@ facilities and so you may wish to make use of them by defining
 to call them in @file{src/stack.c}.  Examples of systems that can make use of
 this capability are IRIX and Tru64, although they have a drawback in that they
 recursively call @code{malloc()} and so work slower than they normally would.
+Alternatively, if libunwind has support for the processor architecture then you
+can try defining @code{MP_LIBUNWIND_SUPPORT} in @file{src/config.h} to see if
+that works.
 
 If any functions from an external system library were used to help implement
 stack traversal for the new processor architecture then you may also have to
@@ -12237,16 +12475,16 @@ well.
 This section contains information about known bugs and limitations in the
 mpatrol library as well as listing potential future enhancements.
 
-Bugs should be reported to @email{mpatrol@@cbmamiga.demon.co.uk} along with the
-details of the operating system, processor architecture and object file format
-that the mpatrol library is being used with --- and don't forget to include the
-version of the mpatrol library you are using!  Keep in mind that I only have
-access to a Pentium III Notebook PC running Red Hat Linux 7.1 and Windows ME, so
-I will be most likely unable to reproduce most of the system-specific bugs.  A
-bug report that comes with an associated fix will be most welcome.
+Bugs should be reported to @email{graemeroy@@users.sourceforge.net} along with
+the details of the operating system, processor architecture and object file
+format that the mpatrol library is being used with --- and don't forget to
+include the version of the mpatrol library you are using!  Nowadays I only
+use Windows XP and Interix or Cygwin on Intel x86 computers, so I will be most
+likely unable to reproduce most of the system-specific bugs on other platforms.
+A bug report that comes with an associated fix will be most welcome.
 
 Enhancement requests and source code containing enhancements should also be sent
-to @email{mpatrol@@cbmamiga.demon.co.uk} or the mpatrol discussion group at
+to @email{graemeroy@@users.sourceforge.net} or the mpatrol discussion group at
 @uref{http://groups.yahoo.com/group/mpatrol/}.  If you are planning to implement
 an enhancement, let me know first in case I am (or someone else is) working
 towards the same goal --- that way, work won't be wasted.  If you wish to send
@@ -12308,13 +12546,13 @@ work for unoptimised code.  A much better solution would be write the
 implementations at a lower level in assembly, but this is much less portable.
 Perhaps there is a library which can be used to perform this across many
 operating systems and processor architectures, or maybe someone would like to
-write one@footnote{There is currently a library called StackTrace written by
-Bjorn Reese which invokes a debugger to generate a stack traceback on certain
-UNIX platforms.  This method would be too slow for mpatrol to use though.}?  I
-can think of many applications that would benefit from such a library besides
-this one@footnote{Looking back at these statements about six months after they
-were written, it would appear that I have just written such a library judging by
-the number of architectures for which stack traversal is now supported.}.
+write one@footnote{There is now a library called libunwind that mpatrol can be
+built with to add support for stack traversal on various architectures and more
+will likely follow in the future.  There is also a library called StackTrace
+written by Bjorn Reese which invokes a debugger to generate a stack traceback
+on certain UNIX platforms, although this method would be too slow for mpatrol
+to use.}?  I can think of many applications that would benefit from such a
+library besides this one.
 
 @item
 An alternative implementation for call stack traversal uses the functions
@@ -12325,8 +12563,7 @@ a maximum number of stack frames that can be traversed at any one time.  The
 implementation depends on both of these builtin functions returning @samp{NULL}
 when the top of stack is reached.  If this is not the case then this method
 cannot be used or should only be used with a small number of fixed stack frames.
-However, perhaps there might even be a use for an option to limit the number of
-stack frames in stack tracebacks for systems that have no such limitation.
+However, using @code{backtrace()} from glibc is also supported as well.
 
 @item
 Is it worth adding functions to manually push and pop entries on the call stack
@@ -12529,10 +12766,14 @@ Add wide-character equivalents of @code{memset()}, etc.  These are defined as
 Perhaps reimplement the standard I/O library for internal use by mpatrol, thus
 preventing recursive calls to @code{malloc()} each time a write to the log file
 occurs on some systems.  Example code to do this was submitted by Alexander
-Barton (@email{abarton@@innotrac.com}) and this may well be incorporated into
-the library at some point in the future@footnote{This code can be applied as an
-mpatrol library patch which can be downloaded from
-@uref{http://www.cbmamiga.demon.co.uk/mpatrol/patches/mpatrol_patch1.tar.gz}.}.
+Barton and this may well be incorporated into the library at some point in the
+future@footnote{This code can be applied as an mpatrol library patch which can
+be downloaded from
+@uref{http://heanet.dl.sourceforge.net/sourceforge/mpatrol/mpatrol_patch1.tar.gz}.}.
+
+@item
+Add the ability to use the reporting and tracing infrastructure of mpatrol
+with the existing C library's memory allocation implementation.
 
 @item
 The @option{LOG*} options could be extended to take a list of specific functions
@@ -12655,7 +12896,7 @@ library, but that currently allocates temporary space on the heap using
 @code{xmalloc()} which means that it will run unbearably slowly under
 mpatrol@footnote{If you really really want this functionality then code to do
 this is available as an mpatrol library patch which can be downloaded from
-@uref{http://www.cbmamiga.demon.co.uk/mpatrol/patches/mpatrol_patch4.tar.gz}.}.
+@uref{http://heanet.dl.sourceforge.net/sourceforge/mpatrol/mpatrol_patch4.tar.gz}.}.
 
 @item
 Add a script to wrap around various popular C and C++ compiler drivers so that
@@ -12675,9 +12916,7 @@ contained in the files in the @file{pkg} directory.
 
 @item
 The postscript version of the quick reference card seems to print at an unusual
-offset on some printers.  In addition, the mpatrol manual should also be
-formatted in DocBook format once a suitable @TeX{}info to DocBook translator is
-available.
+offset on some printers.
 
 @item
 Perhaps add benchmark tests for dynamic memory allocation functions and memory
@@ -12711,6 +12950,11 @@ from misaligned memory allocations.
 There seems to be a problem on some UNIX systems in that the @code{mprotect()}
 call will not work unless it is used on memory that has been allocated with
 @code{mmap()}.  This needs to be investigated further.
+
+@item
+Install a signal handler that can be sent a non-terminating signal that would
+instruct the mpatrol library to log a list of memory leaks and possibly write
+a profile output file.  This would be useful for monitoring daemon processes.
 
 @item
 There is currently a problem in that the call stack displayed from within the
@@ -12760,7 +13004,7 @@ The library cannot currently read any symbols from shared objects that have been
 read via @code{dlopen()}, @code{shl_load()} or similar functions@footnote{There
 is an mpatrol library patch that supports reading symbols from shared libraries
 opened by @code{dlopen()} which can be downloaded from
-@uref{http://www.cbmamiga.demon.co.uk/mpatrol/patches/mpatrol_patch2.tar.gz}.}.
+@uref{http://heanet.dl.sourceforge.net/sourceforge/mpatrol/mpatrol_patch2.tar.gz}.}.
 In addition, symbols cannot currently be read from any COFF or XCOFF shared
 libraries on LynxOS and some work needs to be done to build the mpatrol library
 as a shared library on LynxOS.
@@ -12876,9 +13120,10 @@ Perhaps add an @command{Installer} installation script with icons.
 @item
 Need to add support for processors other than the Intel 80x86.  However, about
 99% of Windows platforms run on this processor family --- does anyone really use
-Windows with other processors?  Also finish Cygwin support, although this is
-effectively mpatrol built with @option{-DTARGET=TARGET_UNIX} support on Windows
-platforms.
+Windows with other processors?  Also finish MinGW support for building with the
+GNU C compiler but using the Microsoft C library, and also Cygwin support,
+although this is effectively mpatrol built with @option{-DTARGET=TARGET_UNIX}
+on Windows platforms.
 
 @item
 Perhaps add support for compiling the mpatrol library with @command{gcc} on
@@ -13012,9 +13257,8 @@ distribution should already contain the latest mpatrol manual in a variety of
 formats and should also contain a file telling you where to get programs that
 can be used to view or print these files.  Alternatively, you can browse the
 latest mpatrol manual on-line at
-@uref{http://www.cbmamiga.demon.co.uk/mpatrol/}.
+@uref{http://sourceforge.net/projects/mpatrol/}.
 
-@cindex DocBook
 @item
 I'd like to convert the mpatrol manual to a different documentation format but
 there is no support for that format in the @file{Makefile}.  How would I go
@@ -13022,10 +13266,9 @@ about doing this?
 
 Since @TeX{}info is intended to be converted to other documentation formats it
 should be fairly easy for you to find a tool which will convert it into your
-desired format.  I plan to also provide the mpatrol manual in DocBook format if
-and when a suitable @TeX{}info to DocBook converter becomes available, but I
-won't provide preformatted versions of the mpatrol manual in any other format
-which isn't already supported.
+desired format.  Please note that I probably won't provide preformatted
+versions of the mpatrol manual in any other format which isn't already
+supported.
 
 @cindex DVI
 @cindex postscript
@@ -13223,8 +13466,9 @@ It is a preprocessor macro function that is used to return the minimum alignment
 in bytes required for a specified type at compile-time.  It is used in the
 @code{MP_MALLOC} family of functions to specify the required alignment of the
 memory allocation that is to be used to store the specified type.  Some
-compilers provide a feature that can be used to determine the minimum alignment
-of a type at compile-time.  For all others, this macro evaluates to @samp{0}.
+compilers provide a built-in function that can be used to determine the minimum
+alignment of a type at compile-time.  For all others, this macro makes use of
+some structure trickery in combination with the @code{offsetof} macro.
 
 @cindex MP_INLINE
 @cindex extern inline
@@ -13304,7 +13548,7 @@ defined in an object file access library.  If mpatrol was built with
 @code{FORMAT=FORMAT_ELF64} then you'll need to add @option{-lelf} (or
 equivalent) to the compiler command line straight after @option{-lmpatrol}.  If
 mpatrol was built with @code{FORMAT=FORMAT_BFD} then you'll need to add
-@option{-lbfd -liberty} (or equivalent) instead.  If you are using the
+@option{-lbfd -liberty -lintl} (or equivalent) instead.  If you are using the
 thread-safe version of mpatrol then you may also need to link with the system
 threads library.
 
@@ -13495,22 +13739,22 @@ option so that this can be achieved.
 
 @item
 Why do I get an error from the dynamic linker about not being able to locate
-@file{libiberty.so} when I use the @option{--dynamic} option with the
-@command{mpatrol} command?
+@file{libiberty.so} and @file{libintl.so} when I use the @option{--dynamic}
+option with the @command{mpatrol} command?
 
-The GNU libiberty library is required when the mpatrol library is build with
-support for the GNU BFD library but is unfortunately only available in archive
-form on many systems.  See the section on the @command{mpatrol} command
-(@pxref{The mpatrol command}) for information on how to get around this problem,
-either by embedding the libiberty library into the mpatrol library when you are
-building it, or by converting the archive form of the libiberty library into its
-corresponding shared library version.
+The GNU libiberty and libintl libraries are required when the mpatrol library is
+built with support for the GNU BFD library but are unfortunately only available
+in archive form on many systems.  See the section on the @command{mpatrol}
+command (@pxref{The mpatrol command}) for information on how to get around this
+problem, either by embedding these libraries into the mpatrol library when you
+are building it, or by converting the archive forms of these libraries into
+their corresponding shared library versions.
 
 @item
 Why does the mpatrol library not read the symbols in my executable file on
 Windows platforms?
 
-If the mpatrol library was compiled with the @code{FORMAT=FORMAT_PE}
+If the mpatrol library was compiled with the @code{FORMAT=FORMAT_IMGHLP}
 preprocessor macro defined then you must ensure that you compile your files with
 debugging information enabled (using the @option{-Z7} or @option{-Zi} options in
 Visual C++) and that you tell the linker that you wish to preserve the debugging
@@ -13728,20 +13972,15 @@ platforms which require the assembler routines in @file{machine.c} cannot build
 the mpatrol library as one large object file from @file{library.c}.  Note that
 the Windows and Netware @file{Makefile}s use @file{libmpatrol.obj}.
 
-@cindex CVS
-@cindex .cvsignore
+@cindex Subversion
 @item
-What are the @file{CVS} subdirectories that come with the mpatrol distribution?
+What are the @file{.svn} subdirectories that come with the mpatrol distribution?
 
-CVS stands for Concurrent Versions System and is a project version control
-system.  All of the source files that comprise an mpatrol release are stored in
-a central CVS repository so that previous releases can be easily retrieved, but
-the CVS system needs to have a way of determining the versions of currently
-checked-out files, hence the @file{CVS} subdirectories.  The @file{.cvsignore}
-files within these directories simply inform CVS about which files to ignore
-when looking for changes.  You shouldn't need to worry about them, so just
-ignore them, and in later releases they should have been removed before a
-distribution was made.
+SVN is short for Subversion and is a project version control system.  All of
+the source files that comprise an mpatrol release are stored in a central
+Subversion repository so that previous releases can be easily retrieved, but
+the Subversion system needs to have a way of determining the versions of
+currently checked-out files, hence the @file{.svn} subdirectories.
 
 @item
 Why does the @command{mpsym} command not work for me?
@@ -13849,20 +14088,20 @@ system.  On the Amiga, Enforcer by Michael Sinz runs in the background and
 detects many common memory access errors in running applications, whilst on the
 Macintosh, QC by Onyx Technology provides roughly the same functionality.
 
-A list of over ninety different items of software which help in debugging
+A list of over ninety five different items of software which help in debugging
 dynamic memory allocation problems is given below@footnote{This list can be
 considered to be a slightly more up to date version of @cite{Debugging Tools
 for Dynamic Storage Allocation and Memory Management}
-(@uref{http://www.cs.colorado.edu/~zorn/MallocDebug.html}) by Ben Zorn
-(@email{zorn@@microsoft.com}).}.  They all provide some of the features that
-mpatrol contains and you may wish to use one of them to solve your problem if
-you have trouble using mpatrol.  I have only ever used CSRI malloc, Dbmalloc,
-Dmalloc, Electric Fence and Mprof, so I can't vouch for any of the others,
-although if you have any recommendations feel free to let me know so I can add
-them to this list.  In particular, there seems to be a shortage of such programs
-for Netware platforms.  Note that there is a comparison of a few of the
-following programs at @uref{http://www.consistent.org/terran/memorycheck.shtml}
-which might help illustrate the differences between the various tools.
+(@uref{http://www.cs.colorado.edu/~zorn/MallocDebug.html}) by Ben Zorn.}.  They
+all provide some of the features that mpatrol contains and you may wish to use
+one of them to solve your problem if you have trouble using mpatrol.  I have
+only ever used CSRI malloc, Dbmalloc, Dmalloc, Electric Fence and Mprof, so I
+can't vouch for any of the others, although if you have any recommendations
+feel free to let me know so I can add them to this list.  In particular, there
+seems to be a shortage of such programs for Netware platforms.  Note that there
+is a comparison of a few of the following programs at
+@uref{http://www.consistent.org/terran/memorycheck.shtml} which might help
+illustrate the differences between the various tools.
 
 @cindex AProbe
 @cindex OC Systems
@@ -14039,6 +14278,22 @@ Various UNIX
 A library of dynamic memory allocation functions with limited debugging and
 profiling support and detection of memory leaks.  Also comes with a graphical
 tool to display a dynamic picture of the heap.
+@end table
+
+@cindex DBAlloc
+@item
+DBAlloc
+@table @asis
+@item Author
+Peter MacDonald (@email{peter@@pdqi.com})
+@item License
+Free Software
+@item Platforms
+Various UNIX, Windows
+@item Location
+@uref{http://browsex.com/dballoc.html}
+@item Overview
+A memory leak and fence-post malloc debug library.
 @end table
 
 @item
@@ -14814,6 +15069,23 @@ Quickly tracks down memory leaks and resource allocation errors with C++Builder
 and Delphi.
 @end table
 
+@cindex Memory Validator
+@cindex Software Verification
+@item
+Memory Validator
+@table @asis
+@item Author
+Software Verification (@email{sales@@softwareverify.com})
+@item License
+Commercial Software
+@item Platforms
+Windows
+@item Location
+@uref{http://www.softwareverify.com/}
+@item Overview
+Detects memory and resource leaks.
+@end table
+
 @cindex Memprof
 @item
 Memprof
@@ -15396,6 +15668,24 @@ determine if any memory locations are accessed when not properly allocated or
 initialised.
 @end table
 
+@cindex Valgrind
+@item
+Valgrind
+@table @asis
+@item Author
+Julian Seward (@email{jseward@@acm.org})
+@item License
+GNU General Public License
+@item Platforms
+Linux
+@item Location
+@uref{http://valgrind.org/}
+@item Overview
+A suite of tools for debugging and profiling on Linux.  Implements a virtual
+machine for various different processor architectures in order to perform
+instrumentation on the application being debugged.
+@end table
+
 @cindex Vmalloc
 @item
 Vmalloc
@@ -15690,18 +15980,24 @@ An article on debugging memory problems in X applications.
 
 @cindex Edinburgh
 @cindex Scotland
+@cindex University of Edinburgh
+@cindex CCIR
+I live just outside Edinburgh (the capital city of Scotland) and work at the
+University of Edinburgh in the Centre for Communication Interface Research
+(CCIR).  I am currently also working towards gaining a PhD in Usability
+Engineering.
+
 @cindex Edinburgh Portable Compilers
 @cindex EPC
 @cindex Analog Devices
 @cindex ADI
-I live in Edinburgh (the capital city of Scotland) and work for an American
-company called Analog Devices which designs and manufactures digital and
-analogue electronic equipment, as well as Digital Signal Processors (DSPs).
-The company I used to work for was called Edinburgh Portable Compilers, a small
-Edinburgh-based company which designed, wrote and sold compilers for various
-programming languages and operating systems (mainly UNIX variants).  A few years
-ago it became a wholly-owned subsidiary of Analog Devices and our focus was
-shifted to write C and C++ compilers for the various ADI DSPs.
+I used to work for an American company called Analog Devices which designs and
+manufactures digital and analogue electronic equipment, as well as Digital
+Signal Processors (DSPs).  Before that I worked for Edinburgh Portable
+Compilers, a small Edinburgh-based company which designed, wrote and sold
+compilers for various programming languages and operating systems (mainly UNIX
+variants).  In 2000 it became a wholly-owned subsidiary of Analog Devices and
+the focus was shifted to write C and C++ compilers for the various ADI DSPs.
 
 I started working at EPC immediately after obtaining my honours degree in
 Computer Science at Edinburgh University.  My interests lie in operating systems
@@ -15731,487 +16027,848 @@ hope you do too!
 @appendix Copying
 
 @smallexample
-                  GNU LIBRARY GENERAL PUBLIC LICENSE
-                       Version 2, June 1991
+                     GNU GENERAL PUBLIC LICENSE
+                       Version 3, 29 June 2007
 
- Copyright (C) 1991 Free Software Foundation, Inc.
-                59 Temple Place, Suite 330, Boston, MA 02111-1307, USA
+ Copyright (C) 2007 Free Software Foundation, Inc. <http://fsf.org/>
  Everyone is permitted to copy and distribute verbatim copies
  of this license document, but changing it is not allowed.
 
-[This is the first released version of the library GPL.  It is
- numbered 2 because it goes with version 2 of the ordinary GPL.]
-
                             Preamble
 
-  The licenses for most software are designed to take away your
-freedom to share and change it.  By contrast, the GNU General Public
-Licenses are intended to guarantee your freedom to share and change
-free software--to make sure the software is free for all its users.
+  The GNU General Public License is a free, copyleft license for
+software and other kinds of works.
 
-  This license, the Library General Public License, applies to some
-specially designated Free Software Foundation software, and to any
-other libraries whose authors decide to use it.  You can use it for
-your libraries, too.
+  The licenses for most software and other practical works are designed
+to take away your freedom to share and change the works.  By contrast,
+the GNU General Public License is intended to guarantee your freedom to
+share and change all versions of a program--to make sure it remains free
+software for all its users.  We, the Free Software Foundation, use the
+GNU General Public License for most of our software; it applies also to
+any other work released this way by its authors.  You can apply it to
+your programs, too.
 
   When we speak of free software, we are referring to freedom, not
 price.  Our General Public Licenses are designed to make sure that you
 have the freedom to distribute copies of free software (and charge for
-this service if you wish), that you receive source code or can get it
-if you want it, that you can change the software or use pieces of it
-in new free programs; and that you know you can do these things.
+them if you wish), that you receive source code or can get it if you
+want it, that you can change the software or use pieces of it in new
+free programs, and that you know you can do these things.
 
-  To protect your rights, we need to make restrictions that forbid
-anyone to deny you these rights or to ask you to surrender the rights.
-These restrictions translate to certain responsibilities for you if
-you distribute copies of the library, or if you modify it.
+  To protect your rights, we need to prevent others from denying you
+these rights or asking you to surrender the rights.  Therefore, you have
+certain responsibilities if you distribute copies of the software, or if
+you modify it: responsibilities to respect the freedom of others.
 
-  For example, if you distribute copies of the library, whether gratis
-or for a fee, you must give the recipients all the rights that we gave
-you.  You must make sure that they, too, receive or can get the source
-code.  If you link a program with the library, you must provide
-complete object files to the recipients so that they can relink them
-with the library, after making changes to the library and recompiling
-it.  And you must show them these terms so they know their rights.
+  For example, if you distribute copies of such a program, whether
+gratis or for a fee, you must pass on to the recipients the same
+freedoms that you received.  You must make sure that they, too, receive
+or can get the source code.  And you must show them these terms so they
+know their rights.
 
-  Our method of protecting your rights has two steps: (1) copyright
-the library, and (2) offer you this license which gives you legal
-permission to copy, distribute and/or modify the library.
+  Developers that use the GNU GPL protect your rights with two steps:
+(1) assert copyright on the software, and (2) offer you this License
+giving you legal permission to copy, distribute and/or modify it.
 
-  Also, for each distributor's protection, we want to make certain
-that everyone understands that there is no warranty for this free
-library.  If the library is modified by someone else and passed on, we
-want its recipients to know that what they have is not the original
-version, so that any problems introduced by others will not reflect on
-the original authors' reputations.
+  For the developers' and authors' protection, the GPL clearly explains
+that there is no warranty for this free software.  For both users' and
+authors' sake, the GPL requires that modified versions be marked as
+changed, so that their problems will not be attributed erroneously to
+authors of previous versions.
 
-  Finally, any free program is threatened constantly by software
-patents.  We wish to avoid the danger that companies distributing free
-software will individually obtain patent licenses, thus in effect
-transforming the program into proprietary software.  To prevent this,
-we have made it clear that any patent must be licensed for everyone's
-free use or not licensed at all.
+  Some devices are designed to deny users access to install or run
+modified versions of the software inside them, although the manufacturer
+can do so.  This is fundamentally incompatible with the aim of
+protecting users' freedom to change the software.  The systematic
+pattern of such abuse occurs in the area of products for individuals to
+use, which is precisely where it is most unacceptable.  Therefore, we
+have designed this version of the GPL to prohibit the practice for those
+products.  If such problems arise substantially in other domains, we
+stand ready to extend this provision to those domains in future versions
+of the GPL, as needed to protect the freedom of users.
 
-  Most GNU software, including some libraries, is covered by the ordinary
-GNU General Public License, which was designed for utility programs.  This
-license, the GNU Library General Public License, applies to certain
-designated libraries.  This license is quite different from the ordinary
-one; be sure to read it in full, and don't assume that anything in it is
-the same as in the ordinary license.
-
-  The reason we have a separate public license for some libraries is that
-they blur the distinction we usually make between modifying or adding to a
-program and simply using it.  Linking a program with a library, without
-changing the library, is in some sense simply using the library, and is
-analogous to running a utility program or application program.  However, in
-a textual and legal sense, the linked executable is a combined work, a
-derivative of the original library, and the ordinary General Public License
-treats it as such.
-
-  Because of this blurred distinction, using the ordinary General
-Public License for libraries did not effectively promote software
-sharing, because most developers did not use the libraries.  We
-concluded that weaker conditions might promote sharing better.
-
-  However, unrestricted linking of non-free programs would deprive the
-users of those programs of all benefit from the free status of the
-libraries themselves.  This Library General Public License is intended to
-permit developers of non-free programs to use free libraries, while
-preserving your freedom as a user of such programs to change the free
-libraries that are incorporated in them.  (We have not seen how to achieve
-this as regards changes in header files, but we have achieved it as regards
-changes in the actual functions of the Library.)  The hope is that this
-will lead to faster development of free libraries.
+  Finally, every program is threatened constantly by software patents.
+States should not allow patents to restrict development and use of
+software on general-purpose computers, but in those that do, we wish to
+avoid the special danger that patents applied to a free program could
+make it effectively proprietary.  To prevent this, the GPL assures that
+patents cannot be used to render the program non-free.
 
   The precise terms and conditions for copying, distribution and
-modification follow.  Pay close attention to the difference between a
-"work based on the library" and a "work that uses the library".  The
-former contains code derived from the library, while the latter only
-works together with the library.
+modification follow.
 
-  Note that it is possible for a library to be covered by the ordinary
-General Public License rather than by this special one.
+                       TERMS AND CONDITIONS
 
-                  GNU LIBRARY GENERAL PUBLIC LICENSE
-   TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+  0. Definitions.
 
-  0. This License Agreement applies to any software library which
-contains a notice placed by the copyright holder or other authorized
-party saying it may be distributed under the terms of this Library
-General Public License (also called "this License").  Each licensee is
-addressed as "you".
+  "This License" refers to version 3 of the GNU General Public License.
 
-  A "library" means a collection of software functions and/or data
-prepared so as to be conveniently linked with application programs
-(which use some of those functions and data) to form executables.
+  "Copyright" also means copyright-like laws that apply to other kinds of
+works, such as semiconductor masks.
 
-  The "Library", below, refers to any such software library or work
-which has been distributed under these terms.  A "work based on the
-Library" means either the Library or any derivative work under
-copyright law: that is to say, a work containing the Library or a
-portion of it, either verbatim or with modifications and/or translated
-straightforwardly into another language.  (Hereinafter, translation is
-included without limitation in the term "modification".)
+  "The Program" refers to any copyrightable work licensed under this
+License.  Each licensee is addressed as "you".  "Licensees" and
+"recipients" may be individuals or organizations.
 
-  "Source code" for a work means the preferred form of the work for
-making modifications to it.  For a library, complete source code means
-all the source code for all modules it contains, plus any associated
-interface definition files, plus the scripts used to control compilation
-and installation of the library.
+  To "modify" a work means to copy from or adapt all or part of the work
+in a fashion requiring copyright permission, other than the making of an
+exact copy.  The resulting work is called a "modified version" of the
+earlier work or a work "based on" the earlier work.
 
-  Activities other than copying, distribution and modification are not
-covered by this License; they are outside its scope.  The act of
-running a program using the Library is not restricted, and output from
-such a program is covered only if its contents constitute a work based
-on the Library (independent of the use of the Library in a tool for
-writing it).  Whether that is true depends on what the Library does
-and what the program that uses the Library does.
+  A "covered work" means either the unmodified Program or a work based
+on the Program.
 
-  1. You may copy and distribute verbatim copies of the Library's
-complete source code as you receive it, in any medium, provided that
-you conspicuously and appropriately publish on each copy an
-appropriate copyright notice and disclaimer of warranty; keep intact
-all the notices that refer to this License and to the absence of any
-warranty; and distribute a copy of this License along with the
-Library.
+  To "propagate" a work means to do anything with it that, without
+permission, would make you directly or secondarily liable for
+infringement under applicable copyright law, except executing it on a
+computer or modifying a private copy.  Propagation includes copying,
+distribution (with or without modification), making available to the
+public, and in some countries other activities as well.
 
-  You may charge a fee for the physical act of transferring a copy,
-and you may at your option offer warranty protection in exchange for a
-fee.
+  To "convey" a work means any kind of propagation that enables other
+parties to make or receive copies.  Mere interaction with a user through
+a computer network, with no transfer of a copy, is not conveying.
 
-  2. You may modify your copy or copies of the Library or any portion
-of it, thus forming a work based on the Library, and copy and
-distribute such modifications or work under the terms of Section 1
-above, provided that you also meet all of these conditions:
+  An interactive user interface displays "Appropriate Legal Notices"
+to the extent that it includes a convenient and prominently visible
+feature that (1) displays an appropriate copyright notice, and (2)
+tells the user that there is no warranty for the work (except to the
+extent that warranties are provided), that licensees may convey the
+work under this License, and how to view a copy of this License.  If
+the interface presents a list of user commands or options, such as a
+menu, a prominent item in the list meets this criterion.
 
-    a) The modified work must itself be a software library.
+  1. Source Code.
 
-    b) You must cause the files modified to carry prominent notices
-    stating that you changed the files and the date of any change.
+  The "source code" for a work means the preferred form of the work
+for making modifications to it.  "Object code" means any non-source
+form of a work.
 
-    c) You must cause the whole of the work to be licensed at no
-    charge to all third parties under the terms of this License.
+  A "Standard Interface" means an interface that either is an official
+standard defined by a recognized standards body, or, in the case of
+interfaces specified for a particular programming language, one that
+is widely used among developers working in that language.
 
-    d) If a facility in the modified Library refers to a function or a
-    table of data to be supplied by an application program that uses
-    the facility, other than as an argument passed when the facility
-    is invoked, then you must make a good faith effort to ensure that,
-    in the event an application does not supply such function or
-    table, the facility still operates, and performs whatever part of
-    its purpose remains meaningful.
+  The "System Libraries" of an executable work include anything, other
+than the work as a whole, that (a) is included in the normal form of
+packaging a Major Component, but which is not part of that Major
+Component, and (b) serves only to enable use of the work with that
+Major Component, or to implement a Standard Interface for which an
+implementation is available to the public in source code form.  A
+"Major Component", in this context, means a major essential component
+(kernel, window system, and so on) of the specific operating system
+(if any) on which the executable work runs, or a compiler used to
+produce the work, or an object code interpreter used to run it.
 
-    (For example, a function in a library to compute square roots has
-    a purpose that is entirely well-defined independent of the
-    application.  Therefore, Subsection 2d requires that any
-    application-supplied function or table used by this function must
-    be optional: if the application does not supply it, the square
-    root function must still compute square roots.)
+  The "Corresponding Source" for a work in object code form means all
+the source code needed to generate, install, and (for an executable
+work) run the object code and to modify the work, including scripts to
+control those activities.  However, it does not include the work's
+System Libraries, or general-purpose tools or generally available free
+programs which are used unmodified in performing those activities but
+which are not part of the work.  For example, Corresponding Source
+includes interface definition files associated with source files for
+the work, and the source code for shared libraries and dynamically
+linked subprograms that the work is specifically designed to require,
+such as by intimate data communication or control flow between those
+subprograms and other parts of the work.
 
-These requirements apply to the modified work as a whole.  If
-identifiable sections of that work are not derived from the Library,
-and can be reasonably considered independent and separate works in
-themselves, then this License, and its terms, do not apply to those
-sections when you distribute them as separate works.  But when you
-distribute the same sections as part of a whole which is a work based
-on the Library, the distribution of the whole must be on the terms of
-this License, whose permissions for other licensees extend to the
-entire whole, and thus to each and every part regardless of who wrote
-it.
+  The Corresponding Source need not include anything that users
+can regenerate automatically from other parts of the Corresponding
+Source.
 
-Thus, it is not the intent of this section to claim rights or contest
-your rights to work written entirely by you; rather, the intent is to
-exercise the right to control the distribution of derivative or
-collective works based on the Library.
+  The Corresponding Source for a work in source code form is that
+same work.
 
-In addition, mere aggregation of another work not based on the Library
-with the Library (or with a work based on the Library) on a volume of
-a storage or distribution medium does not bring the other work under
-the scope of this License.
+  2. Basic Permissions.
 
-  3. You may opt to apply the terms of the ordinary GNU General Public
-License instead of this License to a given copy of the Library.  To do
-this, you must alter all the notices that refer to this License, so
-that they refer to the ordinary GNU General Public License, version 2,
-instead of to this License.  (If a newer version than version 2 of the
-ordinary GNU General Public License has appeared, then you can specify
-that version instead if you wish.)  Do not make any other change in
-these notices.
+  All rights granted under this License are granted for the term of
+copyright on the Program, and are irrevocable provided the stated
+conditions are met.  This License explicitly affirms your unlimited
+permission to run the unmodified Program.  The output from running a
+covered work is covered by this License only if the output, given its
+content, constitutes a covered work.  This License acknowledges your
+rights of fair use or other equivalent, as provided by copyright law.
 
-  Once this change is made in a given copy, it is irreversible for
-that copy, so the ordinary GNU General Public License applies to all
-subsequent copies and derivative works made from that copy.
+  You may make, run and propagate covered works that you do not
+convey, without conditions so long as your license otherwise remains
+in force.  You may convey covered works to others for the sole purpose
+of having them make modifications exclusively for you, or provide you
+with facilities for running those works, provided that you comply with
+the terms of this License in conveying all material for which you do
+not control copyright.  Those thus making or running the covered works
+for you must do so exclusively on your behalf, under your direction
+and control, on terms that prohibit them from making any copies of
+your copyrighted material outside their relationship with you.
 
-  This option is useful when you wish to copy part of the code of
-the Library into a program that is not a library.
+  Conveying under any other circumstances is permitted solely under
+the conditions stated below.  Sublicensing is not allowed; section 10
+makes it unnecessary.
 
-  4. You may copy and distribute the Library (or a portion or
-derivative of it, under Section 2) in object code or executable form
-under the terms of Sections 1 and 2 above provided that you accompany
-it with the complete corresponding machine-readable source code, which
-must be distributed under the terms of Sections 1 and 2 above on a
-medium customarily used for software interchange.
+  3. Protecting Users' Legal Rights From Anti-Circumvention Law.
 
-  If distribution of object code is made by offering access to copy
-from a designated place, then offering equivalent access to copy the
-source code from the same place satisfies the requirement to
-distribute the source code, even though third parties are not
-compelled to copy the source along with the object code.
+  No covered work shall be deemed part of an effective technological
+measure under any applicable law fulfilling obligations under article
+11 of the WIPO copyright treaty adopted on 20 December 1996, or
+similar laws prohibiting or restricting circumvention of such
+measures.
 
-  5. A program that contains no derivative of any portion of the
-Library, but is designed to work with the Library by being compiled or
-linked with it, is called a "work that uses the Library".  Such a
-work, in isolation, is not a derivative work of the Library, and
-therefore falls outside the scope of this License.
+  When you convey a covered work, you waive any legal power to forbid
+circumvention of technological measures to the extent such circumvention
+is effected by exercising rights under this License with respect to
+the covered work, and you disclaim any intention to limit operation or
+modification of the work as a means of enforcing, against the work's
+users, your or third parties' legal rights to forbid circumvention of
+technological measures.
 
-  However, linking a "work that uses the Library" with the Library
-creates an executable that is a derivative of the Library (because it
-contains portions of the Library), rather than a "work that uses the
-library".  The executable is therefore covered by this License.
-Section 6 states terms for distribution of such executables.
+  4. Conveying Verbatim Copies.
 
-  When a "work that uses the Library" uses material from a header file
-that is part of the Library, the object code for the work may be a
-derivative work of the Library even though the source code is not.
-Whether this is true is especially significant if the work can be
-linked without the Library, or if the work is itself a library.  The
-threshold for this to be true is not precisely defined by law.
+  You may convey verbatim copies of the Program's source code as you
+receive it, in any medium, provided that you conspicuously and
+appropriately publish on each copy an appropriate copyright notice;
+keep intact all notices stating that this License and any
+non-permissive terms added in accord with section 7 apply to the code;
+keep intact all notices of the absence of any warranty; and give all
+recipients a copy of this License along with the Program.
 
-  If such an object file uses only numerical parameters, data
-structure layouts and accessors, and small macros and small inline
-functions (ten lines or less in length), then the use of the object
-file is unrestricted, regardless of whether it is legally a derivative
-work.  (Executables containing this object code plus portions of the
-Library will still fall under Section 6.)
+  You may charge any price or no price for each copy that you convey,
+and you may offer support or warranty protection for a fee.
 
-  Otherwise, if the work is a derivative of the Library, you may
-distribute the object code for the work under the terms of Section 6.
-Any executables containing that work also fall under Section 6,
-whether or not they are linked directly with the Library itself.
+  5. Conveying Modified Source Versions.
 
-  6. As an exception to the Sections above, you may also compile or
-link a "work that uses the Library" with the Library to produce a
-work containing portions of the Library, and distribute that work
-under terms of your choice, provided that the terms permit
-modification of the work for the customer's own use and reverse
-engineering for debugging such modifications.
+  You may convey a work based on the Program, or the modifications to
+produce it from the Program, in the form of source code under the
+terms of section 4, provided that you also meet all of these conditions:
 
-  You must give prominent notice with each copy of the work that the
-Library is used in it and that the Library and its use are covered by
-this License.  You must supply a copy of this License.  If the work
-during execution displays copyright notices, you must include the
-copyright notice for the Library among them, as well as a reference
-directing the user to the copy of this License.  Also, you must do one
-of these things:
+    a) The work must carry prominent notices stating that you modified
+    it, and giving a relevant date.
 
-    a) Accompany the work with the complete corresponding
-    machine-readable source code for the Library including whatever
-    changes were used in the work (which must be distributed under
-    Sections 1 and 2 above); and, if the work is an executable linked
-    with the Library, with the complete machine-readable "work that
-    uses the Library", as object code and/or source code, so that the
-    user can modify the Library and then relink to produce a modified
-    executable containing the modified Library.  (It is understood
-    that the user who changes the contents of definitions files in the
-    Library will not necessarily be able to recompile the application
-    to use the modified definitions.)
+    b) The work must carry prominent notices stating that it is
+    released under this License and any conditions added under section
+    7.  This requirement modifies the requirement in section 4 to
+    "keep intact all notices".
 
-    b) Accompany the work with a written offer, valid for at
-    least three years, to give the same user the materials
-    specified in Subsection 6a, above, for a charge no more
-    than the cost of performing this distribution.
+    c) You must license the entire work, as a whole, under this
+    License to anyone who comes into possession of a copy.  This
+    License will therefore apply, along with any applicable section 7
+    additional terms, to the whole of the work, and all its parts,
+    regardless of how they are packaged.  This License gives no
+    permission to license the work in any other way, but it does not
+    invalidate such permission if you have separately received it.
 
-    c) If distribution of the work is made by offering access to copy
-    from a designated place, offer equivalent access to copy the above
-    specified materials from the same place.
+    d) If the work has interactive user interfaces, each must display
+    Appropriate Legal Notices; however, if the Program has interactive
+    interfaces that do not display Appropriate Legal Notices, your
+    work need not make them do so.
 
-    d) Verify that the user has already received a copy of these
-    materials or that you have already sent this user a copy.
+  A compilation of a covered work with other separate and independent
+works, which are not by their nature extensions of the covered work,
+and which are not combined with it such as to form a larger program,
+in or on a volume of a storage or distribution medium, is called an
+"aggregate" if the compilation and its resulting copyright are not
+used to limit the access or legal rights of the compilation's users
+beyond what the individual works permit.  Inclusion of a covered work
+in an aggregate does not cause this License to apply to the other
+parts of the aggregate.
 
-  For an executable, the required form of the "work that uses the
-Library" must include any data and utility programs needed for
-reproducing the executable from it.  However, as a special exception,
-the source code distributed need not include anything that is normally
-distributed (in either source or binary form) with the major
-components (compiler, kernel, and so on) of the operating system on
-which the executable runs, unless that component itself accompanies
-the executable.
+  6. Conveying Non-Source Forms.
 
-  It may happen that this requirement contradicts the license
-restrictions of other proprietary libraries that do not normally
-accompany the operating system.  Such a contradiction means you cannot
-use both them and the Library together in an executable that you
-distribute.
+  You may convey a covered work in object code form under the terms
+of sections 4 and 5, provided that you also convey the
+machine-readable Corresponding Source under the terms of this License,
+in one of these ways:
 
-  7. You may place library facilities that are a work based on the
-Library side-by-side in a single library together with other library
-facilities not covered by this License, and distribute such a combined
-library, provided that the separate distribution of the work based on
-the Library and of the other library facilities is otherwise
-permitted, and provided that you do these two things:
+    a) Convey the object code in, or embodied in, a physical product
+    (including a physical distribution medium), accompanied by the
+    Corresponding Source fixed on a durable physical medium
+    customarily used for software interchange.
 
-    a) Accompany the combined library with a copy of the same work
-    based on the Library, uncombined with any other library
-    facilities.  This must be distributed under the terms of the
-    Sections above.
+    b) Convey the object code in, or embodied in, a physical product
+    (including a physical distribution medium), accompanied by a
+    written offer, valid for at least three years and valid for as
+    long as you offer spare parts or customer support for that product
+    model, to give anyone who possesses the object code either (1) a
+    copy of the Corresponding Source for all the software in the
+    product that is covered by this License, on a durable physical
+    medium customarily used for software interchange, for a price no
+    more than your reasonable cost of physically performing this
+    conveying of source, or (2) access to copy the
+    Corresponding Source from a network server at no charge.
 
-    b) Give prominent notice with the combined library of the fact
-    that part of it is a work based on the Library, and explaining
-    where to find the accompanying uncombined form of the same work.
+    c) Convey individual copies of the object code with a copy of the
+    written offer to provide the Corresponding Source.  This
+    alternative is allowed only occasionally and noncommercially, and
+    only if you received the object code with such an offer, in accord
+    with subsection 6b.
 
-  8. You may not copy, modify, sublicense, link with, or distribute
-the Library except as expressly provided under this License.  Any
-attempt otherwise to copy, modify, sublicense, link with, or
-distribute the Library is void, and will automatically terminate your
-rights under this License.  However, parties who have received copies,
-or rights, from you under this License will not have their licenses
-terminated so long as such parties remain in full compliance.
+    d) Convey the object code by offering access from a designated
+    place (gratis or for a charge), and offer equivalent access to the
+    Corresponding Source in the same way through the same place at no
+    further charge.  You need not require recipients to copy the
+    Corresponding Source along with the object code.  If the place to
+    copy the object code is a network server, the Corresponding Source
+    may be on a different server (operated by you or a third party)
+    that supports equivalent copying facilities, provided you maintain
+    clear directions next to the object code saying where to find the
+    Corresponding Source.  Regardless of what server hosts the
+    Corresponding Source, you remain obligated to ensure that it is
+    available for as long as needed to satisfy these requirements.
 
-  9. You are not required to accept this License, since you have not
-signed it.  However, nothing else grants you permission to modify or
-distribute the Library or its derivative works.  These actions are
-prohibited by law if you do not accept this License.  Therefore, by
-modifying or distributing the Library (or any work based on the
-Library), you indicate your acceptance of this License to do so, and
-all its terms and conditions for copying, distributing or modifying
-the Library or works based on it.
+    e) Convey the object code using peer-to-peer transmission, provided
+    you inform other peers where the object code and Corresponding
+    Source of the work are being offered to the general public at no
+    charge under subsection 6d.
 
-  10. Each time you redistribute the Library (or any work based on the
-Library), the recipient automatically receives a license from the
-original licensor to copy, distribute, link with or modify the Library
-subject to these terms and conditions.  You may not impose any further
-restrictions on the recipients' exercise of the rights granted herein.
-You are not responsible for enforcing compliance by third parties to
+  A separable portion of the object code, whose source code is excluded
+from the Corresponding Source as a System Library, need not be
+included in conveying the object code work.
+
+  A "User Product" is either (1) a "consumer product", which means any
+tangible personal property which is normally used for personal, family,
+or household purposes, or (2) anything designed or sold for incorporation
+into a dwelling.  In determining whether a product is a consumer product,
+doubtful cases shall be resolved in favor of coverage.  For a particular
+product received by a particular user, "normally used" refers to a
+typical or common use of that class of product, regardless of the status
+of the particular user or of the way in which the particular user
+actually uses, or expects or is expected to use, the product.  A product
+is a consumer product regardless of whether the product has substantial
+commercial, industrial or non-consumer uses, unless such uses represent
+the only significant mode of use of the product.
+
+  "Installation Information" for a User Product means any methods,
+procedures, authorization keys, or other information required to install
+and execute modified versions of a covered work in that User Product from
+a modified version of its Corresponding Source.  The information must
+suffice to ensure that the continued functioning of the modified object
+code is in no case prevented or interfered with solely because
+modification has been made.
+
+  If you convey an object code work under this section in, or with, or
+specifically for use in, a User Product, and the conveying occurs as
+part of a transaction in which the right of possession and use of the
+User Product is transferred to the recipient in perpetuity or for a
+fixed term (regardless of how the transaction is characterized), the
+Corresponding Source conveyed under this section must be accompanied
+by the Installation Information.  But this requirement does not apply
+if neither you nor any third party retains the ability to install
+modified object code on the User Product (for example, the work has
+been installed in ROM).
+
+  The requirement to provide Installation Information does not include a
+requirement to continue to provide support service, warranty, or updates
+for a work that has been modified or installed by the recipient, or for
+the User Product in which it has been modified or installed.  Access to a
+network may be denied when the modification itself materially and
+adversely affects the operation of the network or violates the rules and
+protocols for communication across the network.
+
+  Corresponding Source conveyed, and Installation Information provided,
+in accord with this section must be in a format that is publicly
+documented (and with an implementation available to the public in
+source code form), and must require no special password or key for
+unpacking, reading or copying.
+
+  7. Additional Terms.
+
+  "Additional permissions" are terms that supplement the terms of this
+License by making exceptions from one or more of its conditions.
+Additional permissions that are applicable to the entire Program shall
+be treated as though they were included in this License, to the extent
+that they are valid under applicable law.  If additional permissions
+apply only to part of the Program, that part may be used separately
+under those permissions, but the entire Program remains governed by
+this License without regard to the additional permissions.
+
+  When you convey a copy of a covered work, you may at your option
+remove any additional permissions from that copy, or from any part of
+it.  (Additional permissions may be written to require their own
+removal in certain cases when you modify the work.)  You may place
+additional permissions on material, added by you to a covered work,
+for which you have or can give appropriate copyright permission.
+
+  Notwithstanding any other provision of this License, for material you
+add to a covered work, you may (if authorized by the copyright holders of
+that material) supplement the terms of this License with terms:
+
+    a) Disclaiming warranty or limiting liability differently from the
+    terms of sections 15 and 16 of this License; or
+
+    b) Requiring preservation of specified reasonable legal notices or
+    author attributions in that material or in the Appropriate Legal
+    Notices displayed by works containing it; or
+
+    c) Prohibiting misrepresentation of the origin of that material, or
+    requiring that modified versions of such material be marked in
+    reasonable ways as different from the original version; or
+
+    d) Limiting the use for publicity purposes of names of licensors or
+    authors of the material; or
+
+    e) Declining to grant rights under trademark law for use of some
+    trade names, trademarks, or service marks; or
+
+    f) Requiring indemnification of licensors and authors of that
+    material by anyone who conveys the material (or modified versions of
+    it) with contractual assumptions of liability to the recipient, for
+    any liability that these contractual assumptions directly impose on
+    those licensors and authors.
+
+  All other non-permissive additional terms are considered "further
+restrictions" within the meaning of section 10.  If the Program as you
+received it, or any part of it, contains a notice stating that it is
+governed by this License along with a term that is a further
+restriction, you may remove that term.  If a license document contains
+a further restriction but permits relicensing or conveying under this
+License, you may add to a covered work material governed by the terms
+of that license document, provided that the further restriction does
+not survive such relicensing or conveying.
+
+  If you add terms to a covered work in accord with this section, you
+must place, in the relevant source files, a statement of the
+additional terms that apply to those files, or a notice indicating
+where to find the applicable terms.
+
+  Additional terms, permissive or non-permissive, may be stated in the
+form of a separately written license, or stated as exceptions;
+the above requirements apply either way.
+
+  8. Termination.
+
+  You may not propagate or modify a covered work except as expressly
+provided under this License.  Any attempt otherwise to propagate or
+modify it is void, and will automatically terminate your rights under
+this License (including any patent licenses granted under the third
+paragraph of section 11).
+
+  However, if you cease all violation of this License, then your
+license from a particular copyright holder is reinstated (a)
+provisionally, unless and until the copyright holder explicitly and
+finally terminates your license, and (b) permanently, if the copyright
+holder fails to notify you of the violation by some reasonable means
+prior to 60 days after the cessation.
+
+  Moreover, your license from a particular copyright holder is
+reinstated permanently if the copyright holder notifies you of the
+violation by some reasonable means, this is the first time you have
+received notice of violation of this License (for any work) from that
+copyright holder, and you cure the violation prior to 30 days after
+your receipt of the notice.
+
+  Termination of your rights under this section does not terminate the
+licenses of parties who have received copies or rights from you under
+this License.  If your rights have been terminated and not permanently
+reinstated, you do not qualify to receive new licenses for the same
+material under section 10.
+
+  9. Acceptance Not Required for Having Copies.
+
+  You are not required to accept this License in order to receive or
+run a copy of the Program.  Ancillary propagation of a covered work
+occurring solely as a consequence of using peer-to-peer transmission
+to receive a copy likewise does not require acceptance.  However,
+nothing other than this License grants you permission to propagate or
+modify any covered work.  These actions infringe copyright if you do
+not accept this License.  Therefore, by modifying or propagating a
+covered work, you indicate your acceptance of this License to do so.
+
+  10. Automatic Licensing of Downstream Recipients.
+
+  Each time you convey a covered work, the recipient automatically
+receives a license from the original licensors, to run, modify and
+propagate that work, subject to this License.  You are not responsible
+for enforcing compliance by third parties with this License.
+
+  An "entity transaction" is a transaction transferring control of an
+organization, or substantially all assets of one, or subdividing an
+organization, or merging organizations.  If propagation of a covered
+work results from an entity transaction, each party to that
+transaction who receives a copy of the work also receives whatever
+licenses to the work the party's predecessor in interest had or could
+give under the previous paragraph, plus a right to possession of the
+Corresponding Source of the work from the predecessor in interest, if
+the predecessor has it or can get it with reasonable efforts.
+
+  You may not impose any further restrictions on the exercise of the
+rights granted or affirmed under this License.  For example, you may
+not impose a license fee, royalty, or other charge for exercise of
+rights granted under this License, and you may not initiate litigation
+(including a cross-claim or counterclaim in a lawsuit) alleging that
+any patent claim is infringed by making, using, selling, offering for
+sale, or importing the Program or any portion of it.
+
+  11. Patents.
+
+  A "contributor" is a copyright holder who authorizes use under this
+License of the Program or a work on which the Program is based.  The
+work thus licensed is called the contributor's "contributor version".
+
+  A contributor's "essential patent claims" are all patent claims
+owned or controlled by the contributor, whether already acquired or
+hereafter acquired, that would be infringed by some manner, permitted
+by this License, of making, using, or selling its contributor version,
+but do not include claims that would be infringed only as a
+consequence of further modification of the contributor version.  For
+purposes of this definition, "control" includes the right to grant
+patent sublicenses in a manner consistent with the requirements of
 this License.
 
-  11. If, as a consequence of a court judgment or allegation of patent
-infringement or for any other reason (not limited to patent issues),
-conditions are imposed on you (whether by court order, agreement or
+  Each contributor grants you a non-exclusive, worldwide, royalty-free
+patent license under the contributor's essential patent claims, to
+make, use, sell, offer for sale, import and otherwise run, modify and
+propagate the contents of its contributor version.
+
+  In the following three paragraphs, a "patent license" is any express
+agreement or commitment, however denominated, not to enforce a patent
+(such as an express permission to practice a patent or covenant not to
+sue for patent infringement).  To "grant" such a patent license to a
+party means to make such an agreement or commitment not to enforce a
+patent against the party.
+
+  If you convey a covered work, knowingly relying on a patent license,
+and the Corresponding Source of the work is not available for anyone
+to copy, free of charge and under the terms of this License, through a
+publicly available network server or other readily accessible means,
+then you must either (1) cause the Corresponding Source to be so
+available, or (2) arrange to deprive yourself of the benefit of the
+patent license for this particular work, or (3) arrange, in a manner
+consistent with the requirements of this License, to extend the patent
+license to downstream recipients.  "Knowingly relying" means you have
+actual knowledge that, but for the patent license, your conveying the
+covered work in a country, or your recipient's use of the covered work
+in a country, would infringe one or more identifiable patents in that
+country that you have reason to believe are valid.
+
+  If, pursuant to or in connection with a single transaction or
+arrangement, you convey, or propagate by procuring conveyance of, a
+covered work, and grant a patent license to some of the parties
+receiving the covered work authorizing them to use, propagate, modify
+or convey a specific copy of the covered work, then the patent license
+you grant is automatically extended to all recipients of the covered
+work and works based on it.
+
+  A patent license is "discriminatory" if it does not include within
+the scope of its coverage, prohibits the exercise of, or is
+conditioned on the non-exercise of one or more of the rights that are
+specifically granted under this License.  You may not convey a covered
+work if you are a party to an arrangement with a third party that is
+in the business of distributing software, under which you make payment
+to the third party based on the extent of your activity of conveying
+the work, and under which the third party grants, to any of the
+parties who would receive the covered work from you, a discriminatory
+patent license (a) in connection with copies of the covered work
+conveyed by you (or copies made from those copies), or (b) primarily
+for and in connection with specific products or compilations that
+contain the covered work, unless you entered into that arrangement,
+or that patent license was granted, prior to 28 March 2007.
+
+  Nothing in this License shall be construed as excluding or limiting
+any implied license or other defenses to infringement that may
+otherwise be available to you under applicable patent law.
+
+  12. No Surrender of Others' Freedom.
+
+  If conditions are imposed on you (whether by court order, agreement or
 otherwise) that contradict the conditions of this License, they do not
-excuse you from the conditions of this License.  If you cannot
-distribute so as to satisfy simultaneously your obligations under this
-License and any other pertinent obligations, then as a consequence you
-may not distribute the Library at all.  For example, if a patent
-license would not permit royalty-free redistribution of the Library by
-all those who receive copies directly or indirectly through you, then
-the only way you could satisfy both it and this License would be to
-refrain entirely from distribution of the Library.
+excuse you from the conditions of this License.  If you cannot convey a
+covered work so as to satisfy simultaneously your obligations under this
+License and any other pertinent obligations, then as a consequence you may
+not convey it at all.  For example, if you agree to terms that obligate you
+to collect a royalty for further conveying from those to whom you convey
+the Program, the only way you could satisfy both those terms and this
+License would be to refrain entirely from conveying the Program.
 
-If any portion of this section is held invalid or unenforceable under any
-particular circumstance, the balance of the section is intended to apply,
-and the section as a whole is intended to apply in other circumstances.
+  13. Use with the GNU Affero General Public License.
 
-It is not the purpose of this section to induce you to infringe any
-patents or other property right claims or to contest validity of any
-such claims; this section has the sole purpose of protecting the
-integrity of the free software distribution system which is
-implemented by public license practices.  Many people have made
-generous contributions to the wide range of software distributed
-through that system in reliance on consistent application of that
-system; it is up to the author/donor to decide if he or she is willing
-to distribute software through any other system and a licensee cannot
-impose that choice.
+  Notwithstanding any other provision of this License, you have
+permission to link or combine any covered work with a work licensed
+under version 3 of the GNU Affero General Public License into a single
+combined work, and to convey the resulting work.  The terms of this
+License will continue to apply to the part which is the covered work,
+but the special requirements of the GNU Affero General Public License,
+section 13, concerning interaction through a network will apply to the
+combination as such.
 
-This section is intended to make thoroughly clear what is believed to
-be a consequence of the rest of this License.
+  14. Revised Versions of this License.
 
-  12. If the distribution and/or use of the Library is restricted in
-certain countries either by patents or by copyrighted interfaces, the
-original copyright holder who places the Library under this License may add
-an explicit geographical distribution limitation excluding those countries,
-so that distribution is permitted only in or among countries not thus
-excluded.  In such case, this License incorporates the limitation as if
-written in the body of this License.
+  The Free Software Foundation may publish revised and/or new versions of
+the GNU General Public License from time to time.  Such new versions will
+be similar in spirit to the present version, but may differ in detail to
+address new problems or concerns.
 
-  13. The Free Software Foundation may publish revised and/or new
-versions of the Library General Public License from time to time.
-Such new versions will be similar in spirit to the present version,
-but may differ in detail to address new problems or concerns.
+  Each version is given a distinguishing version number.  If the
+Program specifies that a certain numbered version of the GNU General
+Public License "or any later version" applies to it, you have the
+option of following the terms and conditions either of that numbered
+version or of any later version published by the Free Software
+Foundation.  If the Program does not specify a version number of the
+GNU General Public License, you may choose any version ever published
+by the Free Software Foundation.
 
-Each version is given a distinguishing version number.  If the Library
-specifies a version number of this License which applies to it and
-"any later version", you have the option of following the terms and
-conditions either of that version or of any later version published by
-the Free Software Foundation.  If the Library does not specify a
-license version number, you may choose any version ever published by
-the Free Software Foundation.
+  If the Program specifies that a proxy can decide which future
+versions of the GNU General Public License can be used, that proxy's
+public statement of acceptance of a version permanently authorizes you
+to choose that version for the Program.
 
-  14. If you wish to incorporate parts of the Library into other free
-programs whose distribution conditions are incompatible with these,
-write to the author to ask for permission.  For software which is
-copyrighted by the Free Software Foundation, write to the Free
-Software Foundation; we sometimes make exceptions for this.  Our
-decision will be guided by the two goals of preserving the free status
-of all derivatives of our free software and of promoting the sharing
-and reuse of software generally.
+  Later license versions may give you additional or different
+permissions.  However, no additional obligations are imposed on any
+author or copyright holder as a result of your choosing to follow a
+later version.
 
-                            NO WARRANTY
+  15. Disclaimer of Warranty.
 
-  15. BECAUSE THE LIBRARY IS LICENSED FREE OF CHARGE, THERE IS NO
-WARRANTY FOR THE LIBRARY, TO THE EXTENT PERMITTED BY APPLICABLE LAW.
-EXCEPT WHEN OTHERWISE STATED IN WRITING THE COPYRIGHT HOLDERS AND/OR
-OTHER PARTIES PROVIDE THE LIBRARY "AS IS" WITHOUT WARRANTY OF ANY
-KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE
-IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
-PURPOSE.  THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE
-LIBRARY IS WITH YOU.  SHOULD THE LIBRARY PROVE DEFECTIVE, YOU ASSUME
-THE COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION.
+  THERE IS NO WARRANTY FOR THE PROGRAM, TO THE EXTENT PERMITTED BY
+APPLICABLE LAW.  EXCEPT WHEN OTHERWISE STATED IN WRITING THE COPYRIGHT
+HOLDERS AND/OR OTHER PARTIES PROVIDE THE PROGRAM "AS IS" WITHOUT WARRANTY
+OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO,
+THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+PURPOSE.  THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE PROGRAM
+IS WITH YOU.  SHOULD THE PROGRAM PROVE DEFECTIVE, YOU ASSUME THE COST OF
+ALL NECESSARY SERVICING, REPAIR OR CORRECTION.
 
-  16. IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN
-WRITING WILL ANY COPYRIGHT HOLDER, OR ANY OTHER PARTY WHO MAY MODIFY
-AND/OR REDISTRIBUTE THE LIBRARY AS PERMITTED ABOVE, BE LIABLE TO YOU
-FOR DAMAGES, INCLUDING ANY GENERAL, SPECIAL, INCIDENTAL OR
-CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE
-LIBRARY (INCLUDING BUT NOT LIMITED TO LOSS OF DATA OR DATA BEING
-RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR THIRD PARTIES OR A
-FAILURE OF THE LIBRARY TO OPERATE WITH ANY OTHER SOFTWARE), EVEN IF
-SUCH HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH
-DAMAGES.
+  16. Limitation of Liability.
+
+  IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING
+WILL ANY COPYRIGHT HOLDER, OR ANY OTHER PARTY WHO MODIFIES AND/OR CONVEYS
+THE PROGRAM AS PERMITTED ABOVE, BE LIABLE TO YOU FOR DAMAGES, INCLUDING ANY
+GENERAL, SPECIAL, INCIDENTAL OR CONSEQUENTIAL DAMAGES ARISING OUT OF THE
+USE OR INABILITY TO USE THE PROGRAM (INCLUDING BUT NOT LIMITED TO LOSS OF
+DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR THIRD
+PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS),
+EVEN IF SUCH HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF
+SUCH DAMAGES.
+
+  17. Interpretation of Sections 15 and 16.
+
+  If the disclaimer of warranty and limitation of liability provided
+above cannot be given local legal effect according to their terms,
+reviewing courts shall apply local law that most closely approximates
+an absolute waiver of all civil liability in connection with the
+Program, unless a warranty or assumption of liability accompanies a
+copy of the Program in return for a fee.
 
                      END OF TERMS AND CONDITIONS
 
-            How to Apply These Terms to Your New Libraries
+            How to Apply These Terms to Your New Programs
 
-  If you develop a new library, and you want it to be of the greatest
-possible use to the public, we recommend making it free software that
-everyone can redistribute and change.  You can do so by permitting
-redistribution under these terms (or, alternatively, under the terms of the
-ordinary General Public License).
+  If you develop a new program, and you want it to be of the greatest
+possible use to the public, the best way to achieve this is to make it
+free software which everyone can redistribute and change under these terms.
 
-  To apply these terms, attach the following notices to the library.  It is
-safest to attach them to the start of each source file to most effectively
-convey the exclusion of warranty; and each file should have at least the
-"copyright" line and a pointer to where the full notice is found.
+  To do so, attach the following notices to the program.  It is safest
+to attach them to the start of each source file to most effectively
+state the exclusion of warranty; and each file should have at least
+the "copyright" line and a pointer to where the full notice is found.
 
-    <one line to give the library's name and a brief idea of what it does.>
+    <one line to give the program's name and a brief idea of what it does.>
     Copyright (C) <year>  <name of author>
 
-    This library is free software; you can redistribute it and/or
-    modify it under the terms of the GNU Library General Public
-    License as published by the Free Software Foundation; either
-    version 2 of the License, or (at your option) any later version.
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
 
-    This library is distributed in the hope that it will be useful,
+    This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-    Library General Public License for more details.
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
 
-    You should have received a copy of the GNU Library General Public
-    License along with this library; if not, write to the Free Software
-    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 Also add information on how to contact you by electronic and paper mail.
 
-You should also get your employer (if you work as a programmer) or your
-school, if any, to sign a "copyright disclaimer" for the library, if
-necessary.  Here is a sample; alter the names:
+  If the program does terminal interaction, make it output a short
+notice like this when it starts in an interactive mode:
 
-  Yoyodyne, Inc., hereby disclaims all copyright interest in the
-  library `Frob' (a library for tweaking knobs) written by James Random Hacker.
+    <program>  Copyright (C) <year>  <name of author>
+    This program comes with ABSOLUTELY NO WARRANTY; for details type `show w'.
+    This is free software, and you are welcome to redistribute it
+    under certain conditions; type `show c' for details.
 
-  <signature of Ty Coon>, 1 April 1990
-  Ty Coon, President of Vice
+The hypothetical commands `show w' and `show c' should show the appropriate
+parts of the General Public License.  Of course, your program's commands
+might be different; for a GUI interface, you would use an "about box".
 
-That's all there is to it!
+  You should also get your employer (if you work as a programmer) or school,
+if any, to sign a "copyright disclaimer" for the program, if necessary.
+For more information on this, and how to apply and follow the GNU GPL, see
+<http://www.gnu.org/licenses/>.
+
+  The GNU General Public License does not permit incorporating your program
+into proprietary programs.  If your program is a subroutine library, you
+may consider it more useful to permit linking proprietary applications with
+the library.  If this is what you want to do, use the GNU Lesser General
+Public License instead of this License.  But first, please read
+<http://www.gnu.org/philosophy/why-not-lgpl.html>.
+@end smallexample
+
+@smallexample
+                   GNU LESSER GENERAL PUBLIC LICENSE
+                       Version 3, 29 June 2007
+
+ Copyright (C) 2007 Free Software Foundation, Inc. <http://fsf.org/>
+ Everyone is permitted to copy and distribute verbatim copies
+ of this license document, but changing it is not allowed.
+
+
+  This version of the GNU Lesser General Public License incorporates
+the terms and conditions of version 3 of the GNU General Public
+License, supplemented by the additional permissions listed below.
+
+  0. Additional Definitions.
+
+  As used herein, "this License" refers to version 3 of the GNU Lesser
+General Public License, and the "GNU GPL" refers to version 3 of the GNU
+General Public License.
+
+  "The Library" refers to a covered work governed by this License,
+other than an Application or a Combined Work as defined below.
+
+  An "Application" is any work that makes use of an interface provided
+by the Library, but which is not otherwise based on the Library.
+Defining a subclass of a class defined by the Library is deemed a mode
+of using an interface provided by the Library.
+
+  A "Combined Work" is a work produced by combining or linking an
+Application with the Library.  The particular version of the Library
+with which the Combined Work was made is also called the "Linked
+Version".
+
+  The "Minimal Corresponding Source" for a Combined Work means the
+Corresponding Source for the Combined Work, excluding any source code
+for portions of the Combined Work that, considered in isolation, are
+based on the Application, and not on the Linked Version.
+
+  The "Corresponding Application Code" for a Combined Work means the
+object code and/or source code for the Application, including any data
+and utility programs needed for reproducing the Combined Work from the
+Application, but excluding the System Libraries of the Combined Work.
+
+  1. Exception to Section 3 of the GNU GPL.
+
+  You may convey a covered work under sections 3 and 4 of this License
+without being bound by section 3 of the GNU GPL.
+
+  2. Conveying Modified Versions.
+
+  If you modify a copy of the Library, and, in your modifications, a
+facility refers to a function or data to be supplied by an Application
+that uses the facility (other than as an argument passed when the
+facility is invoked), then you may convey a copy of the modified
+version:
+
+   a) under this License, provided that you make a good faith effort to
+   ensure that, in the event an Application does not supply the
+   function or data, the facility still operates, and performs
+   whatever part of its purpose remains meaningful, or
+
+   b) under the GNU GPL, with none of the additional permissions of
+   this License applicable to that copy.
+
+  3. Object Code Incorporating Material from Library Header Files.
+
+  The object code form of an Application may incorporate material from
+a header file that is part of the Library.  You may convey such object
+code under terms of your choice, provided that, if the incorporated
+material is not limited to numerical parameters, data structure
+layouts and accessors, or small macros, inline functions and templates
+(ten or fewer lines in length), you do both of the following:
+
+   a) Give prominent notice with each copy of the object code that the
+   Library is used in it and that the Library and its use are
+   covered by this License.
+
+   b) Accompany the object code with a copy of the GNU GPL and this license
+   document.
+
+  4. Combined Works.
+
+  You may convey a Combined Work under terms of your choice that,
+taken together, effectively do not restrict modification of the
+portions of the Library contained in the Combined Work and reverse
+engineering for debugging such modifications, if you also do each of
+the following:
+
+   a) Give prominent notice with each copy of the Combined Work that
+   the Library is used in it and that the Library and its use are
+   covered by this License.
+
+   b) Accompany the Combined Work with a copy of the GNU GPL and this license
+   document.
+
+   c) For a Combined Work that displays copyright notices during
+   execution, include the copyright notice for the Library among
+   these notices, as well as a reference directing the user to the
+   copies of the GNU GPL and this license document.
+
+   d) Do one of the following:
+
+       0) Convey the Minimal Corresponding Source under the terms of this
+       License, and the Corresponding Application Code in a form
+       suitable for, and under terms that permit, the user to
+       recombine or relink the Application with a modified version of
+       the Linked Version to produce a modified Combined Work, in the
+       manner specified by section 6 of the GNU GPL for conveying
+       Corresponding Source.
+
+       1) Use a suitable shared library mechanism for linking with the
+       Library.  A suitable mechanism is one that (a) uses at run time
+       a copy of the Library already present on the user's computer
+       system, and (b) will operate properly with a modified version
+       of the Library that is interface-compatible with the Linked
+       Version.
+
+   e) Provide Installation Information, but only if you would otherwise
+   be required to provide such information under section 6 of the
+   GNU GPL, and only to the extent that such information is
+   necessary to install and execute a modified version of the
+   Combined Work produced by recombining or relinking the
+   Application with a modified version of the Linked Version. (If
+   you use option 4d0, the Installation Information must accompany
+   the Minimal Corresponding Source and Corresponding Application
+   Code. If you use option 4d1, you must provide the Installation
+   Information in the manner specified by section 6 of the GNU GPL
+   for conveying Corresponding Source.)
+
+  5. Combined Libraries.
+
+  You may place library facilities that are a work based on the
+Library side by side in a single library together with other library
+facilities that are not Applications and are not covered by this
+License, and convey such a combined library under terms of your
+choice, if you do both of the following:
+
+   a) Accompany the combined library with a copy of the same work based
+   on the Library, uncombined with any other library facilities,
+   conveyed under the terms of this License.
+
+   b) Give prominent notice with the combined library that part of it
+   is a work based on the Library, and explaining where to find the
+   accompanying uncombined form of the same work.
+
+  6. Revised Versions of the GNU Lesser General Public License.
+
+  The Free Software Foundation may publish revised and/or new versions
+of the GNU Lesser General Public License from time to time. Such new
+versions will be similar in spirit to the present version, but may
+differ in detail to address new problems or concerns.
+
+  Each version is given a distinguishing version number. If the
+Library as you received it specifies that a certain numbered version
+of the GNU Lesser General Public License "or any later version"
+applies to it, you have the option of following the terms and
+conditions either of that published version or of any later version
+published by the Free Software Foundation. If the Library as you
+received it does not specify a version number of the GNU Lesser
+General Public License, you may choose any version of the GNU Lesser
+General Public License ever published by the Free Software Foundation.
+
+  If the Library as you received it specifies that a proxy can decide
+whether future versions of the GNU Lesser General Public License shall
+apply, that proxy's public statement of acceptance of any version is
+permanent authorization for you to choose that version for the
+Library.
 @end smallexample
 
 @node Function index, Index, Copying, Top

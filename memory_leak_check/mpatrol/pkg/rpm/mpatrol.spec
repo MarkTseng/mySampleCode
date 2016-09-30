@@ -1,43 +1,41 @@
 # mpatrol
 # A library for controlling and tracing dynamic memory allocations.
-# Copyright (C) 1997-2002 Graeme S. Roy <graeme.roy@analog.com>
+# Copyright (C) 1997-2008 Graeme S. Roy <graemeroy@users.sourceforge.net>
 #
-# This library is free software; you can redistribute it and/or
-# modify it under the terms of the GNU Library General Public
-# License as published by the Free Software Foundation; either
-# version 2 of the License, or (at your option) any later version.
+# This program is free software: you can redistribute it and/or modify it
+# under the terms of the GNU Lesser General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or (at
+# your option) any later version.
 #
-# This library is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-# Library General Public License for more details.
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser
+# General Public License for more details.
 #
-# You should have received a copy of the GNU Library General Public
-# License along with this library; if not, write to the Free
-# Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
-# MA 02111-1307, USA.
+# You should have received a copy of the GNU Lesser General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
 # RPM package specification file
 
 
-# $Id: mpatrol.spec,v 1.73 2002/01/08 20:22:08 graeme Exp $
+# $Id$
 
 
-%define libversion 1.4
+%define libversion 1.5
 
 
 Summary: A library for controlling and tracing dynamic memory allocations.
 Name: mpatrol
-Version: 1.4.8
+Version: 1.5.1
 Release: 1
 License: LGPL
 Group: Development/Debuggers
-Source0: http://www.cbmamiga.demon.co.uk/mpatrol/files/%{name}_%{version}.tar.gz
-URL: http://www.cbmamiga.demon.co.uk/mpatrol/
+Source0: http://heanet.dl.sourceforge.net/sourceforge/mpatrol/%{name}_%{version}.tar.gz
+URL: http://sourceforge.net/projects/mpatrol/
 Buildroot: %{_tmppath}/%{name}-root
 Prereq: /sbin/install-info /sbin/ldconfig
-Packager: Graeme S. Roy <graeme.roy@analog.com>
+Packager: Graeme S. Roy <graemeroy@users.sourceforge.net>
 
 
 %description
@@ -62,8 +60,14 @@ to recompile or relink in order to change the library's behaviour.
 %build
 cd build/unix
 make libmpatrol.a libmpatrol.so.%{libversion}
+ln -s libmpatrol.so.%{libversion} libmpatrol.so.1
+ln -s libmpatrol.so.1 libmpatrol.so
 make libmpatrolmt.a libmpatrolmt.so.%{libversion}
+ln -s libmpatrolmt.so.%{libversion} libmpatrolmt.so.1
+ln -s libmpatrolmt.so.1 libmpatrolmt.so
 make libmpalloc.a libmpalloc.so.%{libversion}
+ln -s libmpalloc.so.%{libversion} libmpalloc.so.1
+ln -s libmpalloc.so.1 libmpalloc.so
 make libmptools.a
 make mpatrol mprof mptrace mleak
 
@@ -95,10 +99,16 @@ install -m644 doc/mpatrol.info* $RPM_BUILD_ROOT/%{_infodir}
 mkdir -p $RPM_BUILD_ROOT/%{_libdir}
 install -m644 build/unix/libmpatrol.a $RPM_BUILD_ROOT/%{_libdir}
 install -m755 build/unix/libmpatrol.so.%{libversion} $RPM_BUILD_ROOT/%{_libdir}
+mv build/unix/libmpatrol.so.1 $RPM_BUILD_ROOT/%{_libdir}
+mv build/unix/libmpatrol.so $RPM_BUILD_ROOT/%{_libdir}
 install -m644 build/unix/libmpatrolmt.a $RPM_BUILD_ROOT/%{_libdir}
 install -m755 build/unix/libmpatrolmt.so.%{libversion} $RPM_BUILD_ROOT/%{_libdir}
+mv build/unix/libmpatrolmt.so.1 $RPM_BUILD_ROOT/%{_libdir}
+mv build/unix/libmpatrolmt.so $RPM_BUILD_ROOT/%{_libdir}
 install -m644 build/unix/libmpalloc.a $RPM_BUILD_ROOT/%{_libdir}
 install -m755 build/unix/libmpalloc.so.%{libversion} $RPM_BUILD_ROOT/%{_libdir}
+mv build/unix/libmpalloc.so.1 $RPM_BUILD_ROOT/%{_libdir}
+mv build/unix/libmpalloc.so $RPM_BUILD_ROOT/%{_libdir}
 install -m644 build/unix/libmptools.a $RPM_BUILD_ROOT/%{_libdir}
 mkdir -p $RPM_BUILD_ROOT/%{_mandir}/man1
 install -m644 man/man1/*.1 $RPM_BUILD_ROOT/%{_mandir}/man1
@@ -111,7 +121,7 @@ install -m644 extra/mpatrol.m4 $RPM_BUILD_ROOT/usr/share/aclocal
 %files
 %defattr(-,root,root)
 %doc README README.DOC README.MAN AUTHORS THANKS
-%doc COPYING COPYING.LIB NEWS ChangeLog
+%doc COPYING COPYING.LESSER NEWS ChangeLog
 %doc doc/mpatrol.txt doc/mpatrol.guide doc/mpatrol.html
 %doc doc/mpatrol.dvi doc/mpatrol.ps doc/mpatrol.pdf
 %doc doc/refcard.dvi doc/refcard.ps doc/refcard.pdf

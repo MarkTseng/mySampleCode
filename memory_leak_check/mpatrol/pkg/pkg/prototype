@@ -1,27 +1,25 @@
 # mpatrol
 # A library for controlling and tracing dynamic memory allocations.
-# Copyright (C) 1997-2002 Graeme S. Roy <graeme.roy@analog.com>
+# Copyright (C) 1997-2008 Graeme S. Roy <graemeroy@users.sourceforge.net>
 #
-# This library is free software; you can redistribute it and/or
-# modify it under the terms of the GNU Library General Public
-# License as published by the Free Software Foundation; either
-# version 2 of the License, or (at your option) any later version.
+# This program is free software: you can redistribute it and/or modify it
+# under the terms of the GNU Lesser General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or (at
+# your option) any later version.
 #
-# This library is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-# Library General Public License for more details.
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser
+# General Public License for more details.
 #
-# You should have received a copy of the GNU Library General Public
-# License along with this library; if not, write to the Free
-# Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
-# MA 02111-1307, USA.
+# You should have received a copy of the GNU Lesser General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
 # PKG package file list
 
 
-# $Id: prototype,v 1.52 2002/01/08 20:21:18 graeme Exp $
+# $Id$
 
 
 d none bin 0775 bin bin
@@ -40,7 +38,7 @@ f none doc/mpatrol/README.MAN 0664 bin bin
 f none doc/mpatrol/AUTHORS 0664 bin bin
 f none doc/mpatrol/THANKS 0664 bin bin
 f none doc/mpatrol/COPYING 0664 bin bin
-f none doc/mpatrol/COPYING.LIB 0664 bin bin
+f none doc/mpatrol/COPYING.LESSER 0664 bin bin
 f none doc/mpatrol/NEWS 0664 bin bin
 f none doc/mpatrol/ChangeLog 0664 bin bin
 f none doc/mpatrol/mpatrol.txt 0664 bin bin
@@ -167,16 +165,16 @@ f none include/mpatrol/mgauge.h 0664 bin bin
 f none include/mpatrol/mtrace.h 0664 bin bin
 d none lib 0775 bin bin
 f none lib/libmpatrol.a 0664 bin bin
-f none lib/libmpatrol.so.1.4 0775 bin bin
-s none lib/libmpatrol.so=libmpatrol.so.1.4
+f none lib/libmpatrol.so.1.5 0775 bin bin
+s none lib/libmpatrol.so=libmpatrol.so.1.5
 f none lib/libmpatrolmt.a 0664 bin bin
-f none lib/libmpatrolmt.so.1.4 0775 bin bin
-s none lib/libmpatrolmt.so=libmpatrolmt.so.1.4
+f none lib/libmpatrolmt.so.1.5 0775 bin bin
+s none lib/libmpatrolmt.so=libmpatrolmt.so.1.5
 f none lib/llib-lmpatrol.ln 0664 bin bin
 f none lib/llib-lmpatrolmt.ln 0664 bin bin
 f none lib/libmpalloc.a 0664 bin bin
-f none lib/libmpalloc.so.1.4 0775 bin bin
-s none lib/libmpalloc.so=libmpalloc.so.1.4
+f none lib/libmpalloc.so.1.5 0775 bin bin
+s none lib/libmpalloc.so=libmpalloc.so.1.5
 f none lib/llib-lmpalloc.ln 0664 bin bin
 f none lib/libmptools.a 0664 bin bin
 f none lib/llib-lmptools.ln 0664 bin bin

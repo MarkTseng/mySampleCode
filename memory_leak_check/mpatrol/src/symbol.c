@@ -1,22 +1,20 @@
 /*
  * mpatrol
  * A library for controlling and tracing dynamic memory allocations.
- * Copyright (C) 1997-2002 Graeme S. Roy <graeme.roy@analog.com>
+ * Copyright (C) 1997-2008 Graeme S. Roy <graemeroy@users.sourceforge.net>
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Library General Public
- * License as published by the Free Software Foundation; either
- * version 2 of the License, or (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or (at
+ * your option) any later version.
  *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Library General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser
+ * General Public License for more details.
  *
- * You should have received a copy of the GNU Library General Public
- * License along with this library; if not, write to the Free
- * Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
- * MA 02111-1307, USA.
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 
@@ -31,6 +29,7 @@
  */
 
 
+#define PACKAGE_VERSION ""
 #include "symbol.h"
 #include "diag.h"
 #include "utils.h"
@@ -38,8 +37,8 @@
 #include <stdlib.h>
 #include <string.h>
 #if FORMAT == FORMAT_AOUT || FORMAT == FORMAT_COFF || \
-    FORMAT == FORMAT_XCOFF || FORMAT == FORMAT_ELF32 || \
-    FORMAT == FORMAT_ELF64 || FORMAT == FORMAT_BFD
+    FORMAT == FORMAT_XCOFF || FORMAT == FORMAT_PECOFF || \
+    FORMAT == FORMAT_ELF32 || FORMAT == FORMAT_ELF64 || FORMAT == FORMAT_BFD
 #include <fcntl.h>
 #include <unistd.h>
 #if FORMAT == FORMAT_AOUT
@@ -71,6 +70,13 @@
 #endif /* SYSTEM */
 #include <ldfcn.h>
 #endif /* SYSTEM */
+#elif FORMAT == FORMAT_PECOFF
+#ifndef ISCOFF
+#define ISCOFF(m) ((m) == 0x014C)
+#endif /* ISCOFF */
+#ifndef ISFCN
+#define ISFCN(t) (((t) & 0x30) == (DT_FCN << 4))
+#endif /* ISFCN */
 #elif FORMAT == FORMAT_ELF32 || FORMAT == FORMAT_ELF64
 #include <libelf.h>
 #elif FORMAT == FORMAT_BFD
@@ -114,6 +120,9 @@
  * definitions for reading the internal structures of the dynamic linker.
  */
 #include <elf.h>
+#if SYSTEM == SYSTEM_LINUX
+#include <link.h>
+#endif /* SYSTEM */
 #elif DYNLINK == DYNLINK_WINDOWS
 /* We use the imagehlp library on Windows platforms to obtain information about
  * the symbols loaded from third-party and system DLLs.  We can also use it to
@@ -126,13 +135,20 @@
 
 
 #if MP_IDENT_SUPPORT
-#ident "$Id: symbol.c,v 1.62 2002/01/08 20:13:59 graeme Exp $"
+#ident "$Id$"
 #else /* MP_IDENT_SUPPORT */
-static MP_CONST MP_VOLATILE char *symbol_id = "$Id: symbol.c,v 1.62 2002/01/08 20:13:59 graeme Exp $";
+static MP_CONST MP_VOLATILE char *symbol_id = "$Id$";
 #endif /* MP_IDENT_SUPPORT */
 
 
-#if DYNLINK == DYNLINK_SVR4
+#if DYNLINK == DYNLINK_INTERIX
+/* These definitions are obviously based on those for SVR4, but they never get
+ * defined in any Interix header files.
+ */
+
+#define DT_NULL  0
+#define DT_DEBUG 21
+#elif DYNLINK == DYNLINK_SVR4
 /* These definitions are not always defined in ELF header files on all
  * systems so we define them here as they are documented in most
  * System V ABI documents.
@@ -171,7 +187,163 @@ Elf32_Dyn;
 #endif /* DYNLINK */
 
 
-#if DYNLINK == DYNLINK_IRIX
+#if FORMAT == FORMAT_PECOFF
+/* There isn't an a.out.h header file on Interix so we just make the required
+ * definitions here.
+ */
+
+#define IMAGE_SIZEOF_DOS_HEADER 64
+#define IMAGE_DOS_SIGNATURE     0x5A4D
+#define IMAGE_NT_SIGNATURE      0x00004550
+
+#define FILHSZ   20
+#define SCNHSZ   40
+#define SYMESZ   18
+#define AUXESZ   18
+#define SYMNMLEN 8
+
+#define STYP_TEXT 0x0020
+
+#define C_EXT  2
+#define C_STAT 3
+#define DT_FCN 2
+
+#define n_name   _n._n_name
+#define n_zeroes _n._n_n._n_zeroes
+#define n_offset _n._n_n._n_offset
+
+
+typedef struct FILHDR
+{
+    unsigned short f_magic;
+    unsigned short f_nscns;
+    unsigned long f_timdat;
+    unsigned long f_symptr;
+    unsigned long f_nsyms;
+    unsigned short f_opthdr;
+    unsigned short f_flags;
+}
+FILHDR;
+
+
+typedef struct AOUTHDR
+{
+    unsigned short magic;
+    unsigned short vstamp;
+    unsigned long tsize;
+    unsigned long dsize;
+    unsigned long bsize;
+    unsigned long entry;
+    unsigned long text_start;
+    unsigned long data_start;
+    unsigned long image_base;
+}
+AOUTHDR;
+
+
+typedef struct SCNHDR
+{
+    char s_name[SYMNMLEN];
+    unsigned long s_paddr;
+    unsigned long s_vaddr;
+    unsigned long s_size;
+    unsigned long s_scnptr;
+    unsigned long s_relptr;
+    unsigned long s_lnnoptr;
+    unsigned short s_nreloc;
+    unsigned short s_nlnno;
+    unsigned long s_flags;
+}
+SCNHDR;
+
+
+typedef struct SYMENT
+{
+    union
+    {
+        char _n_name[SYMNMLEN];
+        struct
+        {
+            unsigned long _n_zeroes;
+            unsigned long _n_offset;
+        }
+        _n_n;
+    }
+    _n;
+    unsigned long n_value;
+    short n_scnum;
+    unsigned short n_type;
+    unsigned char n_sclass;
+    unsigned char n_numaux;
+}
+SYMENT;
+
+
+typedef union AUXENT
+{
+    struct
+    {
+        unsigned long x_tagndx;
+        union
+        {
+            struct
+            {
+                unsigned short x_lnno;
+                unsigned short x_size;
+            }
+            x_lnsz;
+            unsigned long x_fsize;
+        }
+        x_misc;
+        union
+        {
+            struct
+            {
+                unsigned long x_lnnoptr;
+                unsigned long x_endndx;
+            }
+            x_fcn;
+            struct
+            {
+                unsigned short x_dimen[4];
+            }
+            x_ary;
+        }
+        x_fcnary;
+        unsigned short x_tvndx;
+    }
+    x_sym;
+    struct
+    {
+        unsigned long x_scnlen;
+        unsigned short x_nreloc;
+        unsigned short x_nlinno;
+        unsigned long x_checksum;
+        short x_associated;
+        unsigned char x_comdat;
+    }
+    x_scn;
+}
+AUXENT;
+#endif /* FORMAT */
+
+
+#if DYNLINK == DYNLINK_INTERIX
+/* This is a structure that is internal to the dynamic linker on Interix
+ * systems, and appears to be based on that of the SVR4 dynamic linker.  The
+ * real structure is a lot larger, but we only need to define what we use here.
+ */
+
+typedef struct dynamiclink
+{
+    size_t base;              /* virtual address of shared object */
+    size_t offset;            /* offset to debugger structures */
+    char *name;               /* filename of shared object */
+    void *dyn;                /* dynamic linking information */
+    struct dynamiclink *next; /* pointer to next shared object */
+}
+dynamiclink;
+#elif DYNLINK == DYNLINK_IRIX
 /* This structure represents an N32 ABI shared object as opposed to an O32 ABI
  * shared object, and is defined on IRIX 6.0 and above platforms as
  * Elf32_Obj_Info.  In order for us to compile on earlier IRIX platforms we
@@ -198,6 +370,7 @@ objectinfo;
  * all ELF header files.
  */
 
+#if SYSTEM != SYSTEM_LINUX
 typedef struct dynamiclink
 {
     size_t base;              /* virtual address of shared object */
@@ -210,6 +383,7 @@ typedef struct dynamiclink
     struct dynamiclink *next; /* pointer to next shared object */
 }
 dynamiclink;
+#endif /* SYSTEM */
 #elif DYNLINK == DYNLINK_WINDOWS
 /* This structure is used to pass information to the callback function
  * called by SymEnumerateSymbols().
@@ -287,6 +461,25 @@ extern struct link_dynamic _DYNAMIC;
 #else /* SYSTEM */
 extern struct _dynamic _DYNAMIC;
 #endif /* SYSTEM */
+#elif DYNLINK == DYNLINK_INTERIX
+/* The declaration of the _DYNAMIC symbol, which allows us direct access to the
+ * dynamic linker's internal data structures.  We need it to be always defined,
+ * even in the statically linked case, but weak doesn't work in the way it
+ * does for ELF platforms so we'll try to make it common instead, even in C++.
+ */
+
+unsigned long _DYNAMIC __attribute__((common));
+
+
+/* The declaration of the dynamic linker's _r_debug symbol, which allows us
+ * direct access to the dynamic linker's internal data structures when _DYNAMIC
+ * doesn't contain a DT_DEBUG tag.  We need it to be always defined, as with
+ * _DYNAMIC, but it's only available in the dynamic linker so libmpatrol.so
+ * must be explicitly linked with /lib/ld.so at build time, otherwise shared
+ * library dependencies won't be found.
+ */
+
+unsigned long _r_debug[5] __attribute__((common));
 #elif DYNLINK == DYNLINK_IRIX
 /* The __rld_obj_head symbol is always defined in IRIX and points to the first
  * entry in a list of shared object files that are required by the program.  For
@@ -304,8 +497,10 @@ extern struct obj_list *__rld_obj_head;
  * a text symbol.
  */
 
+#if SYSTEM != SYSTEM_LINUX
 #pragma weak _DYNAMIC
 void _DYNAMIC(void);
+#endif /* SYSTEM */
 #endif /* DYNLINK */
 
 
@@ -417,8 +612,8 @@ getsymnode(symhead *y)
 
 
 #if FORMAT == FORMAT_AOUT || FORMAT == FORMAT_COFF || \
-    FORMAT == FORMAT_XCOFF || FORMAT == FORMAT_ELF32 || \
-    FORMAT == FORMAT_ELF64 || FORMAT == FORMAT_BFD
+    FORMAT == FORMAT_XCOFF || FORMAT == FORMAT_PECOFF || \
+    FORMAT == FORMAT_ELF32 || FORMAT == FORMAT_ELF64 || FORMAT == FORMAT_BFD
 /* Decide whether to store a symbol by looking at its name.
  */
 
@@ -428,10 +623,11 @@ addsymname(char **s)
 {
     /* We don't bother storing a symbol which has no name or whose name
      * contains a '$', '@' or a '.', although GNU C++ destructors begin
-     * with `_._'.  However, in XCOFF the symbol name is likely to be the
-     * name of a CSECT beginning with a '.' and not the original name of
-     * the function, so we skip the first character.  In addition, the
-     * HP/UX $START$ symbol contains dollar characters but we don't want
+     * with '_._' and symbol names may contain a '@' to indicate the calling
+     * convention on Interix.  However, in XCOFF the symbol name is likely
+     * to be the name of a CSECT beginning with a '.' and not the original
+     * name of the function, so we skip the first character.  In addition,
+     * the HP/UX $START$ symbol contains dollar characters but we don't want
      * to bother allowing any other symbols containing dollars.
      */
     if ((*s != NULL) && (**s != '\0') &&
@@ -443,7 +639,11 @@ addsymname(char **s)
 #if SYSTEM == SYSTEM_HPUX
          (strcmp(*s, "$START$") == 0) ||
 #endif /* SYSTEM */
+#if SYSTEM == SYSTEM_INTERIX
+         !strpbrk(*s, "$.")))
+#else /* SYSTEM */
          !strpbrk(*s, "$@.")))
+#endif /* SYSTEM */
         return 1;
     return 0;
 }
@@ -502,8 +702,8 @@ addsymbol(symhead *y, struct nlist *p, char *f, char *s, size_t b)
     }
     return 1;
 }
-#elif FORMAT == FORMAT_COFF || FORMAT == FORMAT_XCOFF
-/* Allocate a new symbol node for a given COFF or XCOFF symbol.
+#elif FORMAT == FORMAT_COFF || FORMAT == FORMAT_XCOFF || FORMAT == FORMAT_PECOFF
+/* Allocate a new symbol node for a given COFF, XCOFF or PE-COFF symbol.
  */
 
 static
@@ -847,8 +1047,8 @@ addsymbols(symhead *y, char *e, char *l, char *f, size_t b, size_t a)
             return 0;
     return 1;
 }
-#elif FORMAT == FORMAT_COFF || FORMAT == FORMAT_XCOFF
-/* Allocate a set of symbol nodes for a COFF or XCOFF executable file.
+#elif FORMAT == FORMAT_COFF || FORMAT == FORMAT_XCOFF || FORMAT == FORMAT_PECOFF
+/* Allocate a set of symbol nodes for a COFF, XCOFF or PE-COFF executable file.
  */
 
 static
@@ -861,9 +1061,32 @@ addsymbols(symhead *y, char *e, char *l, char *f, size_t b, size_t a)
     SCNHDR *h;
     SYMENT *p;
     char *c, *m, *s;
-    size_t i, t;
+    size_t i, j, k, t;
+    int d;
 
-    /* Check that we have a valid COFF or XCOFF executable file.
+    d = 0;
+    j = k = 0;
+#if FORMAT == FORMAT_PECOFF
+    /* Check that we have a valid PE-COFF executable file.  It should be
+     * preceded by an MS-DOS executable header.
+     */
+    if ((b < IMAGE_SIZEOF_DOS_HEADER) ||
+        (*((unsigned short *) e) != IMAGE_DOS_SIGNATURE) ||
+        ((i = *((unsigned long *) (e + 60))) == 0) || (b < i + 4) ||
+        (*((unsigned long *) (e + i)) != IMAGE_NT_SIGNATURE))
+    {
+        c = "not an executable file";
+        if (l != NULL)
+            __mp_warn(ET_MAX, AT_MAX, NULL, 0, "%s [%s]: %s\n", l, f, c);
+        else
+            __mp_warn(ET_MAX, AT_MAX, NULL, 0, "%s: %s\n", f, c);
+        return 1;
+    }
+    j = i + 4;
+    e += j;
+    b -= j;
+#endif /* FORMAT */
+    /* Check that we have a valid COFF, XCOFF or PE-COFF executable file.
      */
     if (b < FILHSZ)
     {
@@ -885,6 +1108,7 @@ addsymbols(symhead *y, char *e, char *l, char *f, size_t b, size_t a)
             __mp_warn(ET_MAX, AT_MAX, NULL, 0, "%s: %s\n", f, c);
         return 1;
     }
+#if FORMAT == FORMAT_COFF || FORMAT == FORMAT_XCOFF
     /* COFF and XCOFF dynamic linkers don't record the original start
      * address of the text section so we must adjust the base address here
      * if necessary.
@@ -895,6 +1119,17 @@ addsymbols(symhead *y, char *e, char *l, char *f, size_t b, size_t a)
         if (a > v->text_start)
             a -= (v->text_start & ~0xFFFF);
     }
+#elif FORMAT == FORMAT_PECOFF
+    /* The image base will be determined at load time for shared libraries by
+     * the dynamic linker.  However, this is determined at link time for the
+     * executable file and is obtained from the NT optional header.
+     */
+    if ((a == 0) && (o->f_opthdr >= sizeof(AOUTHDR)))
+    {
+        v = (AOUTHDR *) (e + FILHSZ);
+        a = v->image_base;
+    }
+#endif /* FORMAT */
     b -= o->f_opthdr;
     if ((o->f_nscns == 0) || (b < o->f_nscns * SCNHSZ))
     {
@@ -909,10 +1144,10 @@ addsymbols(symhead *y, char *e, char *l, char *f, size_t b, size_t a)
      * usually 1, but we should really make sure.
      */
     h = (SCNHDR *) (e + FILHSZ + o->f_opthdr);
-    b += FILHSZ + o->f_opthdr - o->f_symptr;
+    b += j + FILHSZ + o->f_opthdr;
     for (i = t = 0; i < o->f_nscns; i++)
         if ((h[i].s_flags & STYP_TEXT) ||
-            (strncmp(h[i].s_name, ".text", 8) == 0))
+            (strncmp(h[i].s_name, ".text", 5) == 0))
         {
             t = i + 1;
             break;
@@ -922,7 +1157,32 @@ addsymbols(symhead *y, char *e, char *l, char *f, size_t b, size_t a)
     /* Look for the symbol table.
      */
     i = o->f_nsyms * SYMESZ;
-    if ((o->f_symptr == 0) || (o->f_nsyms == 0) || (b < i))
+    if ((o->f_symptr != 0) && (o->f_nsyms != 0) && (b >= o->f_symptr + i))
+    {
+        p = (SYMENT *) (e + o->f_symptr - j);
+        b -= o->f_symptr + i;
+        k = o->f_nsyms;
+    }
+#if FORMAT == FORMAT_PECOFF
+    else
+    {
+        /* If we couldn't find the symbol table then it is likely that the file
+         * has been stripped.  However, if the file was dynamically linked then
+         * we may be able to obtain some symbols from its dynamic symbol table.
+         */
+        for (i = 0; i < o->f_nscns; i++)
+            if (strcmp(h[i].s_name, ".dynsym") == 0)
+                break;
+        if ((i != o->f_nscns) && (h[i].s_scnptr != 0) && (h[i].s_size != 0) &&
+            (b >= h[i].s_scnptr + h[i].s_size))
+        {
+            p = (SYMENT *) (e + h[i].s_scnptr - j);
+            k = h[i].s_size / SYMESZ;
+            d = 1;
+        }
+    }
+#endif /* FORMAT */
+    if (k == 0)
     {
         c = "missing symbol table";
         if (l != NULL)
@@ -931,16 +1191,34 @@ addsymbols(symhead *y, char *e, char *l, char *f, size_t b, size_t a)
             __mp_warn(ET_MAX, AT_MAX, NULL, 0, "%s: %s\n", f, c);
         return 1;
     }
-    p = (SYMENT *) (e + o->f_symptr);
-    b -= i;
     /* Look for the string table.
      */
-    m = (char *) p + i;
-    if (b < 4)
-        i = 0;
+    m = NULL;
+    if (d == 0)
+    {
+        m = (char *) p + i;
+        if (b < 4)
+            i = 0;
+        else
+            i = *((size_t *) m);
+        if ((i == 0) || (b < i))
+            m = NULL;
+    }
+#if FORMAT == FORMAT_PECOFF
     else
-        i = *((size_t *) m);
-    if ((i == 0) || (b < i))
+    {
+        /* Look for a .dynstr section which contains the string table for the
+         * dynamic symbol table.
+         */
+        for (i = 0; i < o->f_nscns; i++)
+            if (strcmp(h[i].s_name, ".dynstr") == 0)
+                break;
+        if ((i != o->f_nscns) && (h[i].s_scnptr != 0) && (h[i].s_size != 0) &&
+            (b >= h[i].s_scnptr + h[i].s_size))
+            m = e + h[i].s_scnptr - j;
+    }
+#endif /* FORMAT */
+    if (m == NULL)
     {
         c = "missing string table";
         if (l != NULL)
@@ -953,7 +1231,7 @@ addsymbols(symhead *y, char *e, char *l, char *f, size_t b, size_t a)
         f = l;
     /* Cycle through every symbol contained in the executable file.
      */
-    for (i = 0; i < o->f_nsyms; i += p->n_numaux + 1,
+    for (i = 0; i < k; i += p->n_numaux + 1,
          p = (SYMENT *) ((char *) p + (p->n_numaux + 1) * SYMESZ))
         /* We only need to bother looking at text symbols.
          */
@@ -1157,7 +1435,12 @@ addsymbols(symhead *y, bfd *h, char *a, char *f, size_t b)
             __mp_error(ET_MAX, AT_MAX, NULL, 0, "%s: %s\n", f, m);
         return 0;
     }
-    if (n == 0)
+    /* Some recent versions of the BFD library return non-zero for the
+     * bfd_get_symtab_upper_bound() function even if a symbol table doesn't
+     * exist.  This isn't very helpful, so just assume that any symbol table
+     * with less than five symbols isn't really there.
+     */
+    if (n < 5)
     {
         /* If we couldn't find the symbol table then it is likely that the file
          * has been stripped.  However, if the file was dynamically linked then
@@ -1216,7 +1499,8 @@ addsymbols(symhead *y, bfd *h, char *a, char *f, size_t b)
             /* We don't need to bother looking at undefined, absolute or common
              * symbols, and we only need to store non-data symbols.
              */
-            if (!bfd_is_und_section(p[i]->section) &&
+            if ((p[i]->section != NULL) &&
+                !bfd_is_und_section(p[i]->section) &&
                 !bfd_is_abs_section(p[i]->section) &&
                 !bfd_is_com_section(p[i]->section) &&
                 (p[i]->section->flags & SEC_CODE))
@@ -1272,7 +1556,10 @@ addsyms(char *f, unsigned long b, void *p)
          */
         m.SizeOfStruct = sizeof(IMAGEHLP_MODULE);
         if (SymGetModuleInfo(GetCurrentProcess(), b, &m))
-            f = m.LoadedImageName;
+            if (m.LoadedImageName[0] != '\0')
+                f = m.LoadedImageName;
+            else if (m.ImageName[0] != '\0')
+                f = m.ImageName;
         if ((t = __mp_addstring(&y->strings, f)) == NULL)
             r = 0;
         else
@@ -1318,10 +1605,11 @@ int
 __mp_addsymbols(symhead *y, char *s, char *v, size_t b)
 {
 #if FORMAT == FORMAT_AOUT || FORMAT == FORMAT_COFF || \
-    FORMAT == FORMAT_XCOFF || FORMAT == FORMAT_ELF32 || \
-    FORMAT == FORMAT_ELF64 || FORMAT == FORMAT_BFD
+    FORMAT == FORMAT_XCOFF || FORMAT == FORMAT_PECOFF || \
+    FORMAT == FORMAT_ELF32 || FORMAT == FORMAT_ELF64 || FORMAT == FORMAT_BFD
 #if FORMAT == FORMAT_AOUT || (SYSTEM == SYSTEM_LYNXOS && \
-     (FORMAT == FORMAT_COFF || FORMAT == FORMAT_XCOFF))
+     (FORMAT == FORMAT_COFF || FORMAT == FORMAT_XCOFF)) || \
+    FORMAT == FORMAT_PECOFF
     char *m;
     off_t o;
     int f;
@@ -1336,10 +1624,10 @@ __mp_addsymbols(symhead *y, char *s, char *v, size_t b)
     int f;
 #elif FORMAT == FORMAT_BFD
     objectfile *p, *q;
-    bfd *a, *g, *h;
+    bfd *a, *d, *g, *h;
 #endif /* FORMAT */
     char *t;
-#elif FORMAT == FORMAT_PE
+#elif FORMAT == FORMAT_IMGHLP
     modinfo m;
 #endif /* FORMAT */
     size_t l;
@@ -1348,10 +1636,11 @@ __mp_addsymbols(symhead *y, char *s, char *v, size_t b)
     r = 1;
     l = y->dtree.size;
 #if FORMAT == FORMAT_AOUT || (SYSTEM == SYSTEM_LYNXOS && \
-     (FORMAT == FORMAT_COFF || FORMAT == FORMAT_XCOFF))
+     (FORMAT == FORMAT_COFF || FORMAT == FORMAT_XCOFF)) || \
+    FORMAT == FORMAT_PECOFF
     /* This is a very simple, yet portable, way to read symbols from a.out
-     * executable files, or from COFF or XCOFF executable files when libld
-     * is not available.
+     * executable files, or from COFF, XCOFF or PE-COFF executable files when
+     * libld is not available.
      */
     if ((f = open(s, O_RDONLY)) == -1)
     {
@@ -1537,7 +1826,6 @@ __mp_addsymbols(symhead *y, char *s, char *v, size_t b)
      * BFD library comes with support for debugging information.  So take
      * your pick!
      */
-    t = NULL;
     bfd_init();
     if ((h = bfd_openr(s, NULL)) == NULL)
     {
@@ -1547,17 +1835,32 @@ __mp_addsymbols(symhead *y, char *s, char *v, size_t b)
     }
     else
     {
-        /* Normally we wouldn't ever need to read symbols from an archive
-         * library, but this is just provided for completeness, and for AIX
-         * where shared libraries can be embedded within archive libraries.
-         */
-        if (bfd_check_format(h, bfd_archive))
+        a = d = NULL;
+        if (bfd_check_format(h, bfd_object))
         {
+            /* Look for a .gnu_debuglink section and open the separate debug
+             * file if it exists.
+             */
+            if (t = bfd_follow_gnu_debuglink(h, "/usr/lib/debug"))
+            {
+                if (g = bfd_openr(t, NULL))
+                {
+                    d = h;
+                    h = g;
+                }
+                free(t);
+            }
+        }
+        else if (bfd_check_format(h, bfd_archive))
+        {
+            /* Normally we wouldn't ever need to read symbols from an archive
+             * library, but this is just provided for completeness, and for AIX
+             * where shared libraries can be embedded within archive libraries.
+             */
             a = h;
             h = bfd_openr_next_archived_file(a, NULL);
         }
-        else
-            a = NULL;
+        t = NULL;
         while (h != NULL)
         {
             p = NULL;
@@ -1617,6 +1920,14 @@ __mp_addsymbols(symhead *y, char *s, char *v, size_t b)
             g = h;
             if ((a != NULL) && (r == 1))
                 h = bfd_openr_next_archived_file(a, g);
+            else if (d != NULL)
+            {
+                /* If an external debugging file was found, now read the
+                 * original file.
+                 */
+                h = d;
+                d = NULL;
+            }
             else
                 h = NULL;
             if (!y->lineinfo || (r == 0))
@@ -1629,7 +1940,7 @@ __mp_addsymbols(symhead *y, char *s, char *v, size_t b)
         if (a != NULL)
             bfd_close(a);
     }
-#elif FORMAT == FORMAT_PE
+#elif FORMAT == FORMAT_IMGHLP
     /* We only want to obtain the symbols from the executable file using the
      * imagehlp library if we are not using another object file access library,
      * such as GNU BFD.
@@ -1669,12 +1980,28 @@ __mp_addsymbols(symhead *y, char *s, char *v, size_t b)
 }
 
 
+#if DYNLINK == DYNLINK_SVR4 && SYSTEM == SYSTEM_LINUX
+/* The callback function called to allocate a set of symbol nodes for each
+ * shared object located by dl_iterate_phdr().
+ */
+
+static
+int
+addlibrary(struct dl_phdr_info *i, size_t l, void *y)
+{
+    if ((i->dlpi_name == NULL) || (*i->dlpi_name == '\0'))
+        return 0;
+    return !__mp_addsymbols((symhead *) y, i->dlpi_name, NULL, i->dlpi_addr);
+}
+#endif /* DYNLINK && SYSTEM */
+
+
 /* Add any external or additional symbols to the symbol table.
  */
 
 MP_GLOBAL
 int
-__mp_addextsymbols(symhead *y, meminfo *e)
+__mp_addextsymbols(symhead *y, memoryinfo *e)
 {
 #if DYNLINK == DYNLINK_AIX
     static char b[4096];
@@ -1692,6 +2019,9 @@ __mp_addextsymbols(symhead *y, meminfo *e)
     struct shl_descriptor d;
     size_t i;
     unsigned int o;
+#elif DYNLINK == DYNLINK_INTERIX
+    dynamiclink *l;
+    unsigned long *d;
 #elif DYNLINK == DYNLINK_IRIX
     struct obj_list *l;
     struct obj *o;
@@ -1706,12 +2036,14 @@ __mp_addextsymbols(symhead *y, meminfo *e)
     size_t c, l, n;
     size_t b;
 #elif DYNLINK == DYNLINK_SVR4
+#if SYSTEM != SYSTEM_LINUX
 #if ENVIRON == ENVIRON_64
     Elf64_Dyn *d;
 #else /* ENVIRON */
     Elf32_Dyn *d;
 #endif /* ENVIRON */
     dynamiclink *l;
+#endif /* SYSTEM */
 #elif DYNLINK == DYNLINK_WINDOWS
     modinfo m;
 #endif /* DYNLINK */
@@ -1803,6 +2135,46 @@ __mp_addextsymbols(symhead *y, meminfo *e)
             !__mp_addsymbols(y, d.filename, NULL, d.tstart - o))
             return 0;
     }
+#elif DYNLINK == DYNLINK_INTERIX
+    /* Search for the DT_DEBUG tag in the _DYNAMIC symbol.
+     */
+    l = NULL;
+    for (d = &_DYNAMIC; *d != DT_NULL; d += 2)
+        if (*d == DT_DEBUG)
+        {
+            if (d[1] == 0)
+                l = NULL;
+            else
+                l = (dynamiclink *) *((unsigned long *) d[1] + 1);
+            break;
+        }
+    if (l == NULL)
+    {
+        /* If libmpatrol.so is injected via LD_PRELOAD then _DYNAMIC typically
+         * won't contain a DT_DEBUG tag.  Accessing the dynamic linker's
+         * _r_debug structure directly allows us to obtain the full link map
+         * but this will only work if libmpatrol.so is explicitly linked with
+         * /lib/ld.so at build time.
+         */
+        l = (dynamiclink *) _r_debug[1];
+    }
+    /* We skip past the first item on the list since it represents the
+     * executable file, but we may wish to record the name of the file if we
+     * haven't already determined it.
+     */
+    if (l != NULL)
+    {
+        if ((e->prog == NULL) && (l->name != NULL) && (*l->name != '\0'))
+            e->prog = __mp_addstring(&y->strings, l->name);
+        l = l->next;
+    }
+    while (l != NULL)
+    {
+        if ((l->name != NULL) && (*l->name != '\0') &&
+            !__mp_addsymbols(y, l->name, NULL, l->base))
+            return 0;
+        l = l->next;
+    }
 #elif DYNLINK == DYNLINK_IRIX
     if (l = __rld_obj_head)
         /* Determine if the shared object list we are looking at contains O32
@@ -1876,6 +2248,10 @@ __mp_addextsymbols(symhead *y, meminfo *e)
                 }
         }
 #elif DYNLINK == DYNLINK_SVR4
+#if SYSTEM == SYSTEM_LINUX
+    if (dl_iterate_phdr(addlibrary, y) != 0)
+        return 0;
+#else /* SYSTEM */
 #if ENVIRON == ENVIRON_64
     if ((&_DYNAMIC != NULL) && (d = (Elf64_Dyn *) _DYNAMIC))
 #else /* ENVIRON */
@@ -1911,6 +2287,7 @@ __mp_addextsymbols(symhead *y, meminfo *e)
             l = l->next;
         }
     }
+#endif /* SYSTEM */
 #elif DYNLINK == DYNLINK_WINDOWS
     /* We always want to initialise the imagehlp library here since we will
      * be using it to obtain the symbols from any loaded DLLs here and
@@ -2063,7 +2440,7 @@ __mp_findsymbol(symhead *y, void *p)
                 if ((r == NULL) || (!(r->data.flags & N_EXT) &&
                      (n->data.flags & N_EXT)))
                     r = n;
-#elif FORMAT == FORMAT_COFF
+#elif FORMAT == FORMAT_COFF || FORMAT == FORMAT_PECOFF
                 /* We give precedence to global symbols, then local symbols.
                  */
                 if ((r == NULL) || ((r->data.flags == C_STAT) &&

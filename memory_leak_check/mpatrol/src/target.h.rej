@@ -1,0 +1,19 @@
+--- mpatrol-1.4.8/mpatrol/src/target.h	2002-01-08 15:13:59.000000000 -0500
++++ src/target.h	2008-12-05 15:26:36.000000000 -0500
+@@ -226,6 +226,7 @@
+ #define ARCH_POWER   8  /* IBM RS/6000 */
+ #define ARCH_POWERPC 9  /* PowerPC */
+ #define ARCH_SPARC   10 /* SPARC */
++#define ARCH_ARM     11 /* ARM */
+ 
+ 
+ #ifndef ARCH
+@@ -269,6 +270,8 @@
+ #elif defined(sparc) || defined(_sparc) || defined(__sparc) || \
+       defined(__sparc__)
+ #define ARCH ARCH_SPARC
++#elif defined(__arm__)
++#define ARCH ARCH_ARM
+ #else /* ARCH */
+ #define ARCH ARCH_ANY
+ #endif /* ARCH */

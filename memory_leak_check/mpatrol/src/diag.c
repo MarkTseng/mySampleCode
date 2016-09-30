@@ -1,22 +1,20 @@
 /*
  * mpatrol
  * A library for controlling and tracing dynamic memory allocations.
- * Copyright (C) 1997-2002 Graeme S. Roy <graeme.roy@analog.com>
+ * Copyright (C) 1997-2008 Graeme S. Roy <graemeroy@users.sourceforge.net>
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Library General Public
- * License as published by the Free Software Foundation; either
- * version 2 of the License, or (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or (at
+ * your option) any later version.
  *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Library General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser
+ * General Public License for more details.
  *
- * You should have received a copy of the GNU Library General Public
- * License along with this library; if not, write to the Free
- * Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
- * MA 02111-1307, USA.
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 
@@ -49,9 +47,9 @@
 
 
 #if MP_IDENT_SUPPORT
-#ident "$Id: diag.c,v 1.104 2002/01/08 20:13:59 graeme Exp $"
+#ident "$Id$"
 #else /* MP_IDENT_SUPPORT */
-static MP_CONST MP_VOLATILE char *diag_id = "$Id: diag.c,v 1.104 2002/01/08 20:13:59 graeme Exp $";
+static MP_CONST MP_VOLATILE char *diag_id = "$Id$";
 #endif /* MP_IDENT_SUPPORT */
 
 
@@ -62,6 +60,17 @@ extern "C"
 
 
 MP_API extern errortype __mp_errno;
+
+
+#if TARGET == TARGET_WINDOWS && MP_THREADS_SUPPORT
+/* This contains a pointer to the environment variables for a process.  It
+ * is used by __mp_getenv() to read the environment in a multi-threaded
+ * Windows environment since the mutexes guarding the system getenv() are
+ * locked using malloc().
+ */
+
+extern char **_environ;
+#endif /* TARGET && MP_THREADS_SUPPORT */
 
 
 /* The file pointer to the log file.  This should not really be a file scope
@@ -155,6 +164,8 @@ MP_GLOBAL errorinfo __mp_errordetails[ET_MAX + 1] =
      "string " MP_POINTER " overflows [" MP_POINTER "," MP_POINTER "]"},
     {"ZERALN", "alignment too small",
      "alignment 0 is invalid"},
+    {"ZEROPN", "zero-sized operation",
+     "attempt to perform a zero-sized operation\n"},
     {"INTRNL", "internal error",
      "internal error"}
 };
@@ -239,7 +250,7 @@ MP_GLOBAL unsigned long __mp_diagflags;
 
 static
 void
-processfile(meminfo *m, char *s, char *b, size_t l)
+processfile(memoryinfo *m, char *s, char *b, size_t l)
 {
     char *p, *t;
     size_t i;
@@ -338,7 +349,7 @@ processfile(meminfo *m, char *s, char *b, size_t l)
 
 MP_GLOBAL
 char *
-__mp_logfile(meminfo *m, char *s)
+__mp_logfile(memoryinfo *m, char *s)
 {
     static char b[256];
     char p[256];
@@ -347,7 +358,7 @@ __mp_logfile(meminfo *m, char *s)
     if ((s != NULL) && ((strcmp(s, "stderr") == 0) ||
          (strcmp(s, "stdout") == 0)))
         return s;
-    if ((d = getenv(MP_LOGDIR)) && (*d != '\0') && ((s == NULL) ||
+    if ((d = __mp_getenv(MP_LOGDIR)) && (*d != '\0') && ((s == NULL) ||
 #if TARGET == TARGET_UNIX
          !strchr(s, '/')))
 #elif TARGET == TARGET_AMIGA
@@ -391,7 +402,7 @@ __mp_logfile(meminfo *m, char *s)
 
 MP_GLOBAL
 char *
-__mp_proffile(meminfo *m, char *s)
+__mp_proffile(memoryinfo *m, char *s)
 {
     static char b[256];
     char p[256];
@@ -400,7 +411,7 @@ __mp_proffile(meminfo *m, char *s)
     if ((s != NULL) && ((strcmp(s, "stderr") == 0) ||
          (strcmp(s, "stdout") == 0)))
         return s;
-    if ((d = getenv(MP_PROFDIR)) && (*d != '\0') && ((s == NULL) ||
+    if ((d = __mp_getenv(MP_PROFDIR)) && (*d != '\0') && ((s == NULL) ||
 #if TARGET == TARGET_UNIX
          !strchr(s, '/')))
 #elif TARGET == TARGET_AMIGA
@@ -444,7 +455,7 @@ __mp_proffile(meminfo *m, char *s)
 
 MP_GLOBAL
 char *
-__mp_tracefile(meminfo *m, char *s)
+__mp_tracefile(memoryinfo *m, char *s)
 {
     static char b[256];
     char p[256];
@@ -453,7 +464,7 @@ __mp_tracefile(meminfo *m, char *s)
     if ((s != NULL) && ((strcmp(s, "stderr") == 0) ||
          (strcmp(s, "stdout") == 0)))
         return s;
-    if ((d = getenv(MP_TRACEDIR)) && (*d != '\0') && ((s == NULL) ||
+    if ((d = __mp_getenv(MP_TRACEDIR)) && (*d != '\0') && ((s == NULL) ||
 #if TARGET == TARGET_UNIX
          !strchr(s, '/')))
 #elif TARGET == TARGET_AMIGA
@@ -488,6 +499,31 @@ __mp_tracefile(meminfo *m, char *s)
         processfile(m, s, b, sizeof(b));
     }
     return b;
+}
+
+
+/* Read the contents of an environment variable.
+ */
+
+MP_GLOBAL
+char *
+__mp_getenv(char *s)
+{
+#if TARGET == TARGET_WINDOWS && MP_THREADS_SUPPORT
+    char **e;
+    size_t l;
+#endif /* TARGET && MP_THREADS_SUPPORT */
+
+#if TARGET == TARGET_WINDOWS && MP_THREADS_SUPPORT
+    if ((_environ != NULL) && (s != NULL) && ((l = strlen(s)) != 0))
+        for (e = _environ; *e != NULL; e++)
+            if ((strlen(*e) > l) && (*(*e + l) == '=') &&
+                (strncmp(*e, s, l) == 0))
+                return *e + l + 1;
+    return NULL;
+#else /* TARGET && MP_THREADS_SUPPORT */
+    return getenv(s);
+#endif /* TARGET && MP_THREADS_SUPPORT */
 }
 
 
@@ -786,7 +822,7 @@ __mp_editfile(char *f, unsigned long l, int d)
          * environment variable is set then putenv() will not use malloc() to
          * expand the environment.
          */
-        if (getenv(MP_PRELOAD_NAME))
+        if (__mp_getenv(MP_PRELOAD_NAME))
             putenv(s);
 #endif /* MP_PRELOAD_SUPPORT */
         v[0] = MP_EDITOR;
@@ -1782,7 +1818,7 @@ __mp_printversion(void)
         __mp_diag("%s %s\n\n", __mp_copyright, __mp_author);
     __mp_diag("This is free software, and you are welcome to redistribute it "
               "under certain\n");
-    __mp_diag("conditions; see the GNU Library General Public License for "
+    __mp_diag("conditions; see the GNU Lesser General Public License for "
               "details.\n");
     if (__mp_diagflags & FLG_HTML)
         __mp_diagtag("<P>");

@@ -1,35 +1,35 @@
 # mpatrol
 # A library for controlling and tracing dynamic memory allocations.
-# Copyright (C) 1997-2002 Graeme S. Roy <graeme.roy@analog.com>
+# Copyright (C) 1997-2008 Graeme S. Roy <graemeroy@users.sourceforge.net>
 #
-# This library is free software; you can redistribute it and/or
-# modify it under the terms of the GNU Library General Public
-# License as published by the Free Software Foundation; either
-# version 2 of the License, or (at your option) any later version.
+# This program is free software: you can redistribute it and/or modify it
+# under the terms of the GNU Lesser General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or (at
+# your option) any later version.
 #
-# This library is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-# Library General Public License for more details.
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser
+# General Public License for more details.
 #
-# You should have received a copy of the GNU Library General Public
-# License along with this library; if not, write to the Free
-# Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
-# MA 02111-1307, USA.
+# You should have received a copy of the GNU Lesser General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
 # GNU Makefile to build the UNIX manual pages
 
 
-# $Id: Makefile,v 1.16 2002/01/08 20:28:40 graeme Exp $
+# $Id$
 
 
 # Definitions
 
-SHELL  = /bin/sh
-ROFF   = groff
-HTML   = man2html
-PSTILL = pstill
+SHELL     = /bin/sh
+MAN2ASCII = groff -man -t -Tascii
+MAN2HTML  = man2html -r
+MAN2DVI   = groff -ma4 -man -t -Tdvi
+MAN2PS    = groff -ma4 -man -t -Tps
+MAN2PDF   = pstill -Fa4 -c -c -p
 
 CATPAGES  = cat1/mpatrol.1 cat1/mprof.1 cat1/mptrace.1 cat1/mleak.1 \
 	    cat1/mpsym.1 cat1/mpedit.1 cat1/hexwords.1 cat3/libmpatrol.3 \
@@ -55,139 +55,139 @@ PDFPAGES  = pdf/mpatrol.pdf pdf/mprof.pdf pdf/mptrace.pdf pdf/mleak.pdf \
 default: $(CATPAGES)
 
 cat1/mpatrol.1: man1/mpatrol.1
-	$(ROFF) -Tascii -man $< >$@
+	$(MAN2ASCII) $< >$@
 
 cat1/mprof.1: man1/mprof.1
-	$(ROFF) -Tascii -man $< >$@
+	$(MAN2ASCII) $< >$@
 
 cat1/mptrace.1: man1/mptrace.1
-	$(ROFF) -Tascii -man $< >$@
+	$(MAN2ASCII) $< >$@
 
 cat1/mleak.1: man1/mleak.1
-	$(ROFF) -Tascii -man $< >$@
+	$(MAN2ASCII) $< >$@
 
 cat1/mpsym.1: man1/mpsym.1
-	$(ROFF) -Tascii -man $< >$@
+	$(MAN2ASCII) $< >$@
 
 cat1/mpedit.1: man1/mpedit.1
-	$(ROFF) -Tascii -man $< >$@
+	$(MAN2ASCII) $< >$@
 
 cat1/hexwords.1: man1/hexwords.1
-	$(ROFF) -Tascii -man -t $< >$@
+	$(MAN2ASCII) $< >$@
 
 cat3/libmpatrol.3: man3/libmpatrol.3
-	$(ROFF) -Tascii -man -t $< >$@
+	$(MAN2ASCII) $< >$@
 
 cat3/libmpalloc.3: man3/libmpalloc.3
-	$(ROFF) -Tascii -man $< >$@
+	$(MAN2ASCII) $< >$@
 
 html/mpatrol.html: man1/mpatrol.1
-	$(HTML) $< >$@
+	$(MAN2HTML) $< >$@
 
 html/mprof.html: man1/mprof.1
-	$(HTML) $< >$@
+	$(MAN2HTML) $< >$@
 
 html/mptrace.html: man1/mptrace.1
-	$(HTML) $< >$@
+	$(MAN2HTML) $< >$@
 
 html/mleak.html: man1/mleak.1
-	$(HTML) $< >$@
+	$(MAN2HTML) $< >$@
 
 html/mpsym.html: man1/mpsym.1
-	$(HTML) $< >$@
+	$(MAN2HTML) $< >$@
 
 html/mpedit.html: man1/mpedit.1
-	$(HTML) $< >$@
+	$(MAN2HTML) $< >$@
 
 html/hexwords.html: man1/hexwords.1
-	$(HTML) $< >$@
+	$(MAN2HTML) $< >$@
 
 html/libmpatrol.html: man3/libmpatrol.3
-	$(HTML) $< >$@
+	$(MAN2HTML) $< >$@
 
 html/libmpalloc.html: man3/libmpalloc.3
-	$(HTML) $< >$@
+	$(MAN2HTML) $< >$@
 
 dvi/mpatrol.dvi: man1/mpatrol.1
-	$(ROFF) -Tdvi -man $< >$@
+	$(MAN2DVI) $< >$@
 
 dvi/mprof.dvi: man1/mprof.1
-	$(ROFF) -Tdvi -man $< >$@
+	$(MAN2DVI) $< >$@
 
 dvi/mptrace.dvi: man1/mptrace.1
-	$(ROFF) -Tdvi -man $< >$@
+	$(MAN2DVI) $< >$@
 
 dvi/mleak.dvi: man1/mleak.1
-	$(ROFF) -Tdvi -man $< >$@
+	$(MAN2DVI) $< >$@
 
 dvi/mpsym.dvi: man1/mpsym.1
-	$(ROFF) -Tdvi -man $< >$@
+	$(MAN2DVI) $< >$@
 
 dvi/mpedit.dvi: man1/mpedit.1
-	$(ROFF) -Tdvi -man $< >$@
+	$(MAN2DVI) $< >$@
 
 dvi/hexwords.dvi: man1/hexwords.1
-	$(ROFF) -Tdvi -man -t $< >$@
+	$(MAN2DVI) $< >$@
 
 dvi/libmpatrol.dvi: man3/libmpatrol.3
-	$(ROFF) -Tdvi -man -t $< >$@
+	$(MAN2DVI) $< >$@
 
 dvi/libmpalloc.dvi: man3/libmpalloc.3
-	$(ROFF) -Tdvi -man $< >$@
+	$(MAN2DVI) $< >$@
 
 ps/mpatrol.ps: man1/mpatrol.1
-	$(ROFF) -Tps -man $< >$@
+	$(MAN2PS) $< >$@
 
 ps/mprof.ps: man1/mprof.1
-	$(ROFF) -Tps -man $< >$@
+	$(MAN2PS) $< >$@
 
 ps/mptrace.ps: man1/mptrace.1
-	$(ROFF) -Tps -man $< >$@
+	$(MAN2PS) $< >$@
 
 ps/mleak.ps: man1/mleak.1
-	$(ROFF) -Tps -man $< >$@
+	$(MAN2PS) $< >$@
 
 ps/mpsym.ps: man1/mpsym.1
-	$(ROFF) -Tps -man $< >$@
+	$(MAN2PS) $< >$@
 
 ps/mpedit.ps: man1/mpedit.1
-	$(ROFF) -Tps -man $< >$@
+	$(MAN2PS) $< >$@
 
 ps/hexwords.ps: man1/hexwords.1
-	$(ROFF) -Tps -man -t $< >$@
+	$(MAN2PS) $< >$@
 
 ps/libmpatrol.ps: man3/libmpatrol.3
-	$(ROFF) -Tps -man -t $< >$@
+	$(MAN2PS) $< >$@
 
 ps/libmpalloc.ps: man3/libmpalloc.3
-	$(ROFF) -Tps -man $< >$@
+	$(MAN2PS) $< >$@
 
 pdf/mpatrol.pdf: ps/mpatrol.ps
-	$(PSTILL) -c -o $@ $<
+	$(MAN2PDF) -o $@ $<
 
 pdf/mprof.pdf: ps/mprof.ps
-	$(PSTILL) -c -o $@ $<
+	$(MAN2PDF) -o $@ $<
 
 pdf/mptrace.pdf: ps/mptrace.ps
-	$(PSTILL) -c -o $@ $<
+	$(MAN2PDF) -o $@ $<
 
 pdf/mleak.pdf: ps/mleak.ps
-	$(PSTILL) -c -o $@ $<
+	$(MAN2PDF) -o $@ $<
 
 pdf/mpsym.pdf: ps/mpsym.ps
-	$(PSTILL) -c -o $@ $<
+	$(MAN2PDF) -o $@ $<
 
 pdf/mpedit.pdf: ps/mpedit.ps
-	$(PSTILL) -c -o $@ $<
+	$(MAN2PDF) -o $@ $<
 
 pdf/hexwords.pdf: ps/hexwords.ps
-	$(PSTILL) -c -o $@ $<
+	$(MAN2PDF) -o $@ $<
 
 pdf/libmpatrol.pdf: ps/libmpatrol.ps
-	$(PSTILL) -c -o $@ $<
+	$(MAN2PDF) -o $@ $<
 
 pdf/libmpalloc.pdf: ps/libmpalloc.ps
-	$(PSTILL) -c -o $@ $<
+	$(MAN2PDF) -o $@ $<
 
 all: $(CATPAGES) $(HTMLPAGES) $(DVIPAGES) $(PSPAGES) $(PDFPAGES)
 

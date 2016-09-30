@@ -1,3 +1,219 @@
+2008-11-27  Graeme Roy  <graemeroy@users.sourceforge.net>
+
+	* src/target.h: Added detection of 64-bit x86 processors.
+
+2008-11-26  Graeme Roy  <graemeroy@users.sourceforge.net>
+
+	* doc/mpatrol.texi: Mentioned using backtrace() from glibc.
+
+2008-11-26  Graeme Roy  <graemeroy@users.sourceforge.net>
+
+	* src/memory.c, src/machine.c, src/machine.h, src/stack.c, src/stack.h,
+	  src/signals.c:
+	Added support for backtrace() and libunwind.
+
+2008-11-26  Graeme Roy  <graemeroy@users.sourceforge.net>
+
+	* src/config.h:
+	Added the MP_GLIBCBACKTRACE_SUPPORT feature and made it the default
+	for 64-bit x86 Linux systems.
+
+2008-11-26  Graeme Roy  <graemeroy@users.sourceforge.net>
+
+	* src/inter.c: Various fixes for checkalloca().  Courtesy of Daniel
+	Jacobowitz.
+
+2008-11-26  Graeme Roy  <graemeroy@users.sourceforge.net>
+
+	* src/addr.c:
+	Moved the backup copy of the call stack context to a more appropriate
+	position within __mp_getaddrs().  Courtesy of Daniel Jacobowitz.
+
+2008-11-25  Graeme Roy  <graemeroy@users.sourceforge.net>
+
+	* THANKS, doc/mpatrol.texi, extra/mpatrol.m4, man/man3/libmpatrol.3,
+	  src/config.h, src/stack.c, src/stack.h, src/inter.c:
+	Added support for using libunwind for call stack traversal. Turn on
+	with the macro MP_LIBUNWIND_SUPPORT when building mpatrol.  This has
+	been made the default for ARM and IA64 processors.  Courtesy of Daniel
+	Jacobowitz.
+
+2008-11-25  Graeme Roy  <graemeroy@users.sourceforge.net>
+
+	* src/symbol.c:
+	Added support for reading external debugging files created by gcc and
+	now use dl_iterate_phdr() on Linux to read the dynamic linker data
+	structures rather than _DYNAMIC.  Courtesy of Daniel Jacobowitz.
+
+2008-07-17  Graeme Roy  <graemeroy@users.sourceforge.net>
+
+	* doc/mpatrol.texi:
+	Updated the details on the machines I have access to.
+
+2007-08-14  Graeme Roy  <graemeroy@users.sourceforge.net>
+
+	* build/windows/Makefile.mingw: New Makefile for MinGW on Windows.
+
+	* doc/mpatrol.texi: Mentioned MinGW.
+
+	* pkg/rpm/mpatrol.spec: Added symbolic links.
+
+	* src/config.h, src/inter.c, man/man3/libmpatrol.3, extra/mpatrol.m4,
+	  doc/mpatrol.texi:
+	Added libintl when using the BFD library.
+
+	* src/inter.c: Fixed changes for MingW32.
+
+	* src/symbol.c: Fixed problem if LoadedImageName is "" on Windows.
+
+	* src/target.h:
+	Added BFD as supported format for MingW32 and added XP and Vista to
+	list of Microsoft operating systems, removing support for DOS-based 95,
+	98 and ME.
+
+2007-08-13  Graeme Roy  <graemeroy@users.sourceforge.net>
+
+	* THANKS:
+	Removed the email addresses.  Revised into just one list.  Added
+	more people to thank.
+
+	* doc/mpatrol.texi:
+	Mentioned that need to use mpatrol's capabilities with system C library
+	and removed lots of email addresses.  Added a link to Robert Schmitt's
+	tutorial.  Mentioned about working with JNI and adding a signal-handler
+	for debugging daemon processes.  Added Valgrind to software links.
+
+	* extra/mpatrol.m4: Fixed the call to AC_TRY_LINK.
+
+	* src/cplus.c: Updated the name mangling for gcc.
+
+	* src/config.h, src/inter.c, src/stack.c, src/target.h:
+	Added support for MinGW32.
+
+	* src/machine.c: Use hard register names for HP/UX.
+
+	* src/machine.c, src/target.h: Added preliminary support for ARM.
+
+	* src/symbol.c:
+	Fixed an intermittent bug with the BFD library and symbol reading on
+	Linux.
+
+	* src/sbrk.c, src/symbol.c, src/symbol.h, src/trace.c, src/trace.h,
+	  src/diag.c, src/diag.h, src/heap.h, src/memory.c, src/memory.h:
+	Changed meminfo structure to memoryinfo to prevent clash on Solaris.
+
+2007-04-26  Graeme Roy  <graemeroy@users.sourceforge.net>
+
+	* all files from DEV_INTERIX branch:
+	Merged the Interix branch back to mainline.
+
+	* doc/texinfo.tex: No longer required
+
+2005-03-10  Graeme Roy  <graemeroy@users.sourceforge.net>
+
+	* THANKS: Credited Greg Chicares.
+
+	* doc/mpatrol.texi, doc/refcard.tex, man/man1/mpatrol.1,
+	  man/man3/libmpatrol.3:
+	Updated CHECKMEMORY to check for zero-length memory operations.
+
+	* src/mpatrol.c:
+	Updated --check-memory to check for zero-length memory operations.
+
+	* src/option.c: Updated documentation for CHECKMEMORY.
+
+	* src/symbol.c:
+	Fixed a problem with later BFD libraries and not reading the dynamic
+	symbol table if a normal symbol table doesn't exist.
+
+2005-03-09  Graeme Roy  <graemeroy@users.sourceforge.net>
+
+	* doc/mpatrol.texi, doc/refcard.tex:
+	Documented the ZEROPN diagnostic message.
+
+	* src/diag.c, src/diag.h, src/mpatrol.h:
+	Added the ZEROPN diagnostic message.
+
+	* src/info.c, src/inter.c:
+	Added ZEROPN diagnostic in __mp_checkmemory().  Correctly handle
+	memmem() if search memory is zero-length.
+
+2003-11-27  Graeme Roy  <graemeroy@users.sourceforge.net>
+
+	* config/depcomp: Added automake installation file.
+
+	* pkg/auto/cleanup, pkg/auto/setup: Added depcomp.
+
+2003-11-26  Graeme Roy  <graemeroy@users.sourceforge.net>
+
+	* doc/Makefile:
+	thumbpdf now cleans up a lot of its temporary files by default.  No
+	longer use texi2html.
+
+	* doc/README:
+	Added Adobe Reader information and changed texinfo site.  No longer
+	use texi2html.
+
+	* doc/mpatrol.texi:
+	Removed the explicit page breaks as they are no longer needed.
+
+	* man/Makefile:
+	Use -r for man2html.  Simplified the invocation of groff.  Simplified
+	the commands.  Explicitly specify page sizes.  Now always call tbl
+	beforehand.
+
+	* man/README: Mentioned Adobe Reader.
+
+2003-11-25  Graeme Roy  <graemeroy@users.sourceforge.net>
+
+	* doc/Makefile:
+	Added font subset writing to pstill invocation.  Removed workaround
+	for bad HTML production by a previous release of makeinfo.  Added
+	support for building a DocBook version of the mpatrol manual.
+
+	* doc/README:
+	Mentioned Texi2html.  Added information about the DocBook version
+	of the mpatrol manual.
+
+	* doc/mpatrol.texi:
+	Added EXAMPLEIMAGES flag.  Added the TITLEIMAGES flag.  Mentioned
+	about DocBook format.  Simplified macro handling.
+
+	* man/Makefile:
+	Added binary output and font subset writing to pstill options.
+
+2003-11-24  Graeme Roy  <graemeroy@users.sourceforge.net>
+
+	* doc/Makefile:
+	Remove .tpt files.  Added binary output to pstill.  Change dvips
+	option from -Pcmz to -Ppdf.
+
+2002-07-23  Graeme Roy  <graemeroy@users.sourceforge.net>
+
+	* doc/mpatrol.texi: Added examples for the tools.
+
+2002-03-11  Graeme Roy  <graemeroy@users.sourceforge.net>
+
+	* doc/mpatrol.texi: Updated information about MP_ALIGN().
+
+	* src/list.c, src/list.h: Added __mp_joinlist().
+
+	* src/mpatrol.h: Added a better default for MP_ALIGN().
+
+2002-02-05  Graeme Roy  <graemeroy@users.sourceforge.net>
+
+	* src/diag.c, src/diag.h:
+	Added __mp_getenv().  Fixed the problem with getenv() in a
+	multi-threaded Windows process.
+
+	* src/option.c: Now use __mp_getenv().
+
+2002-02-04  Graeme Roy  <graemeroy@users.sourceforge.net>
+
+	* doc/mpatrol.texi: Added information about autoconf setup.
+
+	* man/man3/libmpatrol.3: Added ldfcn as a reference.
+
 2002-01-08  Graeme Roy  <graeme.roy@analog.com>
 
 	* THANKS: Credited Peter Zijlstra.

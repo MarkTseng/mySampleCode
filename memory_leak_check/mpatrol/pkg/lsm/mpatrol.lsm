@@ -1,7 +1,7 @@
 Begin4
 Title:          mpatrol
-Version:        1.4.8
-Entered-date:   2002-01-08
+Version:        1.5.1
+Entered-date:   2008-12-16
 Description:    A link library that attempts to diagnose run-time errors that
                 are caused by the wrong use of dynamically allocated memory.
                 Along with providing a comprehensive and configurable log of
@@ -19,11 +19,11 @@ Description:    A link library that attempts to diagnose run-time errors that
                 library's behaviour.
 Keywords:       mpatrol malloc realloc free new delete library allocate
                 allocation trace tracing debug debugging dynamic memory
-Author:         graeme.roy@analog.com (Graeme S. Roy)
-Maintained-by:  graeme.roy@analog.com (Graeme S. Roy)
-Primary-site:   www.cbmamiga.demon.co.uk mpatrol/files
-                4.2M mpatrol_1.4.8.tar.gz
+Author:         graemeroy@users.sourceforge.net (Graeme S. Roy)
+Maintained-by:  graemeroy@users.sourceforge.net (Graeme S. Roy)
+Primary-site:   heanet.dl.sourceforge.net sourceforge/mpatrol
+                4.2M mpatrol_1.5.1.tar.gz
 Alternate-site: metalab.unc.edu pub/Linux/devel/lang/c
-                4.2M mpatrol-1.4.8.tar.gz
-Copying-policy: GPL
+                4.2M mpatrol-1.5.1.tar.gz
+Copying-policy: LGPL
 End

@@ -1,0 +1,1 @@
+Attempts to diagnose run-time errors that are caused by the wrong use of dynamically allocated memory, and provides a comprehensive and configurable log of all dynamic memory operations that occurred during the lifetime of a program.

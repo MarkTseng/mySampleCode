@@ -1,22 +1,20 @@
 /*
  * mpatrol
  * A library for controlling and tracing dynamic memory allocations.
- * Copyright (C) 1997-2002 Graeme S. Roy <graeme.roy@analog.com>
+ * Copyright (C) 1997-2008 Graeme S. Roy <graemeroy@users.sourceforge.net>
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Library General Public
- * License as published by the Free Software Foundation; either
- * version 2 of the License, or (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or (at
+ * your option) any later version.
  *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Library General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser
+ * General Public License for more details.
  *
- * You should have received a copy of the GNU Library General Public
- * License along with this library; if not, write to the Free
- * Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
- * MA 02111-1307, USA.
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 
@@ -37,9 +35,9 @@
 
 
 #if MP_IDENT_SUPPORT
-#ident "$Id: info.c,v 1.101 2002/01/08 20:13:59 graeme Exp $"
+#ident "$Id$"
 #else /* MP_IDENT_SUPPORT */
-static MP_CONST MP_VOLATILE char *info_id = "$Id: info.c,v 1.101 2002/01/08 20:13:59 graeme Exp $";
+static MP_CONST MP_VOLATILE char *info_id = "$Id$";
 #endif /* MP_IDENT_SUPPORT */
 
 
@@ -1025,7 +1023,10 @@ __mp_locatememory(infohead *h, void *p, size_t l, void *q, size_t m, loginfo *v)
      */
     if (__mp_checkrange(h, p, l, v) && __mp_checkrange(h, q, m, v))
     {
-        r = __mp_memfind(p, l, q, m);
+        if ((v->type == AT_MEMMEM) && (m == 0))
+            r = p;
+        else
+            r = __mp_memfind(p, l, q, m);
         h->ltotal += m;
     }
     if ((h->flags & FLG_LOGMEMORY) && (h->recur == 1))
@@ -1259,8 +1260,14 @@ __mp_checkrange(infohead *h, void *p, size_t s, loginfo *v)
     }
     e = 1;
     if (s == 0)
-        s = 1;
-    if (n = __mp_findnode(&h->alloc, p, s))
+    {
+        if (h->flags & FLG_CHECKMEMORY)
+        {
+            __mp_log(h, v);
+            __mp_warn(ET_ZEROPN, v->type, v->file, v->line, NULL);
+        }
+    }
+    else if (n = __mp_findnode(&h->alloc, p, s))
         if ((m = (infonode *) n->info) == NULL)
         {
             __mp_log(h, v);

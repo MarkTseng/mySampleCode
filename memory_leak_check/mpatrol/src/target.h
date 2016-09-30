@@ -5,22 +5,20 @@
 /*
  * mpatrol
  * A library for controlling and tracing dynamic memory allocations.
- * Copyright (C) 1997-2002 Graeme S. Roy <graeme.roy@analog.com>
+ * Copyright (C) 1997-2008 Graeme S. Roy <graemeroy@users.sourceforge.net>
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Library General Public
- * License as published by the Free Software Foundation; either
- * version 2 of the License, or (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or (at
+ * your option) any later version.
  *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Library General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser
+ * General Public License for more details.
  *
- * You should have received a copy of the GNU Library General Public
- * License along with this library; if not, write to the Free
- * Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
- * MA 02111-1307, USA.
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 
@@ -32,7 +30,7 @@
 
 
 /*
- * $Id: target.h,v 1.38 2002/01/08 20:13:59 graeme Exp $
+ * $Id$
  */
 
 
@@ -56,7 +54,8 @@
 #ifndef TARGET
 #if defined(unix) || defined(_unix) || defined(__unix) || defined(__unix__) || \
     defined(AIX) || defined(_AIX) || defined(__AIX) || defined(__AIX__) || \
-    defined(__Lynx) || defined(__Lynx__)
+    defined(__Lynx) || defined(__Lynx__) || defined(__INTERIX) || \
+    defined(__INTERIX__)
 #define TARGET TARGET_UNIX
 #elif defined(AMIGA) || defined(_AMIGA) || defined(__AMIGA) || \
       defined(__AMIGA__)
@@ -81,7 +80,7 @@
 #elif TARGET == TARGET_AMIGA
 #define TARGET_STR "Commodore AmigaOS"
 #elif TARGET == TARGET_WINDOWS
-#define TARGET_STR "Microsoft Windows 95/98/ME/NT/2000"
+#define TARGET_STR "Microsoft Windows NT/2000/XP/Vista"
 #elif TARGET == TARGET_NETWARE
 #define TARGET_STR "Novell Netware"
 #else /* TARGET */
@@ -102,16 +101,17 @@
 #define SYSTEM_DYNIX    5  /* DYNIX/ptx */
 #define SYSTEM_FREEBSD  6  /* FreeBSD */
 #define SYSTEM_HPUX     7  /* HP/UX */
-#define SYSTEM_IRIX     8  /* IRIX */
-#define SYSTEM_LINUX    9  /* Linux */
-#define SYSTEM_LYNXOS   10 /* LynxOS */
-#define SYSTEM_NETBSD   11 /* NetBSD */
-#define SYSTEM_OPENBSD  12 /* OpenBSD */
-#define SYSTEM_SINIX    13 /* SINIX */
-#define SYSTEM_SOLARIS  14 /* Solaris */
-#define SYSTEM_SUNOS    15 /* SunOS */
-#define SYSTEM_TRU64    16 /* Compaq Tru64 / Digital UNIX / OSF/1 */
-#define SYSTEM_UNIXWARE 17 /* UnixWare */
+#define SYSTEM_INTERIX  8  /* Interix / OpenNT / SFU / SUA */
+#define SYSTEM_IRIX     9  /* IRIX */
+#define SYSTEM_LINUX    10 /* Linux */
+#define SYSTEM_LYNXOS   11 /* LynxOS */
+#define SYSTEM_NETBSD   12 /* NetBSD */
+#define SYSTEM_OPENBSD  13 /* OpenBSD */
+#define SYSTEM_SINIX    14 /* SINIX */
+#define SYSTEM_SOLARIS  15 /* Solaris */
+#define SYSTEM_SUNOS    16 /* SunOS */
+#define SYSTEM_TRU64    17 /* Compaq Tru64 / Digital UNIX / OSF/1 */
+#define SYSTEM_UNIXWARE 18 /* UnixWare */
 
 
 #ifndef SYSTEM
@@ -130,6 +130,8 @@
 #define SYSTEM SYSTEM_FREEBSD
 #elif defined(hpux) || defined(_hpux) || defined(__hpux) || defined(__hpux__)
 #define SYSTEM SYSTEM_HPUX
+#elif defined(__INTERIX) || defined(__INTERIX__)
+#define SYSTEM SYSTEM_INTERIX
 #elif defined(sgi) || defined(_sgi) || defined(__sgi) || defined(__sgi__)
 #define SYSTEM SYSTEM_IRIX
 #elif defined(linux) || defined(_linux) || defined(__linux) || \
@@ -183,6 +185,8 @@
 #define SYSTEM_STR "FreeBSD"
 #elif SYSTEM == SYSTEM_HPUX
 #define SYSTEM_STR "HP/UX"
+#elif SYSTEM == SYSTEM_INTERIX
+#define SYSTEM_STR "INTERIX"
 #elif SYSTEM == SYSTEM_IRIX
 #define SYSTEM_STR "IRIX"
 #elif SYSTEM == SYSTEM_LINUX
@@ -217,15 +221,16 @@
 
 #define ARCH_ANY     0  /* no specific architecture */
 #define ARCH_ALPHA   1  /* DEC Alpha */
-#define ARCH_IA64    2  /* Intel Itanium */
-#define ARCH_IX86    3  /* Intel 80x86 */
-#define ARCH_M68K    4  /* Motorola 680x0 */
-#define ARCH_M88K    5  /* Motorola 88xx0 */
-#define ARCH_MIPS    6  /* MIPS */
-#define ARCH_PARISC  7  /* HP PA/RISC */
-#define ARCH_POWER   8  /* IBM RS/6000 */
-#define ARCH_POWERPC 9  /* PowerPC */
-#define ARCH_SPARC   10 /* SPARC */
+#define ARCH_ARM     2  /* Acorn/Advanced RISC Machine */
+#define ARCH_IA64    3  /* Intel Itanium */
+#define ARCH_IX86    4  /* Intel 80x86 */
+#define ARCH_M68K    5  /* Motorola 680x0 */
+#define ARCH_M88K    6  /* Motorola 88xx0 */
+#define ARCH_MIPS    7  /* MIPS */
+#define ARCH_PARISC  8  /* HP PA/RISC */
+#define ARCH_POWER   9  /* IBM RS/6000 */
+#define ARCH_POWERPC 10 /* PowerPC */
+#define ARCH_SPARC   11 /* SPARC */
 
 
 #ifndef ARCH
@@ -233,10 +238,22 @@
     defined(__ALPHA__) || defined(alpha) || defined(_alpha) || \
     defined(__alpha) || defined(__alpha__) || defined(_M_ALPHA)
 #define ARCH ARCH_ALPHA
+#define ENVIRON ENVIRON_64
+#elif defined(arm) || defined(_arm) || defined(__arm) || defined(__arm__) || \
+      defined(ARM) || defined(_ARM) || defined(__ARM) || defined(__ARM__)
+#define ARCH ARCH_ARM
+#define ENVIRON ENVIRON_32
 #elif defined(ia64) || defined(_ia64) || defined(__ia64) || \
       defined(__a64__) || defined(IA64) || defined(_IA64) || \
       defined(__IA64) || defined(__IA64__) || defined(_M_IA64)
 #define ARCH ARCH_IA64
+#define ENVIRON ENVIRON_64
+#elif defined(amd64) || defined(_amd64) || defined(__amd64) || \
+      defined(__amd64__) || defined(AMD64) || defined(_AMD64) || \
+      defined(__AMD64) || defined(__AMD64__) || defined(x86_64) || \
+      defined(_x86_64) || defined(__x86_64) || defined(__x86_64__)
+#define ARCH ARCH_IX86
+#define ENVIRON ENVIRON_64
 #elif defined(i386) || defined(_i386) || defined(__i386) || \
       defined(__i386__) || defined(I386) || defined(_I386) || \
       defined(__I386) || defined(__I386__) || defined(ix86) || \
@@ -244,15 +261,18 @@
       defined(x86) || defined(_x86) || defined(__x86) || defined(__x86__) || \
       defined(_M_IX86)
 #define ARCH ARCH_IX86
+#define ENVIRON ENVIRON_32
 #elif defined(m68k) || defined(_m68k) || defined(__m68k) || \
       defined(__m68k__) || defined(mc68000) || defined(_mc68000) || \
       defined(__mc68000) || defined(__mc68000__) || defined(M68000) || \
       defined(_M68000) || defined(__M68000) || defined(__M68000__)
 #define ARCH ARCH_M68K
+#define ENVIRON ENVIRON_32
 #elif defined(m88k) || defined(_m88k) || defined(__m88k) || \
       defined(__m88k__) || defined(m88000) || defined(_m88000) || \
       defined(__m88000) || defined(__m88000__)
 #define ARCH ARCH_M88K
+#define ENVIRON ENVIRON_32
 #elif defined(mips) || defined(_mips) || defined(__mips) || \
       defined(__mips__) || defined(_M_MRX000)
 #define ARCH ARCH_MIPS
@@ -261,14 +281,20 @@
 #elif defined(POWER) || defined(_POWER) || defined(__POWER) || \
       defined(__POWER__)
 #define ARCH ARCH_POWER
+#define ENVIRON ENVIRON_32
 #elif defined(ppc) || defined(_ppc) || defined(__ppc) || defined(__ppc__) || \
       defined(powerpc) || defined(_powerpc) || defined(__powerpc) || \
       defined(__powerpc__) || defined(POWERPC) || defined(_POWERPC) || \
       defined(__POWERPC) || defined(__POWERPC__) || defined(_M_PPC)
 #define ARCH ARCH_POWERPC
+#elif defined(sparcv9) || defined(_sparcv9) || defined(__sparcv9) || \
+      defined(__sparcv9__)
+#define ARCH ARCH_SPARC
+#define ENVIRON ENVIRON_64
 #elif defined(sparc) || defined(_sparc) || defined(__sparc) || \
       defined(__sparc__)
 #define ARCH ARCH_SPARC
+#define ENVIRON ENVIRON_32
 #else /* ARCH */
 #define ARCH ARCH_ANY
 #endif /* ARCH */
@@ -280,6 +306,8 @@
 
 #if ARCH == ARCH_ALPHA
 #define ARCH_STR "DEC Alpha"
+#elif ARCH == ARCH_ARM
+#define ARCH_STR "ARM"
 #elif ARCH == ARCH_IA64
 #define ARCH_STR "Intel Itanium"
 #elif ARCH == ARCH_IX86
@@ -298,6 +326,8 @@
 #define ARCH_STR "PowerPC"
 #elif ARCH == ARCH_SPARC
 #define ARCH_STR "SPARC"
+#elif ARCH == ARCH_ARM
+#define ARCH_STR "ARM"
 #else /* ARCH */
 #define ARCH_STR "Unknown"
 #endif /* ARCH */
@@ -322,22 +352,17 @@
 #define ENVIRON ENVIRON_ANY
 #endif /* SIZEOF_VOID_P */
 #else /* HAVE_CONFIG_H && SIZEOF_VOID_P */
-#if ARCH == ARCH_ALPHA || ARCH == ARCH_IA64
+#if defined(_ILP32)
+#define ENVIRON ENVIRON_32
+#elif defined(_LP64)
 #define ENVIRON ENVIRON_64
-#else /* ARCH */
+#else /* _ILP32 && _LP64 */
 #if SYSTEM == SYSTEM_IRIX
 #if defined(ABI64) || defined(_ABI64)
 #define ENVIRON ENVIRON_64
 #else /* ABI64 */
 #define ENVIRON ENVIRON_32
 #endif /* ABI64 */
-#elif SYSTEM == SYSTEM_SOLARIS
-#if defined(sparcv9) || defined(_sparcv9) || defined(__sparcv9) || \
-    defined(__sparcv9__)
-#define ENVIRON ENVIRON_64
-#else /* sparcv9 */
-#define ENVIRON ENVIRON_32
-#endif /* sparcv9 */
 #elif SYSTEM == SYSTEM_TRU64
 #if defined(arch64) || defined(_arch64) || defined(__arch64) || \
     defined(__arch64__)
@@ -348,7 +373,7 @@
 #else /* SYSTEM */
 #define ENVIRON ENVIRON_32
 #endif /* SYSTEM */
-#endif /* ARCH */
+#endif /* _ILP32 && _LP64 */
 #endif /* HAVE_CONFIG_H && SIZEOF_VOID_P */
 #endif /* ENVIRON */
 
@@ -370,20 +395,23 @@
  * library.
  */
 
-#define FORMAT_NONE  0 /* no symbol support */
-#define FORMAT_AOUT  1 /* a.out */
-#define FORMAT_COFF  2 /* COFF */
-#define FORMAT_XCOFF 3 /* XCOFF */
-#define FORMAT_ELF32 4 /* ELF32 */
-#define FORMAT_ELF64 5 /* ELF64 */
-#define FORMAT_BFD   6 /* GNU BFD */
-#define FORMAT_PE    7 /* Portable Executable */
+#define FORMAT_NONE   0 /* no symbol support */
+#define FORMAT_AOUT   1 /* a.out */
+#define FORMAT_COFF   2 /* COFF */
+#define FORMAT_XCOFF  3 /* XCOFF */
+#define FORMAT_PECOFF 4 /* PE-COFF */
+#define FORMAT_ELF32  5 /* ELF32 */
+#define FORMAT_ELF64  6 /* ELF64 */
+#define FORMAT_BFD    7 /* GNU BFD */
+#define FORMAT_IMGHLP 8 /* Microsoft IMAGEHLP */
 
 
 #ifndef FORMAT
 #if TARGET == TARGET_UNIX
 #if SYSTEM == SYSTEM_AIX
 #define FORMAT FORMAT_XCOFF
+#elif SYSTEM == SYSTEM_INTERIX
+#define FORMAT FORMAT_PECOFF
 #elif SYSTEM == SYSTEM_DGUX || SYSTEM == SYSTEM_DRSNX || \
       SYSTEM == SYSTEM_DYNIX || SYSTEM == SYSTEM_IRIX || \
       SYSTEM == SYSTEM_SINIX || SYSTEM == SYSTEM_SOLARIS || \
@@ -412,11 +440,11 @@
 #define FORMAT FORMAT_NONE
 #endif /* SYSTEM */
 #elif TARGET == TARGET_WINDOWS
-#ifdef __GNUC__
+#ifdef __MINGW32__
 #define FORMAT FORMAT_BFD
-#else /* __GNUC__ */
-#define FORMAT FORMAT_PE
-#endif /* __GNUC__ */
+#else /* __MINGW32__ */
+#define FORMAT FORMAT_IMGHLP
+#endif /* __MINGW32__ */
 #else /* TARGET */
 #if TARGET == TARGET_AMIGA && defined(__GNUC__)
 #define FORMAT FORMAT_BFD
@@ -436,14 +464,16 @@
 #define FORMAT_STR "COFF"
 #elif FORMAT == FORMAT_XCOFF
 #define FORMAT_STR "XCOFF"
+#elif FORMAT == FORMAT_PECOFF
+#define FORMAT_STR "PE-COFF"
 #elif FORMAT == FORMAT_ELF32
 #define FORMAT_STR "ELF32"
 #elif FORMAT == FORMAT_ELF64
 #define FORMAT_STR "ELF64"
 #elif FORMAT == FORMAT_BFD
 #define FORMAT_STR "BFD"
-#elif FORMAT == FORMAT_PE
-#define FORMAT_STR "PE"
+#elif FORMAT == FORMAT_IMGHLP
+#define FORMAT_STR "IMAGEHLP"
 #else /* FORMAT */
 #define FORMAT_STR "Unknown"
 #endif /* FORMAT */
@@ -458,10 +488,11 @@
 #define DYNLINK_AIX     1 /* AIX dynamic linker */
 #define DYNLINK_BSD     2 /* BSD dynamic linker */
 #define DYNLINK_HPUX    3 /* HP/UX dynamic linker */
-#define DYNLINK_IRIX    4 /* IRIX dynamic linker */
-#define DYNLINK_OSF     5 /* OSF dynamic linker */
-#define DYNLINK_SVR4    6 /* SVR4 dynamic linker */
-#define DYNLINK_WINDOWS 7 /* Windows dynamic linker */
+#define DYNLINK_INTERIX 4 /* Interix dynamic linker */
+#define DYNLINK_IRIX    5 /* IRIX dynamic linker */
+#define DYNLINK_OSF     6 /* OSF dynamic linker */
+#define DYNLINK_SVR4    7 /* SVR4 dynamic linker */
+#define DYNLINK_WINDOWS 8 /* Windows dynamic linker */
 
 
 #ifndef DYNLINK
@@ -484,6 +515,8 @@
 #endif /* __ELF__ */
 #elif SYSTEM == SYSTEM_HPUX
 #define DYNLINK DYNLINK_HPUX
+#elif SYSTEM == SYSTEM_INTERIX
+#define DYNLINK DYNLINK_INTERIX
 #elif SYSTEM == SYSTEM_IRIX
 #define DYNLINK DYNLINK_IRIX
 #elif SYSTEM == SYSTEM_TRU64
@@ -508,6 +541,8 @@
 #define DYNLINK_STR "BSD"
 #elif DYNLINK == DYNLINK_HPUX
 #define DYNLINK_STR "HP/UX"
+#elif DYNLINK == DYNLINK_INTERIX
+#define DYNLINK_STR "INTERIX"
 #elif DYNLINK == DYNLINK_IRIX
 #define DYNLINK_STR "IRIX"
 #elif DYNLINK == DYNLINK_OSF
@@ -536,7 +571,7 @@
 #define _POSIX_C_SOURCE 199506L
 #endif /* _POSIX_C_SOURCE */
 #endif /* SYSTEM */
-#if SYSTEM == SYSTEM_AIX
+#if SYSTEM == SYSTEM_AIX || SYSTEM == SYSTEM_INTERIX
 #ifndef _ALL_SOURCE
 #define _ALL_SOURCE 1
 #endif /* _ALL_SOURCE */

@@ -5,33 +5,32 @@
 /*
  * mpatrol
  * A library for controlling and tracing dynamic memory allocations.
- * Copyright (C) 1997-2002 Graeme S. Roy <graeme.roy@analog.com>
+ * Copyright (C) 1997-2008 Graeme S. Roy <graemeroy@users.sourceforge.net>
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Library General Public
- * License as published by the Free Software Foundation; either
- * version 2 of the License, or (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or (at
+ * your option) any later version.
  *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Library General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser
+ * General Public License for more details.
  *
- * You should have received a copy of the GNU Library General Public
- * License along with this library; if not, write to the Free
- * Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
- * MA 02111-1307, USA.
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 
 /*
- * $Id: mpatrol.h,v 1.141 2002/01/08 22:29:59 graeme Exp $
+ * $Id$
  */
 
 
 #include <stdlib.h>
 #include <string.h>
 #include <stdarg.h>
+#include <stddef.h>
 #if !MP_NOCPLUSPLUS
 #ifdef __cplusplus
 #include <new>
@@ -47,7 +46,7 @@
  * and ff represents the bug fix count.
  */
 
-#define MPATROL_VERSION 10408
+#define MPATROL_VERSION 10501
 
 
 /* A macro for representing constant function parameters.
@@ -76,7 +75,6 @@
 
 
 /* A macro for determining the alignment of a type at compile-time.
- * This resolves to 0 if the compiler has no mechanism for doing this.
  */
 
 #ifndef MP_ALIGN
@@ -85,7 +83,7 @@
 #elif defined(__GNUC__)
 #define MP_ALIGN(t) __alignof__(t)
 #else /* __EDG__ && __GNUC__ */
-#define MP_ALIGN(t) 0
+#define MP_ALIGN(t) offsetof(struct {char x; t y;}, y)
 #endif /* __EDG__ && __GNUC__ */
 #endif /* MP_ALIGN */
 
@@ -320,6 +318,7 @@ typedef enum __mp_errortype
     MP_ET_RSZZER, /* reallocation too small */
     MP_ET_STROVF, /* string overflow */
     MP_ET_ZERALN, /* alignment too small */
+    MP_ET_ZEROPN, /* zero-sized operation */
     MP_ET_MAX
 }
 __mp_errortype;

@@ -5,22 +5,20 @@
 /*
  * mpatrol
  * A library for controlling and tracing dynamic memory allocations.
- * Copyright (C) 1997-2002 Graeme S. Roy <graeme.roy@analog.com>
+ * Copyright (C) 1997-2008 Graeme S. Roy <graemeroy@users.sourceforge.net>
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Library General Public
- * License as published by the Free Software Foundation; either
- * version 2 of the License, or (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or (at
+ * your option) any later version.
  *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Library General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser
+ * General Public License for more details.
  *
- * You should have received a copy of the GNU Library General Public
- * License along with this library; if not, write to the Free
- * Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
- * MA 02111-1307, USA.
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 
@@ -31,22 +29,26 @@
 
 
 /*
- * $Id: stack.h,v 1.15 2002/01/08 20:13:59 graeme Exp $
+ * $Id$
  */
 
 
 #include "config.h"
 #include <stddef.h>
 #include <signal.h>
-#if !MP_BUILTINSTACK_SUPPORT
-#if MP_LIBRARYSTACK_SUPPORT && TARGET == TARGET_WINDOWS
+#if !MP_BUILTINSTACK_SUPPORT && !MP_GLIBCBACKTRACE_SUPPORT
+#if MP_LIBUNWIND_SUPPORT
+#define UNW_LOCAL_ONLY
+#include <libunwind.h>
+#elif MP_LIBRARYSTACK_SUPPORT && TARGET == TARGET_WINDOWS
 #include <windows.h>
 #include <imagehlp.h>
-#endif /* MP_LIBRARYSTACK_SUPPORT && TARGET */
-#endif /* MP_BUILTINSTACK_SUPPORT */
+#endif /* MP_LIBUNWIND_SUPPORT && MP_LIBRARYSTACK_SUPPORT && TARGET */
+#endif /* MP_BUILTINSTACK_SUPPORT && MP_GLIBCBACKTRACE_SUPPORT */
 
 
-#if !MP_BUILTINSTACK_SUPPORT
+#if !MP_BUILTINSTACK_SUPPORT && !MP_GLIBCBACKTRACE_SUPPORT && \
+    !MP_LIBUNWIND_SUPPORT
 #if MP_LIBRARYSTACK_SUPPORT
 #if SYSTEM == SYSTEM_HPUX
 /* HP/UX provides functions to traverse the PA/RISC stack frames.  This
@@ -80,7 +82,7 @@ typedef struct frameinfo
 frameinfo;
 #endif /* TARGET && ARCH */
 #endif /* MP_LIBRARYSTACK_SUPPORT */
-#endif /* MP_BUILTINSTACK_SUPPORT */
+#endif /* MP_BUILTINSTACK_SUPPORT && MP_GLIBCBACKTRACE_SUPPORT && ... */
 
 
 /* A stackinfo structure provides information about the currently selected
@@ -91,10 +93,16 @@ typedef struct stackinfo
 {
     void *frame;               /* current frame handle */
     void *addr;                /* current return address */
-#if MP_BUILTINSTACK_SUPPORT
+#if MP_BUILTINSTACK_SUPPORT || MP_GLIBCBACKTRACE_SUPPORT
     void *frames[MP_MAXSTACK]; /* array of frame pointers */
     void *addrs[MP_MAXSTACK];  /* array of return addresses */
+#if MP_GLIBCBACKTRACE_SUPPORT
+    size_t count;              /* number of stack frames */
+#endif /* MP_GLIBCBACKTRACE_SUPPORT */
     size_t index;              /* current stack index */
+#elif MP_LIBUNWIND_SUPPORT
+    unw_context_t context;     /* current machine state */
+    unw_cursor_t cursor;       /* unwind cursor */
 #elif MP_LIBRARYSTACK_SUPPORT
 #if TARGET == TARGET_UNIX
 #if SYSTEM == SYSTEM_HPUX
@@ -105,13 +113,13 @@ typedef struct stackinfo
 #elif TARGET == TARGET_WINDOWS
     STACKFRAME next;           /* next frame handle */
 #endif /* TARGET */
-#else /* MP_BUILTINSTACK_SUPPORT && MP_LIBRARYSTACK_SUPPORT */
+#else /* MP_BUILTINSTACK_SUPPORT && MP_GLIBCBACKTRACE_SUPPORT && ... */
 #if TARGET == TARGET_UNIX && ARCH == ARCH_MIPS
     struct frameinfo next;     /* next frame handle */
 #else /* TARGET && ARCH */
     void *next;                /* next frame handle */
 #endif /* TARGET && ARCH */
-#endif /* MP_BUILTINSTACK_SUPPORT && MP_LIBRARYSTACK_SUPPORT */
+#endif /* MP_BUILTINSTACK_SUPPORT && MP_GLIBCBACKTRACE_SUPPORT && ... */
     void *first;               /* first frame information */
 }
 stackinfo;
@@ -123,6 +131,7 @@ extern "C"
 #endif /* __cplusplus */
 
 
+MP_EXPORT int __mp_stackdirection(void *);
 MP_EXPORT void __mp_newframe(stackinfo *, void *);
 MP_EXPORT int __mp_getframe(stackinfo *);
 

@@ -1,22 +1,20 @@
 /*
  * mpatrol
  * A library for controlling and tracing dynamic memory allocations.
- * Copyright (C) 1997-2002 Graeme S. Roy <graeme.roy@analog.com>
+ * Copyright (C) 1997-2008 Graeme S. Roy <graemeroy@users.sourceforge.net>
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Library General Public
- * License as published by the Free Software Foundation; either
- * version 2 of the License, or (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or (at
+ * your option) any later version.
  *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Library General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser
+ * General Public License for more details.
  *
- * You should have received a copy of the GNU Library General Public
- * License along with this library; if not, write to the Free
- * Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
- * MA 02111-1307, USA.
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 
@@ -42,7 +40,35 @@
  */
 
 
-#if ARCH == ARCH_IX86
+#if ARCH == ARCH_ARM
+/* Define the __mp_initsection variable.
+ */
+
+	.section ".data",#alloc,#write
+	.align	4
+__mp_initsection:
+	.word	1
+	.globl	__mp_initsection
+	.type	__mp_initsection,#object
+	.size	__mp_initsection,4
+
+
+/* Place calls to initialise the mpatrol mutexes and data structures into
+ * the .init section and a call to terminate the mpatrol library in the
+ * .fini section.
+ */
+
+	.section ".init",#alloc,#execinstr
+#if MP_THREADS_SUPPORT
+	bl	__mp_initmutexes
+#endif /* MP_THREADS_SUPPORT */
+	bl	__mp_init
+
+#if !MP_USE_ATEXIT
+	.section ".fini",#alloc,#execinstr
+	bl	__mp_fini
+#endif /* MP_USE_ATEXIT */
+#elif ARCH == ARCH_IX86
 /* Define the __mp_initsection variable.
  */
 
@@ -157,11 +183,40 @@ __mp_initsection:
 	call	__mp_fini
 	nop
 #endif /* MP_USE_ATEXIT */
+#elif ARCH == ARCH_ARM
+/* Define the __mp_initsection variable.
+ */
+
+	.section .data,"aw"
+	.align	2
+__mp_initsection:
+	.long	1
+	.globl	__mp_initsection
+	.type	__mp_initsection,#object
+	.size	__mp_initsection,4
+
+
+/* Place calls to initialise the mpatrol mutexes and data structures into
+ * the .init section and a call to terminate the mpatrol library in the
+ * .fini section.
+ */
+
+	.section .init,"ax"
+#if MP_THREADS_SUPPORT
+	bl	__mp_initmutexes
+#endif /* MP_THREADS_SUPPORT */
+	bl	__mp_init
+
+#if !MP_USE_ATEXIT
+	.section .fini,"ax"
+	bl	__mp_fini
+#endif /* MP_USE_ATEXIT */
 #endif /* ARCH */
 #endif /* MP_INIT_SUPPORT */
 
 
-#if !MP_BUILTINSTACK_SUPPORT
+#if !MP_BUILTINSTACK_SUPPORT && !MP_GLIBCBACKTRACE_SUPPORT && \
+    !MP_LIBUNWIND_SUPPORT
 #if MP_LIBRARYSTACK_SUPPORT
 #if SYSTEM == SYSTEM_HPUX
 /* A similar function to this also resides in the system traceback library,
@@ -178,19 +233,19 @@ __mp_frameinfo
 	.PROC
 	.CALLINFO
 	.ENTRY
-	stw	sp,4(arg0)
-	mfsp	sr4,r20
-	stw	r20,8(arg0)
-	stw	rp,12(arg0)
-	stw	dp,16(arg0)
-	stw	r3,36(arg0)
-	stw	r4,44(arg0)
-	stw	r0,0(arg0)
-	stw	r0,20(arg0)
-	stw	r19,40(arg0)
-	bv	r0(rp)
+	stw	%r30,4(%r26)
+	mfsp	%sr4,%r20
+	stw	%r20,8(%r26)
+	stw	%r2,12(%r26)
+	stw	%r27,16(%r26)
+	stw	%r3,36(%r26)
+	stw	%r4,44(%r26)
+	stw	%r0,0(%r26)
+	stw	%r0,20(%r26)
+	stw	%r19,40(%r26)
+	bv	%r0(%r2)
 	.EXIT
-	stw	r0,24(arg0)
+	stw	%r0,24(%r26)
 	.PROCEND
 	.EXPORT	__mp_frameinfo,CODE,PRIV_LEV=3
 	.END
@@ -259,4 +314,4 @@ ___mp_stackpointer:
 #endif /* SYSTEM */
 #endif /* ARCH */
 #endif /* MP_LIBRARYSTACK_SUPPORT */
-#endif /* MP_BUILTINSTACK_SUPPORT */
+#endif /* MP_BUILTINSTACK_SUPPORT && MP_GLIBCBACKTRACE_SUPPORT && ... */

@@ -3,29 +3,32 @@
 
 # mpatrol
 # A library for controlling and tracing dynamic memory allocations.
-# Copyright (C) 1997-2002 Graeme S. Roy <graeme.roy@analog.com>
+# Copyright (C) 1997-2008 Graeme S. Roy <graemeroy@users.sourceforge.net>
 #
-# This library is free software; you can redistribute it and/or
-# modify it under the terms of the GNU Library General Public
-# License as published by the Free Software Foundation; either
-# version 2 of the License, or (at your option) any later version.
+# This program is free software: you can redistribute it and/or modify it
+# under the terms of the GNU Lesser General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or (at
+# your option) any later version.
 #
-# This library is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-# Library General Public License for more details.
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser
+# General Public License for more details.
 #
-# You should have received a copy of the GNU Library General Public
-# License along with this library; if not, write to the Free
-# Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
-# MA 02111-1307, USA.
+# You should have received a copy of the GNU Lesser General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
 # UNIX shell script to update the mpatrol library version and create a new
 # release archive - this file should be used for administrative purposes only
 
 
-# $Id: mupdate,v 1.19 2002/01/08 20:38:24 graeme Exp $
+# $Id$
+
+
+# The location of the mpatrol Subversion repository.
+
+REPOSITORY="https://mpatrol.svn.sourceforge.net/svnroot/mpatrol"
 
 
 # Read the old release version and release date from the VERSION file.
@@ -64,13 +67,13 @@ newversion="$newver\\.$newrev\\.$newcnt"
 sed "s/MPATROL_VERSION $oldvernum/MPATROL_VERSION $newvernum/" \
     src/mpatrol.h >src/mpatrol.h.new
 mv src/mpatrol.h.new src/mpatrol.h
-cvs commit -m "Updated to version $release" src/mpatrol.h >/dev/null 2>&1
+svn commit -m "Updated to version $release" src/mpatrol.h >/dev/null 2>&1
 
 sed -e "s/MP_VERNUM $oldvernum/MP_VERNUM $newvernum/" \
     -e "s/MP_VERSION \"mpatrol $oldversion\"/MP_VERSION \"mpatrol $newversion\"/" \
     src/version.h >src/version.h.new
 mv src/version.h.new src/version.h
-cvs commit -m "Updated to version $release" src/version.h >/dev/null 2>&1
+svn commit -m "Updated to version $release" src/version.h >/dev/null 2>&1
 
 
 # Change the version.c source file in order to update the release date strings.
@@ -88,13 +91,13 @@ sed -e "s/MP_VERSION \" $olddate1\"/MP_VERSION \" $newdate1\"/" \
     -e "s/MP_VERSION \" $olddate3\"/MP_VERSION \" $newdate3\"/" \
     src/version.c >src/version.c.new
 mv src/version.c.new src/version.c
-cvs commit -m "Updated to version $release" src/version.c >/dev/null 2>&1
+svn commit -m "Updated to version $release" src/version.c >/dev/null 2>&1
 
 
 # Update the ChangeLog and NEWS files with all the changes since the last
 # release.
 
-rcs2log -R -u 'graeme:Graeme Roy:graeme.roy@analog.com' >ChangeLog.new 2>/dev/null
+rcs2log -R -u 'graeme:Graeme Roy:graemeroy@users.sourceforge.net' >ChangeLog.new 2>/dev/null
 cp ChangeLog.new NEWS.new
 cat ChangeLog >>ChangeLog.new
 cat NEWS >>NEWS.new
@@ -103,7 +106,7 @@ cmp ChangeLog ChangeLog.new >/dev/null 2>&1
 if [ $? != 0 ]
 then
     mv ChangeLog.new ChangeLog
-    cvs commit -m "Updated to version $release" ChangeLog >/dev/null 2>&1
+    svn commit -m "Updated to version $release" ChangeLog >/dev/null 2>&1
 else
     rm -f ChangeLog.new
 fi
@@ -112,7 +115,7 @@ cmp NEWS NEWS.new >/dev/null 2>&1
 if [ $? != 0 ]
 then
     mv NEWS.new NEWS
-    cvs commit -m "Updated to version $release" NEWS >/dev/null 2>&1
+    svn commit -m "Updated to version $release" NEWS >/dev/null 2>&1
 else
     rm -f NEWS.new
 fi
@@ -121,23 +124,19 @@ fi
 # Write the new release version and release date to the VERSION file.
 
 echo "$release $newdate" >VERSION
-cvs commit -m "Updated to version $release" VERSION >/dev/null 2>&1
+svn commit -m "Updated to version $release" VERSION >/dev/null 2>&1
 
 
 # Tag the entire distribution.
 
-cvs tag REL_${newver}_${newrev}_${newcnt} >/dev/null 2>&1
+svn copy -m "Release $release" "$REPOSITORY/trunk" "$REPOSITORY/tags/REL_${newver}_${newrev}_${newcnt}" >/dev/null 2>&1
 
 
-# Remove the CVS subdirectories and .cvsignore files.
+# Remove the Subversion subdirectories.
 
-for dir in `find . -name CVS -print`
+for dir in `find . -name .svn -print`
 do
     rm -rf "$dir"
-done
-for file in `find . -name .cvsignore -print`
-do
-    rm -f "$file"
 done
 
 

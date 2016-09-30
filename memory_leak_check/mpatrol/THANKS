@@ -1,36 +1,71 @@
 The author would like to thank the following people for their various
 contributions to the mpatrol library.
 
-Michael Anthony         <m@xyzfind.com>
-Alexander Barton        <abarton@innotrac.com>
-Gerrit Bruchhaeuser     <gbruchhaeuser@orga.com>
-Aleksandar Donev        <donev@pa.msu.edu>
-Ivan Finch              <i.finch@rl.ac.uk>
-Dave Gibson             <david.gibson@analog.com>
-Roger Keane             <rgr@bcs-inc.com>
-Boris Makushkin         <oberon@antibiotic.ru>
-Jerome Marant           <jerome@debian.org>
-Steve McIntyre          <smcintyre@allstor-sw.co.uk>
-Diego Santa Cruz        <diego.santacruz@epfl.ch>
-Andreas Schallenberg    <andreas.schallenberg@informatik.uni-oldenburg.de>
-Van Snyder              <vsnyder@math.jpl.nasa.gov>
-Stephan Springl         <springl@bfw-online.de>
-Adam Zell               <zell@best.com>
-Peter Zijlstra          <peter@xlnt-software.com>
-
-The following people helped answer any queries from the author or gave
-useful feedback on the mpatrol library.
-
-Volker Boerchers        <boercher@kidata.de>
-Stefan Hoffmeister      <stefan.hoffmeister@econos.de>
-Georg Huettenegger      <georg@ist.org>
-Richard Jones           <r.e.jones@ukc.ac.uk>
-Aryeh Katz              <aryeh@vasco.com>
-CheeChun Kok            <cheech@pixelmetrix.com>
-Dimitrios Michailidis   <dm@desanasystems.com>
-Paul Pluzhnikov         <paul@parasoft.com>
-Tim Powers              <timp@redhat.com>
-Carlos Roldan           <carlosro@meta4.com>
-Victor R. Volkman       <sysop@hal9k.com>
-Per Winkvist            <nd96pwt@adeptus.student.hig.se>
-Ben Zorn                <zorn@microsoft.com>
+Bjorn Andersson
+Michael Anthony
+Iulian Badarcea
+Alexander Barton
+Ryan Bobko
+Volker Boerchers
+John Boers
+Earnie Boyd
+Blane Bramble
+Gerrit Bruchhaeuser
+Adam Burry
+Cristian Buzduga
+John Carter
+Greg Chicares
+Christian Cloutier
+Andrew Collier
+Jim Colton
+Brandon Corey
+William Croft
+Aleksandar Donev
+Lars Ekman
+Ivan Finch
+Jim Gallagher
+Dave Gibson
+Jurgen Gleiss
+Horst Graffy
+Hae Hirdler
+Stefan Hoffmeister
+Bruce Hoult
+Georg Huettenegger
+Daniel Jacobowitz
+Richard Jones
+Aryeh Katz
+Roger Keane
+Markus Klinik
+CheeChun Kok
+Stewart Levin
+Norman Lin
+Boris Makushkin
+Jerome Marant
+Patrick Marie
+Steve McIntyre
+Dimitrios Michailidis
+Paul Pluzhnikov
+Tim Powers
+Carlos Roldan
+Ethan Romander
+Gopalakrishnan Sankaran
+Diego Santa Cruz
+Andreas Schallenberg
+Robert Schmitt
+Sagar Seth
+Nikolaus Seydel
+Van Snyder
+Stephan Springl
+Gregory Stark
+Pierre-Alain Tercier
+Vincent Torri
+Robert Vanyi
+Tangi Vass
+Saurabh Verma
+Ivan Vihovsky
+Victor R. Volkman
+Timothy Wall
+Per Winkvist
+Adam Zell
+Peter Zijlstra
+Ben Zorn

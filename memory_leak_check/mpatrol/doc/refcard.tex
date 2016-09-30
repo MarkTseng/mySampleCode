@@ -1,25 +1,23 @@
 % mpatrol
 % A library for controlling and tracing dynamic memory allocations.
-% Copyright (C) 1997-2002 Graeme S. Roy <graeme.roy@analog.com>
+% Copyright (C) 1997-2008 Graeme S. Roy <graemeroy@users.sourceforge.net>
 %
-% This library is free software; you can redistribute it and/or
-% modify it under the terms of the GNU Library General Public
-% License as published by the Free Software Foundation; either
-% version 2 of the License, or (at your option) any later version.
+% This program is free software: you can redistribute it and/or modify it
+% under the terms of the GNU Lesser General Public License as published by
+% the Free Software Foundation, either version 3 of the License, or (at
+% your option) any later version.
 %
-% This library is distributed in the hope that it will be useful,
-% but WITHOUT ANY WARRANTY; without even the implied warranty of
-% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-% Library General Public License for more details.
+% This program is distributed in the hope that it will be useful, but
+% WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser
+% General Public License for more details.
 %
-% You should have received a copy of the GNU Library General Public
-% License along with this library; if not, write to the Free
-% Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
-% MA 02111-1307, USA.
+% You should have received a copy of the GNU Lesser General Public License
+% along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 % LaTeX reference card for mpatrol
 
-% $Id: refcard.tex,v 1.33 2002/01/08 20:45:08 graeme Exp $
+% $Id$
 
 \documentclass[a4paper,landscape,final]{article}
 
@@ -177,8 +175,8 @@ an existing block of memory to size zero.
 \item[\option{CHECKFREES}]
 Checks that no attempt is made to deallocate a \texttt{NULL} pointer.
 \item[\option{CHECKMEMORY}]
-Checks that no attempt is made to perform a zero-length memory operation on a
-\texttt{NULL} pointer.
+Checks that no attempt is made to perform a zero-length memory operation or a
+memory operation on a \texttt{NULL} pointer.
 \item[\option{CHECKALL}]
 Equivalent to the \option{CHECKALLOCS}, \option{CHECKREALLOCS},
 \option{CHECKFREES} and \option{CHECKMEMORY} options specified together.
@@ -601,6 +599,8 @@ Attempt to perform a non-overlapping memory operation that overlaps.
 Attempt to perform a string operation that overflows a memory allocation.
 \item[\error{ZERALN}]
 \hfill Alignment 0 is invalid.
+\item[\error{ZEROPN}]
+\hfill Attempt to perform a zero-sized operation.
 \end{description}
 
 \vskip 12pt
@@ -898,7 +898,7 @@ Displays the version number of the \command{hexwords} command.
 \end{description}
 
 \vskip 12pt
-Copyright \copyright 1997-2002 Graeme S. Roy.
+Copyright \copyright 1997-2008 Graeme S. Roy.
 \vskip 6pt
 
 This reference card may be freely distributed under the terms of the GNU General

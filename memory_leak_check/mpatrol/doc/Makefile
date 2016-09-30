@@ -1,27 +1,25 @@
 # mpatrol
 # A library for controlling and tracing dynamic memory allocations.
-# Copyright (C) 1997-2002 Graeme S. Roy <graeme.roy@analog.com>
+# Copyright (C) 1997-2008 Graeme S. Roy <graemeroy@users.sourceforge.net>
 #
-# This library is free software; you can redistribute it and/or
-# modify it under the terms of the GNU Library General Public
-# License as published by the Free Software Foundation; either
-# version 2 of the License, or (at your option) any later version.
+# This program is free software: you can redistribute it and/or modify it
+# under the terms of the GNU Lesser General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or (at
+# your option) any later version.
 #
-# This library is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-# Library General Public License for more details.
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser
+# General Public License for more details.
 #
-# You should have received a copy of the GNU Library General Public
-# License along with this library; if not, write to the Free
-# Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
-# MA 02111-1307, USA.
+# You should have received a copy of the GNU Lesser General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
 # GNU Makefile to build all formats of documentation
 
 
-# $Id: Makefile,v 1.38 2002/01/08 20:45:08 graeme Exp $
+# $Id$
 
 
 # Definitions
@@ -39,7 +37,7 @@ VERBOSE    = false
 
 # Rules
 
-.SUFFIXES: .texi .tex .txt .info .guide .html .dvi .ps .pdf .jpg .eps
+.SUFFIXES: .texi .tex .txt .info .guide .xml .html .dvi .ps .pdf .jpg .eps
 
 default: $(DOCUMENT).txt
 
@@ -81,39 +79,44 @@ else
 	@ makeguide --amiga $<
 endif
 
-ifeq ($(SPLIT),true)
-# Build the HTML files from the Texinfo file using texi2html
+# Build the DocBook file from the Texinfo file using makeinfo
 
-$(DOCUMENT).html: $(DOCUMENT).texi images/$(DOCUMENT).jpg images/test.jpg \
-	images/gcc.jpg images/cpp.jpg images/cc1.jpg images/collect2.jpg \
-	images/trace.jpg
+$(DOCUMENT).xml: $(DOCUMENT).texi images/$(DOCUMENT).txt
 	@ echo creating $@ from $<...
 ifeq ($(VERBOSE),true)
-	@ texi2html -top_file $@ -expand none -split section -menu -number -verbose $<
+	@ makeinfo --docbook --ifinfo --verbose $<
 else
-	@ texi2html -top_file $@ -expand none -split section -menu -number $<
+	@ makeinfo --docbook --ifinfo $<
 endif
-else
+
 # Build the HTML file from the Texinfo file using makeinfo
 
 $(DOCUMENT).html: $(DOCUMENT).texi images/$(DOCUMENT).jpg images/test.jpg \
 	images/gcc.jpg images/cpp.jpg images/cc1.jpg images/collect2.jpg \
 	images/trace.jpg
 	@ echo creating $@ from $<...
+ifeq ($(SPLIT),true)
+ifeq ($(VERBOSE),true)
+	@ makeinfo --html --number-sections --output pages --verbose $<
+else
+	@ makeinfo --html --number-sections --output pages $<
+endif
+	@ echo "<html><head>mpatrol</head><body>" >$@
+	@ echo "<a href="pages/index.html">documentation</a>" >>$@
+	@ echo "</body></html>" >>$@
+else
 ifeq ($(VERBOSE),true)
 	@ makeinfo --html --no-split --number-sections --verbose $<
 else
 	@ makeinfo --html --no-split --number-sections $<
 endif
-	@ sed "s/<[ ]*<[ ]*[Pp][ ]*>[ ]*[Ii][Mm][Gg][ ]*/<img /g" $@ >$@.new
-	@ mv $@.new $@
 endif
 
 # Build the DVI file from the Texinfo file using texi2dvi
 
-$(DOCUMENT).dvi: $(DOCUMENT).texi texinfo.tex images/$(DOCUMENT).eps \
-	images/test.eps images/gcc.eps images/cpp.eps images/cc1.eps \
-	images/collect2.eps images/trace.eps
+$(DOCUMENT).dvi: $(DOCUMENT).texi images/$(DOCUMENT).eps images/test.eps \
+	images/gcc.eps images/cpp.eps images/cc1.eps images/collect2.eps \
+	images/trace.eps
 	@ echo creating $@ from $<...
 ifeq ($(VERBOSE),true)
 	@ TEXPSHEADERS=`pwd`: texi2dvi --batch --clean --verbose $<
@@ -126,16 +129,16 @@ endif
 $(DOCUMENT).ps: $(DOCUMENT).dvi
 	@ echo creating $@ from $<...
 ifeq ($(VERBOSE),true)
-	@ dvips -ta4 -Pcmz -o $@ $<
+	@ dvips -ta4 -Ppdf -o $@ $<
 else
-	@ dvips -ta4 -Pcmz -q -o $@ $<
+	@ dvips -ta4 -Ppdf -q -o $@ $<
 endif
 
 # Build the PDF file from the Texinfo file using texi2dvi
 
-$(DOCUMENT).pdf: $(DOCUMENT).texi texinfo.tex images/$(DOCUMENT).pdf \
-	images/test.pdf images/gcc.pdf images/cpp.pdf images/cc1.pdf \
-	images/collect2.pdf images/trace.pdf
+$(DOCUMENT).pdf: $(DOCUMENT).texi images/$(DOCUMENT).pdf images/test.pdf \
+	images/gcc.pdf images/cpp.pdf images/cc1.pdf images/collect2.pdf \
+	images/trace.pdf
 	@ echo creating $@ from $<...
 ifeq ($(VERBOSE),true)
 	@ TEXPSHEADERS=`pwd`: texi2dvi --pdf --batch --clean --verbose $<
@@ -145,14 +148,12 @@ endif
 ifeq ($(THUMBNAILS),true)
 ifeq ($(VERBOSE),true)
 	@ thumbpdf --verbose $@
-	-@ rm -f $@ thumb*.png thumbpdf.pdf thumbpdf.log >/dev/null 2>&1
 	@ TEXPSHEADERS=`pwd`: texi2dvi --pdf --batch --clean --verbose $<
-	-@ rm -f thumbdta.tex >/dev/null 2>&1
+	-@ rm -f $(DOCUMENT).tpt >/dev/null 2>&1
 else
 	@ thumbpdf --quiet $@
-	-@ rm -f $@ thumb*.png thumbpdf.pdf thumbpdf.log >/dev/null 2>&1
 	@ TEXPSHEADERS=`pwd`: texi2dvi --pdf --batch --clean --quiet $<
-	-@ rm -f thumbdta.tex >/dev/null 2>&1
+	-@ rm -f $(DOCUMENT).tpt >/dev/null 2>&1
 endif
 endif
 
@@ -171,9 +172,9 @@ endif
 $(REFCARD).ps: $(REFCARD).dvi
 	@ echo creating $@ from $<...
 ifeq ($(VERBOSE),true)
-	@ dvips -tlandscape -Pcmz -o $@ $<
+	@ dvips -tlandscape -Ppdf -o $@ $<
 else
-	@ dvips -tlandscape -Pcmz -q -o $@ $<
+	@ dvips -tlandscape -Ppdf -q -o $@ $<
 endif
 
 # Build the PDF reference card from the postscript file using pstill
@@ -181,9 +182,9 @@ endif
 $(REFCARD).pdf: $(REFCARD).ps
 	@ echo creating $@ from $<...
 ifeq ($(VERBOSE),true)
-	@ pstill -Fa4 -R270 -ctv -o $@ $<
+	@ pstill -Fa4 -R270 -c -c -p -t -v -o $@ $<
 else
-	@ pstill -Fa4 -R270 -ct -o $@ $<
+	@ pstill -Fa4 -R270 -c -c -p -t -o $@ $<
 endif
 
 # Build the DVI source code from the LaTeX file using texi2dvi
@@ -207,9 +208,9 @@ endif
 $(SOURCE).ps: $(SOURCE).dvi
 	@ echo creating $@ from $<...
 ifeq ($(VERBOSE),true)
-	@ dvips -ta4 -Pcmz -o $@ $<
+	@ dvips -ta4 -Ppdf -o $@ $<
 else
-	@ dvips -ta4 -Pcmz -q -o $@ $<
+	@ dvips -ta4 -Ppdf -q -o $@ $<
 endif
 
 # Build the PDF source code from the LaTeX file using texi2dvi
@@ -229,29 +230,27 @@ endif
 ifeq ($(THUMBNAILS),true)
 ifeq ($(VERBOSE),true)
 	@ thumbpdf --verbose $@
-	-@ rm -f $@ thumb*.png thumbpdf.pdf thumbpdf.log >/dev/null 2>&1
 	@ TEXPSHEADERS=`pwd`: texi2dvi --language=latex --pdf --batch --clean --verbose $<
-	-@ rm -f thumbdta.tex >/dev/null 2>&1
+	-@ rm -f $(SOURCE).tpt >/dev/null 2>&1
 else
 	@ thumbpdf --quiet $@
-	-@ rm -f $@ thumb*.png thumbpdf.pdf thumbpdf.log >/dev/null 2>&1
 	@ TEXPSHEADERS=`pwd`: texi2dvi --language=latex --pdf --batch --clean --quiet $<
-	-@ rm -f thumbdta.tex >/dev/null 2>&1
+	-@ rm -f $(SOURCE).tpt >/dev/null 2>&1
 endif
 endif
 	-@ rm -rf bin src tools >/dev/null 2>&1
 
-all: $(DOCUMENT).txt $(DOCUMENT).info $(DOCUMENT).guide $(DOCUMENT).html \
-	$(DOCUMENT).dvi $(DOCUMENT).ps $(DOCUMENT).pdf $(REFCARD).dvi \
-	$(REFCARD).ps $(REFCARD).pdf
+all: $(DOCUMENT).txt $(DOCUMENT).info $(DOCUMENT).guide $(DOCUMENT).xml \
+	$(DOCUMENT).html $(DOCUMENT).dvi $(DOCUMENT).ps $(DOCUMENT).pdf \
+	$(REFCARD).dvi $(REFCARD).ps $(REFCARD).pdf
 
 source: $(SOURCE).dvi $(SOURCE).ps $(SOURCE).pdf
 
 clean:
 	-@ rm -f $(DOCUMENT).txt $(DOCUMENT).info >/dev/null 2>&1
-	-@ rm -f $(DOCUMENT).info-* >/dev/null 2>&1
-	-@ rm -f $(DOCUMENT).guide $(DOCUMENT).html >/dev/null 2>&1
-	-@ rm -f $(DOCUMENT)_*.html >/dev/null 2>&1
+	-@ rm -f $(DOCUMENT).info-* $(DOCUMENT).guide >/dev/null 2>&1
+	-@ rm -f $(DOCUMENT).xml $(DOCUMENT).html >/dev/null 2>&1
+	-@ rm -rf pages >/dev/null 2>&1
 	-@ rm -f $(DOCUMENT).dvi $(DOCUMENT).ps $(DOCUMENT).pdf >/dev/null 2>&1
 	-@ rm -f $(REFCARD).dvi $(REFCARD).ps $(REFCARD).pdf >/dev/null 2>&1
 	-@ rm -f $(SOURCE).dvi $(SOURCE).ps $(SOURCE).pdf >/dev/null 2>&1

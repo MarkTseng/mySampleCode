@@ -1,22 +1,20 @@
 /*
  * mpatrol
  * A library for controlling and tracing dynamic memory allocations.
- * Copyright (C) 1997-2002 Graeme S. Roy <graeme.roy@analog.com>
+ * Copyright (C) 1997-2008 Graeme S. Roy <graemeroy@users.sourceforge.net>
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Library General Public
- * License as published by the Free Software Foundation; either
- * version 2 of the License, or (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or (at
+ * your option) any later version.
  *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Library General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser
+ * General Public License for more details.
  *
- * You should have received a copy of the GNU Library General Public
- * License along with this library; if not, write to the Free
- * Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
- * MA 02111-1307, USA.
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 
@@ -53,8 +51,8 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <sys/mman.h>
-#if SYSTEM == SYSTEM_FREEBSD || SYSTEM == SYSTEM_NETBSD || \
-    SYSTEM == SYSTEM_OPENBSD
+#if SYSTEM == SYSTEM_FREEBSD || SYSTEM == SYSTEM_INTERIX || \
+    SYSTEM == SYSTEM_NETBSD || SYSTEM == SYSTEM_OPENBSD
 #ifndef MAP_ANONYMOUS
 #define MAP_ANONYMOUS MAP_ANON
 #endif /* MAP_ANONYMOUS */
@@ -81,9 +79,9 @@
 
 
 #if MP_IDENT_SUPPORT
-#ident "$Id: memory.c,v 1.59 2002/01/08 20:13:59 graeme Exp $"
+#ident "$Id$"
 #else /* MP_IDENT_SUPPORT */
-static MP_CONST MP_VOLATILE char *memory_id = "$Id: memory.c,v 1.59 2002/01/08 20:13:59 graeme Exp $";
+static MP_CONST MP_VOLATILE char *memory_id = "$Id$";
 #endif /* MP_IDENT_SUPPORT */
 
 
@@ -227,25 +225,6 @@ pagesize(void)
 }
 
 
-/* Determine the stack direction on this system.
- */
-
-static
-int
-stackdirection(void *p)
-{
-    unsigned long n;
-
-    n = (unsigned long) &p;
-    if (p == NULL)
-        return stackdirection(&n);
-    else if (&n < (unsigned long *) p)
-        return -1;
-    else
-        return 1;
-}
-
-
 /* Return the executable file name that the program was invoked with.
  * Note that this function will not be reentrant if the return value is
  * a pointer to a local static string buffer.
@@ -264,9 +243,10 @@ progname(void)
     extern char **__Argv;
 #elif SYSTEM == SYSTEM_UNIXWARE
     extern char **___Argv;
-#elif SYSTEM == SYSTEM_FREEBSD || SYSTEM == SYSTEM_LINUX || \
-      SYSTEM == SYSTEM_NETBSD || SYSTEM == SYSTEM_OPENBSD
-    static char c[256];
+#elif SYSTEM == SYSTEM_FREEBSD || SYSTEM == SYSTEM_INTERIX || \
+      SYSTEM == SYSTEM_LINUX || SYSTEM == SYSTEM_NETBSD || \
+      SYSTEM == SYSTEM_OPENBSD
+    static char a[256], c[256];
     ssize_t l;
     int f;
 #elif SYSTEM == SYSTEM_DGUX || SYSTEM == SYSTEM_DRSNX || \
@@ -276,12 +256,13 @@ progname(void)
     char **e;
     char *t;
 #endif /* SYSTEM */
-#if !MP_BUILTINSTACK_SUPPORT && !MP_LIBRARYSTACK_SUPPORT && \
+#if !MP_BUILTINSTACK_SUPPORT && !MP_GLIBCBACKTRACE_SUPPORT && \
+    !MP_LIBUNWIND_SUPPORT && !MP_LIBRARYSTACK_SUPPORT && \
     (ARCH == ARCH_IX86 || ARCH == ARCH_M68K || ARCH == ARCH_MIPS || \
      ARCH == ARCH_POWER || ARCH == ARCH_POWERPC || ARCH == ARCH_SPARC)
     unsigned long *p;
     stackinfo s;
-#endif /* MP_BUILTINSTACK_SUPPORT && MP_LIBRARYSTACK_SUPPORT && ARCH */
+#endif /* MP_BUILTINSTACK_SUPPORT && MP_GLIBCBACKTRACE_SUPPORT && ... */
 #ifdef MP_PROCFS_EXENAME
     static char b[64];
 #endif /* MP_PROCFS_EXENAME */
@@ -292,9 +273,9 @@ progname(void)
 #endif /* TARGET */
 
 #if TARGET == TARGET_UNIX
-    /* AIX, HP/UX, IRIX, SINIX, Tru64 and UnixWare have global variables
-     * containing argc and argv which we can use to determine the filename
-     * that the program was invoked with.
+    /* AIX, HP/UX, Interix, IRIX, SINIX, Tru64 and UnixWare have global
+     * variables containing argc and argv which we can use to determine the
+     * filename that the program was invoked with.
      */
 #if SYSTEM == SYSTEM_AIX
     if (p_xargv[0] != NULL)
@@ -308,14 +289,15 @@ progname(void)
 #elif SYSTEM == SYSTEM_UNIXWARE
     if (___Argv[0] != NULL)
         return ___Argv[0];
-#elif SYSTEM == SYSTEM_FREEBSD || SYSTEM == SYSTEM_LINUX || \
-      SYSTEM == SYSTEM_NETBSD || SYSTEM == SYSTEM_OPENBSD
-    /* The BSD variants and Linux have a file in the /proc filesystem which
-     * contains the argument vector that a process was invoked with.
+#elif SYSTEM == SYSTEM_FREEBSD || SYSTEM == SYSTEM_INTERIX || \
+      SYSTEM == SYSTEM_LINUX || SYSTEM == SYSTEM_NETBSD || \
+      SYSTEM == SYSTEM_OPENBSD
+    /* The BSD variants, Interix and Linux have a file in the /proc filesystem
+     * which contains the argument vector that a process was invoked with.
      */
     l = 0;
-    sprintf(b, MP_PROCFS_CMDNAME, __mp_processid());
-    if ((f = open(b, O_RDONLY)) != -1)
+    sprintf(a, MP_PROCFS_CMDNAME, __mp_processid());
+    if ((f = open(a, O_RDONLY)) != -1)
     {
         if ((l = read(f, c, sizeof(c) - 1)) == -1)
             l = 0;
@@ -345,7 +327,8 @@ progname(void)
     if (t != NULL)
         return t;
 #endif /* SYSTEM */
-#if !MP_BUILTINSTACK_SUPPORT && !MP_LIBRARYSTACK_SUPPORT && \
+#if !MP_BUILTINSTACK_SUPPORT && !MP_GLIBCBACKTRACE_SUPPORT && \
+    !MP_LIBUNWIND_SUPPORT && !MP_LIBRARYSTACK_SUPPORT && \
     (ARCH == ARCH_IX86 || ARCH == ARCH_M68K || ARCH == ARCH_MIPS || \
      ARCH == ARCH_POWER || ARCH == ARCH_POWERPC || ARCH == ARCH_SPARC)
     /* Because there is no function to return the executable filename
@@ -363,6 +346,9 @@ progname(void)
     SYSTEM == SYSTEM_NETBSD || SYSTEM == SYSTEM_OPENBSD
         if (p = (unsigned long *) p[4])
             return (char *) *p;
+#elif SYSTEM == SYSTEM_INTERIX
+        if (p = (unsigned long *) p[-6])
+            return (char *) (p + 1);
 #elif SYSTEM == SYSTEM_LYNXOS
         if (p = (unsigned long *) p[3])
             return (char *) *p;
@@ -393,7 +379,7 @@ progname(void)
             return (char *) *p;
 #endif /* ARCH */
     }
-#endif /* MP_BUILTINSTACK_SUPPORT && MP_LIBRARYSTACK_SUPPORT && ARCH */
+#endif /* MP_BUILTINSTACK_SUPPORT && MP_GLIBCBACKTRACE_SUPPORT && ... */
 #ifdef MP_PROCFS_EXENAME
     /* If the /proc filesystem is supported then we can usually access the
      * actual executable file that contains the current program through a
@@ -416,13 +402,13 @@ progname(void)
 }
 
 
-/* Initialise the fields of a meminfo structure to describe the details
+/* Initialise the fields of a memoryinfo structure to describe the details
  * of the underlying memory architecture.
  */
 
 MP_GLOBAL
 void
-__mp_newmemory(meminfo *i)
+__mp_newmemory(memoryinfo *i)
 {
 #if MP_WATCH_SUPPORT
     char b[64];
@@ -433,7 +419,7 @@ __mp_newmemory(meminfo *i)
 #endif /* MP_ARRAY_SUPPORT */
     i->align = minalign();
     i->page = pagesize();
-    i->stackdir = stackdirection(NULL);
+    i->stackdir = __mp_stackdirection(NULL);
     i->prog = progname();
 #if MP_MMAP_SUPPORT
     /* On UNIX systems that support the mmap() function call, we default to
@@ -459,12 +445,12 @@ __mp_newmemory(meminfo *i)
 }
 
 
-/* Free up any resources used by the meminfo structure.
+/* Free up any resources used by the memoryinfo structure.
  */
 
 MP_GLOBAL
 void
-__mp_endmemory(meminfo *i)
+__mp_endmemory(memoryinfo *i)
 {
 #if MP_MMAP_SUPPORT
     if (i->mfile != -1)
@@ -543,7 +529,7 @@ getmemory(long l)
 
 MP_GLOBAL
 void *
-__mp_memalloc(meminfo *i, size_t *l, size_t a, int u)
+__mp_memalloc(memoryinfo *i, size_t *l, size_t a, int u)
 {
     void *p;
 #if MP_ARRAY_SUPPORT || TARGET == TARGET_UNIX
@@ -675,7 +661,7 @@ __mp_memalloc(meminfo *i, size_t *l, size_t a, int u)
 
 MP_GLOBAL
 void
-__mp_memfree(meminfo *i, void *p, size_t l)
+__mp_memfree(memoryinfo *i, void *p, size_t l)
 {
 #if !MP_ARRAY_SUPPORT
 #if TARGET == TARGET_UNIX || TARGET == TARGET_WINDOWS || \
@@ -737,7 +723,7 @@ memoryhandler(int s)
 
 MP_GLOBAL
 memaccess
-__mp_memquery(meminfo *i, void *p)
+__mp_memquery(memoryinfo *i, void *p)
 {
 #if TARGET == TARGET_UNIX
 #if MP_SIGINFO_SUPPORT
@@ -811,7 +797,7 @@ __mp_memquery(meminfo *i, void *p)
 
 MP_GLOBAL
 int
-__mp_memprotect(meminfo *i, void *p, size_t l, memaccess a)
+__mp_memprotect(memoryinfo *i, void *p, size_t l, memaccess a)
 {
 #if TARGET == TARGET_UNIX || TARGET == TARGET_WINDOWS
     void *t;
@@ -853,7 +839,7 @@ __mp_memprotect(meminfo *i, void *p, size_t l, memaccess a)
 
 MP_GLOBAL
 int
-__mp_memwatch(meminfo *i, void *p, size_t l, memaccess a)
+__mp_memwatch(memoryinfo *i, void *p, size_t l, memaccess a)
 {
 #if MP_WATCH_SUPPORT
     watchcmd w;

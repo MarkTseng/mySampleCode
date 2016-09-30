@@ -48,15 +48,13 @@ Further information
     every time I receive a question about mpatrol.
 
     The latest version of the mpatrol library can always be found at
-    `http://www.cbmamiga.demon.co.uk/mpatrol/', and any correspondence relating
+    `http://sourceforge.net/projects/mpatrol/', and any correspondence relating
     to mpatrol (bug reports, enhancement requests, compliments ;-) should be
-    sent to <mpatrol@cbmamiga.demon.co.uk>.  I normally only check my e-mail
-    about once or twice a week, so don't expect an immediate response.  I can
-    also be reached at <graeme.roy@analog.com> but that is my work e-mail
-    address.  There is also a discussion group at
-    `http://groups.yahoo.com/group/mpatrol/' where you can post mpatrol-related
-    questions but you must first subscribe to the group before you can send mail
-    to it.
+    sent to <graemeroy@users.sourceforge.net>.  I normally only check my e-mail
+    about once or twice a week, so don't expect an immediate response.  There
+    is also a discussion group at `http://groups.yahoo.com/group/mpatrol/'
+    where you can post mpatrol-related questions but you must first subscribe
+    to the group before you can send mail to it.
 
     Oh, and always remember to do final release builds without the mpatrol
     library as the library is much slower than normal malloc implementations and

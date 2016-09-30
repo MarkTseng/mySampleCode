@@ -5,22 +5,20 @@
 /*
  * mpatrol
  * A library for controlling and tracing dynamic memory allocations.
- * Copyright (C) 1997-2002 Graeme S. Roy <graeme.roy@analog.com>
+ * Copyright (C) 1997-2008 Graeme S. Roy <graemeroy@users.sourceforge.net>
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Library General Public
- * License as published by the Free Software Foundation; either
- * version 2 of the License, or (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or (at
+ * your option) any later version.
  *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Library General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser
+ * General Public License for more details.
  *
- * You should have received a copy of the GNU Library General Public
- * License along with this library; if not, write to the Free
- * Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
- * MA 02111-1307, USA.
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 
@@ -32,7 +30,7 @@
 
 
 /*
- * $Id: diag.h,v 1.47 2002/01/08 20:13:59 graeme Exp $
+ * $Id$
  */
 
 
@@ -81,6 +79,7 @@ typedef enum errortype
     ET_RSZZER, /* attempt to resize an allocation to size 0 */
     ET_STROVF, /* string %1 overflows [%2,%3] */
     ET_ZERALN, /* alignment 0 is invalid */
+    ET_ZEROPN, /* attempt to perform a zero-sized operation */
     ET_MAX
 }
 errortype;
@@ -111,9 +110,10 @@ MP_EXPORT char *__mp_lognames[LT_MAX + 1];
 MP_EXPORT unsigned long __mp_diagflags;
 
 
-MP_EXPORT char *__mp_logfile(meminfo *, char *);
-MP_EXPORT char *__mp_proffile(meminfo *, char *);
-MP_EXPORT char *__mp_tracefile(meminfo *, char *);
+MP_EXPORT char *__mp_logfile(memoryinfo *, char *);
+MP_EXPORT char *__mp_proffile(memoryinfo *, char *);
+MP_EXPORT char *__mp_tracefile(memoryinfo *, char *);
+MP_EXPORT char *__mp_getenv(char *);
 MP_EXPORT int __mp_openlogfile(char *);
 MP_EXPORT int __mp_closelogfile(void);
 MP_EXPORT void __mp_diag(char *, ...);

@@ -1,27 +1,25 @@
 dnl mpatrol
 dnl A library for controlling and tracing dynamic memory allocations.
-dnl Copyright (C) 1997-2002 Graeme S. Roy <graeme.roy@analog.com>
+dnl Copyright (C) 1997-2008 Graeme S. Roy <graemeroy@users.sourceforge.net>
 dnl
-dnl This library is free software; you can redistribute it and/or
-dnl modify it under the terms of the GNU Library General Public
-dnl License as published by the Free Software Foundation; either
-dnl version 2 of the License, or (at your option) any later version.
+dnl This program is free software: you can redistribute it and/or modify it
+dnl under the terms of the GNU Lesser General Public License as published by
+dnl the Free Software Foundation, either version 3 of the License, or (at
+dnl your option) any later version.
 dnl
-dnl This library is distributed in the hope that it will be useful,
-dnl but WITHOUT ANY WARRANTY; without even the implied warranty of
-dnl MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-dnl Library General Public License for more details.
+dnl This program is distributed in the hope that it will be useful, but
+dnl WITHOUT ANY WARRANTY; without even the implied warranty of
+dnl MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser
+dnl General Public License for more details.
 dnl
-dnl You should have received a copy of the GNU Library General Public
-dnl License along with this library; if not, write to the Free
-dnl Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
-dnl MA 02111-1307, USA.
+dnl You should have received a copy of the GNU Lesser General Public License
+dnl along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
 dnl Automake macro to build with the mpatrol library
 
 
-dnl $Id: mpatrol.m4,v 1.3 2002/01/08 20:30:57 graeme Exp $
+dnl $Id$
 
 
 # serial 1
@@ -92,10 +90,12 @@ AC_DEFUN(AM_WITH_MPATROL, [
    AC_CHECK_LIB(elf, elf_begin,
                 am_with_mpatrol_libs="$am_with_mpatrol_libs -lelf")
    AC_CHECK_LIB(bfd, bfd_init,
-                am_with_mpatrol_libs="$am_with_mpatrol_libs -lbfd -liberty", ,
-                -liberty)
+                am_with_mpatrol_libs="$am_with_mpatrol_libs -lbfd -liberty -lintl", ,
+                -liberty -lintl)
    AC_CHECK_LIB(imagehlp, SymInitialize,
                 am_with_mpatrol_libs="$am_with_mpatrol_libs -limagehlp")
+   AC_CHECK_LIB(unwind, unw_init_local,
+                am_with_mpatrol_libs="$am_with_mpatrol_libs -lunwind")
    AC_CHECK_LIB(cl, U_get_previous_frame,
                 am_with_mpatrol_libs="$am_with_mpatrol_libs -lcl")
    AC_CHECK_LIB(exc, unwind,
@@ -114,10 +114,13 @@ AC_DEFUN(AM_WITH_MPATROL, [
                 am_with_mpatrol_libs2="$am_with_mpatrol_libs2 -lelf", ,
                 $am_with_mpatrol_libs)
    AC_CHECK_LIB(mpatrol, __mp_libbfd,
-                am_with_mpatrol_libs2="$am_with_mpatrol_libs2 -lbfd -liberty", ,
+                am_with_mpatrol_libs2="$am_with_mpatrol_libs2 -lbfd -liberty -lintl", ,
                 $am_with_mpatrol_libs)
    AC_CHECK_LIB(mpatrol, __mp_libimagehlp,
                 am_with_mpatrol_libs2="$am_with_mpatrol_libs2 -limagehlp", ,
+                $am_with_mpatrol_libs)
+   AC_CHECK_LIB(mpatrol, __mp_libunwind,
+                am_with_mpatrol_libs2="$am_with_mpatrol_libs2 -lunwind", ,
                 $am_with_mpatrol_libs)
    AC_CHECK_LIB(mpatrol, __mp_libcl,
                 am_with_mpatrol_libs2="$am_with_mpatrol_libs2 -lcl", ,
@@ -160,13 +163,8 @@ AC_DEFUN(AM_WITH_MPATROL, [
    # link a simple program with it.
 
    AC_CACHE_CHECK(for working mpatrol, am_cv_with_mpatrol, [
-     AC_TRY_LINK([#include <mpatrol.h>], [
-int main(void)
-{
-    malloc(4);
-    return EXIT_SUCCESS;
-}
-],
+     AC_TRY_LINK([#include <mpatrol.h>],
+      [void *p = malloc(4);],
       [am_cv_with_mpatrol=yes],
       [am_cv_with_mpatrol=no]
      )

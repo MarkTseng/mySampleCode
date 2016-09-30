@@ -1,22 +1,20 @@
 /*
  * mpatrol
  * A library for controlling and tracing dynamic memory allocations.
- * Copyright (C) 1997-2002 Graeme S. Roy <graeme.roy@analog.com>
+ * Copyright (C) 1997-2008 Graeme S. Roy <graemeroy@users.sourceforge.net>
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Library General Public
- * License as published by the Free Software Foundation; either
- * version 2 of the License, or (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or (at
+ * your option) any later version.
  *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Library General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser
+ * General Public License for more details.
  *
- * You should have received a copy of the GNU Library General Public
- * License along with this library; if not, write to the Free
- * Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
- * MA 02111-1307, USA.
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 
@@ -32,9 +30,9 @@
 
 
 #if MP_IDENT_SUPPORT
-#ident "$Id: addr.c,v 1.10 2002/01/08 20:13:59 graeme Exp $"
+#ident "$Id$"
 #else /* MP_IDENT_SUPPORT */
-static MP_CONST MP_VOLATILE char *addr_id = "$Id: addr.c,v 1.10 2002/01/08 20:13:59 graeme Exp $";
+static MP_CONST MP_VOLATILE char *addr_id = "$Id$";
 #endif /* MP_IDENT_SUPPORT */
 
 
@@ -130,7 +128,6 @@ __mp_getaddrs(addrhead *h, stackinfo *p)
     addrnode *m, *n;
     stackinfo s;
 
-    s = *p;
     if ((p->frame == NULL) || (p->addr == NULL))
         m = NULL;
     else if (m = getaddrnode(h))
@@ -146,6 +143,7 @@ __mp_getaddrs(addrhead *h, stackinfo *p)
         /* Traverse the call stack, allocating a new address node
          * for each entry.
          */
+        s = *p;
         while (__mp_getframe(p) && (p->addr != NULL))
         {
             if ((n->data.next = getaddrnode(h)) == NULL)
@@ -159,8 +157,8 @@ __mp_getaddrs(addrhead *h, stackinfo *p)
             n->data.name = NULL;
             n->data.addr = p->addr;
         }
+        *p = s;
     }
-    *p = s;
     return m;
 }
 

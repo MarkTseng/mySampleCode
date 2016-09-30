@@ -1,22 +1,20 @@
 /*
  * mpatrol
  * A library for controlling and tracing dynamic memory allocations.
- * Copyright (C) 1997-2002 Graeme S. Roy <graeme.roy@analog.com>
+ * Copyright (C) 1997-2008 Graeme S. Roy <graemeroy@users.sourceforge.net>
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Library General Public
- * License as published by the Free Software Foundation; either
- * version 2 of the License, or (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or (at
+ * your option) any later version.
  *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Library General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser
+ * General Public License for more details.
  *
- * You should have received a copy of the GNU Library General Public
- * License along with this library; if not, write to the Free
- * Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
- * MA 02111-1307, USA.
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 
@@ -39,9 +37,9 @@
 
 
 #if MP_IDENT_SUPPORT
-#ident "$Id: option.c,v 1.43 2002/01/08 20:13:59 graeme Exp $"
+#ident "$Id$"
 #else /* MP_IDENT_SUPPORT */
-static MP_CONST MP_VOLATILE char *option_id = "$Id: option.c,v 1.43 2002/01/08 20:13:59 graeme Exp $";
+static MP_CONST MP_VOLATILE char *option_id = "$Id$";
 #endif /* MP_IDENT_SUPPORT */
 
 
@@ -94,7 +92,7 @@ static char *options_help[] =
     "", "Checks that no attempt is made to deallocate a NULL pointer.",
     "CHECKMEMORY", NULL,
     "", "Checks that no attempt is made to perform a zero-length memory",
-    "", "operation on a NULL pointer.",
+    "", "operation or a memory operation on a NULL pointer.",
     "CHECKREALLOCS", NULL,
     "", "Checks that no attempt is made to reallocate a NULL pointer or resize",
     "", "an existing block of memory to size zero.",
@@ -426,7 +424,7 @@ __mp_parseoptions(infohead *h)
 
     l = 0;
     f = p = t = NULL;
-    if (((s = getenv(MP_OPTIONS)) == NULL) || (*s == '\0'))
+    if (((s = __mp_getenv(MP_OPTIONS)) == NULL) || (*s == '\0'))
         return;
     if (strlen(s) + 1 > sizeof(options))
     {
@@ -434,7 +432,7 @@ __mp_parseoptions(infohead *h)
                    "long\n", MP_OPTIONS);
         return;
     }
-    /* We shouldn't modify the original string returned by getenv() since
+    /* We shouldn't modify the original string returned by __mp_getenv() since
      * that would modify the environment, and it may be placed in read-only
      * memory anyway.
      */

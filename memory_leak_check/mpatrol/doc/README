@@ -17,7 +17,7 @@ the preformatted files.
 
   * mpatrol.texi
         Format:    GNU TeXinfo
-                   http://texinfo.org/
+                   http://www.gnu.org/software/texinfo/
         Notes:     The unprocessed source of the mpatrol manual.
 
   * refcard.tex
@@ -30,17 +30,11 @@ the preformatted files.
                    http://www.tug.org/
                    The unprocessed source of the source code documentation.
 
-  * texinfo.tex
-        Format:    TeX
-                   http://texinfo.org/
-        Notes:     The TeXinfo macro package required by the DVI and PDF
-                   versions of the mpatrol manual.
-
   * images/mpatrol.txt
         Format:    ASCII text
                    http://www.bbsinc.com/iso8859.html
-        Notes:     The mpatrol logo required by the ASCII text, GNU Info and
-                   AmigaGuide versions of the mpatrol manual.
+        Notes:     The mpatrol logo required by the ASCII text, GNU Info,
+                   AmigaGuide and DocBook versions of the mpatrol manual.
 
   * images/mpatrol.jpg, images/test.jpg, images/gcc.jpg, images/cpp.jpg,
     images/cc1.jpg, images/collect2.jpg & images/trace.jpg
@@ -72,15 +66,15 @@ viewer program.
         Format:    ASCII text
                    http://www.bbsinc.com/iso8859.html
         Generator: GNU MakeInfo
-                   http://texinfo.org/
+                   http://www.gnu.org/software/texinfo/
         Viewer:    Any text viewer
         Notes:     Plain text with no formatting codes.
 
   * mpatrol.info
         Format:    GNU Info
-                   http://texinfo.org/
+                   http://www.gnu.org/software/texinfo/
         Generator: GNU MakeInfo
-                   http://texinfo.org/
+                   http://www.gnu.org/software/texinfo/
         Viewer:    GNU Info
         Notes:     Contains hypertext links but no formatting codes.
 
@@ -92,11 +86,19 @@ viewer program.
         Viewer:    AmigaGuide or MultiView
         Notes:     Contains hypertext links with basic formatting codes.
 
+  * mpatrol.xml
+        Format:    DocBook
+                   http://www.oasis-open.org/docbook/
+        Generator: GNU MakeInfo
+                   http://www.gnu.org/software/texinfo/
+        Viewer:    Any web browser with a DocBook DTD
+        Notes:     Contains hypertext links with formatting codes.
+
   * mpatrol.html
         Format:    Hypertext Markup Language (HTML)
                    http://www.w3c.org/MarkUp/
         Generator: GNU MakeInfo
-                   http://texinfo.org/
+                   http://www.gnu.org/software/texinfo/
         Viewer:    Any web browser
         Notes:     Contains hypertext links with formatting codes, but contains
                    links to JPEG images rather than embedding them.
@@ -132,7 +134,9 @@ with a variety of programs, not just the ones listed here.
                    http://www.tug.org/applications/pdftex/
                    PStill
                    http://www.this.net/~frank/pstill.html
-        Viewer:    XPDF
+        Viewer:    Adobe Reader
+                   http://www.adobe.com/
+                   XPDF
                    http://www.foolabs.com/xpdf/
         Notes:     Contains hypertext links along with embedded PDF images and
                    Postscript Type 1 fonts.

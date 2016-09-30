@@ -1,0 +1,177 @@
+@comment mpatrol
+@comment A library for controlling and tracing dynamic memory allocations.
+@comment Copyright (C) 1997-2008 Graeme S. Roy <graemeroy@users.sourceforge.net>
+@comment
+@comment This program is free software: you can redistribute it and/or
+@comment modify it under the terms of the GNU Lesser General Public License
+@comment as published by the Free Software Foundation, either version 3 of
+@comment the License, or (at your option) any later version.
+@comment
+@comment This program is distributed in the hope that it will be useful, but
+@comment WITHOUT ANY WARRANTY; without even the implied warranty of
+@comment MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+@comment Lesser General Public License for more details.
+@comment
+@comment You should have received a copy of the GNU Lesser General Public
+@comment License along with this program.  If not, see
+@comment <http://www.gnu.org/licenses/>.
+
+
+@comment Interix package file list
+
+
+@comment $Id$
+
+
+@name mpatrol-1.5.1-bin
+@mode 0775
+bin/mpatrol
+bin/mprof
+bin/mptrace
+bin/mleak
+bin/mpsym
+bin/mpedit
+bin/hexwords
+@dirrm doc/mpatrol
+@mode 0664
+doc/mpatrol/README
+doc/mpatrol/README.DOC
+doc/mpatrol/README.MAN
+doc/mpatrol/AUTHORS
+doc/mpatrol/THANKS
+doc/mpatrol/COPYING
+doc/mpatrol/COPYING.LESSER
+doc/mpatrol/NEWS
+doc/mpatrol/ChangeLog
+doc/mpatrol/mpatrol.txt
+doc/mpatrol/mpatrol.guide
+doc/mpatrol/mpatrol.html
+doc/mpatrol/mpatrol.dvi
+doc/mpatrol/mpatrol.ps
+doc/mpatrol/mpatrol.pdf
+doc/mpatrol/refcard.dvi
+doc/mpatrol/refcard.ps
+doc/mpatrol/refcard.pdf
+doc/mpatrol/images/mpatrol.txt
+doc/mpatrol/images/mpatrol.jpg
+doc/mpatrol/images/mpatrol.eps
+doc/mpatrol/images/mpatrol.pdf
+doc/mpatrol/images/test.jpg
+doc/mpatrol/images/test.eps
+doc/mpatrol/images/test.pdf
+doc/mpatrol/images/gcc.jpg
+doc/mpatrol/images/gcc.eps
+doc/mpatrol/images/gcc.pdf
+doc/mpatrol/images/cpp.jpg
+doc/mpatrol/images/cpp.eps
+doc/mpatrol/images/cpp.pdf
+doc/mpatrol/images/cc1.jpg
+doc/mpatrol/images/cc1.eps
+doc/mpatrol/images/cc1.pdf
+doc/mpatrol/images/collect2.jpg
+doc/mpatrol/images/collect2.eps
+doc/mpatrol/images/collect2.pdf
+doc/mpatrol/images/trace.jpg
+doc/mpatrol/images/trace.eps
+doc/mpatrol/images/trace.pdf
+doc/mpatrol/html/mpatrol.html
+doc/mpatrol/html/mprof.html
+doc/mpatrol/html/mptrace.html
+doc/mpatrol/html/mleak.html
+doc/mpatrol/html/mpsym.html
+doc/mpatrol/html/mpedit.html
+doc/mpatrol/html/hexwords.html
+doc/mpatrol/html/libmpatrol.html
+doc/mpatrol/html/libmpalloc.html
+doc/mpatrol/dvi/mpatrol.dvi
+doc/mpatrol/dvi/mprof.dvi
+doc/mpatrol/dvi/mptrace.dvi
+doc/mpatrol/dvi/mleak.dvi
+doc/mpatrol/dvi/mpsym.dvi
+doc/mpatrol/dvi/mpedit.dvi
+doc/mpatrol/dvi/hexwords.dvi
+doc/mpatrol/dvi/libmpatrol.dvi
+doc/mpatrol/dvi/libmpalloc.dvi
+doc/mpatrol/ps/mpatrol.ps
+doc/mpatrol/ps/mprof.ps
+doc/mpatrol/ps/mptrace.ps
+doc/mpatrol/ps/mleak.ps
+doc/mpatrol/ps/mpsym.ps
+doc/mpatrol/ps/mpedit.ps
+doc/mpatrol/ps/hexwords.ps
+doc/mpatrol/ps/libmpatrol.ps
+doc/mpatrol/ps/libmpalloc.ps
+doc/mpatrol/pdf/mpatrol.pdf
+doc/mpatrol/pdf/mprof.pdf
+doc/mpatrol/pdf/mptrace.pdf
+doc/mpatrol/pdf/mleak.pdf
+doc/mpatrol/pdf/mpsym.pdf
+doc/mpatrol/pdf/mpedit.pdf
+doc/mpatrol/pdf/hexwords.pdf
+doc/mpatrol/pdf/libmpatrol.pdf
+doc/mpatrol/pdf/libmpalloc.pdf
+doc/mpatrol/tests/pass/test1.c
+doc/mpatrol/tests/pass/test2.c
+doc/mpatrol/tests/pass/test3.c
+doc/mpatrol/tests/pass/test4.c
+doc/mpatrol/tests/pass/test5.c
+doc/mpatrol/tests/pass/test6.c
+doc/mpatrol/tests/pass/test7.c
+doc/mpatrol/tests/pass/test8.c
+doc/mpatrol/tests/pass/test9.c
+doc/mpatrol/tests/pass/test10.c
+doc/mpatrol/tests/fail/test1.c
+doc/mpatrol/tests/fail/test2.c
+doc/mpatrol/tests/fail/test3.c
+doc/mpatrol/tests/fail/test4.c
+doc/mpatrol/tests/fail/test5.c
+doc/mpatrol/tests/fail/test6.c
+doc/mpatrol/tests/fail/test7.c
+doc/mpatrol/tests/fail/test8.c
+doc/mpatrol/tests/fail/test9.c
+doc/mpatrol/tests/fail/test10.c
+doc/mpatrol/tests/fail/test11.c
+doc/mpatrol/tests/fail/test12.c
+doc/mpatrol/tests/fail/test13.c
+doc/mpatrol/tests/fail/test14.c
+doc/mpatrol/tests/fail/test15.c
+doc/mpatrol/tests/fail/test16.c
+doc/mpatrol/tests/fail/test17.c
+doc/mpatrol/tests/fail/test18.c
+doc/mpatrol/tests/profile/test1.c
+doc/mpatrol/tests/profile/test2.c
+doc/mpatrol/tests/tutorial/test1.c
+doc/mpatrol/tests/tutorial/test2.c
+doc/mpatrol/tests/tutorial/test3.c
+info/mpatrol.info
+include/mpatrol.h
+include/mpalloc.h
+include/mpdebug.h
+@dirrm include/mpatrol
+include/mpatrol/dbmalloc.h
+include/mpatrol/dmalloc.h
+include/mpatrol/heapdiff.h
+include/mpatrol/mgauge.h
+include/mpatrol/mtrace.h
+lib/libmpatrol.a
+lib/libmpatrolmt.a
+lib/libmpalloc.a
+lib/libmptools.a
+@mode 0775
+lib/libmpatrol.so.1.5
+lib/libmpatrol.so
+lib/libmpatrolmt.so.1.5
+lib/libmpatrolmt.so
+lib/libmpalloc.so.1.5
+lib/libmpalloc.so
+@mode 0664
+man/man1/mpatrol.1
+man/man1/mprof.1
+man/man1/mptrace.1
+man/man1/mleak.1
+man/man1/mpsym.1
+man/man1/mpedit.1
+man/man1/hexwords.1
+man/man3/libmpatrol.3
+man/man3/libmpalloc.3
+share/aclocal/mpatrol.m4

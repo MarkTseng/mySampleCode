@@ -1,22 +1,20 @@
 /*
  * mpatrol
  * A library for controlling and tracing dynamic memory allocations.
- * Copyright (C) 1997-2002 Graeme S. Roy <graeme.roy@analog.com>
+ * Copyright (C) 1997-2008 Graeme S. Roy <graemeroy@users.sourceforge.net>
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Library General Public
- * License as published by the Free Software Foundation; either
- * version 2 of the License, or (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or (at
+ * your option) any later version.
  *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Library General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser
+ * General Public License for more details.
  *
- * You should have received a copy of the GNU Library General Public
- * License along with this library; if not, write to the Free
- * Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
- * MA 02111-1307, USA.
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 
@@ -35,8 +33,7 @@
 #if MP_THREADS_SUPPORT
 #include "mutex.h"
 #endif /* MP_THREADS_SUPPORT */
-#if (TARGET == TARGET_AMIGA && defined(__GNUC__)) || \
-    (TARGET == TARGET_WINDOWS && !defined(__GNUC__))
+#if (TARGET == TARGET_AMIGA && defined(__GNUC__)) || TARGET == TARGET_WINDOWS
 #include "sbrk.h"
 #endif /* TARGET && __GNUC__ */
 #include "option.h"
@@ -52,9 +49,9 @@
 
 
 #if MP_IDENT_SUPPORT
-#ident "$Id: inter.c,v 1.156 2002/01/08 20:13:59 graeme Exp $"
+#ident "$Id$"
 #else /* MP_IDENT_SUPPORT */
-static MP_CONST MP_VOLATILE char *inter_id = "$Id: inter.c,v 1.156 2002/01/08 20:13:59 graeme Exp $";
+static MP_CONST MP_VOLATILE char *inter_id = "$Id$";
 #endif /* MP_IDENT_SUPPORT */
 
 
@@ -97,7 +94,7 @@ extern char **__environ;
 static int init_flag;
 extern void *__exc_crd_list_head;
 #endif /* SYSTEM */
-#elif TARGET == TARGET_WINDOWS && !defined(__GNUC__)
+#elif TARGET == TARGET_WINDOWS && !defined(__MINGW32__)
 /* These are global variables used by the Microsoft C run-time library to
  * indicate initialisation of the environment variables, the exit function
  * table and the streams buffers respectively.  The run-time library calls
@@ -110,7 +107,7 @@ extern void *__exc_crd_list_head;
 extern int __env_initialized;
 extern void *__onexitbegin;
 extern void **__piob;
-#endif /* TARGET && __GNUC__ */
+#endif /* TARGET && __MINGW32__ */
 
 
 /* Determine if the C run-time library is initialised.
@@ -125,11 +122,11 @@ extern void **__piob;
 #define crt_initialised() (1)
 #endif /* SYSTEM */
 #elif TARGET == TARGET_WINDOWS
-#ifndef __GNUC__
+#ifndef __MINGW32__
 #define crt_initialised() (__env_initialized && __onexitbegin && __piob)
-#else /* __GNUC__ */
+#else /* __MINGW32__ */
 #define crt_initialised() (1)
-#endif /* __GNUC__ */
+#endif /* __MINGW32__ */
 #endif /* TARGET */
 
 
@@ -306,7 +303,7 @@ checkalloca(loginfo *i, int f)
     alloctype t;
     int c;
 
-    if (memhead.fini || (memhead.astack.size == 0))
+    if (memhead.fini || (memhead.recur != 1) || (memhead.astack.size == 0))
         return;
 #if MP_FULLSTACK
     /* Create the address nodes for the current call.  This is not necessarily
@@ -338,7 +335,8 @@ checkalloca(loginfo *i, int f)
         else
         {
             b = (addrnode *) n->data.frame;
-            if ((b->data.next != NULL) && (a->data.next != NULL) &&
+            if ((b != NULL) && (b->data.next != NULL) &&
+                (a != NULL) && (a->data.next != NULL) &&
                 (((r = __mp_compareaddrs(b->data.next, a->data.next)) ==
                   SC_DIFFERENT) || (r == SC_SHALLOWER)))
                 c = 1;
@@ -1457,7 +1455,10 @@ __mp_locatemem(void *p, size_t l, void *q, size_t m, alloctype f, char *s,
         m = 1;
     }
     if (!memhead.init || memhead.fini)
-        return __mp_memfind(p, l, q, m);
+        if ((f == AT_MEMMEM) && (m == 0))
+            return p;
+        else
+            return __mp_memfind(p, l, q, m);
     savesignals();
     if (__mp_processid() != memhead.pid)
         __mp_reinit();
@@ -2939,26 +2940,28 @@ __mp_remcontents(char *s, void *p)
  * data symbols so that AC_CHECK_LIB() works reliably.
  */
 
-#if TARGET == TARGET_WINDOWS || SYSTEM == SYSTEM_CYGWIN
-#if FORMAT == FORMAT_PE || DYNLINK == DYNLINK_WINDOWS || MP_LIBRARYSTACK_SUPPORT
+#if (TARGET == TARGET_WINDOWS || SYSTEM == SYSTEM_CYGWIN) && \
+    (FORMAT == FORMAT_IMGHLP || DYNLINK == DYNLINK_WINDOWS || \
+     MP_LIBRARYSTACK_SUPPORT)
 MP_API void __mp_libimagehlp(void) {}
-#endif /* FORMAT && DYNLINK && MP_LIBRARYSTACK_SUPPORT */
-#elif SYSTEM == SYSTEM_HPUX
-#if MP_LIBRARYSTACK_SUPPORT
+#endif /* TARGET && SYSTEM && FORMAT && DYNLINK && MP_LIBRARYSTACK_SUPPORT */
+
+#if MP_LIBUNWIND_SUPPORT
+MP_API void __mp_libunwind(void) {}
+#elif MP_LIBRARYSTACK_SUPPORT
+#if SYSTEM == SYSTEM_HPUX
 MP_API void __mp_libcl(void) {}
-#endif /* MP_LIBRARYSTACK_SUPPORT */
 #elif SYSTEM == SYSTEM_IRIX || SYSTEM == SYSTEM_TRU64
-#if MP_LIBRARYSTACK_SUPPORT
 MP_API void __mp_libexc(void) {}
-#endif /* MP_LIBRARYSTACK_SUPPORT */
-#endif /* TARGET && SYSTEM */
+#endif /* SYSTEM */
+#endif /* MP_LIBUNWIND_SUPPORT && MP_LIBRARYSTACK_SUPPORT */
+
 #if (FORMAT == FORMAT_COFF || FORMAT == FORMAT_XCOFF) && SYSTEM != SYSTEM_LYNXOS
 MP_API void __mp_libld(void) {}
 #elif FORMAT == FORMAT_ELF32 || FORMAT == FORMAT_ELF64
 MP_API void __mp_libelf(void) {}
 #elif FORMAT == FORMAT_BFD
 MP_API void __mp_libbfd(void) {}
-MP_API void __mp_libiberty(void) {}
 #endif /* FORMAT */
 
 
