@@ -2011,7 +2011,7 @@ void identify_function_ptr( const char *func, char *buf, const int buf_size)  {
 
 	//printf("lib name %s, function name %s\n", info.dli_fname, info.dli_sname);
 	if(info.dli_sname != NULL)
-		(void)loc_snprintf(buf, buf_size, "%s", info.dli_sname);
+		(void)loc_snprintf(buf, buf_size, "%s, ra=%#lx", info.dli_sname, (unsigned long)func);
 	else
 		(void)loc_snprintf(buf, buf_size, "%s, ra=%#lx", info.dli_fname ,(unsigned long)func);
 }
@@ -2466,6 +2466,7 @@ void	*_dmalloc_chunk_malloc(const char *file, const unsigned int line,
   pnt_info_t	pnt_info;
   const char	*trans_log;
   unsigned int align=alignment;
+  unsigned int rv=0;
   if(0==alignment)
     align=1;
   
@@ -2507,9 +2508,19 @@ void	*_dmalloc_chunk_malloc(const char *file, const unsigned int line,
     return MALLOC_ERROR;
   }
 #endif
-  
+
+// avoid stack frame over buffer
+#if 0
   needed_size=get_align_overhead(align,fence_b=BIT_IS_SET(_dmalloc_flags, DEBUG_CHECK_FENCE))+size;
-  
+#else
+  fence_b = BIT_IS_SET(_dmalloc_flags, DEBUG_CHECK_FENCE);
+  if(align==0)
+	  align=1;
+  if(fence_b)
+	  rv=FENCE_OVERHEAD_SIZE;
+
+  needed_size = rv+align-1 + size;//sizes of fence + alignment overhead 
+#endif
   /* get some space for our memory */
   slot_p = get_memory(needed_size);
   if (slot_p == NULL) {
@@ -3121,6 +3132,8 @@ void	_dmalloc_chunk_log_changed(const unsigned long mark,
 		  dmalloc_message("No munmap: caller: %p, mmap_addr: %p, length:0x%08x, funcName: %s\n", mmap_trace[i].caller, mmap_trace[i].mmap_addr, mmap_trace[i].length, mmap_trace[i].funcName);
 	  }
   }
+  dmalloc_message("Dumping Not-munmap done");
+
   if (log_not_freed_b && log_freed_b) {
     which_str = "Not-Freed and Freed";
   }

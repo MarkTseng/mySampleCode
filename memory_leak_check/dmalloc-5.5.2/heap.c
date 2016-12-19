@@ -74,7 +74,7 @@ void		*_dmalloc_heap_high = NULL;	/* end of our heap */
  *
  * incr -> Number of bytes we need.
  */
-static	void	*heap_extend(const int incr)
+static	void	*heap_extend(int incr)
 {
   void	*ret = SBRK_ERROR;
   char	*high;

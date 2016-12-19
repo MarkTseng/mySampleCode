@@ -389,6 +389,29 @@ static	RETSIGTYPE	signal_handler(const int sig)
     dmalloc_shutdown();
   }
 }
+int do_dmalloc_shutdown = 0;
+static	RETSIGTYPE	signal_seg_handler(const int sig)
+{
+	if(do_dmalloc_shutdown == 0)
+	{
+		if (in_alloc_b) {
+			do_shutdown_b = 1;
+		}
+		else {
+			dmalloc_shutdown();
+		}
+		do_dmalloc_shutdown = 1;
+		printf("### Please do kill -USR1 `pidof mixer` ### \n");
+	}
+}
+
+static	RETSIGTYPE	signal_usr2_handler(const int sig)
+{
+#ifdef SIGNAL3
+    (void)signal(SIGNAL3, signal_handler);
+#endif
+
+}
 #endif
 
 mmap_record mmap_trace[MAX_MMAP_RECORD_NUMBER];
@@ -530,13 +553,15 @@ static	int	dmalloc_startup(const char *debug_str)
     (void)signal(SIGNAL1, signal_handler);
 #endif
 #ifdef SIGNAL2
-    (void)signal(SIGNAL2, signal_handler);
+    (void)signal(SIGNAL2, signal_usr2_handler);
 #endif
-#ifdef SIGNAL3
-    (void)signal(SIGNAL3, signal_handler);
+#if 0
+	#ifdef SIGNAL3
+	(void)signal(SIGNAL3, signal_handler);
+	#endif
 #endif
 #ifdef SIGNAL4
-    (void)signal(SIGNAL4, signal_handler);
+    (void)signal(SIGNAL4, signal_seg_handler);
 #endif
 #ifdef SIGNAL5
     (void)signal(SIGNAL5, signal_handler);
@@ -825,6 +850,21 @@ int identify2_function_ptr( const char *func)  {
 	return 0;
 }
 
+int show_function_name( const char *func)  {
+	Dl_info info;
+	int rc;
+
+	rc = dladdr(func, &info);
+
+	if (!rc)  {
+		dmalloc_message("Problem retrieving program information for %x:  %s\n", func, dlerror());
+	}
+
+	dmalloc_message("lib name %s, function name %s\n", info.dli_fname, info.dli_sname);
+	return 0;
+}
+
+
 /*
  * DMALLOC_PNT dmalloc_mmap
  *
@@ -843,40 +883,63 @@ DMALLOC_PNT	dmalloc_mmap(const char *file, const int line, void *addr, size_t le
 {
 	void *mmap_addr;
 	char *basename;
-
-	if (! enabled_mmap) {
-		(void)dmalloc_mmap_startup();
-	}
+	int i;
 
 #if LOCK_THREADS
   lock_mmap_thread();
 #endif 
 
-	if(mmap_count > MAX_MMAP_RECORD_NUMBER)
-		dmalloc_message("WARN: over mmap record array size : %d\n", MAX_MMAP_RECORD_NUMBER);
+	if (! enabled_mmap) {
+		(void)dmalloc_mmap_startup();
+	}
 
-	if (file == DMALLOC_DEFAULT_FILE && line == DMALLOC_DEFAULT_LINE) {
-		snprintf(mmap_trace[mmap_count].funcName,sizeof(mmap_trace[mmap_count].funcName) - 1 ,"unknown");	
-	}
-	else if (line == DMALLOC_DEFAULT_LINE) {
-		identify2_function_ptr( file );
-	}
-	else if (file == DMALLOC_DEFAULT_FILE) {
-		snprintf(mmap_trace[mmap_count].funcName,sizeof(mmap_trace[mmap_count].funcName) - 1 ,"ra=ERROR(line=%u)", line);	
-	}
-	else {
-		basename = strrchr(file,'/');
-		if(basename == NULL)
-			snprintf(mmap_trace[mmap_count].funcName,sizeof(mmap_trace[mmap_count].funcName) - 1 ,"%.*s:%u",sizeof(mmap_trace[mmap_count].funcName) - 1 ,file, line);	
-		else
-			snprintf(mmap_trace[mmap_count].funcName,sizeof(mmap_trace[mmap_count].funcName) - 1 ,"%.*s:%u",sizeof(mmap_trace[mmap_count].funcName) - 1 ,basename + 1, line);	
-	}
+	if(mmap_count > MAX_MMAP_RECORD_NUMBER)
+		dmalloc_message("### WARN: over mmap record array size : %d , Please check %s function ###\n", MAX_MMAP_RECORD_NUMBER, mmap_trace[MAX_MMAP_RECORD_NUMBER-1].funcName);
 
 	mmap_addr = real_mmap(addr, length, prot, flags, fd, offset);
-	//dmalloc_message("mmap call %d, addr: %p, length: %#x, prot: %d, flags: %d, fd: %d, offset: %lx\n", mmap_count, mmap_addr, length, prot, flags, fd, offset);
-	mmap_trace[mmap_count].caller = (void *)file;
-	mmap_trace[mmap_count].mmap_addr = mmap_addr;
-	mmap_trace[mmap_count].length = length;
+
+	if (mmap_addr == ((void *) -1))
+	{
+		dmalloc_message("### Please check ");
+		show_function_name( file );
+		dmalloc_message(" function mmap failed ###\n");
+	}
+	
+	if (mmap_addr == ((void *) 0))
+	{
+		dmalloc_message("### Please check ");
+		show_function_name( file );
+		dmalloc_message(" function mmap return 0 error ###\n");
+	}
+
+	for(i=0;i< MAX_MMAP_RECORD_NUMBER;i++)
+	{
+		if(mmap_trace[i].mmap_addr == NULL && mmap_trace[i].caller == NULL)
+		{
+			mmap_trace[i].caller = (void *)file;
+			mmap_trace[i].mmap_addr = mmap_addr;
+			mmap_trace[i].length = length;
+
+			if (file == DMALLOC_DEFAULT_FILE && line == DMALLOC_DEFAULT_LINE) {
+				snprintf(mmap_trace[i].funcName,sizeof(mmap_trace[i].funcName) - 1 ,"unknown");	
+			}
+			else if (line == DMALLOC_DEFAULT_LINE) {
+				identify2_function_ptr( file );
+			}
+			else if (file == DMALLOC_DEFAULT_FILE) {
+				snprintf(mmap_trace[i].funcName,sizeof(mmap_trace[i].funcName) - 1 ,"ra=ERROR(line=%u)", line);	
+			}
+			else {
+				basename = strrchr(file,'/');
+				if(basename == NULL)
+					snprintf(mmap_trace[i].funcName,sizeof(mmap_trace[i].funcName) - 1 ,"%.*s:%u",sizeof(mmap_trace[i].funcName) - 1 ,file, line);	
+				else
+					snprintf(mmap_trace[i].funcName,sizeof(mmap_trace[i].funcName) - 1 ,"%.*s:%u",sizeof(mmap_trace[i].funcName) - 1 ,basename + 1, line);	
+			}
+			break;
+		}
+	}
+
 	mmap_count++;
 
 #if LOCK_THREADS
@@ -916,6 +979,7 @@ int	dmalloc_munmap(const char *file, const int line, void *addr, size_t length)
 			mmap_trace[i].caller = NULL;
 		}
 	}
+	mmap_count--;
 #if LOCK_THREADS
   unlock_mmap_thread();
 #endif
