@@ -11,6 +11,8 @@ struct task_struct *kthread_task; /* task struct for kthread. */
 
 int MainRoutine( void *pParam )
 {
+    //struct sched_param param = {.sched_priority = 1};
+    //sched_setscheduler(current, SCHED_RR, &param);
    	while (1)
 	{
 		pr_info("start to wait complete : %lu \n", jiffies);
@@ -36,7 +38,7 @@ static int __init dsp_init(void)
 	if (IS_ERR(kthread_task )) {
 		pr_info("start kthread.\n");
 	}
-	msleep(10000);
+	msleep(1000);
 
 	complete (&comp_lock);
 
