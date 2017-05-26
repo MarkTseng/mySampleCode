@@ -1,0 +1,20 @@
+Jesse Kennedy
+CPSC 322 Project 1
+Fall 2015
+
+KNOWN PROBLEMS
+==============
+No known problems have been discovered.
+
+DESIGN
+======
+The shim uses a linked list to store references to allocated blocks.
+It stores a reference to the block itself along with the size of the
+block. New blocks are stored at the head of the list, and block
+removals require a seek. Any unfreed blocks upon termination of the
+program remain in the linked list and are printed.
+
+The syscall tracer doesn't do anything fancy. It converts the given
+program call argument to an array by using strtok before passing it to
+execvp. It stores the system calls in a preallocated array. Only
+syscalls that have been called at least once are printed.
