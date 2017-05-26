@@ -1,0 +1,4 @@
+*.o
+*.d
+libunwind/build
+libmguard.so
