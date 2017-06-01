@@ -1,0 +1,54 @@
+
+0.4.0 Thu Sep 10 08:52:33 CEST 2015
+	- libunwind backtracing performance optimized
+
+0.4.0b Sun Aug  2 22:20:42 CEST 2015
+	- use libunwind for backtrace if available
+	- scripts modified to support decoding of libunwind based backtrace
+
+0.3.0 Sun Nov 23 21:12:54 CET 2014
+	- add manpages
+	- release
+
+0.3.0b2 Thu Nov 20 23:10:47 CET 2014
+	- backtrace2line.pl support for decoding native glibc backtraces
+	- add log-malloc2_util.h inline only helper functions
+
+0.3.0b Mon Nov 10 00:00:00 CET 2014
+	- code cleanup
+	- using costructor/destructor instead of init/fini
+	- improved protection against multiple inits
+	- reduced exported symbols
+	- added /proc/self/maps printing (to make addr2line mapping easier)
+	- remove that yummy segfault in realloc that has been till now optimized away by gcc
+	- implemented few API functions for working with library directly
+	- added macros that make leaked memory hunting a bit easier
+	- autodisabling trace if trace-fd not opened for writing
+	- added backtrace2symbols translation scripts
+	- added log-malloc trace file analysis scripts
+	- provide pkg-config
+	- added script for easier log-malloc trace start
+	- clang warning fixed
+	- etc..
+
+0.2.4 Wed Sep 24 22:15:31 CEST 2013
+	- removed dummy prefix 0x from %p printouts (I'm pretty blind - I've fixed
+		it 'lightyears' ago in some private copy and not pushed it to repo ;-)
+	- added possibility to disable call counts, not everyone needs them and they
+		might harm performance, because of using CAS operation
+
+0.2.3 Thu Mar 29 18:58:35 CEST 2012
+	- improved initialization to be compatible with libraries
+		using malloc functions in lib constructor functions (like libproc)
+	- detect if backtrace() and backtrace_symbols_fd() is available
+	- some docu improvements
+
+0.2.2 Tue Mar 26 19:22:43 CEST 2012
+	- track real size of allocated memory using malloc_usable_size
+
+0.2.1 Wed Feb 14 16:12:05 CET 2012
+	- added posix_memalign/valloc tracking
+	- operate safely if allocation fails
+
+0.2.0 Wed Feb  8 19:42:13 CET 2012
+	- initial public release
