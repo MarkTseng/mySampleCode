@@ -51,7 +51,7 @@ const char *proc_maps(pid_t pid, size_t *start, size_t *end, int *exe_self)
 		if (ret == 8 && perms[2] == 'x' && ret_path[0] == '/') {
 			if (exe_self != NULL) {
 				*exe_self = (strcmp(ret_path, exe_name) == 0);
-                printf("[%s][%d] %s \n", __func__, __LINE__, line);
+                printf("[%s][%d] %s \n", __func__, __LINE__, ret_path);
 			}
 			return ret_path;
 		}

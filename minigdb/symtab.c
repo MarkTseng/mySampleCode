@@ -33,7 +33,7 @@ static ARRAY(g_symbol_table, struct symbol_s, 1000);
 static int symtab_build_section(Elf *elf, Elf_Scn *section,
 		uintptr_t offset, uintptr_t base_addr)
 {
-	Elf64_Shdr *shdr = elf64_getshdr(section);
+	Elf32_Shdr *shdr = elf32_getshdr(section);
 	if (shdr == NULL) {
 		return 0;
 	}
@@ -48,15 +48,15 @@ static int symtab_build_section(Elf *elf, Elf_Scn *section,
 	}
 
 	int count = 0;
-	Elf64_Sym *esym = (Elf64_Sym *)data->d_buf;
-	Elf64_Sym *lastsym = (Elf64_Sym *)((char*) data->d_buf + data->d_size);
+	Elf32_Sym *esym = (Elf32_Sym *)data->d_buf;
+	Elf32_Sym *lastsym = (Elf32_Sym *)((char*) data->d_buf + data->d_size);
 	for (; esym < lastsym; esym++) {
 		if ((esym->st_value == 0) || (esym->st_size == 0) ||
 				(esym->st_shndx == SHN_UNDEF) ||
 #ifdef STB_NUM
-				(ELF64_ST_BIND(esym->st_info) == STB_NUM) ||
+				(ELF32_ST_BIND(esym->st_info) == STB_NUM) ||
 #endif
-				(ELF64_ST_TYPE(esym->st_info) != STT_FUNC)) {
+				(ELF32_ST_TYPE(esym->st_info) != STT_FUNC)) {
 			continue;
 		}
 
@@ -68,7 +68,7 @@ static int symtab_build_section(Elf *elf, Elf_Scn *section,
 
 		sym->address = esym->st_value - base_addr + offset;
 		sym->size = esym->st_size;
-		sym->weak = (ELF64_ST_BIND(esym->st_info) == STB_WEAK);
+		sym->weak = (ELF32_ST_BIND(esym->st_info) == STB_WEAK);
 
     	printf("[%s][%d] name: %s, addr:%#x \n", __func__, __LINE__, sym->name, sym->address);
 		count++;
@@ -81,7 +81,7 @@ static uintptr_t symtab_elf_base(Elf *elf)
 	size_t i, n;
 
 	elf_getphdrnum(elf, &n);
-	Elf64_Phdr *headers = elf64_getphdr(elf);
+	Elf32_Phdr *headers = elf32_getphdr(elf);
 	if (n == 0 || headers == NULL) {
 		return 0;
 	}
@@ -112,7 +112,7 @@ static int symtab_build_file(const char *path, uintptr_t start, uintptr_t end)
 	}
 
 	uintptr_t offset = 0, base_addr = 0;
-	Elf64_Ehdr *hdr = elf64_getehdr(elf);
+	Elf32_Ehdr *hdr = elf32_getehdr(elf);
 	if (hdr->e_type == ET_DYN) { /* only for dynamic library, but not executable */
 		offset = start; /* offset in process */
 		base_addr = symtab_elf_base(elf); /* base address of library */

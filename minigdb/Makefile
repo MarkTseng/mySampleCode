@@ -1,9 +1,9 @@
-CFLAGS =  -DMLX_LINUX -DMLX_WITH_LIBDW -I/usr/include/elfutils/ -g -O2 -Wall
-LDLIBS =  -lunwind-ptrace -lunwind -lunwind-x86_64 -lelf -ldw
+CFLAGS =  -DMLX_LINUX -DMLX_WITH_LIBDW -I/home/mark/myResearch/elfutils-0.165/ARM_LIBS/include/elfutils -I/home/mark/myResearch/elfutils-0.165/ARM_LIBS/include -g -O2 -Wall -I/home/mark/myResearch/libunwind/LIBUNWIND_ARM/include 
+LDLIBS =  -L/home/mark/myResearch/libunwind/LIBUNWIND_ARM/lib -L/home/mark/myResearch/elfutils-0.165/ARM_LIBS/lib -L/home/mark/myResearch/elfutils-0.165/ARM_LIBS/lib/elfutils -L/home/mark/nfs/ARM_LIBS/lib -lunwind-ptrace -lunwind -lunwind-arm -lelf -ldw -lz 
 LDFLAGS = 
 PREFIX = /usr
 DESTDIR =
-
+CC = arm-linux-gnueabihf-gcc
 TARGET = memleax
 
 SOURCES = debug_file.c debug_line.c memleax.c ptr_backtrace.c proc_info.c symtab.c addr_maps.c
