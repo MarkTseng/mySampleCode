@@ -1,5 +1,6 @@
 #define _GNU_SOURCE
 #include <stdlib.h>
+#include <string.h>
 #include <pthread.h>
 #include <signal.h>
 
@@ -11,7 +12,6 @@ struct thpool {
     pthread_t* threads;
     jobqueue_t* queue;
     unsigned int num_threads;
-    struct sched_param param;
     int policy;
     pthread_mutex_t update_mutex;
     pthread_cond_t  update_cv;
@@ -21,6 +21,8 @@ struct thpool {
 
 thpool_t* thpool_init(unsigned int num_threads, int policy, int priority, char *name) {
     int i;
+    struct sched_param param;
+    memset(&param,0,sizeof(param));
     thpool_t* p = malloc(sizeof(thpool_t));
     if (!p) return NULL;
 
@@ -42,8 +44,8 @@ thpool_t* thpool_init(unsigned int num_threads, int policy, int priority, char *
         pthread_setname_np(p->threads[i], name);
         if(policy == SCHED_RR)
         {
-            p->param.sched_priority = priority;
-            pthread_setschedparam(p->threads[i], SCHED_RR, &p->param);
+            param.sched_priority = priority;
+            pthread_setschedparam(p->threads[i], SCHED_RR, &param);
         }
         pthread_detach(p->threads[i]);
     }

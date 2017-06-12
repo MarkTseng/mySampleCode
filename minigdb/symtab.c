@@ -25,7 +25,7 @@ struct symbol_s {
 	uintptr_t	address;
 	size_t		size;
 	int8_t		weak;
-	char		name[47];
+	char		name[128];
 };
 
 static ARRAY(g_symbol_table, struct symbol_s, 1000);
