@@ -43,16 +43,16 @@ int main(int argv, char *argc[])
         exit(1);
     }
 
-    for(i=0;i<1000;i++)
+    for(i=0;i<20000;i++)
     {
-        if(i%20==0)
+        if((i%20 == 0) && (i < 10000))
         { 
             if (!thpool_add_job(workQueueHigh, (void*) taskthreadHigh, (void*)i)) {
-                fprintf(stderr, "audio_play: Could not add file reading job for \n");
+                fprintf(stderr, "workQueueHigh can no add job \n");
             }
         }else{
             if (!thpool_add_job(workQueue, (void*) taskthread, (void*)i)) {
-                fprintf(stderr, "audio_play: Could not add file reading job for \n");
+                fprintf(stderr, "workQueue can no add job \n");
             }
         }
     }
@@ -71,6 +71,7 @@ int main(int argv, char *argc[])
         if(thpool_jobqueue_is_empty(workQueueHigh) && thpool_jobqueue_is_empty(workQueue))
             break;
 
+        printf("quitJob:%d\n", quitJob);
         sleep(1);
     }
     if (workQueue) thpool_destroy(workQueue);
