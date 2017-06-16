@@ -15,7 +15,7 @@
 #include <string.h>
 
 #include "debug_file.h"
-#include "memleax.h"
+#include "minigdb.h"
 
 
 static uint32_t gnu_debuglink_crc32 (uint32_t crc, unsigned char *buf, size_t len)
@@ -102,7 +102,11 @@ static int elf_section_data(int fd, const char *name, uint8_t *out_buf, int out_
 		return -1;
 	}
 
+#if defined(X86_64)
+	Elf64_Ehdr *elfhdr = elf64_getehdr(elf);
+#else
 	Elf32_Ehdr *elfhdr = elf32_getehdr(elf);
+#endif
 	Elf_Scn *strtab_sec = elf_getscn(elf, elfhdr->e_shstrndx);
 	Elf_Data *strtab_data = elf_getdata(strtab_sec, NULL);
 	const char *strings = strtab_data->d_buf;
@@ -110,7 +114,11 @@ static int elf_section_data(int fd, const char *name, uint8_t *out_buf, int out_
 	Elf_Scn* section = NULL;
 	int ret = -1;
 	while ((section = elf_nextscn(elf, section)) != NULL) {
+#if defined(X86_64)
+		Elf64_Shdr *shdr = elf64_getshdr(section);
+#else
 		Elf32_Shdr *shdr = elf32_getshdr(section);
+#endif
 		if (shdr == NULL) {
 			break;
 		}

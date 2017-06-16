@@ -17,7 +17,7 @@
 #include <string.h>
 
 #include "array.h"
-#include "memleax.h"
+#include "minigdb.h"
 #include "proc_info.h"
 #include "debug_file.h"
 
@@ -33,7 +33,11 @@ static ARRAY(g_symbol_table, struct symbol_s, 1000);
 static int symtab_build_section(Elf *elf, Elf_Scn *section,
 		uintptr_t offset, uintptr_t base_addr)
 {
+#if defined(X86_64)
+	Elf64_Shdr *shdr = elf64_getshdr(section);
+#else
 	Elf32_Shdr *shdr = elf32_getshdr(section);
+#endif
 	if (shdr == NULL) {
 		return 0;
 	}
@@ -48,15 +52,27 @@ static int symtab_build_section(Elf *elf, Elf_Scn *section,
 	}
 
 	int count = 0;
+#if defined(X86_64)
+	Elf64_Sym *esym = (Elf64_Sym *)data->d_buf;
+	Elf64_Sym *lastsym = (Elf64_Sym *)((char*) data->d_buf + data->d_size);
+#else
 	Elf32_Sym *esym = (Elf32_Sym *)data->d_buf;
 	Elf32_Sym *lastsym = (Elf32_Sym *)((char*) data->d_buf + data->d_size);
+#endif
 	for (; esym < lastsym; esym++) {
 		if ((esym->st_value == 0) || (esym->st_size == 0) ||
 				(esym->st_shndx == SHN_UNDEF) ||
-#ifdef STB_NUM
+#if defined(X86_64)
+    #ifdef STB_NUM
+				(ELF64_ST_BIND(esym->st_info) == STB_NUM) ||
+    #endif
+				(ELF64_ST_TYPE(esym->st_info) != STT_FUNC)) {
+#else
+  #ifdef STB_NUM
 				(ELF32_ST_BIND(esym->st_info) == STB_NUM) ||
-#endif
+    #endif
 				(ELF32_ST_TYPE(esym->st_info) != STT_FUNC)) {
+#endif
 			continue;
 		}
 
@@ -81,7 +97,11 @@ static uintptr_t symtab_elf_base(Elf *elf)
 	size_t i, n;
 
 	elf_getphdrnum(elf, &n);
+#if defined(X86_64)
+	Elf64_Phdr *headers = elf64_getphdr(elf);
+#else
 	Elf32_Phdr *headers = elf32_getphdr(elf);
+#endif
 	if (n == 0 || headers == NULL) {
 		return 0;
 	}
@@ -112,7 +132,11 @@ static int symtab_build_file(const char *path, uintptr_t start, uintptr_t end)
 	}
 
 	uintptr_t offset = 0, base_addr = 0;
+#if defined(X86_64)
+	Elf64_Ehdr *hdr = elf64_getehdr(elf);
+#else
 	Elf32_Ehdr *hdr = elf32_getehdr(elf);
+#endif
 	if (hdr->e_type == ET_DYN) { /* only for dynamic library, but not executable */
 		offset = start; /* offset in process */
 		base_addr = symtab_elf_base(elf); /* base address of library */

@@ -19,7 +19,7 @@
 #include "proc_info.h"
 #include "list.h"
 #include "hash.h"
-#include "memleax.h"
+#include "minigdb.h"
 #include "ptrace_utils.h"
 
 

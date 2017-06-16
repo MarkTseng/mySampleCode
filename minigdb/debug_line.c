@@ -20,7 +20,7 @@
 #include <string.h>
 
 #include "array.h"
-#include "memleax.h"
+#include "minigdb.h"
 #include "proc_info.h"
 #include "debug_file.h"
 
@@ -237,7 +237,11 @@ static int debug_line_build_file(const char *path, size_t start, size_t end)
 		close(fd);
 		return -1;
 	}
+#if defined(X86_64)
+	Elf64_Ehdr *hdr = elf64_getehdr(elf);
+#else
 	Elf32_Ehdr *hdr = elf32_getehdr(elf);
+#endif
 	uintptr_t offset = hdr->e_type == ET_EXEC ? 0 : start;
 	elf_end(elf);
 
