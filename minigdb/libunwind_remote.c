@@ -26,7 +26,7 @@ void do_backtrace(pid_t child) {
 
 	//ptrace(PTRACE_ATTACH, child, 0, 0);
 	struct timespec t = { .tv_sec = 0, t.tv_nsec = 1000000 };
-	nanosleep(&t, NULL);
+	//nanosleep(&t, NULL);
 
 	unw_cursor_t c;
 	int rc = unw_init_remote(&c, as, ui);
@@ -76,7 +76,7 @@ int main(int argc __attribute__((unused)), char **argv, char **envp) {
 	if (!child) {
 
 		ptrace(PTRACE_TRACEME, child,0,0);
-		execve("/home/mark/ptrace/target",
+		execve("./target",
 				argv, envp);
 
 		return 0;
