@@ -10,6 +10,10 @@
 #include <signal.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <sys/user.h>
+#include <sys/syscall.h>
+#include <sys/reg.h>
+
 
 
 #define panic(X) fprintf(stderr, #X "\n");
@@ -85,6 +89,8 @@ int main(int argc __attribute__((unused)), char **argv, char **envp) {
 
 		struct timespec t = { .tv_sec = 1, .tv_nsec = 0 };
 		nanosleep(&t, NULL);
+        struct user_regs_struct regs;
+		long orig_rax = 0;
 
 		int status,w;
 		while(1)
@@ -101,8 +107,11 @@ int main(int argc __attribute__((unused)), char **argv, char **envp) {
 				} else if (WIFSIGNALED(status)) {
 					printf("killed by signal %d\n", WTERMSIG(status));
 				} else if (WIFSTOPPED(status)) {
-
-					do_backtrace(child);
+					orig_rax = ptrace(PTRACE_PEEKUSER, child, 8 * ORIG_RAX, NULL);
+					printf("The child made a system call %ld\n", orig_rax);
+					if(orig_rax == SYS_brk) {
+						do_backtrace(child);
+					}
 					ptrace(PTRACE_SINGLESTEP, child, 0,0);
 					printf("stopped by signal %d\n", WSTOPSIG(status));
 				} else if (WIFCONTINUED(status)) {
