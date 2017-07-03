@@ -1,3 +1,4 @@
+#include <cxxabi.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -18,12 +19,56 @@
 #include <asm/ptrace.h>
 #include <sys/user.h>
 
+// define
+#define ARM_UNKONW_INST (0xde01)
 // global variable
 pid_t g_child;
 pid_t g_mainPid;
 struct user regs;
 static unw_addr_space_t as;
 static struct UPT_info *ui;
+
+const char* demangle(const char* name)
+{
+	char buf[1024];
+	unsigned int size=1024;
+	int status;
+	char* res = abi::__cxa_demangle (name,
+			0,
+			0,
+			&status);
+    if(res)
+        printf("fun name:%s\n", res);
+    else
+        printf("no demangle fun name:%s\n", name);
+	return res;
+}
+#ifdef __cplusplus 
+	extern "C" { 
+#endif 
+void set_breakpoint(pid_t child)
+{
+    int status;
+    //long orig = ptrace(PTRACE_PEEKTEXT, global_pid, callstack->calldata[callstack->depth].retaddr);
+    long trap;
+
+    trap = ARM_UNKONW_INST;
+    //printf("[+] Add breakpoint on 0x%lx\n", callstack->calldata[callstack->depth].retaddr);
+
+    //ptrace(PTRACE_POKETEXT, global_pid, callstack->calldata[callstack->depth].retaddr, trap);
+    //callstack->calldata[callstack->depth].breakpoint.orig_code = orig;
+    //callstack->calldata[callstack->depth].breakpoint.vaddr = callstack->calldata[callstack->depth].retaddr;
+
+}
+
+void remove_breakpoint(pid_t child)
+{
+    int status;
+    //printf("[-] Removing breakpoint from 0x%lx\n", callstack->calldata[callstack->depth].retaddr);
+
+    //ptrace(PTRACE_POKETEXT, global_pid, addr, orig_opc);
+}
+
 
 static void dump_regs(struct user const *regs, FILE *outfp)
 {
@@ -38,9 +83,9 @@ static void dump_regs(struct user const *regs, FILE *outfp)
     fprintf(outfp, "\n");
 }
 
-void do_backtrace(pid_t child) {
+static void do_backtrace(pid_t child) {
 
-	ui = _UPT_create(child);
+	ui = (UPT_info*)_UPT_create(child);
 	if (!ui) {
 		printf("_UPT_create failed");
 	}
@@ -51,6 +96,7 @@ void do_backtrace(pid_t child) {
 	}
 
 	unw_cursor_t c;
+	int backTaceLevel = 0;
 	int rc = unw_init_remote(&c, as, ui);
 	if (rc != 0) {
 		if (rc == UNW_EINVAL) {
@@ -72,12 +118,13 @@ void do_backtrace(pid_t child) {
 		unw_get_reg(&c, UNW_REG_IP, &pc);
 		fname[0] = '\0';
 		(void) unw_get_proc_name(&c, fname, sizeof(fname), &offset);
-
 		printf("%p : (%s+0x%x) [%p]\n", (void *)pc,
 				fname,
 				(int) offset,
 				(void *) pc);
-	} while (unw_step(&c) > 0);
+		//demangle(fname);
+		backTaceLevel++;
+	} while ((unw_step(&c) > 0) && (backTaceLevel < 5));
 	printf("### backtrace end ###\n\n");
 
 	unw_destroy_addr_space(as);
@@ -140,11 +187,23 @@ int main(int argc __attribute__((unused)), char **argv, char **envp)
 			new_child = waitpid(-1, &status, __WALL);
 			if (WIFSTOPPED(status)) {
             	memset(&regs, 0, sizeof(regs));
-            	ptrace(PTRACE_GETREGS, new_child, NULL, &regs);
-				printf("### pid: %ld, stop signal: %d\n", new_child, WSTOPSIG(status));  
-                dump_regs(&regs, stdout);
-				do_backtrace(new_child);
-				ptrace(PTRACE_CONT,new_child, NULL, NULL);
+            	ptrace((__ptrace_request)PTRACE_GETREGS, new_child, NULL, &regs);
+				//printf("### pid: %ld, stop signal: %d\n", new_child, WSTOPSIG(status));  
+                //dump_regs(&regs, stdout);
+				//do_backtrace(new_child);
+				if(regs.regs.ARM_r7 == 0x2d)
+                {	
+					//dump_regs(&regs, stdout);
+					union u {
+						long val;
+						char chars[sizeof(long)];
+					}data;
+            		data.val = ptrace((__ptrace_request)PTRACE_PEEKUSER, new_child, regs.regs.ARM_r0, 0);
+					printf("brk size= %#lx\n", regs.regs.ARM_r0);
+					if(regs.regs.ARM_r0 > 0)
+						do_backtrace(new_child);
+				}
+				ptrace(PTRACE_SYSCALL,new_child, NULL, NULL);
 			}
 			if (status>>8 == (SIGTRAP | (PTRACE_EVENT_EXEC<<8))) {
 				printf("### PTRACE_EVENT_EXEC %ld, \n", new_child);  
@@ -171,4 +230,6 @@ int main(int argc __attribute__((unused)), char **argv, char **envp)
 
 	return 0;
 }
-
+#ifdef __cplusplus 
+} 
+#endif
