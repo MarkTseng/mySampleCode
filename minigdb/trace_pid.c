@@ -64,6 +64,7 @@ void do_backtrace(pid_t child) {
 		}
 	}
 
+	printf("\n### backtrace start ###\n");
 	do {
 		unw_word_t  offset, pc;
 		char        fname[64];
@@ -72,11 +73,12 @@ void do_backtrace(pid_t child) {
 		fname[0] = '\0';
 		(void) unw_get_proc_name(&c, fname, sizeof(fname), &offset);
 
-		printf("\n%p : (%s+0x%x) [%p]\n", (void *)pc,
+		printf("%p : (%s+0x%x) [%p]\n", (void *)pc,
 				fname,
 				(int) offset,
 				(void *) pc);
 	} while (unw_step(&c) > 0);
+	printf("### backtrace end ###\n\n");
 
 	unw_destroy_addr_space(as);
 	_UPT_destroy(ui);
