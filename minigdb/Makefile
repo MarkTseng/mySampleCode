@@ -8,16 +8,27 @@ DESTDIR =
 #CC = arm-linux-gnueabihf-gcc
 CC = gcc
 TARGET = minigdb
+TARGET2 = test
+TARGET3 = trace_pid
 
 SOURCES = breakpoint.c debug_file.c debug_line.c minigdb.c ptr_backtrace.c callstack.c memblock.c proc_info.c symtab.c addr_maps.c
 OBJS = breakpoint.o debug_file.o debug_line.o minigdb.o ptr_backtrace.o callstack.o memblock.o proc_info.o symtab.o addr_maps.o
 
+all: $(TARGET) $(TARGET2) $(TARGET3)
+
 $(TARGET) : $(OBJS)
 	$(CC) -o $@ $(OBJS) $(LDFLAGS) $(LDLIBS)
-	$(CC) -o test test.c
+
+$(TARGET2) : test.o
+	$(CC) -g -o test test.c
+
+$(TARGET3) : trace_pid.c
+	 arm-linux-gnueabihf-g++ -g -o trace_pid trace_pid.c -I/home/mark/myResearch/libunwind/LIBUNWIND_ARM/include -L/home/mark/myResearch/libunwind/LIBUNWIND_ARM/lib -lunwind-ptrace -lunwind -lunwind-arm
+	 cp trace_pid ~/nfs/ && sync
+	
 
 clean :
-	rm -f $(OBJS) $(TARGET)
+	rm -f $(OBJS) $(TARGET) $(TARGET2) $(TARGET3)
 
 install :
 	mkdir -p $(DESTDIR)$(PREFIX)/bin/
@@ -42,3 +53,4 @@ memblock.o: memblock.c hash.h list.h memblock.h callstack.h \
 proc_info.o: proc_info.c proc_info.h
 symtab.o: symtab.c array.h minigdb.h proc_info.h debug_file.h
 addr_maps.o: addr_maps.c addr_maps.h proc_info.h array.h
+test.o: test.c

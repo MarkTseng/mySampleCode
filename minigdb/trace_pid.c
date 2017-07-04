@@ -193,7 +193,7 @@ int main(int argc __attribute__((unused)), char **argv, char **envp)
 				//do_backtrace(new_child);
 				if(regs.regs.ARM_r7 == 0x2d)
                 {	
-					//dump_regs(&regs, stdout);
+					dump_regs(&regs, stdout);
 					union u {
 						long val;
 						char chars[sizeof(long)];
