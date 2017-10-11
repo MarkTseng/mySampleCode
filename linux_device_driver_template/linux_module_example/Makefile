@@ -52,9 +52,9 @@ endif
 #obj-m += debugfs.o
 #obj-m += system_call.o
 #obj-m += cdev_device.o
-#obj-m += kthread_example.o
+obj-m += kthread_example.o
 #obj-m += kthread_hw_semaphore.o
-#obj-m += file_log.o
+obj-m += file_log.o
 #obj-m += cpuset.o
 #obj-m += platform_driver_template.o
 #obj-m += kprobe_test.o
@@ -62,6 +62,8 @@ endif
 #obj-m += kretprobe_test.o
 #obj-m += mmapdriver.o
 obj-m += file_log_vfs.o
+obj-m += lab3_poll.o
+obj-m += of_platform_device.o
 all: modules
 
 modules:
