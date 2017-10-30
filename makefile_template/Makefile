@@ -1,8 +1,10 @@
 #include ${IPCM_TOP}/config.mk
 
-# shared library or binary 
-SHARED_LIS?=0
+# output compile message
 V?=0
+
+# shared library or binary and TARGET name
+SHARED_LIS?=0
 ifeq ($(SHARED_LIS),0)
     TARGET = hellomake
 else
