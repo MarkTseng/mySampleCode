@@ -1,15 +1,23 @@
 include ${IPCM_TOP}/config.mk
 
-# output compile message
+# Setting output compile message
 V?=0
 
-# shared library or binary and TARGET name
+# Setting shared library or binary and TARGET name
 SHARED_LIBS?=1
+TARGET = hellomake
+
+# Setting CFLAGS and LDFLAGS
+CFLAGS += -fPIC -Wall -Wextra -O2 -g -Iinc 
+CXXFLAGS += -DMYDEF2
+LDFLAGS +=  
+
 ifeq ($(SHARED_LIBS),0)
-    TARGET = hellomake
     PACKAGENAME = $(addsuffix .tar.xz,$(TARGET))
 else
-    TARGET = libhellomake.so
+	TARGET := $(addprefix lib,$(TARGET))
+	TARGET := $(addsuffix .so,$(TARGET))
+	TARGET := $(TARGET)
     LDFLAGS += -shared  
     PACKAGENAME = $(addsuffix .tar.xz,$(basename $(TARGET)))
 endif
@@ -25,11 +33,6 @@ RM = rm -rf
 MKDIR = mkdir -p
 TAR = tar cfJ   
 CP = cp -a  	
-
-# CFLAGS and LDFLAGS
-CFLAGS += -fPIC -Wall -Wextra -O2 -g -Iinc 
-CXXFLAGS += -DMYDEF2
-LDFLAGS +=  
 
 SRCS = $(wildcard ./src/*.c) # source files
 OBJS = $(subst src,obj,$(SRCS:%.c=%.o))
@@ -83,6 +86,7 @@ prepare:
 	@echo "  STRIP = $(STRIP)"
 	@echo "  AR = $(AR)"
 	@echo "  IPCM_TOP = $(IPCM_TOP)"
+	@echo "  TARGET = $(TARGET)"
 	@echo "  PACKAGE NAME = $(PACKAGENAME)"
 	@echo "========================================================"
 	@echo
