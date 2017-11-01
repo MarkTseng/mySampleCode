@@ -4,13 +4,13 @@ include ${IPCM_TOP}/config.mk
 V?=0
 
 # shared library or binary and TARGET name
-SHARED_LIS?=0
-ifeq ($(SHARED_LIS),0)
+SHARED_LIBS?=1
+ifeq ($(SHARED_LIBS),0)
     TARGET = hellomake
     PACKAGENAME = $(addsuffix .tar.xz,$(TARGET))
 else
-    LDFLAGS += -shared  
     TARGET = libhellomake.so
+    LDFLAGS += -shared  
     PACKAGENAME = $(addsuffix .tar.xz,$(basename $(TARGET)))
 endif
 
@@ -53,7 +53,7 @@ endif
 
 $(TARGET): $(OBJS)
 	$(MKDIR) $(LIB_DIR) $(BIN_DIR)
-ifeq ($(SHARED_LIS),0)
+ifeq ($(SHARED_LIBS),0)
 	$(CC) ${LDFLAGS} -o $(BIN_DIR)/$@ $^
 else
 	$(CC) ${LDFLAGS} -o $(LIB_DIR)/$@ $^
@@ -64,7 +64,7 @@ clean:
 
 package:
 	@echo "pack $(PACKAGENAME)"
-ifeq ($(SHARED_LIS),0)
+ifeq ($(SHARED_LIBS),0)
 	@$(MKDIR) package/$(TARGET) 
 	@$(CP) out/* package/$(TARGET)
 	@cd package && $(TAR) $(PACKAGENAME) $(TARGET)
