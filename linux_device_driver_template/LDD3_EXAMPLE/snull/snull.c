@@ -330,7 +330,8 @@ static int snull_poll(struct napi_struct *napi, int budget)
 	}
 	/* If we processed all packets, we're done; tell the kernel and reenable ints */
 	if (npackets < budget) {
-		netif_rx_complete(dev, napi);
+		//netif_rx_complete(dev, napi);
+        napi_complete(napi);
 		snull_rx_ints(dev, 1);
 	}
 	return npackets;
@@ -413,7 +414,8 @@ static void snull_napi_interrupt(int irq, void *dev_id, struct pt_regs *regs)
 	priv->status = 0;
 	if (statusword & SNULL_RX_INTR) {
 		snull_rx_ints(dev, 0);  /* Disable further interrupts */
-		netif_rx_schedule(dev, &(priv->napi));
+		//netif_rx_schedule(dev, &(priv->napi));
+        napi_schedule(&(priv->napi));
 	}
 	if (statusword & SNULL_TX_INTR) {
         	/* a transmission is over: free the skb */
@@ -639,6 +641,18 @@ static const struct header_ops snull_header_ops = {
 	.cache	 = NULL,  /* disable caching */
 };
 
+
+static const struct net_device_ops snull_netdev_ops = {
+    .ndo_open   = snull_open,
+    .ndo_stop   = snull_release,
+    .ndo_set_config = snull_config,
+    .ndo_do_ioctl   = snull_ioctl,
+    .ndo_get_stats  = snull_stats,
+    .ndo_start_xmit = snull_tx,
+    .ndo_change_mtu = snull_change_mtu,
+    .ndo_tx_timeout = snull_tx_timeout,
+};
+
 /*
  * The init function (sometimes called probe).
  * It is invoked by register_netdev()
@@ -659,20 +673,22 @@ void snull_init(struct net_device *dev)
 	 * hand assignments
 	 */
 	ether_setup(dev); /* assign some of the fields */
-
-	dev->open            = snull_open;
-	dev->stop            = snull_release;
+	dev->header_ops      = &snull_header_ops;
+    dev->netdev_ops      = &snull_netdev_ops;
+#if 0
+	dev->open            = snull_open;	
+    dev->stop            = snull_release;
 	dev->set_config      = snull_config;
 	dev->hard_start_xmit = snull_tx;
 	dev->do_ioctl        = snull_ioctl;
 	dev->get_stats       = snull_stats;
 	dev->change_mtu      = snull_change_mtu;  
-	dev->header_ops      = &snull_header_ops;
 	dev->tx_timeout      = snull_tx_timeout;
+#endif
 	dev->watchdog_timeo = timeout;
 	/* keep the default flags, just add NOARP */
 	dev->flags           |= IFF_NOARP;
-	dev->features        |= NETIF_F_NO_CSUM;
+	//dev->features        |= NETIF_F_NO_CSUM;
 	/*
 	 * Then, initialize the priv field. This encloses the statistics
 	 * and a few private fields.
@@ -723,9 +739,9 @@ int snull_init_module(void)
 	snull_interrupt = use_napi ? snull_napi_interrupt : snull_regular_interrupt;
 
 	/* Allocate the devices */
-	snull_devs[0] = alloc_netdev(sizeof(struct snull_priv), "sn%d",
+	snull_devs[0] = alloc_netdev(sizeof(struct snull_priv), "sn%d", NET_NAME_UNKNOWN,
 			snull_init);
-	snull_devs[1] = alloc_netdev(sizeof(struct snull_priv), "sn%d",
+	snull_devs[1] = alloc_netdev(sizeof(struct snull_priv), "sn%d", NET_NAME_UNKNOWN,
 			snull_init);
 	if (snull_devs[0] == NULL || snull_devs[1] == NULL)
 		goto out;
