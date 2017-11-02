@@ -4,7 +4,7 @@ include ${IPCM_TOP}/config.mk
 V?=0
 
 # Setting shared library or binary and TARGET name
-SHARED_LIBS?=1
+SHARED_LIBS?=0
 TARGET = hellomake
 
 # Setting CFLAGS and LDFLAGS
@@ -45,15 +45,6 @@ BIN_DIR=$(OUT_DIR)/bin
 
 all: prepare ${TARGET} package
 
-obj/%.o : src/%.c $(H_SRCS)
-	@mkdir -p obj
-ifeq ($(V),0)
-	@echo "  CC  $<"
-	@$(CC) $(CFLAGS) -c $< -o $@
-else
-	$(CC) $(CFLAGS) -c $< -o $@
-endif
-
 $(TARGET): $(OBJS)
 	$(MKDIR) $(LIB_DIR) $(BIN_DIR)
 ifeq ($(SHARED_LIBS),0)
@@ -62,8 +53,24 @@ else
 	$(CC) ${LDFLAGS} -o $(LIB_DIR)/$@ $^
 endif
 
+$(OBJS:%.o=%.d):obj/%.d:src/%.c
+	@$(CC) $(CFLAGS) -MM $< >$@2
+	@sed 's,\($*\)\.o[ :]*,obj\/\1.o: ,g' <$@2 >$@ 
+	@$(RM) $@2
+
+-include $(OBJS:%.o=%.d)
+
+obj/%.o : src/%.c 
+	@mkdir -p obj
+ifeq ($(V),0)
+	@echo "  CC  $<"
+	@$(CC) $(CFLAGS) -c $< -o $@
+else
+	$(CC) $(CFLAGS) -c $< -o $@
+endif
+
 clean:
-	${RM} ${OBJS} out/ package
+	${RM} ${OBJS} out/ package obj/*.d*
 
 package:
 	@echo "pack $(PACKAGENAME)"
