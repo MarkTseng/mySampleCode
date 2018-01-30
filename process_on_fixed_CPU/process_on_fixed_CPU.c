@@ -16,7 +16,7 @@ main(int argc, char *argv[])
 	cpu_set_t cpuset;
 
 	CPU_ZERO(&cpuset);
-	CPU_SET(2, &cpuset); // on CPU 2
+	CPU_SET(1, &cpuset); // on CPU 1
 
 	s = sched_setaffinity(getpid(), sizeof(cpu_set_t), &cpuset);
 	if (s != 0)
