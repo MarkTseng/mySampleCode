@@ -1,0 +1,199 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+ADDRESS_LABEL	env.c	41;"	d	file:
+ASSIGNMENT_CHAR	env.c	52;"	d	file:
+ASSIGNMENT_CHAR	env.c	57;"	d	file:
+CALLOC_CALL	mguard.c	/^        CALLOC_CALL,$/;"	e	enum:__anon2	file:
+DEBUG_LABEL	env.c	42;"	d	file:
+DLCLOSE_CALL	mguard.c	/^        DLCLOSE_CALL,$/;"	e	enum:__anon2	file:
+DLOPEN_CALL	mguard.c	/^        DLOPEN_CALL,$/;"	e	enum:__anon2	file:
+DMALLOC_FREE_RET	env.c	71;"	d	file:
+DMALLOC_PNT	env.c	70;"	d	file:
+FREE_CALL	mguard.c	/^        FREE_CALL,$/;"	e	enum:__anon2	file:
+INIT_RECORD	mguard.c	93;"	d	file:
+INTERVAL_LABEL	env.c	43;"	d	file:
+LIMIT_LABEL	env.c	47;"	d	file:
+LOCK_ON_LABEL	env.c	44;"	d	file:
+LOGFILE_LABEL	env.c	45;"	d	file:
+MALLOC_CALL	mguard.c	/^        MALLOC_CALL=1,$/;"	e	enum:__anon2	file:
+MEMALIGN_CALL	mguard.c	/^        MEMALIGN_CALL,$/;"	e	enum:__anon2	file:
+MERR	mguard.c	25;"	d	file:
+MGUARD_ENV_LOG	env.c	55;"	d	file:
+MGUARD_ENV_OPTION	env.c	54;"	d	file:
+MMAP_CALL	mguard.c	/^        MMAP_CALL,$/;"	e	enum:__anon2	file:
+MREMAP_CALL	mguard.c	/^        MREMAP_CALL,$/;"	e	enum:__anon2	file:
+MUNMAP_CALL	mguard.c	/^        MUNMAP_CALL,$/;"	e	enum:__anon2	file:
+POSIX_MEMALIGN_CALL	mguard.c	/^        POSIX_MEMALIGN_CALL,$/;"	e	enum:__anon2	file:
+REALLOC_CALL	mguard.c	/^        REALLOC_CALL,$/;"	e	enum:__anon2	file:
+RNAME_LABEL	env.c	49;"	d	file:
+RPID_LABEL	env.c	48;"	d	file:
+SET_POINTER	env.c	86;"	d	file:
+SID	mguard.c	/^static int SID=1;$/;"	v	file:
+SIGNAL1	mguard.c	86;"	d	file:
+SIGNAL2	mguard.c	87;"	d	file:
+SIGNAL3	mguard.c	88;"	d	file:
+START_LABEL	env.c	46;"	d	file:
+TOTAL_CALL_TYPE_SIZE	mguard.c	/^        TOTAL_CALL_TYPE_SIZE$/;"	e	enum:__anon2	file:
+TRACK_LABEL	env.c	50;"	d	file:
+UNW_LOCAL_ONLY	mguard.c	19;"	d	file:
+VALLOC_CALL	mguard.c	/^        VALLOC_CALL,$/;"	e	enum:__anon2	file:
+_dmalloc_envopt_process	env.c	/^static void    _dmalloc_envopt_process(const char *env_str)$/;"	f	file:
+_dmalloc_vmessage	compat.c	/^static void    _dmalloc_vmessage(const char *format, int single_line ,va_list args)$/;"	f	file:
+address_cnt	mguard.c	/^    int address_cnt;$/;"	m	struct:mcall_struct	file:
+alignment	mguard.c	/^            size_t alignment;$/;"	m	struct:__anon3::__anon4::__anon8	file:
+at_desc	env.c	/^  char      *at_desc;       \/* description string *\/$/;"	m	struct:__anon1	file:
+at_string	env.c	/^  char      *at_string;     \/* attribute string *\/$/;"	m	struct:__anon1	file:
+at_value	env.c	/^  unsigned long at_value;       \/* value for the item *\/$/;"	m	struct:__anon1	file:
+attr_t	env.c	/^} attr_t;$/;"	t	typeref:struct:__anon1	file:
+backtrace_id	mguard.c	/^    size_t backtrace_id;$/;"	m	struct:__anon3	file:
+backtrace_struct	mguard.c	/^struct backtrace_struct {$/;"	s	file:
+boundary	mguard.c	/^            size_t boundary;$/;"	m	struct:__anon3::__anon4::__anon7	file:
+btrace	mguard.c	/^static struct backtrace_struct *btrace=NULL;$/;"	v	typeref:struct:backtrace_struct	file:
+btrace_table_lock	mguard.c	/^static pthread_rwlock_t btrace_table_lock;$/;"	v	file:
+build_logfile_path	compat.c	/^static  void    build_logfile_path(int sid,char *timestamp_str,char *buf, const int buf_len)$/;"	f	file:
+call_begin	mguard.c	/^static int call_begin()$/;"	f	file:
+call_count_list	mguard.c	/^static int call_count_list[TOTAL_CALL_TYPE_SIZE]={0};$/;"	v	file:
+call_end	mguard.c	/^static void call_end()$/;"	f	file:
+calloc	mguard.c	/^void* calloc(size_t ncount, size_t nsize)$/;"	f
+calloc_call	mguard.c	/^        } calloc_call;$/;"	m	union:__anon3::__anon4	typeref:struct:__anon3::__anon4::__anon5	file:
+child_fork	mguard.c	/^static void child_fork()$/;"	f	file:
+cnt	mguard.c	/^    unsigned int cnt;$/;"	m	struct:backtrace_struct	file:
+dlclose	mguard.c	/^int dlclose(void* handle)$/;"	f
+dlopen	mguard.c	/^void* dlopen(const char* filename, int flag)$/;"	f
+dlopen_call	mguard.c	/^		} dlopen_call;$/;"	m	union:__anon3::__anon4	typeref:struct:__anon3::__anon4::__anon11	file:
+dmalloc_message	compat.c	/^void dmalloc_message(const char *format, ...)$/;"	f
+dmalloc_message_concat	compat.c	/^void dmalloc_message_concat(const char *format, ...)$/;"	f
+do_mcall	mguard.c	/^static void do_mcall(mcall_record *record,va_list args) {$/;"	f	file:
+do_unwind_backtrace	mguard.c	/^void do_unwind_backtrace()$/;"	f
+dummy_calloc	mguard.c	/^static void* dummy_calloc(size_t nmemb, size_t size) {$/;"	f	file:
+dummy_free	mguard.c	/^static void dummy_free(void *ptr) {$/;"	f	file:
+dummy_malloc	mguard.c	/^static void* dummy_malloc(size_t size) {$/;"	f	file:
+entered	mguard.c	/^__thread unsigned int entered = 0;$/;"	v
+env_load_option	env.c	/^void env_load_option(void)$/;"	f
+env_logpath	env.c	/^static	char env_logpath[512]	= { '\\0' }; \/* storage for env path *\/$/;"	v	file:
+env_opt_debug	env.c	/^long env_opt_debug=0;$/;"	v
+env_opt_remove_zero_called_btrace	env.c	/^int env_opt_remove_zero_called_btrace=0;$/;"	v
+env_opt_rname	env.c	/^char env_opt_rname[512]={0};$/;"	v
+env_opt_rpid	env.c	/^size_t env_opt_rpid=0;$/;"	v
+env_opt_track	env.c	/^int env_opt_track=0;$/;"	v
+env_setup_logpath	env.c	/^void env_setup_logpath(void)$/;"	f
+fd	mguard.c	/^        	int fd;$/;"	m	struct:__anon3::__anon4::__anon9	file:
+filename	mguard.c	/^			const char *filename;$/;"	m	struct:__anon3::__anon4::__anon11	file:
+flag	mguard.c	/^			int flag;$/;"	m	struct:__anon3::__anon4::__anon11	file:
+flag	mguard.c	/^        	int flag;$/;"	m	struct:__anon3::__anon4::__anon10	file:
+flag	mguard.c	/^        	int flag;$/;"	m	struct:__anon3::__anon4::__anon9	file:
+forked	mguard.c	/^static int forked=0;$/;"	v	file:
+free	mguard.c	/^void free(void *ptr)$/;"	f
+generating_report	mguard.c	/^static int generating_report=0;$/;"	v	file:
+get_SID	mguard.c	/^int get_SID()$/;"	f
+guarding_flag	mguard.c	/^static int guarding_flag=1;$/;"	v	file:
+hash_id_struct	mguard.c	/^struct hash_id_struct {$/;"	s	file:
+hex_to_long	compat.c	/^long    hex_to_long(const char *str)$/;"	f
+hh	mguard.c	/^    UT_hash_handle hh; \/* makes this structure hashable *\/$/;"	m	struct:backtrace_struct	file:
+hh	mguard.c	/^    UT_hash_handle hh; \/* makes this structure hashable *\/$/;"	m	struct:hash_id_struct	file:
+hh	mguard.c	/^    UT_hash_handle hh; \/* makes this structure hashable *\/$/;"	m	struct:mcall_struct	file:
+hookfns	mguard.c	/^static void  hookfns()$/;"	f	file:
+id	mguard.c	/^	size_t id;            \/* we'll use this field as the key *\/$/;"	m	struct:backtrace_struct	file:
+id	mguard.c	/^    size_t id;            \/* we'll use this field as the key *\/$/;"	m	struct:hash_id_struct	file:
+id	mguard.c	/^    size_t id;$/;"	m	struct:mcall_struct	file:
+in_ptr	mguard.c	/^            void *in_ptr;$/;"	m	struct:__anon3::__anon4::__anon10	file:
+in_ptr	mguard.c	/^            void* in_ptr;$/;"	m	struct:__anon3::__anon4::__anon6	file:
+in_size	mguard.c	/^        	size_t in_size;$/;"	m	struct:__anon3::__anon4::__anon10	file:
+init_mutex	mguard.c	/^static pthread_mutex_t init_mutex = PTHREAD_MUTEX_INITIALIZER;$/;"	v	file:
+initialized	mguard.c	/^static int initialized = 0;$/;"	v	file:
+is_pointer_valid	mguard.c	/^bool is_pointer_valid(void *p) {$/;"	f
+loc_atoul	compat.c	/^unsigned long   loc_atoul(const char *str)$/;"	f
+loc_snprintf	compat.c	/^static int loc_snprintf(char *buf, const int buf_size, const char *format, ...)$/;"	f	file:
+loc_vsnprintf	compat.c	/^static int loc_vsnprintf(char *buf, const int buf_size, const char *format, va_list args)$/;"	f	file:
+log_file_path	compat.c	/^static char  log_file_path[1024]={0};$/;"	v	file:
+malloc	mguard.c	/^void* malloc(size_t size)$/;"	f
+mcall_record	mguard.c	/^} mcall_record;$/;"	t	typeref:struct:__anon3	file:
+mcall_struct	mguard.c	/^struct mcall_struct{$/;"	s	file:
+mcall_table	mguard.c	/^static struct mcall_struct *mcall_table=NULL;$/;"	v	typeref:struct:mcall_struct	file:
+mcall_table_lock	mguard.c	/^static pthread_rwlock_t mcall_table_lock;$/;"	v	file:
+mcall_type	mguard.c	/^}mcall_type ;$/;"	t	typeref:enum:__anon2	file:
+memalign	mguard.c	/^void* memalign(size_t boundary, size_t size)$/;"	f
+memalign_call	mguard.c	/^        } memalign_call;$/;"	m	union:__anon3::__anon4	typeref:struct:__anon3::__anon4::__anon7	file:
+memptr	mguard.c	/^            void** memptr;$/;"	m	struct:__anon3::__anon4::__anon8	file:
+message_str	compat.c	/^static  char    message_str[1024];      \/* message string buffer *\/$/;"	v	file:
+mguard_close_log	compat.c	/^void mguard_close_log(void)$/;"	f
+mguard_config	mguard.c	/^static void mguard_config(void)$/;"	f	file:
+mguard_env_logpath	env.c	/^char *mguard_env_logpath=NULL;$/;"	v
+mguard_open_log	compat.c	/^void mguard_open_log(int sid,char *timestamp_str)$/;"	f
+mguard_opt_debug	mguard.c	/^long mguard_opt_debug=(OPT_DBG_NO_TRACK_DLOPEN|OPT_DBG_NO_TRACK_MEMALIGN);$/;"	v
+mguard_opt_rpid	mguard.c	/^size_t mguard_opt_rpid=0;$/;"	v
+mmap	mguard.c	/^void* mmap(void *start, size_t size, int prot, int flag, int fd, off_t offset)$/;"	f
+mmap_call	mguard.c	/^        } mmap_call;$/;"	m	union:__anon3::__anon4	typeref:struct:__anon3::__anon4::__anon9	file:
+mremap	mguard.c	/^void* mremap(void *in_ptr, size_t in_size, size_t size, int flag,...)$/;"	f
+mremap_call	mguard.c	/^		} mremap_call;$/;"	m	union:__anon3::__anon4	typeref:struct:__anon3::__anon4::__anon10	file:
+mtype	mguard.c	/^	mcall_type mtype;$/;"	m	struct:backtrace_struct	file:
+mtype	mguard.c	/^    mcall_type mtype;$/;"	m	struct:__anon3	file:
+munmap	mguard.c	/^int munmap(void *ptr, size_t size)$/;"	f
+ncount	mguard.c	/^            size_t ncount;$/;"	m	struct:__anon3::__anon4::__anon5	file:
+nonused_va	mguard.c	/^static va_list nonused_va;$/;"	v	file:
+nsize	mguard.c	/^            size_t nsize;$/;"	m	struct:__anon3::__anon4::__anon5	file:
+offset	mguard.c	/^        	off_t offset;$/;"	m	struct:__anon3::__anon4::__anon9	file:
+ourgetpid	mguard.c	/^pid_t ourgetpid() {$/;"	f
+ourgettid	mguard.c	/^pid_t ourgettid() {$/;"	f
+outfile_fd	compat.c	/^static  int outfile_fd = -1;        \/* output file descriptor *\/$/;"	v	file:
+parent_fork	mguard.c	/^static void parent_fork()$/;"	f	file:
+pid	mguard.c	/^	pid_t pid;$/;"	m	struct:backtrace_struct	file:
+posix_memalign	mguard.c	/^int posix_memalign(void** memptr, size_t alignment, size_t size)$/;"	f
+posix_memalign_call	mguard.c	/^        } posix_memalign_call;$/;"	m	union:__anon3::__anon4	typeref:struct:__anon3::__anon4::__anon8	file:
+post_guard	mguard.c	/^void post_guard(mcall_record* record)$/;"	f
+pre_guard	mguard.c	/^static void pre_guard(mcall_record *record) {$/;"	f	file:
+prepare_fork	mguard.c	/^static void prepare_fork()$/;"	f	file:
+prot	mguard.c	/^        	int prot;$/;"	m	struct:__anon3::__anon4::__anon9	file:
+ptr	mguard.c	/^    void* ptr;$/;"	m	struct:__anon3	file:
+real_calloc	mguard.c	/^static void* (*real_calloc)(size_t nmemb, size_t size);$/;"	v	file:
+real_dlclose	mguard.c	/^static int   (*real_dlclose)(void* handle);$/;"	v	file:
+real_dlopen	mguard.c	/^static void* (*real_dlopen)(const char *filename, int flag);$/;"	v	file:
+real_free	mguard.c	/^static void  (*real_free)(void *ptr);$/;"	v	file:
+real_malloc	mguard.c	/^static void* (*real_malloc)(size_t size);$/;"	v	file:
+real_memalign	mguard.c	/^static void* (*real_memalign)(size_t boundary, size_t size);$/;"	v	file:
+real_mmap	mguard.c	/^static void* (*real_mmap)(void *start, size_t length, int prot, int flags, int fd, off_t offset);$/;"	v	file:
+real_mremap	mguard.c	/^static void* (*real_mremap)(void *start, size_t length, size_t new_length, int flag,...);$/;"	v	file:
+real_munmap	mguard.c	/^static int   (*real_munmap)(void *addr, size_t length);$/;"	v	file:
+real_posix_memalign	mguard.c	/^static int   (*real_posix_memalign)(void** memptr, size_t alignment, size_t size);$/;"	v	file:
+real_realloc	mguard.c	/^static void* (*real_realloc)(void *ptr, size_t size);$/;"	v	file:
+real_valloc	mguard.c	/^static void* (*real_valloc)(size_t size);$/;"	v	file:
+realloc	mguard.c	/^void* realloc(void *ptr, size_t size)$/;"	f
+realloc_call	mguard.c	/^        } realloc_call;$/;"	m	union:__anon3::__anon4	typeref:struct:__anon3::__anon4::__anon6	file:
+record	mguard.c	/^    mcall_record record;$/;"	m	struct:mcall_struct	file:
+report_job	mguard.c	/^static void *report_job(void *arg)$/;"	f	file:
+report_meminfo	mguard.c	/^static void report_meminfo()$/;"	f	file:
+report_thread	mguard.c	/^static pthread_t report_thread=0;$/;"	v	file:
+rv	mguard.c	/^    int rv;$/;"	m	struct:__anon3	file:
+set_guarding_flag	mguard.c	/^void set_guarding_flag(int flag)$/;"	f
+should_be_guard	mguard.c	/^static int should_be_guard(mcall_record *record)$/;"	f	file:
+signal_SIGNAL_handler	mguard.c	/^static  void  signal_SIGNAL_handler(const int sig)$/;"	f	file:
+size	mguard.c	/^    size_t size;$/;"	m	struct:__anon3	file:
+stack	mguard.c	/^    void *stack[MAX_CALL_STACK_LEN];$/;"	m	struct:backtrace_struct	file:
+start	mguard.c	/^        	void *start;$/;"	m	struct:__anon3::__anon4::__anon9	file:
+temp_calloc	mguard.c	/^static void* (*temp_calloc)(size_t nmemb, size_t size);$/;"	v	file:
+temp_dlclose	mguard.c	/^static int   (*temp_dlclose)(void* handle);$/;"	v	file:
+temp_dlopen	mguard.c	/^static void* (*temp_dlopen)(const char *filename, int flag);$/;"	v	file:
+temp_free	mguard.c	/^static void  (*temp_free)(void *ptr);$/;"	v	file:
+temp_malloc	mguard.c	/^static void* (*temp_malloc)(size_t size);$/;"	v	file:
+temp_memalign	mguard.c	/^static void* (*temp_memalign)(size_t blocksize, size_t bytes);$/;"	v	file:
+temp_mmap	mguard.c	/^static void* (*temp_mmap)(void *start, size_t length, int prot, int flags, int fd, off_t offset);$/;"	v	file:
+temp_mremap	mguard.c	/^static void* (*temp_mremap)(void *start, size_t length, size_t new_length, int flag,...);$/;"	v	file:
+temp_munmap	mguard.c	/^static int   (*temp_munmap)(void *addr, size_t length);$/;"	v	file:
+temp_posix_memalign	mguard.c	/^static int   (*temp_posix_memalign)(void** memptr, size_t alignment, size_t size);$/;"	v	file:
+temp_realloc	mguard.c	/^static void* (*temp_realloc)(void *ptr, size_t size);$/;"	v	file:
+temp_valloc	mguard.c	/^static void* (*temp_valloc)(size_t size);$/;"	v	file:
+tid	mguard.c	/^	pid_t tid;$/;"	m	struct:backtrace_struct	file:
+tmpallocs	mguard.c	/^static unsigned long tmpallocs = 0;$/;"	v	file:
+tmpbuf	mguard.c	/^static char tmpbuf[1024];$/;"	v	file:
+tmppos	mguard.c	/^static unsigned long tmppos = 0;$/;"	v	file:
+tracked	mguard.c	/^    unsigned int tracked;$/;"	m	struct:backtrace_struct	file:
+ufree	mguard.c	/^void ufree(void *ptr,size_t size)$/;"	f
+umalloc	mguard.c	/^void* umalloc(size_t size)$/;"	f
+uthash_free	mguard.c	82;"	d	file:
+uthash_malloc	mguard.c	81;"	d	file:
+uthash_memory_usage	mguard.c	/^unsigned long uthash_memory_usage=0;$/;"	v
+valloc	mguard.c	/^void* valloc(size_t size)$/;"	f

@@ -5,11 +5,11 @@
 
 # Toolchain setting
 TOOL_CHAIN_DIR=/home/mark/MySoftware/bin
-CROSS_COMPILE=$(TOOL_CHAIN_DIR)/mips-linux-gnu-
-ARCH_PLATFORM=mips
+CROSS_COMPILE=arm-linux-gnueabihf-
+ARCH_PLATFORM=arm
 
 # Kernel path
-KERNELDIR=/home/mark/SVN/kernelteam/LinuxKernel/linux-2.6.38
+KERNELDIR=/home/mark/mstar_workshop/IPCM-I3/source/linux-3.18
 
 # module install directory
 INSTALLDIR=/home/mark/SVN/kernelteam/FileSystem/ramfs/root/lib/modules/2.6.38_SPHE9200_V1

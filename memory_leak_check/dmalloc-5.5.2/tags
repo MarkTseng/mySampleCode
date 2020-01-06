@@ -1,0 +1,1958 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+ABORT_OKAY	conf.h	102;"	d
+ADDRESS_LABEL	env.c	56;"	d	file:
+ALLOCATION_ALIGNMENT	conf.h	93;"	d
+ALLOC_BLANK_CHAR	settings.h	107;"	d
+ALLOC_FLAG_ADMIN	chunk_loc.h	75;"	d
+ALLOC_FLAG_BLANK	chunk_loc.h	76;"	d
+ALLOC_FLAG_EXTERN	chunk_loc.h	74;"	d
+ALLOC_FLAG_FENCE	chunk_loc.h	77;"	d
+ALLOC_FLAG_FREE	chunk_loc.h	73;"	d
+ALLOC_FLAG_USER	chunk_loc.h	72;"	d
+ALLOW_ALLOC_ZERO_SIZE	settings.h	45;"	d
+ALLOW_FREE_NULL	settings.h	86;"	d
+ALLOW_FREE_NULL_MESSAGE	settings.h	87;"	d
+ALLOW_REALLOC_NULL	settings.h	53;"	d
+ALLOW_REALLOC_SIZE_ZERO	settings.h	62;"	d
+ALL_FLAGS	dmalloc.c	96;"	d	file:
+ARGV_ARRAY_COUNT	dmalloc_argv.h	93;"	d
+ARGV_ARRAY_ENTRY	dmalloc_argv.h	96;"	d
+ARGV_ARRAY_ENTRY_P	dmalloc_argv.h	100;"	d
+ARGV_BIN	dmalloc_argv.h	155;"	d
+ARGV_BOOL	dmalloc_argv.h	142;"	d
+ARGV_BOOL_ARG	dmalloc_argv.h	144;"	d
+ARGV_BOOL_INT	dmalloc_argv.h	161;"	d
+ARGV_BOOL_INT_ARG	dmalloc_argv.h	163;"	d
+ARGV_BOOL_INT_NEG	dmalloc_argv.h	162;"	d
+ARGV_BOOL_NEG	dmalloc_argv.h	143;"	d
+ARGV_CHAR	dmalloc_argv.h	145;"	d
+ARGV_CHAR_P	dmalloc_argv.h	146;"	d
+ARGV_DOUBLE	dmalloc_argv.h	154;"	d
+ARGV_FALSE	dmalloc_argv.h	180;"	d
+ARGV_FLAG_ARRAY	dmalloc_argv.h	166;"	d
+ARGV_FLAG_MAND	dmalloc_argv.h	167;"	d
+ARGV_FLAG_USED	dmalloc_argv_loc.h	69;"	d
+ARGV_FLOAT	dmalloc_argv.h	153;"	d
+ARGV_HEX	dmalloc_argv.h	157;"	d
+ARGV_INCR	dmalloc_argv.h	158;"	d
+ARGV_INT	dmalloc_argv.h	149;"	d
+ARGV_LAST	dmalloc_argv.h	104;"	d
+ARGV_LONG	dmalloc_argv.h	151;"	d
+ARGV_MAND	dmalloc_argv.h	112;"	d
+ARGV_MAYBE	dmalloc_argv.h	118;"	d
+ARGV_OCT	dmalloc_argv.h	156;"	d
+ARGV_ONE_OF	dmalloc_argv.h	135;"	d
+ARGV_OR	dmalloc_argv.h	126;"	d
+ARGV_PNT	dmalloc_argv.h	56;"	d
+ARGV_PNT	dmalloc_argv.h	58;"	d
+ARGV_SHORT	dmalloc_argv.h	147;"	d
+ARGV_SIZE	dmalloc_argv.h	159;"	d
+ARGV_TRUE	dmalloc_argv.h	181;"	d
+ARGV_TYPE	dmalloc_argv.h	165;"	d
+ARGV_USAGE_ALL	dmalloc_argv.h	177;"	d
+ARGV_USAGE_DEFAULT	dmalloc_argv.h	174;"	d
+ARGV_USAGE_LONG	dmalloc_argv.h	173;"	d
+ARGV_USAGE_NONE	dmalloc_argv.h	171;"	d
+ARGV_USAGE_SEE	dmalloc_argv.h	175;"	d
+ARGV_USAGE_SHORT	dmalloc_argv.h	172;"	d
+ARGV_USAGE_SHORT_REM	dmalloc_argv.h	176;"	d
+ARGV_U_INT	dmalloc_argv.h	150;"	d
+ARGV_U_LONG	dmalloc_argv.h	152;"	d
+ARGV_U_SHORT	dmalloc_argv.h	148;"	d
+ARGV_U_SIZE	dmalloc_argv.h	160;"	d
+ARGV_XOR	dmalloc_argv.h	136;"	d
+ARG_EQUALS	dmalloc_argv_loc.h	96;"	d
+ARG_MALLOC_INCR	dmalloc_argv_loc.h	64;"	d
+ARRAY_INCR	dmalloc_argv_loc.h	59;"	d
+ARRAY_LABEL	dmalloc_argv_loc.h	125;"	d
+ASM_GET_RET_ADDR	return.h	/^asm void ASM_GET_RET_ADDR(file)$/;"	f
+ASSIGNMENT_CHAR	env.c	64;"	d	file:
+AUTO_SHUTDOWN	settings.h	163;"	d
+AUTO_SHUTDOWN	settings.h	334;"	d
+AUTO_SHUTDOWN	settings.h	335;"	d
+A_OUT	Makefile	/^A_OUT = aout$/;"	m
+Allocation-Basics	docs/dmalloc.html	/^<a name="Allocation-Basics"><\/a>$/;"	a
+Allocation-Macros	docs/dmalloc.html	/^<a name="Allocation-Macros"><\/a>$/;"	a
+Argument-Checking	docs/dmalloc.html	/^<a name="Argument-Checking"><\/a>$/;"	a
+BASIC_BLOCK	conf.h	75;"	d
+BITS_IN_BYTE	dmalloc_argv_loc.h	61;"	d
+BIT_CLEAR	dmalloc_loc.h	82;"	d
+BIT_CLEAR	dmalloc_loc.h	83;"	d
+BIT_FLAG	dmalloc_loc.h	78;"	d
+BIT_FLAG	dmalloc_loc.h	79;"	d
+BIT_IS_SET	dmalloc_loc.h	84;"	d
+BIT_IS_SET	dmalloc_loc.h	85;"	d
+BIT_SET	dmalloc_loc.h	80;"	d
+BIT_SET	dmalloc_loc.h	81;"	d
+BLOCK_SIZE	dmalloc_loc.h	100;"	d
+BOOL_ARG_LABEL	dmalloc_argv_loc.h	126;"	d
+BOOL_ARG_LENGTH	dmalloc_argv_loc.h	136;"	d
+BUF_SIZE	dmalloc_t.c	2217;"	d	file:
+BUF_SIZE	dmalloc_t.c	2338;"	d	file:
+BUF_SIZE	dmalloc_t.c	2431;"	d	file:
+BUF_SIZE	dmalloc_t.c	3303;"	d	file:
+BUILD_ALL	Makefile	/^BUILD_ALL = dmalloc.h $(LIBRARY) $(UTIL) \\$/;"	m
+BUILD_ALL_1	Makefile	/^BUILD_ALL_1 = threads$/;"	m
+BUILD_ALL_2	Makefile	/^BUILD_ALL_2 = $(LIB_TH_SL)$/;"	m
+BUILD_ALL_7	Makefile	/^BUILD_ALL_7 = $(LIB_SL)$/;"	m
+BUILD_CXX	Makefile	/^BUILD_CXX = $(LIB_CXX) \\$/;"	m
+BUILD_CXX_3	Makefile	/^BUILD_CXX_3 = $(LIB_CXX_SL)$/;"	m
+BUILD_CXX_5	Makefile	/^BUILD_CXX_5 = $(LIB_TH_CXX)$/;"	m
+BUILD_CXX_6	Makefile	/^BUILD_CXX_6 = $(LIB_TH_CXX_SL)$/;"	m
+BUILD_SL	Makefile	/^BUILD_SL = $(LIB_SL) \\$/;"	m
+BUILD_SL_7	Makefile	/^BUILD_SL_7 = $(LIB_TH_SL)$/;"	m
+BUILD_THREADS	Makefile	/^BUILD_THREADS = $(LIB_TH) \\$/;"	m
+BUILD_THREADS_1	Makefile	/^BUILD_THREADS_1 = $(LIB_TH_SL)$/;"	m
+BUILD_TH_CXX	Makefile	/^BUILD_TH_CXX = $(LIB_TH_CXX) \\$/;"	m
+BUILD_TH_CXX_7	Makefile	/^BUILD_TH_CXX_7 = $(LIB_TH_CXX_SL)$/;"	m
+Basic-Definitions	docs/dmalloc.html	/^<a name="Basic-Definitions"><\/a>$/;"	a
+CALLOC_ERROR	DMALLOC/include/dmalloc.h	71;"	d
+CALLOC_ERROR	dmalloc.h	71;"	d
+CC	Makefile	/^CC = arm-linux-gnueabihf-gcc$/;"	m
+CCFLAGS	Makefile	/^CCFLAGS = -U_FORTIFY_SOURCE -fPIC$/;"	m
+CFLAGS	Makefile	/^CFLAGS = $(CCFLAGS)$/;"	m
+CHUNK_SMALLEST_BLOCK	chunk_loc.h	68;"	d
+COMMENT_COLUMN	dmalloc_argv_loc.h	118;"	d
+COMMENT_LABEL	dmalloc_argv_loc.h	124;"	d
+COMMENT_LABEL_LENGTH	dmalloc_argv_loc.h	133;"	d
+CONSTRUCTOR_WORKS	conf.h	172;"	d
+COUNT_ARG	dmalloc_t.c	3253;"	d	file:
+CXX	Makefile	/^CXX = arm-linux-gnueabihf-g++$/;"	m
+CXX_OBJS	Makefile	/^CXX_OBJS = dmallocc.o$/;"	m
+CXX_OBJS_SL	Makefile	/^CXX_OBJS_SL = dmallocc_sl.o$/;"	m
+Compatibility	docs/dmalloc.html	/^<a name="Compatibility"><\/a>$/;"	a
+Copying	docs/dmalloc.html	/^<a name="Copying"><\/a>$/;"	a
+DEBUG_ALLOC_BLANK	debug_tok.h	65;"	d
+DEBUG_ARG	dmalloc.c	64;"	d	file:
+DEBUG_CATCH_NULL	debug_tok.h	68;"	d
+DEBUG_CATCH_SIGNALS	debug_tok.h	60;"	d
+DEBUG_CHECK_BLANK	debug_tok.h	54;"	d
+DEBUG_CHECK_FENCE	debug_tok.h	51;"	d
+DEBUG_CHECK_FUNCS	debug_tok.h	55;"	d
+DEBUG_CHECK_HEAP	debug_tok.h	52;"	d
+DEBUG_CHECK_SHUTDOWN	debug_tok.h	56;"	d
+DEBUG_ERROR_ABORT	debug_tok.h	64;"	d
+DEBUG_ERROR_DUMP	debug_tok.h	72;"	d
+DEBUG_ERROR_FREE_NULL	debug_tok.h	70;"	d
+DEBUG_FREE_BLANK	debug_tok.h	63;"	d
+DEBUG_LABEL	env.c	57;"	d	file:
+DEBUG_LOG_ADMIN	debug_tok.h	41;"	d
+DEBUG_LOG_BAD_SPACE	debug_tok.h	44;"	d
+DEBUG_LOG_CURRENT_TIME	debug_tok.h	48;"	d
+DEBUG_LOG_ELAPSED_TIME	debug_tok.h	47;"	d
+DEBUG_LOG_KNOWN	debug_tok.h	38;"	d
+DEBUG_LOG_NONFREE	debug_tok.h	37;"	d
+DEBUG_LOG_NONFREE_SPACE	debug_tok.h	45;"	d
+DEBUG_LOG_STATS	debug_tok.h	36;"	d
+DEBUG_LOG_TRANS	debug_tok.h	39;"	d
+DEBUG_NEVER_REUSE	debug_tok.h	69;"	d
+DEBUG_PRINT_MESSAGES	debug_tok.h	67;"	d
+DEBUG_REALLOC_COPY	debug_tok.h	62;"	d
+DEFAULT_CONFIG	dmalloc.c	60;"	d	file:
+DEFAULT_ITERATIONS	dmalloc_t.c	63;"	d	file:
+DEFAULT_SMALLEST_ALLOCATION	settings.h	406;"	d
+DEFS	Makefile	/^DEFS = -DHAVE_STDARG_H=1 \\$/;"	m
+DESTRUCTOR_WORKS	conf.h	180;"	d
+DISPLAY_ARG	dmalloc_argv_loc.h	106;"	d
+DMALLOC_DEFAULT_FILE	dmalloc_loc.h	62;"	d
+DMALLOC_DEFAULT_LINE	dmalloc_loc.h	63;"	d
+DMALLOC_DISABLE	arg_check.c	30;"	d	file:
+DMALLOC_DISABLE	chunk.c	38;"	d	file:
+DMALLOC_DISABLE	compat.c	35;"	d	file:
+DMALLOC_DISABLE	contrib/Xmalloc.c	11;"	d	file:
+DMALLOC_DISABLE	dmalloc.c	37;"	d	file:
+DMALLOC_DISABLE	dmallocc.cc	39;"	d	file:
+DMALLOC_DISABLE	env.c	29;"	d	file:
+DMALLOC_DISABLE	error.c	63;"	d	file:
+DMALLOC_DISABLE	heap.c	39;"	d	file:
+DMALLOC_DISABLE	malloc.c	102;"	d	file:
+DMALLOC_ERROR	DMALLOC/include/dmalloc.h	79;"	d
+DMALLOC_ERROR	dmalloc.h	79;"	d
+DMALLOC_FREE_RET	DMALLOC/include/dmalloc.h	62;"	d
+DMALLOC_FREE_RET	DMALLOC/include/dmalloc.h	65;"	d
+DMALLOC_FREE_RET	dmalloc.h	62;"	d
+DMALLOC_FREE_RET	dmalloc.h	65;"	d
+DMALLOC_FUNC_CALLOC	DMALLOC/include/dmalloc.h	91;"	d
+DMALLOC_FUNC_CALLOC	dmalloc.h	91;"	d
+DMALLOC_FUNC_CFREE	DMALLOC/include/dmalloc.h	99;"	d
+DMALLOC_FUNC_CFREE	dmalloc.h	99;"	d
+DMALLOC_FUNC_CHECK	dmalloc_fc_t.c	36;"	d	file:
+DMALLOC_FUNC_DELETE	DMALLOC/include/dmalloc.h	103;"	d
+DMALLOC_FUNC_DELETE	dmalloc.h	103;"	d
+DMALLOC_FUNC_DELETE_ARRAY	DMALLOC/include/dmalloc.h	104;"	d
+DMALLOC_FUNC_DELETE_ARRAY	dmalloc.h	104;"	d
+DMALLOC_FUNC_FREE	DMALLOC/include/dmalloc.h	98;"	d
+DMALLOC_FUNC_FREE	dmalloc.h	98;"	d
+DMALLOC_FUNC_MALLOC	DMALLOC/include/dmalloc.h	90;"	d
+DMALLOC_FUNC_MALLOC	dmalloc.h	90;"	d
+DMALLOC_FUNC_MEMALIGN	DMALLOC/include/dmalloc.h	94;"	d
+DMALLOC_FUNC_MEMALIGN	dmalloc.h	94;"	d
+DMALLOC_FUNC_NEW	DMALLOC/include/dmalloc.h	101;"	d
+DMALLOC_FUNC_NEW	dmalloc.h	101;"	d
+DMALLOC_FUNC_NEW_ARRAY	DMALLOC/include/dmalloc.h	102;"	d
+DMALLOC_FUNC_NEW_ARRAY	dmalloc.h	102;"	d
+DMALLOC_FUNC_POSIX_MEMALIGN	DMALLOC/include/dmalloc.h	95;"	d
+DMALLOC_FUNC_POSIX_MEMALIGN	dmalloc.h	95;"	d
+DMALLOC_FUNC_REALLOC	DMALLOC/include/dmalloc.h	92;"	d
+DMALLOC_FUNC_REALLOC	dmalloc.h	92;"	d
+DMALLOC_FUNC_RECALLOC	DMALLOC/include/dmalloc.h	93;"	d
+DMALLOC_FUNC_RECALLOC	dmalloc.h	93;"	d
+DMALLOC_FUNC_STRDUP	DMALLOC/include/dmalloc.h	97;"	d
+DMALLOC_FUNC_STRDUP	dmalloc.h	97;"	d
+DMALLOC_FUNC_VALLOC	DMALLOC/include/dmalloc.h	96;"	d
+DMALLOC_FUNC_VALLOC	dmalloc.h	96;"	d
+DMALLOC_HOME	dmalloc_loc.h	37;"	d
+DMALLOC_NOERROR	DMALLOC/include/dmalloc.h	80;"	d
+DMALLOC_NOERROR	dmalloc.h	80;"	d
+DMALLOC_PNT	DMALLOC/include/dmalloc.h	61;"	d
+DMALLOC_PNT	DMALLOC/include/dmalloc.h	64;"	d
+DMALLOC_PNT	dmalloc.h	61;"	d
+DMALLOC_PNT	dmalloc.h	64;"	d
+DMALLOC_SIZE	DMALLOC/include/dmalloc.h	43;"	d
+DMALLOC_SIZE	dmalloc.h	43;"	d
+DMALLOC_SIZE_UNSIGNED	conf.h	214;"	d
+DMALLOC_STDARG	DMALLOC/include/dmalloc.h	50;"	d
+DMALLOC_STDARG	dmalloc.h	50;"	d
+DMALLOC_STRDUP_MACRO	DMALLOC/include/dmalloc.h	32;"	d
+DMALLOC_STRDUP_MACRO	dmalloc.h	32;"	d
+DMALLOC_VERIFY_ERROR	DMALLOC/include/dmalloc.h	82;"	d
+DMALLOC_VERIFY_ERROR	dmalloc.h	82;"	d
+DMALLOC_VERIFY_NOERROR	DMALLOC/include/dmalloc.h	83;"	d
+DMALLOC_VERIFY_NOERROR	dmalloc.h	83;"	d
+DMALLOC_VERSION_MAJOR	DMALLOC/include/dmalloc.h	55;"	d
+DMALLOC_VERSION_MAJOR	dmalloc.h	55;"	d
+DMALLOC_VERSION_MINOR	DMALLOC/include/dmalloc.h	56;"	d
+DMALLOC_VERSION_MINOR	dmalloc.h	56;"	d
+DMALLOC_VERSION_PATCH	DMALLOC/include/dmalloc.h	57;"	d
+DMALLOC_VERSION_PATCH	dmalloc.h	57;"	d
+DOCFILES	Makefile	/^DOCFILES = $(HTMLFILE) $(TEXIFILE) $(PDFFILE)$/;"	m
+DO_XT_ENTRY_POINTS	contrib/Xmalloc.c	19;"	d	file:
+DPKG_EXPORT_BUILDFLAGS	debian/rules	/^DPKG_EXPORT_BUILDFLAGS=1$/;"	m
+DUMP_SPACE	settings.h	231;"	d
+DUMP_SPACE_BUF	dmalloc_argv_loc.h	63;"	d
+DUMP_UNFREED_SUMMARY_ONLY	settings.h	384;"	d
+Debug-Tokens	docs/dmalloc.html	/^<a name="Debug-Tokens"><\/a>$/;"	a
+Debugging-A-Server	docs/dmalloc.html	/^<a name="Debugging-A-Server"><\/a>$/;"	a
+Definitions	docs/dmalloc.html	/^<a name="Definitions"><\/a>$/;"	a
+Disabling-the-Library	docs/dmalloc.html	/^<a name="Disabling-the-Library"><\/a>$/;"	a
+Dmalloc-Program	docs/dmalloc.html	/^<a name="Dmalloc-Program"><\/a>$/;"	a
+Dumping-Core	docs/dmalloc.html	/^<a name="Dumping-Core"><\/a>$/;"	a
+EINVAL	malloc.c	54;"	d	file:
+ENOMEM	malloc.c	50;"	d	file:
+ENTRY_BLOCK_MAGIC1	chunk_loc.h	136;"	d
+ENTRY_BLOCK_MAGIC2	chunk_loc.h	137;"	d
+ENTRY_BLOCK_MAGIC3	chunk_loc.h	138;"	d
+ENVIRON_FORMAT	dmalloc_argv_loc.h	100;"	d
+ERROR	dmalloc_argv_loc.h	47;"	d
+ERROR	dmalloc_argv_loc.h	48;"	d
+ERROR_ADDRESS_LIST	error_val.h	72;"	d
+ERROR_ADMIN_LIST	error_val.h	70;"	d
+ERROR_ALLOC_FAILED	error_val.h	59;"	d
+ERROR_ALREADY_FREE	error_val.h	65;"	d
+ERROR_BAD_FILE	error_val.h	47;"	d
+ERROR_BAD_LINE	error_val.h	48;"	d
+ERROR_BAD_SETUP	error_val.h	37;"	d
+ERROR_BAD_SIZE	error_val.h	56;"	d
+ERROR_FREE_OVERWRITTEN	error_val.h	67;"	d
+ERROR_IN_TWICE	error_val.h	38;"	d
+ERROR_IS_FOUND	error_val.h	46;"	d
+ERROR_IS_NULL	error_val.h	43;"	d
+ERROR_LOCK_NOT_CONFIG	error_val.h	40;"	d
+ERROR_NONE	error_val.h	33;"	d
+ERROR_NOT_FOUND	error_val.h	45;"	d
+ERROR_NOT_IN_HEAP	error_val.h	44;"	d
+ERROR_NOT_ON_BLOCK	error_val.h	64;"	d
+ERROR_NOT_START_BLOCK	error_val.h	53;"	d
+ERROR_OVER_FENCE	error_val.h	50;"	d
+ERROR_OVER_LIMIT	error_val.h	61;"	d
+ERROR_SLOT_CORRUPT	error_val.h	73;"	d
+ERROR_STREAM_INIT	dmalloc_argv_loc.h	57;"	d
+ERROR_TOO_BIG	error_val.h	57;"	d
+ERROR_UNDER_FENCE	error_val.h	49;"	d
+ERROR_WOULD_OVERWRITE	error_val.h	51;"	d
+EXIT_CODE	dmalloc_argv_loc.h	80;"	d
+Environment-Variable	docs/dmalloc.html	/^<a name="Environment-Variable"><\/a>$/;"	a
+Error-Codes	docs/dmalloc.html	/^<a name="Error-Codes"><\/a>$/;"	a
+Extensions	docs/dmalloc.html	/^<a name="Extensions"><\/a>$/;"	a
+FENCE_BOTTOM_SIZE	settings.h	224;"	d
+FENCE_MAGIC_BOTTOM	chunk_loc.h	65;"	d
+FENCE_MAGIC_TOP	chunk_loc.h	66;"	d
+FENCE_OVERHEAD_SIZE	chunk_loc.h	64;"	d
+FENCE_TOP_SIZE	settings.h	213;"	d
+FILE_ARG	dmalloc_argv_loc.h	107;"	d
+FILE_FOUND	dmalloc.c	71;"	d	file:
+FILE_LINE_SIZE	dmalloc_argv_loc.h	65;"	d
+FILE_NOT_FOUND	dmalloc.c	70;"	d	file:
+FINI_DMALLOC	settings.h	330;"	d
+FREED_POINTER_DELAY	settings.h	350;"	d
+FREE_BLANK_CHAR	settings.h	116;"	d
+FREE_ERROR	DMALLOC/include/dmalloc.h	76;"	d
+FREE_ERROR	dmalloc.h	76;"	d
+FREE_NOERROR	DMALLOC/include/dmalloc.h	77;"	d
+FREE_NOERROR	dmalloc.h	77;"	d
+Features	docs/dmalloc.html	/^<a name="Features"><\/a>$/;"	a
+Fence_002dPost-Overruns	docs/dmalloc.html	/^<a name="Fence_002dPost-Overruns"><\/a>$/;"	a
+GETENV_SAFE	conf.h	164;"	d
+GET_RET_ADDR	return.h	138;"	d
+GET_RET_ADDR	return.h	142;"	d
+GET_RET_ADDR	return.h	185;"	d
+GET_RET_ADDR	return.h	191;"	d
+GET_RET_ADDR	return.h	218;"	d
+GET_RET_ADDR	return.h	233;"	d
+GET_RET_ADDR	return.h	266;"	d
+GET_RET_ADDR	return.h	288;"	d
+GET_RET_ADDR	return.h	305;"	d
+GET_RET_ADDR	return.h	320;"	d
+GET_RET_ADDR	return.h	338;"	d
+GET_RET_ADDR	return.h	350;"	d
+GET_RET_ADDR	return.h	360;"	d
+GET_RET_ADDR	return.h	372;"	d
+GET_RET_ADDR	return.h	374;"	d
+GET_RET_ADDR	return.h	71;"	d
+GET_TIMEVAL	settings.h	321;"	d
+GLOBAL_CLOSE	dmalloc_argv_loc.h	84;"	d
+GLOBAL_ENV	dmalloc_argv_loc.h	85;"	d
+GLOBAL_ERROR	dmalloc_argv_loc.h	86;"	d
+GLOBAL_LASTTOG	dmalloc_argv_loc.h	89;"	d
+GLOBAL_MULTI	dmalloc_argv_loc.h	87;"	d
+GLOBAL_NAME	dmalloc_argv_loc.h	83;"	d
+GLOBAL_USAGE	dmalloc_argv_loc.h	88;"	d
+General-Errors	docs/dmalloc.html	/^<a name="General-Errors"><\/a>$/;"	a
+Getting-Started	docs/dmalloc.html	/^<a name="Getting-Started"><\/a>$/;"	a
+HASH_MIX	dmalloc_tab_loc.h	67;"	d
+HAS_ARG	dmalloc_argv_loc.h	138;"	d
+HAVE_ATEXIT	conf.h	210;"	d
+HAVE_ATOI	conf.h	238;"	d
+HAVE_ATOL	conf.h	239;"	d
+HAVE_BCMP	conf.h	240;"	d
+HAVE_BCOPY	conf.h	241;"	d
+HAVE_BZERO	conf.h	242;"	d
+HAVE_CTIME	conf.h	226;"	d
+HAVE_FORK	conf.h	221;"	d
+HAVE_GETENVIRONMENTVARIABLEA	conf.h	186;"	d
+HAVE_GETHOSTNAME	conf.h	222;"	d
+HAVE_GETPID	conf.h	223;"	d
+HAVE_GETUID	conf.h	224;"	d
+HAVE_INDEX	conf.h	243;"	d
+HAVE_MEMALIGN	conf.h	233;"	d
+HAVE_MEMCCPY	conf.h	244;"	d
+HAVE_MEMCHR	conf.h	245;"	d
+HAVE_MEMCMP	conf.h	246;"	d
+HAVE_MEMCPY	conf.h	247;"	d
+HAVE_MEMMOVE	conf.h	248;"	d
+HAVE_MEMSET	conf.h	249;"	d
+HAVE_MMAP	conf.h	62;"	d
+HAVE_ON_EXIT	conf.h	211;"	d
+HAVE_PTHREADS_H	conf.h	132;"	d
+HAVE_PTHREAD_H	conf.h	131;"	d
+HAVE_PTHREAD_MUTEX_INIT	conf.h	137;"	d
+HAVE_PTHREAD_MUTEX_LOCK	conf.h	138;"	d
+HAVE_PTHREAD_MUTEX_UNLOCK	conf.h	139;"	d
+HAVE_RECALLOC	conf.h	232;"	d
+HAVE_RINDEX	conf.h	250;"	d
+HAVE_SBRK	conf.h	50;"	d
+HAVE_SNPRINTF	conf.h	229;"	d
+HAVE_STRCASECMP	conf.h	251;"	d
+HAVE_STRCAT	conf.h	252;"	d
+HAVE_STRCHR	conf.h	253;"	d
+HAVE_STRCMP	conf.h	254;"	d
+HAVE_STRCPY	conf.h	255;"	d
+HAVE_STRCSPN	conf.h	256;"	d
+HAVE_STRDUP	conf.h	257;"	d
+HAVE_STRLEN	conf.h	258;"	d
+HAVE_STRNCASECMP	conf.h	259;"	d
+HAVE_STRNCAT	conf.h	260;"	d
+HAVE_STRNCMP	conf.h	261;"	d
+HAVE_STRNCPY	conf.h	262;"	d
+HAVE_STRNDUP	conf.h	263;"	d
+HAVE_STRPBRK	conf.h	264;"	d
+HAVE_STRRCHR	conf.h	265;"	d
+HAVE_STRSEP	conf.h	266;"	d
+HAVE_STRSPN	conf.h	267;"	d
+HAVE_STRSTR	conf.h	268;"	d
+HAVE_STRTOK	conf.h	269;"	d
+HAVE_TIME	conf.h	225;"	d
+HAVE_VALLOC	conf.h	234;"	d
+HAVE_VPRINTF	conf.h	228;"	d
+HAVE_VSNPRINTF	conf.h	230;"	d
+HEAP_ALLOC_ERROR	heap.h	32;"	d
+HELP_ARG	dmalloc_argv_loc.h	108;"	d
+HFLS	Makefile	/^HFLS = dmalloc.h$/;"	m
+HIGH_FLAGS	dmalloc.c	94;"	d	file:
+HOME_ENVIRON	dmalloc.c	58;"	d	file:
+HTMLFILE	Makefile	/^HTMLFILE = $(MODULE).html$/;"	m
+How-It-Works	docs/dmalloc.html	/^<a name="How-It-Works"><\/a>$/;"	a
+IDENT_WORKS	conf.h	126;"	d
+IDX1	docs/dmalloc.html	/^<a name="IDX1"><\/a>$/;"	a
+IDX10	docs/dmalloc.html	/^<a name="IDX10"><\/a>$/;"	a
+IDX100	docs/dmalloc.html	/^<a name="IDX100"><\/a>$/;"	a
+IDX101	docs/dmalloc.html	/^<a name="IDX101"><\/a>$/;"	a
+IDX102	docs/dmalloc.html	/^<a name="IDX102"><\/a>$/;"	a
+IDX103	docs/dmalloc.html	/^<a name="IDX103"><\/a>$/;"	a
+IDX104	docs/dmalloc.html	/^<a name="IDX104"><\/a>$/;"	a
+IDX105	docs/dmalloc.html	/^<a name="IDX105"><\/a>$/;"	a
+IDX106	docs/dmalloc.html	/^<a name="IDX106"><\/a>$/;"	a
+IDX107	docs/dmalloc.html	/^<dd><a name="IDX107"><\/a>$/;"	a
+IDX108	docs/dmalloc.html	/^<a name="IDX108"><\/a>$/;"	a
+IDX109	docs/dmalloc.html	/^<a name="IDX109"><\/a>$/;"	a
+IDX11	docs/dmalloc.html	/^<a name="IDX11"><\/a>$/;"	a
+IDX110	docs/dmalloc.html	/^<a name="IDX110"><\/a>$/;"	a
+IDX111	docs/dmalloc.html	/^<a name="IDX111"><\/a>$/;"	a
+IDX112	docs/dmalloc.html	/^<a name="IDX112"><\/a>$/;"	a
+IDX113	docs/dmalloc.html	/^<a name="IDX113"><\/a>$/;"	a
+IDX114	docs/dmalloc.html	/^<a name="IDX114"><\/a>$/;"	a
+IDX115	docs/dmalloc.html	/^<a name="IDX115"><\/a>$/;"	a
+IDX116	docs/dmalloc.html	/^<a name="IDX116"><\/a>$/;"	a
+IDX117	docs/dmalloc.html	/^<a name="IDX117"><\/a>$/;"	a
+IDX118	docs/dmalloc.html	/^<a name="IDX118"><\/a>$/;"	a
+IDX119	docs/dmalloc.html	/^<a name="IDX119"><\/a>$/;"	a
+IDX12	docs/dmalloc.html	/^<a name="IDX12"><\/a>$/;"	a
+IDX120	docs/dmalloc.html	/^<a name="IDX120"><\/a>$/;"	a
+IDX121	docs/dmalloc.html	/^<a name="IDX121"><\/a>$/;"	a
+IDX122	docs/dmalloc.html	/^<a name="IDX122"><\/a>$/;"	a
+IDX123	docs/dmalloc.html	/^<a name="IDX123"><\/a>$/;"	a
+IDX124	docs/dmalloc.html	/^<a name="IDX124"><\/a>$/;"	a
+IDX125	docs/dmalloc.html	/^<a name="IDX125"><\/a>$/;"	a
+IDX126	docs/dmalloc.html	/^<a name="IDX126"><\/a>$/;"	a
+IDX127	docs/dmalloc.html	/^<a name="IDX127"><\/a>$/;"	a
+IDX128	docs/dmalloc.html	/^<a name="IDX128"><\/a>$/;"	a
+IDX129	docs/dmalloc.html	/^<a name="IDX129"><\/a>$/;"	a
+IDX13	docs/dmalloc.html	/^<a name="IDX13"><\/a>$/;"	a
+IDX130	docs/dmalloc.html	/^<a name="IDX130"><\/a>$/;"	a
+IDX131	docs/dmalloc.html	/^<a name="IDX131"><\/a>$/;"	a
+IDX132	docs/dmalloc.html	/^<a name="IDX132"><\/a>$/;"	a
+IDX133	docs/dmalloc.html	/^<a name="IDX133"><\/a>$/;"	a
+IDX134	docs/dmalloc.html	/^<a name="IDX134"><\/a>$/;"	a
+IDX135	docs/dmalloc.html	/^<a name="IDX135"><\/a>$/;"	a
+IDX136	docs/dmalloc.html	/^<a name="IDX136"><\/a>$/;"	a
+IDX137	docs/dmalloc.html	/^<a name="IDX137"><\/a>$/;"	a
+IDX138	docs/dmalloc.html	/^<a name="IDX138"><\/a>$/;"	a
+IDX139	docs/dmalloc.html	/^<a name="IDX139"><\/a>$/;"	a
+IDX14	docs/dmalloc.html	/^<a name="IDX14"><\/a>$/;"	a
+IDX140	docs/dmalloc.html	/^<a name="IDX140"><\/a>$/;"	a
+IDX141	docs/dmalloc.html	/^<a name="IDX141"><\/a>$/;"	a
+IDX142	docs/dmalloc.html	/^<a name="IDX142"><\/a>$/;"	a
+IDX143	docs/dmalloc.html	/^<a name="IDX143"><\/a>$/;"	a
+IDX144	docs/dmalloc.html	/^<a name="IDX144"><\/a>$/;"	a
+IDX145	docs/dmalloc.html	/^<a name="IDX145"><\/a>$/;"	a
+IDX146	docs/dmalloc.html	/^<a name="IDX146"><\/a>$/;"	a
+IDX147	docs/dmalloc.html	/^<a name="IDX147"><\/a>$/;"	a
+IDX148	docs/dmalloc.html	/^<a name="IDX148"><\/a>$/;"	a
+IDX149	docs/dmalloc.html	/^<a name="IDX149"><\/a>$/;"	a
+IDX15	docs/dmalloc.html	/^<a name="IDX15"><\/a>$/;"	a
+IDX150	docs/dmalloc.html	/^<a name="IDX150"><\/a>$/;"	a
+IDX151	docs/dmalloc.html	/^<a name="IDX151"><\/a>$/;"	a
+IDX152	docs/dmalloc.html	/^<a name="IDX152"><\/a>$/;"	a
+IDX153	docs/dmalloc.html	/^<a name="IDX153"><\/a>$/;"	a
+IDX154	docs/dmalloc.html	/^<a name="IDX154"><\/a>$/;"	a
+IDX155	docs/dmalloc.html	/^<a name="IDX155"><\/a>$/;"	a
+IDX156	docs/dmalloc.html	/^<a name="IDX156"><\/a>$/;"	a
+IDX157	docs/dmalloc.html	/^<a name="IDX157"><\/a>$/;"	a
+IDX158	docs/dmalloc.html	/^<a name="IDX158"><\/a>$/;"	a
+IDX159	docs/dmalloc.html	/^<a name="IDX159"><\/a>$/;"	a
+IDX16	docs/dmalloc.html	/^<a name="IDX16"><\/a>$/;"	a
+IDX160	docs/dmalloc.html	/^<a name="IDX160"><\/a>$/;"	a
+IDX161	docs/dmalloc.html	/^<a name="IDX161"><\/a>$/;"	a
+IDX162	docs/dmalloc.html	/^<a name="IDX162"><\/a>$/;"	a
+IDX163	docs/dmalloc.html	/^<a name="IDX163"><\/a>$/;"	a
+IDX164	docs/dmalloc.html	/^<a name="IDX164"><\/a>$/;"	a
+IDX165	docs/dmalloc.html	/^<a name="IDX165"><\/a>$/;"	a
+IDX166	docs/dmalloc.html	/^<a name="IDX166"><\/a>$/;"	a
+IDX167	docs/dmalloc.html	/^<a name="IDX167"><\/a>$/;"	a
+IDX168	docs/dmalloc.html	/^<a name="IDX168"><\/a>$/;"	a
+IDX169	docs/dmalloc.html	/^<a name="IDX169"><\/a>$/;"	a
+IDX17	docs/dmalloc.html	/^<a name="IDX17"><\/a>$/;"	a
+IDX170	docs/dmalloc.html	/^<a name="IDX170"><\/a>$/;"	a
+IDX171	docs/dmalloc.html	/^<a name="IDX171"><\/a>$/;"	a
+IDX172	docs/dmalloc.html	/^<a name="IDX172"><\/a>$/;"	a
+IDX173	docs/dmalloc.html	/^<a name="IDX173"><\/a>$/;"	a
+IDX174	docs/dmalloc.html	/^<a name="IDX174"><\/a>$/;"	a
+IDX175	docs/dmalloc.html	/^<a name="IDX175"><\/a>$/;"	a
+IDX176	docs/dmalloc.html	/^<a name="IDX176"><\/a>$/;"	a
+IDX177	docs/dmalloc.html	/^<a name="IDX177"><\/a>$/;"	a
+IDX178	docs/dmalloc.html	/^<a name="IDX178"><\/a>$/;"	a
+IDX179	docs/dmalloc.html	/^<a name="IDX179"><\/a>$/;"	a
+IDX18	docs/dmalloc.html	/^<a name="IDX18"><\/a>$/;"	a
+IDX180	docs/dmalloc.html	/^<a name="IDX180"><\/a>$/;"	a
+IDX181	docs/dmalloc.html	/^<a name="IDX181"><\/a>$/;"	a
+IDX182	docs/dmalloc.html	/^<a name="IDX182"><\/a>$/;"	a
+IDX183	docs/dmalloc.html	/^<a name="IDX183"><\/a>$/;"	a
+IDX184	docs/dmalloc.html	/^<a name="IDX184"><\/a>$/;"	a
+IDX185	docs/dmalloc.html	/^<a name="IDX185"><\/a>$/;"	a
+IDX186	docs/dmalloc.html	/^<a name="IDX186"><\/a>$/;"	a
+IDX187	docs/dmalloc.html	/^<a name="IDX187"><\/a>$/;"	a
+IDX188	docs/dmalloc.html	/^<a name="IDX188"><\/a>$/;"	a
+IDX189	docs/dmalloc.html	/^<a name="IDX189"><\/a>$/;"	a
+IDX19	docs/dmalloc.html	/^<a name="IDX19"><\/a>$/;"	a
+IDX190	docs/dmalloc.html	/^<a name="IDX190"><\/a>$/;"	a
+IDX191	docs/dmalloc.html	/^<a name="IDX191"><\/a>$/;"	a
+IDX192	docs/dmalloc.html	/^<a name="IDX192"><\/a>$/;"	a
+IDX193	docs/dmalloc.html	/^<a name="IDX193"><\/a>$/;"	a
+IDX194	docs/dmalloc.html	/^<a name="IDX194"><\/a>$/;"	a
+IDX195	docs/dmalloc.html	/^<a name="IDX195"><\/a>$/;"	a
+IDX196	docs/dmalloc.html	/^<a name="IDX196"><\/a>$/;"	a
+IDX197	docs/dmalloc.html	/^<a name="IDX197"><\/a>$/;"	a
+IDX198	docs/dmalloc.html	/^<a name="IDX198"><\/a>$/;"	a
+IDX199	docs/dmalloc.html	/^<a name="IDX199"><\/a>$/;"	a
+IDX2	docs/dmalloc.html	/^<a name="IDX2"><\/a>$/;"	a
+IDX20	docs/dmalloc.html	/^<a name="IDX20"><\/a>$/;"	a
+IDX200	docs/dmalloc.html	/^<a name="IDX200"><\/a>$/;"	a
+IDX201	docs/dmalloc.html	/^<a name="IDX201"><\/a>$/;"	a
+IDX202	docs/dmalloc.html	/^<a name="IDX202"><\/a>$/;"	a
+IDX203	docs/dmalloc.html	/^<a name="IDX203"><\/a>$/;"	a
+IDX204	docs/dmalloc.html	/^<a name="IDX204"><\/a>$/;"	a
+IDX205	docs/dmalloc.html	/^<a name="IDX205"><\/a>$/;"	a
+IDX206	docs/dmalloc.html	/^<a name="IDX206"><\/a>$/;"	a
+IDX207	docs/dmalloc.html	/^<a name="IDX207"><\/a>$/;"	a
+IDX208	docs/dmalloc.html	/^<a name="IDX208"><\/a>$/;"	a
+IDX209	docs/dmalloc.html	/^<a name="IDX209"><\/a>$/;"	a
+IDX21	docs/dmalloc.html	/^<a name="IDX21"><\/a>$/;"	a
+IDX210	docs/dmalloc.html	/^<a name="IDX210"><\/a>$/;"	a
+IDX211	docs/dmalloc.html	/^<a name="IDX211"><\/a>$/;"	a
+IDX212	docs/dmalloc.html	/^<a name="IDX212"><\/a>$/;"	a
+IDX213	docs/dmalloc.html	/^<a name="IDX213"><\/a>$/;"	a
+IDX214	docs/dmalloc.html	/^<a name="IDX214"><\/a>$/;"	a
+IDX215	docs/dmalloc.html	/^<a name="IDX215"><\/a>$/;"	a
+IDX216	docs/dmalloc.html	/^<a name="IDX216"><\/a>$/;"	a
+IDX217	docs/dmalloc.html	/^<a name="IDX217"><\/a>$/;"	a
+IDX218	docs/dmalloc.html	/^<a name="IDX218"><\/a>$/;"	a
+IDX219	docs/dmalloc.html	/^<a name="IDX219"><\/a>$/;"	a
+IDX22	docs/dmalloc.html	/^<a name="IDX22"><\/a>$/;"	a
+IDX220	docs/dmalloc.html	/^<a name="IDX220"><\/a>$/;"	a
+IDX221	docs/dmalloc.html	/^<a name="IDX221"><\/a>$/;"	a
+IDX222	docs/dmalloc.html	/^<a name="IDX222"><\/a>$/;"	a
+IDX223	docs/dmalloc.html	/^<a name="IDX223"><\/a>$/;"	a
+IDX224	docs/dmalloc.html	/^<a name="IDX224"><\/a>$/;"	a
+IDX225	docs/dmalloc.html	/^<a name="IDX225"><\/a>$/;"	a
+IDX226	docs/dmalloc.html	/^<a name="IDX226"><\/a>$/;"	a
+IDX227	docs/dmalloc.html	/^<a name="IDX227"><\/a>$/;"	a
+IDX228	docs/dmalloc.html	/^<a name="IDX228"><\/a>$/;"	a
+IDX229	docs/dmalloc.html	/^<a name="IDX229"><\/a>$/;"	a
+IDX23	docs/dmalloc.html	/^<a name="IDX23"><\/a>$/;"	a
+IDX230	docs/dmalloc.html	/^<a name="IDX230"><\/a>$/;"	a
+IDX231	docs/dmalloc.html	/^<a name="IDX231"><\/a>$/;"	a
+IDX232	docs/dmalloc.html	/^<a name="IDX232"><\/a>$/;"	a
+IDX233	docs/dmalloc.html	/^<a name="IDX233"><\/a>$/;"	a
+IDX234	docs/dmalloc.html	/^<a name="IDX234"><\/a>$/;"	a
+IDX235	docs/dmalloc.html	/^<a name="IDX235"><\/a>$/;"	a
+IDX236	docs/dmalloc.html	/^<a name="IDX236"><\/a>$/;"	a
+IDX237	docs/dmalloc.html	/^<a name="IDX237"><\/a>$/;"	a
+IDX238	docs/dmalloc.html	/^<a name="IDX238"><\/a>$/;"	a
+IDX239	docs/dmalloc.html	/^<a name="IDX239"><\/a>$/;"	a
+IDX24	docs/dmalloc.html	/^<a name="IDX24"><\/a>$/;"	a
+IDX240	docs/dmalloc.html	/^<a name="IDX240"><\/a>$/;"	a
+IDX241	docs/dmalloc.html	/^<a name="IDX241"><\/a>$/;"	a
+IDX242	docs/dmalloc.html	/^<a name="IDX242"><\/a>$/;"	a
+IDX243	docs/dmalloc.html	/^<a name="IDX243"><\/a>$/;"	a
+IDX244	docs/dmalloc.html	/^<a name="IDX244"><\/a>$/;"	a
+IDX245	docs/dmalloc.html	/^<a name="IDX245"><\/a>$/;"	a
+IDX246	docs/dmalloc.html	/^<a name="IDX246"><\/a>$/;"	a
+IDX247	docs/dmalloc.html	/^<a name="IDX247"><\/a>$/;"	a
+IDX248	docs/dmalloc.html	/^<a name="IDX248"><\/a>$/;"	a
+IDX249	docs/dmalloc.html	/^<a name="IDX249"><\/a>$/;"	a
+IDX25	docs/dmalloc.html	/^<a name="IDX25"><\/a>$/;"	a
+IDX250	docs/dmalloc.html	/^<a name="IDX250"><\/a>$/;"	a
+IDX251	docs/dmalloc.html	/^<a name="IDX251"><\/a>$/;"	a
+IDX252	docs/dmalloc.html	/^<a name="IDX252"><\/a>$/;"	a
+IDX253	docs/dmalloc.html	/^<a name="IDX253"><\/a>$/;"	a
+IDX254	docs/dmalloc.html	/^<a name="IDX254"><\/a>$/;"	a
+IDX255	docs/dmalloc.html	/^<a name="IDX255"><\/a>$/;"	a
+IDX256	docs/dmalloc.html	/^<a name="IDX256"><\/a>$/;"	a
+IDX257	docs/dmalloc.html	/^<a name="IDX257"><\/a>$/;"	a
+IDX258	docs/dmalloc.html	/^<a name="IDX258"><\/a>$/;"	a
+IDX259	docs/dmalloc.html	/^<a name="IDX259"><\/a>$/;"	a
+IDX26	docs/dmalloc.html	/^<a name="IDX26"><\/a>$/;"	a
+IDX260	docs/dmalloc.html	/^<a name="IDX260"><\/a>$/;"	a
+IDX261	docs/dmalloc.html	/^<a name="IDX261"><\/a>$/;"	a
+IDX262	docs/dmalloc.html	/^<a name="IDX262"><\/a>$/;"	a
+IDX263	docs/dmalloc.html	/^<a name="IDX263"><\/a>$/;"	a
+IDX264	docs/dmalloc.html	/^<a name="IDX264"><\/a>$/;"	a
+IDX265	docs/dmalloc.html	/^<a name="IDX265"><\/a>$/;"	a
+IDX266	docs/dmalloc.html	/^<a name="IDX266"><\/a>$/;"	a
+IDX267	docs/dmalloc.html	/^<a name="IDX267"><\/a>$/;"	a
+IDX268	docs/dmalloc.html	/^<a name="IDX268"><\/a>$/;"	a
+IDX269	docs/dmalloc.html	/^<a name="IDX269"><\/a>$/;"	a
+IDX27	docs/dmalloc.html	/^<a name="IDX27"><\/a>$/;"	a
+IDX270	docs/dmalloc.html	/^<a name="IDX270"><\/a>$/;"	a
+IDX271	docs/dmalloc.html	/^<a name="IDX271"><\/a>$/;"	a
+IDX272	docs/dmalloc.html	/^<a name="IDX272"><\/a>$/;"	a
+IDX273	docs/dmalloc.html	/^<a name="IDX273"><\/a>$/;"	a
+IDX274	docs/dmalloc.html	/^<a name="IDX274"><\/a>$/;"	a
+IDX275	docs/dmalloc.html	/^<a name="IDX275"><\/a>$/;"	a
+IDX276	docs/dmalloc.html	/^<a name="IDX276"><\/a>$/;"	a
+IDX277	docs/dmalloc.html	/^<a name="IDX277"><\/a>$/;"	a
+IDX278	docs/dmalloc.html	/^<a name="IDX278"><\/a>$/;"	a
+IDX279	docs/dmalloc.html	/^<a name="IDX279"><\/a>$/;"	a
+IDX28	docs/dmalloc.html	/^<a name="IDX28"><\/a>$/;"	a
+IDX280	docs/dmalloc.html	/^<a name="IDX280"><\/a>$/;"	a
+IDX281	docs/dmalloc.html	/^<a name="IDX281"><\/a>$/;"	a
+IDX282	docs/dmalloc.html	/^<a name="IDX282"><\/a>$/;"	a
+IDX283	docs/dmalloc.html	/^<a name="IDX283"><\/a>$/;"	a
+IDX284	docs/dmalloc.html	/^<a name="IDX284"><\/a>$/;"	a
+IDX285	docs/dmalloc.html	/^<a name="IDX285"><\/a>$/;"	a
+IDX286	docs/dmalloc.html	/^<a name="IDX286"><\/a>$/;"	a
+IDX287	docs/dmalloc.html	/^<a name="IDX287"><\/a>$/;"	a
+IDX288	docs/dmalloc.html	/^<a name="IDX288"><\/a>$/;"	a
+IDX289	docs/dmalloc.html	/^<a name="IDX289"><\/a>$/;"	a
+IDX29	docs/dmalloc.html	/^<a name="IDX29"><\/a>$/;"	a
+IDX290	docs/dmalloc.html	/^<a name="IDX290"><\/a>$/;"	a
+IDX291	docs/dmalloc.html	/^<a name="IDX291"><\/a>$/;"	a
+IDX292	docs/dmalloc.html	/^<a name="IDX292"><\/a>$/;"	a
+IDX293	docs/dmalloc.html	/^<a name="IDX293"><\/a>$/;"	a
+IDX294	docs/dmalloc.html	/^<a name="IDX294"><\/a>$/;"	a
+IDX295	docs/dmalloc.html	/^<a name="IDX295"><\/a>$/;"	a
+IDX296	docs/dmalloc.html	/^<a name="IDX296"><\/a>$/;"	a
+IDX297	docs/dmalloc.html	/^<a name="IDX297"><\/a>$/;"	a
+IDX298	docs/dmalloc.html	/^<a name="IDX298"><\/a>$/;"	a
+IDX299	docs/dmalloc.html	/^<a name="IDX299"><\/a>$/;"	a
+IDX3	docs/dmalloc.html	/^<a name="IDX3"><\/a>$/;"	a
+IDX30	docs/dmalloc.html	/^<a name="IDX30"><\/a>$/;"	a
+IDX300	docs/dmalloc.html	/^<a name="IDX300"><\/a>$/;"	a
+IDX301	docs/dmalloc.html	/^<a name="IDX301"><\/a>$/;"	a
+IDX302	docs/dmalloc.html	/^<a name="IDX302"><\/a>$/;"	a
+IDX303	docs/dmalloc.html	/^<a name="IDX303"><\/a>$/;"	a
+IDX304	docs/dmalloc.html	/^<a name="IDX304"><\/a>$/;"	a
+IDX305	docs/dmalloc.html	/^<a name="IDX305"><\/a>$/;"	a
+IDX306	docs/dmalloc.html	/^<a name="IDX306"><\/a>$/;"	a
+IDX307	docs/dmalloc.html	/^<a name="IDX307"><\/a>$/;"	a
+IDX308	docs/dmalloc.html	/^<a name="IDX308"><\/a>$/;"	a
+IDX309	docs/dmalloc.html	/^<a name="IDX309"><\/a>$/;"	a
+IDX31	docs/dmalloc.html	/^<a name="IDX31"><\/a>$/;"	a
+IDX310	docs/dmalloc.html	/^<a name="IDX310"><\/a>$/;"	a
+IDX311	docs/dmalloc.html	/^<a name="IDX311"><\/a>$/;"	a
+IDX312	docs/dmalloc.html	/^<a name="IDX312"><\/a>$/;"	a
+IDX313	docs/dmalloc.html	/^<a name="IDX313"><\/a>$/;"	a
+IDX314	docs/dmalloc.html	/^<a name="IDX314"><\/a>$/;"	a
+IDX315	docs/dmalloc.html	/^<a name="IDX315"><\/a>$/;"	a
+IDX316	docs/dmalloc.html	/^<a name="IDX316"><\/a>$/;"	a
+IDX317	docs/dmalloc.html	/^<a name="IDX317"><\/a>$/;"	a
+IDX318	docs/dmalloc.html	/^<a name="IDX318"><\/a>$/;"	a
+IDX319	docs/dmalloc.html	/^<a name="IDX319"><\/a>$/;"	a
+IDX32	docs/dmalloc.html	/^<dd><a name="IDX32"><\/a>$/;"	a
+IDX320	docs/dmalloc.html	/^<a name="IDX320"><\/a>$/;"	a
+IDX321	docs/dmalloc.html	/^<a name="IDX321"><\/a>$/;"	a
+IDX322	docs/dmalloc.html	/^<a name="IDX322"><\/a>$/;"	a
+IDX323	docs/dmalloc.html	/^<a name="IDX323"><\/a>$/;"	a
+IDX324	docs/dmalloc.html	/^<dd><a name="IDX324"><\/a>$/;"	a
+IDX325	docs/dmalloc.html	/^<a name="IDX325"><\/a>$/;"	a
+IDX326	docs/dmalloc.html	/^<a name="IDX326"><\/a>$/;"	a
+IDX327	docs/dmalloc.html	/^<a name="IDX327"><\/a>$/;"	a
+IDX328	docs/dmalloc.html	/^<a name="IDX328"><\/a>$/;"	a
+IDX329	docs/dmalloc.html	/^<a name="IDX329"><\/a>$/;"	a
+IDX33	docs/dmalloc.html	/^<a name="IDX33"><\/a>$/;"	a
+IDX330	docs/dmalloc.html	/^<a name="IDX330"><\/a>$/;"	a
+IDX331	docs/dmalloc.html	/^<a name="IDX331"><\/a>$/;"	a
+IDX332	docs/dmalloc.html	/^<a name="IDX332"><\/a>$/;"	a
+IDX333	docs/dmalloc.html	/^<a name="IDX333"><\/a>$/;"	a
+IDX334	docs/dmalloc.html	/^<a name="IDX334"><\/a>$/;"	a
+IDX335	docs/dmalloc.html	/^<a name="IDX335"><\/a>$/;"	a
+IDX336	docs/dmalloc.html	/^<a name="IDX336"><\/a>$/;"	a
+IDX337	docs/dmalloc.html	/^<a name="IDX337"><\/a>$/;"	a
+IDX338	docs/dmalloc.html	/^<a name="IDX338"><\/a>$/;"	a
+IDX339	docs/dmalloc.html	/^<a name="IDX339"><\/a>$/;"	a
+IDX34	docs/dmalloc.html	/^<a name="IDX34"><\/a>$/;"	a
+IDX340	docs/dmalloc.html	/^<a name="IDX340"><\/a>$/;"	a
+IDX341	docs/dmalloc.html	/^<a name="IDX341"><\/a>$/;"	a
+IDX342	docs/dmalloc.html	/^<a name="IDX342"><\/a>$/;"	a
+IDX343	docs/dmalloc.html	/^<a name="IDX343"><\/a>$/;"	a
+IDX344	docs/dmalloc.html	/^<a name="IDX344"><\/a>$/;"	a
+IDX345	docs/dmalloc.html	/^<a name="IDX345"><\/a>$/;"	a
+IDX346	docs/dmalloc.html	/^<a name="IDX346"><\/a>$/;"	a
+IDX347	docs/dmalloc.html	/^<a name="IDX347"><\/a>$/;"	a
+IDX348	docs/dmalloc.html	/^<a name="IDX348"><\/a>$/;"	a
+IDX349	docs/dmalloc.html	/^<a name="IDX349"><\/a>$/;"	a
+IDX35	docs/dmalloc.html	/^<a name="IDX35"><\/a>$/;"	a
+IDX350	docs/dmalloc.html	/^<a name="IDX350"><\/a>$/;"	a
+IDX351	docs/dmalloc.html	/^<a name="IDX351"><\/a>$/;"	a
+IDX352	docs/dmalloc.html	/^<a name="IDX352"><\/a>$/;"	a
+IDX353	docs/dmalloc.html	/^<a name="IDX353"><\/a>$/;"	a
+IDX354	docs/dmalloc.html	/^<a name="IDX354"><\/a>$/;"	a
+IDX355	docs/dmalloc.html	/^<a name="IDX355"><\/a>$/;"	a
+IDX356	docs/dmalloc.html	/^<a name="IDX356"><\/a>$/;"	a
+IDX357	docs/dmalloc.html	/^<a name="IDX357"><\/a>$/;"	a
+IDX358	docs/dmalloc.html	/^<a name="IDX358"><\/a>$/;"	a
+IDX359	docs/dmalloc.html	/^<a name="IDX359"><\/a>$/;"	a
+IDX36	docs/dmalloc.html	/^<dd><a name="IDX36"><\/a>$/;"	a
+IDX360	docs/dmalloc.html	/^<a name="IDX360"><\/a>$/;"	a
+IDX361	docs/dmalloc.html	/^<a name="IDX361"><\/a>$/;"	a
+IDX362	docs/dmalloc.html	/^<a name="IDX362"><\/a>$/;"	a
+IDX363	docs/dmalloc.html	/^<a name="IDX363"><\/a>$/;"	a
+IDX364	docs/dmalloc.html	/^<a name="IDX364"><\/a>$/;"	a
+IDX365	docs/dmalloc.html	/^<a name="IDX365"><\/a>$/;"	a
+IDX366	docs/dmalloc.html	/^<a name="IDX366"><\/a>$/;"	a
+IDX367	docs/dmalloc.html	/^<a name="IDX367"><\/a>$/;"	a
+IDX368	docs/dmalloc.html	/^<dd><a name="IDX368"><\/a>$/;"	a
+IDX369	docs/dmalloc.html	/^<a name="IDX369"><\/a>$/;"	a
+IDX37	docs/dmalloc.html	/^<a name="IDX37"><\/a>$/;"	a
+IDX370	docs/dmalloc.html	/^<dd><a name="IDX370"><\/a>$/;"	a
+IDX371	docs/dmalloc.html	/^<dd><a name="IDX371"><\/a>$/;"	a
+IDX372	docs/dmalloc.html	/^<a name="IDX372"><\/a>$/;"	a
+IDX373	docs/dmalloc.html	/^<dd><a name="IDX373"><\/a>$/;"	a
+IDX374	docs/dmalloc.html	/^<a name="IDX374"><\/a>$/;"	a
+IDX375	docs/dmalloc.html	/^<a name="IDX375"><\/a>$/;"	a
+IDX376	docs/dmalloc.html	/^<dd><a name="IDX376"><\/a>$/;"	a
+IDX377	docs/dmalloc.html	/^<dd><a name="IDX377"><\/a>$/;"	a
+IDX378	docs/dmalloc.html	/^<dd><a name="IDX378"><\/a>$/;"	a
+IDX379	docs/dmalloc.html	/^<a name="IDX379"><\/a>$/;"	a
+IDX38	docs/dmalloc.html	/^<dd><a name="IDX38"><\/a>$/;"	a
+IDX380	docs/dmalloc.html	/^<a name="IDX380"><\/a>$/;"	a
+IDX381	docs/dmalloc.html	/^<a name="IDX381"><\/a>$/;"	a
+IDX382	docs/dmalloc.html	/^<a name="IDX382"><\/a>$/;"	a
+IDX383	docs/dmalloc.html	/^<a name="IDX383"><\/a>$/;"	a
+IDX384	docs/dmalloc.html	/^<a name="IDX384"><\/a>$/;"	a
+IDX385	docs/dmalloc.html	/^<a name="IDX385"><\/a>$/;"	a
+IDX386	docs/dmalloc.html	/^<a name="IDX386"><\/a>$/;"	a
+IDX387	docs/dmalloc.html	/^<a name="IDX387"><\/a>$/;"	a
+IDX388	docs/dmalloc.html	/^<a name="IDX388"><\/a>$/;"	a
+IDX389	docs/dmalloc.html	/^<a name="IDX389"><\/a>$/;"	a
+IDX39	docs/dmalloc.html	/^<dd><a name="IDX39"><\/a>$/;"	a
+IDX390	docs/dmalloc.html	/^<a name="IDX390"><\/a>$/;"	a
+IDX391	docs/dmalloc.html	/^<a name="IDX391"><\/a>$/;"	a
+IDX392	docs/dmalloc.html	/^<a name="IDX392"><\/a>$/;"	a
+IDX393	docs/dmalloc.html	/^<a name="IDX393"><\/a>$/;"	a
+IDX394	docs/dmalloc.html	/^<a name="IDX394"><\/a>$/;"	a
+IDX395	docs/dmalloc.html	/^<a name="IDX395"><\/a>$/;"	a
+IDX396	docs/dmalloc.html	/^<a name="IDX396"><\/a>$/;"	a
+IDX397	docs/dmalloc.html	/^<a name="IDX397"><\/a>$/;"	a
+IDX398	docs/dmalloc.html	/^<a name="IDX398"><\/a>$/;"	a
+IDX399	docs/dmalloc.html	/^<a name="IDX399"><\/a>$/;"	a
+IDX4	docs/dmalloc.html	/^<a name="IDX4"><\/a>$/;"	a
+IDX40	docs/dmalloc.html	/^<a name="IDX40"><\/a>$/;"	a
+IDX400	docs/dmalloc.html	/^<a name="IDX400"><\/a>$/;"	a
+IDX401	docs/dmalloc.html	/^<a name="IDX401"><\/a>$/;"	a
+IDX402	docs/dmalloc.html	/^<a name="IDX402"><\/a>$/;"	a
+IDX403	docs/dmalloc.html	/^<a name="IDX403"><\/a>$/;"	a
+IDX404	docs/dmalloc.html	/^<a name="IDX404"><\/a>$/;"	a
+IDX405	docs/dmalloc.html	/^<a name="IDX405"><\/a>$/;"	a
+IDX406	docs/dmalloc.html	/^<a name="IDX406"><\/a>$/;"	a
+IDX407	docs/dmalloc.html	/^<a name="IDX407"><\/a>$/;"	a
+IDX408	docs/dmalloc.html	/^<a name="IDX408"><\/a>$/;"	a
+IDX409	docs/dmalloc.html	/^<a name="IDX409"><\/a>$/;"	a
+IDX41	docs/dmalloc.html	/^<dd><a name="IDX41"><\/a>$/;"	a
+IDX410	docs/dmalloc.html	/^<a name="IDX410"><\/a>$/;"	a
+IDX411	docs/dmalloc.html	/^<a name="IDX411"><\/a>$/;"	a
+IDX412	docs/dmalloc.html	/^<a name="IDX412"><\/a>$/;"	a
+IDX413	docs/dmalloc.html	/^<a name="IDX413"><\/a>$/;"	a
+IDX414	docs/dmalloc.html	/^<a name="IDX414"><\/a>$/;"	a
+IDX415	docs/dmalloc.html	/^<a name="IDX415"><\/a>$/;"	a
+IDX416	docs/dmalloc.html	/^<a name="IDX416"><\/a>$/;"	a
+IDX417	docs/dmalloc.html	/^<a name="IDX417"><\/a>$/;"	a
+IDX418	docs/dmalloc.html	/^<a name="IDX418"><\/a>$/;"	a
+IDX419	docs/dmalloc.html	/^<a name="IDX419"><\/a>$/;"	a
+IDX42	docs/dmalloc.html	/^<dd><a name="IDX42"><\/a>$/;"	a
+IDX420	docs/dmalloc.html	/^<a name="IDX420"><\/a>$/;"	a
+IDX421	docs/dmalloc.html	/^<a name="IDX421"><\/a>$/;"	a
+IDX422	docs/dmalloc.html	/^<a name="IDX422"><\/a>$/;"	a
+IDX423	docs/dmalloc.html	/^<a name="IDX423"><\/a>$/;"	a
+IDX424	docs/dmalloc.html	/^<a name="IDX424"><\/a>$/;"	a
+IDX425	docs/dmalloc.html	/^<a name="IDX425"><\/a>$/;"	a
+IDX426	docs/dmalloc.html	/^<a name="IDX426"><\/a>$/;"	a
+IDX427	docs/dmalloc.html	/^<a name="IDX427"><\/a>$/;"	a
+IDX428	docs/dmalloc.html	/^<a name="IDX428"><\/a>$/;"	a
+IDX429	docs/dmalloc.html	/^<a name="IDX429"><\/a>$/;"	a
+IDX43	docs/dmalloc.html	/^<a name="IDX43"><\/a>$/;"	a
+IDX430	docs/dmalloc.html	/^<a name="IDX430"><\/a>$/;"	a
+IDX431	docs/dmalloc.html	/^<a name="IDX431"><\/a>$/;"	a
+IDX432	docs/dmalloc.html	/^<a name="IDX432"><\/a>$/;"	a
+IDX433	docs/dmalloc.html	/^<a name="IDX433"><\/a>$/;"	a
+IDX434	docs/dmalloc.html	/^<a name="IDX434"><\/a>$/;"	a
+IDX435	docs/dmalloc.html	/^<a name="IDX435"><\/a>$/;"	a
+IDX436	docs/dmalloc.html	/^<a name="IDX436"><\/a>$/;"	a
+IDX437	docs/dmalloc.html	/^<a name="IDX437"><\/a>$/;"	a
+IDX438	docs/dmalloc.html	/^<a name="IDX438"><\/a>$/;"	a
+IDX439	docs/dmalloc.html	/^<a name="IDX439"><\/a>$/;"	a
+IDX44	docs/dmalloc.html	/^<a name="IDX44"><\/a>$/;"	a
+IDX440	docs/dmalloc.html	/^<a name="IDX440"><\/a>$/;"	a
+IDX441	docs/dmalloc.html	/^<a name="IDX441"><\/a>$/;"	a
+IDX442	docs/dmalloc.html	/^<a name="IDX442"><\/a>$/;"	a
+IDX443	docs/dmalloc.html	/^<a name="IDX443"><\/a>$/;"	a
+IDX444	docs/dmalloc.html	/^<dd><a name="IDX444"><\/a>$/;"	a
+IDX445	docs/dmalloc.html	/^<a name="IDX445"><\/a>$/;"	a
+IDX446	docs/dmalloc.html	/^<a name="IDX446"><\/a>$/;"	a
+IDX447	docs/dmalloc.html	/^<a name="IDX447"><\/a>$/;"	a
+IDX448	docs/dmalloc.html	/^<a name="IDX448"><\/a>$/;"	a
+IDX449	docs/dmalloc.html	/^<a name="IDX449"><\/a>$/;"	a
+IDX45	docs/dmalloc.html	/^<dd><a name="IDX45"><\/a>$/;"	a
+IDX450	docs/dmalloc.html	/^<a name="IDX450"><\/a>$/;"	a
+IDX451	docs/dmalloc.html	/^<a name="IDX451"><\/a>$/;"	a
+IDX452	docs/dmalloc.html	/^<a name="IDX452"><\/a>$/;"	a
+IDX453	docs/dmalloc.html	/^<a name="IDX453"><\/a>$/;"	a
+IDX454	docs/dmalloc.html	/^<a name="IDX454"><\/a>$/;"	a
+IDX455	docs/dmalloc.html	/^<a name="IDX455"><\/a>$/;"	a
+IDX456	docs/dmalloc.html	/^<a name="IDX456"><\/a>$/;"	a
+IDX457	docs/dmalloc.html	/^<a name="IDX457"><\/a>$/;"	a
+IDX458	docs/dmalloc.html	/^<a name="IDX458"><\/a>$/;"	a
+IDX459	docs/dmalloc.html	/^<a name="IDX459"><\/a>$/;"	a
+IDX46	docs/dmalloc.html	/^<dd><a name="IDX46"><\/a>$/;"	a
+IDX460	docs/dmalloc.html	/^<a name="IDX460"><\/a>$/;"	a
+IDX461	docs/dmalloc.html	/^<a name="IDX461"><\/a>$/;"	a
+IDX462	docs/dmalloc.html	/^<a name="IDX462"><\/a>$/;"	a
+IDX463	docs/dmalloc.html	/^<a name="IDX463"><\/a>$/;"	a
+IDX464	docs/dmalloc.html	/^<a name="IDX464"><\/a>$/;"	a
+IDX465	docs/dmalloc.html	/^<a name="IDX465"><\/a>$/;"	a
+IDX466	docs/dmalloc.html	/^<a name="IDX466"><\/a>$/;"	a
+IDX467	docs/dmalloc.html	/^<a name="IDX467"><\/a>$/;"	a
+IDX468	docs/dmalloc.html	/^<a name="IDX468"><\/a>$/;"	a
+IDX469	docs/dmalloc.html	/^<a name="IDX469"><\/a>$/;"	a
+IDX47	docs/dmalloc.html	/^<a name="IDX47"><\/a>$/;"	a
+IDX470	docs/dmalloc.html	/^<a name="IDX470"><\/a>$/;"	a
+IDX471	docs/dmalloc.html	/^<a name="IDX471"><\/a>$/;"	a
+IDX472	docs/dmalloc.html	/^<a name="IDX472"><\/a>$/;"	a
+IDX48	docs/dmalloc.html	/^<a name="IDX48"><\/a>$/;"	a
+IDX49	docs/dmalloc.html	/^<a name="IDX49"><\/a>$/;"	a
+IDX5	docs/dmalloc.html	/^<a name="IDX5"><\/a>$/;"	a
+IDX50	docs/dmalloc.html	/^<dd><a name="IDX50"><\/a>$/;"	a
+IDX51	docs/dmalloc.html	/^<a name="IDX51"><\/a>$/;"	a
+IDX52	docs/dmalloc.html	/^<a name="IDX52"><\/a>$/;"	a
+IDX53	docs/dmalloc.html	/^<a name="IDX53"><\/a>$/;"	a
+IDX54	docs/dmalloc.html	/^<a name="IDX54"><\/a>$/;"	a
+IDX55	docs/dmalloc.html	/^<a name="IDX55"><\/a>$/;"	a
+IDX56	docs/dmalloc.html	/^<a name="IDX56"><\/a>$/;"	a
+IDX57	docs/dmalloc.html	/^<a name="IDX57"><\/a>$/;"	a
+IDX58	docs/dmalloc.html	/^<a name="IDX58"><\/a>$/;"	a
+IDX59	docs/dmalloc.html	/^<a name="IDX59"><\/a>$/;"	a
+IDX6	docs/dmalloc.html	/^<a name="IDX6"><\/a>$/;"	a
+IDX60	docs/dmalloc.html	/^<a name="IDX60"><\/a>$/;"	a
+IDX61	docs/dmalloc.html	/^<a name="IDX61"><\/a>$/;"	a
+IDX62	docs/dmalloc.html	/^<a name="IDX62"><\/a>$/;"	a
+IDX63	docs/dmalloc.html	/^<a name="IDX63"><\/a>$/;"	a
+IDX64	docs/dmalloc.html	/^<a name="IDX64"><\/a>$/;"	a
+IDX65	docs/dmalloc.html	/^<a name="IDX65"><\/a>$/;"	a
+IDX66	docs/dmalloc.html	/^<a name="IDX66"><\/a>$/;"	a
+IDX67	docs/dmalloc.html	/^<a name="IDX67"><\/a>$/;"	a
+IDX68	docs/dmalloc.html	/^<a name="IDX68"><\/a>$/;"	a
+IDX69	docs/dmalloc.html	/^<a name="IDX69"><\/a>$/;"	a
+IDX7	docs/dmalloc.html	/^<a name="IDX7"><\/a>$/;"	a
+IDX70	docs/dmalloc.html	/^<a name="IDX70"><\/a>$/;"	a
+IDX71	docs/dmalloc.html	/^<a name="IDX71"><\/a>$/;"	a
+IDX72	docs/dmalloc.html	/^<a name="IDX72"><\/a>$/;"	a
+IDX73	docs/dmalloc.html	/^<a name="IDX73"><\/a>$/;"	a
+IDX74	docs/dmalloc.html	/^<a name="IDX74"><\/a>$/;"	a
+IDX75	docs/dmalloc.html	/^<a name="IDX75"><\/a>$/;"	a
+IDX76	docs/dmalloc.html	/^<a name="IDX76"><\/a>$/;"	a
+IDX77	docs/dmalloc.html	/^<a name="IDX77"><\/a>$/;"	a
+IDX78	docs/dmalloc.html	/^<a name="IDX78"><\/a>$/;"	a
+IDX79	docs/dmalloc.html	/^<a name="IDX79"><\/a>$/;"	a
+IDX8	docs/dmalloc.html	/^<a name="IDX8"><\/a>$/;"	a
+IDX80	docs/dmalloc.html	/^<a name="IDX80"><\/a>$/;"	a
+IDX81	docs/dmalloc.html	/^<a name="IDX81"><\/a>$/;"	a
+IDX82	docs/dmalloc.html	/^<a name="IDX82"><\/a>$/;"	a
+IDX83	docs/dmalloc.html	/^<a name="IDX83"><\/a>$/;"	a
+IDX84	docs/dmalloc.html	/^<dd><a name="IDX84"><\/a>$/;"	a
+IDX85	docs/dmalloc.html	/^<a name="IDX85"><\/a>$/;"	a
+IDX86	docs/dmalloc.html	/^<a name="IDX86"><\/a>$/;"	a
+IDX87	docs/dmalloc.html	/^<a name="IDX87"><\/a>$/;"	a
+IDX88	docs/dmalloc.html	/^<a name="IDX88"><\/a>$/;"	a
+IDX89	docs/dmalloc.html	/^<a name="IDX89"><\/a>$/;"	a
+IDX9	docs/dmalloc.html	/^<a name="IDX9"><\/a>$/;"	a
+IDX90	docs/dmalloc.html	/^<a name="IDX90"><\/a>$/;"	a
+IDX91	docs/dmalloc.html	/^<a name="IDX91"><\/a>$/;"	a
+IDX92	docs/dmalloc.html	/^<a name="IDX92"><\/a>$/;"	a
+IDX93	docs/dmalloc.html	/^<a name="IDX93"><\/a>$/;"	a
+IDX94	docs/dmalloc.html	/^<a name="IDX94"><\/a>$/;"	a
+IDX95	docs/dmalloc.html	/^<a name="IDX95"><\/a>$/;"	a
+IDX96	docs/dmalloc.html	/^<a name="IDX96"><\/a>$/;"	a
+IDX97	docs/dmalloc.html	/^<a name="IDX97"><\/a>$/;"	a
+IDX98	docs/dmalloc.html	/^<a name="IDX98"><\/a>$/;"	a
+IDX99	docs/dmalloc.html	/^<a name="IDX99"><\/a>$/;"	a
+INCS	Makefile	/^INCS = -I. -I$(srcdir) $(INCLUDES)$/;"	m
+INSTALL	Makefile	/^INSTALL = \/usr\/bin\/install -c$/;"	m
+INSTALL_CXX	Makefile	/^INSTALL_CXX = $(LIB_CXX) \\$/;"	m
+INSTALL_CXX_3	Makefile	/^INSTALL_CXX_3 = installcxxsl$/;"	m
+INSTALL_CXX_5	Makefile	/^INSTALL_CXX_5 = installthcxx$/;"	m
+INSTALL_CXX_6	Makefile	/^INSTALL_CXX_6 = installthcxxsl$/;"	m
+INSTALL_DATA	Makefile	/^INSTALL_DATA = ${INSTALL} -m 644$/;"	m
+INSTALL_LIB	Makefile	/^INSTALL_LIB = $(LIBRARY) \\$/;"	m
+INSTALL_LIB_1	Makefile	/^INSTALL_LIB_1 = installth$/;"	m
+INSTALL_LIB_2	Makefile	/^INSTALL_LIB_2 = installthsl$/;"	m
+INSTALL_LIB_7	Makefile	/^INSTALL_LIB_7 = installsl$/;"	m
+INSTALL_PROGRAM	Makefile	/^INSTALL_PROGRAM = ${INSTALL}$/;"	m
+INSTALL_SL	Makefile	/^INSTALL_SL = $(LIB_SL) \\$/;"	m
+INSTALL_SL_7	Makefile	/^INSTALL_SL_7 = installthsl$/;"	m
+INSTALL_THREADS	Makefile	/^INSTALL_THREADS = $(LIB_TH) \\$/;"	m
+INSTALL_THREADS_1	Makefile	/^INSTALL_THREADS_1 = installthsl$/;"	m
+INSTALL_TH_CXX	Makefile	/^INSTALL_TH_CXX = $(LIB_TH_CXX) \\$/;"	m
+INSTALL_TH_CXX_7	Makefile	/^INSTALL_TH_CXX_7 = installthcxxsl$/;"	m
+INTERNAL_ERROR_NAME	dmalloc_argv_loc.h	73;"	d
+INTERNAL_MEMORY_SPACE	settings.h	399;"	d
+INTERVAL_ARG	dmalloc.c	65;"	d	file:
+INTERVAL_LABEL	env.c	58;"	d	file:
+INTER_CHAR	dmalloc_t.c	62;"	d	file:
+INVALID_ERROR	error_val.h	75;"	d
+IS_IN_HEAP	heap.h	35;"	d
+Index-of-Concepts	docs/dmalloc.html	/^<a name="Index-of-Concepts"><\/a>$/;"	a
+Installation	docs/dmalloc.html	/^<a name="Installation"><\/a>$/;"	a
+KILL_INCLUDE	settings.h	188;"	d
+KILL_PROCESS	settings.h	189;"	d
+LARGEST_ALLOCATION	settings.h	144;"	d
+LAST_ARG	dmalloc_argv_loc.h	92;"	d
+LDFLAGS	Makefile	/^LDFLAGS = $/;"	m
+LIBRARY	Makefile	/^LIBRARY	= lib$(MODULE).a$/;"	m
+LIBS	Makefile	/^LIBS = -L. $/;"	m
+LIB_CXX	Makefile	/^LIB_CXX	= lib$(MODULE)cxx.a$/;"	m
+LIB_CXX_SL	Makefile	/^LIB_CXX_SL = lib$(MODULE)cxx.so$/;"	m
+LIB_SL	Makefile	/^LIB_SL = lib$(MODULE).so$/;"	m
+LIB_TH	Makefile	/^LIB_TH	= lib$(MODULE)th.a$/;"	m
+LIB_TH_CXX	Makefile	/^LIB_TH_CXX = lib$(MODULE)thcxx.a$/;"	m
+LIB_TH_CXX_SL	Makefile	/^LIB_TH_CXX_SL = lib$(MODULE)thcxx.so$/;"	m
+LIB_TH_SL	Makefile	/^LIB_TH_SL = lib$(MODULE)th.so$/;"	m
+LIMIT_ARG	dmalloc.c	67;"	d	file:
+LIMIT_LABEL	env.c	62;"	d	file:
+LINE_WIDTH	dmalloc.c	68;"	d	file:
+LOCK_ON_LABEL	env.c	59;"	d	file:
+LOCK_THREADS	settings.h	418;"	d
+LOGFILE_LABEL	env.c	60;"	d	file:
+LOG_CTIME_STRING	settings.h	294;"	d
+LOG_ITERATION	settings.h	246;"	d
+LOG_PID	settings.h	253;"	d
+LOG_PNT_ITERATION	settings.h	284;"	d
+LOG_PNT_SEEN_COUNT	settings.h	274;"	d
+LOG_PNT_THREAD_ID	settings.h	452;"	d
+LOG_PNT_TIME	settings.h	311;"	d
+LOG_PNT_TIMEVAL	settings.h	318;"	d
+LOG_REOPEN	settings.h	264;"	d
+LOG_TIME_NUMBER	settings.h	237;"	d
+LONG_COLUMN	dmalloc_argv_loc.h	117;"	d
+LONG_LABEL	dmalloc_argv_loc.h	123;"	d
+LONG_LABEL_LENGTH	dmalloc_argv_loc.h	134;"	d
+LONG_PREFIX	dmalloc_argv_loc.h	93;"	d
+LONG_PREFIX_LENGTH	dmalloc_argv_loc.h	130;"	d
+LOW_FLAGS	dmalloc.c	86;"	d	file:
+Logfile-Details	docs/dmalloc.html	/^<a name="Logfile-Details"><\/a>$/;"	a
+M88K_RET_ADDR	return.h	213;"	d
+M88K_RET_ADDR	return.h	215;"	d
+MAGIC_A	dmalloc_rand.c	39;"	d	file:
+MAGIC_QUOTIENT	dmalloc_rand.c	41;"	d	file:
+MAGIC_REMAINDER	dmalloc_rand.c	42;"	d	file:
+MALLOC_ERROR	DMALLOC/include/dmalloc.h	72;"	d
+MALLOC_ERROR	dmalloc.h	72;"	d
+MALLOC_VERIFY_ERROR	DMALLOC/include/dmalloc.h	84;"	d
+MALLOC_VERIFY_ERROR	dmalloc.h	84;"	d
+MALLOC_VERIFY_NOERROR	DMALLOC/include/dmalloc.h	85;"	d
+MALLOC_VERIFY_NOERROR	dmalloc.h	85;"	d
+MAX	dmalloc_loc.h	70;"	d
+MAX	dmalloc_loc.h	71;"	d
+MAXATEXIT	contrib/atexit.c	41;"	d	file:
+MAX_ALLOC	dmalloc_t.c	67;"	d	file:
+MAX_ALLOC	dmalloc_t.c	70;"	d	file:
+MAX_FILE_LENGTH	settings.h	134;"	d
+MAX_LINE_NUMBER	settings.h	135;"	d
+MAX_POINTERS	dmalloc_t.c	64;"	d	file:
+MAX_QSORT_PARTITION	dmalloc_tab_loc.h	41;"	d
+MAX_QSORT_SPLITS	dmalloc_tab_loc.h	34;"	d
+MAX_SKIP_LEVEL	chunk_loc.h	57;"	d
+MEDIUM_FLAGS	dmalloc.c	91;"	d	file:
+MEMORY_TABLE_SIZE	settings.h	367;"	d
+MEMORY_TABLE_TOP_LOG	settings.h	376;"	d
+MEM_ALLOC_ENTRIES	chunk_loc.h	60;"	d
+MEM_CHANGED_ENTRIES	chunk_loc.h	61;"	d
+MERSENNE_PRIME	dmalloc_rand.c	40;"	d	file:
+MIN	dmalloc_argv_loc.h	41;"	d
+MIN	dmalloc_argv_loc.h	42;"	d
+MIN	dmalloc_loc.h	72;"	d
+MIN	dmalloc_loc.h	73;"	d
+MINS_IN_HOUR	error.c	84;"	d	file:
+MIN_AVAIL	dmalloc_t.c	72;"	d	file:
+MIN_FILE_LENGTH	settings.h	133;"	d
+MODULE	Makefile	/^MODULE	= dmalloc$/;"	m
+Malloc-Functions	docs/dmalloc.html	/^<a name="Malloc-Functions"><\/a>$/;"	a
+Memory-Leaks	docs/dmalloc.html	/^<a name="Memory-Leaks"><\/a>$/;"	a
+NEVER_REUSE_ITERS	dmalloc_t.c	651;"	d	file:
+NOERROR	dmalloc_argv_loc.h	44;"	d
+NOERROR	dmalloc_argv_loc.h	45;"	d
+NORMAL_OBJS	Makefile	/^NORMAL_OBJS = chunk.o error.o malloc.o$/;"	m
+NORMAL_OBJS_SL	Makefile	/^NORMAL_OBJS_SL = chunk_sl.o error_sl.o malloc_sl.o$/;"	m
+NO_VALUE	dmalloc_argv_loc.h	58;"	d
+NULL	dmalloc_argv_loc.h	38;"	d
+NULL	dmalloc_loc.h	44;"	d
+NUMBER_ARG_CHARS	dmalloc_argv_loc.h	97;"	d
+OBJS	Makefile	/^OBJS = arg_check.o compat.o dmalloc_rand.o dmalloc_tab.o env.o heap.o$/;"	m
+OBJS_SL	Makefile	/^OBJS_SL = arg_check_sl.o compat_sl.o dmalloc_rand_sl.o dmalloc_tab_sl.o env_sl.o heap_sl.o$/;"	m
+OPTIONS_ENVIRON	dmalloc_loc.h	32;"	d
+Other-Hints	docs/dmalloc.html	/^<a name="Other-Hints"><\/a>$/;"	a
+Overview	docs/dmalloc.html	/^<a name="Overview"><\/a>$/;"	a
+PDFFILE	Makefile	/^PDFFILE = $(MODULE).pdf$/;"	m
+PROGRAM_NAME	dmalloc_argv_loc.h	79;"	d
+PROTECT_ALLOWED	conf.h	39;"	d
+Portability	docs/dmalloc.html	/^<a name="Portability"><\/a>$/;"	a
+Programming	docs/dmalloc.html	/^<a name="Programming"><\/a>$/;"	a
+RC-File	docs/dmalloc.html	/^<a name="RC-File"><\/a>$/;"	a
+REALLOC_ERROR	DMALLOC/include/dmalloc.h	73;"	d
+REALLOC_ERROR	dmalloc.h	73;"	d
+RETSIGTYPE	conf.h	111;"	d
+RETURN_MACROS_WORK	conf.h	119;"	d
+RUNTIME_FLAGS	dmalloc.c	82;"	d	file:
+Return-Address	docs/dmalloc.html	/^<a name="Return-Address"><\/a>$/;"	a
+SBRK_ERROR	heap.c	52;"	d	file:
+SCREEN_WIDTH	dmalloc_argv_loc.h	60;"	d
+SEC1	docs/dmalloc.html	/^<a name="SEC1"><\/a>$/;"	a
+SEC10	docs/dmalloc.html	/^<a name="SEC10"><\/a>$/;"	a
+SEC11	docs/dmalloc.html	/^<a name="SEC11"><\/a>$/;"	a
+SEC12	docs/dmalloc.html	/^<a name="SEC12"><\/a>$/;"	a
+SEC13	docs/dmalloc.html	/^<a name="SEC13"><\/a>$/;"	a
+SEC14	docs/dmalloc.html	/^<a name="SEC14"><\/a>$/;"	a
+SEC15	docs/dmalloc.html	/^<a name="SEC15"><\/a>$/;"	a
+SEC16	docs/dmalloc.html	/^<a name="SEC16"><\/a>$/;"	a
+SEC17	docs/dmalloc.html	/^<a name="SEC17"><\/a>$/;"	a
+SEC18	docs/dmalloc.html	/^<a name="SEC18"><\/a>$/;"	a
+SEC19	docs/dmalloc.html	/^<a name="SEC19"><\/a>$/;"	a
+SEC2	docs/dmalloc.html	/^<a name="SEC2"><\/a>$/;"	a
+SEC20	docs/dmalloc.html	/^<a name="SEC20"><\/a>$/;"	a
+SEC21	docs/dmalloc.html	/^<a name="SEC21"><\/a>$/;"	a
+SEC22	docs/dmalloc.html	/^<a name="SEC22"><\/a>$/;"	a
+SEC23	docs/dmalloc.html	/^<a name="SEC23"><\/a>$/;"	a
+SEC24	docs/dmalloc.html	/^<a name="SEC24"><\/a>$/;"	a
+SEC25	docs/dmalloc.html	/^<a name="SEC25"><\/a>$/;"	a
+SEC26	docs/dmalloc.html	/^<a name="SEC26"><\/a>$/;"	a
+SEC27	docs/dmalloc.html	/^<a name="SEC27"><\/a>$/;"	a
+SEC28	docs/dmalloc.html	/^<a name="SEC28"><\/a>$/;"	a
+SEC29	docs/dmalloc.html	/^<a name="SEC29"><\/a>$/;"	a
+SEC3	docs/dmalloc.html	/^<a name="SEC3"><\/a>$/;"	a
+SEC30	docs/dmalloc.html	/^<a name="SEC30"><\/a>$/;"	a
+SEC31	docs/dmalloc.html	/^<a name="SEC31"><\/a>$/;"	a
+SEC32	docs/dmalloc.html	/^<a name="SEC32"><\/a>$/;"	a
+SEC33	docs/dmalloc.html	/^<a name="SEC33"><\/a>$/;"	a
+SEC34	docs/dmalloc.html	/^<a name="SEC34"><\/a>$/;"	a
+SEC35	docs/dmalloc.html	/^<a name="SEC35"><\/a>$/;"	a
+SEC36	docs/dmalloc.html	/^<a name="SEC36"><\/a>$/;"	a
+SEC37	docs/dmalloc.html	/^<a name="SEC37"><\/a>$/;"	a
+SEC38	docs/dmalloc.html	/^<a name="SEC38"><\/a>$/;"	a
+SEC39	docs/dmalloc.html	/^<a name="SEC39"><\/a>$/;"	a
+SEC4	docs/dmalloc.html	/^<a name="SEC4"><\/a>$/;"	a
+SEC40	docs/dmalloc.html	/^<a name="SEC40"><\/a>$/;"	a
+SEC40_0	docs/dmalloc.html	/^<tr><th><a name="SEC40_0">%<\/a><\/th><td><\/td><td><\/td><\/tr>$/;"	a
+SEC40_1	docs/dmalloc.html	/^<tr><th><a name="SEC40_1">-<\/a><\/th><td><\/td><td><\/td><\/tr>$/;"	a
+SEC40_10	docs/dmalloc.html	/^<tr><th><a name="SEC40_10">A<\/a><\/th><td><\/td><td><\/td><\/tr>$/;"	a
+SEC40_11	docs/dmalloc.html	/^<tr><th><a name="SEC40_11">B<\/a><\/th><td><\/td><td><\/td><\/tr>$/;"	a
+SEC40_12	docs/dmalloc.html	/^<tr><th><a name="SEC40_12">C<\/a><\/th><td><\/td><td><\/td><\/tr>$/;"	a
+SEC40_13	docs/dmalloc.html	/^<tr><th><a name="SEC40_13">D<\/a><\/th><td><\/td><td><\/td><\/tr>$/;"	a
+SEC40_14	docs/dmalloc.html	/^<tr><th><a name="SEC40_14">E<\/a><\/th><td><\/td><td><\/td><\/tr>$/;"	a
+SEC40_15	docs/dmalloc.html	/^<tr><th><a name="SEC40_15">F<\/a><\/th><td><\/td><td><\/td><\/tr>$/;"	a
+SEC40_16	docs/dmalloc.html	/^<tr><th><a name="SEC40_16">G<\/a><\/th><td><\/td><td><\/td><\/tr>$/;"	a
+SEC40_17	docs/dmalloc.html	/^<tr><th><a name="SEC40_17">H<\/a><\/th><td><\/td><td><\/td><\/tr>$/;"	a
+SEC40_18	docs/dmalloc.html	/^<tr><th><a name="SEC40_18">I<\/a><\/th><td><\/td><td><\/td><\/tr>$/;"	a
+SEC40_19	docs/dmalloc.html	/^<tr><th><a name="SEC40_19">J<\/a><\/th><td><\/td><td><\/td><\/tr>$/;"	a
+SEC40_2	docs/dmalloc.html	/^<tr><th><a name="SEC40_2">.<\/a><\/th><td><\/td><td><\/td><\/tr>$/;"	a
+SEC40_20	docs/dmalloc.html	/^<tr><th><a name="SEC40_20">K<\/a><\/th><td><\/td><td><\/td><\/tr>$/;"	a
+SEC40_21	docs/dmalloc.html	/^<tr><th><a name="SEC40_21">L<\/a><\/th><td><\/td><td><\/td><\/tr>$/;"	a
+SEC40_22	docs/dmalloc.html	/^<tr><th><a name="SEC40_22">M<\/a><\/th><td><\/td><td><\/td><\/tr>$/;"	a
+SEC40_23	docs/dmalloc.html	/^<tr><th><a name="SEC40_23">N<\/a><\/th><td><\/td><td><\/td><\/tr>$/;"	a
+SEC40_24	docs/dmalloc.html	/^<tr><th><a name="SEC40_24">O<\/a><\/th><td><\/td><td><\/td><\/tr>$/;"	a
+SEC40_25	docs/dmalloc.html	/^<tr><th><a name="SEC40_25">P<\/a><\/th><td><\/td><td><\/td><\/tr>$/;"	a
+SEC40_26	docs/dmalloc.html	/^<tr><th><a name="SEC40_26">Q<\/a><\/th><td><\/td><td><\/td><\/tr>$/;"	a
+SEC40_27	docs/dmalloc.html	/^<tr><th><a name="SEC40_27">R<\/a><\/th><td><\/td><td><\/td><\/tr>$/;"	a
+SEC40_28	docs/dmalloc.html	/^<tr><th><a name="SEC40_28">S<\/a><\/th><td><\/td><td><\/td><\/tr>$/;"	a
+SEC40_29	docs/dmalloc.html	/^<tr><th><a name="SEC40_29">T<\/a><\/th><td><\/td><td><\/td><\/tr>$/;"	a
+SEC40_3	docs/dmalloc.html	/^<tr><th><a name="SEC40_3">0<\/a><\/th><td><\/td><td><\/td><\/tr>$/;"	a
+SEC40_30	docs/dmalloc.html	/^<tr><th><a name="SEC40_30">U<\/a><\/th><td><\/td><td><\/td><\/tr>$/;"	a
+SEC40_31	docs/dmalloc.html	/^<tr><th><a name="SEC40_31">V<\/a><\/th><td><\/td><td><\/td><\/tr>$/;"	a
+SEC40_32	docs/dmalloc.html	/^<tr><th><a name="SEC40_32">W<\/a><\/th><td><\/td><td><\/td><\/tr>$/;"	a
+SEC40_33	docs/dmalloc.html	/^<tr><th><a name="SEC40_33">Z<\/a><\/th><td><\/td><td><\/td><\/tr>$/;"	a
+SEC40_4	docs/dmalloc.html	/^<tr><th><a name="SEC40_4">1<\/a><\/th><td><\/td><td><\/td><\/tr>$/;"	a
+SEC40_5	docs/dmalloc.html	/^<tr><th><a name="SEC40_5">2<\/a><\/th><td><\/td><td><\/td><\/tr>$/;"	a
+SEC40_6	docs/dmalloc.html	/^<tr><th><a name="SEC40_6">3<\/a><\/th><td><\/td><td><\/td><\/tr>$/;"	a
+SEC40_7	docs/dmalloc.html	/^<tr><th><a name="SEC40_7">4<\/a><\/th><td><\/td><td><\/td><\/tr>$/;"	a
+SEC40_8	docs/dmalloc.html	/^<tr><th><a name="SEC40_8">6<\/a><\/th><td><\/td><td><\/td><\/tr>$/;"	a
+SEC40_9	docs/dmalloc.html	/^<tr><th><a name="SEC40_9">7<\/a><\/th><td><\/td><td><\/td><\/tr>$/;"	a
+SEC5	docs/dmalloc.html	/^<a name="SEC5"><\/a>$/;"	a
+SEC6	docs/dmalloc.html	/^<a name="SEC6"><\/a>$/;"	a
+SEC7	docs/dmalloc.html	/^<a name="SEC7"><\/a>$/;"	a
+SEC8	docs/dmalloc.html	/^<a name="SEC8"><\/a>$/;"	a
+SEC9	docs/dmalloc.html	/^<a name="SEC9"><\/a>$/;"	a
+SECS_IN_HOUR	error.c	86;"	d	file:
+SECS_IN_MIN	error.c	85;"	d	file:
+SEC_About	docs/dmalloc.html	/^<a name="SEC_About"><\/a>$/;"	a
+SEC_Contents	docs/dmalloc.html	/^<a name="SEC_Contents"><\/a>$/;"	a
+SEC_Top	docs/dmalloc.html	/^<a name="SEC_Top"><\/a>$/;"	a
+SET_POINTER	dmalloc_loc.h	90;"	d
+SHELL	Makefile	/^SHELL = \/bin\/sh$/;"	m
+SHELL_ENVIRON	dmalloc.c	59;"	d	file:
+SHORT_COLUMN	dmalloc_argv_loc.h	116;"	d
+SHORT_PREFIX	dmalloc_argv_loc.h	94;"	d
+SHORT_PREFIX_LENGTH	dmalloc_argv_loc.h	129;"	d
+SIGNAL1	settings.h	199;"	d
+SIGNAL2	settings.h	200;"	d
+SIGNAL3	settings.h	201;"	d
+SIGNAL4	settings.h	202;"	d
+SIGNAL5	settings.h	203;"	d
+SIGNAL6	settings.h	204;"	d
+SIGNAL_OKAY	conf.h	110;"	d
+SIZE_ARG	dmalloc_t.c	3252;"	d	file:
+SKIP_SLOT_SIZE	chunk_loc.h	132;"	d
+SPECIAL_CHARS	chunk_loc.h	51;"	d
+SPECIAL_CHARS	dmalloc_argv_loc.h	62;"	d
+START_LABEL	env.c	61;"	d	file:
+STDC_HEADERS	conf.h	195;"	d
+STDERR	dmalloc_loc.h	56;"	d
+STDERR	dmalloc_loc.h	57;"	d
+STDIN	dmalloc_argv_loc.h	50;"	d
+STDIN	dmalloc_argv_loc.h	51;"	d
+STDIN	dmalloc_loc.h	50;"	d
+STDIN	dmalloc_loc.h	51;"	d
+STDOUT	dmalloc_loc.h	53;"	d
+STDOUT	dmalloc_loc.h	54;"	d
+Shell-Alias	docs/dmalloc.html	/^<a name="Shell-Alias"><\/a>$/;"	a
+Source-Code	docs/dmalloc.html	/^<a name="Source-Code"><\/a>$/;"	a
+TEST	Makefile	/^TEST = $(MODULE)_t$/;"	m
+TEST_FC	Makefile	/^TEST_FC = $(MODULE)_fc_t$/;"	m
+TEXIFILE	Makefile	/^TEXIFILE = $(MODULE).texi$/;"	m
+THREAD_GET_ID	settings.h	454;"	d
+THREAD_ID_TO_STRING	settings.h	456;"	d
+THREAD_ID_TO_STRING	settings.h	460;"	d
+THREAD_INCLUDE	settings.h	430;"	d
+THREAD_INIT_LOCK	settings.h	438;"	d
+THREAD_LOCK_INIT_VAL	conf.h	153;"	d
+THREAD_LOCK_ON_ARG	dmalloc.c	66;"	d	file:
+THREAD_MUTEX_T	conf.h	145;"	d
+THREAD_OBJS	Makefile	/^THREAD_OBJS = chunk_th.o error_th.o malloc_th.o$/;"	m
+THREAD_OBJS_SL	Makefile	/^THREAD_OBJS_SL = chunk_th_sl.o error_th_sl.o malloc_th_sl.o$/;"	m
+THREAD_TYPE	settings.h	453;"	d
+TIMEVAL_INCLUDE	settings.h	319;"	d
+TIMEVAL_TYPE	settings.h	320;"	d
+TIME_INCLUDE	settings.h	238;"	d
+TIME_INCLUDE	settings.h	313;"	d
+TIME_TYPE	settings.h	295;"	d
+TIME_TYPE	settings.h	316;"	d
+TOC1	docs/dmalloc.html	/^  <li><a name="TOC1" href="#SEC1">1. Library Copying and Licensing Conditions<\/a><\/li>$/;"	a
+TOC10	docs/dmalloc.html	/^  <li><a name="TOC10" href="#SEC10">3. How to Program with the Library<\/a>$/;"	a
+TOC11	docs/dmalloc.html	/^    <li><a name="TOC11" href="#SEC11">3.1 Macros Providing File and Line Information<\/a><\/li>$/;"	a
+TOC12	docs/dmalloc.html	/^    <li><a name="TOC12" href="#SEC12">3.2 Getting Caller Address Information<\/a><\/li>$/;"	a
+TOC13	docs/dmalloc.html	/^    <li><a name="TOC13" href="#SEC13">3.3 Checking of Function Arguments<\/a><\/li>$/;"	a
+TOC14	docs/dmalloc.html	/^    <li><a name="TOC14" href="#SEC14">3.4 Generating a Core File on Errors<\/a><\/li>$/;"	a
+TOC15	docs/dmalloc.html	/^    <li><a name="TOC15" href="#SEC15">3.5 Additional Non-standard Routines<\/a><\/li>$/;"	a
+TOC16	docs/dmalloc.html	/^    <li><a name="TOC16" href="#SEC16">3.6 Description of the Internal Error Codes<\/a><\/li>$/;"	a
+TOC17	docs/dmalloc.html	/^    <li><a name="TOC17" href="#SEC17">3.7 How to Disable the library<\/a><\/li>$/;"	a
+TOC18	docs/dmalloc.html	/^    <li><a name="TOC18" href="#SEC18">3.8 Using the Library with C++<\/a><\/li>$/;"	a
+TOC19	docs/dmalloc.html	/^    <li><a name="TOC19" href="#SEC19">3.9 Using Dmalloc With a Debugger<\/a>$/;"	a
+TOC2	docs/dmalloc.html	/^  <li><a name="TOC2" href="#SEC2">2. Description of Features and How to Get Started<\/a>$/;"	a
+TOC20	docs/dmalloc.html	/^      <li><a name="TOC20" href="#SEC20">3.9.1 Diagnosing General Problems with a Debugger<\/a><\/li>$/;"	a
+TOC21	docs/dmalloc.html	/^      <li><a name="TOC21" href="#SEC21">3.9.2 Tracking Down Non-Freed Memory<\/a><\/li>$/;"	a
+TOC22	docs/dmalloc.html	/^      <li><a name="TOC22" href="#SEC22">3.9.3 Diagnosing Fence-Post Overwritten Memory<\/a><\/li>$/;"	a
+TOC23	docs/dmalloc.html	/^      <li><a name="TOC23" href="#SEC23">3.9.4 Translating Return Addresses into Code Locations<\/a><\/li>$/;"	a
+TOC24	docs/dmalloc.html	/^    <li><a name="TOC24" href="#SEC24">3.10 Using the Library with a Thread Package<\/a><\/li>$/;"	a
+TOC25	docs/dmalloc.html	/^    <li><a name="TOC25" href="#SEC25">3.11 Using the library with Cygwin environment.<\/a><\/li>$/;"	a
+TOC26	docs/dmalloc.html	/^    <li><a name="TOC26" href="#SEC26">3.12 Debugging Memory in a Server or Cgi-Bin Process<\/a><\/li>$/;"	a
+TOC27	docs/dmalloc.html	/^    <li><a name="TOC27" href="#SEC27">3.13 Explanation of the Logfile Output<\/a><\/li>$/;"	a
+TOC28	docs/dmalloc.html	/^    <li><a name="TOC28" href="#SEC28">3.14 Various Other Hints That May Help<\/a><\/li>$/;"	a
+TOC29	docs/dmalloc.html	/^  <li><a name="TOC29" href="#SEC29">4. Dmalloc Utility Program<\/a>$/;"	a
+TOC3	docs/dmalloc.html	/^    <li><a name="TOC3" href="#SEC3">2.1 How to Install the Library<\/a><\/li>$/;"	a
+TOC30	docs/dmalloc.html	/^    <li><a name="TOC30" href="#SEC30">4.1 Using a Shell Alias with the Utility<\/a><\/li>$/;"	a
+TOC31	docs/dmalloc.html	/^    <li><a name="TOC31" href="#SEC31">4.2 How to Use the Dmalloc Program<\/a><\/li>$/;"	a
+TOC32	docs/dmalloc.html	/^    <li><a name="TOC32" href="#SEC32">4.3 Environment Variable Name and Features<\/a><\/li>$/;"	a
+TOC33	docs/dmalloc.html	/^    <li><a name="TOC33" href="#SEC33">4.4 Description of the Debugging Tokens<\/a><\/li>$/;"	a
+TOC34	docs/dmalloc.html	/^    <li><a name="TOC34" href="#SEC34">4.5 Format of the Runtime Configuration File<\/a><\/li>$/;"	a
+TOC35	docs/dmalloc.html	/^  <li><a name="TOC35" href="#SEC35">5. Information on the Source Code<\/a>$/;"	a
+TOC36	docs/dmalloc.html	/^    <li><a name="TOC36" href="#SEC36">5.1 Definition of Terms and other Information<\/a><\/li>$/;"	a
+TOC37	docs/dmalloc.html	/^    <li><a name="TOC37" href="#SEC37">5.2 General Compatibility Concerns<\/a><\/li>$/;"	a
+TOC38	docs/dmalloc.html	/^    <li><a name="TOC38" href="#SEC38">5.3 Issues Important for Porting the Library<\/a><\/li>$/;"	a
+TOC39	docs/dmalloc.html	/^  <li><a name="TOC39" href="#SEC39">6. Some Solutions to Common Problems<\/a><\/li>$/;"	a
+TOC4	docs/dmalloc.html	/^    <li><a name="TOC4" href="#SEC4">2.2 Getting Started with the Library<\/a><\/li>$/;"	a
+TOC40	docs/dmalloc.html	/^  <li><a name="TOC40" href="#SEC40">Index of Concepts<\/a><\/li>$/;"	a
+TOC5	docs/dmalloc.html	/^    <li><a name="TOC5" href="#SEC5">2.3 Basic Description of Terms and Functions<\/a>$/;"	a
+TOC6	docs/dmalloc.html	/^      <li><a name="TOC6" href="#SEC6">2.3.1 General Memory Terms and Concepts<\/a><\/li>$/;"	a
+TOC7	docs/dmalloc.html	/^      <li><a name="TOC7" href="#SEC7">2.3.2 Functionality Supported by All Malloc Libraries<\/a><\/li>$/;"	a
+TOC8	docs/dmalloc.html	/^    <li><a name="TOC8" href="#SEC8">2.4 General Features of the Library<\/a><\/li>$/;"	a
+TOC9	docs/dmalloc.html	/^    <li><a name="TOC9" href="#SEC9">2.5 How the Library Checks Your Program<\/a><\/li>$/;"	a
+TOKENIZE_CHARS	dmalloc.c	62;"	d	file:
+TOKENIZE_EQUALS	dmalloc.c	61;"	d	file:
+TOKEN_FOUND	dmalloc.c	72;"	d	file:
+Top	docs/dmalloc.html	/^<a name="Top"><\/a>$/;"	a
+Translate-Return-Addresses	docs/dmalloc.html	/^<a name="Translate-Return-Addresses"><\/a>$/;"	a
+Troubleshooting	docs/dmalloc.html	/^<a name="Troubleshooting"><\/a>$/;"	a
+UNKNOWN_ARG	dmalloc_argv_loc.h	95;"	d
+UNKNOWN_ARG_LENGTH	dmalloc_argv_loc.h	135;"	d
+USAGE_ALL_ARG	dmalloc_argv_loc.h	112;"	d
+USAGE_ARG	dmalloc_argv_loc.h	109;"	d
+USAGE_CHAR_ARG	dmalloc_argv_loc.h	103;"	d
+USAGE_ERROR_NAME	dmalloc_argv_loc.h	72;"	d
+USAGE_LABEL	dmalloc_argv_loc.h	121;"	d
+USAGE_LABEL_LENGTH	dmalloc_argv_loc.h	132;"	d
+USAGE_LONG_ARG	dmalloc_argv_loc.h	111;"	d
+USAGE_SHORT_ARG	dmalloc_argv_loc.h	110;"	d
+USE_ABORT	settings.h	183;"	d
+USE_ABORT	settings.h	185;"	d
+USE_MMAP	conf.h	63;"	d
+USE_RETURN_MACROS	settings.h	96;"	d
+UTIL	Makefile	/^UTIL = $(MODULE)$/;"	m
+Using-With-C_002b_002b	docs/dmalloc.html	/^<a name="Using-With-C_002b_002b"><\/a>$/;"	a
+Using-With-Cygwin	docs/dmalloc.html	/^<a name="Using-With-Cygwin"><\/a>$/;"	a
+Using-With-Threads	docs/dmalloc.html	/^<a name="Using-With-Threads"><\/a>$/;"	a
+Using-With-a-Debugger	docs/dmalloc.html	/^<a name="Using-With-a-Debugger"><\/a>$/;"	a
+Utility-Usage	docs/dmalloc.html	/^<a name="Utility-Usage"><\/a>$/;"	a
+VERSION_ARG	dmalloc_argv_loc.h	113;"	d
+VERSION_LABEL	dmalloc_argv_loc.h	122;"	d
+XtCalloc	contrib/Xmalloc.c	/^char	*XtCalloc(unsigned num_elements, unsigned size)$/;"	f
+XtFree	contrib/Xmalloc.c	/^void	XtFree(char *pnt)$/;"	f
+XtMalloc	contrib/Xmalloc.c	/^char	*XtMalloc(unsigned size)$/;"	f
+XtRealloc	contrib/Xmalloc.c	/^char	*XtRealloc(char *ptr, unsigned size)$/;"	f
+_GNU_SOURCE	malloc.c	29;"	d	file:
+_XtAllocError	contrib/Xmalloc.c	/^static	void	_XtAllocError(const char *name)$/;"	f	file:
+__ARGV_H__	dmalloc_argv.h	25;"	d
+__ARGV_LOC_H__	dmalloc_argv_loc.h	25;"	d
+__ARG_CHECK_H__	arg_check.h	25;"	d
+__CHUNK_H__	chunk.h	25;"	d
+__CHUNK_LOC_H__	chunk_loc.h	25;"	d
+__COMPAT_H__	compat.h	25;"	d
+__CONF_H__	conf.h	26;"	d
+__DEBUG_TOK_H__	debug_tok.h	25;"	d
+__DMALLOC_H__	DMALLOC/include/dmalloc.h	25;"	d
+__DMALLOC_H__	dmalloc.h	25;"	d
+__DMALLOC_LOC_H__	dmalloc_loc.h	25;"	d
+__DMALLOC_RAND_H__	dmalloc_rand.h	25;"	d
+__DMALLOC_TAB_H__	dmalloc_tab.h	25;"	d
+__DMALLOC_TAB_LOC_H__	dmalloc_tab_loc.h	25;"	d
+__ENV_H__	env.h	25;"	d
+__ERROR_H__	error.h	25;"	d
+__ERROR_VAL_H__	error_val.h	25;"	d
+__HEAP_H__	heap.h	25;"	d
+__MALLOC_H__	malloc_funcs.h	25;"	d
+__RETURN_H__	return.h	43;"	d
+__SETTINGS_H__	settings.h	36;"	d
+__USE_GNU	chunk.c	1998;"	d	file:
+__VERSION_H__	version.h	25;"	d
+__atexit	contrib/atexit.c	/^static void (*__atexit[MAXATEXIT])(void);$/;"	v	file:
+__atexit_registered	contrib/atexit.c	/^static int __atexit_registered = 0;$/;"	v	file:
+__fini_dmalloc	malloc.c	/^void	__fini_dmalloc(void)$/;"	f
+_dmalloc_aborting_b	error.c	/^int		_dmalloc_aborting_b = 0;$/;"	v
+_dmalloc_address	error.c	/^DMALLOC_PNT	_dmalloc_address = NULL;$/;"	v
+_dmalloc_address_break	env.c	/^void	_dmalloc_address_break(const char *addr_all, DMALLOC_PNT *addr_p,$/;"	f
+_dmalloc_address_seen_n	error.c	/^unsigned long	_dmalloc_address_seen_n = 0;$/;"	v
+_dmalloc_alloc_total	chunk.c	/^unsigned long		_dmalloc_alloc_total = 0;$/;"	v
+_dmalloc_atoi	arg_check.c	/^int	_dmalloc_atoi(const char *file, const int line, const char *str)$/;"	f
+_dmalloc_atol	arg_check.c	/^long	_dmalloc_atol(const char *file, const int line, const char *str)$/;"	f
+_dmalloc_bcmp	arg_check.c	/^int	_dmalloc_bcmp(const char *file, const int line,$/;"	f
+_dmalloc_bcopy	arg_check.c	/^void	_dmalloc_bcopy(const char *file, const int line,$/;"	f
+_dmalloc_bzero	arg_check.c	/^void	_dmalloc_bzero(const char *file, const int line,$/;"	f
+_dmalloc_check_interval	error.c	/^unsigned long	_dmalloc_check_interval = 0;$/;"	v
+_dmalloc_chunk_count_changed	chunk.c	/^unsigned long	_dmalloc_chunk_count_changed(const unsigned long mark,$/;"	f
+_dmalloc_chunk_desc_pnt	chunk.c	/^char	*_dmalloc_chunk_desc_pnt(char *buf, const int buf_size,$/;"	f
+_dmalloc_chunk_free	chunk.c	/^int	_dmalloc_chunk_free(const char *file, const unsigned int line,$/;"	f
+_dmalloc_chunk_get_stats	chunk.c	/^void	_dmalloc_chunk_get_stats(void **heap_low_p, void **heap_high_p,$/;"	f
+_dmalloc_chunk_heap_check	chunk.c	/^int	_dmalloc_chunk_heap_check(void)$/;"	f
+_dmalloc_chunk_log_changed	chunk.c	/^void	_dmalloc_chunk_log_changed(const unsigned long mark,$/;"	f
+_dmalloc_chunk_log_stats	chunk.c	/^void	_dmalloc_chunk_log_stats(void)$/;"	f
+_dmalloc_chunk_malloc	chunk.c	/^void	*_dmalloc_chunk_malloc(const char *file, const unsigned int line,$/;"	f
+_dmalloc_chunk_pnt_check	chunk.c	/^int	_dmalloc_chunk_pnt_check(const char *func, const void *user_pnt,$/;"	f
+_dmalloc_chunk_read_info	chunk.c	/^int	_dmalloc_chunk_read_info(const void *user_pnt, const char *where,$/;"	f
+_dmalloc_chunk_realloc	chunk.c	/^void	*_dmalloc_chunk_realloc(const char *file, const unsigned int line,$/;"	f
+_dmalloc_chunk_startup	chunk.c	/^int	_dmalloc_chunk_startup(void)$/;"	f
+_dmalloc_chunk_tag_pnt	chunk.c	/^int _dmalloc_chunk_tag_pnt(const void * user_pnt,char *file,int line)$/;"	f
+_dmalloc_die	error.c	/^void	_dmalloc_die(const int silent_b)$/;"	f
+_dmalloc_environ_process	env.c	/^void	_dmalloc_environ_process(const char *env_str, DMALLOC_PNT *addr_p,$/;"	f
+_dmalloc_environ_set	env.c	/^void	_dmalloc_environ_set(char *buf, const int buf_size,$/;"	f
+_dmalloc_flags	error.c	/^unsigned int	_dmalloc_flags = 0;$/;"	v
+_dmalloc_heap_alloc	heap.c	/^void	*_dmalloc_heap_alloc(const unsigned int size)$/;"	f
+_dmalloc_heap_high	heap.c	/^void		*_dmalloc_heap_high = NULL;	\/* end of our heap *\/$/;"	v
+_dmalloc_heap_low	heap.c	/^void		*_dmalloc_heap_low = NULL;	\/* base of our heap *\/$/;"	v
+_dmalloc_heap_startup	heap.c	/^int	_dmalloc_heap_startup(void)$/;"	f
+_dmalloc_index	arg_check.c	/^char	*_dmalloc_index(const char *file, const int line,$/;"	f
+_dmalloc_iter_c	error.c	/^unsigned long	_dmalloc_iter_c = 0;$/;"	v
+_dmalloc_lock_on	error.c	/^int		_dmalloc_lock_on = 0;$/;"	v
+_dmalloc_memccpy	arg_check.c	/^void	*_dmalloc_memccpy(const char *file, const int line,$/;"	f
+_dmalloc_memchr	arg_check.c	/^void	*_dmalloc_memchr(const char *file, const int line,$/;"	f
+_dmalloc_memcmp	arg_check.c	/^int	_dmalloc_memcmp(const char *file, const int line,$/;"	f
+_dmalloc_memcpy	arg_check.c	/^void	*_dmalloc_memcpy(const char *file, const int line,$/;"	f
+_dmalloc_memmove	arg_check.c	/^void	*_dmalloc_memmove(const char *file, const int line,$/;"	f
+_dmalloc_memory_limit	chunk.c	/^unsigned long		_dmalloc_memory_limit = 0;$/;"	v
+_dmalloc_memset	arg_check.c	/^void	*_dmalloc_memset(const char *file, const int line, void *buf,$/;"	f
+_dmalloc_open_log	error.c	/^void	_dmalloc_open_log(void)$/;"	f
+_dmalloc_ptime	error.c	/^char	*_dmalloc_ptime(const TIME_TYPE *time_p, char *buf, const int buf_size,$/;"	f
+_dmalloc_ptimeval	error.c	/^char	*_dmalloc_ptimeval(const TIMEVAL_TYPE *timeval_p, char *buf,$/;"	f
+_dmalloc_rand	dmalloc_rand.c	/^long	_dmalloc_rand(void)$/;"	f
+_dmalloc_reopen_log	error.c	/^void	_dmalloc_reopen_log(void)$/;"	f
+_dmalloc_rindex	arg_check.c	/^char	*_dmalloc_rindex(const char *file, const int line,$/;"	f
+_dmalloc_srand	dmalloc_rand.c	/^void	_dmalloc_srand(const long seed)$/;"	f
+_dmalloc_start	error.c	/^TIMEVAL_TYPE	_dmalloc_start;$/;"	v
+_dmalloc_start	error.c	/^TIME_TYPE	_dmalloc_start = 0;$/;"	v
+_dmalloc_start_break	env.c	/^void	_dmalloc_start_break(char *start_all, char **start_file_p,$/;"	f
+_dmalloc_strcasecmp	arg_check.c	/^int	_dmalloc_strcasecmp(const char *file, const int line,$/;"	f
+_dmalloc_strcat	arg_check.c	/^char	*_dmalloc_strcat(const char *file, const int line,$/;"	f
+_dmalloc_strchr	arg_check.c	/^char	*_dmalloc_strchr(const char *file, const int line,$/;"	f
+_dmalloc_strcmp	arg_check.c	/^int	_dmalloc_strcmp(const char *file, const int line,$/;"	f
+_dmalloc_strcpy	arg_check.c	/^char	*_dmalloc_strcpy(const char *file, const int line,$/;"	f
+_dmalloc_strcspn	arg_check.c	/^int	_dmalloc_strcspn(const char *file, const int line,$/;"	f
+_dmalloc_strlen	arg_check.c	/^DMALLOC_SIZE	_dmalloc_strlen(const char *file, const int line,$/;"	f
+_dmalloc_strncasecmp	arg_check.c	/^int	_dmalloc_strncasecmp(const char *file, const int line,$/;"	f
+_dmalloc_strncat	arg_check.c	/^char	*_dmalloc_strncat(const char *file, const int line,$/;"	f
+_dmalloc_strncmp	arg_check.c	/^int	_dmalloc_strncmp(const char *file, const int line,$/;"	f
+_dmalloc_strncpy	arg_check.c	/^char	*_dmalloc_strncpy(const char *file, const int line,$/;"	f
+_dmalloc_strpbrk	arg_check.c	/^char	*_dmalloc_strpbrk(const char *file, const int line,$/;"	f
+_dmalloc_strrchr	arg_check.c	/^char	*_dmalloc_strrchr(const char *file, const int line,$/;"	f
+_dmalloc_strspn	arg_check.c	/^int	_dmalloc_strspn(const char *file, const int line,$/;"	f
+_dmalloc_strstr	arg_check.c	/^char	*_dmalloc_strstr(const char *file, const int line,$/;"	f
+_dmalloc_strtok	arg_check.c	/^char	*_dmalloc_strtok(const char *file, const int line,$/;"	f
+_dmalloc_table_clear	dmalloc_tab.c	/^void	_dmalloc_table_clear(mem_table_t *mem_table, const int entry_n,$/;"	f
+_dmalloc_table_delete	dmalloc_tab.c	/^void	_dmalloc_table_delete(mem_table_t *mem_table, const int entry_n,$/;"	f
+_dmalloc_table_insert	dmalloc_tab.c	/^void	_dmalloc_table_insert(mem_table_t *mem_table, const int entry_n,$/;"	f
+_dmalloc_table_log_info	dmalloc_tab.c	/^void	_dmalloc_table_log_info(mem_table_t *mem_table, const int current_n,$/;"	f
+_dmalloc_vmessage	error.c	/^void	_dmalloc_vmessage(const char *format, va_list args)$/;"	f
+aa_entries	dmalloc_argv.h	/^  ARGV_PNT	aa_entries;		\/* entry list specified *\/$/;"	m	struct:__anon4
+aa_entry_n	dmalloc_argv.h	/^  int		aa_entry_n;		\/* number of elements in aa_entrees *\/$/;"	m	struct:__anon4
+add_entry	dmalloc_tab.c	/^static	void	add_entry(mem_table_t *total_p, const mem_table_t *tab_p)$/;"	f	file:
+address	dmalloc.c	/^static	char	*address = NULL;		\/* for ADDRESS *\/$/;"	v	file:
+admin_block_c	chunk.c	/^static	unsigned long	admin_block_c = 0;	\/* count of admin blocks *\/$/;"	v	file:
+aix_c_get_ret_addr	return.h	/^static	void	aix_c_get_ret_addr(int i, int *file)$/;"	f
+align_to	chunk.c	/^static char * align_to(char * p, unsigned int alignment)$/;"	f	file:
+alloc_cur_given	chunk.c	/^static	unsigned long	alloc_cur_given = 0;	\/* current mem given *\/$/;"	v	file:
+alloc_cur_pnts	chunk.c	/^static	unsigned long	alloc_cur_pnts = 0;	\/* current pointers *\/$/;"	v	file:
+alloc_current	chunk.c	/^static	unsigned long	alloc_current = 0;	\/* current memory usage *\/$/;"	v	file:
+alloc_max_given	chunk.c	/^static	unsigned long	alloc_max_given = 0;	\/* maximum mem given  *\/$/;"	v	file:
+alloc_max_pnts	chunk.c	/^static	unsigned long	alloc_max_pnts = 0;	\/* maximum pointers *\/$/;"	v	file:
+alloc_maximum	chunk.c	/^static	unsigned long	alloc_maximum = 0;	\/* maximum memory usage  *\/$/;"	v	file:
+alloc_one_max	chunk.c	/^static	unsigned long	alloc_one_max = 0;	\/* maximum at once *\/$/;"	v	file:
+alloc_slots	chunk.c	/^static	void	*alloc_slots(const int level_n)$/;"	f	file:
+alloc_tot_pnts	chunk.c	/^static	unsigned long	alloc_tot_pnts = 0;	\/* total pointers *\/$/;"	v	file:
+ar_comment	dmalloc_argv.h	/^  char		*ar_comment;		\/* comment for usage message *\/$/;"	m	struct:__anon3
+ar_long_arg	dmalloc_argv.h	/^  char		*ar_long_arg;		\/* long version of arg, '--delete' *\/$/;"	m	struct:__anon3
+ar_short_arg	dmalloc_argv.h	/^  char		ar_short_arg;		\/* short argument, 'd' if '-d' *\/$/;"	m	struct:__anon3
+ar_type	dmalloc_argv.h	/^  unsigned int	ar_type;		\/* type of option, see values below *\/$/;"	m	struct:__anon3
+ar_var_label	dmalloc_argv.h	/^  char		*ar_var_label;		\/* label for variable description *\/$/;"	m	struct:__anon3
+ar_variable	dmalloc_argv.h	/^  ARGV_PNT	ar_variable;		\/* address of associated variable *\/$/;"	m	struct:__anon3
+arg_list	dmalloc_fc_t.c	/^static	argv_t		arg_list[] = {$/;"	v	file:
+arg_list	dmalloc_t.c	/^static	argv_t		arg_list[] = {$/;"	v	file:
+args	dmalloc.c	/^static	argv_t	args[] = {$/;"	v	file:
+argv_argc	dmalloc_argv.c	/^int	argv_argc = 0;$/;"	v
+argv_argv	dmalloc_argv.c	/^char	**argv_argv = NULL;$/;"	v
+argv_array_t	dmalloc_argv.h	/^} argv_array_t;$/;"	t	typeref:struct:__anon4
+argv_cleanup	dmalloc_argv.c	/^void	argv_cleanup(const argv_t *args)$/;"	f
+argv_close_enable_b	dmalloc_argv.c	/^int	argv_close_enable_b = 1;$/;"	v
+argv_copy_args	dmalloc_argv.c	/^int	argv_copy_args(char *buf, const int buf_size)$/;"	f
+argv_entry_was_used	dmalloc_argv.c	/^int	argv_entry_was_used(const argv_t *argv_entry_p)$/;"	f
+argv_env_after_b	dmalloc_argv.c	/^int	argv_env_after_b = 0;$/;"	v
+argv_error_code	dmalloc_argv.c	/^int	argv_error_code = EXIT_CODE;$/;"	v
+argv_error_stream	dmalloc_argv.c	/^FILE 	*argv_error_stream = ERROR_STREAM_INIT;$/;"	v
+argv_error_type	dmalloc_argv.c	/^int	argv_error_type = ARGV_USAGE_SEE;$/;"	v
+argv_help_string	dmalloc_argv.c	/^char	*argv_help_string = NULL;$/;"	v
+argv_interactive	dmalloc_argv.c	/^int 	argv_interactive = ARGV_TRUE;$/;"	v
+argv_last_toggle_b	dmalloc_argv.c	/^int	argv_last_toggle_b = 0;$/;"	v
+argv_long_was_used	dmalloc_argv.c	/^int	argv_long_was_used(const argv_t *args, const char *long_arg)$/;"	f
+argv_multi_accept_b	dmalloc_argv.c	/^int	argv_multi_accept_b = 1;$/;"	v
+argv_process	dmalloc_argv.c	/^int	argv_process(argv_t *args, const int argc, char **argv)$/;"	f
+argv_process_env_b	dmalloc_argv.c	/^int	argv_process_env_b = 1;$/;"	v
+argv_process_no_env	dmalloc_argv.c	/^int	argv_process_no_env(argv_t *args, const int arg_n, char **argv)$/;"	f
+argv_program	dmalloc_argv.c	/^char	argv_program[PROGRAM_NAME + 1] = "Unknown";$/;"	v
+argv_startup	dmalloc_argv.c	/^static	void	argv_startup(void)$/;"	f	file:
+argv_t	dmalloc_argv.h	/^} argv_t;$/;"	t	typeref:struct:__anon3
+argv_type_info	dmalloc_argv.c	/^const char	*argv_type_info(const unsigned int type, unsigned int *size_p,$/;"	f
+argv_type_t	dmalloc_argv_loc.h	/^} argv_type_t;$/;"	t	typeref:struct:__anon5
+argv_types	dmalloc_argv_loc.h	/^static	argv_type_t	argv_types[] = {$/;"	v
+argv_usage	dmalloc_argv.c	/^int	argv_usage(const argv_t *args, const int which)$/;"	f
+argv_usage_type	dmalloc_argv.c	/^int	argv_usage_type = ARGV_USAGE_LONG;$/;"	v
+argv_value_string	dmalloc_argv.c	/^int	argv_value_string(const argv_t *argv_entry_p, char *buf,$/;"	f
+argv_version_string	dmalloc_argv.c	/^char	*argv_version_string = NULL;$/;"	v
+argv_was_used	dmalloc_argv.c	/^int	argv_was_used(const argv_t *args, const char short_arg)$/;"	f
+at_desc	debug_tok.h	/^  char		*at_desc;		\/* description string *\/$/;"	m	struct:__anon2
+at_desc	dmalloc_argv_loc.h	/^  const char	*at_desc;		\/* description of the type *\/$/;"	m	struct:__anon5
+at_name	dmalloc_argv_loc.h	/^  const char	*at_name;		\/* name of the type *\/$/;"	m	struct:__anon5
+at_size	dmalloc_argv_loc.h	/^  unsigned int	at_size;		\/* size of type *\/$/;"	m	struct:__anon5
+at_string	debug_tok.h	/^  char		*at_string;		\/* attribute string *\/$/;"	m	struct:__anon2
+at_value	debug_tok.h	/^  unsigned long	at_value;		\/* value for the item *\/$/;"	m	struct:__anon2
+at_value	dmalloc_argv_loc.h	/^  unsigned int	at_value;		\/* value of the type *\/$/;"	m	struct:__anon5
+atexit	contrib/atexit.c	/^atexit(void (*fn)(void)) {$/;"	f
+atoi	DMALLOC/include/dmalloc.h	1231;"	d
+atoi	DMALLOC/include/dmalloc.h	1232;"	d
+atoi	compat.c	/^int	atoi(const char *str)$/;"	f
+atoi	dmalloc.h	1231;"	d
+atoi	dmalloc.h	1232;"	d
+atol	DMALLOC/include/dmalloc.h	1234;"	d
+atol	DMALLOC/include/dmalloc.h	1235;"	d
+atol	compat.c	/^long	atol(const char *str)$/;"	f
+atol	dmalloc.h	1234;"	d
+atol	dmalloc.h	1235;"	d
+attr_t	debug_tok.h	/^} attr_t;$/;"	t	typeref:struct:__anon2
+attributes	debug_tok.h	/^static	attr_t		attributes[]$/;"	v
+auto_seed	dmalloc_rand.c	/^static	void	auto_seed(void)$/;"	f	file:
+bcmp	DMALLOC/include/dmalloc.h	1238;"	d
+bcmp	DMALLOC/include/dmalloc.h	1239;"	d
+bcmp	dmalloc.h	1238;"	d
+bcmp	dmalloc.h	1239;"	d
+bcopy	DMALLOC/include/dmalloc.h	1241;"	d
+bcopy	DMALLOC/include/dmalloc.h	1242;"	d
+bcopy	dmalloc.h	1241;"	d
+bcopy	dmalloc.h	1242;"	d
+bindir	Makefile	/^bindir = ${exec_prefix}\/bin$/;"	m
+bit_sizes	chunk.c	/^static	int		bit_sizes[BASIC_BLOCK]; \/* number bits for div-blocks*\/$/;"	v	file:
+bourne_b	dmalloc.c	/^static	int	bourne_b = 0;			\/* set bourne shell output *\/$/;"	v	file:
+btoi	dmalloc_argv.c	/^static	int	btoi(const char *str)$/;"	f	file:
+bugs	RELEASE.html	/^<h3><a name="bugs"> Bugs Fixed <\/a><\/h3>$/;"	a
+build_logfile_path	error.c	/^static	void	build_logfile_path(char *buf, const int buf_len)$/;"	f	file:
+by_size	contrib/dmalloc_summarize.pl	/^sub by_size {$/;"	s
+bzero	DMALLOC/include/dmalloc.h	1244;"	d
+bzero	DMALLOC/include/dmalloc.h	1245;"	d
+bzero	dmalloc.h	1244;"	d
+bzero	dmalloc.h	1245;"	d
+calloc	DMALLOC/include/dmalloc.h	1163;"	d
+calloc	DMALLOC/include/dmalloc.h	1164;"	d
+calloc	dmalloc.h	1163;"	d
+calloc	dmalloc.h	1164;"	d
+calloc	malloc.c	/^DMALLOC_PNT	calloc(DMALLOC_SIZE num_elements, DMALLOC_SIZE size)$/;"	f
+calloc	malloc.c	1217;"	d	file:
+cfree	malloc.c	/^DMALLOC_FREE_RET	cfree(DMALLOC_PNT pnt)$/;"	f
+cfree	malloc.c	1541;"	d	file:
+check_arg_check	dmalloc_t.c	/^static	int	check_arg_check(void)$/;"	f	file:
+check_fail	dmalloc_fc_t.c	/^static	int	check_fail(const char *what, const int expected_errno) {$/;"	f	file:
+check_free_slot	chunk.c	/^static	int	check_free_slot(const skip_alloc_t *slot_p)$/;"	f	file:
+check_initial_special	dmalloc_t.c	/^static	int	check_initial_special(void)$/;"	f	file:
+check_mand	dmalloc_argv.c	/^static	int	check_mand(const argv_t *args)$/;"	f	file:
+check_ok	dmalloc_fc_t.c	/^static	int	check_ok(const char *what) {$/;"	f	file:
+check_opt	dmalloc_argv.c	/^static	int	check_opt(const int queue_head, const int queue_tail)$/;"	f	file:
+check_or	dmalloc_argv.c	/^static	int	check_or(const argv_t *args, const argv_t *which_p)$/;"	f	file:
+check_pnt	malloc.c	/^static	void	check_pnt(const char *file, const int line, const void *pnt,$/;"	f	file:
+check_special	dmalloc_t.c	/^static	int	check_special(void)$/;"	f	file:
+check_used_slot	chunk.c	/^static	int	check_used_slot(const skip_alloc_t *slot_p,$/;"	f	file:
+check_xor	dmalloc_argv.c	/^static	int	check_xor(const argv_t *args)$/;"	f	file:
+choose_shell	dmalloc.c	/^static	void	choose_shell(void)$/;"	f	file:
+clear_alloc	chunk.c	/^static	void	clear_alloc(skip_alloc_t *slot_p, pnt_info_t *info_p,$/;"	f	file:
+clear_b	dmalloc.c	/^static	int	clear_b = 0;			\/* clear variables *\/$/;"	v	file:
+compare_t	dmalloc_tab_loc.h	/^typedef int	(*compare_t)(const void *element1_p, const void *element2_p);$/;"	t
+copyright	chunk.c	/^static	char	*copyright =$/;"	v	file:
+create_divided_chunks	chunk.c	/^static	int	create_divided_chunks(const unsigned int div_size)$/;"	f	file:
+cshell_b	dmalloc.c	/^static	int	cshell_b = 0;			\/* set c-shell output *\/$/;"	v	file:
+de_flags	dmalloc.c	/^  long		de_flags;			\/* default settings *\/$/;"	m	struct:__anon6	file:
+de_string	dmalloc.c	/^  char		*de_string;			\/* default name *\/$/;"	m	struct:__anon6	file:
+debug	dmalloc.c	/^static	int	debug = 0;			\/* for DEBUG *\/$/;"	v	file:
+debug_tokens_b	dmalloc.c	/^static	int	debug_tokens_b = 0;		\/* list debug tokens *\/$/;"	v	file:
+default_iter_n	dmalloc_t.c	/^static	long		default_iter_n = DEFAULT_ITERATIONS; \/* # of iters *\/$/;"	v	file:
+default_t	dmalloc.c	/^} default_t;$/;"	t	typeref:struct:__anon6	file:
+defaults	dmalloc.c	/^static	default_t	defaults[] = {$/;"	v	file:
+display_arg	dmalloc_argv.c	/^static	void	display_arg(FILE *stream, const argv_t *arg_p, const int max,$/;"	f	file:
+display_option	dmalloc_argv.c	/^static	void	display_option(FILE *stream, const argv_t *arg_p, int *col_cp)$/;"	f	file:
+display_pnt	chunk.c	/^static	char	*display_pnt(const void *user_pnt, const skip_alloc_t *alloc_p,$/;"	f	file:
+display_variables	dmalloc_argv.c	/^static	void	display_variables(const argv_t *args)$/;"	f	file:
+dmalloc	RELEASE.html	/^<h3><a name="dmalloc"> Dmalloc Utility Changes <\/a><\/h3>$/;"	a
+dmalloc_count_changed	malloc.c	/^unsigned long	dmalloc_count_changed(const unsigned long mark,$/;"	f
+dmalloc_debug	malloc.c	/^unsigned int	dmalloc_debug(const unsigned int flags)$/;"	f
+dmalloc_debug_current	malloc.c	/^unsigned int	dmalloc_debug_current(void)$/;"	f
+dmalloc_debug_setup	malloc.c	/^void	dmalloc_debug_setup(const char *options_str)$/;"	f
+dmalloc_errno	malloc.c	/^int		dmalloc_errno = ERROR_NONE;$/;"	v
+dmalloc_error	error.c	/^void	dmalloc_error(const char *func)$/;"	f
+dmalloc_examine	malloc.c	/^int	dmalloc_examine(const DMALLOC_PNT pnt, DMALLOC_SIZE *user_size_p,$/;"	f
+dmalloc_free	malloc.c	/^int	dmalloc_free(const char *file, const int line, DMALLOC_PNT pnt,$/;"	f
+dmalloc_get_stats	malloc.c	/^void	dmalloc_get_stats(DMALLOC_PNT *heap_low_p,$/;"	f
+dmalloc_in	malloc.c	/^static	int	dmalloc_in(const char *file, const int line,$/;"	f	file:
+dmalloc_log_changed	malloc.c	/^void	dmalloc_log_changed(const unsigned long mark, const int not_freed_b,$/;"	f
+dmalloc_log_stats	malloc.c	/^void	dmalloc_log_stats(void)$/;"	f
+dmalloc_log_unfreed	malloc.c	/^void	dmalloc_log_unfreed(void)$/;"	f
+dmalloc_logpath	malloc.c	/^char		*dmalloc_logpath = NULL;$/;"	v
+dmalloc_malloc	malloc.c	/^DMALLOC_PNT	dmalloc_malloc(const char *file, const int line,$/;"	f
+dmalloc_mark	malloc.c	/^unsigned long	dmalloc_mark(void)$/;"	f
+dmalloc_memory_allocated	malloc.c	/^unsigned long	dmalloc_memory_allocated(void)$/;"	f
+dmalloc_message	malloc.c	/^void	dmalloc_message(const char *format, ...)$/;"	f
+dmalloc_mmap	malloc.c	/^DMALLOC_PNT	dmalloc_mmap(const char *file, const int line)$/;"	f
+dmalloc_mutex	malloc.c	/^static THREAD_MUTEX_T dmalloc_mutex;$/;"	v	file:
+dmalloc_out	malloc.c	/^static	void	dmalloc_out(void)$/;"	f	file:
+dmalloc_page_size	malloc.c	/^unsigned int	dmalloc_page_size(void)$/;"	f
+dmalloc_posix_memalign	malloc.c	/^int	dmalloc_posix_memalign(const char *file, const int line, DMALLOC_PNT *memptr,$/;"	f
+dmalloc_realloc	malloc.c	/^DMALLOC_PNT	dmalloc_realloc(const char *file, const int line,$/;"	f
+dmalloc_shutdown	malloc.c	/^void	dmalloc_shutdown(void)$/;"	f
+dmalloc_startup	malloc.c	/^static	int	dmalloc_startup(const char *debug_str)$/;"	f	file:
+dmalloc_strerror	malloc.c	/^const char	*dmalloc_strerror(const int error_num)$/;"	f
+dmalloc_strndup	malloc.c	/^char	*dmalloc_strndup(const char *file, const int line,$/;"	f
+dmalloc_tag	DMALLOC/include/dmalloc.h	1157;"	d
+dmalloc_tag	DMALLOC/include/dmalloc.h	1158;"	d
+dmalloc_tag	DMALLOC/include/dmalloc.h	697;"	d
+dmalloc_tag	dmalloc.h	1157;"	d
+dmalloc_tag	dmalloc.h	1158;"	d
+dmalloc_tag	dmalloc.h	697;"	d
+dmalloc_tag_pnt	malloc.c	/^int	dmalloc_tag_pnt(const DMALLOC_PNT pnt,char *file,int line)$/;"	f
+dmalloc_track	malloc.c	/^void	dmalloc_track(const dmalloc_track_t track_func)$/;"	f
+dmalloc_track_t	DMALLOC/include/dmalloc.h	/^typedef void  (*dmalloc_track_t)(const char *file, const unsigned int line,$/;"	t
+dmalloc_track_t	dmalloc.h	/^typedef void  (*dmalloc_track_t)(const char *file, const unsigned int line,$/;"	t
+dmalloc_verify	malloc.c	/^int	dmalloc_verify(const DMALLOC_PNT pnt)$/;"	f
+dmalloc_verify_pnt	malloc.c	/^int	dmalloc_verify_pnt(const char *file, const int line, const char *func,$/;"	f
+dmalloc_verify_pnt_strsize	malloc.c	/^int	dmalloc_verify_pnt_strsize(const char *file, const int line,$/;"	f
+dmalloc_version	version.h	/^static	char	*dmalloc_version = "5.5.2" ;$/;"	v
+dmalloc_vmessage	malloc.c	/^void	dmalloc_vmessage(const char *format, va_list args)$/;"	f
+do_arg	dmalloc_argv.c	/^static	void	do_arg(argv_t *grid, argv_t *match_p, const char *close_p,$/;"	f	file:
+do_atoi	dmalloc_fc_t.c	/^static	int	do_atoi(void) {$/;"	f	file:
+do_atol	dmalloc_fc_t.c	/^static	int	do_atol(void) {$/;"	f	file:
+do_bcmp	dmalloc_fc_t.c	/^static	int	do_bcmp(void) {$/;"	f	file:
+do_bcopy	dmalloc_fc_t.c	/^static	int	do_bcopy(void) {$/;"	f	file:
+do_bzero	dmalloc_fc_t.c	/^static	int	do_bzero(void) {$/;"	f	file:
+do_env_args	dmalloc_argv.c	/^static	int	do_env_args(argv_t *args, argv_t **queue_list,$/;"	f	file:
+do_index	dmalloc_fc_t.c	/^static	int	do_index(void) {$/;"	f	file:
+do_interactive	dmalloc_t.c	/^static	void	do_interactive(void)$/;"	f	file:
+do_list	dmalloc_argv.c	/^static	void	do_list(argv_t *grid, const int arg_c, char **argv,$/;"	f	file:
+do_memccpy	dmalloc_fc_t.c	/^static	int	do_memccpy(void) {$/;"	f	file:
+do_memchr	dmalloc_fc_t.c	/^static	int	do_memchr(void) {$/;"	f	file:
+do_memcmp	dmalloc_fc_t.c	/^static	int	do_memcmp(void) {$/;"	f	file:
+do_memcpy	dmalloc_fc_t.c	/^static	int	do_memcpy(void) {$/;"	f	file:
+do_memmove	dmalloc_fc_t.c	/^static	int	do_memmove(void) {$/;"	f	file:
+do_memset	dmalloc_fc_t.c	/^static	int	do_memset(void) {$/;"	f	file:
+do_random	dmalloc_t.c	/^static	int	do_random(const int iter_n)$/;"	f	file:
+do_rindex	dmalloc_fc_t.c	/^static	int	do_rindex(void) {$/;"	f	file:
+do_shutdown_b	malloc.c	/^static	int		do_shutdown_b = 0;	\/* execute shutdown soon *\/$/;"	v	file:
+do_strcasecmp	dmalloc_fc_t.c	/^static	int	do_strcasecmp(void) {$/;"	f	file:
+do_strcat	dmalloc_fc_t.c	/^static	int	do_strcat(void) {$/;"	f	file:
+do_strchr	dmalloc_fc_t.c	/^static	int	do_strchr(void) {$/;"	f	file:
+do_strcmp	dmalloc_fc_t.c	/^static	int	do_strcmp(void) {$/;"	f	file:
+do_strcpy	dmalloc_fc_t.c	/^static	int	do_strcpy(void) {$/;"	f	file:
+do_strcspn	dmalloc_fc_t.c	/^static	int	do_strcspn(void) {$/;"	f	file:
+do_strlen	dmalloc_fc_t.c	/^static	int	do_strlen(void) {$/;"	f	file:
+do_strncasecmp	dmalloc_fc_t.c	/^static	int	do_strncasecmp(void) {$/;"	f	file:
+do_strncat	dmalloc_fc_t.c	/^static	int	do_strncat(void) {$/;"	f	file:
+do_strncmp	dmalloc_fc_t.c	/^static	int	do_strncmp(void) {$/;"	f	file:
+do_strncpy	dmalloc_fc_t.c	/^static	int	do_strncpy(void) {$/;"	f	file:
+do_strpbrk	dmalloc_fc_t.c	/^static	int	do_strpbrk(void) {$/;"	f	file:
+do_strrchr	dmalloc_fc_t.c	/^static	int	do_strrchr(void) {$/;"	f	file:
+do_strspn	dmalloc_fc_t.c	/^static	int	do_strspn(void) {$/;"	f	file:
+do_strstr	dmalloc_fc_t.c	/^static	int	do_strstr(void) {$/;"	f	file:
+do_strtok	dmalloc_fc_t.c	/^static	int	do_strtok(void) {$/;"	f	file:
+do_tests	dmalloc_fc_t.c	/^static	int	do_tests(void) {$/;"	f	file:
+do_usage	dmalloc_argv.c	/^static	void	do_usage(const argv_t *args, const int flag)$/;"	f	file:
+docdir	Makefile	/^docdir = $(prefix)\/share\/doc\/$(MODULE)$/;"	m
+dump_current	dmalloc.c	/^static	void	dump_current(void)$/;"	f	file:
+dump_debug	dmalloc.c	/^static	void	dump_debug(const unsigned long val)$/;"	f	file:
+eb_first_slot	chunk_loc.h	/^  skip_alloc_t		eb_first_slot;	\/* first slot in the block *\/$/;"	m	struct:entry_block_st
+eb_level_n	chunk_loc.h	/^  unsigned int		eb_level_n;	\/* the levels which are stored here *\/$/;"	m	struct:entry_block_st
+eb_magic1	chunk_loc.h	/^  unsigned int		eb_magic1;	\/* magic number *\/$/;"	m	struct:entry_block_st
+eb_magic2	chunk_loc.h	/^  unsigned int		eb_magic2;	\/* magic number *\/$/;"	m	struct:entry_block_st
+eb_next_p	chunk_loc.h	/^  struct entry_block_st	*eb_next_p;	\/* pointer to next block *\/$/;"	m	struct:entry_block_st	typeref:struct:entry_block_st::entry_block_st
+empty	dmalloc_argv.c	/^static	argv_t	empty[] = {{ ARGV_LAST, NULL, 0, NULL, NULL, NULL }};$/;"	v	file:
+enabled_b	dmalloc_argv.c	/^static	int	enabled_b = ARGV_FALSE;		\/* are the lights on? *\/$/;"	v	file:
+enabled_b	malloc.c	/^static	int		enabled_b = 0;		\/* have we started yet? *\/$/;"	v	file:
+entry_block_st	chunk_loc.h	/^typedef struct entry_block_st {$/;"	s
+entry_block_t	chunk_loc.h	/^} entry_block_t;$/;"	t	typeref:struct:entry_block_st
+entry_blocks	chunk.c	/^static	entry_block_t	*entry_blocks[MAX_SKIP_LEVEL];$/;"	v	file:
+entry_cmp	dmalloc_tab.c	/^static	int	entry_cmp(const void *entry1_p, const void *entry2_p)$/;"	f	file:
+entry_free_list	chunk.c	/^static	skip_alloc_t	*entry_free_list[MAX_SKIP_LEVEL];$/;"	v	file:
+env	RELEASE.html	/^<h3><a name="env"> Environmental Variable Changes <\/a><\/h3>$/;"	a
+env_string	dmalloc_fc_t.c	/^static	char		*env_string = NULL;		\/* env options *\/$/;"	v	file:
+env_string	dmalloc_t.c	/^static	char		*env_string = NULL;		\/* env options *\/$/;"	v	file:
+errno_to_print	dmalloc.c	/^static	int	errno_to_print = 0;		\/* to print the error string *\/$/;"	v	file:
+error_list	error_val.h	/^static	error_str_t	error_list[]$/;"	v
+error_str	error.c	/^static	char	error_str[1024];		\/* error string buffer *\/$/;"	v	file:
+error_str_t	error_val.h	/^} error_str_t;$/;"	t	typeref:struct:__anon7
+es_error	error_val.h	/^  int		es_error;		\/* error number *\/$/;"	m	struct:__anon7
+es_string	error_val.h	/^  char		*es_string;		\/* associated string *\/$/;"	m	struct:__anon7
+exec_prefix	Makefile	/^exec_prefix = ${prefix}$/;"	m
+exit	contrib/atexit.c	/^exit(int status) {$/;"	f
+expand_buf	dmalloc_argv.c	/^static	int	expand_buf(const void *buf, const int buf_size,$/;"	f	file:
+expand_chars	chunk.c	/^static	int	expand_chars(const void *buf, const int buf_size,$/;"	f	file:
+fence_bottom	chunk.c	/^static	char		fence_bottom[FENCE_BOTTOM_SIZE];$/;"	v	file:
+fence_read	chunk.c	/^static	int	fence_read(const pnt_info_t *info_p)$/;"	f	file:
+fence_top	chunk.c	/^static	char		fence_top[FENCE_TOP_SIZE];$/;"	v	file:
+file_args	dmalloc_argv.c	/^static	void	file_args(const char *path, argv_t *grid,$/;"	f	file:
+find_address	chunk.c	/^static	skip_alloc_t	*find_address(const void *address, const int free_b,$/;"	f	file:
+find_free_size	chunk.c	/^static	skip_alloc_t	*find_free_size(const unsigned int size,$/;"	f	file:
+find_tag	dmalloc.c	/^static	long	find_tag(const long debug_value, const char *tag_find,$/;"	f	file:
+foo	configure	/^  foo();$/;"	f
+form	contrib/dmalloc_summarize.pl	/^sub form {$/;"	s
+free	DMALLOC/include/dmalloc.h	1192;"	d
+free	DMALLOC/include/dmalloc.h	1193;"	d
+free	configure	/^free () { if (main_b) _exit(0); }$/;"	f
+free	dmalloc.h	1192;"	d
+free	dmalloc.h	1193;"	d
+free	malloc.c	/^DMALLOC_FREE_RET	free(DMALLOC_PNT pnt)$/;"	f
+free	malloc.c	1510;"	d	file:
+free_slot	dmalloc_t.c	/^static	void	free_slot(const int iter_c, pnt_info_t *slot_p,$/;"	f	file:
+free_space_bytes	chunk.c	/^static	unsigned long	free_space_bytes = 0;	\/* count the free bytes *\/$/;"	v	file:
+free_wait_list_head	chunk.c	/^static	skip_alloc_t	*free_wait_list_head = NULL;$/;"	v	file:
+free_wait_list_tail	chunk.c	/^static	skip_alloc_t	*free_wait_list_tail = NULL;$/;"	v	file:
+func	RELEASE.html	/^<h3><a name="func"> New Functionality <\/a><\/h3>$/;"	a
+func_calloc_c	chunk.c	/^static	unsigned long	func_calloc_c = 0;	\/* # callocs, done in alloc *\/$/;"	v	file:
+func_delete_c	chunk.c	/^static	unsigned long	func_delete_c = 0;	\/* count the deletes *\/$/;"	v	file:
+func_free_c	chunk.c	/^static	unsigned long	func_free_c = 0;	\/* count the frees *\/$/;"	v	file:
+func_malloc_c	chunk.c	/^static	unsigned long	func_malloc_c = 0;	\/* count the mallocs *\/$/;"	v	file:
+func_memalign_c	chunk.c	/^static	unsigned long	func_memalign_c = 0;	\/* count the memaligns *\/$/;"	v	file:
+func_new_c	chunk.c	/^static	unsigned long	func_new_c = 0;		\/* count the news *\/$/;"	v	file:
+func_posix_memalign_c	chunk.c	/^static	unsigned long	func_posix_memalign_c = 0;	\/* count the posix_memaligns *\/$/;"	v	file:
+func_realloc_c	chunk.c	/^static	unsigned long	func_realloc_c = 0;	\/* count the reallocs *\/$/;"	v	file:
+func_recalloc_c	chunk.c	/^static	unsigned long	func_recalloc_c = 0;	\/* count the reallocs *\/$/;"	v	file:
+func_valloc_c	chunk.c	/^static	unsigned long	func_valloc_c = 0;	\/* count the veallocs *\/$/;"	v	file:
+gdb_b	dmalloc.c	/^static	int	gdb_b = 0;			\/* set gdb output *\/$/;"	v	file:
+get_address	dmalloc_t.c	/^static	void	*get_address(void)$/;"	f	file:
+get_align_overhead	chunk.c	/^static unsigned int get_align_overhead(unsigned int align,int fence_b)$/;"	f	file:
+get_divided_memory	chunk.c	/^static	skip_alloc_t	*get_divided_memory(const unsigned int size)$/;"	f	file:
+get_memory	chunk.c	/^static	skip_alloc_t	*get_memory(const unsigned int size)$/;"	f	file:
+get_pnt_info	chunk.c	/^static	void	get_pnt_info(const skip_alloc_t *slot_p, pnt_info_t *info_p)$/;"	f	file:
+get_slot	chunk.c	/^static	skip_alloc_t	*get_slot(void)$/;"	f	file:
+hash	dmalloc_tab.c	/^static	unsigned int	hash(const unsigned char *key,$/;"	f	file:
+header	dmalloc.c	/^static	void	header(void)$/;"	f	file:
+heap_check_c	chunk.c	/^static	unsigned long	heap_check_c = 0;	\/* count of heap-checks *\/$/;"	v	file:
+heap_extend	heap.c	/^static	void	*heap_extend(const int incr)$/;"	f	file:
+help_b	dmalloc.c	/^static	int	help_b = 0;			\/* print help message *\/$/;"	v	file:
+hex_to_long	dmalloc_t.c	/^static	long	hex_to_long(char *str)$/;"	f	file:
+hex_to_long	env.c	/^static	long	hex_to_long(const char *str)$/;"	f	file:
+htoi	dmalloc_argv.c	/^static	int	htoi(const char *str)$/;"	f	file:
+identify_function_ptr	chunk.c	/^void identify_function_ptr( const char *func, char *buf, const int buf_size)  {$/;"	f
+in_alloc_b	malloc.c	/^static	int		in_alloc_b = 0;		\/* can't be here twice *\/$/;"	v	file:
+includedir	Makefile	/^includedir = ${prefix}\/include$/;"	m
+index	DMALLOC/include/dmalloc.h	1261;"	d
+index	DMALLOC/include/dmalloc.h	1262;"	d
+index	dmalloc.h	1261;"	d
+index	dmalloc.h	1262;"	d
+information	chunk.c	/^static char *information = "@(#) $Information: lock-threads is enabled $";$/;"	v	file:
+information	error.c	/^static char *information = "@(#) $Information: lock-threads is enabled $";$/;"	v	file:
+information	malloc.c	/^static char *information = "@(#) $Information: lock-threads is enabled $";$/;"	v	file:
+inpath	dmalloc.c	/^static	char	*inpath = NULL;			\/* for config-file path *\/$/;"	v	file:
+insert_address	chunk.c	/^static	skip_alloc_t	*insert_address(void *address, const int free_b,$/;"	f	file:
+insert_slot	chunk.c	/^static	int	insert_slot(skip_alloc_t *slot_p, const int free_b)$/;"	f	file:
+insert_sort	dmalloc_tab.c	/^static	void	insert_sort(unsigned char *first_p, unsigned char *last_p,$/;"	f	file:
+install	RELEASE.html	/^<h3><a name="install"> Installation Changes <\/a><\/h3>$/;"	a
+interactive_b	dmalloc_t.c	/^static	int		interactive_b = ARGV_FALSE;	\/* interactive flag *\/$/;"	v	file:
+interpret_name	contrib/dmalloc_summarize.pl	/^sub interpret_name {$/;"	s
+interval	dmalloc.c	/^static	unsigned long interval = 0;		\/* for setting INTERVAL *\/$/;"	v	file:
+is_aligned_to	chunk.c	/^static int is_aligned_to(char * p, unsigned int alignment)$/;"	f	file:
+is_number	dmalloc_argv.c	/^static	int	is_number(const char *str)$/;"	f	file:
+keep_b	dmalloc.c	/^static	int	keep_b = 0;			\/* keep settings override -r *\/$/;"	v	file:
+libdir	Makefile	/^libdir = ${exec_prefix}\/lib$/;"	m
+limit_arg	dmalloc.c	/^static	unsigned long limit_arg = 0;		\/* memory limit *\/$/;"	v	file:
+list_tags	dmalloc.c	/^static	void	list_tags(void)$/;"	f	file:
+list_tags_b	dmalloc.c	/^static	int	list_tags_b = 0;		\/* list rc tags *\/$/;"	v	file:
+loc_atoul	compat.c	/^unsigned long	loc_atoul(const char *str)$/;"	f
+loc_snprintf	compat.c	/^int	loc_snprintf(char *buf, const int buf_size, const char *format, ...)$/;"	f
+loc_strlen	arg_check.c	/^static	int	loc_strlen(const char *file, const int line,$/;"	f	file:
+loc_vsnprintf	compat.c	/^int	loc_vsnprintf(char *buf, const int buf_size, const char *format,$/;"	f
+local_strerror	dmalloc.c	/^static	char	*local_strerror(const int error_num)$/;"	f	file:
+lock_thread	malloc.c	/^static	void	lock_thread(void)$/;"	f	file:
+log_entry	dmalloc_tab.c	/^static	void	log_entry(const mem_table_t *tab_p, const int in_use_column_b,$/;"	f	file:
+log_error_info	chunk.c	/^static	void	log_error_info(const char *now_file,$/;"	f	file:
+log_path	env.c	/^static	char		log_path[512]	= { '\\0' }; \/* storage for env path *\/$/;"	v	file:
+log_trans_b	dmalloc_fc_t.c	/^static	int		log_trans_b = ARGV_FALSE;	\/* log transactions *\/$/;"	v	file:
+log_trans_b	dmalloc_t.c	/^static	int		log_trans_b = ARGV_FALSE;	\/* log transactions *\/$/;"	v	file:
+logpath	dmalloc.c	/^static	char	*logpath = NULL;		\/* for LOGFILE setting *\/$/;"	v	file:
+long_tokens_b	dmalloc.c	/^static	int	long_tokens_b = 0;		\/* long-tok output *\/$/;"	v	file:
+main	dmalloc.c	/^int	main(int argc, char **argv)$/;"	f
+main	dmalloc_fc_t.c	/^int	main(int argc, char **argv) {$/;"	f
+main	dmalloc_t.c	/^int	main(int argc, char **argv)$/;"	f
+main	dmalloc_test.c	/^int main()$/;"	f
+make_changes_b	dmalloc.c	/^static	int	make_changes_b = 1;		\/* make no changes to env *\/$/;"	v	file:
+malloc	DMALLOC/include/dmalloc.h	1160;"	d
+malloc	DMALLOC/include/dmalloc.h	1161;"	d
+malloc	dmalloc.h	1160;"	d
+malloc	dmalloc.h	1161;"	d
+malloc	malloc.c	/^DMALLOC_PNT	malloc(DMALLOC_SIZE size)$/;"	f
+malloc	malloc.c	1188;"	d	file:
+malloc_verify	malloc.c	/^int	malloc_verify(const DMALLOC_PNT pnt)$/;"	f
+max_alloc	dmalloc_t.c	/^static	long		max_alloc = MAX_ALLOC;		\/* amt of mem to use *\/$/;"	v	file:
+max_pointers	dmalloc_t.c	/^static	long		max_pointers = MAX_POINTERS;	\/* # of pnts to use *\/$/;"	v	file:
+mem_table_alloc	chunk.c	/^static	mem_table_t	mem_table_alloc[MEM_ALLOC_ENTRIES];$/;"	v	file:
+mem_table_alloc_c	chunk.c	/^static	int		mem_table_alloc_c = 0;$/;"	v	file:
+mem_table_changed	chunk.c	/^static	mem_table_t	mem_table_changed[MEM_CHANGED_ENTRIES];$/;"	v	file:
+mem_table_changed_c	chunk.c	/^static	int		mem_table_changed_c = 0;$/;"	v	file:
+mem_table_st	dmalloc_tab.h	/^typedef struct mem_table_st {$/;"	s
+mem_table_t	dmalloc_tab.h	/^} mem_table_t;$/;"	t	typeref:struct:mem_table_st
+memalign	DMALLOC/include/dmalloc.h	1172;"	d
+memalign	DMALLOC/include/dmalloc.h	1173;"	d
+memalign	dmalloc.h	1172;"	d
+memalign	dmalloc.h	1173;"	d
+memalign	malloc.c	/^DMALLOC_PNT	memalign(DMALLOC_SIZE alignment, DMALLOC_SIZE size)$/;"	f
+memalign	malloc.c	1314;"	d	file:
+memalign_warn_b	malloc.c	/^static	int		memalign_warn_b = 0;	\/* memalign warning printed?*\/$/;"	v	file:
+memccpy	DMALLOC/include/dmalloc.h	1281;"	d
+memccpy	DMALLOC/include/dmalloc.h	1282;"	d
+memccpy	dmalloc.h	1281;"	d
+memccpy	dmalloc.h	1282;"	d
+memchr	DMALLOC/include/dmalloc.h	1284;"	d
+memchr	DMALLOC/include/dmalloc.h	1285;"	d
+memchr	dmalloc.h	1284;"	d
+memchr	dmalloc.h	1285;"	d
+memcmp	DMALLOC/include/dmalloc.h	1248;"	d
+memcmp	DMALLOC/include/dmalloc.h	1249;"	d
+memcmp	compat.c	/^int	memcmp(const void *str1, const void *str2, DMALLOC_SIZE len)$/;"	f
+memcmp	dmalloc.h	1248;"	d
+memcmp	dmalloc.h	1249;"	d
+memcpy	DMALLOC/include/dmalloc.h	1251;"	d
+memcpy	DMALLOC/include/dmalloc.h	1252;"	d
+memcpy	compat.c	/^void	*memcpy(void *dest, const void *src, DMALLOC_SIZE len)$/;"	f
+memcpy	dmalloc.h	1251;"	d
+memcpy	dmalloc.h	1252;"	d
+memmove	DMALLOC/include/dmalloc.h	1254;"	d
+memmove	DMALLOC/include/dmalloc.h	1255;"	d
+memmove	compat.c	/^void	*memmove(void *dest, const void *src, DMALLOC_SIZE len)$/;"	f
+memmove	dmalloc.h	1254;"	d
+memmove	dmalloc.h	1255;"	d
+memset	DMALLOC/include/dmalloc.h	1257;"	d
+memset	DMALLOC/include/dmalloc.h	1258;"	d
+memset	compat.c	/^void	*memset(void *str, const int ch, DMALLOC_SIZE len)$/;"	f
+memset	dmalloc.h	1257;"	d
+memset	dmalloc.h	1258;"	d
+message_str	error.c	/^static	char	message_str[1024];		\/* message string buffer *\/$/;"	v	file:
+minus	dmalloc.c	/^static	argv_array_t	minus;			\/* tokens to remove *\/$/;"	v	file:
+mmap	malloc.c	1161;"	d	file:
+mt_entry_pos_p	dmalloc_tab.h	/^  struct mem_table_st	*mt_entry_pos_p;	\/* pos of entry in table *\/$/;"	m	struct:mem_table_st	typeref:struct:mem_table_st::mem_table_st
+mt_file	dmalloc_tab.h	/^  const char		*mt_file;		\/* filename of alloc or ra *\/$/;"	m	struct:mem_table_st
+mt_in_use_c	dmalloc_tab.h	/^  unsigned long		mt_in_use_c;		\/* pointers currently in use *\/$/;"	m	struct:mem_table_st
+mt_in_use_size	dmalloc_tab.h	/^  unsigned long		mt_in_use_size;		\/* size currently alloced *\/$/;"	m	struct:mem_table_st
+mt_line	dmalloc_tab.h	/^  unsigned int		mt_line;		\/* line number of alloc *\/$/;"	m	struct:mem_table_st
+mt_total_c	dmalloc_tab.h	/^  unsigned long		mt_total_c;		\/* total pointers allocated *\/$/;"	m	struct:mem_table_st
+mt_total_size	dmalloc_tab.h	/^  unsigned long		mt_total_size;		\/* size bytes alloced *\/$/;"	m	struct:mem_table_st
+never_called	contrib/dmalloc_summarize.pl	/^sub never_called {$/;"	s
+no_special_b	dmalloc_t.c	/^static	int		no_special_b = ARGV_FALSE;	\/* no-special flag *\/$/;"	v	file:
+operator delete	dmallocc.cc	/^operator delete(void *pnt)$/;"	f
+operator delete[]	dmallocc.cc	/^operator delete[](void *pnt)$/;"	f
+operator new	dmallocc.cc	/^operator new(size_t size)$/;"	f
+operator new[]	dmallocc.cc	/^operator new[](size_t size)$/;"	f
+otoi	dmalloc_argv.c	/^static	int	otoi(const char *str)$/;"	f	file:
+outfile_fd	error.c	/^static	int	outfile_fd = -1;		\/* output file descriptor *\/$/;"	v	file:
+overview	RELEASE.html	/^<h3><a name="overview"> Overview <\/a><\/h3>$/;"	a
+pi_align	chunk_loc.h	/^  unsigned int	pi_align;		\/* alignment *\/$/;"	m	struct:__anon1
+pi_alloc_bounds	chunk_loc.h	/^  void		*pi_alloc_bounds;	\/* pnt past end of total allocation *\/$/;"	m	struct:__anon1
+pi_alloc_start	chunk_loc.h	/^  void		*pi_alloc_start;	\/* pnt to start of allocation *\/$/;"	m	struct:__anon1
+pi_blanked_b	chunk_loc.h	/^  int		pi_blanked_b;		\/* pointer was blanked *\/$/;"	m	struct:__anon1
+pi_crc	dmalloc_t.c	/^  long			pi_crc;			\/* crc of storage *\/$/;"	m	struct:pnt_info_st	file:
+pi_fence_b	chunk_loc.h	/^  int		pi_fence_b;		\/* fence-posts are on for pointer *\/$/;"	m	struct:__anon1
+pi_fence_bottom	chunk_loc.h	/^  void		*pi_fence_bottom;	\/* pnt to the bottom fence area *\/$/;"	m	struct:__anon1
+pi_fence_top	chunk_loc.h	/^  void		*pi_fence_top;		\/* pnt to the top fence area *\/$/;"	m	struct:__anon1
+pi_next	dmalloc_t.c	/^  struct pnt_info_st	*pi_next;		\/* pnt to next *\/$/;"	m	struct:pnt_info_st	typeref:struct:pnt_info_st::pnt_info_st	file:
+pi_pnt	dmalloc_t.c	/^  void			*pi_pnt;		\/* pnt to storage *\/$/;"	m	struct:pnt_info_st	file:
+pi_size	dmalloc_t.c	/^  int			pi_size;		\/* size of storage *\/$/;"	m	struct:pnt_info_st	file:
+pi_upper_bounds	chunk_loc.h	/^  void		*pi_upper_bounds;	\/* pnt to highest available user area*\/$/;"	m	struct:__anon1
+pi_user_bounds	chunk_loc.h	/^  void		*pi_user_bounds;	\/* pnt past end of user allocation *\/$/;"	m	struct:__anon1
+pi_user_start	chunk_loc.h	/^  void		*pi_user_start;		\/* pnt to start of user allocation *\/$/;"	m	struct:__anon1
+plus	dmalloc.c	/^static	argv_array_t	plus;			\/* tokens to add *\/$/;"	v	file:
+pnt_info_st	dmalloc_t.c	/^typedef struct pnt_info_st {$/;"	s	file:
+pnt_info_t	chunk_loc.h	/^} pnt_info_t;$/;"	t	typeref:struct:__anon1
+pnt_info_t	dmalloc_t.c	/^} pnt_info_t;$/;"	t	typeref:struct:pnt_info_st	file:
+pointer_grid	dmalloc_t.c	/^static	pnt_info_t	*pointer_grid;$/;"	v	file:
+posix_memalign	DMALLOC/include/dmalloc.h	1176;"	d
+posix_memalign	DMALLOC/include/dmalloc.h	1177;"	d
+posix_memalign	dmalloc.h	1176;"	d
+posix_memalign	dmalloc.h	1177;"	d
+posix_memalign	malloc.c	/^int	posix_memalign(DMALLOC_PNT *memptr, DMALLOC_SIZE alignment, DMALLOC_SIZE size)$/;"	f
+posix_memalign	malloc.c	1350;"	d	file:
+power_of_two	malloc.c	/^static int power_of_two(unsigned int v)$/;"	f	file:
+prefix	Makefile	/^prefix = \/home\/mark\/myResearch\/mySampleCode\/memory_leak_check\/dmalloc-5.5.2\/DMALLOC$/;"	m
+preprocess_array	dmalloc_argv.c	/^static	int	preprocess_array(argv_t *args, const int arg_n)$/;"	f	file:
+print_report	contrib/dmalloc_summarize.pl	/^sub print_report {$/;"	s
+process_env	dmalloc_argv.c	/^static	int	process_env(void)$/;"	f	file:
+process_environ	malloc.c	/^static	void	process_environ(const char *option_str)$/;"	f	file:
+programming	RELEASE.html	/^<h3><a name="programming"> Programming Notes <\/a><\/h3>$/;"	a
+prototypes	configure	/^   function prototypes and stuff, but not '\\xHH' hex character constants.$/;"	f
+pthread_mutex_init	configure	/^pthread_mutex_init ();$/;"	f
+random_debug_b	dmalloc_fc_t.c	/^static	int		random_debug_b = ARGV_FALSE;	\/* random flag *\/$/;"	v	file:
+random_debug_b	dmalloc_t.c	/^static	int		random_debug_b = ARGV_FALSE;	\/* random flag *\/$/;"	v	file:
+random_level	chunk.c	/^static	int	random_level(const int max_level)$/;"	f	file:
+rcshell_b	dmalloc.c	/^static	int	rcshell_b = 0;			\/* set rc shell output *\/$/;"	v	file:
+read_data	contrib/dmalloc_summarize.pl	/^sub read_data {$/;"	s
+read_next_token	dmalloc.c	/^static	int	read_next_token(FILE *infile, long *debug_p,$/;"	f	file:
+read_rc_file	dmalloc.c	/^static	int	read_rc_file(const char *path, const long debug_value,$/;"	f	file:
+realloc	DMALLOC/include/dmalloc.h	1166;"	d
+realloc	DMALLOC/include/dmalloc.h	1167;"	d
+realloc	dmalloc.h	1166;"	d
+realloc	dmalloc.h	1167;"	d
+realloc	malloc.c	/^DMALLOC_PNT	realloc(DMALLOC_PNT old_pnt, DMALLOC_SIZE new_size)$/;"	f
+realloc	malloc.c	1249;"	d	file:
+recalloc	DMALLOC/include/dmalloc.h	1169;"	d
+recalloc	DMALLOC/include/dmalloc.h	1170;"	d
+recalloc	dmalloc.h	1169;"	d
+recalloc	dmalloc.h	1170;"	d
+recalloc	malloc.c	/^DMALLOC_PNT	recalloc(DMALLOC_PNT old_pnt, DMALLOC_SIZE new_size)$/;"	f
+recalloc	malloc.c	1281;"	d	file:
+remove_auto_b	dmalloc.c	/^static	int	remove_auto_b = 0;		\/* auto-remove settings *\/$/;"	v	file:
+remove_slot	chunk.c	/^static	int	remove_slot(skip_alloc_t *delete_p, skip_alloc_t *update_p)$/;"	f	file:
+rindex	DMALLOC/include/dmalloc.h	1264;"	d
+rindex	DMALLOC/include/dmalloc.h	1265;"	d
+rindex	dmalloc.h	1264;"	d
+rindex	dmalloc.h	1265;"	d
+sa_align	chunk_loc.h	/^  unsigned int		sa_align;	\/* alignment of user portion *\/$/;"	m	struct:skip_alloc_st
+sa_file	chunk_loc.h	/^  const char		*sa_file;	\/* .c filename where allocated *\/$/;"	m	struct:skip_alloc_st
+sa_flags	chunk_loc.h	/^  unsigned char		sa_flags;	\/* what it is *\/$/;"	m	struct:skip_alloc_st
+sa_iteration	chunk_loc.h	/^  unsigned long		sa_iteration;	\/* interation when pointer alloced *\/$/;"	m	struct:skip_alloc_st
+sa_level_n	chunk_loc.h	/^  unsigned char		sa_level_n;	\/* how tall our node is *\/$/;"	m	struct:skip_alloc_st
+sa_line	chunk_loc.h	/^  unsigned short	sa_line;	\/* line where it was allocated *\/$/;"	m	struct:skip_alloc_st
+sa_mem	chunk_loc.h	/^  void			*sa_mem;	\/* pointer to the memory in question *\/$/;"	m	struct:skip_alloc_st
+sa_next_p	chunk_loc.h	/^  struct skip_alloc_st	*sa_next_p[1];$/;"	m	struct:skip_alloc_st	typeref:struct:skip_alloc_st::skip_alloc_st
+sa_seen_c	chunk_loc.h	/^  unsigned long		sa_seen_c;	\/* times pointer was seen *\/$/;"	m	struct:skip_alloc_st
+sa_thread_id	chunk_loc.h	/^  THREAD_TYPE		sa_thread_id;	\/* thread id which allocated pnt *\/$/;"	m	struct:skip_alloc_st
+sa_time	chunk_loc.h	/^  TIME_TYPE		sa_time;	\/* time when pointer alloced *\/$/;"	m	struct:skip_alloc_st
+sa_timeval	chunk_loc.h	/^  TIMEVAL_TYPE 		sa_timeval;	\/* time when pointer alloced *\/$/;"	m	struct:skip_alloc_st
+sa_total_size	chunk_loc.h	/^  unsigned int		sa_total_size;	\/* total size of the block *\/$/;"	m	struct:skip_alloc_st
+sa_use_iter	chunk_loc.h	/^  unsigned long		sa_use_iter;	\/* when last ``used'' *\/$/;"	m	struct:skip_alloc_st
+sa_user_size	chunk_loc.h	/^  unsigned int		sa_user_size;	\/* size requested by user (wo fence or align) *\/$/;"	m	struct:skip_alloc_st
+safe_inc	contrib/dmalloc_summarize.pl	/^sub safe_inc {$/;"	s
+seed_random	dmalloc_fc_t.c	/^static	unsigned int	seed_random = 0;		\/* random seed *\/$/;"	v	file:
+seed_random	dmalloc_t.c	/^static	unsigned int	seed_random = 0;		\/* random seed *\/$/;"	v	file:
+set_variable	dmalloc.c	/^static	void    set_variable(const char *var, const char *value)$/;"	f	file:
+settings.dist	RELEASE.html	/^<h3><a name="settings.dist"> Changes to the settings.dist File <\/a><\/h3>$/;"	a
+sh_shells	dmalloc.c	/^static	char	*sh_shells[] = { "sh", "ash", "bash", "ksh", "zsh", NULL };$/;"	v	file:
+shlibdir	Makefile	/^shlibdir = ${exec_prefix}\/lib$/;"	m
+signal_handler	malloc.c	/^static	RETSIGTYPE	signal_handler(const int sig)$/;"	f	file:
+silent_b	dmalloc_fc_t.c	/^static	int		silent_b = ARGV_FALSE;		\/* silent flag *\/$/;"	v	file:
+silent_b	dmalloc_t.c	/^static	int		silent_b = ARGV_FALSE;		\/* silent flag *\/$/;"	v	file:
+skip_address_alloc	chunk.c	/^static	skip_alloc_t	skip_address_alloc[MAX_SKIP_LEVEL \/* read note ^^ *\/];$/;"	v	file:
+skip_address_list	chunk.c	/^static	skip_alloc_t	*skip_address_list = skip_address_alloc;$/;"	v	file:
+skip_alloc_st	chunk_loc.h	/^typedef struct skip_alloc_st {$/;"	s
+skip_alloc_t	chunk_loc.h	/^} skip_alloc_t;$/;"	t	typeref:struct:skip_alloc_st
+skip_free_alloc	chunk.c	/^static	skip_alloc_t	skip_free_alloc[MAX_SKIP_LEVEL \/* read note ^^ *\/];$/;"	v	file:
+skip_free_list	chunk.c	/^static	skip_alloc_t	*skip_free_list = skip_free_alloc;$/;"	v	file:
+skip_update	chunk.c	/^static	skip_alloc_t	skip_update[MAX_SKIP_LEVEL \/* read note ^^ *\/];$/;"	v	file:
+source_url	chunk.c	/^static	char	*source_url =$/;"	v	file:
+split	dmalloc_tab.c	/^static	void	split(unsigned char *first_p, unsigned char *last_p,$/;"	f	file:
+srcdir	Makefile	/^srcdir = .$/;"	m
+start_file	dmalloc.c	/^static	char	*start_file = NULL;		\/* for START settings *\/$/;"	v	file:
+start_file	env.c	/^static	char		start_file[512] = { '\\0' }; \/* file to start at *\/$/;"	v	file:
+start_file	malloc.c	/^static	char		*start_file = NULL;	\/* file to start at *\/$/;"	v	file:
+start_gdb	contrib/dmalloc_summarize.pl	/^sub start_gdb {$/;"	s
+start_iter	dmalloc.c	/^static	unsigned long start_iter = 0;		\/* for START settings *\/$/;"	v	file:
+start_iter	malloc.c	/^static	unsigned long	start_iter = 0;		\/* start after X iterations *\/$/;"	v	file:
+start_line	malloc.c	/^static	int		start_line = 0;		\/* line to start *\/$/;"	v	file:
+start_size	dmalloc.c	/^static	unsigned long start_size = 0;		\/* for START settings *\/$/;"	v	file:
+start_size	malloc.c	/^static	unsigned long	start_size = 0;		\/* start after X bytes *\/$/;"	v	file:
+strcasecmp	DMALLOC/include/dmalloc.h	1301;"	d
+strcasecmp	DMALLOC/include/dmalloc.h	1302;"	d
+strcasecmp	dmalloc.h	1301;"	d
+strcasecmp	dmalloc.h	1302;"	d
+strcat	DMALLOC/include/dmalloc.h	1268;"	d
+strcat	DMALLOC/include/dmalloc.h	1269;"	d
+strcat	dmalloc.h	1268;"	d
+strcat	dmalloc.h	1269;"	d
+strchr	DMALLOC/include/dmalloc.h	1288;"	d
+strchr	DMALLOC/include/dmalloc.h	1289;"	d
+strchr	compat.c	/^char	*strchr(const char *str, const int ch)$/;"	f
+strchr	dmalloc.h	1288;"	d
+strchr	dmalloc.h	1289;"	d
+strcmp	DMALLOC/include/dmalloc.h	1271;"	d
+strcmp	DMALLOC/include/dmalloc.h	1272;"	d
+strcmp	compat.c	/^int	strcmp(const char *str1, const char *str2)$/;"	f
+strcmp	dmalloc.h	1271;"	d
+strcmp	dmalloc.h	1272;"	d
+strcpy	DMALLOC/include/dmalloc.h	1295;"	d
+strcpy	DMALLOC/include/dmalloc.h	1296;"	d
+strcpy	compat.c	/^char	*strcpy(char *str1, const char *str2)$/;"	f
+strcpy	dmalloc.h	1295;"	d
+strcpy	dmalloc.h	1296;"	d
+strcspn	DMALLOC/include/dmalloc.h	1310;"	d
+strcspn	DMALLOC/include/dmalloc.h	1311;"	d
+strcspn	dmalloc.h	1310;"	d
+strcspn	dmalloc.h	1311;"	d
+strdup	DMALLOC/include/dmalloc.h	1185;"	d
+strdup	DMALLOC/include/dmalloc.h	1186;"	d
+strdup	DMALLOC/include/dmalloc.h	513;"	d
+strdup	dmalloc.h	1185;"	d
+strdup	dmalloc.h	1186;"	d
+strdup	dmalloc.h	513;"	d
+strdup	malloc.c	/^char	*strdup(const char *string)$/;"	f
+strdup	malloc.c	1407;"	d	file:
+string_copy	dmalloc_argv.c	/^static	char	*string_copy(const char *str)$/;"	f	file:
+string_to_value	dmalloc_argv.c	/^static	int	string_to_value(const char *arg, ARGV_PNT var,$/;"	f	file:
+strlen	DMALLOC/include/dmalloc.h	1274;"	d
+strlen	DMALLOC/include/dmalloc.h	1275;"	d
+strlen	compat.c	/^int	strlen(const char *str)$/;"	f
+strlen	dmalloc.h	1274;"	d
+strlen	dmalloc.h	1275;"	d
+strncasecmp	DMALLOC/include/dmalloc.h	1304;"	d
+strncasecmp	DMALLOC/include/dmalloc.h	1305;"	d
+strncasecmp	dmalloc.h	1304;"	d
+strncasecmp	dmalloc.h	1305;"	d
+strncat	DMALLOC/include/dmalloc.h	1313;"	d
+strncat	DMALLOC/include/dmalloc.h	1314;"	d
+strncat	dmalloc.h	1313;"	d
+strncat	dmalloc.h	1314;"	d
+strncmp	DMALLOC/include/dmalloc.h	1316;"	d
+strncmp	DMALLOC/include/dmalloc.h	1317;"	d
+strncmp	compat.c	/^int	strncmp(const char *str1, const char *str2, const int len)$/;"	f
+strncmp	dmalloc.h	1316;"	d
+strncmp	dmalloc.h	1317;"	d
+strncpy	DMALLOC/include/dmalloc.h	1298;"	d
+strncpy	DMALLOC/include/dmalloc.h	1299;"	d
+strncpy	compat.c	/^char	*strncpy(char *str1, const char *str2, const int len)$/;"	f
+strncpy	dmalloc.h	1298;"	d
+strncpy	dmalloc.h	1299;"	d
+strndup	DMALLOC/include/dmalloc.h	1189;"	d
+strndup	DMALLOC/include/dmalloc.h	1190;"	d
+strndup	DMALLOC/include/dmalloc.h	538;"	d
+strndup	dmalloc.h	1189;"	d
+strndup	dmalloc.h	1190;"	d
+strndup	dmalloc.h	538;"	d
+strndup	malloc.c	/^char	*strndup(const char *string, const DMALLOC_SIZE len)$/;"	f
+strndup	malloc.c	1456;"	d	file:
+strpbrk	DMALLOC/include/dmalloc.h	1319;"	d
+strpbrk	DMALLOC/include/dmalloc.h	1320;"	d
+strpbrk	dmalloc.h	1319;"	d
+strpbrk	dmalloc.h	1320;"	d
+strrchr	DMALLOC/include/dmalloc.h	1291;"	d
+strrchr	DMALLOC/include/dmalloc.h	1292;"	d
+strrchr	compat.c	/^char	*strrchr(const char *str, const int ch)$/;"	f
+strrchr	dmalloc.h	1291;"	d
+strrchr	dmalloc.h	1292;"	d
+strsep	compat.c	/^char	*strsep(char **string_p, const char *delim)$/;"	f
+strspn	DMALLOC/include/dmalloc.h	1307;"	d
+strspn	DMALLOC/include/dmalloc.h	1308;"	d
+strspn	dmalloc.h	1307;"	d
+strspn	dmalloc.h	1308;"	d
+strstr	DMALLOC/include/dmalloc.h	1322;"	d
+strstr	DMALLOC/include/dmalloc.h	1323;"	d
+strstr	dmalloc.h	1322;"	d
+strstr	dmalloc.h	1323;"	d
+strtok	DMALLOC/include/dmalloc.h	1277;"	d
+strtok	DMALLOC/include/dmalloc.h	1278;"	d
+strtok	dmalloc.h	1277;"	d
+strtok	dmalloc.h	1278;"	d
+swap_bytes	dmalloc_tab.c	/^static	void	swap_bytes(unsigned char *item1_p, unsigned char *item2_p,$/;"	f	file:
+tag	dmalloc.c	/^static	char	*tag = NULL;			\/* maybe a tag argument *\/$/;"	v	file:
+test_funcs	dmalloc_fc_t.c	/^static	int	(*test_funcs[])() = {$/;"	v	file:
+thread_lock_c	malloc.c	/^static	int		thread_lock_c = 0;	\/* lock counter *\/$/;"	v	file:
+thread_lock_on	dmalloc.c	/^static	int	thread_lock_on = 0;		\/* for setting LOCK_ON *\/$/;"	v	file:
+token_to_value	dmalloc.c	/^static	long	token_to_value(const char *tok)$/;"	f	file:
+tokens	RELEASE.html	/^<h3><a name="tokens"> Changes in the Debug Tokens <\/a><\/h3>$/;"	a
+track_alloc_trxn	dmalloc_t.c	/^static	void	track_alloc_trxn(const char *file, const unsigned int line,$/;"	f	file:
+tracking_func	malloc.c	/^static	dmalloc_track_t	tracking_func = NULL;	\/* memory trxn tracking func *\/$/;"	v	file:
+unlock_thread	malloc.c	/^static	void	unlock_thread(void)$/;"	f	file:
+usage	contrib/dmalloc_summarize.pl	/^sub usage {$/;"	s
+usage	contrib/dmalloc_summarize.pl	/^usage: $0 [executable] < logfile$/;"	l
+usage	contrib/tsecs	/^sub usage {$/;"	s
+usage_b	dmalloc.c	/^static	int	usage_b = 0;			\/* usage messages *\/$/;"	v	file:
+usage_long	dmalloc_argv.c	/^static	void	usage_long(const argv_t *args)$/;"	f	file:
+usage_short	dmalloc_argv.c	/^static	void	usage_short(const argv_t *args, const int flag)$/;"	f	file:
+use_free_memory	chunk.c	/^static	skip_alloc_t	*use_free_memory(const unsigned int size,$/;"	f	file:
+user_block_c	chunk.c	/^static	unsigned long	user_block_c = 0;	\/* count of blocks *\/$/;"	v	file:
+valloc	DMALLOC/include/dmalloc.h	1180;"	d
+valloc	DMALLOC/include/dmalloc.h	1181;"	d
+valloc	dmalloc.h	1180;"	d
+valloc	dmalloc.h	1181;"	d
+valloc	malloc.c	/^DMALLOC_PNT	valloc(DMALLOC_SIZE size)$/;"	f
+valloc	malloc.c	1378;"	d	file:
+value	dmalloc_rand.c	/^static long	value = 0;			\/* our random value *\/$/;"	v	file:
+value_to_string	dmalloc_argv.c	/^static	int	value_to_string(const ARGV_PNT var, const unsigned int type,$/;"	f	file:
+vectorize	dmalloc_argv.c	/^static	char	**vectorize(char *str, const char *tok, int *num_tok_p)$/;"	f	file:
+ver	debian/rules	/^ver=$(shell dpkg-parsechangelog | sed -ne '\/^Version:\/s\/^.*:[        ]*\\([^-]*\\).*\/\\1\/p')$/;"	m
+ver_major	debian/rules	/^ver_major=$(shell dpkg-parsechangelog | sed -ne '\/^Version:\/s\/^.*:[        ]*\\([^\\.]*\\).*\/\\1\/p')$/;"	m
+verbose_b	dmalloc.c	/^static	int	verbose_b = 0;			\/* verbose flag *\/$/;"	v	file:
+verbose_b	dmalloc_fc_t.c	/^static	int		verbose_b = ARGV_FALSE;		\/* verbose flag *\/$/;"	v	file:
+verbose_b	dmalloc_t.c	/^static	int		verbose_b = ARGV_FALSE;		\/* verbose flag *\/$/;"	v	file:
+version_b	dmalloc.c	/^static	int	version_b = 0;			\/* print version string *\/$/;"	v	file:
+very_verbose_b	dmalloc.c	/^static	int	very_verbose_b = 0;		\/* very-verbose flag *\/$/;"	v	file:
+which_bucket	dmalloc_tab.c	/^static	unsigned int	which_bucket(const int entry_n, const char *file,$/;"	f	file:
+xcalloc	DMALLOC/include/dmalloc.h	1199;"	d
+xcalloc	DMALLOC/include/dmalloc.h	1200;"	d
+xcalloc	dmalloc.h	1199;"	d
+xcalloc	dmalloc.h	1200;"	d
+xfree	DMALLOC/include/dmalloc.h	1221;"	d
+xfree	DMALLOC/include/dmalloc.h	1222;"	d
+xfree	dmalloc.h	1221;"	d
+xfree	dmalloc.h	1222;"	d
+xmalloc	DMALLOC/include/dmalloc.h	1196;"	d
+xmalloc	DMALLOC/include/dmalloc.h	1197;"	d
+xmalloc	dmalloc.h	1196;"	d
+xmalloc	dmalloc.h	1197;"	d
+xmemalign	DMALLOC/include/dmalloc.h	1208;"	d
+xmemalign	DMALLOC/include/dmalloc.h	1209;"	d
+xmemalign	dmalloc.h	1208;"	d
+xmemalign	dmalloc.h	1209;"	d
+xrealloc	DMALLOC/include/dmalloc.h	1202;"	d
+xrealloc	DMALLOC/include/dmalloc.h	1203;"	d
+xrealloc	dmalloc.h	1202;"	d
+xrealloc	dmalloc.h	1203;"	d
+xrecalloc	DMALLOC/include/dmalloc.h	1205;"	d
+xrecalloc	DMALLOC/include/dmalloc.h	1206;"	d
+xrecalloc	dmalloc.h	1205;"	d
+xrecalloc	dmalloc.h	1206;"	d
+xstrdup	DMALLOC/include/dmalloc.h	1215;"	d
+xstrdup	DMALLOC/include/dmalloc.h	1216;"	d
+xstrdup	dmalloc.h	1215;"	d
+xstrdup	dmalloc.h	1216;"	d
+xstrndup	DMALLOC/include/dmalloc.h	1218;"	d
+xstrndup	DMALLOC/include/dmalloc.h	1219;"	d
+xstrndup	dmalloc.h	1218;"	d
+xstrndup	dmalloc.h	1219;"	d
+xvalloc	DMALLOC/include/dmalloc.h	1212;"	d
+xvalloc	DMALLOC/include/dmalloc.h	1213;"	d
+xvalloc	dmalloc.h	1212;"	d
+xvalloc	dmalloc.h	1213;"	d

@@ -15937,7 +15937,7 @@ libunwind_detail=no
 if test "${with_libunwind_detail+set}" = set; then :
   withval=$with_libunwind_detail; libunwind_detail=yes
 else
-  libunwind_detail=no
+  libunwind_detail=yes
 
 fi
 
@@ -15948,7 +15948,7 @@ if test "x$no_libunwind" != "xyes"; then
 if test "x$ac_cv_header_libunwind_h" = xyes; then :
   libunwind=yes
 else
-  libunwind=no
+  libunwind=yes
 fi
 
 

@@ -1,4 +1,5 @@
-CC=arm-linux-gnueabihf-gcc
+#CC=arm-linux-gnueabihf-gcc
+CC=gcc
 CFLAGS=-c -Wall
 LDFLAGS= -pthread
 SOURCES=jobqueue.c thpool.c workqueue.c

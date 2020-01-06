@@ -1,0 +1,331 @@
+#!/bin/sh
+
+
+# mpatrol
+# A library for controlling and tracing dynamic memory allocations.
+# Copyright (C) 1997-2008 Graeme S. Roy <graemeroy@users.sourceforge.net>
+#
+# This program is free software: you can redistribute it and/or modify it
+# under the terms of the GNU Lesser General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or (at
+# your option) any later version.
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser
+# General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
+# UNIX shell script to extract any words from a dictionary file
+# that can be written as hexadecimal numbers
+
+
+# $Id$
+
+
+# Program version.
+
+VERSION="1.1"
+
+
+# Set the rule to use for matching words.
+
+match=0
+
+setmatch()
+{
+    if [ "$2" = "" ]
+    then
+        echo "$progname: Option \`$1' requires an argument" >&2
+        error=1
+    else
+        case "$2" in
+          exact)
+            match=0;;
+          lower)
+            match=1;;
+          upper)
+            match=2;;
+          any)
+            match=3;;
+          *)
+            echo "$progname: Bad argument \`$2' for option \`$1'" >&2
+            error=1;;
+        esac
+    fi
+}
+
+
+# Set the minimum number of letters to match.
+
+minimum=4
+
+setminimum()
+{
+    if [ "$2" = "" ]
+    then
+        echo "$progname: Option \`$1' requires an argument" >&2
+        error=1
+    else
+        minimum="$2"
+    fi
+}
+
+
+# Set the maximum number of letters to match.
+
+maximum=8
+
+setmaximum()
+{
+    if [ "$2" = "" ]
+    then
+        echo "$progname: Option \`$1' requires an argument" >&2
+        error=1
+    else
+        maximum="$2"
+    fi
+}
+
+
+# Parse the command line options.
+
+error=0
+help=0
+skip=0
+version=0
+progname=`basename "$0"`
+
+for option in "$@"
+do
+    if [ $skip = 1 ]
+    then
+        skip=0
+        shift
+        continue
+    fi
+    case "$option" in
+      -h|--help)
+        help=1
+        shift;;
+      -l|--minimum)
+        if [ $# = 1 ]
+        then
+            optarg=""
+        else
+            optarg="$2"
+        fi
+        setminimum "$option" "$optarg"
+        skip=1
+        shift;;
+      -l*)
+        optarg=`expr "$option" : '-l\(.*\)'`
+        setminimum "-l" "$optarg"
+        shift;;
+      --minimum=*)
+        optarg=`expr "$option" : '.*=\(.*\)'`
+        setminimum "--minimum" "$optarg"
+        shift;;
+      -m|--match)
+        if [ $# = 1 ]
+        then
+            optarg=""
+        else
+            optarg="$2"
+        fi
+        setmatch "$option" "$optarg"
+        skip=1
+        shift;;
+      -m*)
+        optarg=`expr "$option" : '-m\(.*\)'`
+        setmatch "-m" "$optarg"
+        shift;;
+      --match=*)
+        optarg=`expr "$option" : '.*=\(.*\)'`
+        setmatch "--match" "$optarg"
+        shift;;
+      -u|--maximum)
+        if [ $# = 1 ]
+        then
+            optarg=""
+        else
+            optarg="$2"
+        fi
+        setmaximum "$option" "$optarg"
+        skip=1
+        shift;;
+      -u*)
+        optarg=`expr "$option" : '-u\(.*\)'`
+        setmaximum "-u" "$optarg"
+        shift;;
+      --maximum=*)
+        optarg=`expr "$option" : '.*=\(.*\)'`
+        setmaximum "--maximum" "$optarg"
+        shift;;
+      -V|--version)
+        version=1
+        shift;;
+      -hV|-Vh)
+        help=1
+        version=1
+        shift;;
+      --)
+        shift
+        break;;
+      -)
+        break;;
+      -*)
+        echo "$progname: Illegal option \`$option'" >&2
+        error=1
+        shift;;
+      *)
+        break;;
+    esac
+done
+
+
+# Parse the command line arguments.
+
+if [ $# != 0 ]
+then
+    dictfile="$1"
+    shift
+else
+    dictfile="/usr/dict/words"
+    if [ ! -f "$dictfile" ]
+    then
+        dictfile="/usr/lib/dict/words"
+        if [ ! -f "$dictfile" ]
+        then
+            dictfile="/usr/share/dict/words"
+        fi
+    fi
+fi
+
+if [ $# != 0 ]
+then
+    error=1
+fi
+
+
+# Display the program version.
+
+if [ $version = 1 ]
+then
+    echo "$progname $VERSION"
+    echo "Copyright (C) 1997-2008 Graeme S. Roy"
+    echo
+    echo "This is free software, and you are welcome to redistribute it under certain"
+    echo "conditions; see the GNU Lesser General Public License for details."
+    echo
+    echo "For the latest mpatrol release and documentation,"
+    echo "visit http://sourceforge.net/projects/mpatrol."
+    echo
+fi
+
+
+# Display the program usage.
+
+if [ $error = 1 -o $help = 1 ]
+then
+    echo "Usage: $progname [options] [dictfile]"
+    echo
+    if [ $help = 0 ]
+    then
+        echo "Type \`$progname --help' for a complete list of options."
+    else
+cat <<EOF
+Options:
+  -h  --help
+        Displays this quick-reference option summary.
+  -m  --match=<exact|lower|upper|any>
+        Sets the type of case-sensitivity to use.
+  -u  --maximum=<count>
+        Sets the maximum number of letters to match.
+  -l  --minimum=<count>
+        Sets the minimum number of letters to match.
+  -V  --version
+        Displays the version number of this program.
+EOF
+    fi
+    if [ $error = 1 ]
+    then
+        exit 1
+    fi
+    exit
+fi
+
+
+# Check that the specified minimum number of letters does not exceed the
+# maximum number of letters.
+
+if [ $minimum -gt $maximum ]
+then
+    echo "$progname: Minimum number of letters exceeds maximum" >&2
+    exit 1
+fi
+
+
+# Check that the input file exists.
+
+if [ ! -f "$dictfile" ]
+then
+    echo "$progname: Cannot open file \`$dictfile'" >&2
+    exit 1
+fi
+
+
+# Set up the temporary files.
+
+if [ "$TMPDIR" = "" ]
+then
+    TMPDIR="/tmp"
+fi
+
+dicttemp1="$TMPDIR/$progname_$$.1"
+dicttemp2="$TMPDIR/$progname_$$.2"
+
+trap "rm -f \"$dicttemp1\" \"$dicttemp2\"" 0 1 2 3 15
+
+
+# Set up the character classes required for selecting the words.
+
+if [ $match = 3 ]
+then
+    letters='0123456789AaBbCcDdEeFfGgIiJjLlOoQqRrSsTtZz'
+    source='OoQIiLlZzqRrSsGJjTtg'
+    target='00011112244455677779'
+else
+    letters='0123456789AaBbCcDdEeFfGgIiJlOoQqRSsTZz'
+    source='OoQIilZzqRSsGJTg'
+    target='0001112244556779'
+fi
+
+
+# Convert the dictionary of words to lowercase or uppercase if required.
+
+if [ $match = 1 ]
+then
+    tr '[A-Z]' '[a-z]' <"$dictfile" >"$dicttemp2"
+elif [ $match = 2 ]
+then
+    tr '[a-z]' '[A-Z]' <"$dictfile" >"$dicttemp2"
+else
+    cp "$dictfile" "$dicttemp2"
+    chmod 664 "$dicttemp2"
+fi
+
+
+# Select the words and display them in their original and hexadecimal form.
+
+if [ $match = 3 ]
+then
+    grep -i '^['$letters']\{'$minimum','$maximum'\}$' "$dicttemp2" >"$dicttemp1"
+else
+    grep '^['$letters']\{'$minimum','$maximum'\}$' "$dicttemp2" >"$dicttemp1"
+fi
+tr "$source" "$target" <"$dicttemp1" >"$dicttemp2"
+paste -d':' "$dicttemp1" "$dicttemp2" | sed 's/:/ -> 0x/'

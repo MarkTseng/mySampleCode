@@ -1,0 +1,73 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+DEFAULT_BUFFER_SIZE	memusage.c	96;"	d	file:
+MAGIC	memusage.c	72;"	d	file:
+buffer	memusage.c	/^static struct entry buffer[2 * DEFAULT_BUFFER_SIZE];$/;"	v	typeref:struct:entry	file:
+buffer_cnt	memusage.c	/^static uatomic32_t buffer_cnt;$/;"	v	file:
+buffer_size	memusage.c	/^static size_t buffer_size;$/;"	v	file:
+calloc	memusage.c	/^calloc (size_t n, size_t len)$/;"	f
+callocp	memusage.c	/^static void *(*callocp) (size_t, size_t);$/;"	v	file:
+calls	memusage.c	/^static memusage_cntr_t calls[idx_last];$/;"	v	file:
+calls_total	memusage.c	/^static memusage_cntr_t calls_total;$/;"	v	file:
+current_heap	memusage.c	/^static memusage_size_t current_heap;$/;"	v	file:
+decreasing	memusage.c	/^static memusage_cntr_t decreasing;$/;"	v	file:
+decreasing_mremap	memusage.c	/^static memusage_cntr_t decreasing_mremap;$/;"	v	file:
+dest	memusage.c	/^dest (void)$/;"	f	file:
+entry	memusage.c	/^struct entry$/;"	s	file:
+failed	memusage.c	/^static memusage_cntr_t failed[idx_last];$/;"	v	file:
+fd	memusage.c	/^static int fd = -1;$/;"	v	file:
+first	memusage.c	/^static struct entry first;$/;"	v	typeref:struct:entry	file:
+free	memusage.c	/^free (void *ptr)$/;"	f
+freep	memusage.c	/^static void (*freep) (void *);$/;"	v	file:
+grand_total	memusage.c	/^static memusage_size_t grand_total;$/;"	v	file:
+header	memusage.c	/^struct header$/;"	s	file:
+heap	memusage.c	/^  uint64_t heap;$/;"	m	struct:entry	file:
+histogram	memusage.c	/^static memusage_cntr_t histogram[65536 \/ 16];$/;"	v	file:
+idx_calloc	memusage.c	/^  idx_calloc,$/;"	e	enum:__anon1	file:
+idx_free	memusage.c	/^  idx_free,$/;"	e	enum:__anon1	file:
+idx_last	memusage.c	/^  idx_last$/;"	e	enum:__anon1	file:
+idx_malloc	memusage.c	/^  idx_malloc = 0,$/;"	e	enum:__anon1	file:
+idx_mmap_a	memusage.c	/^  idx_mmap_a,$/;"	e	enum:__anon1	file:
+idx_mmap_r	memusage.c	/^  idx_mmap_r,$/;"	e	enum:__anon1	file:
+idx_mmap_w	memusage.c	/^  idx_mmap_w,$/;"	e	enum:__anon1	file:
+idx_mremap	memusage.c	/^  idx_mremap,$/;"	e	enum:__anon1	file:
+idx_munmap	memusage.c	/^  idx_munmap,$/;"	e	enum:__anon1	file:
+idx_realloc	memusage.c	/^  idx_realloc,$/;"	e	enum:__anon1	file:
+init	memusage.c	/^init (void)$/;"	f	file:
+initialized	memusage.c	/^static int initialized;$/;"	v	file:
+inplace	memusage.c	/^static memusage_cntr_t inplace;$/;"	v	file:
+inplace_mremap	memusage.c	/^static memusage_cntr_t inplace_mremap;$/;"	v	file:
+int_handler	memusage.c	/^int_handler (int signo)$/;"	f	file:
+large	memusage.c	/^static memusage_cntr_t large;$/;"	v	file:
+length	memusage.c	/^  size_t length;$/;"	m	struct:header	file:
+magic	memusage.c	/^  size_t magic;$/;"	m	struct:header	file:
+malloc	memusage.c	/^malloc (size_t len)$/;"	f
+mallocp	memusage.c	/^static void *(*mallocp)(size_t);$/;"	v	file:
+me	memusage.c	/^me (void)$/;"	f	file:
+mmap	memusage.c	/^mmap (void *start, size_t len, int prot, int flags, int fd, off_t offset)$/;"	f
+mmap64	memusage.c	/^mmap64 (void *start, size_t len, int prot, int flags, int fd, off64_t offset)$/;"	f
+mmap64p	memusage.c	/^static void *(*mmap64p) (void *, size_t, int, int, int, off64_t);$/;"	v	file:
+mmapp	memusage.c	/^static void *(*mmapp) (void *, size_t, int, int, int, off_t);$/;"	v	file:
+mremap	memusage.c	/^mremap (void *start, size_t old_len, size_t len, int flags, ...)$/;"	f
+mremapp	memusage.c	/^static void *(*mremapp) (void *, size_t, size_t, int, void *);$/;"	v	file:
+munmap	memusage.c	/^munmap (void *start, size_t len)$/;"	f
+munmapp	memusage.c	/^static int (*munmapp) (void *, size_t);$/;"	v	file:
+not_me	memusage.c	/^static bool not_me;$/;"	v	file:
+peak_heap	memusage.c	92;"	d	file:
+peak_stack	memusage.c	93;"	d	file:
+peak_total	memusage.c	94;"	d	file:
+peak_use	memusage.c	/^static memusage_size_t peak_use[3];$/;"	v	file:
+realloc	memusage.c	/^realloc (void *old, size_t len)$/;"	f
+realloc_free	memusage.c	/^static memusage_cntr_t realloc_free;$/;"	v	file:
+reallocp	memusage.c	/^static void *(*reallocp) (void *, size_t);$/;"	v	file:
+stack	memusage.c	/^  uint64_t stack;$/;"	m	struct:entry	file:
+start_sp	memusage.c	/^static __thread uintptr_t start_sp;$/;"	v	file:
+time_high	memusage.c	/^  uint32_t time_high;$/;"	m	struct:entry	file:
+time_low	memusage.c	/^  uint32_t time_low;$/;"	m	struct:entry	file:
+total	memusage.c	/^static memusage_size_t total[idx_last];$/;"	v	file:
+trace_mmap	memusage.c	/^static bool trace_mmap;$/;"	v	file:
+update_data	memusage.c	/^update_data (struct header *result, size_t len, size_t old_len)$/;"	f	file:

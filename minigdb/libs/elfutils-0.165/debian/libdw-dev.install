@@ -1,0 +1,8 @@
+usr/include/dwarf.h
+usr/include/elfutils/libdw.h
+usr/include/elfutils/libdwfl.h
+usr/include/elfutils/libdwelf.h
+usr/include/elfutils/known-dwarf.h
+usr/lib/*/libdw.so
+usr/lib/*/libdw.a
+usr/lib/*/pkgconfig/libdw.pc

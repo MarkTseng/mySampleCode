@@ -1,0 +1,212 @@
+.gly-spin {
+  -webkit-animation: spin 2s infinite linear;
+  -moz-animation: spin 2s infinite linear;
+  -o-animation: spin 2s infinite linear;
+  animation: spin 2s infinite linear;
+}
+
+@-moz-keyframes spin {
+  0% {
+    -moz-transform: rotate(0deg);
+  }
+  100% {
+    -moz-transform: rotate(359deg);
+  }
+}
+
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(359deg);
+  }
+}
+
+@-o-keyframes spin {
+  0% {
+    -o-transform: rotate(0deg);
+  }
+  100% {
+    -o-transform: rotate(359deg);
+  }
+}
+
+@keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(359deg);
+    transform: rotate(359deg);
+  }
+}
+
+figure.graph {
+  margin-bottom: -20px;
+  padding-bottom: 0;
+}
+
+figure.graph > img {
+  max-width: 500px;
+}
+
+.alert a {
+  color: #fff;
+  font-weight: bold;
+  border-bottom: 1px dashed;
+}
+
+.alert a:hover {
+  border-bottom: none;
+}
+
+table {
+  border-collapse: collapse !important;
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 20px;
+}
+
+table > thead > tr > th,
+table > tbody > tr > th,
+table > tfoot > tr > th,
+table > thead > tr > td,
+table > tbody > tr > td,
+table > tfoot > tr > td {
+  padding: 8px;
+  line-height: 1.42857143;
+  vertical-align: top;
+  border-top: 1px solid #ddd;
+}
+table > thead > tr > th {
+  vertical-align: bottom;
+  border-bottom: 2px solid #ddd;
+}
+table > caption + thead > tr:first-child > th,
+table > colgroup + thead > tr:first-child > th,
+table > thead:first-child > tr:first-child > th,
+table > caption + thead > tr:first-child > td,
+table > colgroup + thead > tr:first-child > td,
+table > thead:first-child > tr:first-child > td {
+  border-top: 0;
+}
+table > tbody + tbody {
+  border-top: 2px solid #ddd;
+}
+
+table > tbody > tr:nth-of-type(odd) {
+  background-color: #f9f9f9;
+}
+
+table > tbody > tr:hover {
+  background-color: #f5f5f5;
+}
+
+img, figure {
+  max-width: 100%;
+}
+
+h4 {
+   font-weight: bold;
+}
+
+h5 {
+   font-weight: bold;
+   font-size: 1.1em;
+}
+
+hr {
+  clear: both;
+}
+
+@media (max-width: 600px)  {
+  img, figure {
+    margin: 0 auto;
+    float: none !important;
+    width: 100%;
+  }
+}
+
+/* .sticky { */
+/*    position: sticky; */
+/*    top: 0; */
+/*    overflow: auto; */
+/*    /1* display: block; *1/ */
+/*    /1* padding-bottom: 35px; *1/ */
+/*    /1* top: 10px; *1/ */
+/* } */
+
+/* * { */
+/*    z-index: 10; */
+/* } */
+
+/* .sticky.sidebar { */
+/*    z-index: 0; */
+/* } */
+
+/* .sticky.sidebar:after, .sticky.sidebar:before { */
+/*   content: ""; */
+/*   position: fixed; */
+/*   z-index: 1; */
+/*   left: 0; */
+/*   pointer-events: none; */
+/*   width: 100%; */
+/*   height: 2.5em; */
+/* } */
+
+/* .sidebar:after { */
+/*   bottom: 0; */
+/*   background-image: linear-gradient(to bottom, */
+/*                     rgba(255,255,255, 0), */
+/*                     rgba(255,255,255, 1) 75%); */
+/* } */
+
+/* .sidebar:before { */
+/*   top: 0; */
+/*   background-image: linear-gradient(to top, */
+/*                     rgba(255,255,255, 0), */
+/*                     rgba(255,255,255, 1) 75%); */
+/* } */
+
+.sidebar .table-of-contents ul {
+   padding-left: 0;
+   margin-left: 25px;
+}
+
+.sidebar .table-of-contents > ul > a {
+   font-weight: bold;
+}
+
+.panel-question {
+   border-color: #4b297d;
+}
+
+.panel-question > .panel-heading {
+   color: #fff;
+   background-color: #562f8f;
+   border-color: #4b297d;
+}
+
+.panel-question > .panel-body {
+  padding: 5px 15px;
+}
+
+.panel-question > .panel-heading + .panel-collapse > .panel-body {
+   border-top-color: #faebcc;
+}
+.panel-question > .panel-heading .badge {
+   color: #3D2166;
+   background-color: #C2A5F2;
+   border: 1px solid #3D2166;
+}
+
+.panel-question > .panel-heading .badge > code {
+   color: #3D2166;
+   background-color: #C2A5F2;
+}
+
+.panel-question > .panel-footer + .panel-collapse > .panel-body {
+   border-bottom-color: #faebcc;
+}

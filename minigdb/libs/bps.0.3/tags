@@ -1,0 +1,185 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+ARCH	Makefile	/^ARCH=-DARCHARM$/;"	m
+BPACTION_DISABLE	bps_data.h	35;"	d
+BPACTION_ENABLE	bps_data.h	34;"	d
+BPACTION_NONE	bps_data.h	33;"	d
+BPSVER	bps.0.3.c	3;"	d	file:
+CC	Makefile	/^CC=arm-linux-gnueabihf-gcc$/;"	m
+CFLAGS	Makefile	/^CFLAGS=$(WARN) $(ARCH) -I\/home\/mark\/myResearch\/elfutils-0.165\/ARM_LIBS\/include$/;"	m
+CPSR_THUMB	bps_ptrace.h	61;"	d
+ERR	bps_error.h	29;"	d
+E_ARGS	bps_error.h	31;"	d
+E_FORK	bps_error.h	33;"	d
+E_MALLOC	bps_error.h	32;"	d
+E_OK	bps_error.h	30;"	d
+E_PTRACE	bps_error.h	34;"	d
+E_UNKNOWN	bps_error.h	35;"	d
+HEX_PER_ROW	bps_util.h	36;"	d
+LIBS	Makefile	/^LIBS=-L\/home\/mark\/myResearch\/elfutils-0.165\/ARM_LIBS\/lib -L\/home\/mark\/nfs\/ARM_LIBS\/lib -lelf -lz$/;"	m
+PROCESS_NEW	bps_data.h	38;"	d
+PROCESS_PREINIT	bps_data.h	36;"	d
+PROCESS_RUNNING	bps_data.h	37;"	d
+PROCESS_SINGLESTEP	bps_data.h	39;"	d
+REGS_STRUCT	bps_ptrace.h	53;"	d
+REGS_STRUCT	bps_ptrace.h	57;"	d
+REG_CPSR	bps_ptrace.h	60;"	d
+REG_PC	bps_ptrace.h	54;"	d
+REG_PC	bps_ptrace.h	58;"	d
+REG_SP	bps_ptrace.h	55;"	d
+REG_SP	bps_ptrace.h	59;"	d
+S_MYPRINTF	bps_util.h	37;"	d
+S_REG	bps_data.h	32;"	d
+S_SYMNAME	bps_elf.h	34;"	d
+TRAPBYTE	bps_ptrace.h	41;"	d
+TRAPHALF	bps_ptrace.h	48;"	d
+TRAPINT	bps_ptrace.h	47;"	d
+VERSION	Makefile	/^VERSION=0.3$/;"	m
+WARN	Makefile	/^WARN=-Wall$/;"	m
+_BPS_ARM_H	bps_arm.h	29;"	d
+_BPS_CMDLINE_H	bps_cmdline.h	25;"	d
+_BPS_DATA_H	bps_data.h	25;"	d
+_BPS_ELF_H	bps_elf.h	25;"	d
+_BPS_ERROR_H	bps_error.h	25;"	d
+_BPS_H	bps.h	25;"	d
+_BPS_PTRACE_H	bps_ptrace.h	29;"	d
+_BPS_UTIL_H	bps_util.h	25;"	d
+action	bps_data.h	/^	int action;$/;"	m	struct:bpmodlist
+addaddr	bps_data.c	/^struct addrlist *addaddr(struct addrlist **head)$/;"	f
+addbp	bps_data.c	/^struct breakpoint *addbp(struct breakpoint **head)$/;"	f
+addbpmod	bps_data.c	/^struct bpmodlist *addbpmod(struct bpmodlist **head)$/;"	f
+addprocess	bps_data.c	/^struct process *addprocess(struct process **head)$/;"	f
+addptr	bps_data.c	/^struct ptrlist *addptr(struct ptrlist **head)$/;"	f
+addreg	bps_data.c	/^struct reglist *addreg(struct reglist **head)$/;"	f
+address	bps_data.h	/^	unsigned long address;$/;"	m	struct:addrlist
+address	bps_data.h	/^	unsigned long address;$/;"	m	struct:breakpoint
+address	bps_elf.h	/^	unsigned long address;$/;"	m	struct:symbol
+addrlist	bps_data.h	/^struct addrlist$/;"	s
+arm_branchaddr	bps_arm.c	/^unsigned int arm_branchaddr(pid_t exe, REGS_STRUCT *regs, unsigned int instr)$/;"	f
+arm_dataproc	bps_arm.c	/^unsigned int arm_dataproc(int opcode, unsigned int operand1, unsigned int operand2, REGS_STRUCT *regs)$/;"	f
+arm_shiftrot	bps_arm.c	/^unsigned int arm_shiftrot(unsigned int instr, REGS_STRUCT *regs)$/;"	f
+arm_singlestep	bps_arm.c	/^void arm_singlestep(struct process *proc)$/;"	f
+bphead	bps_data.h	/^	struct breakpoint *bphead;$/;"	m	struct:process	typeref:struct:process::breakpoint
+bpmodlist	bps_data.h	/^struct bpmodlist$/;"	s
+bpmods	bps_data.h	/^	struct bpmodlist *bpmods;$/;"	m	struct:breakpoint	typeref:struct:breakpoint::bpmodlist
+bpmods	bps_data.h	/^	struct bpmodlist *bpmods;$/;"	m	struct:process	typeref:struct:process::bpmodlist
+bpnum	bps_data.h	/^	int bpnum;$/;"	m	struct:bpmodlist
+breakpoint	bps_data.h	/^struct breakpoint$/;"	s
+child_continue	bps_ptrace.c	/^void child_continue(pid_t exe, int signal)$/;"	f
+child_singlestep	bps_ptrace.c	/^void child_singlestep(struct process *proc)$/;"	f
+clearbreakpoint	bps_ptrace.c	/^void clearbreakpoint(pid_t exe, unsigned long breakaddr, unsigned int origint)$/;"	f
+copyaddr	bps_data.c	/^void copyaddr(struct addrlist *dst, struct addrlist *src)$/;"	f
+copyaddrs	bps_data.c	/^struct addrlist *copyaddrs(struct addrlist *head)$/;"	f
+copybp	bps_data.c	/^void copybp(struct breakpoint *dst, struct breakpoint *src)$/;"	f
+copybpmod	bps_data.c	/^void copybpmod(struct bpmodlist *dst, struct bpmodlist *src)$/;"	f
+copybpmods	bps_data.c	/^struct bpmodlist *copybpmods(struct bpmodlist *head)$/;"	f
+copybps	bps_data.c	/^struct breakpoint *copybps(struct breakpoint *head)$/;"	f
+copyonfork	bps_data.h	/^	int copyonfork;$/;"	m	struct:breakpoint
+copyonfork	bps_data.h	/^	int copyonfork;$/;"	m	struct:process
+copyonthread	bps_data.h	/^	int copyonthread;$/;"	m	struct:breakpoint
+copyonthread	bps_data.h	/^	int copyonthread;$/;"	m	struct:process
+copyprocess	bps_data.c	/^struct process *copyprocess(struct process **head, pid_t pid)$/;"	f
+copyptr	bps_data.c	/^void copyptr(struct ptrlist *dst, struct ptrlist *src)$/;"	f
+copyptrs	bps_data.c	/^struct ptrlist *copyptrs(struct ptrlist *head)$/;"	f
+copyreg	bps_data.c	/^void copyreg(struct reglist *dst, struct reglist *src)$/;"	f
+copyregs	bps_data.c	/^struct reglist *copyregs(struct reglist *head)$/;"	f
+count	bps_data.h	/^	int count;$/;"	m	struct:breakpoint
+decpc	bps_ptrace.c	/^unsigned long decpc(pid_t exe)$/;"	f
+defcount	bps_data.h	/^	int defcount;$/;"	m	struct:breakpoint
+deletebpmods	bps_data.c	/^void deletebpmods(struct bpmodlist *head)$/;"	f
+deletebps	bps_data.c	/^void deletebps(struct breakpoint *breakpoints)$/;"	f
+deleteprocess	bps_data.c	/^void deleteprocess(struct process **head, pid_t pid)$/;"	f
+deref	bps_data.h	/^	int deref;$/;"	m	struct:addrlist
+deref	bps_data.h	/^	int deref;$/;"	m	struct:ptrlist
+disablebreakpoint	bps_ptrace.c	/^void disablebreakpoint(pid_t exe, int bpnum, struct breakpoint *head)$/;"	f
+disablebreakpoints	bps_ptrace.c	/^void disablebreakpoints(pid_t exe, struct breakpoint *breakpoints)$/;"	f
+disabled	bps_data.h	/^	int disabled;$/;"	m	struct:breakpoint
+display_breakpoints	bps_data.c	/^void display_breakpoints(struct breakpoint *bphead)$/;"	f
+display_stopstate	bps_ptrace.c	/^void display_stopstate(pid_t exe, int status, char *location)$/;"	f
+display_symbols	bps_elf.c	/^void display_symbols(struct symbol *symbols, int total)$/;"	f
+displayaddrs	bps_ptrace.c	/^void displayaddrs(pid_t pid, struct addrlist *printaddrs, REGS_STRUCT *regs)$/;"	f
+displayptrs	bps_ptrace.c	/^void displayptrs(pid_t pid, struct ptrlist *printptrs, REGS_STRUCT *regs)$/;"	f
+displayregs	bps_ptrace.c	/^void displayregs(struct reglist *printregs, REGS_STRUCT *regs)$/;"	f
+enablebreakpoint	bps_ptrace.c	/^void enablebreakpoint(pid_t exe, int bpnum, struct breakpoint *head)$/;"	f
+extendbpmods	bps_data.c	/^void extendbpmods(struct bpmodlist **dst, struct bpmodlist *src)$/;"	f
+fnname	bps_data.h	/^	char *fnname;$/;"	m	struct:breakpoint
+format	bps_data.h	/^	unsigned char format;$/;"	m	struct:addrlist
+format	bps_data.h	/^	unsigned char format;$/;"	m	struct:ptrlist
+getpc	bps_ptrace.c	/^unsigned long getpc(pid_t exe)$/;"	f
+getprocess	bps_data.c	/^struct process *getprocess(struct process *head, pid_t pid)$/;"	f
+getreg	bps_ptrace.c	/^unsigned long getreg(char *reg, REGS_STRUCT *regs)$/;"	f
+global	bps_data.h	/^	int global;$/;"	m	struct:bpmodlist
+hexdump	bps_util.c	/^void hexdump(unsigned char *data, unsigned char format, int data_len)$/;"	f
+initallprocesses	bps_ptrace.c	/^void initallprocesses(struct process *head)$/;"	f
+isintbreakpoint	bps_ptrace.c	/^int isintbreakpoint(int trapint, int lsb)$/;"	f
+isnextval	bps_cmdline.c	/^int isnextval(char *buff)$/;"	f
+isvalidreg	bps_ptrace.c	/^int isvalidreg(char *reg)$/;"	f
+kill	bps_data.h	/^	int kill;$/;"	m	struct:breakpoint
+main	bps.0.3.c	/^int main(int argc, char *argv[], char *envp[])$/;"	f
+modbps	bps_data.h	/^	int modbps;$/;"	m	struct:process
+modbreakpoints	bps_ptrace.c	/^void modbreakpoints(pid_t exe, struct bpmodlist *bpmod, struct breakpoint *breakpoints, int local)$/;"	f
+modbreakpointsglobal	bps_ptrace.c	/^void modbreakpointsglobal(struct process *prochead, struct bpmodlist *bpmod, pid_t exe)$/;"	f
+myprintf	bps_util.c	/^int myprintf(unsigned int vlevel, const char *fmt, ... )$/;"	f
+name	bps_elf.h	/^	char name[S_SYMNAME];$/;"	m	struct:symbol
+next	bps_data.h	/^	struct addrlist *next;$/;"	m	struct:addrlist	typeref:struct:addrlist::addrlist
+next	bps_data.h	/^	struct bpmodlist *next;$/;"	m	struct:bpmodlist	typeref:struct:bpmodlist::bpmodlist
+next	bps_data.h	/^	struct breakpoint *next;$/;"	m	struct:breakpoint	typeref:struct:breakpoint::breakpoint
+next	bps_data.h	/^	struct process *next;$/;"	m	struct:process	typeref:struct:process::process
+next	bps_data.h	/^	struct ptrlist *next;$/;"	m	struct:ptrlist	typeref:struct:ptrlist::ptrlist
+next	bps_data.h	/^	struct reglist *next;$/;"	m	struct:reglist	typeref:struct:reglist::reglist
+nextval	bps_cmdline.c	/^char *nextval(char *buff)$/;"	f
+offset	bps_data.h	/^	int offset;$/;"	m	struct:addrlist
+offset	bps_data.h	/^	int offset;$/;"	m	struct:ptrlist
+openpipe	bps_util.c	/^int openpipe(char *pipename)$/;"	f
+output	bps_util.c	/^int output = 1;$/;"	v
+pid	bps_data.h	/^	pid_t pid;$/;"	m	struct:process
+preinit	bps_data.h	/^	int preinit;$/;"	m	struct:process
+printablechar	bps_util.c	/^unsigned char printablechar(unsigned char c)$/;"	f
+printaddrs	bps_data.h	/^	struct addrlist *printaddrs;$/;"	m	struct:breakpoint	typeref:struct:breakpoint::addrlist
+printptrs	bps_data.h	/^	struct ptrlist *printptrs;$/;"	m	struct:breakpoint	typeref:struct:breakpoint::ptrlist
+printregs	bps_data.h	/^	struct reglist *printregs;$/;"	m	struct:breakpoint	typeref:struct:breakpoint::reglist
+process	bps_data.h	/^struct process$/;"	s
+processaddrarg	bps_cmdline.c	/^int processaddrarg(char *arg, struct addrlist *addr)$/;"	f
+processptrarg	bps_cmdline.c	/^int processptrarg(char *arg, struct ptrlist *ptr)$/;"	f
+ptrlist	bps_data.h	/^struct ptrlist$/;"	s
+readchildbuffer	bps_ptrace.c	/^unsigned char *readchildbuffer(pid_t pid, unsigned long addr, int size)$/;"	f
+readchildregs	bps_ptrace.c	/^void readchildregs(pid_t pid, REGS_STRUCT *regs)$/;"	f
+readchildstring	bps_ptrace.c	/^unsigned char *readchildstring(pid_t pid, unsigned long addr)$/;"	f
+readchildword	bps_ptrace.c	/^unsigned long readchildword(pid_t pid, unsigned long addr)$/;"	f
+readsyms	bps_elf.c	/^int readsyms(struct symbol **symbols, char *filename, int display)$/;"	f
+reg	bps_data.h	/^	char *reg;$/;"	m	struct:ptrlist
+reg	bps_data.h	/^	char *reg;$/;"	m	struct:reglist
+regindex	bps_ptrace.c	/^int regindex(char *reg)$/;"	f
+reglist	bps_data.h	/^struct reglist$/;"	s
+run_child_exe	bps_ptrace.c	/^void run_child_exe(char *cmdline[], char *envp[])$/;"	f
+run_controller	bps_ptrace.c	/^void run_controller(pid_t exe, unsigned long breakaddr, struct breakpoint *breakpoints, int copyonfork, int copyonthread, int initbreakglobal)$/;"	f
+run_debugger	bps_ptrace.c	/^void run_debugger(char *cmdline[], char *envp[], unsigned long breakaddr, struct breakpoint *breakpoints, int copyonfork, int copyonthread, int initbreakglobal)$/;"	f
+set_ptrace_options	bps_ptrace.c	/^void set_ptrace_options(pid_t exe)$/;"	f
+setbreakpoint	bps_ptrace.c	/^unsigned int setbreakpoint(pid_t exe, unsigned long breakaddr)$/;"	f
+setupbreakpoints	bps_ptrace.c	/^void setupbreakpoints(struct process *currproc)$/;"	f
+shexdump	bps_util.c	/^void shexdump(unsigned char *data, int data_len)$/;"	f
+signof	bps_ptrace.c	/^char signof(int val)$/;"	f
+size	bps_data.h	/^	int size;$/;"	m	struct:addrlist
+size	bps_data.h	/^	int size;$/;"	m	struct:ptrlist
+ssaddr1	bps_data.h	/^	unsigned long ssaddr1;$/;"	m	struct:process
+ssaddr2	bps_data.h	/^	unsigned long ssaddr2;$/;"	m	struct:process
+ssbp	bps_data.h	/^	struct breakpoint *ssbp;$/;"	m	struct:process	typeref:struct:process::breakpoint
+sstrap1	bps_data.h	/^	unsigned int sstrap1;$/;"	m	struct:process
+sstrap2	bps_data.h	/^	unsigned int sstrap2;$/;"	m	struct:process
+state	bps_data.h	/^	int state;$/;"	m	struct:process
+symaddr	bps_elf.c	/^unsigned long symaddr(struct symbol *symbols, int total, char *name)$/;"	f
+symbol	bps_elf.h	/^struct symbol$/;"	s
+thread	bps_data.h	/^	int thread;$/;"	m	struct:process
+threadparent	bps_ptrace.c	/^pid_t threadparent(struct process *prochead, pid_t exe)$/;"	f
+thumb	bps_data.h	/^	int thumb;$/;"	m	struct:breakpoint
+thumb_branchaddr	bps_arm.c	/^unsigned int thumb_branchaddr(pid_t exe, REGS_STRUCT *regs, unsigned int instr)$/;"	f
+trapint	bps_data.h	/^	unsigned int trapint;$/;"	m	struct:breakpoint
+usage	bps.0.3.c	/^void usage(char *msg) {$/;"	f
+validregs	bps_ptrace.c	/^char *validregs[] = {"ebx", "ecx", "edx", "esi", "edi", "ebp", "eax", "xds", "xes", "xfs", "xgs", "orig_eax", "eip", "xcs", "eflags", "esp", "xss", NULL};$/;"	v
+verbose	bps_util.c	/^int verbose = 0;$/;"	v
+writechildregs	bps_ptrace.c	/^void writechildregs(pid_t pid, REGS_STRUCT *regs)$/;"	f
+writechildword	bps_ptrace.c	/^void writechildword(pid_t pid, unsigned long addr, unsigned long word)$/;"	f

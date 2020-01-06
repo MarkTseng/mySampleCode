@@ -1,0 +1,29 @@
+Source: dwarfutils
+Section: libs
+Priority: optional
+Maintainer: Fabian Wolff <fabi.wolff@arcor.de>
+Uploaders:
+Build-Depends: debhelper (>> 9), quilt (>= 0.47), libelf-dev, binutils-dev
+Standards-Version: 3.9.3.1
+
+Package: dwarfdump
+Section: utils
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: utility to dump DWARF debug information from ELF objects
+ This package contains the newer implementation of dwarfdump written in C++,
+ sometimes called dwarfdump2.
+ .
+ This utility is part of dwarfutils.
+
+Package: libdwarf-dev
+Section: libdevel
+Architecture: any
+Conflicts: libdw-dev
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: library to consume and produce DWARF debug information
+ The libdwarf package provides a shared library which allows reading/consumer
+ and writing/producer of DWARF debugging information from object files, shared
+ libraries, and executables.
+ .
+ This library is part of dwarfutils.

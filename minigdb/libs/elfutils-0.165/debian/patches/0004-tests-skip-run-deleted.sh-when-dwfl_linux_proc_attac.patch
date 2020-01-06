@@ -1,0 +1,49 @@
+From 26d5a631209a82efe1d55dd44a9c65dc481138cb Mon Sep 17 00:00:00 2001
+From: Pino Toscano <toscano.pino@tiscali.it>
+Date: Sat, 27 Jun 2015 19:23:01 +0200
+Subject: [PATCH] tests: skip run-deleted.sh when dwfl_linux_proc_attach is not
+ implemented
+
+If the current OS does not implement dwfl_linux_proc_attach (which
+currently only Linux does) then skip this test, as "stack" uses that
+API for attaching to a running process.
+
+Signed-off-by: Pino Toscano <toscano.pino@tiscali.it>
+---
+ tests/ChangeLog      | 5 +++++
+ tests/run-deleted.sh | 4 ++++
+ 2 files changed, 9 insertions(+)
+
+diff --git a/tests/ChangeLog b/tests/ChangeLog
+index 3e567b3..90b9a0a 100644
+--- a/tests/ChangeLog
++++ b/tests/ChangeLog
+@@ -1,5 +1,10 @@
+ 2015-06-27  Pino Toscano  <toscano.pino@tiscali.it>
+ 
++	* tests/run-deleted.sh: Skip when detecting a not implemented
++	dwfl_linux_proc_attach.
++
++2015-06-27  Pino Toscano  <toscano.pino@tiscali.it>
++
+ 	* tests/dwfl-bug-fd-leak.c (elfutils_open): Check for null results of
+ 	dwfl_addrmodule.
+ 
+diff --git a/tests/run-deleted.sh b/tests/run-deleted.sh
+index 2b5a9a8..0f64762 100755
+--- a/tests/run-deleted.sh
++++ b/tests/run-deleted.sh
+@@ -38,6 +38,10 @@ cat bt bt.err
+ kill -9 $pid
+ wait
+ check_native_unsupported bt.err deleted
++if grep -q -E ': dwfl_linux_proc_attach pid ([[:digit:]]+): Function not implemented$' bt.err; then
++  echo >&2 deleted: OS not supported
++  exit 77
++fi
+ # For PPC64 we need access to the OPD table which we get through the shdrs
+ # (see backends/ppc64_init.c) but for the deleted-lib we only have phdrs.
+ # So we don't have the name of the function. But since we should find
+-- 
+2.1.4
+

@@ -1,0 +1,12 @@
+prefix=/usr/local
+exec_prefix=${prefix}
+includedir=${prefix}/include
+libdir=${exec_prefix}/lib
+libexecdir=${exec_prefix}/libexec
+LD_PRELOAD=${libdir}/liblog-malloc2.so
+
+Name: log-malloc2
+Description: Memory tracking library
+Version: 0.4.0
+Cflags: -I${includedir}/log-malloc2
+Libs: -L${libdir} -llog-malloc2

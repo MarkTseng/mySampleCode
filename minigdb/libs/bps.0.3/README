@@ -1,0 +1,257 @@
+bps - Breakpoint Shenanigans - K Sheldrake
+
+Copyright (C) 2015  Kevin Sheldrake
+
+This file is part of bps.
+
+Bps is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+
+
+Overview
+--------
+
+The idea is to automate some of the things I use gdb for, namely repeatedly
+breaking on certain addresses and displaying the contents of registers and
+memory locations, and automatically continuing.
+
+Breakpoints can be specified as either addresses or function names; display
+information can be contents of registers, or the contents of buffers pointed
+to by addresses or registers, with offsets.  Buffers need to have the format
+specified - b(ytes), h(alfwords), w(ords), s(tring); size (not for string);
+and an optional offset.  For each breakpoint you can specify the maximum
+number of times to break on it.  You can also specify a function or address to
+hit before enabling the breakpoints.
+
+If a count is specified for a breakpoint, then it will trigger any specified
+actions after the specified number of times that breakpoint is hit; the
+breakpoint will then be disabled.  If a count is not specified, then the
+breakpoint will trigger any specified actions every time the breakpoint is
+hit.
+
+Breakpoint actions are: enable or disable any number of breakpoints, including
+itself (by 1-indexed count of breakpoints in the order specified on the
+command line); kill the process that triggered the breakpoint; and enable or
+disable copy of breakpoints on fork or thread creation.  Breakpoint actions
+that enable or disable breakpoints can either be local or global, meaning they
+affect either the current process or thread or they affect all processes and
+threads.
+
+Program output defaults to stdout, but can be redirected to either stderr or
+a named pipe.
+
+
+Examples
+--------
+
+$ ./bps.0.3 -f hidden -R esp:w:16 -R esp:S:4 -R esp:S:8 -- ../test/hello5 blah
+
+calling newfn
+This is newfn: 5
+after newfn
+strfn, msg( 0x8048813 )='hello', msg2( 0x804880b )='goodbye'
+output( 0x8f68008 ) = 'hello - goodbye'
+strfn returned 'hello - goodbye'
+pid 2054: breakpoint 1: hidden (0x804851b)
+	register pointers:
+		esp+0x0:
+		00000000  080486b9 bf844b48  0804882e b7543be0 
+		00000010  0804873b 00000002  bf844c04 00000005 
+		00000020  08048713 bf844b70  b76c9000 00000000 
+		00000030  b752ce5e 00000000  08048420 00000000 
+		(esp+0x4) 
+		(esp+0x8) hello world
+a = 0xbf844b48, b = 0x804882e
+*a = 5, *b = 'hello world'
+c = 11, d = 11
+hello world
+Controller: Process 2054 exited...
+
+
+This runs the program './hello5' with command line argument 'blah', with a
+breakpoint set on the start of function 'hidden'.  Bps is instructed to
+display a 16 word buffer pointed to by register esp (i.e. the stack), and two
+string buffers, at (esp+4) and (esp+8) (i.e. the arguments to the function on
+x86).
+
+When the program runs it provides various output.  The bps output are the
+lines that start with 'pid 2054:...' and end with '(esp+0x8)...', plus the
+final line that states that the process exited.
+
+
+Command Line Arguments
+----------------------
+
+-l <exe>
+
+List the symbols in the ELF executable.  This command takes no other options.
+
+
+-z/-Z
+
+Enable or disable copy of breakpoints on fork.
+When specified before a breakpoint, this specifies the initial configuration
+of the target executable.  In reality all breakpoints are copied to all forked
+processes but they are disabled by default.  Using -z causes all new processes
+to have the breakpoints enabled when they start up.  -Z is the default option,
+disabled, meaning breakpoints will only trigger in the initial process unless
+otherwise enabled.
+When specified after a breakpoint, this switch enables or disables the copy on
+the process the breakpoint triggers within.  In other words, if copy of
+breakpoints is specified globally (-z before breakpoints), then -Z could be
+specified after a breakpoint to indicate that when the breakpoint triggers, it
+should disable the copy of breakpoints for any subsequent forks by the
+process.  This allows containment of breakpoints to a small number of relevant
+processes.
+
+
+-y/-Y
+
+Enable or disable copy of breakpoints on thread creation.  This works the same
+way as -z/-Z but for threads instead of processes.
+
+
+-G
+
+By default, breakpoint actions only affect the process or thread that the
+breakpoint triggered within.  Switch -G causes the actions to affect all
+processes instead.  This can be reversed per breakpoint action with -g (see
+below).
+
+
+-b initial break function / -B initial break address
+
+By default, bps sets up the breakpoints when the target executable starts.  By
+using -b/-B bps can wait until the specified function/address is hit before
+setting up the breakpoints.  This allows breakpoints to be focused on
+particular sections of the program that occur after the specified location is
+reached.
+
+
+-T
+
+Break function is a thumb function, rather than ARM (only for ARM).
+
+
+-I
+
+By default, if an initial break function/address is specified with -b/-B, bps
+will only enable the breakpoints on the process or thread that triggered the
+inital breakpoint.  Using switch -I will cause bps to enable the breakpoints
+on all processes and threads upon initial breakpoint.
+
+
+-f breakpoint function / -F breakpoint address
+
+These switches specify a breakpoint.  Use -f to break on the start of the
+specified function (in unstripped binaries) or -F to break on the specified
+address.  The following switches indicate how bps should react to the trigger.
+
+  -t
+
+Breakpoint is a thumb address, rather than ARM (only for ARM).
+
+  -r register
+
+Display the register's contents.
+
+  -R register:format[:size][:offset]
+
+Display the contents of a buffer pointed to by the (optionally offset)
+register.  Format can be b/B for bytes, h/H for 16 bit half-words, w/W for 32
+bit words, or s/S for string.  For b/B, h/H and w/W the size must be specified
+in terms of the unit; i.e. if you specify w/W then size is the number of 32
+bit words to display.  Size must not be specified for strings.  Uppercase
+formats cause the calculated address to be dereferenced before display.
+
+  -A address:format[:size][:offset]
+
+Display the contents of a buffer pointed to by the (optionally offset)
+address.  Format is the same as for registers.
+
+  -c count
+
+Specify the number of times the breakpoint should trigger before disabling
+itself and carrying out any specified actions.
+
+  -D
+
+Disable the breakpoint on launch so that it doesn't trigger until another
+breakpoint enables it.
+
+  -k
+
+Kill the process that triggered the breakpoint after the count number of
+triggers.
+
+  -e breakpoint number / -d breakpoint number
+
+Enable or diable a breakpoint.  The effect will be local or global depending
+on -g.
+
+  -g
+
+Reverse the effect of -G for following enable/disable options for this
+breakpoint.  For example, if -G isn't specified, then breakpoint actions will
+be local by default; specifying -g on a breakpoint causes all the actions
+specified for the breakpoint after the -g to have global effect.  If -G is
+specified, the effect is the opposite.
+
+
+-o
+
+By default, bps output to stdout.  This switch causes output to go to stderr
+instead.
+
+
+-p pipe for output
+
+This switch causes output to be directed to the specfied named pipe, which
+must already exist.  To use a named pipe, first create it with
+'mkfifo -m 0600 </path/to/pipe>' and then listen on it in a separate shell
+with 'cat </path/to/pipe>' prior to running bps.
+
+
+-v
+
+This switch increases verbosity.  Use it several times for more info.  Most of
+this will be for debugging bps itself so ymmv.  Might be useful in bug
+reports.
+
+
+-- exe [arg1 [arg2 ...]]
+
+The -- switch separates the exe and its arguments from the bps arguments.
+Simply follow the -- with your usual command line for the target executable.
+
+
+Numbers
+-------
+
+Numbers and addresses can be specified in decimal (no prefix), hex (0x prefix)
+or octal (0 prefix).
+
+
+Support / Patches
+-----------------
+
+The latest version of the code can be found at rtfc.org.uk.
+
+No support is offered, but if you report bugs I may try to fix them.  Patches
+are especially welcome.  Feature requests are best accompanied with a working
+patch.  I'm more likely to work on it if I have beer; see rtfc.org.uk for
+details.
+
+Contact details are at rtfc.org.uk.
+

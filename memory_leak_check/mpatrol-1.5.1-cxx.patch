@@ -1,0 +1,31 @@
+--- Makefile.orig	2007-12-18 12:46:05.000000000 -0500
++++ mpatrol/build/unix/Makefile	2007-12-19 10:19:10.000000000 -0500
+@@ -27,7 +27,8 @@
+ # Definitions
+ 
+ SHELL = /bin/sh
+-CC    = g++
++CC    = gcc
++CXX   = g++
+ AR    = ar
+ LD    = $(CC)
+ LINT  = lint
+@@ -191,6 +192,18 @@
+ 	$(CC) $(CFLAGS) $(OFLAGS) $(SFLAGS) $(TFLAGS) -c -o $@ machine.s
+ 	-@ rm -f machine.s 2>&1 >/dev/null
+ 
++cplus.o:
++	$(CXX) $(CFLAGS) $(OFLAGS) -c $<
++
++cplus.s.o:
++	$(CXX) $(CFLAGS) $(OFLAGS) $(SFLAGS) -c -o $@ $<
++
++cplus.t.o:
++	$(CXX) $(CFLAGS) $(OFLAGS) $(TFLAGS) -c -o $@ $<
++
++cplus.s.t.o:
++	$(CXX) $(CFLAGS) $(OFLAGS) $(SFLAGS) $(TFLAGS) -c -o $@ $<
++
+ mpatrol: mpatrol.o getopt.o version.o
+ 	$(CC) $(CFLAGS) $(OFLAGS) -o $@ mpatrol.o getopt.o version.o
+ 

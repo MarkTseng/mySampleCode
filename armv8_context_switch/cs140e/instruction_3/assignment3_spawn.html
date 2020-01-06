@@ -1,0 +1,3632 @@
+<!DOCTYPE html>
+<!-- saved from url=(0058)https://web.stanford.edu/class/cs140e/assignments/3-spawn/ -->
+<html lang="en" class="hb-loaded"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <title>Stanford CS140e - Operating Systems</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="./assignment3_spawn_files/bootstrap.min.css" media="screen">
+    <link rel="stylesheet" href="./assignment3_spawn_files/hugo-bootswatch.css">
+    <link rel="stylesheet" href="./assignment3_spawn_files/extra.css">
+  </head>
+  <body huaban_collector_injected="true" style="">
+
+<nav class="navbar navbar-default">
+<div class="container">
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <a href="https://web.stanford.edu/class/cs140e/" class="navbar-brand">CS140e</a>
+  </div>
+  <div id="navbar" class="navbar-collapse collapse">
+    <ul class="nav navbar-nav">
+        
+        
+          
+            
+            <li>
+              <a href="https://web.stanford.edu/class/cs140e/">Home</a>
+            </li>
+            
+          
+        
+          
+            <li class="dropdown  active">
+              <a href="https://web.stanford.edu/class/cs140e/assignments/3-spawn/#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                Assignments<span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" role="menu">
+                
+                  
+                  <li>
+                    <a href="https://web.stanford.edu/class/cs140e/assignments/info/"> Grading and Policies </a>
+                  </li>
+                  
+                
+                  
+                  <li>
+                    <a href="https://web.stanford.edu/class/cs140e/assignments/submission/"> Submission and Grades </a>
+                  </li>
+                  
+                
+                  <li class="divider"></li>
+                  <li>
+                    <a href="https://web.stanford.edu/class/cs140e/assignments/0-blinky/"> Assignment 0: Blinky </a>
+                  </li>
+                  
+                
+                  
+                  <li>
+                    <a href="https://web.stanford.edu/class/cs140e/assignments/1-shell/"> Assignment 1: Shell </a>
+                  </li>
+                  
+                
+                  
+                  <li>
+                    <a href="https://web.stanford.edu/class/cs140e/assignments/2-fs/"> Assignment 2: File System </a>
+                  </li>
+                  
+                
+                  
+                  <li class="active">
+                    <a href="https://web.stanford.edu/class/cs140e/assignments/3-spawn/"> Assignment 3: Spawn </a>
+                  </li>
+                  
+                
+                  <li class="divider"></li>
+                  <li>
+                    <a href="https://web.stanford.edu/class/cs140e/assignments/final/"> Final Exam </a>
+                  </li>
+                  
+                
+              </ul>
+            </li>
+          
+        
+          
+            
+            <li>
+              <a href="https://web.stanford.edu/class/cs140e/about/">General Information</a>
+            </li>
+            
+          
+        
+          
+            
+            <li>
+              <a href="https://web.stanford.edu/class/cs140e/syllabus/">Syllabus</a>
+            </li>
+            
+          
+        
+
+    </ul>
+  </div>
+</div>
+</nav>
+
+
+<div class="container">
+   <div class="row pad-top">
+      <article class="col-md-9">
+         <h1>Assignment 3 <small>Spawn</small></h1>
+         <h4>Due:<b> Monday March 19, 2018 11:59PM</b></h4>
+         <hr>
+         
+
+<h3 id="overview">Overview</h3>
+
+<p>In this assignment, you will enable user-level applications by implementing
+processes and related infrastructure. You will write privilege level switching
+code, context-switching code, a simple round-robin scheduler, system call
+handlers, and a virtual memory subsystem. You will also port your shell to user
+space and extend your shell so that it can spawn new processes.</p>
+
+
+<div class="alert alert-dismissible alert-warning">
+   <p style="font-size: 16px; font-weight: bold;">
+      
+         <span class="glyphicon glyphicon-warning-sign" aria-hidden="true" style="margin-right: 3px"></span>
+      
+      Assignment 3 is on Hiatus
+   </p>
+   <p></p><p>At present, phases 0, 1, and 2 are available. The remaining phases will be
+  published in the near future.</p>
+<p></p>
+</div>
+
+
+
+<hr>
+
+<h3 id="phase-0-getting-started">Phase 0: Getting Started</h3>
+
+<p>As with previous assignments, ensure that you are using a compatible machine:</p>
+
+<ul>
+<li>Runs a modern Unix natively: Linux, BSD, or macOS</li>
+<li>Runs a 64-bit variant of the OS</li>
+<li>Has a USB-A port or USB-C to USB-A adapter</li>
+<li>Has the software from previous assignments installed</li>
+</ul>
+
+<h4 id="getting-the-skeleton-code">Getting the Skeleton Code</h4>
+
+<p>Clone the assignment 3 skeleton git repository to your <code>cs140e</code> working directory:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">git clone https://web.stanford.edu/class/cs140e/assignments/3-spawn/skeleton.git <span style="color:#1c01ce">3</span>-spawn</code></pre></div>
+<p>After cloning, your <code>cs140e</code> directory tree should look as follows:</p>
+
+<pre><code>cs140e
+├── 0-blinky
+├── 1-shell
+├── 2-fs
+├── 3-spawn
+└── os
+</code></pre>
+
+<p>Inside of the <code>os</code> repository, checkout the <code>3-spawn</code> git branch and merge your
+changes from assignment 2:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh"><span style="color:#a90d91">cd</span> os
+git fetch
+git checkout <span style="color:#1c01ce">3</span>-spawn
+git merge <span style="color:#1c01ce">2</span>-fs</code></pre></div>
+<p>You may need to resolve conflicts before continuing. For example, if you see a
+message that looks like:</p>
+
+<pre><code>Auto-merging kernel/src/kmain.rs
+CONFLICT (content): Merge conflict in kernel/src/kmain.rs
+Automatic merge failed; fix conflicts and then commit the result.
+</code></pre>
+
+<p>You will need to manually modify the <code>kmain.rs</code> file to resolve the conflict.
+Ensure you keep all of your changes from assignment 2. Once all conflicts are
+resolved, add the resolved files with <code>git add</code> and commit. For more information
+on resolving merge conflicts, <a href="https://githowto.com/resolving_conflicts">see this tutorial on
+githowto.com</a>.</p>
+
+<h4 id="arm-documentation">ARM Documentation</h4>
+
+<p>Throughout this assignment, we will be referring to three official ARM
+documents. They are:</p>
+
+<ol>
+<li><p><a href="https://web.stanford.edu/class/cs140e/docs/ARMv8-Reference-Manual.pdf">ARMv8 Reference Manual</a></p>
+
+<p>This is the official reference manual for the ARMv8 architecture. This is a
+wholistic manual covering the entire architecture in a general manner. For
+the specific implementation of the architecture for the Raspberry Pi 3, see
+the ARM Cortex-A53 Manual. We will be referring to sections from this manual
+with notes of the form (<a href="https://web.stanford.edu/class/cs140e/docs/ARMv8-Reference-Manual.pdf">ref</a>: C5.2) which indicates that you should refer
+to section C5.2 of the <a href="https://web.stanford.edu/class/cs140e/docs/ARMv8-Reference-Manual.pdf">ARMv8 Reference Manual</a>.</p></li>
+
+<li><p><a href="https://web.stanford.edu/class/cs140e/docs/ARM-Cortex-A53-Manual.pdf">ARM Cortex-A53 Manual</a></p>
+
+<p>Manual for the specific implementation of the ARMv8 (v8.0-A) architecture as
+used by the Raspberry Pi 3. We will be referring to sections from this
+manual with notes of the form (<a href="https://web.stanford.edu/class/cs140e/docs/ARM-Cortex-A53-Manual.pdf">A53</a>: 4.3.30) which indicates that you
+should refer to section 4.3.30 of the <a href="https://web.stanford.edu/class/cs140e/docs/ARM-Cortex-A53-Manual.pdf">ARM Cortex-A53 Manual</a>.</p></li>
+
+<li><p><a href="https://web.stanford.edu/class/cs140e/docs/ARMv8-A-Programmer-Guide.pdf">ARMv8-A Programmer Guide</a></p>
+
+<p>A high-level guide on how to program an ARMv8-A process. We will be
+referring to sections from this manual with notes of the form (<a href="https://web.stanford.edu/class/cs140e/docs/ARMv8-A-Programmer-Guide.pdf">guide</a>:
+10.1) which indicates that you should refer to section 10.1 of the <a href="https://web.stanford.edu/class/cs140e/docs/ARMv8-A-Programmer-Guide.pdf">ARMv8-A
+Programmer Guide</a>.</p></li>
+</ol>
+
+<p>We recommend that you download these three documents now and maintain them
+within easy reach.</p>
+
+<hr>
+
+<h3 id="phase-1-arm-and-a-leg">Phase 1: ARM and a Leg</h3>
+
+<p>In this phase, you will learn about the ARMv8 architecture, switch to a lower
+privilege level, install exception vectors, enable timer interrupts, and handle
+breakpoint exceptions by starting a debug shell. You will learn about exception
+levels in the ARM architecture and how the architecture handles exceptions,
+interrupts, and privilege levels.</p>
+
+<hr>
+
+<h4 id="subphase-a-armv8-overview">Subphase A: ARMv8 Overview</h4>
+
+<p>In this subphase, you will learn about the ARMv8 architecture. You will not be
+writing any code, but you will be answering several questions about the
+architecure.</p>
+
+<p>The ARM (Acorn RISC Machine) CPU architecture has a history spanning over 30
+years. There are eight major revisions, the latest being ARMv8-A, introduced in
+2011. The Broadcom BCM2837 SOC contains an ARM Cortex-A53, an ARMv8.0-A based
+CPU. The Cortex-A53 (and other specific CPUs) are referred to as
+<em>implementations</em> of the architecture. This is the CPU you have been programming
+in the last three assignments.</p>
+
+
+<div class="alert alert-dismissible alert-info">
+   <p style="font-size: 16px; font-weight: bold;">
+      
+         <span class="glyphicon glyphicon-info-sign" aria-hidden="true" style="margin-right: 3px"></span>
+      
+      ARM CPUs dominate the mobile market.
+   </p>
+   <p></p><p>ARM CPUs dominate the mobile market, appearing in over 95% of all smartphones
+  sold worldwide and almost 100% of all flagship smartphones including Apple’s
+  iPhone and Google’s Pixel.</p>
+<p></p>
+</div>
+
+
+
+<p>Thus far, we’ve avoided the details of the underlying architecture, allowing the
+Rust compiler to handle them for us. To enable running processes in user-space,
+however, we’ll need to program the CPU directly at the lowest of levels.
+Programming the CPU directly requires familiarization with the CPUs native
+assembly language and overall concepts. We’ll start with an overview of the
+architecture and then proceed to describe a few key assembly instructions.</p>
+
+<h5 id="registers">Registers</h5>
+
+<p>The ARMv8 architecture includes the following registers (<a href="https://web.stanford.edu/class/cs140e/docs/ARMv8-Reference-Manual.pdf">ref</a>: B1.2.1):</p>
+
+<ul>
+<li><p><code>r0</code>…<code>r30</code> - 64-bit general purpose registers</p>
+
+<p>These registers are accessed via aliases. The registers <code>x0</code>…<code>x30</code> alias
+all 64-bits of these registers. The registers <code>w0</code>…<code>w30</code> alias the
+least-significant 32-bits of these registers.</p></li>
+
+<li><p><code>lr</code> - 64-bit link register; aliases <code>x30</code></p>
+
+<p>Used to store the <em>link address</em>. The <code>bl &lt;addr&gt;</code> instruction stores the
+address of the next instruction in <code>lr</code> and branches to <code>addr</code>. The <code>ret</code>
+instruction sets the PC to the address in <code>lr</code>.</p></li>
+
+<li><p><code>sp</code> - a dedicated stack pointer</p>
+
+<p>The lower 32 bits of the stack-pointer can be accessed via <code>wsp</code>. The stack
+pointer must always be 16-byte aligned.</p></li>
+
+<li><p><code>pc</code> - the program counter</p>
+
+<p>This register can be read but not written. The <code>pc</code> is updated on branching
+instructions and exception entry/return.</p></li>
+
+<li><p><code>v0</code>…<code>v31</code> - 128-bit SIMD and FP point registers</p>
+
+<p>These registers are used for vectorizing SIMD instruction and floating point
+operations. These registers are accessed via aliases. The registers
+<code>q0</code>…<code>q31</code> alias all 128-bits of these registers. The registers
+<code>d0</code>…<code>d31</code> alias the lower 64-bits of these registers. There are also
+alias for the lower 32, 16, and 8 bits of these registers prefixed with <code>s</code>,
+<code>h</code>, and <code>b</code>, respectively.</p></li>
+
+<li><p><code>xzr</code> - read-only zero register</p>
+
+<p>This pseudo-register, which may or may not be a hardware register, always
+holds the value <code>0</code>.</p></li>
+</ul>
+
+<p>There are also <em>many</em> <em>special-purpose</em> registers. We’ll describe these as
+needed, as in the next section.</p>
+
+<h5 id="pstate">PSTATE</h5>
+
+<p>At any point in time, an ARMv8 CPU captures the <em>program state</em> in a
+pseudo-register named PSTATE (<a href="https://web.stanford.edu/class/cs140e/docs/ARMv8-Reference-Manual.pdf">ref</a>: D1.7). PSTATE isn’t a real register;
+there’s no way to read or write it directly. Instead, there are special purpose
+registers that can be used to read or write the various fields of the PSTATE
+pseudo-register. On ARMv8.0, these are:</p>
+
+<ul>
+<li><code>NZCV</code> - condition flags</li>
+<li><code>DAIF</code> - exception mask bits, used to prevent exceptions from being issued</li>
+<li><code>CurrentEL</code> - the current exception level (explained later)</li>
+<li><code>SPSel</code> - stack pointer selector</li>
+</ul>
+
+<p>These registers belong to the class of registers known as <em>system registers</em> or
+<em>special registers</em> (<a href="https://web.stanford.edu/class/cs140e/docs/ARMv8-Reference-Manual.pdf">ref</a>: C5.2). Typically, registers can be loaded into from
+memory (written) using the <code>ldr</code> instruction and stored in memory (read) using
+the <code>str</code> instruction. System registers cannot be read/written with these
+instructions. Instead, the special purpose instructions <code>mrs</code> and <code>msr</code> must be
+used (<a href="https://web.stanford.edu/class/cs140e/docs/ARMv8-Reference-Manual.pdf">ref</a>: C6.2.162 - C6.2.164). For example to read <code>NZCV</code> into <code>x1</code>, you can
+issue the instruction:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-asm" data-lang="asm"><span style="color:#000">mrs</span> <span style="color:#000">x1</span>, <span style="color:#000">NZCV</span></code></pre></div>
+<h5 id="execution-state">Execution State</h5>
+
+<p>At any point in time, an ARMv8 CPU is executing in a given <em>execution state</em>.
+There are two such execution states: AArch32, corresponding to 32-bit ARMv7
+compatibility mode, and AArch64, 64-bit ARMv8 mode (<a href="https://web.stanford.edu/class/cs140e/docs/ARMv8-A-Programmer-Guide.pdf">guide</a>: 3.1). We’ll always
+be executing in AArch64.</p>
+
+<h5 id="secure-mode">Secure Mode</h5>
+
+<p>At any point in time, an ARMv8 CPU is executing in a given <em>security state</em>,
+otherwise known as a <em>security mode</em> or <em>security world</em>. There are two security
+states: <em>secure</em>, and <em>non-secure</em>, also known as <em>normal</em>. We’ll always be
+executing in non-secure (normal) mode.</p>
+
+<h5 id="exception-levels">Exception Levels</h5>
+
+<p>At any point in time, an ARMv8 CPU is executing at a given <em>exception level</em>
+(<a href="https://web.stanford.edu/class/cs140e/docs/ARMv8-A-Programmer-Guide.pdf">guide</a>: 3). Each exception level corresponds to a <em>privilege level</em>: the
+higher the exception level, the greater the privileges programs running at that
+level have. There are 4 exception levels:</p>
+
+<ul>
+<li><strong>EL0 (user)</strong> - Typically used to run untrusted user applications.</li>
+<li><strong>EL1 (kernel)</strong> - Typically used to run privileged operating system kernels.</li>
+<li><strong>EL2 (hypervisor)</strong> - Typically used to run virtual machine hypervisors.</li>
+<li><strong>EL3 (monitor)</strong> - Typically used to run low-level firmware.</li>
+</ul>
+
+<p>The Raspberry Pi’s CPU boots into EL3. At that point, the firmware provided by
+the Raspberry Pi foundation runs, switches to EL2, and runs our <code>kernel8.img</code>
+file. Thus, <em>our</em> kernel starts executing in EL2. Later, you’ll switch from EL2
+to EL1 so that our kernel is running in the appropriate exception level.</p>
+
+<h5 id="elx-registers">ELx Registers</h5>
+
+<p>Several system registers such as <code>ELR</code>, <code>SPSR</code>, and <code>SP</code> are duplicated for each
+exception level. The register names are suffixed with <code>_ELn</code> to indicate the
+register for exception level <code>n</code>. For instance, <code>ELR_EL1</code> is the <em>exception link
+register</em> for EL1, while <code>ELR_EL2</code> is the exception link register for EL2.</p>
+
+<p>We use the suffix <code>x</code>, such as in <code>ELR_ELx</code>, when we refer to a register from
+the <em>target</em> exception level <code>x</code>. The <em>target</em> exception level is the exception
+level the CPU will switch to, if necessary, to run the exception vector. We use
+the suffix <code>s</code>, such as in <code>SP_ELs</code>, when we refer to a register in the <em>source</em>
+exception level <code>s</code>. The <em>source</em> exception level is the exception level in
+which the CPU was executing when the exception occurred.</p>
+
+<h5 id="switching-exception-levels">Switching Exception Levels</h5>
+
+<p>There is exactly one mechanism to increase the exception level and exactly one
+mechanism to decrease the exception level.</p>
+
+<p>To switch from a higher level to a lower level (a privilege decrease), the
+running program must <em>return</em> from the exception level using the <code>eret</code>
+instruction (<a href="https://web.stanford.edu/class/cs140e/docs/ARMv8-Reference-Manual.pdf">ref</a>: D1.11). On executing an <code>eret</code> instruction when the current
+exception level is <code>ELx</code>, the CPU:</p>
+
+<ul>
+<li>Sets the PC to the value in <code>ELR_ELx</code>, a special purpose system-register.</li>
+<li>Sets the PSTATE to the values in <code>SPSR_ELx</code>, a special purpose system-register.</li>
+</ul>
+
+<p>The <code>SPSR_ELx</code> register (<a href="https://web.stanford.edu/class/cs140e/docs/ARMv8-Reference-Manual.pdf">ref</a>: C5.2.18) also contains the exception level to
+return to. Note that changing exception levels also has the following
+implications:</p>
+
+<ul>
+<li>On return to <code>ELs</code>, the <code>sp</code> is set to <code>SP_ELs</code> if <code>SPSR_ELx[0] == 1</code> or
+<code>SP_EL0</code> if <code>SPSR_ELx[0] == 0</code>.</li>
+</ul>
+
+<p>Switching from a lower level to a higher level only occurs as a result of an
+exception (<a href="https://web.stanford.edu/class/cs140e/docs/ARMv8-A-Programmer-Guide.pdf">guide</a>: 10). Unless otherwise configured, the CPU will trap
+exceptions to the next exception level. For instance, if an interrupt is
+received while running in EL0, the CPU will switch to EL1 to handle the
+exception. When a switch to <code>ELx</code> occurs, the CPU will:</p>
+
+<ul>
+<li>Mask all exceptions and interrupts by setting <code>PSTATE.DAIF = 0b1111</code>.</li>
+<li>Save <code>PSTATE</code> and other fields to <code>SPSR_ELx</code>.</li>
+<li>Save the <em>preferred exception link address</em> to <code>ELR_ELx</code> (<a href="https://web.stanford.edu/class/cs140e/docs/ARMv8-Reference-Manual.pdf">ref</a>: D1.10.1).</li>
+<li>Set <code>sp</code> to <code>SP_ELx</code> if <code>SPSel</code> was set to <code>1</code>.</li>
+<li>Save the <em>exception syndrome</em> (described later) to <code>ESR_ELx</code> (<a href="https://web.stanford.edu/class/cs140e/docs/ARMv8-Reference-Manual.pdf">ref</a>: D1.10.4).</li>
+<li>Set <code>pc</code> to address corresponding to the exception vector (described later).</li>
+</ul>
+
+<p>Note that the exception syndrome register is only valid when the exception was
+<em>synchronous</em> (described next). All general purpose and SIMD/FP registers will
+maintain the value they had when the exception occurred.</p>
+
+<h5 id="exception-vectors">Exception Vectors</h5>
+
+<p>When an exception occurs, the CPU jumps to the <em>exception vector</em> for that
+exception (<a href="https://web.stanford.edu/class/cs140e/docs/ARMv8-Reference-Manual.pdf">ref</a>: D1.10.2). There are 4 types of exceptions each with 4
+possible exception sources for a total of 16 exception vectors. The four types
+of exceptions are:</p>
+
+<ul>
+<li><strong>Synchronous</strong> - an exception resulting from an instruction like <code>svc</code> or <code>brk</code></li>
+<li><strong>IRQ</strong> - an asynchronous interrupt request from an external source</li>
+<li><strong>FIQ</strong> - an asynchronous <em>fast</em> interrupt request from an external source</li>
+<li><strong>SError</strong> - a “system error” interrupt</li>
+</ul>
+
+<p>The four sources are:</p>
+
+<ul>
+<li>Same exception level when source <code>SP = SP_EL0</code></li>
+<li>Same exception level when source <code>SP = SP_ELx</code></li>
+<li>Lower exception level running on AArch64</li>
+<li>Lower exception level running on AArch32</li>
+</ul>
+
+<p>As described in (<a href="https://web.stanford.edu/class/cs140e/docs/ARMv8-A-Programmer-Guide.pdf">guide</a>: 10.4):</p>
+
+<blockquote>
+<p>When an exception occurs, the processor must execute handler code which
+corresponds to the exception. The location in memory where [an exception]
+handler is stored is called the <em>exception vector</em>. In the ARM architecture,
+exception vectors are stored in a table, called the <em>exception vector table</em>.
+Each exception level has its own vector table, that is, there is one for each of
+EL3, EL2 and EL1. The table contains instructions to be executed, rather than a
+set of addresses [as in x86]. Each entry in the vector table is 16 instructions
+long. Vectors for individual exceptions are located at fixed offsets from the
+beginning of the table. The virtual address of each table base is set by the
+[special-purpose] Vector Based Address Registers <code>VBAR_EL3</code>, <code>VBAR_EL2</code> and
+<code>VBAR_EL1</code>.</p>
+</blockquote>
+
+<p>The vectors are physically laid out as follows:</p>
+
+<ul>
+<li><p>Target and source at same exception level with source <code>SP = SP_EL0</code>:</p>
+
+<table>
+<thead>
+<tr>
+<th><code>VBAR_ELx</code> Offset</th>
+<th>Exception</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>0x000</td>
+<td>Synchronous exception</td>
+</tr>
+
+<tr>
+<td>0x080</td>
+<td>IRQ</td>
+</tr>
+
+<tr>
+<td>0x100</td>
+<td>FIQ</td>
+</tr>
+
+<tr>
+<td>0x180</td>
+<td>SError</td>
+</tr>
+</tbody>
+</table></li>
+
+<li><p>Target and source at same exception level with source <code>SP = SP_ELx</code>:</p>
+
+<table>
+<thead>
+<tr>
+<th><code>VBAR_ELx</code> Offset</th>
+<th>Exception</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>0x200</td>
+<td>Synchronous exception</td>
+</tr>
+
+<tr>
+<td>0x280</td>
+<td>IRQ</td>
+</tr>
+
+<tr>
+<td>0x300</td>
+<td>FIQ</td>
+</tr>
+
+<tr>
+<td>0x380</td>
+<td>SError</td>
+</tr>
+</tbody>
+</table></li>
+
+<li><p>Source is at lower exception level running on AArch64</p>
+
+<table>
+<thead>
+<tr>
+<th><code>VBAR_ELx</code> Offset</th>
+<th>Exception</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>0x400</td>
+<td>Synchronous exception</td>
+</tr>
+
+<tr>
+<td>0x480</td>
+<td>IRQ</td>
+</tr>
+
+<tr>
+<td>0x500</td>
+<td>FIQ</td>
+</tr>
+
+<tr>
+<td>0x580</td>
+<td>SError</td>
+</tr>
+</tbody>
+</table></li>
+
+<li><p>Source is at lower exception level running on AArch32</p>
+
+<table>
+<thead>
+<tr>
+<th><code>VBAR_ELx</code> Offset</th>
+<th>Exception</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>0x600</td>
+<td>Synchronous exception</td>
+</tr>
+
+<tr>
+<td>0x680</td>
+<td>IRQ</td>
+</tr>
+
+<tr>
+<td>0x700</td>
+<td>FIQ</td>
+</tr>
+
+<tr>
+<td>0x780</td>
+<td>SError</td>
+</tr>
+</tbody>
+</table></li>
+</ul>
+
+<p>The vector table is contiguous.</p>
+
+<h5 id="recap">Recap</h5>
+
+<p>For now, this is all of the ARMv8 architecture that you need to know. Before
+continuing, answer the following questions:</p>
+
+<div class="panel panel-question">
+  <div class="panel-heading">
+     <div class="badge pull-right">
+        <code>
+           arm-x30
+        </code>
+     </div>
+    <h3 class="panel-title">
+       <span class="glyphicon glyphicon-question-sign" aria-hidden="true" style="padding-right: 5px"></span>
+       Which registers alias <code>x30</code>?
+    </h3>
+  </div>
+  <div class="panel-body">
+     <p></p><p>If a value of <code>0xFFFF</code> is written to <code>x30</code>, which two other registers names
+   can be used to retrieve that value?</p>
+<p></p>
+  </div>
+</div>
+
+
+<div class="panel panel-question">
+  <div class="panel-heading">
+     <div class="badge pull-right">
+        <code>
+           arm-pc
+        </code>
+     </div>
+    <h3 class="panel-title">
+       <span class="glyphicon glyphicon-question-sign" aria-hidden="true" style="padding-right: 5px"></span>
+       How would you set the PC to a specific address?
+    </h3>
+  </div>
+  <div class="panel-body">
+     <p></p><p>How would you set the PC to the address <code>A</code> using the <code>ret</code> instruction? How
+   would you set the PC to the address <code>A</code> using the <code>eret</code> instruction? Be
+   specific about which registers you would set to which values.</p>
+<p></p>
+  </div>
+</div>
+
+
+<div class="panel panel-question">
+  <div class="panel-heading">
+     <div class="badge pull-right">
+        <code>
+           arm-el
+        </code>
+     </div>
+    <h3 class="panel-title">
+       <span class="glyphicon glyphicon-question-sign" aria-hidden="true" style="padding-right: 5px"></span>
+       How would you determine the current exception level?
+    </h3>
+  </div>
+  <div class="panel-body">
+     <p></p><p>Which instructions, exactly, would you run to determine the current exception
+   level?</p>
+<p></p>
+  </div>
+</div>
+
+
+<div class="panel panel-question">
+  <div class="panel-heading">
+     <div class="badge pull-right">
+        <code>
+           arm-sp-el
+        </code>
+     </div>
+    <h3 class="panel-title">
+       <span class="glyphicon glyphicon-question-sign" aria-hidden="true" style="padding-right: 5px"></span>
+       How would you change the stack pointer on exception return?
+    </h3>
+  </div>
+  <div class="panel-body">
+     <p></p><p>The stack pointer of a running program is <code>A</code> when an exception occurs. After
+   handling the exception, you’d like to return back to where the program was
+   executing but want to change its stack pointer to <code>B</code>. How would you do so?</p>
+<p></p>
+  </div>
+</div>
+
+
+<div class="panel panel-question">
+  <div class="panel-heading">
+     <div class="badge pull-right">
+        <code>
+           arm-svc
+        </code>
+     </div>
+    <h3 class="panel-title">
+       <span class="glyphicon glyphicon-question-sign" aria-hidden="true" style="padding-right: 5px"></span>
+       Which vector is used for system calls from a lower EL?
+    </h3>
+  </div>
+  <div class="panel-body">
+     <p></p><p>A process is running in <code>EL0</code> when it issues an <code>svc</code> instruction. To which
+   address, exactly, does the CPU jump to?</p>
+<p></p>
+  </div>
+</div>
+
+
+<div class="panel panel-question">
+  <div class="panel-heading">
+     <div class="badge pull-right">
+        <code>
+           arm-int
+        </code>
+     </div>
+    <h3 class="panel-title">
+       <span class="glyphicon glyphicon-question-sign" aria-hidden="true" style="padding-right: 5px"></span>
+       Which vector is used for interrupts from a lower EL?
+    </h3>
+  </div>
+  <div class="panel-body">
+     <p></p><p>A process is running in <code>EL0</code> when a timer interrupt occurs. To which
+   address, exactly, does the CPU jump to?</p>
+<p></p>
+  </div>
+</div>
+
+
+<div class="panel panel-question">
+  <div class="panel-heading">
+     <div class="badge pull-right">
+        <code>
+           arm-mask
+        </code>
+     </div>
+    <h3 class="panel-title">
+       <span class="glyphicon glyphicon-question-sign" aria-hidden="true" style="padding-right: 5px"></span>
+       How do you unmask IRQ exceptions?
+    </h3>
+  </div>
+  <div class="panel-body">
+     <p></p><p>Which values would you write to which register to unmask IRQ interrupts only?</p>
+<p></p>
+  </div>
+</div>
+
+
+<div class="panel panel-question">
+  <div class="panel-heading">
+     <div class="badge pull-right">
+        <code>
+           arm-aarch32
+        </code>
+     </div>
+    <h3 class="panel-title">
+       <span class="glyphicon glyphicon-question-sign" aria-hidden="true" style="padding-right: 5px"></span>
+       How would you <code>eret</code> into an AArch32 execution state?
+    </h3>
+  </div>
+  <div class="panel-body">
+     <p></p><p>An exception has occurred with the source running in the AArch64 state. The
+   target is also running in AArch64. Which values in which registers would you
+   change so that on return from the exception via <code>eret</code>, the CPU switches to
+   the AArch32 execution state?</p>
+
+<p></p><div class="alert alert-dismissible alert-success">
+   <p style="font-size: 16px;">
+   <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+   <span style="font-weight: bold;">Hint:</span> See (<a href="https://web.stanford.edu/class/cs140e/docs/ARMv8-A-Programmer-Guide.pdf">guide</a>: 10.1).</p>
+</div><p></p>
+<p></p>
+  </div>
+</div>
+
+
+<hr>
+
+<h4 id="subphase-b-instructions">Subphase B: Instructions</h4>
+
+<p>In this subphase, you will learn about the ARMv8 instruction set. You will not be
+writing any code, but you will be answering several questions about the
+instruction set.</p>
+
+<h5 id="accessing-memory">Accessing Memory</h5>
+
+<p>ARMv8 is a load/store RISC (reduced instruction set computer) instruction set.
+Perhaps the defining feature of such an instruction set is that memory can only
+be accessed through specific instructions. In particular, memory can only be
+read by reading into a register with a load instruction and written to memory by
+storing from a register using a store instruction.</p>
+
+<p>There are many load and store instructions and variations of particular
+instructions. We’ll start with the simplest:</p>
+
+<ul>
+<li><code>ldr &lt;ra&gt;, [&lt;rb&gt;]</code>: load value from address in <code>&lt;rb&gt;</code> into <code>&lt;ra&gt;</code></li>
+<li><code>str &lt;ra&gt;, [&lt;rb&gt;]</code>: store value in <code>&lt;ra&gt;</code> to address in <code>&lt;rb&gt;</code></li>
+</ul>
+
+<p>The register <code>&lt;rb&gt;</code> is known as the <em>base register</em>. Thus, if <code>r3 = 0x1234</code>, then:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-asm" data-lang="asm"><span style="color:#000">ldr</span> <span style="color:#000">r0</span>, [<span style="color:#000">r3</span>]      <span style="color:#000">//</span> <span style="color:#000">r0</span> <span style="color:#000">=</span> *<span style="color:#000">r3</span> (<span style="color:#000">i.e.</span>, <span style="color:#000">r0</span> <span style="color:#000">=</span> *(<span style="color:#1c01ce">0x1234</span>))
+<span style="color:#000">str</span> <span style="color:#000">r0</span>, [<span style="color:#000">r3</span>]      <span style="color:#000">//</span> *<span style="color:#000">r3</span> <span style="color:#000">=</span> <span style="color:#000">r0</span> (<span style="color:#000">i.e.</span>, *(<span style="color:#1c01ce">0x1234</span>) <span style="color:#000">=</span> <span style="color:#000">r0</span>)</code></pre></div>
+<p>You can also provide an offset in the range <code>[-256, 255]</code>:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-asm" data-lang="asm"><span style="color:#000">ldr</span> <span style="color:#000">r0</span>, [<span style="color:#000">r3</span>, <span style="color:#177500">#64]      // r0 = *(r3 + 64)
+</span><span style="color:#177500"></span><span style="color:#000">str</span> <span style="color:#000">r0</span>, [<span style="color:#000">r3</span>, <span style="color:#000">#</span>-<span style="color:#1c01ce">12</span>]     <span style="color:#000">//</span> *(<span style="color:#000">r3</span> - <span style="color:#1c01ce">12</span>) <span style="color:#000">=</span> <span style="color:#000">r0</span></code></pre></div>
+<p>You can also provide a post-index that changes the value in the base register
+<em>after</em> the load or store has been applied:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-asm" data-lang="asm"><span style="color:#000">ldr</span> <span style="color:#000">r0</span>, [<span style="color:#000">r3</span>], <span style="color:#177500">#30      // r0 = *r3; r3 += 30
+</span><span style="color:#177500"></span><span style="color:#000">str</span> <span style="color:#000">r0</span>, [<span style="color:#000">r3</span>], <span style="color:#000">#</span>-<span style="color:#1c01ce">12</span>     <span style="color:#000">//</span> *<span style="color:#000">r3</span> <span style="color:#000">=</span> <span style="color:#000">r0</span><span style="color:#000">;</span> <span style="color:#000">r3</span> -<span style="color:#000">=</span> <span style="color:#1c01ce">12</span></code></pre></div>
+<p>You can also provide a pre-index that changes the value in the base register
+<em>before</em> the load or store has been applied:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-asm" data-lang="asm"><span style="color:#000">ldr</span> <span style="color:#000">r0</span>, [<span style="color:#000">r3</span>, <span style="color:#177500">#30]!     // r3 += 30; r0 = *r3
+</span><span style="color:#177500"></span><span style="color:#000">str</span> <span style="color:#000">r0</span>, [<span style="color:#000">r3</span>, <span style="color:#000">#</span>-<span style="color:#1c01ce">12</span>]!    <span style="color:#000">//</span> <span style="color:#000">r3</span> -<span style="color:#000">=</span> <span style="color:#1c01ce">12</span><span style="color:#000">;</span> *<span style="color:#000">r3</span> <span style="color:#000">=</span> <span style="color:#000">r0</span></code></pre></div>
+<p>Offset, post-index, and pre-index are known as <em>addressing modes</em>.</p>
+
+<p>Finally, you can load and store from two registers at once using the <code>ldp</code> and
+<code>stp</code> (load pair, store pair) instructions. These instructions can be used with
+all of the same addressing modes as <code>ldr</code> and <code>str</code>:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-asm" data-lang="asm"><span style="color:#000">//</span> <span style="color:#000">push</span> <span style="color:#000">`</span><span style="color:#000">x0</span><span style="color:#000">`</span> <span style="color:#000">and</span> <span style="color:#000">`</span><span style="color:#000">x1</span><span style="color:#000">`</span> <span style="color:#000">onto</span> <span style="color:#000">the</span> <span style="color:#000">stack.</span> <span style="color:#000">after</span> <span style="color:#000">this</span> <span style="color:#000">operation</span> <span style="color:#000">the</span> <span style="color:#000">stack</span> <span style="color:#000">is</span>:
+<span style="color:#000">//</span>
+<span style="color:#000">//</span>   <span style="color:#000">|------|</span> <span style="color:#000">&lt;</span><span style="color:#000">x</span> (<span style="color:#000">original</span> <span style="color:#000">SP</span>)
+<span style="color:#000">//</span>   <span style="color:#000">|</span>  <span style="color:#000">x1</span>  <span style="color:#000">|</span>
+<span style="color:#000">//</span>   <span style="color:#000">|------|</span>
+<span style="color:#000">//</span>   <span style="color:#000">|</span>  <span style="color:#000">x0</span>  <span style="color:#000">|</span>
+<span style="color:#000">//</span>   <span style="color:#000">|------|</span> <span style="color:#000">&lt;-</span> <span style="color:#000">SP</span>
+<span style="color:#000">//</span>
+<span style="color:#000">stp</span> <span style="color:#000">x0</span>, <span style="color:#000">x1</span>, [<span style="color:#000">SP</span>, <span style="color:#177500">#-16]!
+</span><span style="color:#177500"></span>
+<span style="color:#000">//</span> <span style="color:#000">pop</span> <span style="color:#000">`</span><span style="color:#000">x0</span><span style="color:#000">`</span> <span style="color:#000">and</span> <span style="color:#000">`</span><span style="color:#000">x1</span><span style="color:#000">`</span> <span style="color:#000">from</span> <span style="color:#000">the</span> <span style="color:#000">stack.</span> <span style="color:#000">after</span> <span style="color:#000">this</span> <span style="color:#000">operation</span>, <span style="color:#000">the</span> <span style="color:#000">stack</span> <span style="color:#000">is</span>:
+<span style="color:#000">//</span>
+<span style="color:#000">//</span>   <span style="color:#000">|------|</span> <span style="color:#000">&lt;-</span> <span style="color:#000">SP</span>
+<span style="color:#000">//</span>   <span style="color:#000">|</span>  <span style="color:#000">x1</span>  <span style="color:#000">|</span>
+<span style="color:#000">//</span>   <span style="color:#000">|------|</span>
+<span style="color:#000">//</span>   <span style="color:#000">|</span>  <span style="color:#000">x0</span>  <span style="color:#000">|</span>
+<span style="color:#000">//</span>   <span style="color:#000">|------|</span> <span style="color:#000">&lt;</span><span style="color:#000">x</span> (<span style="color:#000">original</span> <span style="color:#000">SP</span>)
+<span style="color:#000">//</span>
+<span style="color:#000">ldp</span> <span style="color:#000">x0</span>, <span style="color:#000">x1</span>, [<span style="color:#000">SP</span>], <span style="color:#177500">#16
+</span><span style="color:#177500"></span>
+<span style="color:#000">//</span> <span style="color:#000">these</span> <span style="color:#000">four</span> <span style="color:#000">operations</span> <span style="color:#000">perform</span> <span style="color:#000">the</span> <span style="color:#000">same</span> <span style="color:#000">thing</span> <span style="color:#000">as</span> <span style="color:#000">the</span> <span style="color:#000">previous</span> <span style="color:#000">two</span>
+<span style="color:#000">sub</span> <span style="color:#000">SP</span>, <span style="color:#000">SP</span>, <span style="color:#177500">#16
+</span><span style="color:#177500"></span><span style="color:#000">stp</span> <span style="color:#000">x0</span>, <span style="color:#000">x1</span>, [<span style="color:#000">SP</span>]
+<span style="color:#000">ldp</span> <span style="color:#000">x0</span>, <span style="color:#000">x1</span>, [<span style="color:#000">SP</span>]
+<span style="color:#000">add</span> <span style="color:#000">SP</span>, <span style="color:#000">SP</span>, <span style="color:#177500">#16
+</span><span style="color:#177500"></span>
+<span style="color:#000">//</span> <span style="color:#000">same</span> <span style="color:#000">as</span> <span style="color:#000">before</span>, <span style="color:#000">but</span> <span style="color:#000">we</span> <span style="color:#000">are</span> <span style="color:#000">saving</span> <span style="color:#000">and</span> <span style="color:#000">restoring</span> <span style="color:#000">all</span> <span style="color:#000">of</span> <span style="color:#000">x0</span>, <span style="color:#000">x1</span>, <span style="color:#000">x2</span>, <span style="color:#000">and</span> <span style="color:#000">x3.</span>
+<span style="color:#000">sub</span> <span style="color:#000">SP</span>, <span style="color:#000">SP</span>, <span style="color:#177500">#32
+</span><span style="color:#177500"></span><span style="color:#000">stp</span> <span style="color:#000">x0</span>, <span style="color:#000">x1</span>, [<span style="color:#000">SP</span>]
+<span style="color:#000">stp</span> <span style="color:#000">x2</span>, <span style="color:#000">x3</span>, [<span style="color:#000">SP</span>, <span style="color:#177500">#16]
+</span><span style="color:#177500"></span>
+<span style="color:#000">ldp</span> <span style="color:#000">x0</span>, <span style="color:#000">x1</span>, [<span style="color:#000">SP</span>]
+<span style="color:#000">ldp</span> <span style="color:#000">x2</span>, <span style="color:#000">x3</span>, [<span style="color:#000">SP</span>, <span style="color:#177500">#16]
+</span><span style="color:#177500"></span><span style="color:#000">add</span> <span style="color:#000">SP</span>, <span style="color:#000">SP</span>, <span style="color:#000">#</span><span style="color:#1c01ce">32</span></code></pre></div>
+<h5 id="loading-immediates">Loading Immediates</h5>
+
+<p>An <em>immediate</em> is another name for an integer whose value is known without any
+computation. To load a 16-bit immediate into a register, optionally shifted to
+the left by a multiple of 16-bits, use <code>mov</code> (move). To load a 16-bit immediate
+shifted by left some number of bits without replacing any of the other bits, use
+the <code>movk</code> (move/keep) instruction. An example of their usage:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-asm" data-lang="asm"><span style="color:#000">mov</span>   <span style="color:#000">x0</span>, <span style="color:#177500">#0xABCD, LSL #32  // x0 = 0xABCD00000000
+</span><span style="color:#177500"></span><span style="color:#000">mov</span>   <span style="color:#000">x0</span>, <span style="color:#177500">#0x1234, LSL #16  // x0 = 0x12340000
+</span><span style="color:#177500"></span>
+<span style="color:#000">mov</span>   <span style="color:#000">x1</span>, <span style="color:#177500">#0xBEEF           // x1 = 0xBEEF
+</span><span style="color:#177500"></span><span style="color:#000">movk</span>  <span style="color:#000">x1</span>, <span style="color:#177500">#0xDEAD, LSL #16  // x1 = 0xDEADBEEF
+</span><span style="color:#177500"></span><span style="color:#000">movk</span>  <span style="color:#000">x1</span>, <span style="color:#177500">#0xF00D, LSL #32  // x1 = 0xF00DDEADBEEF
+</span><span style="color:#177500"></span><span style="color:#000">movk</span>  <span style="color:#000">x1</span>, <span style="color:#000">#</span><span style="color:#1c01ce">0xFEED</span>, <span style="color:#000">LSL</span> <span style="color:#000">#</span><span style="color:#1c01ce">48</span>  <span style="color:#000">//</span> <span style="color:#000">x1</span> <span style="color:#000">=</span> <span style="color:#1c01ce">0xFEEDF00DDEADBEEF</span></code></pre></div>
+<p>Note that immediates are prefixed with a <code>#</code>, that the destination register
+appears to the left, and that <code>LSL</code> specifies the left shift.</p>
+
+<p>Only 16-bit immediates with optional shifts can be loaded into a register. The
+assembler is able to figure out the right shift value in many cases. For
+instance, the assembler is able to convert <code>mov x12, #(1 &lt;&lt; 21)</code> into a <code>mov
+x12, 0x20, LSL #16</code> automatically.</p>
+
+<h5 id="loading-addresses-from-labels">Loading Addresses from Labels</h5>
+
+<p>Sections of assembly code can be <em>labled</em> using <code>&lt;label&gt;:</code>:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-asm" data-lang="asm"><span style="color:#000">add_30:</span>
+    <span style="color:#000">add</span> <span style="color:#000">x1</span>, <span style="color:#000">x1</span>, <span style="color:#177500">#10
+</span><span style="color:#177500"></span>    <span style="color:#000">add</span> <span style="color:#000">x1</span>, <span style="color:#000">x1</span>, <span style="color:#000">#</span><span style="color:#1c01ce">20</span></code></pre></div>
+<p>To load the address of the first instruction after the label, you can either use
+the <code>adr</code> or <code>ldr</code> instructions:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-asm" data-lang="asm"><span style="color:#000">adr</span> <span style="color:#000">x0</span>, <span style="color:#000">add_30</span>    <span style="color:#000">//</span> <span style="color:#000">x0</span> <span style="color:#000">=</span> <span style="color:#000">address</span> <span style="color:#000">of</span> <span style="color:#000">first</span> <span style="color:#000">instruction</span> <span style="color:#000">of</span> <span style="color:#000">add_30</span>
+<span style="color:#000">ldr</span> <span style="color:#000">x0</span>, <span style="color:#000">=</span><span style="color:#000">add_30</span>   <span style="color:#000">//</span> <span style="color:#000">x0</span> <span style="color:#000">=</span> <span style="color:#000">address</span> <span style="color:#000">of</span> <span style="color:#000">first</span> <span style="color:#000">instruction</span> <span style="color:#000">of</span> <span style="color:#000">add_30</span></code></pre></div>
+<p>You <em>must</em> use <code>ldr</code> if the label is not within the same linker section as the
+instruction. If the label <em>is</em> within the same section, you should use <code>adr</code>.</p>
+
+<h5 id="moving-between-registers">Moving Between Registers</h5>
+
+<p>You can move values between registers with the <code>mov</code> instruction as well:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-asm" data-lang="asm"><span style="color:#000">mov</span>  <span style="color:#000">x13</span>, <span style="color:#177500">#23    //          x13 = 23
+</span><span style="color:#177500"></span><span style="color:#000">mov</span>  <span style="color:#000">sp</span>, <span style="color:#000">x13</span>     <span style="color:#000">//</span> <span style="color:#000">sp</span> <span style="color:#000">=</span> <span style="color:#1c01ce">23</span>, <span style="color:#000">x13</span> <span style="color:#000">=</span> <span style="color:#1c01ce">23</span></code></pre></div>
+<h5 id="loading-from-special-registers">Loading from Special Registers</h5>
+
+<p>Special and system registers such as <code>ELR_EL1</code> can only be loaded/stored from
+other registers using the <code>mrs</code> and <code>msr</code> instruction.</p>
+
+<p>To write to a special register from another register, use <code>msr</code>:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-asm" data-lang="asm"><span style="color:#000">msr</span> <span style="color:#000">ELR_EL1</span>, <span style="color:#000">x1</span>  <span style="color:#000">//</span> <span style="color:#000">ELR_EL1</span> <span style="color:#000">=</span> <span style="color:#000">x1</span></code></pre></div>
+<p>To read from a special register into another register, use <code>mrs</code>:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-asm" data-lang="asm"><span style="color:#000">mrs</span> <span style="color:#000">x0</span>, <span style="color:#000">CurrentEL</span> <span style="color:#000">//</span> <span style="color:#000">x0</span> <span style="color:#000">=</span> <span style="color:#000">CurrentEL</span></code></pre></div>
+<h5 id="arithmetic">Arithmetic</h5>
+
+<p>The <code>add</code> and <code>sub</code> instruction can be used to perform arithmetic. The syntax
+is:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-asm" data-lang="asm"><span style="color:#000">add</span> <span style="color:#000">&lt;</span><span style="color:#000">dest</span><span style="color:#000">&gt;</span> <span style="color:#000">&lt;</span><span style="color:#000">a</span><span style="color:#000">&gt;</span> <span style="color:#000">&lt;</span><span style="color:#000">b</span><span style="color:#000">&gt;</span> <span style="color:#000">//</span> <span style="color:#000">dest</span> <span style="color:#000">=</span> <span style="color:#000">a</span> <span style="color:#000">+</span> <span style="color:#000">b</span>
+<span style="color:#000">sub</span> <span style="color:#000">&lt;</span><span style="color:#000">dest</span><span style="color:#000">&gt;</span> <span style="color:#000">&lt;</span><span style="color:#000">a</span><span style="color:#000">&gt;</span> <span style="color:#000">&lt;</span><span style="color:#000">b</span><span style="color:#000">&gt;</span> <span style="color:#000">//</span> <span style="color:#000">dest</span> <span style="color:#000">=</span> <span style="color:#000">a</span> - <span style="color:#000">b</span></code></pre></div>
+<p>For example:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-asm" data-lang="asm"><span style="color:#000">mov</span> <span style="color:#000">x2</span>, <span style="color:#177500">#24
+</span><span style="color:#177500"></span><span style="color:#000">mov</span> <span style="color:#000">x3</span>, <span style="color:#177500">#36
+</span><span style="color:#177500"></span><span style="color:#000">add</span> <span style="color:#000">x1</span>, <span style="color:#000">x2</span>, <span style="color:#000">x3</span>  <span style="color:#000">//</span> <span style="color:#000">x1</span> <span style="color:#000">=</span> <span style="color:#1c01ce">24</span> <span style="color:#000">+</span> <span style="color:#1c01ce">36</span> <span style="color:#000">=</span> <span style="color:#1c01ce">60</span>
+<span style="color:#000">sub</span> <span style="color:#000">x4</span>, <span style="color:#000">x3</span>, <span style="color:#000">x2</span>  <span style="color:#000">//</span> <span style="color:#000">x4</span> <span style="color:#000">=</span> <span style="color:#1c01ce">36</span> - <span style="color:#1c01ce">24</span> <span style="color:#000">=</span> <span style="color:#1c01ce">12</span></code></pre></div>
+<p>The parameter <code>&lt;b&gt;</code> can also be an immediate:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-asm" data-lang="asm"><span style="color:#000">sub</span> <span style="color:#000">sp</span>, <span style="color:#000">sp</span>, <span style="color:#177500">#120 // sp -= 120
+</span><span style="color:#177500"></span><span style="color:#000">add</span> <span style="color:#000">x3</span>, <span style="color:#000">x1</span>, <span style="color:#177500">#120 // x3 = x1 + 120
+</span><span style="color:#177500"></span><span style="color:#000">add</span> <span style="color:#000">x3</span>, <span style="color:#000">x3</span>, <span style="color:#000">#</span><span style="color:#1c01ce">88</span>  <span style="color:#000">//</span> <span style="color:#000">x3</span> <span style="color:#000">+=</span> <span style="color:#1c01ce">88</span></code></pre></div>
+<h5 id="logical-instructions">Logical Instructions</h5>
+
+<p>The <code>and</code> and <code>orr</code> instruction perform bitwise <code>AND</code> and <code>OR</code>. Their usage is
+identical to that of <code>add</code> and <code>sub</code>:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-asm" data-lang="asm"><span style="color:#000">mov</span> <span style="color:#000">x1</span>, <span style="color:#1c01ce">0</span><span style="color:#000">b11001</span>
+<span style="color:#000">mov</span> <span style="color:#000">x2</span>, <span style="color:#1c01ce">0</span><span style="color:#000">b10101</span>
+
+<span style="color:#000">and</span> <span style="color:#000">x3</span>, <span style="color:#000">x1</span>, <span style="color:#000">x2</span>  <span style="color:#000">//</span> <span style="color:#000">x3</span> <span style="color:#000">=</span> <span style="color:#000">x1</span> <span style="color:#000">&amp;</span> <span style="color:#000">x2</span> <span style="color:#000">=</span> <span style="color:#1c01ce">0</span><span style="color:#000">b10001</span>
+<span style="color:#000">orr</span> <span style="color:#000">x3</span>, <span style="color:#000">x1</span>, <span style="color:#000">x2</span>  <span style="color:#000">//</span> <span style="color:#000">x3</span> <span style="color:#000">=</span> <span style="color:#000">x1</span> <span style="color:#000">|</span> <span style="color:#000">x2</span> <span style="color:#000">=</span> <span style="color:#1c01ce">0</span><span style="color:#000">b11101</span>
+<span style="color:#000">orr</span> <span style="color:#000">x1</span>, <span style="color:#000">x1</span>, <span style="color:#000">x2</span>  <span style="color:#000">//</span> <span style="color:#000">x1</span> <span style="color:#000">|=</span> <span style="color:#000">x2</span>
+<span style="color:#000">and</span> <span style="color:#000">x2</span>, <span style="color:#000">x2</span>, <span style="color:#000">x1</span>  <span style="color:#000">//</span> <span style="color:#000">x2</span> <span style="color:#000">&amp;=</span> <span style="color:#000">x1</span>
+
+<span style="color:#000">and</span> <span style="color:#000">x1</span>, <span style="color:#000">x1</span>, <span style="color:#177500">#0b110  // x1 &amp;= 0b110
+</span><span style="color:#177500"></span><span style="color:#000">orr</span> <span style="color:#000">x1</span>, <span style="color:#000">x1</span>, <span style="color:#000">#</span><span style="color:#1c01ce">0</span><span style="color:#000">b101</span>  <span style="color:#000">//</span> <span style="color:#000">x1</span> <span style="color:#000">|=</span> <span style="color:#1c01ce">0</span><span style="color:#000">b101</span></code></pre></div>
+<h5 id="branching">Branching</h5>
+
+<p><em>Branching</em> is another term for jumping to an address. A <em>branch</em> changes the PC
+to a given address or address of a label. To unconditionally jump to a label,
+use the <code>b</code> instruction:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-asm" data-lang="asm"><span style="color:#000">b</span> <span style="color:#000">label</span> <span style="color:#000">//</span> <span style="color:#000">jump</span> <span style="color:#000">to</span> <span style="color:#000">label</span></code></pre></div>
+<p>To jump to a label while storing the next address in the link register, use
+<code>bl</code>. The <code>ret</code> instruction jumps to the address in <code>lr</code>:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-asm" data-lang="asm"><span style="color:#000">my_function:</span>
+    <span style="color:#000">add</span> <span style="color:#000">x0</span>, <span style="color:#000">x0</span>, <span style="color:#000">x1</span>
+    <span style="color:#000">ret</span>
+
+<span style="color:#000">mov</span>  <span style="color:#000">x0</span>, <span style="color:#177500">#4
+</span><span style="color:#177500"></span><span style="color:#000">mov</span>  <span style="color:#000">x1</span>, <span style="color:#177500">#30
+</span><span style="color:#177500"></span><span style="color:#000">bl</span>   <span style="color:#000">my_function</span>  <span style="color:#000">//</span> <span style="color:#000">lr</span> <span style="color:#000">=</span> <span style="color:#000">address</span> <span style="color:#000">of</span> <span style="color:#000">`</span><span style="color:#000">mov</span> <span style="color:#000">x3</span>, <span style="color:#000">x0</span><span style="color:#000">`</span>
+<span style="color:#000">mov</span>  <span style="color:#000">x3</span>, <span style="color:#000">x0</span>       <span style="color:#000">//</span> <span style="color:#000">x3</span> <span style="color:#000">=</span> <span style="color:#000">x0</span> <span style="color:#000">=</span> <span style="color:#1c01ce">4</span> <span style="color:#000">+</span> <span style="color:#1c01ce">30</span> <span style="color:#000">=</span> <span style="color:#1c01ce">34</span></code></pre></div>
+<p>The <code>br</code> and <code>blr</code> instruction are the same as <code>b</code> and <code>bl</code>, respectively, but
+jump to an address contained in a register:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-asm" data-lang="asm"><span style="color:#000">ldr</span>  <span style="color:#000">x0</span>, <span style="color:#000">=</span><span style="color:#000">label</span>
+<span style="color:#000">blr</span>  <span style="color:#000">x0</span>          <span style="color:#000">//</span> <span style="color:#000">identical</span> <span style="color:#000">to</span> <span style="color:#000">bl</span> <span style="color:#000">label</span>
+<span style="color:#000">br</span>   <span style="color:#000">x0</span>          <span style="color:#000">//</span> <span style="color:#000">identical</span> <span style="color:#000">to</span> <span style="color:#000">b</span>  <span style="color:#000">label</span></code></pre></div>
+<h5 id="conditional-branching">Conditional Branching</h5>
+
+<p>The <code>cmp</code> instruction compares values in two registers or a register and an
+immediate and sets flags for future conditional branching instructions such as
+<code>bne</code> (branch not equal), <code>beq</code> (branch if equal), <code>blt</code> (branch if less than),
+and so on (<a href="https://web.stanford.edu/class/cs140e/docs/ARMv8-Reference-Manual.pdf">ref</a>: C1.2.4):</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-asm" data-lang="asm"><span style="color:#000">//</span> <span style="color:#000">add</span> <span style="color:#1c01ce">1</span> <span style="color:#000">to</span> <span style="color:#000">x0</span> <span style="color:#000">until</span> <span style="color:#000">it</span> <span style="color:#000">equals</span> <span style="color:#000">x1</span>, <span style="color:#000">then</span> <span style="color:#000">call</span> <span style="color:#000">`</span><span style="color:#000">function_when_eq</span><span style="color:#000">`</span>, <span style="color:#000">then</span> <span style="color:#000">exit</span>
+<span style="color:#000">not_equal:</span>
+    <span style="color:#000">add</span>  <span style="color:#000">x0</span>, <span style="color:#000">x0</span>, <span style="color:#177500">#1
+</span><span style="color:#177500"></span>    <span style="color:#000">cmp</span>  <span style="color:#000">x0</span>, <span style="color:#000">x1</span>
+    <span style="color:#000">bne</span>  <span style="color:#000">not_equal</span>
+    <span style="color:#000">bl</span>   <span style="color:#000">function_when_eq</span>
+
+<span style="color:#000">exit:</span>
+    <span style="color:#836c28">...</span>
+
+<span style="color:#000">//</span> <span style="color:#000">called</span> <span style="color:#000">when</span> <span style="color:#000">x0</span> <span style="color:#000">==</span> <span style="color:#000">x1</span>
+<span style="color:#000">function_when_eq:</span>
+    <span style="color:#000">ret</span></code></pre></div>
+<p>Using an immediate:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-asm" data-lang="asm"><span style="color:#000">cmp</span>  <span style="color:#000">x1</span>, <span style="color:#177500">#0
+</span><span style="color:#177500"></span><span style="color:#000">beq</span>  <span style="color:#000">x1_is_eq_to_zero</span></code></pre></div>
+<p>Note that if the branch is not taken, execution simply continues forward.</p>
+
+<h5 id="recap-1">Recap</h5>
+
+<p>There are many more instructions in the ARMv8 instruction set. With these as a
+basis, you should be able to pick up most of the remaining instructions with
+ease. The instructions are documented in (<a href="https://web.stanford.edu/class/cs140e/docs/ARMv8-Reference-Manual.pdf">ref</a>: C3). For a concise reference of
+the instructions presented above, see this <a href="https://web.stanford.edu/class/cs140e/docs/AArch64-ISA-Cheat-Sheet.pdf">ISA cheat sheet</a> by Griffin Dietz.
+Before continuing, answer the following questions:</p>
+
+<div class="panel panel-question">
+  <div class="panel-heading">
+     <div class="badge pull-right">
+        <code>
+           asm-memcpy
+        </code>
+     </div>
+    <h3 class="panel-title">
+       <span class="glyphicon glyphicon-question-sign" aria-hidden="true" style="padding-right: 5px"></span>
+       How would you write <code>memcpy</code> in ARMv8 assembly?
+    </h3>
+  </div>
+  <div class="panel-body">
+     <p></p><p>Assuming that the source address is in <code>x0</code>, the destination address is in
+   <code>x1</code>, and the number of bytes to copy is in <code>x2</code>, which is guaranteed to be a
+   non-zero multiple of 8, how would you implement <code>memcpy</code> in ARMv8 assembly?
+   Ensure you <code>ret</code>.</p>
+
+<p></p><div class="alert alert-dismissible alert-success">
+   <p style="font-size: 16px;">
+   <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+   <span style="font-weight: bold;">Hint:</span> You can implement this in just 6 or 7 lines.</p>
+</div><p></p>
+<p></p>
+  </div>
+</div>
+
+
+<div class="panel panel-question">
+  <div class="panel-heading">
+     <div class="badge pull-right">
+        <code>
+           asm-movk
+        </code>
+     </div>
+    <h3 class="panel-title">
+       <span class="glyphicon glyphicon-question-sign" aria-hidden="true" style="padding-right: 5px"></span>
+       How would you write <code>0xABCDE</code> to <code>ELR_EL1</code>?
+    </h3>
+  </div>
+  <div class="panel-body">
+     <p></p><p>Assume you’re running in <code>EL1</code>, how would you write the immediate <code>0xABCDE</code>
+   to <code>ELR_EL1</code> using ARMv8 assembly?</p>
+
+<p></p><div class="alert alert-dismissible alert-success">
+   <p style="font-size: 16px;">
+   <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+   <span style="font-weight: bold;">Hint:</span> You’ll need three instruction.</p>
+</div><p></p>
+<p></p>
+  </div>
+</div>
+
+
+<div class="panel panel-question">
+  <div class="panel-heading">
+     <div class="badge pull-right">
+        <code>
+           asm-cbz
+        </code>
+     </div>
+    <h3 class="panel-title">
+       <span class="glyphicon glyphicon-question-sign" aria-hidden="true" style="padding-right: 5px"></span>
+       What does the <code>cbz</code> instruction do?
+    </h3>
+  </div>
+  <div class="panel-body">
+     <p></p><p>Read the documentation for the <code>cbz</code> instruction in (<a href="https://web.stanford.edu/class/cs140e/docs/ARMv8-Reference-Manual.pdf">ref</a>: C6.2.36). What
+   does the instruction do? How would you use it?</p>
+<p></p>
+  </div>
+</div>
+
+
+<div class="panel panel-question">
+  <div class="panel-heading">
+     <div class="badge pull-right">
+        <code>
+           asm-init
+        </code>
+     </div>
+    <h3 class="panel-title">
+       <span class="glyphicon glyphicon-question-sign" aria-hidden="true" style="padding-right: 5px"></span>
+       What does <code>init.S</code> do?
+    </h3>
+  </div>
+  <div class="panel-body">
+     <p></p><p>The <code>os/kernel/ext/init.S</code> file is the first piece of code that runs for our
+   kernel. In particular, the <code>_start</code> symbol will be at address <code>0x80000</code> when
+   the Raspberry Pi boots, and the firmware will jump to this address as soon as
+   it is done initializing the system. Soon, you’ll modify this file to switch
+   to EL1 and setup exception vectors.</p>
+
+<p>Read all of the assembly in <code>os/kernel/ext/init.S</code> up to the <code>context_save</code>
+   label. Then, for every comment in the file indicating that some function is
+   occurring, explain how the code is doing this. For example, to explain the
+   two comments (“read cpu affinity”, “core affinity != 0”), we might say:</p>
+
+<blockquote>
+<p>The first two bits of the <code>MPIDR_EL1</code> register (<a href="https://web.stanford.edu/class/cs140e/docs/ARMv8-Reference-Manual.pdf">ref</a>: D7.2.74) are read
+(<code>Aff0</code>), yielding the core number that’s currently executing code. If the
+number is zero, <code>setup</code> is branched to. Otherwise, the core is put to sleep
+forever using <code>wfe</code> to save power.</p>
+</blockquote>
+
+<p></p><div class="alert alert-dismissible alert-success">
+   <p style="font-size: 16px;">
+   <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+   <span style="font-weight: bold;">Hint:</span> Refer to the manual for any instruction/register you’re not familiar with yet.</p>
+</div><p></p>
+<p></p>
+  </div>
+</div>
+
+
+<hr>
+
+<h4 id="subphase-c-switching-to-el1">Subphase C: Switching to EL1</h4>
+
+<p>In this subphase, you will write the assembly code to switch from EL2 to EL1.
+You will be working primarily in <code>os/kernel/ext/init.S</code> and
+<code>os/kernel/src/kmain.rs</code>. We recommend that you only proceed to this subphase
+after you have answered the questions from the previous subphases.</p>
+
+<h5 id="current-exception-level">Current Exception Level</h5>
+
+<p>We’ve provided several Rust functions in the <code>aarch64</code> module
+(<code>os/kernel/src/aarch64.rs</code>) that internally use <a href="https://doc.rust-lang.org/unstable-book/language-features/asm.html">inline assembly</a> to access
+low-level details about the system. As an example, the <code>sp()</code> function allows
+you to retrieve the current stack pointer at any point in time. Similarly, the
+<code>current_el()</code> function returns the exception level the CPU is currently
+executing in, otherwise known as the <em>current exception level</em>.</p>
+
+<p>As mentioned before, the CPU should be running in EL2 when our kernel is called.
+Confirm this now by printing the current exception level in <code>kmain()</code>. Note that
+you’ll need to use unsafe to call <code>current_el()</code>; we’ll remove this call once
+we’ve confirmed that we’ve switched to EL1 successfully.</p>
+
+<h5 id="switching">Switching</h5>
+
+<p>Now, you’ll finish writing the assembly to switch to EL1. Find the line in
+<code>os/kernel/ext/init.S</code> marked:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#000">//</span> <span style="color:#000">FIXME</span>: <span style="color:#3f6e75">Return</span> <span style="color:#000">to</span> <span style="color:#000">EL1</span> <span style="color:#000">at</span> <span style="color:#000">`</span><span style="color:#000">set_stack</span><span style="color:#000">`</span>.</code></pre></div>
+<p>Above this line, you’ll see two instructions:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-asm" data-lang="asm"><span style="color:#000">mov</span>     <span style="color:#000">x2</span>, <span style="color:#177500">#0x3c5
+</span><span style="color:#177500"></span><span style="color:#000">msr</span>     <span style="color:#000">SPSR_EL2</span>, <span style="color:#000">x2</span></code></pre></div>
+<p>From the previous subphase, you should know what these do. In particular, you
+should know which bits are being set in <code>SPSR_EL2</code> and what the implications
+will be if an <code>eret</code> occurs thereafter.</p>
+
+<p>Complete the switching routine now by replacing the <code>FIXME</code> with the proper
+instructions. Ensure that on the switch to EL1, the CPU jumps to <code>set_stack</code> so
+that kernel setup continues successfully. You’ll need exactly three instructions
+to complete the routine. Recall that the only way to decrease the exception
+level is via an <code>eret</code>. Once you have completed the routine, ensure that
+<code>current_el()</code> now returns <code>1</code>.</p>
+
+<div class="alert alert-dismissible alert-success">
+   <p style="font-size: 16px;">
+   <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+   <span style="font-weight: bold;">Hint:</span> Which register is used to set the PC on exception return?</p>
+</div>
+
+
+
+<hr>
+
+<h4 id="subphase-d-exception-vectors">Subphase D: Exception Vectors</h4>
+
+<p>In this subphase, you’ll setup and install exception vectors and an exception
+handler. This will be the first step towards enabling your kernel to handle
+arbitrary exceptions and interrupts. You’ll test your exception vector and
+exception handling code by implementing a tiny debugger that starts in response
+to a <code>brk #n</code> instruction. You will be working primarily in <code>kernel/ext/init.S</code>
+and the <code>kernel/src/traps</code> directory.</p>
+
+<h5 id="overview-1">Overview</h5>
+
+<p>Recall that the vector table consists of 16 vectors, where each vector is a
+series of at most 16 instructions. We’ve set apart space in <code>init.S</code> for these
+vectors and have placed the <code>_vectors</code> label at the base of the table. Your task
+will be to populate the table with the 16 vectors such that, ultimately, the
+<code>handle_exception</code> Rust function in <code>kernel/src/traps/mod.rs</code> is called with the
+proper arguments when an exception occurs. All exceptions will be routed to the
+<code>handle_exception</code> function. The function will determine why an exception has
+occurred and dispatch the exception to higher-level handlers as needed.</p>
+
+<h5 id="calling-convention">Calling Convention</h5>
+
+<p>In order to properly call the <code>handle_exception</code> function declared in Rust, we
+must know <em>how</em> the function expects to be called. In particular, we must know
+where the function should expect to find the values for its parameters <code>info</code>,
+<code>esr</code>, and <code>tf</code>, what it promises about the state of the machine after the
+function is called, and how it will return to the site of the function call.</p>
+
+<p>This problem of knowing how to call foreign functions arises whenever one
+language calls into another (as in assignment 2 between C and Rust). Instead of
+having to know how every language expects its functions to be called, <em>calling
+conventions</em> are established. A <em>calling convention</em>, or <em>procedure call
+standard</em>, is a set of rules that dictates the following:</p>
+
+<ul>
+<li><p><strong>How to pass parameters to a function.</strong></p>
+
+<p>On AArch64, the first 8 parameters are passed in registers <code>r0</code>…<code>r7</code>, in
+that order from left-to-right.</p></li>
+
+<li><p><strong>How to return values from a function.</strong></p>
+
+<p>On AArch64, the first 8 return values are passed in registers <code>r0</code>…<code>r7</code>.</p></li>
+
+<li><p><strong>Which state (registers, stack, etc.) the function must preserve.</strong></p>
+
+<p>Registers are usually categorized as either <em>caller-saved</em> or
+<em>callee-saved</em>.</p>
+
+<p>A <em>caller-saved</em> register is not guaranteed to be preserved across a
+function call. Thus, if the caller requires the value in the register to be
+preserved, it must save the register’s value before calling the function.</p>
+
+<p>On the contrary, a <em>callee-saved</em> register is guaranteed to be preserved
+across a function call. Thus, if a callee wishes to use the register during
+the function call, it must save the register’s value before doing so and
+restore it before returning.</p>
+
+<p>Register values are typically saved and restored by pushing and popping from
+the stack.</p>
+
+<p>On AArch64, registers <code>r19</code>…<code>r29</code> and <code>SP</code> are callee-saved. The remaining
+general purpose registers are caller-saved. Note that this includes <code>lr</code>
+(<code>x30</code>). SIMD/FP registers have complicated saving rules. For our purposes,
+it suffices to say that they are all caller-saved.</p></li>
+
+<li><p><strong>How to return to the caller.</strong></p>
+
+<p>On AArch64, the <code>lr</code> register holds the <em>link address</em>: the address the
+callee should jump to when it returns. The <code>ret</code> instruction branches to
+<code>lr</code>, so it often terminates a function.</p></li>
+</ul>
+
+<p>The AArch64 calling convention is described in (<a href="https://web.stanford.edu/class/cs140e/docs/ARMv8-A-Programmer-Guide.pdf">guide</a>: 9) as well as in the
+official <a href="https://web.stanford.edu/class/cs140e/docs/AArch64-Procedure-Call-Standard.pdf">procedure call standard</a> documentation. When you call the
+<code>handle_exception</code> Rust function from assembly, you’ll need to ensure that you
+adhere to this calling convention.</p>
+
+
+<div class="alert alert-dismissible alert-info">
+   <p style="font-size: 16px; font-weight: bold;">
+      
+         <span class="glyphicon glyphicon-info-sign" aria-hidden="true" style="margin-right: 3px"></span>
+      
+      How does Rust know which convention to use?
+   </p>
+   <p></p><p>Strictly adhering to a calling convention precludes all kinds of optimizations
+  on function calls and bodies. As a result, Rust’s functions are not guaranteed
+  to abide to a particular calling convention by default. To force Rust to
+  compile a function exactly according to the calling convention of the target
+  platform, the <code>extern</code> function qualifier can be used. We’ve already declared
+  <code>handle_exception</code> as <code>extern</code>, so we can be sure that Rust will compile the
+  function appropriately.</p>
+<p></p>
+</div>
+
+
+
+<h5 id="vector-table">Vector Table</h5>
+
+<p>To help you populate the vector table, we’ve provided the <code>HANDLER(source,
+kind)</code> macro which expands to a series of 6 instructions aligned to the next
+valid vector entry. When <code>HANDLER(a, b)</code> is used as an “instruction”, it expands
+to the lines that follow the <code>#define</code>. In other words, this:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-asm" data-lang="asm"><span style="color:#000">_vectors:</span>
+    <span style="color:#000">HANDLER</span>(<span style="color:#1c01ce">32</span>, <span style="color:#1c01ce">39</span>)</code></pre></div>
+<p>Expands to the following:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-asm" data-lang="asm"><span style="color:#000">_vectors:</span>
+    <span style="color:#836c28">.align</span> <span style="color:#1c01ce">7</span>
+    <span style="color:#000">stp</span>     <span style="color:#000">lr</span>, <span style="color:#000">x0</span>, [<span style="color:#000">SP</span>, <span style="color:#177500">#-16]!
+</span><span style="color:#177500"></span>    <span style="color:#000">mov</span>     <span style="color:#000">x0</span>, <span style="color:#177500">#32
+</span><span style="color:#177500"></span>    <span style="color:#000">movk</span>    <span style="color:#000">x0</span>, <span style="color:#177500">#39, LSL #16
+</span><span style="color:#177500"></span>    <span style="color:#000">bl</span>      <span style="color:#000">context_save</span>
+    <span style="color:#000">ldp</span>     <span style="color:#000">lr</span>, <span style="color:#000">x0</span>, [<span style="color:#000">SP</span>], <span style="color:#177500">#16
+</span><span style="color:#177500"></span>    <span style="color:#000">eret</span></code></pre></div>
+<p>The expanded code pushes <code>lr</code> and <code>x0</code> to the stack, creates a 32-bit value in
+<code>x0</code> where the lower 16-bits are <code>source</code> and the upper 16-bits are <code>kind</code>, and
+calls the <code>context_save</code> assembly function (declared above <code>_vectors</code>). When
+that function returns, it restores <code>lr</code> and <code>x0</code> from the stack and finally
+returns from the exception.</p>
+
+<p>The <code>context_save</code> function currently does nothing: it simply falls through to a
+<code>ret</code> from <code>context_restore</code> below. Soon, you will modify the <code>context_save</code>
+function so that it correctly calls the <code>handle_exception</code> Rust function.</p>
+
+<h5 id="syndrome">Syndrome</h5>
+
+<p>When a <em>synchronous</em> exception occurs (an exception caused by the execution or
+attempted execution of an instruction), the CPU sets a value in a syndrome
+register (<code>ESR_ELx</code>) that describes the cause of the exception (<a href="https://web.stanford.edu/class/cs140e/docs/ARMv8-Reference-Manual.pdf">ref</a>: D1.10.4).
+We’ve set up structures in <code>kernel/src/traps/syndrome.rs</code> that should parse the
+syndrome value into a meaningful <code>Syndrome</code> <code>enum</code>. You will soon write code
+that passes the <code>ESR_ELx</code> value to the Rust function as the <code>esr</code> parameter.
+You’ll then use <code>Sydnrome::from(esr)</code> to parse the syndrome value which
+determines what to do next.</p>
+
+<h5 id="info">Info</h5>
+
+<p>The <code>handle_exception</code> Rust function takes an <code>Info</code> structure as the first
+parameter. The structure has two <code>16-bit</code> fields: the first corresponds to the
+source, and the second corresponds to the <code>kind</code> of exception. As you may have
+guessed, this is exactly the <code>32-bit</code> value that the <code>HANDLE</code> macro sets up in
+<code>x0</code>. You’ll need to ensure that you use the correct <code>HANDLE</code> invocations for
+the correct entries so that the <code>Info</code> structure is correctly created.</p>
+
+<h5 id="implementation">Implementation</h5>
+
+<p>You’re now ready to implement preliminary exception handling code. The first
+exception you will handle is the <code>brk</code> exception (a software breakpoint). When
+such an exception occurs, you’ll start up a shell that would theoretically allow
+you explore the state of the machine at that point in its execution.</p>
+
+<p>Start by inserting a call to <code>brk</code> in <code>kmain</code>. Use <a href="https://doc.rust-lang.org/unstable-book/language-features/asm.html">inline assembly</a> like so:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#a90d91">unsafe</span> { <span style="color:#000">asm</span><span style="color:#000">!</span>(<span style="color:#c41a16">"brk 2"</span> :::: <span style="color:#c41a16">"volatile"</span>); }</code></pre></div>
+<p>Then, proceed as follows:</p>
+
+<ol>
+<li><p><strong>Populate the <code>_vectors</code> table using the <code>HANDLE</code> macro.</strong></p>
+
+<p>Ensure that your entries would correctly create the <code>Info</code> structure.</p></li>
+
+<li><p><strong>Call the <code>handle_exception</code> function in <code>context_save</code>.</strong></p>
+
+<p>Ensure that you save/restore any caller-saved registers as needed and that
+ you pass the appropriate parameters. You should use between 5 and 9
+ instructions. For now, you can pass in <code>0</code> for the <code>tf</code> parameter; we’ll be
+ using this later.</p>
+
+<p><strong>Note:</strong> AArch64 requires the <code>SP</code> register to be 16-byte aligned whenever
+ it is used as part of a load or store. Ensure that you keep <code>SP</code> 16-byte
+ aligned at all times.</p></li>
+
+<li><p><strong>Setup the correct <code>VBAR</code> register at the comment marked:</strong></p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"> <span style="color:#000">//</span> <span style="color:#000">FIXME</span>: <span style="color:#3f6e75">load</span> <span style="color:#000">`</span><span style="color:#000">_vectors</span><span style="color:#000">`</span> <span style="color:#000">addr</span> <span style="color:#000">into</span> <span style="color:#000">appropriate</span> <span style="color:#000">register</span> (<span style="color:#000">guide</span>: <span style="color:#1c01ce">10.4</span>)</code></pre></div></li>
+
+<li><p><strong>At this point, your <code>handle_exception</code> function should be called whenever
+ an exception occurs.</strong></p>
+
+<p>In <code>handle_exception</code>, print the value of the <code>info</code> and <code>esr</code> parameters
+ and ensure that they are what you expect. Then, loop endlessly in the
+ handler. You’ll want to call <code>aarch64::nop()</code> in the loop to ensure it
+ doesn’t get optimized away. We will need to write more code to properly
+ return from the exception handler, so we’ll simply loop for now. We will
+ fix this in the next subphase.</p></li>
+
+<li><p><strong>Implement the <code>Syndrome::from()</code> and the <code>Fault::from()</code> methods.</strong></p>
+
+<p>The former should call the latter. You’ll need to refer to (<a href="https://web.stanford.edu/class/cs140e/docs/ARMv8-Reference-Manual.pdf">ref</a>: D1.10.4,
+ <a href="https://web.stanford.edu/class/cs140e/docs/ARMv8-Reference-Manual.pdf">ref</a>: Table D1-8) to implement these correctly. Clicking on the “ISS
+ encoding description” in the table gives you details about how to decode
+ the syndrome for a particular exception class. You should ensure, for
+ example, that a <code>brk 12</code> is decoded as <code>Syndrome::Brk(12)</code>. Similarly, a
+ <code>svc 77</code> should be parsed as a <code>Syndrome::Svc(77)</code>. Note that we have
+ excluded the 32-bit variants of some exceptions and coalesced exceptions
+ when they are identical but occur with differing exception classes.</p></li>
+
+<li><p><strong>Start a shell when a <code>brk</code> exception occurs.</strong></p>
+
+<p>Use your <code>Syndrome::from()</code> method in <code>handle_exception</code> to detect a <code>brk</code>
+ exception. When such an exception occurs, start a shell. You may wish to
+ use a different shell prefix to differentiate between shells. Note that you
+ should only call <code>Syndrome::from()</code> for synchronous exceptions. The
+ <code>ESR_ELx</code> register is not guaranteed to hold a valid value otherwise.</p>
+
+<p>At this point, you’ll also need to modify your shell to implement a new
+ command: <code>exit</code>. When <code>exit</code> is called, your shell should end its loop and
+ return. This will allow us to exit from a <code>brk</code> exception later. Because of
+ this change, you’ll also need to wrap your invocation to <code>shell()</code> in kmain
+ in a <code>loop { }</code> to prevent your kernel from crashing.</p></li>
+</ol>
+
+<p>Once you are finished, the <code>brk 2</code> instruction in <code>kmain</code> should result in an
+exception with syndrome <code>Brk(2)</code>, source <code>CurrentSpElx</code>, and kind <code>Synchronous</code>
+being routed to the <code>handle_exception</code> function. At that point, a debug shell
+should start. When <code>exit</code> is called from the shell, the shell should terminate,
+and the exception handler should begin to loop endlessly.</p>
+
+<p>Before proceeding, you should ensure that you detect other synchronous
+exceptions correctly. You should try calling other exception-causing
+instructions such as <code>svc 3</code>. You should also try purposefully causing a data or
+instruction abort by jumping to an address outside of the physical memory range.</p>
+
+<p>Once everything works as expected, you’re ready to proceed to the next phase.</p>
+
+<hr>
+
+<h4 id="subphase-e-exception-return">Subphase E: Exception Return</h4>
+
+<p>In this subphase, you will write the code to enable correct returns from an
+exception of any kind. You will be working primarily in <code>kernel/ext/init.S</code> and
+the <code>kernel/src/traps</code> directory.</p>
+
+
+<div class="alert alert-dismissible alert-warning">
+   <p style="font-size: 16px; font-weight: bold;">
+      
+         <span class="glyphicon glyphicon-warning-sign" aria-hidden="true" style="margin-right: 3px"></span>
+      
+      Ensure your skeletons are up-to-date!
+   </p>
+   <p></p><p>Ensure your skeletons are up-to-date by committing or discarding any changes
+  and pulling the latest <code>3-spawn</code> and <code>os</code> skeletons with <code>git pull</code>.</p>
+<p></p>
+</div>
+
+
+
+<h5 id="overview-2">Overview</h5>
+
+<p>If you try removing the endless loop in <code>handle_exception</code> now, your Raspberry
+Pi will likely enter an exception loop, where it repeatedly enters the exception
+handler, or crash entirely when you <code>exit</code> from your debug shell. This is
+because when your exception handler returns to whatever code was running
+previously, the state of the processor (its registers, primarily) has changed
+without the code accounting for it.</p>
+
+<p>As an example, consider the following assembly:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-asm" data-lang="asm"><span style="color:#000">1:</span> <span style="color:#000">mov</span> <span style="color:#000">x3</span>, <span style="color:#177500">#127
+</span><span style="color:#177500"></span><span style="color:#1c01ce">2</span>: <span style="color:#000">mov</span> <span style="color:#000">x4</span>, <span style="color:#177500">#127
+</span><span style="color:#177500"></span><span style="color:#1c01ce">3</span>: <span style="color:#000">brk</span> <span style="color:#1c01ce">10</span>
+<span style="color:#000">4:</span> <span style="color:#000">cmp</span> <span style="color:#000">x3</span>, <span style="color:#000">x4</span>
+<span style="color:#000">5:</span> <span style="color:#000">beq</span> <span style="color:#000">safety</span>
+<span style="color:#000">6:</span> <span style="color:#000">b</span>   <span style="color:#000">oh_no</span></code></pre></div>
+<p>When the <code>brk</code> exception occurs, your exception vector will be called,
+eventually calling <code>handle_exception</code>. The <code>handle_exception</code> function, as
+compiled by Rust, will make use of the <code>x3</code> and <code>x4</code> registers (among others)
+for processing. If your exception handler returns to the site of the <code>brk</code> call,
+the state of <code>x3</code> and <code>x4</code> is unknown, and the <code>beq safety</code> instruction on
+line 5 is not guaranteed to branch to <code>safety</code>.</p>
+
+<p>As a result, in order for our exception handler to be able to use the machine as
+it desires, we’ll need to ensure that we save all of the processing context (the
+registers, etc.) before we call our exception handler. Then, when the handler
+returns, we’ll need to restore the processing context so that the previously
+executing code continues to execute flawlessly. This process of saving and
+restoring a processing context is known as a <strong>context switch</strong>.</p>
+
+
+<div class="alert alert-dismissible alert-info">
+   <p style="font-size: 16px; font-weight: bold;">
+      
+         <span class="glyphicon glyphicon-info-sign" aria-hidden="true" style="margin-right: 3px"></span>
+      
+      What makes it a context <em>switch</em>?
+   </p>
+   <p></p><p>The inclusion of the word <em>switch</em> can be a bit deceiving. After all, aren’t
+  we simply returning to the same context?</p>
+
+<p>In fact, we rarely want to return to the same context. Instead, we typically
+  want to modify the context before we return so that the CPU executes things
+  just a little bit differently. For example, when we implement process
+  switching, we’ll swap out the context of one process for another’s,
+  multiplexing CPU time. When we implement system calls, we’ll modify the values
+  of registers to inject return values. And finally, when we return from a
+  breakpoint exception, we’ll need to modify the return address in <code>ELR</code> so that
+  the <em>next</em> instruction executes instead of the same one.</p>
+<p></p>
+</div>
+
+
+
+<p>Soon, you’ll write the code to save all of the processing context into a
+structure known as a <em>trap frame</em>. You’ll finish the definition of the
+<code>TrapFrame</code> structure in <code>kernel/src/traps/trap_frame.rs</code> so that you can
+access and modify the trap frame from Rust, and you’ll write the assembly to
+save and restore the trap frame as well as pass a pointer to the trap frame to
+the <code>handle_exception</code> function in the <code>tf</code> parameter.</p>
+
+<h5 id="trap-frame">Trap Frame</h5>
+
+<p>The <em>trap frame</em> is the name we give to the structure that holds all of the
+processing context. The name “trap frame” comes from the term “trap” which is a
+generic term used to describe the mechanism by which a processor invokes a
+higher privilege level when an event occurs. We say that the processor <em>traps</em>
+to the higher privilege level.</p>
+
+<p>There are many ways to create a trap frame, but all approaches are effectively
+the same: they save all of the state necessary for execution in memory. Most
+implementations push all of the state onto the stack. After pushing all of the
+state, the stack pointer itself becomes a pointer to the trap frame. We’ll be
+taking exactly this approach.</p>
+
+<p>For now, the complete execution state of our Cortex-A53 consists of:</p>
+
+<ul>
+<li><p><strong><code>x0</code>…<code>x30</code> - all 64-bits of all 31 general purpose registers</strong></p></li>
+
+<li><p><strong><code>q0</code>…<code>q31</code> - all 128-bits of all SIMD/FP registers</strong></p></li>
+
+<li><p><strong><code>pc</code> - the program counter</strong></p>
+
+<p>The register <code>ELR_ELx</code> stores the <em>preferred link address</em>, which may or may
+not be the PC that the CPU had when the exception is taken. Typically, the
+<code>ELR_ELx</code> is either the PC when the exception is taken, or <code>PC + 4</code>.</p></li>
+
+<li><p><strong><code>PSTATE</code> - the program state</strong></p>
+
+<p>Recall that this is stored in <code>SPSR_ELx</code> when an exception is taken to <code>ELx</code>.</p></li>
+
+<li><p><strong><code>sp</code> - the stack pointer</strong></p>
+
+<p>This is stored in <code>SP_ELs</code> when the source of the exception is at level <code>s</code>.</p></li>
+
+<li><p><strong><code>TPIDR</code> - the 64-bit “thread ID” register</strong></p>
+
+<p>This is stored in <code>TPIDR_ELs</code> when the source of the exception is at level <code>s</code>.</p></li>
+</ul>
+
+<p>We’ll need to save <em>all</em> of this context in the trap frame by pushing the
+relevant registers onto the stack before calling the exception handler and then
+restore the trap frame by popping from the stack when the handler returns. After
+saving all of the state, the stack should look as follows:</p>
+
+<figure style="
+   
+    padding: 10px; 
+">
+   <img src="./assignment3_spawn_files/trap-frame.svg" alt="ROS Trap Frame Layout" style="
+          display: block; margin: 0 auto; 
+      ">
+   
+</figure>
+
+
+<p>Note that <code>SP</code> and <code>TPIDR</code> in the trap frame should be the stack pointer and
+thread ID of the source, not the target. Since the only eventual source of
+exception will be <code>EL0</code>, you should save/restore the <code>SP_EL0</code> and <code>TPIDR_EL0</code>
+registers. When all state has been pushed, the CPU’s true <code>SP</code> (the one used by
+the exception vector) will point to the beginning of the trap frame.</p>
+
+<p>Finally, you’ll pass a pointer to the trap frame as the third argument to
+<code>handle_exception</code>. The type of the argument is <code>&amp;mut TrapFrame</code>; <code>TrapFrame</code> is
+declared in <code>kernel/src/traps/trap_frame.rs</code>. You’ll need to define the
+<code>TrapFrame</code> struct so that it <em>exactly</em> matches the trap frame’s layout.</p>
+
+
+<div class="alert alert-dismissible alert-info">
+   <p style="font-size: 16px; font-weight: bold;">
+      
+         <span class="glyphicon glyphicon-info-sign" aria-hidden="true" style="margin-right: 3px"></span>
+      
+      What’s a thread ID?
+   </p>
+   <p></p><p>The <code>TPIDR</code> register (<code>TPIDR_ELx</code>) allows the operating system to store some
+  identifying information about what’s currently executing. Later, when we
+  implement process, we’ll store the process’s ID in this register. For now,
+  we’ll save and restore this register for posterity.</p>
+<p></p>
+</div>
+
+
+
+<h5 id="preferred-exception-return-address">Preferred Exception Return Address</h5>
+
+<p>When an exception is taken to <code>ELx</code>, the CPU stores a <em>preferred link address</em>,
+or <em>preferred exception return address</em> in <code>ELR_ELx</code>. This value is defined in
+(<a href="https://web.stanford.edu/class/cs140e/docs/ARMv8-Reference-Manual.pdf">ref</a>: D1.10.1) as follows:</p>
+
+<ol>
+<li><p>For asynchronous exceptions,  it is the address of the first instruction
+ that did not execute, or did not complete execution, as a result of taking
+ the interrupt.</p></li>
+
+<li><p>For synchronous exceptions other than system calls, it is the address of
+ the instruction that generates the exception.</p></li>
+
+<li><p>For exception generating instructions, it is the address of the instruction
+ that follows the exception generating instruction.</p></li>
+</ol>
+
+<p>A <code>brk</code> instruction falls into the second category. As such, if we want to
+continue execution after a <code>brk</code> instruction, we’ll need to ensure that
+<code>ELR_ELx</code> contains the address of the <em>next</em> instruction before returning. Since
+all instructions are 32-bits wide on AArch64, this is simply <code>ELR_ELx + 4</code>.</p>
+
+<h5 id="implementation-1">Implementation</h5>
+
+<p>Start by implementing the <code>context_save</code> and <code>context_restore</code> routines in
+<code>os/kernel/ext/init.S</code>. The <code>context_save</code> routine should push all of the
+relevant registers onto the stack and then call <code>handle_exception</code>, passing a
+pointer to the trap frame as the third argument. Then implement
+<code>context_restore</code>, which should do nothing more than restore the context.</p>
+
+<p>Note that the instructions generated by the <code>HANDLER</code> macro already save and
+restore <code>x0</code> and <code>x30</code>. You should not save and restore these registers in your
+<code>context_{save,restore}</code> routines. Your trap frame must still contain these
+registers, however.</p>
+
+<p>To minimize the impact on performance for the context switch, you should
+push/pop registers from the stack as follows:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#177500">// pushing registers `x1`, `x5`, `x12`, and `x13`
+</span><span style="color:#177500"></span><span style="color:#000">sub</span>  <span style="color:#000">SP</span>, <span style="color:#000">SP</span>, <span style="color:#000">#</span><span style="color:#1c01ce">32</span>
+<span style="color:#000">stp</span>  <span style="color:#000">x1</span>, <span style="color:#000">x5</span>, [<span style="color:#000">SP</span>]
+<span style="color:#000">stp</span>  <span style="color:#000">x12</span>, <span style="color:#000">x13</span>, [<span style="color:#000">SP</span>, <span style="color:#000">#</span><span style="color:#1c01ce">16</span>]
+
+<span style="color:#177500">// popping registers `x1`, `x5`, `x12`, and `x13`
+</span><span style="color:#177500"></span><span style="color:#000">ldp</span>  <span style="color:#000">x1</span>, <span style="color:#000">x5</span>, [<span style="color:#000">SP</span>]
+<span style="color:#000">ldp</span>  <span style="color:#000">x12</span>, <span style="color:#000">x13</span>, [<span style="color:#000">SP</span>, <span style="color:#000">#</span><span style="color:#1c01ce">16</span>]
+<span style="color:#000">add</span>  <span style="color:#000">SP</span>, <span style="color:#000">SP</span>, <span style="color:#000">#</span><span style="color:#1c01ce">32</span></code></pre></div>
+<p>Ensure that <code>SP</code> is always aligned to 16 bytes. You’ll find that doing so
+creates the <em>reserved</em> entry in the trap frame.</p>
+
+<p>Once you have implemented these routines, finish defining <code>TrapFrame</code> in
+<code>kernel/src/traps/trap_frame.rs</code>. Ensure that the order and size of the fields
+exactly match the trap frame you create and pass a pointer to in <code>context_save</code>.</p>
+
+<p>Finally, in <code>handle_exception</code>, increment the <code>ELR</code> in the trap frame by <code>4</code>
+before returning from a <code>brk</code> exception. Once you have successfully implemented
+the context switch, your kernel should continue to run as normal after <code>exit</code>ing
+from the debug shell. When you are ready, proceed to the next phase.</p>
+
+
+<div class="alert alert-dismissible alert-info">
+   <p style="font-size: 16px; font-weight: bold;">
+      
+         <span class="glyphicon glyphicon-info-sign" aria-hidden="true" style="margin-right: 3px"></span>
+      
+      Your trap frame doesn’t need to <em>exactly</em> match the diagram, but it should contain all of the same data.
+   </p>
+   <p></p>
+</div>
+
+
+
+
+<div class="alert alert-dismissible alert-warning">
+   <p style="font-size: 16px; font-weight: bold;">
+      
+         <span class="glyphicon glyphicon-warning-sign" aria-hidden="true" style="margin-right: 3px"></span>
+      
+      Don’t forget that the <code>qn</code> registers are 128-bits wide!
+   </p>
+   <p></p>
+</div>
+
+
+
+<div class="alert alert-dismissible alert-success">
+   <p style="font-size: 16px;">
+   <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+   <span style="font-weight: bold;">Hint:</span> To call <code>handle_exception</code>, you’ll need to save/restore a register that’s <em>not</em> part of the trap frame.</p>
+</div>
+
+
+
+<div class="alert alert-dismissible alert-success">
+   <p style="font-size: 16px;">
+   <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+   <span style="font-weight: bold;">Hint:</span> Rust has two 128-bit integer types: <code>u128</code> and <code>i128</code>.</p>
+</div>
+
+
+
+<div class="alert alert-dismissible alert-success">
+   <p style="font-size: 16px;">
+   <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+   <span style="font-weight: bold;">Hint:</span> Use the <code>mrs</code> and <code>msr</code> instruction to read/write special registers.</p>
+</div>
+
+
+
+<div class="alert alert-dismissible alert-success">
+   <p style="font-size: 16px;">
+   <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+   <span style="font-weight: bold;">Hint:</span> Our <code>context_save</code> routine is exactly 45 instructions.</p>
+</div>
+
+
+
+<div class="alert alert-dismissible alert-success">
+   <p style="font-size: 16px;">
+   <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+   <span style="font-weight: bold;">Hint:</span> Our <code>context_restore</code> routine is exactly 41 instructions.</p>
+</div>
+
+
+
+<div class="alert alert-dismissible alert-success">
+   <p style="font-size: 16px;">
+   <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+   <span style="font-weight: bold;">Hint:</span> Our <code>TrapFrame</code> contains 68 fields and is 800 bytes in size.</p>
+</div>
+
+
+
+<div class="panel panel-question">
+  <div class="panel-heading">
+     <div class="badge pull-right">
+        <code>
+           lazy-float
+        </code>
+     </div>
+    <h3 class="panel-title">
+       <span class="glyphicon glyphicon-question-sign" aria-hidden="true" style="padding-right: 5px"></span>
+       How could you lazy-load floating point registers?
+    </h3>
+  </div>
+  <div class="panel-body">
+     <p></p><p>Saving and restoring the 128-bit SIMD/FP registers is <em>very</em> expensive; they
+  account for 512 of the 800 bytes in the <code>TrapFrame</code>! It would be ideal if we
+  saved/restored these registers only if they were actually in use by the source
+  of the exception or the target of a context switch.</p>
+
+<p>The AArch64 architecture allows the use of these registers to be selectively
+  enabled and disabled. When SIMD/FP is disabled, an instruction that uses the
+  registers traps. How could you use this functionality to implement
+  lazy-loading of SIMD/FP registers so that they’re only saved/restored on
+  context switches if they’re being used while continuing to allow the registers
+  and SIMD/FP instructions to be used freely? Be specific about what you would
+  do when specific exceptions occur, whether you would need to modify the
+  <code>TrapFrame</code> struct, and what additional state you’d need to maintain.</p>
+<p></p>
+  </div>
+</div>
+
+
+<hr>
+
+<h3 id="phase-2-it-s-a-process">Phase 2: It’s a Process</h3>
+
+<p>In this phase, you will implement user-level processes. You’ll start by
+implementing a <code>Process</code> struct that will maintain a process’s state. You’ll
+then bootstrap the system by starting the first process. Then, you’ll implement
+a tick-based, round-robin scheduler. To do so, you’ll first implement an
+interrupt controller driver and enable timer interrupts. Then, you’ll invoke
+your scheduler when a timer interrupt occurs, performing a context switch to the
+next process. Finally, you’ll implement your first system call: <code>sleep</code>.</p>
+
+<p>After completing this subphase, you’ll have built a minimal but complete
+multitasking operating system. For now, processes will be sharing physical
+memory with the kernel and other processes. In the next phase, we will enable
+virtual memory to isolate processes from one another and protect the kernel’s
+memory from untrusted processes.</p>
+
+
+<div class="alert alert-dismissible alert-warning">
+   <p style="font-size: 16px; font-weight: bold;">
+      
+         <span class="glyphicon glyphicon-warning-sign" aria-hidden="true" style="margin-right: 3px"></span>
+      
+      Ensure your skeletons are up-to-date!
+   </p>
+   <p></p><p>Ensure your skeletons are up-to-date by committing or discarding any changes
+  and pulling the latest <code>3-spawn</code> and <code>os</code> skeletons with <code>git pull</code>.</p>
+<p></p>
+</div>
+
+
+
+<hr>
+
+<h4 id="subphase-a-processes">Subphase A: Processes</h4>
+
+<p>In this subphase, you’ll complete the implementation of the <code>Process</code> structure
+in <code>kernel/src/process/process.rs</code>. You’ll use your implementation to start the
+first process in the next subphase.</p>
+
+<h5 id="what-s-a-process">What’s a Process?</h5>
+
+<p>A process is a container for code and data that’s executed, managed, and
+protected by the kernel. They are the singular unit by which non-kernel code
+executes: if code is executing, it is either executing as part of a process or
+executing as part of the kernel. There are many operating system architectures,
+especially in the research world, but they all have a concept that largely
+mirrors that of a process.</p>
+
+<p>Processes typically run with a reduced set of privileges (<code>EL0</code> for our OS) so
+that the kernel can ensure system stability and security. If one process
+crashes, we don’t want other processes to crash or for the entire machine to
+crash with it. We also don’t want processes to be able to interfere with one
+another. If one process hangs, we don’t want other processes to be unable to
+make progress. Processes provide <em>isolation</em>: they operate largely independently
+of one another. You likely see these properties of processes every day: when
+your web browser crashes or hangs, does the rest of the machine crash or hang as
+well?</p>
+
+<p>Implementing processes, then, is about creating the structures and algorithms to
+protect, isolate, execute, and manage untrusted code and data.</p>
+
+<h5 id="what-s-in-a-process">What’s in a Process?</h5>
+
+<p>To implement processes, we’ll need to keep track of a process’s code and data as
+well as auxiliary information to allow us to properly manage and isolate
+multiple processes. This means keeping track of a process’s:</p>
+
+<ul>
+<li><p><strong>Stack</strong></p>
+
+<p>Each process needs a unique stack to execute on. When you implement
+processes, you’ll need to allocate a section of memory suitable for use as
+the process’s stack. You’ll then need to bootrstrap the process’s stack
+pointer to point to this region of memory.</p></li>
+
+<li><p><strong>Heap</strong></p>
+
+<p>To enable disjoint dynamic memory allocation, each process will also have
+its own heap. The heap will start empty but can be expanded on request via a
+system call. You won’t be implementing the heap until later in the
+assignment.</p></li>
+
+<li><p><strong>Code</strong></p>
+
+<p>A process isn’t very useful unless it’s executing code, so the kernel will
+need to load the process’s code into memory and execute it when appropriate.</p></li>
+
+<li><p><strong>Virtual address space</strong></p>
+
+<p>Because we don’t want processes to have access to the kernel’s memory or the
+memory of other processes, each process will be confined to a separate
+virtual address space using virtual memory.</p></li>
+
+<li><p><strong>Scheduling state</strong></p>
+
+<p>There are typically many more processes than there are CPU cores. The CPU
+can only execute one instruction stream at a time, so the kernel will need
+to multiplex the CPUs time (and thus, instruction stream) to execute
+processes concurrently. It is the scheduler’s job to determine which process
+gets to run when and where. To do so correctly, the scheduler needs to know
+if a process is ready to be scheduled. The <em>scheduling state</em> keeps track of
+this.</p></li>
+
+<li><p><strong>Execution state</strong></p>
+
+<p>To correctly multiplex the CPUs time amongst several processes, we’ll need
+to ensure that we save a process’s execution state when we switch it off the
+CPU and restore it when we switch it back on. You’ve already seen the
+structure we use to maintain execution state: the trap frame. Each process
+maintains a trap frame to properly maintain its execution state.</p></li>
+</ul>
+
+<p>A process’s stack, heap, and code make up all of the physical state of a
+process. The rest of the state is necessary for the isolation, management, and
+protection of processes.</p>
+
+<p>The <code>Process</code> structure in <code>kernel/src/process/process.rs</code> will maintain all of
+this information. Because all processes will be sharing memory for the time
+being, you won’t see any fields for the process’s heap, code, or virtual address
+space; you’ll handle these later in the assignment.</p>
+
+<div class="panel panel-question">
+  <div class="panel-heading">
+     <div class="badge pull-right">
+        <code>
+           kernel-distrust
+        </code>
+     </div>
+    <h3 class="panel-title">
+       <span class="glyphicon glyphicon-question-sign" aria-hidden="true" style="padding-right: 5px"></span>
+       Does a process have to trust the kernel?
+    </h3>
+  </div>
+  <div class="panel-body">
+     <p></p><p>It should be clear that a kernel is distinctively distrustful of processes,
+   but does a process have to trust the kernel? If so, what is it expecting from
+   the kernel?</p>
+<p></p>
+  </div>
+</div>
+
+
+<div class="panel panel-question">
+  <div class="panel-heading">
+     <div class="badge pull-right">
+        <code>
+           isolated-stacks
+        </code>
+     </div>
+    <h3 class="panel-title">
+       <span class="glyphicon glyphicon-question-sign" aria-hidden="true" style="padding-right: 5px"></span>
+       What could go wrong if two processes shared stacks?
+    </h3>
+  </div>
+  <div class="panel-body">
+     <p></p><p>Imagine that two processes are executing concurrently and are sharing a
+   stack. First: what would it mean for two processes to share a stack? Second:
+   why would it be very likely that the processes would crash fairly quickly
+   into their lives? Third: define a property of processes that, even if they
+   were sharing a stack, would never crash as a result of sharing a stack. In
+   other words, what would two processes that run concurrently and share a stack
+   but never crash as a result of this sharing look like?</p>
+<p></p>
+  </div>
+</div>
+
+
+<h5 id="implementation-2">Implementation</h5>
+
+<p>You’ll now finish the implementation of the <code>Process</code> structure in
+<code>kernel/src/process/process.rs</code>. Before you begin, read the implementation of
+the <code>Stack</code> structure that we provided for you in <code>kernel/src/process/stack.rs</code>.
+Ensure that you know how to use the structure to allocate a new stack and
+retrieve a pointer to the stack for a new process. Then, read the implementation
+of the <code>State</code> structure, which will be used to keep track of the scheduling
+state, that we have provided for you in <code>kernel/src/process/state.rs</code>. Try to
+reason about how you’d interpret the different variants when scheduling
+processes.</p>
+
+<p>Finally, implement the <code>Process::new()</code> method. The implementation will be
+simple; there’s nothing complex about keeping track of state! When you’re ready,
+proceed to the next subphase.</p>
+
+<div class="panel panel-question">
+  <div class="panel-heading">
+     <div class="badge pull-right">
+        <code>
+           stack-drop
+        </code>
+     </div>
+    <h3 class="panel-title">
+       <span class="glyphicon glyphicon-question-sign" aria-hidden="true" style="padding-right: 5px"></span>
+       How is the stack’s memory reclaimed?
+    </h3>
+  </div>
+  <div class="panel-body">
+     <p></p><p>The <code>Stack</code> structure allocates a 16-byte aligned 1MiB block of memory when
+   it is created. What ensures that this memory is freed when the <code>Process</code> that
+   owns it is no longer around?</p>
+<p></p>
+  </div>
+</div>
+
+
+<div class="panel panel-question">
+  <div class="panel-heading">
+     <div class="badge pull-right">
+        <code>
+           lazy-stacks
+        </code>
+     </div>
+    <h3 class="panel-title">
+       <span class="glyphicon glyphicon-question-sign" aria-hidden="true" style="padding-right: 5px"></span>
+       How could you lazily allocate memory for the stack?
+    </h3>
+  </div>
+  <div class="panel-body">
+     <p></p><p>The <code>Stack</code> structure allocates 1MiB of memory for the stack regardless of
+   whether or how much of the stack the process actually uses. Thinking ahead to
+   virtual memory, how might we use virtual memory to lazily allocate memory for
+   the stack so that no or minimal memory is used by the stack until it’s needed?</p>
+<p></p>
+  </div>
+</div>
+
+
+<div class="panel panel-question">
+  <div class="panel-heading">
+     <div class="badge pull-right">
+        <code>
+           stack-size
+        </code>
+     </div>
+    <h3 class="panel-title">
+       <span class="glyphicon glyphicon-question-sign" aria-hidden="true" style="padding-right: 5px"></span>
+       How could a process increase its stack size?
+    </h3>
+  </div>
+  <div class="panel-body">
+     <p></p><p>Some processes will require significantly more stack space than 1MiB, but our
+   simple design allocates exactly 1MiB of stack space for all processes.
+   Assuming processes have access to dynamic memory allocation, how could a
+   process increase its stack size? Be specific about which instructions the
+   process would execute.</p>
+<p></p>
+  </div>
+</div>
+
+
+<hr>
+
+<h4 id="subphase-b-the-first-process">Subphase B: The First Process</h4>
+
+<p>In this subphase, we’ll start the first user-space (<code>EL0</code>) process. You will be
+working primarily in <code>kernel/src/process/scheduler.rs</code> and
+<code>kernel/src/kmain.rs</code>.</p>
+
+<h5 id="context-switching-processes">Context Switching Processes</h5>
+
+<p>You’ve already done most of the work that will allow you to context switch
+between processes. To context switch between processes in response to an
+exception, you will:</p>
+
+<ol>
+<li><p>Save the trap frame as the current process’s trap frame in its <code>trap_frame</code>
+ field.</p></li>
+
+<li><p>Restore the trap frame of the next process to execute from its <code>trap_frame</code>
+ field.</p></li>
+
+<li><p>Modify the scheduling state to keep track of which process is executing.</p></li>
+</ol>
+
+<p>Unfortunately, for the first process, we’ll need to deviate from this plan a
+bit. It would be incorrect to execute one of the steps above for the first
+process. Can you tell which?</p>
+
+<p>Let’s see what would happen if we followed these steps for the first process.
+First, an exception occurs which prompts a context switch. We’ll later see that
+this will be a timer interrupt. Then we follow step 1: in response to the
+exception, we store the saved trap frame in the first process’s <code>trap_frame</code>
+field. Note that the saved trap frame has nothing to do with the process! Later,
+as part of step 2, we restore the process’s <code>trap_frame</code> and return.</p>
+
+<p>Because the exception wasn’t taken while the process running, the trap frame we
+save, and later restore, will have little in relation to the process itself. In
+other words, we’ve clobbered the process’s trap frame with an unrelated one.
+Thus, we can’t possibly run step 1 without a valid process’s trap frame first.
+In other words, to properly context switch into the first process, it seems that
+the process needs to already be running. Said yet another way, we can’t properly
+context switch until after the first context switch has occurred: catch-22!</p>
+
+<p>To work around this, we’re going to bootstrap context switching by <em>faking</em> the
+first context switch. Instead of the trap frame for the first process coming
+from the <code>context_save</code> routine you wrote previously, we will manually create
+the trap frame on the new process’s stack and call <code>context_restore</code> ourselves,
+avoiding step 1 above entirely. Once the first process is running, all other
+context switching will work normally.</p>
+
+<h5 id="kernel-threads">Kernel Threads</h5>
+
+<p>We haven’t yet built a mechanism to load code from the disk into memory. Once we
+enable virtual memory, we’ll need to implement the procedures to do so. For now,
+while we’re sharing memory with the kernel, we can simply reuse the kernel’s
+code and data. As long as the kernel and the processes don’t share local data
+(the stack), which we’ve ensured they don’t by allocating a new stack for each
+process, they will be able to execute concurrently without issue. What’s more,
+Rust ensures that there is no possibility of a data race between the processes.</p>
+
+<p>Sharing memory and other resources between processes is such a common occurrence
+that these types of processes have a special name: <em>threads</em>. Indeed, a thread
+is nothing more than a process that shares memory and other resources with
+another process.</p>
+
+<p>Soon, you’ll start the first process. Because that process will be sharing
+memory with the kernel, it will be a <em>kernel thread</em>. As such, the extent of the
+work required to start this first process is minimal since all of the code and
+data is already in memory:</p>
+
+<ol>
+<li>Bootstrap context switching by setting up the “fake” saved trap frame.</li>
+<li>Call <code>context_restore</code></li>
+<li>Switch to <code>EL0</code>.</li>
+</ol>
+
+<p>While requiring very few lines of code, you’ll find that it requires careful
+implementation for correctness.</p>
+
+
+<div class="alert alert-dismissible alert-info">
+   <p style="font-size: 16px; font-weight: bold;">
+      
+         <span class="glyphicon glyphicon-info-sign" aria-hidden="true" style="margin-right: 3px"></span>
+      
+      The term <em>kernel thread</em> is overloaded.
+   </p>
+   <p></p><p>The term <em>kernel thread</em> is used to refer both to threads implemented by the
+  kernel (as opposed to threads implemented in user space) and threads running
+  <em>in</em> the kernel. It’s an unfortunate name clash, but context typically
+  clarifies which is meant. As a quick heuristic, unless the discussion is about
+  OS development, you should assume that the discussion is about threads
+  implemented by the kernel.</p>
+<p></p>
+</div>
+
+
+
+<h5 id="implementation-3">Implementation</h5>
+
+<p>There is a new global variable in <code>kmain.rs</code>, <code>SCHEDULER</code>, of type
+<code>GlobalScheduler</code>, which is simply a wrapper around a <code>Scheduler</code>. Both of these
+types are defined in <code>kernel/src/process/scheduler.rs</code>. The <code>SCHEDULER</code> variable
+will serve as the handle to the scheduler for the entire system.</p>
+
+<p>To initialize the scheduler and start executing the first process, the <code>start()</code>
+method on <code>GlobalScheduler</code> should be called. Your task is to implement the
+<code>start()</code> method.</p>
+
+<p>To do so, you will need to:</p>
+
+<ol>
+<li><p><strong>Write an <code>extern</code> function that takes no parameters and starts a shell.</strong></p>
+
+<p>You will arrange for this function to be called when the process first
+ executes. You can write this function wherever you’d like. We’ll remove it
+ once we’re able to start processes backed by binaries on the disk.</p></li>
+
+<li><p><strong>Create a new <code>Process</code> and set-up the saved trap-frame.</strong></p>
+
+<p>You’ll need to set up the process’s trap frame so that when it is restored
+ to the CPU by <code>context_restore</code> later, your <code>extern</code> function executes, the
+ process’s stack pointer points to the top of the process’s stack, the
+ process is executing in <code>EL0</code> in the AAarch64 execution state, and all
+ interrupts are unmasked so that we can handle timer interrupts from <code>EL0</code>
+ in the next section.</p></li>
+
+<li><p><strong>Setup the necessary registers, call <code>context_restore</code>, and <code>eret</code> into
+ EL0.</strong></p>
+
+<p>Once you’ve set up the trap frame, you can bootstrap a context switch to
+ that process by:</p>
+
+<ul>
+<li><p>Calling <code>context_restore</code> with the appropriate register(s) set to the
+appropriate values.</p>
+
+<p>Note: we are being vague here on purpose! If this feels opaque, consider
+what <code>context_restore</code> does, what you <em>want</em> it to do, and how you can
+make it do that.</p></li>
+
+<li><p>Setting the current stack pointer (<code>sp</code>) to its initial value (the
+address of <code>_start</code>). This is necessary so that we can use the entire
+<code>EL1</code> stack when we take exceptions later. <strong>Note:</strong> You cannot <code>ldr</code> or
+<code>adr</code> into <code>sp</code> directly. You must first load into a different register
+and then <code>mov</code> from that register into <code>sp</code>.</p></li>
+
+<li><p>Resetting any registers that may no longer contain <code>0</code>. You should not
+leak any information to user-level processes.</p></li>
+
+<li><p>Returning to <code>EL0</code> via <code>eret</code>.</p></li>
+</ul>
+
+<p>You’ll need to use <a href="https://doc.rust-lang.org/unstable-book/language-features/asm.html">inline assembly</a> to implement this. As an example, if a
+variable <code>tf</code> is a pointer to the trap frame, the following sets the value
+of <code>x0</code> to that address and then copies it to <code>x1</code>:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#a90d91">unsafe</span> {
+    <span style="color:#000">asm</span><span style="color:#000">!</span>(<span style="color:#c41a16">"mov x0, $0
+</span><span style="color:#c41a16">          mov x1, x0"</span>
+         :: <span style="color:#c41a16">"r"</span>(<span style="color:#000">tf</span>)
+         :: <span style="color:#c41a16">"volatile"</span>);
+}</code></pre></div></li>
+</ol>
+
+<p>Once you’ve implemented the method, add a call to <code>SCHEDULER.start()</code> in <code>kmain</code>
+and remove any shell or breakpoint invocations. Your <code>kmain</code> should now simply
+be a series of three initialization calls, with the scheduler’s being the last.
+If all is well, your <code>extern</code> function will be called from <code>EL0</code> when the kernel
+starts, running the shell as a user-level process.</p>
+
+<p>Before continuing, you should also ensure that a context switch back to the same
+process works correctly at this point. Try adding a few calls to <code>brk</code> in your
+<code>extern</code> function before and after you start a shell:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#a90d91">extern</span> <span style="color:#a90d91">fn</span> <span style="color:#000">run_shell</span>() {
+    <span style="color:#a90d91">unsafe</span> { <span style="color:#000">asm</span><span style="color:#000">!</span>(<span style="color:#c41a16">"brk 1"</span> :::: <span style="color:#c41a16">"volatile"</span>); }
+    <span style="color:#a90d91">unsafe</span> { <span style="color:#000">asm</span><span style="color:#000">!</span>(<span style="color:#c41a16">"brk 2"</span> :::: <span style="color:#c41a16">"volatile"</span>); }
+    <span style="color:#000">shell</span>::<span style="color:#000">shell</span>(<span style="color:#c41a16">"user0&gt; "</span>);
+    <span style="color:#a90d91">unsafe</span> { <span style="color:#000">asm</span><span style="color:#000">!</span>(<span style="color:#c41a16">"brk 3"</span> :::: <span style="color:#c41a16">"volatile"</span>); }
+    <span style="color:#a90d91">loop</span> { <span style="color:#000">shell</span>::<span style="color:#000">shell</span>(<span style="color:#c41a16">"user1&gt; "</span>); }
+}</code></pre></div>
+<p>You should be able to return from each of the break point exceptions
+successfully. The source for each of the breakpoint exception should be
+<code>LowerAArch64</code>, indicating a successful switch to user-space. Once everything
+works as you expect, proceed to the next subphase.</p>
+
+<div class="alert alert-dismissible alert-success">
+   <p style="font-size: 16px;">
+   <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+   <span style="font-weight: bold;">Hint:</span> Our inline assembly consists of exactly 6 instructions.</p>
+</div>
+
+
+
+<div class="alert alert-dismissible alert-success">
+   <p style="font-size: 16px;">
+   <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+   <span style="font-weight: bold;">Hint:</span> To get the pointer to a <code>T</code> inside of a <code>Box&lt;T&gt;</code>, use <code>&amp;*box</code>.</p>
+</div>
+
+
+
+<div class="alert alert-dismissible alert-success">
+   <p style="font-size: 16px;">
+   <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+   <span style="font-weight: bold;">Hint:</span> Besides the inline assembly, you do not need <code>unsafe</code>.</p>
+</div>
+
+
+
+<hr>
+
+<h4 id="subphase-c-timer-interrupts">Subphase C: Timer Interrupts</h4>
+
+<p>In this subphase, you will implement a driver for the interrupt controller on
+the BCM2837. You’ll also modify your existing system timer driver to enable
+timer interrupts to be configured. Finally, you’ll enable periodic timer
+interrupts to act as the spring-board for scheduling based context switches. You
+will be working primarily in <code>os/pi/src/interrupt.rs</code>, <code>os/pi/src/timer.rs</code>, and
+<code>os/kernel/src/traps</code>.</p>
+
+<h5 id="interrupt-handling">Interrupt Handling</h5>
+
+<p>On AArch64, interrupts are nothing more than exceptions of a particular class.
+The key differentiator between the two is that interrupts occur asynchronously:
+they are generated by an external source in response to external events.</p>
+
+<p>The diagram below illustrates the path an interrupt takes from the source, an
+external device, to the sink, an exception vector:</p>
+
+<figure style="
+   
+    padding: 10px; 
+">
+   <img src="./assignment3_spawn_files/int-chain.svg" alt="Interrupt Delivery Process" style="
+          display: block; margin: 0 auto; 
+      ">
+   
+</figure>
+
+
+<p>Interrupts can be selectively disabled at each point along the path. In order
+for an interrupt to be delivered to an exception vector, the external device,
+the interrupt controller, and the CPU must all be configured to accept the
+interrupt.</p>
+
+
+<div class="alert alert-dismissible alert-info">
+   <p style="font-size: 16px; font-weight: bold;">
+      
+         <span class="glyphicon glyphicon-info-sign" aria-hidden="true" style="margin-right: 3px"></span>
+      
+      What is an interrupt controller?
+   </p>
+   <p></p><p>An interrupt controller as another external device that acts as a proxy and
+  gate between interrupt generating devices, like the system timer, and the CPU.
+  The interrupt controller is physically connected to the CPU’s interrupt pins.
+  When an input pin on the interrupt controller is signaled, the interrupt
+  controller forwards the signal to the CPU.</p>
+
+<p>The extra layer of indirection allows for interrupts to be selectively enabled
+  and disabled. It also allows CPU manufacturers to choose which, if any,
+  interrupt controller they want to bundle with the CPU.</p>
+<p></p>
+</div>
+
+
+
+<h6 id="external-device">External Device</h6>
+
+<p>You’ve already written a device driver for the system timer. In this subphase,
+you will extend your driver to enable configuration of the timer’s compare
+registers. The system timer continuously compares the current time to the values
+in the compare registers and generates an interrupt when the values equal.</p>
+
+<h6 id="interrupt-controller">Interrupt Controller</h6>
+
+<p>The system timer delivers interrupts to the interrupt controller, which must
+then be configured to deliver interrupts to the CPU. You will write a device
+driver for the interrupt controller to do exactly this.</p>
+
+<p>When the interrupt controller receives an interrupt, it marks the interrupt as
+pending and forwards it to the CPU by holding a physical interrupt pin on the
+CPU logically high. For some interrupts, including system timer interrupts, the
+pin is held high until the interrupt is acknowledged. This means that the
+interrupt will be continuously delivered until it is acknowledged. Once the
+interrupt is acknowledged, the interrupt pin is released, and the pending flag
+is unset.</p>
+
+<h6 id="cpu">CPU</h6>
+
+<p>Interrupts must be <em>unmasked</em> for the CPU to deliver them to exception vectors.
+By default, interrupts are <em>masked</em> by the CPU, so they will not be delivered.
+The CPU may deliver interrupts that were received while interrupts were masked
+as soon as interrupts are unmasked. When the CPU invokes an exception vector, it
+also automatically masks all interrupts. This is so that interrupts which are
+held high until they are handled, like system timer interrupts, don’t
+immediately result in an exception loop.</p>
+
+<p>In the previous subphase, you configured interrupts to be delivered when
+processes are executing in <code>EL0</code>, so there’s no additional work to do on this
+front.</p>
+
+<div class="panel panel-question">
+  <div class="panel-heading">
+     <div class="badge pull-right">
+        <code>
+           reentrant-irq
+        </code>
+     </div>
+    <h3 class="panel-title">
+       <span class="glyphicon glyphicon-question-sign" aria-hidden="true" style="padding-right: 5px"></span>
+       When would you unmask IRQs while handling an IRQ?
+    </h3>
+  </div>
+  <div class="panel-body">
+     <p></p><p>It turns out that unmasking IRQs while handling IRQs is a fairly common
+  occurrence. Can you come up with a scenario in which you’d want to do this?
+  Further, would doing so without first acknowledging pending IRQs result in an
+  exception loop? Why or why not?</p>
+<p></p>
+  </div>
+</div>
+
+
+<h6 id="exception-vector">Exception Vector</h6>
+
+<p>You’ve already configured exception vectors. As such, all that’s left is to
+properly handle IRQ (interrupt request) exceptions. You’ll modify your
+<code>handle_exception</code> function in <code>kernel/src/traps/mod.rs</code> so that it forwards all
+known interrupt requests to the <code>handle_irq</code> function in
+<code>kernel/src/traps/irq.rs</code>. To determine which interrupt has occurred, you will
+need to check which interrupts are pending at the interrupt controller. The
+<code>handle_irq</code> function will then acknowledge the interrupt and process it.</p>
+
+<h5 id="implementation-4">Implementation</h5>
+
+<p>Start by implementing the interrupt controller driver in <code>pi/src/interrupt.rs</code>.
+The documentation for the interrupt controller is on chapter 7 of the <a href="https://web.stanford.edu/class/cs140e/docs/BCM2837-ARM-Peripherals.pdf">BCM2837
+ARM Peripherals Manual</a>. You only need to handle enabling, disabling, and
+checking the status of the regular IRQs described by the <code>Interrupt</code> enum; you
+needn’t worry about FIQs or Basic IRQs.</p>
+
+<p>Then, implement the <code>tick_in()</code> method and function for your system timer driver
+in <code>pi/src/timer.rs</code>. The documentation for the system timer is on chapter 12 of
+the <a href="https://web.stanford.edu/class/cs140e/docs/BCM2837-ARM-Peripherals.pdf">BCM2837 ARM Peripherals Manual</a>. You will need write to two registers to
+implement <code>tick_in()</code> correctly.</p>
+
+<p>Then, enable timer interrupts and set a timer interrupt to occur in <code>TICK</code>
+microseconds just before you start the first process in
+<code>GlobalScheduler::start()</code> in <code>kernel/src/process/scheduler.rs</code>. The <code>TICK</code>
+variable is declared in the same file.</p>
+
+<p>Finally, modify your <code>handle_exception</code> function in <code>kernel/src/traps/mod.rs</code> so
+that it forwards known interrupts to the <code>handle_irq</code> function in
+<code>kernel/src/traps/irq.rs</code>. The <code>handle_irq</code> function should acknowledge the
+timer interrupt and set a new timer interrupt to occur in <code>TICK</code> microseconds,
+ensuring that timer interrupts occur every <code>TICK</code> microseconds indefinitely.</p>
+
+<p>When you are finished, you should see a timer interrupt occur every <code>TICK</code>
+microseconds with a source of <code>LowerAArch64</code> and kind of <code>Irq</code>. You should be
+able to interact with the process normally between timer interrupts. When
+everything works as you expect, proceed to the next subphase.</p>
+
+
+<div class="alert alert-dismissible alert-warning">
+   <p style="font-size: 16px; font-weight: bold;">
+      
+         <span class="glyphicon glyphicon-warning-sign" aria-hidden="true" style="margin-right: 3px"></span>
+      
+      We’ll change the <code>TICK</code> setting later on!
+   </p>
+   <p></p><p>We’re currently using an absurdly slow <code>TICK</code> setting of 2 seconds to ensure
+  that everything works as we expect. Typically, this number is between 1 and 10
+  milliseconds. We’ll decrease the <code>TICK</code> to a more reasonable 10 ms later on.</p>
+<p></p>
+</div>
+
+
+
+<hr>
+
+<h4 id="subphase-d-scheduler">Subphase D: Scheduler</h4>
+
+<p>In this subphase, you will implement a simple round-robin preemptive scheduler.
+You will be working primarily in <code>kernel/src/process/scheduler.rs</code>,
+<code>kernel/src/process/process.rs</code>, and <code>kernel/src/traps/irq.rs</code>.</p>
+
+<h5 id="scheduling">Scheduling</h5>
+
+<p>The scheduler’s primary responsibility is to determine which task to execute
+next, where a task is defined as anything that requires execution on the CPU.
+Our operating system is relatively simple, and so the scheduler’s idea of a task
+will be constrained to processes. As such, our scheduler will be responsible for
+determining which process to run next, if any.</p>
+
+<p>There are many scheduling algorithms with a myriad of properties. One of the
+simplest is known as “round-robin” scheduling. A round-robin scheduler maintains
+a queue of tasks. The next task to execute is chosen from the front of the
+queue. The scheduler executes the task for a fixed time slice (the <code>TICK</code>), also
+known as a <em>quantum</em>. When the task has executed for at most its full quantum,
+the scheduler moves it to the back of the queue. Thus, a round-robin scheudler
+simply cycles through a queue of tasks.</p>
+
+<p>In our operating system, the scheduler marks a task as being in one of three
+states:</p>
+
+<ul>
+<li><p><strong>Ready</strong></p>
+
+<p>A task that is ready to be executed. The scheduler will execute the task
+when its turn comes up.</p></li>
+
+<li><p><strong>Running</strong></p>
+
+<p>A task that is currently executing.</p></li>
+
+<li><p><strong>Waiting</strong></p>
+
+<p>A task that is waiting on an event and is not ready to be executed until
+that event occurs. The scheduler will check if the event has occurred when
+the task’s turns comes up. If the event has occurred, the task is executed.
+Otherwise, the task loses its turn and is checked again in the future.</p></li>
+</ul>
+
+<p>The <code>State</code> enum in <code>kernel/src/process/state.rs</code> represents these states. Each
+process struct is associated with a <code>State</code> which the scheduler will manage.
+Note that the <code>Waiting</code> state contains a function that the scheduler can use to
+determine if the event being waited on has occurred.</p>
+
+<p>The diagram below depicts six scheduling rounds of a round-robin scheduler. The
+task <code>C</code> is waiting on an event that occurs some time between rounds 3 and 5.</p>
+
+<figure style="
+   
+    padding: 10px; 
+">
+   <img src="./assignment3_spawn_files/round-robin.svg" alt="Round Robin Scheduling" width="500px" style="
+          display: block; margin: 0 auto; 
+      ">
+   
+</figure>
+
+
+<p>The rounds are:</p>
+
+<ol>
+<li><p>In round 1, there are three tasks in the queue, <code>B</code>, <code>C</code>, <code>D</code>, and one task
+ already executing on the CPU: <code>A</code>. <code>C</code> is in a waiting state, while the
+ others are ready or running. When <code>A</code>’s quantum is used up, it is moved to
+ the back of the queue.</p></li>
+
+<li><p>The task from the front of the queue, <code>B</code>, is executed. It is moved to the
+ back of the queue when its quantum expires.</p></li>
+
+<li><p>Since <code>C</code> is waiting for an event, the scheduler checks to see if the event
+ being waited on has occurred. At this point it has not, so <code>C</code> is skipped
+ and <code>D</code> is chosen to run next. At the end of the quantum, <code>D</code> is moved to
+ the back of the queue.</p></li>
+
+<li><p>This round is not shown in the diagram. <code>A</code> is executed then moved to the
+ back of the queue.</p></li>
+
+<li><p><code>B</code> is executed then moved to the back of the queue.</p></li>
+
+<li><p><code>C</code> is still waiting for an event. The scheduler checks to see if the event
+ has occurred. At this point it has, so <code>C</code> is scheduled.</p></li>
+</ol>
+
+<div class="panel panel-question">
+  <div class="panel-heading">
+     <div class="badge pull-right">
+        <code>
+           wait-queue
+        </code>
+     </div>
+    <h3 class="panel-title">
+       <span class="glyphicon glyphicon-question-sign" aria-hidden="true" style="padding-right: 5px"></span>
+       Would separating ready and waiting tasks be beneficial?
+    </h3>
+  </div>
+  <div class="panel-body">
+     <p></p><p>An alternative implementation of a round-robin scheduler maintains two queues:
+  a <em>ready</em> queue, consisting of only ready tasks, and a <em>wait</em> queue,
+  consisting only of waiting tasks. How would you make use of the queues in the
+  round-robin scheduler? Do you expect performance (average task
+  latency/throughput) to be better or worse?</p>
+<p></p>
+  </div>
+</div>
+
+
+<h5 id="code-structure">Code Structure</h5>
+
+<p>The <code>Scheduler</code> structure in <code>kernel/src/process/scheduler.rs</code> maintains a queue
+of processes to execute. Processes are added to the queue via the the
+<code>Scheduler::add()</code> method. The method is also responsible for assigning unique
+IDs to processes. IDs are stored in the process’s <code>TPIDR</code> register.</p>
+
+<p>When a scheduling change is required, the <code>Scheduler::switch()</code> method is
+invoked. The method changes the current process’s state to <code>new_state</code>, saves
+the current trap frame in the current process, finds the next process to
+execute, and restores the next process’s trap frame. If there is no process
+ready to execute, the scheduler waits until one becomes becomes ready.</p>
+
+<p>To determine if a process is ready to execute, the scheduler should call the
+<code>process.is_ready()</code> method, defined in <code>kernel/src/process/process.rs</code>. The
+method returns <code>true</code> if either the state is <code>Ready</code> or if an event being waited
+on has occurred.</p>
+
+<p>Finally, the scheduler should be invoked every <code>TICK</code> microseconds. Timer
+interrupts, set up in the previous subphase, will be one of the primary sources
+of a scheduling change. Note that the <code>GlobalScheduler</code> type provides
+thread-safe wrappers around the <code>add()</code> and <code>switch()</code> methods of <code>Scheduler</code>.</p>
+
+<div class="panel panel-question">
+  <div class="panel-heading">
+     <div class="badge pull-right">
+        <code>
+           new-state
+        </code>
+     </div>
+    <h3 class="panel-title">
+       <span class="glyphicon glyphicon-question-sign" aria-hidden="true" style="padding-right: 5px"></span>
+       Why doesn’t the scheduler know the new state?
+    </h3>
+  </div>
+  <div class="panel-body">
+     <p></p><p>The <code>scheduler.switch()</code> method requires the caller to pass in the new state
+  of the current process. This implies that the scheduler does not know what the
+  new state of the process should be. Why might it not?</p>
+<p></p>
+  </div>
+</div>
+
+
+<h5 id="implementation-5">Implementation</h5>
+
+<p>You’re now ready to implement the round-robin scheduler. We recommend the
+following approach:</p>
+
+<ol>
+<li><p><strong>Implement the <code>Process::is_ready()</code> method in
+ <code>kernel/src/process/process.rs</code>.</strong></p>
+
+<p>The <a href="https://doc.rust-lang.org/std/mem/fn.replace.html">mem::replace()</a> function will prove useful here.</p></li>
+
+<li><p><strong>Implement the <code>Scheduler</code> struct in <code>kernel/src/process/scheduler.rs</code>.</strong></p>
+
+<p>The <code>switch()</code> method requires you to block until there is a process to
+ switch to, conserving energy as much as possible while waiting. To conserve
+ energy, you should use the <code>wfi</code> (wait for interrupt) instruction.
+ Executing the instruction causes the CPU to enter into a low-power state
+ and wait until an interrupt has occurred before executing any other
+ instruction. You should add a wrapper function for the instruction in the
+ <code>aarch64.rs</code> file.</p></li>
+
+<li><p><strong>Initalize the scheduler in <code>GlobalScheduler::start()</code>.</strong></p>
+
+<p>The global scheduler should be created and initialized before the first
+ process executes. The first process should be present in scheduler’s queue
+ before it executes.</p></li>
+
+<li><p><strong>Invoke the scheduler when a timer interrupt occurs.</strong></p>
+
+<p>Invoke <code>SCHEDULER.switch()</code> on a timer interrupt to context switch between
+ the current process and the next process.</p></li>
+</ol>
+
+<p>Test your scheduler by starting more than one process in
+<code>GlobalScheduler::start()</code>. You’ll need to allocate new processes and set up
+their trap frames appropriately. You’ll likely want to create a new <code>extern</code>
+function for each new process so that you can differentiate between them. Ensure
+that you add the processes to the scheduler’s queue in the correct order.</p>
+
+<p>When you are finished, you should see a different process execute every <code>TICK</code>
+microseconds. You should be able to interact with each process normally between
+timer interrupts. When everything works as you expect, proceed to the next
+subphase.</p>
+
+
+<div class="alert alert-dismissible alert-warning">
+   <p style="font-size: 16px; font-weight: bold;">
+      
+         <span class="glyphicon glyphicon-warning-sign" aria-hidden="true" style="margin-right: 3px"></span>
+      
+      Don’t overflow when generating a process ID!
+   </p>
+   <p></p>
+</div>
+
+
+
+
+<div class="alert alert-dismissible alert-danger">
+   <p style="font-size: 16px; font-weight: bold;">
+      
+         <span class="glyphicon glyphicon-ban-circle" aria-hidden="true" style="margin-right: 3px"></span>
+      
+      You should not use <code>unsafe</code> to implement any of these routines!
+   </p>
+   <p></p>
+</div>
+
+
+
+<div class="alert alert-dismissible alert-success">
+   <p style="font-size: 16px;">
+   <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+   <span style="font-weight: bold;">Hint:</span> Use <a href="https://doc.rust-lang.org/std/mem/fn.replace.html">mem::replace()</a> to get an owned version of the process’s <code>state</code>.</p>
+</div>
+
+
+
+<div class="panel panel-question">
+  <div class="panel-heading">
+     <div class="badge pull-right">
+        <code>
+           wfi
+        </code>
+     </div>
+    <h3 class="panel-title">
+       <span class="glyphicon glyphicon-question-sign" aria-hidden="true" style="padding-right: 5px"></span>
+       Why is it correct to wait for interrupts when no process is ready?
+    </h3>
+  </div>
+  <div class="panel-body">
+     <p></p><p>Using the <code>wfi</code> instruction to wait when no process is ready means that the
+  CPU stalls until an interrupt arrives. If no interrupt arrives after a <code>wfi</code>
+  is executed, scheduling never resumes. Why is this the correct behavior?</p>
+
+<p></p><div class="alert alert-dismissible alert-success">
+   <p style="font-size: 16px;">
+   <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+   <span style="font-weight: bold;">Hint:</span> Think about the scenarios in which a process is in the waiting state.</p>
+</div><p></p>
+<p></p>
+  </div>
+</div>
+
+
+<hr>
+
+<h4 id="subphase-e-sleep">Subphase E: Sleep</h4>
+
+<p>In this subphase, you will implement the <code>sleep</code> system call and shell command.
+You will be working primarily in <code>kernel/src/shell.rs</code> and <code>kernel/src/traps</code>.</p>
+
+<h5 id="system-calls">System Calls</h5>
+
+<p>A system call is nothing more than a particular kind of exception. When the <code>svc
+#n</code> instruction is executed, a synchronous exception with syndrome <code>Svc(n)</code> will
+be generated corresponding to system call <code>n</code>. This is similar to how <code>brk #n</code>
+generates a <code>Brk(n)</code> exception except that the preferred link address is the
+instruction after the <code>svc</code> instruction instead of the instruction itself.
+System calls are the mechanism that user processes use to request services from
+the operating system that they would otherwise have insufficient permissions to
+carry out.</p>
+
+<p>A typical operating system exposes 100s of system calls ranging from file system
+operations to getting information about the underlying hardware. In this
+subphase you will implement the <code>sleep</code> system call. The <code>sleep</code> system call
+asks the scheduler not to schedule the process for some amount of time. In other
+words, it asks the operating system to put the process to sleep.</p>
+
+<h5 id="syscall-convention">Syscall Convention</h5>
+
+<p>Just as we need a convention for function calls, we require a convention for
+system calls. Our operating system will adopt a modified version of the system
+call convention used by other Unix-based operating systems. The rules are:</p>
+
+<ul>
+<li><p>System call <code>n</code> is invoked with <code>svc #n</code>.</p></li>
+
+<li><p>Up to 7 parameters can be passed to a system call in registers <code>x0</code>…<code>x6</code>.</p></li>
+
+<li><p>Up to 7 parameters can be returned from a system call in registers <code>x0</code>…<code>x6</code>.</p></li>
+
+<li><p>Register <code>x7</code> is used to indicate an error.</p>
+
+<ul>
+<li><p>If <code>x7</code> is <code>0</code>, there was no error.</p></li>
+
+<li><p>If <code>x7</code> is <code>1</code>, the system call does not exist.</p></li>
+
+<li><p>If <code>x7</code> is any other value, it represents an error code specific to the
+system call.</p></li>
+</ul></li>
+
+<li><p>All other registers and program state are preserved by the kernel.</p></li>
+</ul>
+
+<p>As such, to invoke an imaginary system call <code>7</code> that takes two parameters, a
+<code>u32</code> and a <code>u64</code>, and returns two values, two <code>u64</code>s, we might write the
+following using Rust’s <a href="https://doc.rust-lang.org/unstable-book/language-features/asm.html">inline assembly</a>:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#a90d91">fn</span> <span style="color:#000">syscall_7</span>(<span style="color:#000">a</span>: <span style="color:#a90d91">u32</span>, <span style="color:#000">b</span>: <span style="color:#a90d91">u64</span>) -&gt; <span style="color:#a90d91">Result</span><span style="color:#000">&lt;</span>(<span style="color:#a90d91">u64</span>, <span style="color:#a90d91">u64</span>), <span style="color:#000">Error</span><span style="color:#000">&gt;</span> {
+    <span style="color:#a90d91">let</span> <span style="color:#000">error</span>: <span style="color:#a90d91">u64</span>;
+    <span style="color:#a90d91">let</span> <span style="color:#000">result_one</span>: <span style="color:#a90d91">u64</span>;
+    <span style="color:#a90d91">let</span> <span style="color:#000">result_two</span>: <span style="color:#a90d91">u64</span>;
+    <span style="color:#a90d91">unsafe</span> {
+        <span style="color:#000">asm</span><span style="color:#000">!</span>(<span style="color:#c41a16">"mov w0, $3
+</span><span style="color:#c41a16">              mov x1, $4
+</span><span style="color:#c41a16">              svc 7
+</span><span style="color:#c41a16">              mov $0, x0
+</span><span style="color:#c41a16">              mov $1, x1
+</span><span style="color:#c41a16">              mov $2, x7"</span>
+              : <span style="color:#c41a16">"=r"</span>(<span style="color:#000">result_one</span>), <span style="color:#c41a16">"=r"</span>(<span style="color:#000">result_two</span>), <span style="color:#c41a16">"=r"</span>(<span style="color:#000">error</span>)
+              : <span style="color:#c41a16">"r"</span>(<span style="color:#000">a</span>), <span style="color:#c41a16">"r"</span>(<span style="color:#000">b</span>)
+              : <span style="color:#c41a16">"x0"</span>, <span style="color:#c41a16">"x1"</span>, <span style="color:#c41a16">"x7"</span>)
+    }
+
+    <span style="color:#a90d91">if</span> <span style="color:#000">error</span> <span style="color:#000">!=</span> <span style="color:#1c01ce">0</span> {
+        <span style="color:#a90d91">Err</span>(<span style="color:#000">Error</span>::<span style="color:#000">from</span>(<span style="color:#000">error</span>))
+    } <span style="color:#a90d91">else</span> {
+        <span style="color:#a90d91">Ok</span>((<span style="color:#000">result_one</span>, <span style="color:#000">result_two</span>))
+    }
+}</code></pre></div>
+<p>Notice that the wrapper around the system call checks the error value before
+returning the result value.</p>
+
+<div class="panel panel-question">
+  <div class="panel-heading">
+     <div class="badge pull-right">
+        <code>
+           syscall-error
+        </code>
+     </div>
+    <h3 class="panel-title">
+       <span class="glyphicon glyphicon-question-sign" aria-hidden="true" style="padding-right: 5px"></span>
+       Why do we use a separate register to pass the error value?
+    </h3>
+  </div>
+  <div class="panel-body">
+     <p></p><p>Most Unix operating systems, including Linux, overload the first result
+  register (<code>x0</code>, in our case) as the error value register. In these
+  conventions, negative values with a certain range represent error codes; all
+  other values are interpreted as successful return values. What is the
+  advantage to the approach that we have taken? What is the disadvantage?</p>
+<p></p>
+  </div>
+</div>
+
+
+<h5 id="sleep-syscall">Sleep Syscall</h5>
+
+<p>The <code>sleep</code> system call will be system call number <code>1</code> in our operating system.
+The call takes one parameter: a <code>u32</code> corresponding to the number of
+milliseconds that the calling process should be suspended for. Besides the
+possible error value, it returns one parameter: a <code>u32</code> corresponding to the
+number of milliseconds that elapsed between the process’s initial request to
+sleep and the process being woken up. Its pseudocode signature would be:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust">(<span style="color:#1c01ce">1</span>) <span style="color:#000">sleep</span>(<span style="color:#a90d91">u32</span>) -&gt; <span style="color:#a90d91">u32</span></code></pre></div>
+<div class="panel panel-question">
+  <div class="panel-heading">
+     <div class="badge pull-right">
+        <code>
+           sleep-elapsed
+        </code>
+     </div>
+    <h3 class="panel-title">
+       <span class="glyphicon glyphicon-question-sign" aria-hidden="true" style="padding-right: 5px"></span>
+       When does the elapsed time differ from the requested time?
+    </h3>
+  </div>
+  <div class="panel-body">
+     <p></p><p>In which situations, if any, will the return value from <code>sleep</code> differ from
+  the input value? In which situations, if any, will they be identical? What do
+  you think the relative probability of each case is?</p>
+<p></p>
+  </div>
+</div>
+
+
+<h5 id="implementation-6">Implementation</h5>
+
+<p>Implement the <code>sleep</code> system call now. Start by modifying your
+<code>handle_exception</code> function in <code>kernel/src/traps/mod.rs</code> so that it recognizes
+system call exceptions and forwards them to the <code>handle_syscall</code> function in
+<code>kernel/src/traps/syscalls.rs</code>. Then implement the <code>handle_syscall</code> function.
+The function should recognize the <code>sleep</code> system call and modify the currently
+executing process as required. You will likely need to create a <code>Box&lt;FnMut&gt;</code>
+using a closure to complete your implementation. This should look as follows:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#a90d91">let</span> <span style="color:#000">boxed_fnmut</span> <span style="color:#000">=</span> <span style="color:#a90d91">Box</span>::<span style="color:#000">new</span>(<span style="color:#a90d91">move</span> <span style="color:#000">|</span><span style="color:#000">p</span><span style="color:#000">|</span> {
+    <span style="color:#177500">// use `p`
+</span><span style="color:#177500"></span>});</code></pre></div>
+<p>You can read more about <a href="https://doc.rust-lang.org/book/second-edition/ch13-01-closures.html">closures in TRPLv2</a>.</p>
+
+<p>Finally, add a <code>sleep &lt;ms&gt;</code> command to your shell that invokes the sleep system
+call, passing in <code>ms</code> milliseconds as the sleep time.</p>
+
+<p>Test your implementation by calling <code>sleep</code> in user-level shells. Ensure that a
+process is not scheduled while it is sleeping. All other processes should
+continue to be scheduled correctly. Then, ensure that <em>no</em> process is scheduled
+if all processes are sleeping. Once your implementation works as you expect,
+proceed to the next subphase.</p>
+
+<div class="alert alert-dismissible alert-success">
+   <p style="font-size: 16px;">
+   <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+   <span style="font-weight: bold;">Hint:</span> The <code>sleep</code> system call handler will need to interact with the scheduler.</p>
+</div>
+
+
+
+<div class="alert alert-dismissible alert-success">
+   <p style="font-size: 16px;">
+   <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+   <span style="font-weight: bold;">Hint:</span> Recall that closures can capture values from their environment.</p>
+</div>
+
+
+
+<div class="alert alert-dismissible alert-success">
+   <p style="font-size: 16px;">
+   <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+   <span style="font-weight: bold;">Hint:</span> The <code>u32</code> type implement <a href="https://doc.rust-lang.org/std/str/trait.FromStr.html">FromStr</a>.</p>
+</div>
+
+
+
+<hr>
+
+<h3 id="phases-3-4-coming-soon">Phases 3, 4: Coming soon</h3>
+
+<p>Coming soon!</p>
+
+<!--
+
+--------------------------------------------------------------------------------
+
+### Phases 3: I Forgot, Virtually
+
+Coming soon!
+
+--------------------------------------------------------------------------------
+
+### Phase 4: Spaced Out
+
+Coming soon!
+
+-->
+
+<hr>
+
+<h3 id="span-class-glyphicon-glyphicon-flag-aria-hidden-true-span-submission"><span class="glyphicon glyphicon-flag" aria-hidden="true"></span> Submission</h3>
+
+
+<div class="alert alert-dismissible alert-warning">
+   <p style="font-size: 16px; font-weight: bold;">
+      
+         <span class="glyphicon glyphicon-warning-sign" aria-hidden="true" style="margin-right: 3px"></span>
+      
+      Ensure your skeletons are up-to-date!
+   </p>
+   <p></p><p>Ensure your skeletons are up-to-date by committing or discarding any changes
+  and pulling the latest <code>3-spawn</code> and <code>os</code> skeletons with <code>git pull</code>.</p>
+<p></p>
+</div>
+
+
+
+<p>Once you’ve completed phases 1 and 2 above, you’re done and ready to submit!
+Congratulations!</p>
+
+<p>From inside of the <code>3-spawn</code> assignment 3 skeleton directory, you can call <code>make
+check</code> to check if you’ve answered every question. Note that there are no unit
+tests for this assignment in <code>os</code>. You’re responsible for ensuring that
+everything works as expected.</p>
+
+<p>When you’re ready, commit your changes. <strong>Any uncommitted changes will not be
+submitted with your assignment.</strong> Then, run <code>make submission</code> from the <code>3-spawn</code>
+directory and proceed to the <a href="https://web.stanford.edu/class/cs140e/assignments/submission">submission page</a> to upload your submission.</p>
+
+      </article>
+
+      <div class="col-md-3 sidebar">
+         
+            <h3>Table of Contents</h3>
+            
+
+
+ 
+
+
+
+
+
+
+<div class="table-of-contents toc bd-callout">
+    
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/3-spawn/#overview">
+                    <li>Overview</li>
+                </a>
+                
+                
+                    </ul>
+                
+             
+        
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/3-spawn/#phase-0-getting-started">
+                    <li>Phase 0: Getting Started</li>
+                </a>
+                
+                
+                    </ul>
+                
+             
+        
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                    <ul class="toc-h4">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/3-spawn/#getting-the-skeleton-code">
+                    <li>Getting the Skeleton Code</li>
+                </a>
+                
+                
+                    </ul>
+                
+                    </ul>
+                
+             
+        
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                    <ul class="toc-h4">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/3-spawn/#arm-documentation">
+                    <li>ARM Documentation</li>
+                </a>
+                
+                
+                    </ul>
+                
+                    </ul>
+                
+             
+        
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/3-spawn/#phase-1-arm-and-a-leg">
+                    <li>Phase 1: ARM and a Leg</li>
+                </a>
+                
+                
+                    </ul>
+                
+             
+        
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                    <ul class="toc-h4">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/3-spawn/#subphase-a-armv8-overview">
+                    <li>Subphase A: ARMv8 Overview</li>
+                </a>
+                
+                
+                    </ul>
+                
+                    </ul>
+                
+             
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                    <ul class="toc-h4">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/3-spawn/#subphase-b-instructions">
+                    <li>Subphase B: Instructions</li>
+                </a>
+                
+                
+                    </ul>
+                
+                    </ul>
+                
+             
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                    <ul class="toc-h4">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/3-spawn/#subphase-c-switching-to-el1">
+                    <li>Subphase C: Switching to EL1</li>
+                </a>
+                
+                
+                    </ul>
+                
+                    </ul>
+                
+             
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                    <ul class="toc-h4">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/3-spawn/#subphase-d-exception-vectors">
+                    <li>Subphase D: Exception Vectors</li>
+                </a>
+                
+                
+                    </ul>
+                
+                    </ul>
+                
+             
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                    <ul class="toc-h4">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/3-spawn/#subphase-e-exception-return">
+                    <li>Subphase E: Exception Return</li>
+                </a>
+                
+                
+                    </ul>
+                
+                    </ul>
+                
+             
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/3-spawn/#phase-2-it-s-a-process">
+                    <li>Phase 2: It’s a Process</li>
+                </a>
+                
+                
+                    </ul>
+                
+             
+        
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                    <ul class="toc-h4">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/3-spawn/#subphase-a-processes">
+                    <li>Subphase A: Processes</li>
+                </a>
+                
+                
+                    </ul>
+                
+                    </ul>
+                
+             
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                    <ul class="toc-h4">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/3-spawn/#subphase-b-the-first-process">
+                    <li>Subphase B: The First Process</li>
+                </a>
+                
+                
+                    </ul>
+                
+                    </ul>
+                
+             
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                    <ul class="toc-h4">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/3-spawn/#subphase-c-timer-interrupts">
+                    <li>Subphase C: Timer Interrupts</li>
+                </a>
+                
+                
+                    </ul>
+                
+                    </ul>
+                
+             
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                    <ul class="toc-h4">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/3-spawn/#subphase-d-scheduler">
+                    <li>Subphase D: Scheduler</li>
+                </a>
+                
+                
+                    </ul>
+                
+                    </ul>
+                
+             
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                    <ul class="toc-h4">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/3-spawn/#subphase-e-sleep">
+                    <li>Subphase E: Sleep</li>
+                </a>
+                
+                
+                    </ul>
+                
+                    </ul>
+                
+             
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/3-spawn/#phases-3-4-coming-soon">
+                    <li>Phases 3, 4: Coming soon</li>
+                </a>
+                
+                
+                    </ul>
+                
+             
+        
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/3-spawn/#span-class-glyphicon-glyphicon-flag-aria-hidden-true-span-submission">
+                    <li>Submission</li>
+                </a>
+                
+                
+                    </ul>
+                
+             
+        
+    
+</div>
+
+
+         
+
+         
+            <h3>References</h3>
+            
+               <p>
+                  <a href="https://doc.rust-lang.org/book/second-edition/">The Rust Programming Language v2</a>
+                   <br> TRPL v2, an introductory book about Rust and required reading material for this course. 
+               </p>
+            
+               <p>
+                  <a href="https://doc.rust-lang.org/nightly/std/">Rust Standard Library Documentation</a>
+                   <br> The rustdocs for Rust's standard library, a staple while writing any Rust software. 
+               </p>
+            
+               <p>
+                  <a href="https://web.stanford.edu/class/cs140e/docs/BCM2837-ARM-Peripherals.pdf">BCM2837 Documentation</a>
+                   <br> Our modified version of the BCM2835 documentation with fixes for the BCM2837 and known errata. 
+               </p>
+            
+               <p>
+                  <a href="https://web.stanford.edu/class/cs140e/docs/ARMv8-Reference-Manual.pdf">ARMv8 Reference Manual</a>
+                   <br> Reference manual for the ARMv8 architecture. This is a wholistic manual covering the entire architecture in a general manner. For the specific implementation of the architecture for the Raspberry Pi 3, see the ARM Cortex A53 Manual. 
+               </p>
+            
+               <p>
+                  <a href="https://web.stanford.edu/class/cs140e/docs/ARM-Cortex-A53-Manual.pdf">ARM Cortex-A53 Manual</a>
+                   <br> Manual for the specific implementation of the ARMv8 (v8.0-A) architecture as used by the Raspberry Pi 3. 
+               </p>
+            
+               <p>
+                  <a href="https://web.stanford.edu/class/cs140e/docs/ARMv8-A-Programmer-Guide.pdf">ARMv8-A Programmer Guide</a>
+                   <br> A high-level guide on how to program an ARMv8-A process. 
+               </p>
+            
+               <p>
+                  <a href="https://web.stanford.edu/class/cs140e/docs/AArch64-Procedure-Call-Standard.pdf">AArch64 Procedural Call Standard</a>
+                   <br> Official procedure call standard for the AArch64 architecture. 
+               </p>
+            
+               <p>
+                  <a href="https://web.stanford.edu/class/cs140e/docs/AArch64-ISA-Cheat-Sheet.pdf">ARMv8 ISA Cheat Sheet</a>
+                   <br> A concise reference of the ARMv8 assembly instructions presented in this assignment, by Griffin Dietz. 
+               </p>
+            
+         
+      </div>
+   </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+    <script src="./assignment3_spawn_files/jquery-1.10.2.min.js"></script>
+    <script src="./assignment3_spawn_files/moment.min.js"></script>
+    <script src="./assignment3_spawn_files/bootstrap.min.js"></script>
+    <script src="./assignment3_spawn_files/bootswatch.js"></script>
+    <script src="./assignment3_spawn_files/schedule.js" type="text/javascript" charset="utf-8"></script>
+  
+
+
+
+<iframe frameborder="0" scrolling="no" style="background-color: transparent; border: 0px; display: none;" src="./assignment3_spawn_files/saved_resource.html"></iframe><div id="GOOGLE_INPUT_CHEXT_FLAG" style="display: none;" input="" input_stat="{&quot;tlang&quot;:true,&quot;tsbc&quot;:true,&quot;pun&quot;:false,&quot;mk&quot;:true,&quot;ss&quot;:true}"></div><div id="HUABAN_WIDGETS"><div class="HUABAN-f-button" style="display: none;">采集</div><style>#HUABAN_WIDGETS  {font-family: "helvetica neue",arial,sans-serif; color: #444; font-size: 14px;} #HUABAN_WIDGETS * {box-sizing: content-box;} #HUABAN_WIDGETS .HUABAN-main {position: fixed; left: 0; top: 0; width: 100%; height: 100%; background: #e5e5e5; background: rgba(229,229,229,.95); max-height: 100%; overflow: hidden; z-index: 9999999999999;} #HUABAN_WIDGETS a img {border: 0;} #HUABAN_WIDGETS .HUABAN-header {height: 50px; background: white; box-shadow: 0 0 4px rgba(0,0,0,.2); width: 100%; left: 0; top: 0; position: absolute;} #HUABAN_WIDGETS .HUABAN-header .HUABAN-inner {margin: 0 auto; position: relative;} #HUABAN_WIDGETS .HUABAN-header .HUABAN-close {width: 60px; height: 50px; border-left: 1px solid #ddd; position: absolute; right: 0; top: 0; background: url(https://huaban.com/img/widgets/btn_close.png) 20px 14px no-repeat; cursor: pointer;} #HUABAN_WIDGETS .HUABAN-header .HUABAN-close:hover {background-position: 20px -26px;} #HUABAN_WIDGETS .HUABAN-header .HUABAN-close:active {background-position: 20px -66px;} #HUABAN_WIDGETS .HUABAN-header .HUABAN-logo {display: block; position: absolute; top: 12px;} #HUABAN_WIDGETS .HUABAN-waterfall-holder {position: relative; overflow-y: auto; height: 100%;} #HUABAN_WIDGETS .HUABAN-waterfall {position: relative; margin-top: 50px;} #HUABAN_WIDGETS .HUABAN-waterfall .HUABAN-empty {position: absolute; left: 50%; top: 30px; height: 36px; line-height: 36px; width: 216px; text-align: left; margin-left: -128px; color: #777; background: url(https://huaban.com/img/widgets/icon_notice.png) 12px 8px no-repeat white; padding-left: 40px; font-size: 15px;} #HUABAN_WIDGETS .HUABAN-btn {display: inline-block; border-radius: 2px; font-size: 14px; padding: 0 12px; height: 30px; line-height: 30px; cursor: pointer; text-decoration: none; white-space: nowrap; -moz-user-select: none; -webkit-user-select: none; user-select: none; text-align: center; background: #D53939; color: white;} #HUABAN_WIDGETS .HUABAN-btn:hover {background: #E54646;} #HUABAN_WIDGETS .HUABAN-btn:active {background: #C52424;} #HUABAN_WIDGETS .HUABAN-wbtn {background: #EDEDED; color: #444;} #HUABAN_WIDGETS .HUABAN-wbtn:hover {background: #F2F2F2;} #HUABAN_WIDGETS .HUABAN-wbtn:active {background: #DDD;} #HUABAN_WIDGETS .HUABAN-f-button {position: absolute; display: none; z-index: 9999999999998; box-shadow: 0 0 0 2px rgba(255,255,255,.2); background: #aaa; background: rgba(0,0,0,.3); color: white; cursor: pointer; padding: 0 12px; height: 30px; line-height: 30px; border-radius: 2px; font-size: 14px} #HUABAN_WIDGETS .HUABAN-f-button:hover {background-color: #999; background-color: rgba(0,0,0,.5);} #HUABAN_WIDGETS .HUABAN-f-button:active {background-color: rgba(0,0,0,.6);} #HUABAN_WIDGETS .HUABAN-red-normal-icon-button {width: 36px; height: 24px; border: 0px; line-height: 24px; padding-left: 24px; padding-right: 0px; text-align: left; background: url(https://huaban.com/img/widgets/widget_icons.png) 0 -200px no-repeat; box-shadow: none !important; font-size: 14px; background-color: transparent !important;} #HUABAN_WIDGETS .HUABAN-red-normal-icon-button:hover {background-position: -130px -200px;} #HUABAN_WIDGETS .HUABAN-red-normal-icon-button:active {background-position: -260px -200px;} #HUABAN_WIDGETS .HUABAN-red-large-icon-button {width: 80px; height: 24px; border: 0px; line-height: 24px; padding-left: 24px; padding-right: 0px; text-align: left; background: url(https://huaban.com/img/widgets/widget_icons.png) 0 -150px no-repeat; box-shadow: none !important; font-size: 14px; background-color: transparent !important;} #HUABAN_WIDGETS .HUABAN-red-large-icon-button:hover {background-position: -130px -150px;} #HUABAN_WIDGETS .HUABAN-red-large-icon-button:active {background-position: -260px -150px;} #HUABAN_WIDGETS .HUABAN-red-small-icon-button {width: 30px; height: 21px; border: 0px; line-height: 21px; padding-left: 20px; padding-right: 0px; text-align: left; background: url(https://huaban.com/img/widgets/widget_icons.png) 0 -250px no-repeat; box-shadow: none !important; font-size: 12px; background-color: transparent !important;} #HUABAN_WIDGETS .HUABAN-red-small-icon-button:hover {background-position: -130px -250px;} #HUABAN_WIDGETS .HUABAN-red-small-icon-button:active {background-position: -260px -250px;} #HUABAN_WIDGETS .HUABAN-white-normal-icon-button {width: 36px; height: 24px; border: 0px; line-height: 24px; padding-left: 24px; padding-right: 0px; text-align: left; background: url(https://huaban.com/img/widgets/widget_icons.png) 0 -500px no-repeat; box-shadow: none !important; color: #444; font-size: 14px; background-color: transparent !important;} #HUABAN_WIDGETS .HUABAN-white-normal-icon-button:hover {background-position: -130px -500px;} #HUABAN_WIDGETS .HUABAN-white-normal-icon-button:active {background-position: -260px -500px;} #HUABAN_WIDGETS .HUABAN-white-large-icon-button {width: 80px; height: 24px; border: 0px; line-height: 24px; padding-left: 24px; padding-right: 0px; text-align: left; background: url(https://huaban.com/img/widgets/widget_icons.png) 0 -450px no-repeat; box-shadow: none !important; color: #444; font-size: 14px; background-color: transparent !important;} #HUABAN_WIDGETS .HUABAN-white-large-icon-button:hover {background-position: -130px -450px;} #HUABAN_WIDGETS .HUABAN-white-large-icon-button:active {background-position: -260px -450px;} #HUABAN_WIDGETS .HUABAN-white-small-icon-button {width: 30px; height: 21px; border: 0px; line-height: 21px; padding-left: 20px; padding-right: 0px; text-align: left; background: url(https://huaban.com/img/widgets/widget_icons.png) 0 -550px no-repeat; box-shadow: none !important; color: #444; font-size: 12px; background-color: transparent !important;} #HUABAN_WIDGETS .HUABAN-white-small-icon-button:hover {background-position: -130px -550px;} #HUABAN_WIDGETS .HUABAN-white-small-icon-button:active {background-position: -260px -550px;} #HUABAN_WIDGETS .HUABAN-cell {width: 236px; position: absolute; background: white; box-shadow: 0 1px 3px rgba(0,0,0,.3); transition: left .3s ease-in-out, top .3s linear;} #HUABAN_WIDGETS .HUABAN-cell .HUABAN-img-holder {overflow: hidden; position: relative;} #HUABAN_WIDGETS .HUABAN-cell .HUABAN-img-holder:hover img.HUABAN-cell-img {opacity: .8} #HUABAN_WIDGETS .HUABAN-cell .HUABAN-video-icon {width: 72px; height: 62px; position: absolute; left: 50%; top: 50%; margin: -31px auto auto -36px; background: url(https://huaban.com/img/widgets/media_video.png) 0 0 no-repeat; display: none;} #HUABAN_WIDGETS .HUABAN-cell.HUABAN-video .HUABAN-video-icon {display: block;} #HUABAN_WIDGETS .HUABAN-cell .HUABAN-over {display: none;} #HUABAN_WIDGETS .HUABAN-cell:hover .HUABAN-over {display: block;} #HUABAN_WIDGETS .HUABAN-cell .HUABAN-over .HUABAN-btn {width: 60px; height: 34px; padding: 0; position: absolute; left: 50%; top: 50%; margin: -18px 0 0 -31px; line-height: 34px; box-shadow: 0 0 0 2px rgba(255,255,255,.2); font-size: 16px;} #HUABAN_WIDGETS .HUABAN-cell.HUABAN-long .HUABAN-img-holder {height: 600px;} #HUABAN_WIDGETS .HUABAN-cell.HUABAN-long .HUABAN-img-holder:after {content: ""; display: block; position: absolute; width: 236px; height: 12px; left: 0; bottom: 0; background: url(https://huaban.com/img/widgets/long_image_shadow_2.png) repeat-x 4px top;} #HUABAN_WIDGETS .HUABAN-cell img {width: 236px; display: block;} #HUABAN_WIDGETS .HUABAN-cell .HUABAN-size {margin: 8px 16px; font-size: 12px; color: #999} #HUABAN_WIDGETS .HUABAN-cell .HUABAN-description {display: block; width: 202px; margin: 0 6px 6px; padding: 6px 10px; border: 0; resize: none; outline: 0; border: 1px solid transparent; line-height: 18px; font-size: 13px; overflow: hidden; word-wrap: break-word; background: url(https://huaban.com/img/widgets/icon_edit.png) 500px center no-repeat;} #HUABAN_WIDGETS .HUABAN-cell:hover .HUABAN-description {background-color: #fff9e0; background-position: right top;} #HUABAN_WIDGETS .HUABAN-cell .HUABAN-description:focus {background-color: #F9F9F9; background-position: 500px center;} #HUABAN_WIDGETS .HUABAN-cell .HUABAN-select-btn {width: 34px; height:34px; background: url(https://huaban.com/img/widgets/checkbox.png) 0 0 no-repeat; position: absolute; right: 5px; top: 5px; cursor: pointer;} #HUABAN_WIDGETS .HUABAN-cell .HUABAN-pinned-label {position: absolute; left: 0; top: 10px; height: 24px; line-height: 24px; padding: 0 10px; background: #CE0000; background: rgba(200, 0, 0, 0.9); color: white; font-size: 12px; display: none;} #HUABAN_WIDGETS .HUABAN-cell.HUABAN-pinned .HUABAN-pinned-label {display: block;} #HUABAN_WIDGETS .HUABAN-selected .HUABAN-select-btn {background-position: 0 -40px;} #HUABAN_WIDGETS .HUABAN-multi .HUABAN-cell .HUABAN-img-holder {cursor: pointer;} #HUABAN_WIDGETS .HUABAN-multi .HUABAN-cell .HUABAN-cell-pin-btn {display: none;} #HUABAN_WIDGETS .HUABAN-multi .HUABAN-cell .HUABAN-over {display: block;} #HUABAN_WIDGETS .HUABAN-header .HUABAN-multi-buttons {position: absolute; top: 10px; left: 0; display: none;} #HUABAN_WIDGETS .HUABAN-header .HUABAN-multi-buttons .HUABAN-btn {margin-right: 10px;} #HUABAN_WIDGETS .HUABAN-header .HUABAN-multi-noti {display: none; height: 50px; line-height: 50px; text-align: center; font-size: 16px; color: #999; font-weight: bold;} #HUABAN_WIDGETS .HUABAN-header .HUABAN-multi-noti span {font-weight: normal;} #HUABAN_WIDGETS .HUABAN-header .HUABAN-multi-noti i {font-style: normal;} #HUABAN_WIDGETS .HUABAN-header .HUABAN-notice {padding: 0 10px; height:30px; line-height: 30px; position: absolute; left: 50%; top: 10px; margin-left: -83px; background: #fff9e2; text-align: center;} #HUABAN_WIDGETS .HUABAN-header .HUABAN-notice i {display: inline-block; width: 18px; height: 18px; background: url(https://huaban.com/img/widgets/icon_notice.png) 0 0 no-repeat; vertical-align: top; margin: 6px 6px 0 0;} #HUABAN_WIDGETS .HUABAN-switcher {height: 50px; width: 100px; position: relative;} #HUABAN_WIDGETS .HUABAN-switcher .HUABAN-title {position: absolute; right: 75px; top: 13px; color: #999; white-space: nowrap; line-height: 24px; opacity: 0; visibility: hidden;} #HUABAN_WIDGETS .HUABAN-switcher:hover .HUABAN-title {visibility: visible; opacity: 1; -webkit-transition: opacity .2s linear; -webkit-transition-delay: .2s; transition: opacity .2s linear; transition-delay: .2s;} #HUABAN_WIDGETS .HUABAN-switcher .HUABAN-bar {width: 40px; height: 24px; background: #EB595F; border-radius: 12px; color: white; position: absolute; right: 0; top: 13px; cursor: pointer; font-size: 14px; -webkit-transition: all .2s linear; transition: all .2s linear;} #HUABAN_WIDGETS .HUABAN-switcher:hover .HUABAN-bar {width: 64px;} #HUABAN_WIDGETS .HUABAN-switcher.HUABAN-on .HUABAN-bar {background: #7DD100;} #HUABAN_WIDGETS .HUABAN-switcher .HUABAN-bar .HUABAN-round {width: 20px; height: 20px; background: white; border-radius: 50%; position: absolute; left: 2px; top: 2px; -webkit-transition: left .2s linear; box-shadow: 0px 0px 3px rgba(0,0,0,0.15); transition: left .2s linear; box-shadow: 0px 0px 3px rgba(0,0,0,0.15);} #HUABAN_WIDGETS .HUABAN-switcher.HUABAN-on .HUABAN-bar .HUABAN-round {left: 17px;} #HUABAN_WIDGETS .HUABAN-switcher.HUABAN-on:hover .HUABAN-bar .HUABAN-round {left: 41px;} #HUABAN_WIDGETS .HUABAN-switcher .HUABAN-bar .HUABAN-text-1 {height: 24px; line-height: 24px; position: absolute; right:17px; top: 0; opacity: 0; visibility: hidden; -webkit-transition: all .2s linear; transition: all .2s linear;} #HUABAN_WIDGETS .HUABAN-switcher:hover .HUABAN-bar .HUABAN-text-1 {right: 9px; opacity: 1; visibility: visible;} #HUABAN_WIDGETS .HUABAN-switcher.HUABAN-on:hover .HUABAN-bar .HUABAN-text-1 {right: 17px; opacity: 0; visibility: hidden;} #HUABAN_WIDGETS .HUABAN-switcher .HUABAN-bar .HUABAN-text-2 {height: 24px; line-height: 24px; position: absolute; left:17px; top: 0; opacity: 0; visibility: hidden; -webkit-transition: all .2s linear; transition: all .2s linear;} #HUABAN_WIDGETS .HUABAN-switcher:hover .HUABAN-bar .HUABAN-text-2 {left: 17px; opacity: 0; visibility: hidden;} #HUABAN_WIDGETS .HUABAN-switcher.HUABAN-on:hover .HUABAN-bar .HUABAN-text-2 {left: 9px; opacity: 1; visibility: visible;} #HUABAN_WIDGETS .HUABAN-header .HUABAN-switcher {position: absolute; right: 0; top: 0;} <!--[if IE 6]>#HUABAN_WIDGETS .HUABAN-red-normal-icon-button, .HUABAN-red-large-icon-button, .HUABAN-red-small-icon-button, .HUABAN-white-normal-icon-button, .HUABAN-white-large-icon-button, .HUABAN-white-small-icon-button { background-image: url({{imgBase}}/widget_icons_ie6.png) <![endif]--></style></div></body></html>

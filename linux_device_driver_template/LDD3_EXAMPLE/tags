@@ -1,0 +1,1174 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+CFLAGS	misc-progs/Makefile	/^CFLAGS = -O2 -fomit-frame-pointer -Wall -I$(INCLUDEDIR)$/;"	m
+DEBFLAGS	lddbus/Makefile	/^  DEBFLAGS = -O -g # "-O" is needed to expand inlines$/;"	m
+DEBFLAGS	lddbus/Makefile	/^  DEBFLAGS = -O2$/;"	m
+DEBFLAGS	sbull/Makefile	/^  DEBFLAGS = -O -g -DSBULL_DEBUG # "-O" is needed to expand inlines$/;"	m
+DEBFLAGS	sbull/Makefile	/^  DEBFLAGS = -O2$/;"	m
+DEBFLAGS	scull/Makefile	/^  DEBFLAGS = -O -g -DSCULL_DEBUG # "-O" is needed to expand inlines$/;"	m
+DEBFLAGS	scull/Makefile	/^  DEBFLAGS = -O2$/;"	m
+DEBFLAGS	scullc/Makefile	/^  DEBFLAGS = -O -g -DSCULLC_DEBUG # "-O" is needed to expand inlines$/;"	m
+DEBFLAGS	scullc/Makefile	/^  DEBFLAGS = -O2$/;"	m
+DEBFLAGS	sculld/Makefile	/^  DEBFLAGS = -O -g -DSCULLD_DEBUG # "-O" is needed to expand inlines$/;"	m
+DEBFLAGS	sculld/Makefile	/^  DEBFLAGS = -O2$/;"	m
+DEBFLAGS	scullp/Makefile	/^  DEBFLAGS = -O -g -DSCULLP_DEBUG # "-O" is needed to expand inlines$/;"	m
+DEBFLAGS	scullp/Makefile	/^  DEBFLAGS = -O2$/;"	m
+DEBFLAGS	scullv/Makefile	/^  DEBFLAGS = -O -g -DSCULLV_DEBUG # "-O" is needed to expand inlines$/;"	m
+DEBFLAGS	scullv/Makefile	/^  DEBFLAGS = -O2$/;"	m
+DEBFLAGS	short/Makefile	/^  DEBFLAGS = -O -g -DSHORT_DEBUG # "-O" is needed to expand inlines$/;"	m
+DEBFLAGS	short/Makefile	/^  DEBFLAGS = -O2$/;"	m
+DEBFLAGS	simple/Makefile	/^  DEBFLAGS = -O -g # "-O" is needed to expand inlines$/;"	m
+DEBFLAGS	simple/Makefile	/^  DEBFLAGS = -O2$/;"	m
+DEBFLAGS	snull/Makefile	/^  DEBFLAGS = -O -g -DSBULL_DEBUG # "-O" is needed to expand inlines$/;"	m
+DEBFLAGS	snull/Makefile	/^  DEBFLAGS = -O2$/;"	m
+DEBFLAGS	tty/Makefile	/^  DEBFLAGS = -O -g -DSCULL_DEBUG # "-O" is needed to expand inlines$/;"	m
+DEBFLAGS	tty/Makefile	/^  DEBFLAGS = -O2$/;"	m
+DELAY_TIME	tty/tiny_serial.c	34;"	d	file:
+DELAY_TIME	tty/tiny_tty.c	38;"	d	file:
+DEVNUM	sbull/sbull.c	52;"	d	file:
+DRIVER_AUTHOR	tty/tiny_serial.c	/^MODULE_AUTHOR( DRIVER_AUTHOR );$/;"	v
+DRIVER_AUTHOR	tty/tiny_serial.c	26;"	d	file:
+DRIVER_AUTHOR	tty/tiny_tty.c	/^MODULE_AUTHOR( DRIVER_AUTHOR );$/;"	v
+DRIVER_AUTHOR	tty/tiny_tty.c	30;"	d	file:
+DRIVER_DESC	tty/tiny_serial.c	/^MODULE_DESCRIPTION( DRIVER_DESC );$/;"	v
+DRIVER_DESC	tty/tiny_serial.c	27;"	d	file:
+DRIVER_DESC	tty/tiny_tty.c	/^MODULE_DESCRIPTION( DRIVER_DESC );$/;"	v
+DRIVER_DESC	tty/tiny_tty.c	31;"	d	file:
+DRIVER_VERSION	tty/tiny_tty.c	29;"	d	file:
+Devices	sbull/sbull.c	/^static struct sbull_dev *Devices = NULL;$/;"	v	typeref:struct:sbull_dev	file:
+FILES	misc-progs/Makefile	/^FILES = nbtest load50 mapcmp polltest mapper setlevel setconsole inp outp \\$/;"	m
+INCLUDEDIR	misc-progs/Makefile	/^INCLUDEDIR = $(KERNELDIR)\/include$/;"	m
+INVALIDATE_DELAY	sbull/sbull.c	63;"	d	file:
+ISA_BASE	misc-modules/silly.c	56;"	d	file:
+ISA_MAX	misc-modules/silly.c	57;"	d	file:
+ISA_REGION_BEGIN	skull/skull_init.c	36;"	d	file:
+ISA_REGION_END	skull/skull_init.c	37;"	d	file:
+JIT_ASYNC_LOOPS	misc-modules/jit.c	135;"	d	file:
+JIT_BUSY	misc-modules/jit.c	/^	JIT_BUSY,$/;"	e	enum:jit_files	file:
+JIT_QUEUE	misc-modules/jit.c	/^	JIT_QUEUE,$/;"	e	enum:jit_files	file:
+JIT_SCHED	misc-modules/jit.c	/^	JIT_SCHED,$/;"	e	enum:jit_files	file:
+JIT_SCHEDTO	misc-modules/jit.c	/^	JIT_SCHEDTO$/;"	e	enum:jit_files	file:
+KERNELDIR	lddbus/Makefile	/^KERNELDIR ?= \/lib\/modules\/$(shell uname -r)\/build$/;"	m
+KERNELDIR	misc-modules/Makefile	/^    KERNELDIR ?= \/lib\/modules\/$(shell uname -r)\/build$/;"	m
+KERNELDIR	misc-progs/Makefile	/^KERNELDIR ?= \/lib\/modules\/$(shell uname -r)\/build$/;"	m
+KERNELDIR	pci/Makefile	/^KERNELDIR ?= \/lib\/modules\/$(shell uname -r)\/build$/;"	m
+KERNELDIR	sbull/Makefile	/^KERNELDIR ?= \/lib\/modules\/$(shell uname -r)\/build$/;"	m
+KERNELDIR	scull/Makefile	/^KERNELDIR ?= \/lib\/modules\/$(shell uname -r)\/build$/;"	m
+KERNELDIR	scullc/Makefile	/^KERNELDIR ?= \/lib\/modules\/$(shell uname -r)\/build$/;"	m
+KERNELDIR	sculld/Makefile	/^KERNELDIR ?= \/lib\/modules\/$(shell uname -r)\/build$/;"	m
+KERNELDIR	scullp/Makefile	/^KERNELDIR ?= \/lib\/modules\/$(shell uname -r)\/build$/;"	m
+KERNELDIR	scullv/Makefile	/^KERNELDIR ?= \/lib\/modules\/$(shell uname -r)\/build$/;"	m
+KERNELDIR	short/Makefile	/^KERNELDIR ?= \/lib\/modules\/$(shell uname -r)\/build$/;"	m
+KERNELDIR	shortprint/Makefile	/^KERNELDIR ?= \/lib\/modules\/$(shell uname -r)\/build$/;"	m
+KERNELDIR	simple/Makefile	/^KERNELDIR ?= \/lib\/modules\/$(shell uname -r)\/build$/;"	m
+KERNELDIR	snull/Makefile	/^KERNELDIR ?= \/lib\/modules\/$(shell uname -r)\/build$/;"	m
+KERNELDIR	tty/Makefile	/^KERNELDIR ?= \/lib\/modules\/$(shell uname -r)\/build$/;"	m
+KERNELDIR	usb/Makefile	/^KERNELDIR ?= \/lib\/modules\/$(shell uname -r)\/build$/;"	m
+KERNEL_SECTOR_SIZE	sbull/sbull.c	58;"	d	file:
+LIMIT	misc-modules/jiq.c	44;"	d	file:
+LIMIT	scull/pipe.c	285;"	d	file:
+MAX_SIMPLE_DEV	simple/simple.c	181;"	d	file:
+MCR_DTR	tty/tiny_tty.c	305;"	d	file:
+MCR_LOOP	tty/tiny_tty.c	307;"	d	file:
+MCR_RTS	tty/tiny_tty.c	306;"	d	file:
+MINOR_SHIFT	sbull/sbull.c	51;"	d	file:
+MSR_CD	tty/tiny_tty.c	309;"	d	file:
+MSR_CTS	tty/tiny_tty.c	308;"	d	file:
+MSR_DSR	tty/tiny_tty.c	311;"	d	file:
+MSR_RI	tty/tiny_tty.c	310;"	d	file:
+MY_NAME	tty/tiny_serial.c	43;"	d	file:
+M_16	misc-modules/silly.c	/^enum silly_modes {M_8=0, M_16, M_32, M_memcpy};$/;"	e	enum:silly_modes	file:
+M_32	misc-modules/silly.c	/^enum silly_modes {M_8=0, M_16, M_32, M_memcpy};$/;"	e	enum:silly_modes	file:
+M_8	misc-modules/silly.c	/^enum silly_modes {M_8=0, M_16, M_32, M_memcpy};$/;"	e	enum:silly_modes	file:
+M_memcpy	misc-modules/silly.c	/^enum silly_modes {M_8=0, M_16, M_32, M_memcpy};$/;"	e	enum:silly_modes	file:
+NR_TIMEVAL	short/short.c	356;"	d	file:
+NUM	scull/scull.h	101;"	d
+PAGE_SIZE	misc-progs/mapcmp.c	26;"	d	file:
+PDEBUG	sbull/sbull.h	30;"	d
+PDEBUG	sbull/sbull.h	34;"	d
+PDEBUG	sbull/sbull.h	37;"	d
+PDEBUG	sbull/sbull.h	40;"	d
+PDEBUG	scull/scull.h	27;"	d
+PDEBUG	scull/scull.h	31;"	d
+PDEBUG	scull/scull.h	34;"	d
+PDEBUG	scull/scull.h	37;"	d
+PDEBUG	scullc/scullc.h	23;"	d
+PDEBUG	scullc/scullc.h	27;"	d
+PDEBUG	scullc/scullc.h	30;"	d
+PDEBUG	scullc/scullc.h	33;"	d
+PDEBUG	sculld/sculld.h	25;"	d
+PDEBUG	sculld/sculld.h	29;"	d
+PDEBUG	sculld/sculld.h	32;"	d
+PDEBUG	sculld/sculld.h	35;"	d
+PDEBUG	scullp/scullp.h	23;"	d
+PDEBUG	scullp/scullp.h	27;"	d
+PDEBUG	scullp/scullp.h	30;"	d
+PDEBUG	scullp/scullp.h	33;"	d
+PDEBUG	scullv/scullv.h	23;"	d
+PDEBUG	scullv/scullv.h	27;"	d
+PDEBUG	scullv/scullv.h	30;"	d
+PDEBUG	scullv/scullv.h	33;"	d
+PDEBUG	snull/snull.h	21;"	d
+PDEBUG	snull/snull.h	25;"	d
+PDEBUG	snull/snull.h	28;"	d
+PDEBUG	snull/snull.h	31;"	d
+PDEBUGG	sbull/sbull.h	43;"	d
+PDEBUGG	sbull/sbull.h	44;"	d
+PDEBUGG	scull/scull.h	40;"	d
+PDEBUGG	scull/scull.h	41;"	d
+PDEBUGG	scullc/scullc.h	36;"	d
+PDEBUGG	scullc/scullc.h	37;"	d
+PDEBUGG	sculld/sculld.h	38;"	d
+PDEBUGG	sculld/sculld.h	39;"	d
+PDEBUGG	scullp/scullp.h	36;"	d
+PDEBUGG	scullp/scullp.h	37;"	d
+PDEBUGG	scullv/scullv.h	36;"	d
+PDEBUGG	scullv/scullv.h	37;"	d
+PDEBUGG	snull/snull.h	34;"	d
+PDEBUGG	snull/snull.h	35;"	d
+PORT_FILE	misc-progs/inp.c	40;"	d	file:
+PORT_FILE	misc-progs/outp.c	40;"	d	file:
+PWD	lddbus/Makefile	/^PWD       := $(shell pwd)$/;"	m
+PWD	misc-modules/Makefile	/^    PWD := $(shell pwd)$/;"	m
+PWD	pci/Makefile	/^PWD       := $(shell pwd)$/;"	m
+PWD	sbull/Makefile	/^PWD       := $(shell pwd)$/;"	m
+PWD	scull/Makefile	/^PWD       := $(shell pwd)$/;"	m
+PWD	scullc/Makefile	/^PWD       := $(shell pwd)$/;"	m
+PWD	sculld/Makefile	/^PWD       := $(shell pwd)$/;"	m
+PWD	scullp/Makefile	/^PWD       := $(shell pwd)$/;"	m
+PWD	scullv/Makefile	/^PWD       := $(shell pwd)$/;"	m
+PWD	short/Makefile	/^PWD       := $(shell pwd)$/;"	m
+PWD	shortprint/Makefile	/^PWD       := $(shell pwd)$/;"	m
+PWD	simple/Makefile	/^PWD       := $(shell pwd)$/;"	m
+PWD	snull/Makefile	/^PWD       := $(shell pwd)$/;"	m
+PWD	tty/Makefile	/^PWD       := $(shell pwd)$/;"	m
+PWD	usb/Makefile	/^PWD       := $(shell pwd)$/;"	m
+RELEVANT_IFLAG	tty/tiny_tty.c	222;"	d	file:
+RM_FULL	sbull/sbull.c	/^	RM_FULL    = 1,	\/* The full-blown version *\/$/;"	e	enum:__anon1	file:
+RM_NOQUEUE	sbull/sbull.c	/^	RM_NOQUEUE = 2,	\/* Use make_request *\/$/;"	e	enum:__anon1	file:
+RM_SIMPLE	sbull/sbull.c	/^	RM_SIMPLE  = 0,	\/* The extra-simple request function *\/$/;"	e	enum:__anon1	file:
+SBULLR_MAJOR	sbull/sbull.h	54;"	d
+SBULL_BLKSIZE	sbull/sbull.h	51;"	d
+SBULL_DEVS	sbull/sbull.h	48;"	d
+SBULL_HARDSECT	sbull/sbull.h	52;"	d
+SBULL_MAJOR	sbull/sbull.h	47;"	d
+SBULL_MINORS	sbull/sbull.c	50;"	d	file:
+SBULL_RAHEAD	sbull/sbull.h	49;"	d
+SBULL_SIZE	sbull/sbull.h	50;"	d
+SCHEDULER_QUEUE	misc-modules/jiq.c	64;"	d	file:
+SCULLC_DEVS	scullc/scullc.h	41;"	d
+SCULLC_IOCGQSET	scullc/scullc.h	114;"	d
+SCULLC_IOCGQUANTUM	scullc/scullc.h	108;"	d
+SCULLC_IOCHQSET	scullc/scullc.h	117;"	d
+SCULLC_IOCHQUANTUM	scullc/scullc.h	111;"	d
+SCULLC_IOCQQSET	scullc/scullc.h	115;"	d
+SCULLC_IOCQQUANTUM	scullc/scullc.h	109;"	d
+SCULLC_IOCRESET	scullc/scullc.h	96;"	d
+SCULLC_IOCSQSET	scullc/scullc.h	112;"	d
+SCULLC_IOCSQUANTUM	scullc/scullc.h	106;"	d
+SCULLC_IOCTQSET	scullc/scullc.h	113;"	d
+SCULLC_IOCTQUANTUM	scullc/scullc.h	107;"	d
+SCULLC_IOCXQSET	scullc/scullc.h	116;"	d
+SCULLC_IOCXQUANTUM	scullc/scullc.h	110;"	d
+SCULLC_IOC_MAGIC	scullc/scullc.h	94;"	d
+SCULLC_IOC_MAXNR	scullc/scullc.h	119;"	d
+SCULLC_MAJOR	scullc/scullc.h	39;"	d
+SCULLC_QSET	scullc/scullc.h	53;"	d
+SCULLC_QUANTUM	scullc/scullc.h	52;"	d
+SCULLC_USE_PROC	scullc/scullc.h	86;"	d
+SCULLD_DEVS	sculld/sculld.h	43;"	d
+SCULLD_IOCGORDER	sculld/sculld.h	112;"	d
+SCULLD_IOCGQSET	sculld/sculld.h	118;"	d
+SCULLD_IOCHORDER	sculld/sculld.h	115;"	d
+SCULLD_IOCHQSET	sculld/sculld.h	121;"	d
+SCULLD_IOCQORDER	sculld/sculld.h	113;"	d
+SCULLD_IOCQQSET	sculld/sculld.h	119;"	d
+SCULLD_IOCRESET	sculld/sculld.h	100;"	d
+SCULLD_IOCSORDER	sculld/sculld.h	110;"	d
+SCULLD_IOCSQSET	sculld/sculld.h	116;"	d
+SCULLD_IOCTORDER	sculld/sculld.h	111;"	d
+SCULLD_IOCTQSET	sculld/sculld.h	117;"	d
+SCULLD_IOCXORDER	sculld/sculld.h	114;"	d
+SCULLD_IOCXQSET	sculld/sculld.h	120;"	d
+SCULLD_IOC_MAGIC	sculld/sculld.h	98;"	d
+SCULLD_IOC_MAXNR	sculld/sculld.h	123;"	d
+SCULLD_MAJOR	sculld/sculld.h	41;"	d
+SCULLD_ORDER	sculld/sculld.h	54;"	d
+SCULLD_QSET	sculld/sculld.h	55;"	d
+SCULLD_USE_PROC	sculld/sculld.h	90;"	d
+SCULLP_DEVS	scullp/scullp.h	41;"	d
+SCULLP_IOCGORDER	scullp/scullp.h	108;"	d
+SCULLP_IOCGQSET	scullp/scullp.h	114;"	d
+SCULLP_IOCHORDER	scullp/scullp.h	111;"	d
+SCULLP_IOCHQSET	scullp/scullp.h	117;"	d
+SCULLP_IOCQORDER	scullp/scullp.h	109;"	d
+SCULLP_IOCQQSET	scullp/scullp.h	115;"	d
+SCULLP_IOCRESET	scullp/scullp.h	96;"	d
+SCULLP_IOCSORDER	scullp/scullp.h	106;"	d
+SCULLP_IOCSQSET	scullp/scullp.h	112;"	d
+SCULLP_IOCTORDER	scullp/scullp.h	107;"	d
+SCULLP_IOCTQSET	scullp/scullp.h	113;"	d
+SCULLP_IOCXORDER	scullp/scullp.h	110;"	d
+SCULLP_IOCXQSET	scullp/scullp.h	116;"	d
+SCULLP_IOC_MAGIC	scullp/scullp.h	94;"	d
+SCULLP_IOC_MAXNR	scullp/scullp.h	119;"	d
+SCULLP_MAJOR	scullp/scullp.h	39;"	d
+SCULLP_ORDER	scullp/scullp.h	52;"	d
+SCULLP_QSET	scullp/scullp.h	53;"	d
+SCULLP_USE_PROC	scullp/scullp.h	86;"	d
+SCULLV_DEVS	scullv/scullv.h	41;"	d
+SCULLV_IOCGORDER	scullv/scullv.h	108;"	d
+SCULLV_IOCGQSET	scullv/scullv.h	114;"	d
+SCULLV_IOCHORDER	scullv/scullv.h	111;"	d
+SCULLV_IOCHQSET	scullv/scullv.h	117;"	d
+SCULLV_IOCQORDER	scullv/scullv.h	109;"	d
+SCULLV_IOCQQSET	scullv/scullv.h	115;"	d
+SCULLV_IOCRESET	scullv/scullv.h	96;"	d
+SCULLV_IOCSORDER	scullv/scullv.h	106;"	d
+SCULLV_IOCSQSET	scullv/scullv.h	112;"	d
+SCULLV_IOCTORDER	scullv/scullv.h	107;"	d
+SCULLV_IOCTQSET	scullv/scullv.h	113;"	d
+SCULLV_IOCXORDER	scullv/scullv.h	110;"	d
+SCULLV_IOCXQSET	scullv/scullv.h	116;"	d
+SCULLV_IOC_MAGIC	scullv/scullv.h	94;"	d
+SCULLV_IOC_MAXNR	scullv/scullv.h	119;"	d
+SCULLV_MAJOR	scullv/scullv.h	39;"	d
+SCULLV_ORDER	scullv/scullv.h	52;"	d
+SCULLV_QSET	scullv/scullv.h	53;"	d
+SCULLV_USE_PROC	scullv/scullv.h	86;"	d
+SCULL_IOCGQSET	scull/scull.h	158;"	d
+SCULL_IOCGQUANTUM	scull/scull.h	157;"	d
+SCULL_IOCHQSET	scull/scull.h	164;"	d
+SCULL_IOCHQUANTUM	scull/scull.h	163;"	d
+SCULL_IOCQQSET	scull/scull.h	160;"	d
+SCULL_IOCQQUANTUM	scull/scull.h	159;"	d
+SCULL_IOCRESET	scull/scull.h	143;"	d
+SCULL_IOCSQSET	scull/scull.h	154;"	d
+SCULL_IOCSQUANTUM	scull/scull.h	153;"	d
+SCULL_IOCTQSET	scull/scull.h	156;"	d
+SCULL_IOCTQUANTUM	scull/scull.h	155;"	d
+SCULL_IOCXQSET	scull/scull.h	162;"	d
+SCULL_IOCXQUANTUM	scull/scull.h	161;"	d
+SCULL_IOC_MAGIC	scull/scull.h	140;"	d
+SCULL_IOC_MAXNR	scull/scull.h	175;"	d
+SCULL_MAJOR	scull/scull.h	44;"	d
+SCULL_NR_DEVS	scull/scull.h	48;"	d
+SCULL_N_ADEVS	scull/access.c	338;"	d	file:
+SCULL_P_BUFFER	scull/scull.h	76;"	d
+SCULL_P_IOCQSIZE	scull/scull.h	172;"	d
+SCULL_P_IOCTSIZE	scull/scull.h	171;"	d
+SCULL_P_NR_DEVS	scull/scull.h	52;"	d
+SCULL_QSET	scull/scull.h	69;"	d
+SCULL_QUANTUM	scull/scull.h	65;"	d
+SHORTP_NR_PORTS	shortprint/shortprint.c	39;"	d	file:
+SHORT_DEFAULT	short/short.c	/^enum short_modes {SHORT_DEFAULT=0, SHORT_PAUSE, SHORT_STRING, SHORT_MEMORY};$/;"	e	enum:short_modes	file:
+SHORT_MEMORY	short/short.c	/^enum short_modes {SHORT_DEFAULT=0, SHORT_PAUSE, SHORT_STRING, SHORT_MEMORY};$/;"	e	enum:short_modes	file:
+SHORT_NR_PORTS	short/short.c	44;"	d	file:
+SHORT_PAUSE	short/short.c	/^enum short_modes {SHORT_DEFAULT=0, SHORT_PAUSE, SHORT_STRING, SHORT_MEMORY};$/;"	e	enum:short_modes	file:
+SHORT_STRING	short/short.c	/^enum short_modes {SHORT_DEFAULT=0, SHORT_PAUSE, SHORT_STRING, SHORT_MEMORY};$/;"	e	enum:short_modes	file:
+SKULL_PORT_CEIL	skull/skull_init.c	80;"	d	file:
+SKULL_PORT_FLOOR	skull/skull_init.c	79;"	d	file:
+SKULL_PORT_RANGE	skull/skull_init.c	81;"	d	file:
+SNULL_RX_INTR	snull/snull.h	39;"	d
+SNULL_TIMEOUT	snull/snull.h	43;"	d
+SNULL_TX_INTR	snull/snull.h	40;"	d
+SP_CONTROL	shortprint/shortprint.h	22;"	d
+SP_CR_AUTOLF	shortprint/shortprint.h	40;"	d
+SP_CR_INIT	shortprint/shortprint.h	39;"	d
+SP_CR_IRQ	shortprint/shortprint.h	37;"	d
+SP_CR_SELECT	shortprint/shortprint.h	38;"	d
+SP_CR_STROBE	shortprint/shortprint.h	41;"	d
+SP_DATA	shortprint/shortprint.h	20;"	d
+SP_MIN_SPACE	shortprint/shortprint.h	46;"	d
+SP_NPORTS	shortprint/shortprint.h	23;"	d
+SP_SR_ACK	shortprint/shortprint.h	29;"	d
+SP_SR_BUSY	shortprint/shortprint.h	28;"	d
+SP_SR_ERR	shortprint/shortprint.h	32;"	d
+SP_SR_ONLINE	shortprint/shortprint.h	31;"	d
+SP_SR_PAPER	shortprint/shortprint.h	30;"	d
+SP_STATUS	shortprint/shortprint.h	21;"	d
+STEP	skull/skull_init.c	38;"	d	file:
+SUBDIRS	Makefile	/^SUBDIRS =  misc-progs misc-modules \\$/;"	m
+Sbull_Dev	sbull/sbull.h	/^typedef struct Sbull_Dev {$/;"	s
+Sbull_Dev	sbull/sbull.h	/^}              Sbull_Dev;$/;"	t	typeref:struct:Sbull_Dev
+SimpleDevs	simple/simple.c	/^static struct cdev SimpleDevs[MAX_SIMPLE_DEV];$/;"	v	typeref:struct:cdev	file:
+TARGET	scullc/Makefile	/^TARGET = scullc$/;"	m
+TARGET	sculld/Makefile	/^TARGET = sculld$/;"	m
+TARGET	scullp/Makefile	/^TARGET = scullp$/;"	m
+TARGET	scullv/Makefile	/^TARGET = scullv$/;"	m
+TIMEOUT	shortprint/shortprint.c	149;"	d	file:
+TINY_DATA_CHARACTER	tty/tiny_serial.c	35;"	d	file:
+TINY_DATA_CHARACTER	tty/tiny_tty.c	39;"	d	file:
+TINY_SERIAL_MAJOR	tty/tiny_serial.c	37;"	d	file:
+TINY_SERIAL_MINORS	tty/tiny_serial.c	38;"	d	file:
+TINY_SERIAL_NAME	tty/tiny_serial.c	41;"	d	file:
+TINY_TTY_MAJOR	tty/tiny_tty.c	41;"	d	file:
+TINY_TTY_MINORS	tty/tiny_tty.c	42;"	d	file:
+TYPE	scull/scull.h	100;"	d
+UART_NR	tty/tiny_serial.c	39;"	d	file:
+USB_SKEL_MINOR_BASE	usb/usb-skeleton.c	40;"	d	file:
+USB_SKEL_PRODUCT_ID	usb/usb-skeleton.c	29;"	d	file:
+USB_SKEL_VENDOR_ID	usb/usb-skeleton.c	28;"	d	file:
+VGA_BASE	misc-modules/silly.c	60;"	d	file:
+VIDEO_MAX	misc-modules/silly.c	59;"	d	file:
+Version	lddbus/lddbus.c	/^static char *Version = "$Revision: 1.9 $";$/;"	v	file:
+_SCULL_H_	scull/scull.h	19;"	d
+access_key	scull/scull.h	/^	unsigned int access_key;  \/* used by sculluid and scullpriv *\/$/;"	m	struct:scull_dev
+async_queue	scull/pipe.c	/^        struct fasync_struct *async_queue; \/* asynchronous readers *\/$/;"	m	struct:scull_pipe	typeref:struct:scull_pipe::fasync_struct	file:
+async_work	scullc/main.c	/^struct async_work {$/;"	s	file:
+async_work	sculld/main.c	/^struct async_work {$/;"	s	file:
+async_work	scullp/main.c	/^struct async_work {$/;"	s	file:
+async_work	scullv/main.c	/^struct async_work {$/;"	s	file:
+base	short/short.c	/^static unsigned long base = 0x378;$/;"	v	file:
+base	shortprint/shortprint.c	/^static unsigned long base = 0x378;$/;"	v	file:
+buf	misc-modules/jiq.c	/^	char *buf;$/;"	m	struct:clientdata	file:
+buf	misc-modules/jit.c	/^	unsigned char *buf;$/;"	m	struct:jit_data	file:
+buffer	misc-progs/asynctest.c	/^char buffer[4096];$/;"	v
+buffer	misc-progs/nbtest.c	/^char buffer[4096];$/;"	v
+buffer	misc-progs/polltest.c	/^char buffer[4096];$/;"	v
+buffer	scull/pipe.c	/^        char *buffer, *end;                \/* begin of buf, end of buf *\/$/;"	m	struct:scull_pipe	file:
+buffersize	scull/pipe.c	/^        int buffersize;                    \/* used in pointer arithmetic *\/$/;"	m	struct:scull_pipe	file:
+bulk_in_buffer	usb/usb-skeleton.c	/^	unsigned char *		bulk_in_buffer;		\/* the buffer to receive data *\/$/;"	m	struct:usb_skel	file:
+bulk_in_endpointAddr	usb/usb-skeleton.c	/^	__u8			bulk_in_endpointAddr;	\/* the address of the bulk in endpoint *\/$/;"	m	struct:usb_skel	file:
+bulk_in_size	usb/usb-skeleton.c	/^	size_t			bulk_in_size;		\/* the size of the receive buffer *\/$/;"	m	struct:usb_skel	file:
+bulk_out_endpointAddr	usb/usb-skeleton.c	/^	__u8			bulk_out_endpointAddr;	\/* the address of the bulk out endpoint *\/$/;"	m	struct:usb_skel	file:
+busy	sbull/sbull.h	/^   int busy;$/;"	m	struct:Sbull_Dev
+c	misc-modules/kdataalign.c	/^struct c   {char c;  char      t;} c;$/;"	m	struct:c	file:
+c	misc-modules/kdataalign.c	/^struct c   {char c;  char      t;} c;$/;"	s	file:
+c	misc-modules/kdataalign.c	/^struct c   {char c;  char      t;} c;$/;"	v	typeref:struct:c
+c	misc-modules/kdataalign.c	/^struct i   {char c;  int       t;} i;$/;"	m	struct:i	file:
+c	misc-modules/kdataalign.c	/^struct l   {char c;  long      t;} l;$/;"	m	struct:l	file:
+c	misc-modules/kdataalign.c	/^struct ll  {char c;  long long t;} ll;$/;"	m	struct:ll	file:
+c	misc-modules/kdataalign.c	/^struct p   {char c;  void *    t;} p;$/;"	m	struct:p	file:
+c	misc-modules/kdataalign.c	/^struct s   {char c;  short     t;} s;$/;"	m	struct:s	file:
+c	misc-modules/kdataalign.c	/^struct u1b {char c;  __u8      t;} u1b;$/;"	m	struct:u1b	file:
+c	misc-modules/kdataalign.c	/^struct u2b {char c;  __u16     t;} u2b;$/;"	m	struct:u2b	file:
+c	misc-modules/kdataalign.c	/^struct u4b {char c;  __u32     t;} u4b;$/;"	m	struct:u4b	file:
+c	misc-modules/kdataalign.c	/^struct u8b {char c;  __u64     t;} u8b;$/;"	m	struct:u8b	file:
+c	misc-progs/dataalign.c	/^struct c   {char c;  char      t;} c;$/;"	m	struct:c	file:
+c	misc-progs/dataalign.c	/^struct c   {char c;  char      t;} c;$/;"	s	file:
+c	misc-progs/dataalign.c	/^struct c   {char c;  char      t;} c;$/;"	v	typeref:struct:c
+c	misc-progs/dataalign.c	/^struct i   {char c;  int       t;} i;$/;"	m	struct:i	file:
+c	misc-progs/dataalign.c	/^struct l   {char c;  long      t;} l;$/;"	m	struct:l	file:
+c	misc-progs/dataalign.c	/^struct ll  {char c;  long long t;} ll;$/;"	m	struct:ll	file:
+c	misc-progs/dataalign.c	/^struct p   {char c;  void *    t;} p;$/;"	m	struct:p	file:
+c	misc-progs/dataalign.c	/^struct s   {char c;  short     t;} s;$/;"	m	struct:s	file:
+c	misc-progs/dataalign.c	/^struct u1b {char c;  __u8      t;} u1b;$/;"	m	struct:u1b	file:
+c	misc-progs/dataalign.c	/^struct u2b {char c;  __u16     t;} u2b;$/;"	m	struct:u2b	file:
+c	misc-progs/dataalign.c	/^struct u4b {char c;  __u32     t;} u4b;$/;"	m	struct:u4b	file:
+c	misc-progs/dataalign.c	/^struct u8b {char c;  __u64     t;} u8b;$/;"	m	struct:u8b	file:
+cdev	scull/pipe.c	/^        struct cdev cdev;                  \/* Char device structure *\/$/;"	m	struct:scull_pipe	typeref:struct:scull_pipe::cdev	file:
+cdev	scull/scull.h	/^	struct cdev cdev;	  \/* Char device structure		*\/$/;"	m	struct:scull_dev	typeref:struct:scull_dev::cdev
+cdev	scullc/scullc.h	/^	struct cdev cdev;$/;"	m	struct:scullc_dev	typeref:struct:scullc_dev::cdev
+cdev	sculld/sculld.h	/^	struct cdev cdev;$/;"	m	struct:sculld_dev	typeref:struct:sculld_dev::cdev
+cdev	scullp/scullp.h	/^	struct cdev cdev;$/;"	m	struct:scullp_dev	typeref:struct:scullp_dev::cdev
+cdev	scullv/scullv.h	/^	struct cdev cdev;$/;"	m	struct:scullv_dev	typeref:struct:scullv_dev::cdev
+clientdata	misc-modules/jiq.c	/^static struct clientdata {$/;"	s	file:
+comp	misc-modules/complete.c	/^DECLARE_COMPLETION(comp);$/;"	v
+complete_cleanup	misc-modules/complete.c	/^module_exit(complete_cleanup);$/;"	v
+complete_cleanup	misc-modules/complete.c	/^void complete_cleanup(void)$/;"	f
+complete_fops	misc-modules/complete.c	/^struct file_operations complete_fops = {$/;"	v	typeref:struct:file_operations
+complete_init	misc-modules/complete.c	/^int complete_init(void)$/;"	f
+complete_init	misc-modules/complete.c	/^module_init(complete_init);$/;"	v
+complete_major	misc-modules/complete.c	/^static int complete_major = 0;$/;"	v	file:
+complete_read	misc-modules/complete.c	/^ssize_t complete_read (struct file *filp, char __user *buf, size_t count, loff_t *pos)$/;"	f
+complete_write	misc-modules/complete.c	/^ssize_t complete_write (struct file *filp, const char __user *buf, size_t count,$/;"	f
+ct_exit	misc-modules/seq.c	/^module_exit(ct_exit);$/;"	v
+ct_exit	misc-modules/seq.c	/^static void ct_exit(void)$/;"	f	file:
+ct_file_ops	misc-modules/seq.c	/^static struct file_operations ct_file_ops = {$/;"	v	typeref:struct:file_operations	file:
+ct_init	misc-modules/seq.c	/^module_init(ct_init);$/;"	v
+ct_init	misc-modules/seq.c	/^static int ct_init(void)$/;"	f	file:
+ct_open	misc-modules/seq.c	/^static int ct_open(struct inode *inode, struct file *file)$/;"	f	file:
+ct_seq_next	misc-modules/seq.c	/^static void *ct_seq_next(struct seq_file *s, void *v, loff_t *pos)$/;"	f	file:
+ct_seq_ops	misc-modules/seq.c	/^static struct seq_operations ct_seq_ops = {$/;"	v	typeref:struct:seq_operations	file:
+ct_seq_show	misc-modules/seq.c	/^static int ct_seq_show(struct seq_file *s, void *v)$/;"	f	file:
+ct_seq_start	misc-modules/seq.c	/^static void *ct_seq_start(struct seq_file *s, loff_t *pos)$/;"	f	file:
+ct_seq_stop	misc-modules/seq.c	/^static void ct_seq_stop(struct seq_file *s, void *v)$/;"	f	file:
+data	sbull/sbull.c	/^        u8 *data;                       \/* The data array *\/$/;"	m	struct:sbull_dev	file:
+data	sbull/sbull.h	/^   u8 *data;$/;"	m	struct:Sbull_Dev
+data	scull/scull.h	/^	struct scull_qset *data;  \/* Pointer to first quantum set *\/$/;"	m	struct:scull_dev	typeref:struct:scull_dev::scull_qset
+data	scull/scull.h	/^	void **data;$/;"	m	struct:scull_qset
+data	scullc/scullc.h	/^	void **data;$/;"	m	struct:scullc_dev
+data	sculld/sculld.h	/^	void **data;$/;"	m	struct:sculld_dev
+data	scullp/scullp.h	/^	void **data;$/;"	m	struct:scullp_dev
+data	scullv/scullv.h	/^	void **data;$/;"	m	struct:scullv_dev
+data	snull/snull.c	/^	u8 data[ETH_DATA_LEN];$/;"	m	struct:snull_packet	file:
+data_cleanup	misc-modules/kdataalign.c	/^module_exit(data_cleanup);$/;"	v
+data_cleanup	misc-modules/kdataalign.c	/^static void data_cleanup(void)$/;"	f	file:
+data_cleanup	misc-modules/kdatasize.c	/^module_exit(data_cleanup);$/;"	v
+data_cleanup	misc-modules/kdatasize.c	/^static void data_cleanup(void)$/;"	f	file:
+data_init	misc-modules/kdataalign.c	/^module_init(data_init);$/;"	v
+data_init	misc-modules/kdataalign.c	/^static int data_init(void)$/;"	f	file:
+data_init	misc-modules/kdatasize.c	/^int data_init(void)$/;"	f
+data_init	misc-modules/kdatasize.c	/^module_init(data_init);$/;"	v
+datalen	snull/snull.c	/^	int	datalen;$/;"	m	struct:snull_packet	file:
+delay	misc-modules/jiq.c	/^	long delay;$/;"	m	struct:clientdata	file:
+delay	misc-modules/jiq.c	/^static long delay = 1;$/;"	v	file:
+delay	misc-modules/jit.c	/^int delay = HZ; \/* the default delay, expressed in jiffies *\/$/;"	v
+delay	shortprint/shortprint.c	/^static int delay = 0;$/;"	v	file:
+dev	include/lddbus.h	/^	struct device dev;$/;"	m	struct:ldd_device	typeref:struct:ldd_device::device
+dev	snull/snull.c	/^	struct net_device *dev;$/;"	m	struct:snull_packet	typeref:struct:snull_packet::net_device	file:
+dev	snull/snull.c	/^	struct net_device *dev;$/;"	m	struct:snull_priv	typeref:struct:snull_priv::net_device	file:
+device	scull/access.c	/^	struct scull_dev device;$/;"	m	struct:scull_listitem	typeref:struct:scull_listitem::scull_dev	file:
+devname	sculld/sculld.h	/^	char devname[20];$/;"	m	struct:sculld_dev
+do_close	tty/tiny_tty.c	/^static void do_close(struct tiny_serial *tiny)$/;"	f	file:
+do_short_read	short/short.c	/^ssize_t do_short_read (struct inode *inode, struct file *filp, char __user *buf,$/;"	f
+do_short_write	short/short.c	/^ssize_t do_short_write (struct inode *inode, struct file *filp, const char __user *buf,$/;"	f
+driver	include/lddbus.h	/^	struct device_driver driver;$/;"	m	struct:ldd_driver	typeref:struct:ldd_driver::device_driver
+driver	include/lddbus.h	/^	struct ldd_driver *driver;$/;"	m	struct:ldd_device	typeref:struct:ldd_device::ldd_driver
+end	scull/pipe.c	/^        char *buffer, *end;                \/* begin of buf, end of buf *\/$/;"	m	struct:scull_pipe	file:
+faulty_cleanup	misc-modules/faulty.c	/^module_exit(faulty_cleanup);$/;"	v
+faulty_cleanup	misc-modules/faulty.c	/^void faulty_cleanup(void)$/;"	f
+faulty_fops	misc-modules/faulty.c	/^struct file_operations faulty_fops = {$/;"	v	typeref:struct:file_operations
+faulty_init	misc-modules/faulty.c	/^int faulty_init(void)$/;"	f
+faulty_init	misc-modules/faulty.c	/^module_init(faulty_init);$/;"	v
+faulty_major	misc-modules/faulty.c	/^int faulty_major = 0;$/;"	v
+faulty_read	misc-modules/faulty.c	/^ssize_t faulty_read(struct file *filp, char __user *buf,$/;"	f
+faulty_write	misc-modules/faulty.c	/^ssize_t faulty_write (struct file *filp, const char __user *buf, size_t count,$/;"	f
+flag	misc-modules/sleepy.c	/^static int flag = 0;$/;"	v	file:
+fops	scull/access.c	/^	struct file_operations *fops;$/;"	m	struct:scull_adev_info	typeref:struct:scull_adev_info::file_operations	file:
+gd	sbull/sbull.c	/^        struct gendisk *gd;             \/* The gendisk structure *\/$/;"	m	struct:sbull_dev	typeref:struct:sbull_dev::gendisk	file:
+gotdata	misc-progs/asynctest.c	/^int gotdata=0;$/;"	v
+hardsect_size	sbull/sbull.c	/^static int hardsect_size = 512;$/;"	v	file:
+hello_exit	misc-modules/hello.c	/^module_exit(hello_exit);$/;"	v
+hello_exit	misc-modules/hello.c	/^static void hello_exit(void)$/;"	f	file:
+hello_exit	misc-modules/hellop.c	/^module_exit(hello_exit);$/;"	v
+hello_exit	misc-modules/hellop.c	/^static void hello_exit(void)$/;"	f	file:
+hello_init	misc-modules/hello.c	/^module_init(hello_init);$/;"	v
+hello_init	misc-modules/hello.c	/^static int hello_init(void)$/;"	f	file:
+hello_init	misc-modules/hellop.c	/^module_init(hello_init);$/;"	v
+hello_init	misc-modules/hellop.c	/^static int hello_init(void)$/;"	f	file:
+hi	misc-modules/jit.c	/^	int hi; \/* tasklet or tasklet_hi *\/$/;"	m	struct:jit_data	file:
+howmany	misc-modules/hellop.c	/^static int howmany = 1;$/;"	v	file:
+i	misc-modules/kdataalign.c	/^struct i   {char c;  int       t;} i;$/;"	s	file:
+i	misc-modules/kdataalign.c	/^struct i   {char c;  int       t;} i;$/;"	v	typeref:struct:i
+i	misc-progs/dataalign.c	/^struct i   {char c;  int       t;} i;$/;"	s	file:
+i	misc-progs/dataalign.c	/^struct i   {char c;  int       t;} i;$/;"	v	typeref:struct:i
+icount	tty/tiny_tty.c	/^	struct async_icount	icount;$/;"	m	struct:tiny_serial	typeref:struct:tiny_serial::async_icount	file:
+ids	pci/pci_skel.c	/^static struct pci_device_id ids[] = {$/;"	v	typeref:struct:pci_device_id	file:
+inq	scull/pipe.c	/^        wait_queue_head_t inq, outq;       \/* read and write queues *\/$/;"	m	struct:scull_pipe	file:
+interface	usb/usb-skeleton.c	/^	struct usb_interface *	interface;		\/* the interface for this device *\/$/;"	m	struct:usb_skel	typeref:struct:usb_skel::usb_interface	file:
+io_base	misc-modules/silly.c	/^static void __iomem *io_base;$/;"	v	file:
+iocb	scullc/main.c	/^	struct kiocb *iocb;$/;"	m	struct:async_work	typeref:struct:async_work::kiocb	file:
+iocb	sculld/main.c	/^	struct kiocb *iocb;$/;"	m	struct:async_work	typeref:struct:async_work::kiocb	file:
+iocb	scullp/main.c	/^	struct kiocb *iocb;$/;"	m	struct:async_work	typeref:struct:async_work::kiocb	file:
+iocb	scullv/main.c	/^	struct kiocb *iocb;$/;"	m	struct:async_work	typeref:struct:async_work::kiocb	file:
+irq	short/short.c	/^static int irq = -1;$/;"	v	file:
+irq	shortprint/shortprint.c	/^static int irq = -1;$/;"	v	file:
+jiffies	misc-modules/jiq.c	/^	unsigned long jiffies;$/;"	m	struct:clientdata	file:
+jiq_cleanup	misc-modules/jiq.c	/^module_exit(jiq_cleanup);$/;"	v
+jiq_cleanup	misc-modules/jiq.c	/^static void jiq_cleanup(void)$/;"	f	file:
+jiq_data	misc-modules/jiq.c	/^} jiq_data;$/;"	v	typeref:struct:clientdata	file:
+jiq_init	misc-modules/jiq.c	/^module_init(jiq_init);$/;"	v
+jiq_init	misc-modules/jiq.c	/^static int jiq_init(void)$/;"	f	file:
+jiq_print	misc-modules/jiq.c	/^static int jiq_print(void *ptr)$/;"	f	file:
+jiq_print_tasklet	misc-modules/jiq.c	/^static void jiq_print_tasklet(unsigned long ptr)$/;"	f	file:
+jiq_print_wq	misc-modules/jiq.c	/^static void jiq_print_wq(struct work_struct *ptr)$/;"	f	file:
+jiq_read_run_timer	misc-modules/jiq.c	/^static int jiq_read_run_timer(char *buf, char **start, off_t offset,$/;"	f	file:
+jiq_read_tasklet	misc-modules/jiq.c	/^static int jiq_read_tasklet(char *buf, char **start, off_t offset, int len,$/;"	f	file:
+jiq_read_wq	misc-modules/jiq.c	/^static int jiq_read_wq(char *buf, char **start, off_t offset,$/;"	f	file:
+jiq_read_wq_delayed	misc-modules/jiq.c	/^static int jiq_read_wq_delayed(char *buf, char **start, off_t offset,$/;"	f	file:
+jiq_timedout	misc-modules/jiq.c	/^static void jiq_timedout(unsigned long ptr)$/;"	f	file:
+jiq_timer	misc-modules/jiq.c	/^static struct timer_list jiq_timer;$/;"	v	typeref:struct:timer_list	file:
+jit_cleanup	misc-modules/jit.c	/^module_exit(jit_cleanup);$/;"	v
+jit_cleanup	misc-modules/jit.c	/^void __exit jit_cleanup(void)$/;"	f
+jit_currentime	misc-modules/jit.c	/^int jit_currentime(char *buf, char **start, off_t offset,$/;"	f
+jit_data	misc-modules/jit.c	/^struct jit_data {$/;"	s	file:
+jit_files	misc-modules/jit.c	/^enum jit_files {$/;"	g	file:
+jit_fn	misc-modules/jit.c	/^int jit_fn(char *buf, char **start, off_t offset,$/;"	f
+jit_init	misc-modules/jit.c	/^int __init jit_init(void)$/;"	f
+jit_init	misc-modules/jit.c	/^module_init(jit_init);$/;"	v
+jit_tasklet	misc-modules/jit.c	/^int jit_tasklet(char *buf, char **start, off_t offset,$/;"	f
+jit_tasklet_fn	misc-modules/jit.c	/^void jit_tasklet_fn(unsigned long arg)$/;"	f
+jit_timer	misc-modules/jit.c	/^int jit_timer(char *buf, char **start, off_t offset,$/;"	f
+jit_timer_fn	misc-modules/jit.c	/^void jit_timer_fn(unsigned long arg)$/;"	f
+key	scull/access.c	/^	dev_t key;$/;"	m	struct:scull_listitem	file:
+kref	usb/usb-skeleton.c	/^	struct kref		kref;$/;"	m	struct:usb_skel	typeref:struct:usb_skel::kref	file:
+l	misc-modules/kdataalign.c	/^struct l   {char c;  long      t;} l;$/;"	s	file:
+l	misc-modules/kdataalign.c	/^struct l   {char c;  long      t;} l;$/;"	v	typeref:struct:l
+l	misc-progs/dataalign.c	/^struct l   {char c;  long      t;} l;$/;"	s	file:
+l	misc-progs/dataalign.c	/^struct l   {char c;  long      t;} l;$/;"	v	typeref:struct:l
+ldd_bus	lddbus/lddbus.c	/^struct device ldd_bus = {$/;"	v	typeref:struct:device
+ldd_bus_exit	lddbus/lddbus.c	/^module_exit(ldd_bus_exit);$/;"	v
+ldd_bus_exit	lddbus/lddbus.c	/^static void ldd_bus_exit(void)$/;"	f	file:
+ldd_bus_init	lddbus/lddbus.c	/^module_init(ldd_bus_init);$/;"	v
+ldd_bus_init	lddbus/lddbus.c	/^static int __init ldd_bus_init(void)$/;"	f	file:
+ldd_bus_release	lddbus/lddbus.c	/^static void ldd_bus_release(struct device *dev)$/;"	f	file:
+ldd_bus_type	lddbus/lddbus.c	/^struct bus_type ldd_bus_type = {$/;"	v	typeref:struct:bus_type
+ldd_dev_release	lddbus/lddbus.c	/^static void ldd_dev_release(struct device *dev)$/;"	f	file:
+ldd_device	include/lddbus.h	/^struct ldd_device {$/;"	s
+ldd_driver	include/lddbus.h	/^struct ldd_driver {$/;"	s
+ldd_match	lddbus/lddbus.c	/^static int ldd_match(struct device *dev, struct device_driver *driver)$/;"	f	file:
+ldd_uevent	lddbus/lddbus.c	/^static int ldd_uevent(struct device *dev, struct kobj_uevent_env *env) {$/;"	f	file:
+ldev	sculld/sculld.h	/^	struct ldd_device ldev;$/;"	m	struct:sculld_dev	typeref:struct:sculld_dev::ldd_device
+len	misc-modules/jiq.c	/^	int len;$/;"	m	struct:clientdata	file:
+list	scull/access.c	/^	struct list_head list;$/;"	m	struct:scull_listitem	typeref:struct:scull_listitem::list_head	file:
+ll	misc-modules/kdataalign.c	/^struct ll  {char c;  long long t;} ll;$/;"	s	file:
+ll	misc-modules/kdataalign.c	/^struct ll  {char c;  long long t;} ll;$/;"	v	typeref:struct:ll
+ll	misc-progs/dataalign.c	/^struct ll  {char c;  long long t;} ll;$/;"	s	file:
+ll	misc-progs/dataalign.c	/^struct ll  {char c;  long long t;} ll;$/;"	v	typeref:struct:ll
+lock	sbull/sbull.c	/^        spinlock_t lock;                \/* For mutual exclusion *\/$/;"	m	struct:sbull_dev	file:
+lock	sbull/sbull.h	/^   spinlock_t lock;$/;"	m	struct:Sbull_Dev
+lock	snull/snull.c	/^	spinlock_t lock;$/;"	m	struct:snull_priv	file:
+lockup	snull/snull.c	/^static int lockup = 0;$/;"	v	file:
+loops	misc-modules/jit.c	/^	int loops;$/;"	m	struct:jit_data	file:
+main	misc-progs/asynctest.c	/^int main(int argc, char **argv)$/;"	f
+main	misc-progs/dataalign.c	/^int main(int argc, char **argv)$/;"	f
+main	misc-progs/datasize.c	/^int main(int argc, char **argv)$/;"	f
+main	misc-progs/inp.c	/^int main(int argc, char **argv)$/;"	f
+main	misc-progs/load50.c	/^int main(int argc, char **argv)$/;"	f
+main	misc-progs/mapcmp.c	/^int main (int argc, char **argv)$/;"	f
+main	misc-progs/mapper.c	/^int main(int argc, char **argv)$/;"	f
+main	misc-progs/nbtest.c	/^int main(int argc, char **argv)$/;"	f
+main	misc-progs/netifdebug.c	/^int main(int argc, char **argv)$/;"	f
+main	misc-progs/outp.c	/^int main(int argc, char **argv)$/;"	f
+main	misc-progs/polltest.c	/^int main(int argc, char **argv)$/;"	f
+main	misc-progs/setconsole.c	/^int main(int argc, char **argv)$/;"	f
+main	misc-progs/setlevel.c	/^int main(int argc, char **argv)$/;"	f
+major	short/short.c	/^static int major = 0;	\/* dynamic by default *\/$/;"	v	file:
+major	shortprint/shortprint.c	/^static int major = 0; \/* dynamic by default *\/$/;"	v	file:
+mapdev	misc-progs/mapcmp.c	/^static char *mapdev (const char *dev, unsigned long offset,$/;"	f	file:
+mcr	tty/tiny_tty.c	/^	int			mcr;		\/* MCR shadow *\/$/;"	m	struct:tiny_serial	file:
+media_change	sbull/sbull.c	/^        short media_change;             \/* Flag a media change? *\/$/;"	m	struct:sbull_dev	file:
+module	include/lddbus.h	/^	struct module *module;$/;"	m	struct:ldd_driver	typeref:struct:ldd_driver::module
+msr	tty/tiny_tty.c	/^	int			msr;		\/* MSR shadow *\/$/;"	m	struct:tiny_serial	file:
+name	include/lddbus.h	/^	char *name;$/;"	m	struct:ldd_device
+name	scull/access.c	/^	char *name;$/;"	m	struct:scull_adev_info	file:
+napi	snull/snull.c	/^	struct napi_struct napi;$/;"	m	struct:snull_priv	typeref:struct:snull_priv::napi_struct	file:
+ndevices	sbull/sbull.c	/^static int ndevices = 4;$/;"	v	file:
+next	scull/scull.h	/^	struct scull_qset *next;$/;"	m	struct:scull_qset	typeref:struct:scull_qset::scull_qset
+next	scullc/scullc.h	/^	struct scullc_dev *next;  \/* next listitem *\/$/;"	m	struct:scullc_dev	typeref:struct:scullc_dev::scullc_dev
+next	sculld/sculld.h	/^	struct sculld_dev *next;  \/* next listitem *\/$/;"	m	struct:sculld_dev	typeref:struct:sculld_dev::sculld_dev
+next	scullp/scullp.h	/^	struct scullp_dev *next;  \/* next listitem *\/$/;"	m	struct:scullp_dev	typeref:struct:scullp_dev::scullp_dev
+next	scullv/scullv.h	/^	struct scullv_dev *next;  \/* next listitem *\/$/;"	m	struct:scullv_dev	typeref:struct:scullv_dev::scullv_dev
+next	snull/snull.c	/^	struct snull_packet *next;$/;"	m	struct:snull_packet	typeref:struct:snull_packet::snull_packet	file:
+nreaders	scull/pipe.c	/^        int nreaders, nwriters;            \/* number of openings for r\/w *\/$/;"	m	struct:scull_pipe	file:
+nsectors	sbull/sbull.c	/^static int nsectors = 1024;	\/* How big the drive is *\/$/;"	v	file:
+nwriters	scull/pipe.c	/^        int nreaders, nwriters;            \/* number of openings for r\/w *\/$/;"	m	struct:scull_pipe	file:
+obj-m	lddbus/Makefile	/^obj-m	:= lddbus.o$/;"	m
+obj-m	misc-modules/Makefile	/^    obj-m := hello.o hellop.o seq.o jit.o jiq.o sleepy.o complete.o \\$/;"	m
+obj-m	pci/Makefile	/^obj-m	:= pci_skel.o$/;"	m
+obj-m	sbull/Makefile	/^obj-m	:= sbull.o$/;"	m
+obj-m	scull/Makefile	/^obj-m	:= scull.o$/;"	m
+obj-m	scullc/Makefile	/^obj-m	:= scullc.o$/;"	m
+obj-m	sculld/Makefile	/^obj-m	:= sculld.o$/;"	m
+obj-m	scullp/Makefile	/^obj-m	:= scullp.o$/;"	m
+obj-m	scullv/Makefile	/^obj-m	:= scullv.o$/;"	m
+obj-m	short/Makefile	/^obj-m	:= short.o$/;"	m
+obj-m	shortprint/Makefile	/^obj-m	:= shortprint.o$/;"	m
+obj-m	simple/Makefile	/^obj-m	:= simple.o$/;"	m
+obj-m	snull/Makefile	/^obj-m	:= snull.o$/;"	m
+obj-m	tty/Makefile	/^obj-m	:= tiny_tty.o tiny_serial.o$/;"	m
+obj-m	usb/Makefile	/^obj-m	:= usb-skeleton.o$/;"	m
+open_count	tty/tiny_tty.c	/^	int			open_count;	\/* number of times this port has been opened *\/$/;"	m	struct:tiny_serial	file:
+order	sculld/sculld.h	/^	int order;                \/* the current allocation order *\/$/;"	m	struct:sculld_dev
+order	scullp/scullp.h	/^	int order;                \/* the current allocation order *\/$/;"	m	struct:scullp_dev
+order	scullv/scullv.h	/^	int order;                \/* the current allocation order *\/$/;"	m	struct:scullv_dev
+outq	scull/pipe.c	/^        wait_queue_head_t inq, outq;       \/* read and write queues *\/$/;"	m	struct:scull_pipe	file:
+p	misc-modules/kdataalign.c	/^struct p   {char c;  void *    t;} p;$/;"	s	file:
+p	misc-modules/kdataalign.c	/^struct p   {char c;  void *    t;} p;$/;"	v	typeref:struct:p
+p	misc-progs/dataalign.c	/^struct p   {char c;  void *    t;} p;$/;"	s	file:
+p	misc-progs/dataalign.c	/^struct p   {char c;  void *    t;} p;$/;"	v	typeref:struct:p
+pci_driver	pci/pci_skel.c	/^static struct pci_driver pci_driver = {$/;"	v	typeref:struct:pci_driver	file:
+pci_skel_exit	pci/pci_skel.c	/^module_exit(pci_skel_exit);$/;"	v
+pci_skel_exit	pci/pci_skel.c	/^static void __exit pci_skel_exit(void)$/;"	f	file:
+pci_skel_init	pci/pci_skel.c	/^module_init(pci_skel_init);$/;"	v
+pci_skel_init	pci/pci_skel.c	/^static int __init pci_skel_init(void)$/;"	f	file:
+pool_size	snull/snull.c	/^int pool_size = 8;$/;"	v
+ppool	snull/snull.c	/^	struct snull_packet *ppool;$/;"	m	struct:snull_priv	typeref:struct:snull_priv::snull_packet	file:
+prevjiffies	misc-modules/jit.c	/^	unsigned long prevjiffies;$/;"	m	struct:jit_data	file:
+prgname	misc-progs/inp.c	/^char *prgname;$/;"	v
+prgname	misc-progs/outp.c	/^char *prgname;$/;"	v
+probe	pci/pci_skel.c	/^static int probe(struct pci_dev *dev, const struct pci_device_id *id)$/;"	f	file:
+probe	short/short.c	/^static int probe = 0;	\/* select at load time how to probe irq line *\/$/;"	v	file:
+qset	scull/scull.h	/^	int qset;                 \/* the current array size *\/$/;"	m	struct:scull_dev
+qset	scullc/scullc.h	/^	int qset;                 \/* the current array size *\/$/;"	m	struct:scullc_dev
+qset	sculld/sculld.h	/^	int qset;                 \/* the current array size *\/$/;"	m	struct:sculld_dev
+qset	scullp/scullp.h	/^	int qset;                 \/* the current array size *\/$/;"	m	struct:scullp_dev
+qset	scullv/scullv.h	/^	int qset;                 \/* the current array size *\/$/;"	m	struct:scullv_dev
+quantum	scull/scull.h	/^	int quantum;              \/* the current quantum size *\/$/;"	m	struct:scull_dev
+quantum	scullc/scullc.h	/^	int quantum;              \/* the current allocation size *\/$/;"	m	struct:scullc_dev
+queue	sbull/sbull.c	/^        struct request_queue *queue;    \/* The device request queue *\/$/;"	m	struct:sbull_dev	typeref:struct:sbull_dev::request_queue	file:
+queue	sbull/sbull.h	/^   request_queue_t *queue;$/;"	m	struct:Sbull_Dev
+read_and_print_one	misc-progs/inp.c	/^static int read_and_print_one(unsigned int port,int size)$/;"	f	file:
+register_ldd_device	lddbus/lddbus.c	/^EXPORT_SYMBOL(register_ldd_device);$/;"	v
+register_ldd_device	lddbus/lddbus.c	/^int register_ldd_device(struct ldd_device *ldddev)$/;"	f
+register_ldd_driver	lddbus/lddbus.c	/^EXPORT_SYMBOL(register_ldd_driver);$/;"	v
+register_ldd_driver	lddbus/lddbus.c	/^int register_ldd_driver(struct ldd_driver *driver)$/;"	f
+remove	pci/pci_skel.c	/^static void remove(struct pci_dev *dev)$/;"	f	file:
+request_mode	sbull/sbull.c	/^static int request_mode = RM_SIMPLE;$/;"	v	file:
+result	scullc/main.c	/^	int result;$/;"	m	struct:async_work	file:
+result	sculld/main.c	/^	int result;$/;"	m	struct:async_work	file:
+result	scullp/main.c	/^	int result;$/;"	m	struct:async_work	file:
+result	scullv/main.c	/^	int result;$/;"	m	struct:async_work	file:
+rp	scull/pipe.c	/^        char *rp, *wp;                     \/* where to read, where to write *\/$/;"	m	struct:scull_pipe	file:
+rx_int_enabled	snull/snull.c	/^	int rx_int_enabled;$/;"	m	struct:snull_priv	file:
+rx_queue	snull/snull.c	/^	struct snull_packet *rx_queue;  \/* List of incoming packets *\/$/;"	m	struct:snull_priv	typeref:struct:snull_priv::snull_packet	file:
+s	misc-modules/kdataalign.c	/^struct s   {char c;  short     t;} s;$/;"	s	file:
+s	misc-modules/kdataalign.c	/^struct s   {char c;  short     t;} s;$/;"	v	typeref:struct:s
+s	misc-progs/dataalign.c	/^struct s   {char c;  short     t;} s;$/;"	s	file:
+s	misc-progs/dataalign.c	/^struct s   {char c;  short     t;} s;$/;"	v	typeref:struct:s
+sbull_dev	sbull/sbull.c	/^struct sbull_dev {$/;"	s	file:
+sbull_exit	sbull/sbull.c	/^module_exit(sbull_exit);$/;"	v
+sbull_exit	sbull/sbull.c	/^static void sbull_exit(void)$/;"	f	file:
+sbull_full_request	sbull/sbull.c	/^static void sbull_full_request(struct request_queue *q)$/;"	f	file:
+sbull_init	sbull/sbull.c	/^module_init(sbull_init);$/;"	v
+sbull_init	sbull/sbull.c	/^static int __init sbull_init(void)$/;"	f	file:
+sbull_invalidate	sbull/sbull.c	/^void sbull_invalidate(unsigned long ldev)$/;"	f
+sbull_ioctl	sbull/sbull.c	/^int sbull_ioctl (struct inode *inode, struct file *filp,$/;"	f
+sbull_major	sbull/sbull.c	/^static int sbull_major = 0;$/;"	v	file:
+sbull_make_request	sbull/sbull.c	/^   static int sbull_make_request(struct request_queue *q, struct bio *bio)$/;"	f	file:
+sbull_media_changed	sbull/sbull.c	/^int sbull_media_changed(struct gendisk *gd)$/;"	f
+sbull_open	sbull/sbull.c	/^static int sbull_open(struct inode *inode, struct file *filp)$/;"	f	file:
+sbull_ops	sbull/sbull.c	/^static struct block_device_operations sbull_ops = {$/;"	v	typeref:struct:block_device_operations	file:
+sbull_release	sbull/sbull.c	/^static int sbull_release(struct inode *inode, struct file *filp)$/;"	f	file:
+sbull_request	sbull/sbull.c	/^static void sbull_request(struct request_queue *q)$/;"	f	file:
+sbull_revalidate	sbull/sbull.c	/^int sbull_revalidate(struct gendisk *gd)$/;"	f
+sbull_transfer	sbull/sbull.c	/^static void sbull_transfer(struct sbull_dev *dev, unsigned long sector,$/;"	f	file:
+sbull_xfer_bio	sbull/sbull.c	/^static int sbull_xfer_bio(struct sbull_dev *dev, struct bio *bio)$/;"	f	file:
+sbull_xfer_request	sbull/sbull.c	/^static int sbull_xfer_request(struct sbull_dev *dev, struct request *req)$/;"	f	file:
+scull-objs	scull/Makefile	/^scull-objs := main.o pipe.o access.o$/;"	m
+scull_a_firstdev	scull/access.c	/^static dev_t scull_a_firstdev;  \/* Where our range begins *\/$/;"	v	file:
+scull_access_cleanup	scull/access.c	/^void scull_access_cleanup(void)$/;"	f
+scull_access_devs	scull/access.c	/^} scull_access_devs[] = {$/;"	v	typeref:struct:scull_adev_info	file:
+scull_access_init	scull/access.c	/^int scull_access_init(dev_t firstdev)$/;"	f
+scull_access_setup	scull/access.c	/^static void scull_access_setup (dev_t devno, struct scull_adev_info *devinfo)$/;"	f	file:
+scull_adev_info	scull/access.c	/^static struct scull_adev_info {$/;"	s	file:
+scull_c_device	scull/access.c	/^static struct scull_dev scull_c_device;   $/;"	v	typeref:struct:scull_dev	file:
+scull_c_lock	scull/access.c	/^static spinlock_t scull_c_lock = SPIN_LOCK_UNLOCKED;$/;"	v	file:
+scull_c_lookfor_device	scull/access.c	/^static struct scull_dev *scull_c_lookfor_device(dev_t key)$/;"	f	file:
+scull_c_open	scull/access.c	/^static int scull_c_open(struct inode *inode, struct file *filp)$/;"	f	file:
+scull_c_release	scull/access.c	/^static int scull_c_release(struct inode *inode, struct file *filp)$/;"	f	file:
+scull_cleanup_module	scull/main.c	/^module_exit(scull_cleanup_module);$/;"	v
+scull_cleanup_module	scull/main.c	/^void scull_cleanup_module(void)$/;"	f
+scull_create_proc	scull/main.c	/^static void scull_create_proc(void)$/;"	f	file:
+scull_dev	scull/scull.h	/^struct scull_dev {$/;"	s
+scull_devices	scull/main.c	/^struct scull_dev *scull_devices;	\/* allocated in scull_init_module *\/$/;"	v	typeref:struct:scull_dev
+scull_follow	scull/main.c	/^struct scull_qset *scull_follow(struct scull_dev *dev, int n)$/;"	f
+scull_fops	scull/main.c	/^struct file_operations scull_fops = {$/;"	v	typeref:struct:file_operations
+scull_getwritespace	scull/pipe.c	/^static int scull_getwritespace(struct scull_pipe *dev, struct file *filp)$/;"	f	file:
+scull_init_module	scull/main.c	/^int scull_init_module(void)$/;"	f
+scull_init_module	scull/main.c	/^module_init(scull_init_module);$/;"	v
+scull_ioctl	scull/main.c	/^int scull_ioctl(struct inode *inode, struct file *filp,$/;"	f
+scull_listitem	scull/access.c	/^struct scull_listitem {$/;"	s	file:
+scull_llseek	scull/main.c	/^loff_t scull_llseek(struct file *filp, loff_t off, int whence)$/;"	f
+scull_major	scull/main.c	/^int scull_major =   SCULL_MAJOR;$/;"	v
+scull_minor	scull/main.c	/^int scull_minor =   0;$/;"	v
+scull_nr_devs	scull/main.c	/^int scull_nr_devs = SCULL_NR_DEVS;	\/* number of bare scull devices *\/$/;"	v
+scull_open	scull/main.c	/^int scull_open(struct inode *inode, struct file *filp)$/;"	f
+scull_p_buffer	scull/pipe.c	/^int scull_p_buffer =  SCULL_P_BUFFER;	\/* buffer size *\/$/;"	v
+scull_p_cleanup	scull/pipe.c	/^void scull_p_cleanup(void)$/;"	f
+scull_p_devices	scull/pipe.c	/^static struct scull_pipe *scull_p_devices;$/;"	v	typeref:struct:scull_pipe	file:
+scull_p_devno	scull/pipe.c	/^dev_t scull_p_devno;			\/* Our first device number *\/$/;"	v
+scull_p_fasync	scull/pipe.c	/^static int scull_p_fasync(int fd, struct file *filp, int mode)$/;"	f	file:
+scull_p_init	scull/pipe.c	/^int scull_p_init(dev_t firstdev)$/;"	f
+scull_p_nr_devs	scull/pipe.c	/^static int scull_p_nr_devs = SCULL_P_NR_DEVS;	\/* number of pipe devices *\/$/;"	v	file:
+scull_p_open	scull/pipe.c	/^static int scull_p_open(struct inode *inode, struct file *filp)$/;"	f	file:
+scull_p_poll	scull/pipe.c	/^static unsigned int scull_p_poll(struct file *filp, poll_table *wait)$/;"	f	file:
+scull_p_read	scull/pipe.c	/^static ssize_t scull_p_read (struct file *filp, char __user *buf, size_t count,$/;"	f	file:
+scull_p_release	scull/pipe.c	/^static int scull_p_release(struct inode *inode, struct file *filp)$/;"	f	file:
+scull_p_setup_cdev	scull/pipe.c	/^static void scull_p_setup_cdev(struct scull_pipe *dev, int index)$/;"	f	file:
+scull_p_write	scull/pipe.c	/^static ssize_t scull_p_write(struct file *filp, const char __user *buf, size_t count,$/;"	f	file:
+scull_pipe	scull/pipe.c	/^struct scull_pipe {$/;"	s	file:
+scull_pipe_fops	scull/pipe.c	/^struct file_operations scull_pipe_fops = {$/;"	v	typeref:struct:file_operations
+scull_priv_fops	scull/access.c	/^struct file_operations scull_priv_fops = {$/;"	v	typeref:struct:file_operations
+scull_proc_open	scull/main.c	/^static int scull_proc_open(struct inode *inode, struct file *file)$/;"	f	file:
+scull_proc_ops	scull/main.c	/^static struct file_operations scull_proc_ops = {$/;"	v	typeref:struct:file_operations	file:
+scull_qset	scull/main.c	/^int scull_qset =    SCULL_QSET;$/;"	v
+scull_qset	scull/scull.h	/^struct scull_qset {$/;"	s
+scull_quantum	scull/main.c	/^int scull_quantum = SCULL_QUANTUM;$/;"	v
+scull_read	scull/main.c	/^ssize_t scull_read(struct file *filp, char __user *buf, size_t count,$/;"	f
+scull_read_p_mem	scull/pipe.c	/^static int scull_read_p_mem(char *buf, char **start, off_t offset, int count,$/;"	f	file:
+scull_read_procmem	scull/main.c	/^int scull_read_procmem(char *buf, char **start, off_t offset,$/;"	f
+scull_release	scull/main.c	/^int scull_release(struct inode *inode, struct file *filp)$/;"	f
+scull_remove_proc	scull/main.c	/^static void scull_remove_proc(void)$/;"	f	file:
+scull_s_available	scull/access.c	/^static atomic_t scull_s_available = ATOMIC_INIT(1);$/;"	v	file:
+scull_s_device	scull/access.c	/^static struct scull_dev scull_s_device;$/;"	v	typeref:struct:scull_dev	file:
+scull_s_open	scull/access.c	/^static int scull_s_open(struct inode *inode, struct file *filp)$/;"	f	file:
+scull_s_release	scull/access.c	/^static int scull_s_release(struct inode *inode, struct file *filp)$/;"	f	file:
+scull_seq_next	scull/main.c	/^static void *scull_seq_next(struct seq_file *s, void *v, loff_t *pos)$/;"	f	file:
+scull_seq_ops	scull/main.c	/^static struct seq_operations scull_seq_ops = {$/;"	v	typeref:struct:seq_operations	file:
+scull_seq_show	scull/main.c	/^static int scull_seq_show(struct seq_file *s, void *v)$/;"	f	file:
+scull_seq_start	scull/main.c	/^static void *scull_seq_start(struct seq_file *s, loff_t *pos)$/;"	f	file:
+scull_seq_stop	scull/main.c	/^static void scull_seq_stop(struct seq_file *s, void *v)$/;"	f	file:
+scull_setup_cdev	scull/main.c	/^static void scull_setup_cdev(struct scull_dev *dev, int index)$/;"	f	file:
+scull_sngl_fops	scull/access.c	/^struct file_operations scull_sngl_fops = {$/;"	v	typeref:struct:file_operations
+scull_trim	scull/main.c	/^int scull_trim(struct scull_dev *dev)$/;"	f
+scull_u_count	scull/access.c	/^static int scull_u_count;	\/* initialized to 0 by default *\/$/;"	v	file:
+scull_u_device	scull/access.c	/^static struct scull_dev scull_u_device;$/;"	v	typeref:struct:scull_dev	file:
+scull_u_lock	scull/access.c	/^static spinlock_t scull_u_lock = SPIN_LOCK_UNLOCKED;$/;"	v	file:
+scull_u_open	scull/access.c	/^static int scull_u_open(struct inode *inode, struct file *filp)$/;"	f	file:
+scull_u_owner	scull/access.c	/^static uid_t scull_u_owner;	\/* initialized to 0 by default *\/$/;"	v	file:
+scull_u_release	scull/access.c	/^static int scull_u_release(struct inode *inode, struct file *filp)$/;"	f	file:
+scull_user_fops	scull/access.c	/^struct file_operations scull_user_fops = {$/;"	v	typeref:struct:file_operations
+scull_w_available	scull/access.c	/^static inline int scull_w_available(void)$/;"	f	file:
+scull_w_count	scull/access.c	/^static int scull_w_count;	\/* initialized to 0 by default *\/$/;"	v	file:
+scull_w_device	scull/access.c	/^static struct scull_dev scull_w_device;$/;"	v	typeref:struct:scull_dev	file:
+scull_w_lock	scull/access.c	/^static spinlock_t scull_w_lock = SPIN_LOCK_UNLOCKED;$/;"	v	file:
+scull_w_open	scull/access.c	/^static int scull_w_open(struct inode *inode, struct file *filp)$/;"	f	file:
+scull_w_owner	scull/access.c	/^static uid_t scull_w_owner;	\/* initialized to 0 by default *\/$/;"	v	file:
+scull_w_release	scull/access.c	/^static int scull_w_release(struct inode *inode, struct file *filp)$/;"	f	file:
+scull_write	scull/main.c	/^ssize_t scull_write(struct file *filp, const char __user *buf, size_t count,$/;"	f
+scull_wusr_fops	scull/access.c	/^struct file_operations scull_wusr_fops = {$/;"	v	typeref:struct:file_operations
+scullc-objs	scullc/Makefile	/^scullc-objs := main.o$/;"	m
+scullc_aio_read	scullc/main.c	/^static ssize_t scullc_aio_read(struct kiocb *iocb,$/;"	f	file:
+scullc_aio_write	scullc/main.c	/^static ssize_t scullc_aio_write(struct kiocb *iocb,$/;"	f	file:
+scullc_cache	scullc/main.c	/^struct kmem_cache *scullc_cache;$/;"	v	typeref:struct:kmem_cache
+scullc_cleanup	scullc/main.c	/^module_exit(scullc_cleanup);$/;"	v
+scullc_cleanup	scullc/main.c	/^void scullc_cleanup(void)$/;"	f
+scullc_defer_op	scullc/main.c	/^static ssize_t scullc_defer_op(int write, struct kiocb *iocb, const struct iovec *iov,$/;"	f	file:
+scullc_dev	scullc/scullc.h	/^struct scullc_dev {$/;"	s
+scullc_devices	scullc/main.c	/^struct scullc_dev *scullc_devices; \/* allocated in scullc_init *\/$/;"	v	typeref:struct:scullc_dev
+scullc_devs	scullc/main.c	/^int scullc_devs =    SCULLC_DEVS;	\/* number of bare scullc devices *\/$/;"	v
+scullc_do_deferred_op	scullc/main.c	/^static void scullc_do_deferred_op(struct work_struct *work)$/;"	f	file:
+scullc_follow	scullc/main.c	/^struct scullc_dev *scullc_follow(struct scullc_dev *dev, int n)$/;"	f
+scullc_fops	scullc/main.c	/^struct file_operations scullc_fops = {$/;"	v	typeref:struct:file_operations
+scullc_init	scullc/main.c	/^int scullc_init(void)$/;"	f
+scullc_init	scullc/main.c	/^module_init(scullc_init);$/;"	v
+scullc_ioctl	scullc/main.c	/^int scullc_ioctl (struct inode *inode, struct file *filp,$/;"	f
+scullc_llseek	scullc/main.c	/^loff_t scullc_llseek (struct file *filp, loff_t off, int whence)$/;"	f
+scullc_major	scullc/main.c	/^int scullc_major =   SCULLC_MAJOR;$/;"	v
+scullc_mmap	scullc/mmap.c	/^int scullc_mmap(struct file *filp, struct vm_area_struct *vma)$/;"	f
+scullc_open	scullc/main.c	/^int scullc_open (struct inode *inode, struct file *filp)$/;"	f
+scullc_proc_offset	scullc/main.c	/^void scullc_proc_offset(char *buf, char **start, off_t *offset, int *len)$/;"	f
+scullc_qset	scullc/main.c	/^int scullc_qset =    SCULLC_QSET;$/;"	v
+scullc_quantum	scullc/main.c	/^int scullc_quantum = SCULLC_QUANTUM;$/;"	v
+scullc_read	scullc/main.c	/^ssize_t scullc_read (struct file *filp, char __user *buf, size_t count,$/;"	f
+scullc_read_procmem	scullc/main.c	/^int scullc_read_procmem(char *buf, char **start, off_t offset,$/;"	f
+scullc_release	scullc/main.c	/^int scullc_release (struct inode *inode, struct file *filp)$/;"	f
+scullc_setup_cdev	scullc/main.c	/^static void scullc_setup_cdev(struct scullc_dev *dev, int index)$/;"	f	file:
+scullc_trim	scullc/main.c	/^int scullc_trim(struct scullc_dev *dev)$/;"	f
+scullc_vm_ops	scullc/mmap.c	/^struct vm_operations_struct scullc_vm_ops = {$/;"	v	typeref:struct:vm_operations_struct
+scullc_vma_close	scullc/mmap.c	/^void scullc_vma_close(struct vm_area_struct *vma)$/;"	f
+scullc_vma_nopage	scullc/mmap.c	/^struct page *scullc_vma_nopage(struct vm_area_struct *vma,$/;"	f
+scullc_vma_open	scullc/mmap.c	/^void scullc_vma_open(struct vm_area_struct *vma)$/;"	f
+scullc_write	scullc/main.c	/^ssize_t scullc_write (struct file *filp, const char __user *buf, size_t count,$/;"	f
+sculld-objs	sculld/Makefile	/^sculld-objs := main.o mmap.o$/;"	m
+sculld_aio_read	sculld/main.c	/^static ssize_t sculld_aio_read(struct kiocb *iocb,$/;"	f	file:
+sculld_aio_write	sculld/main.c	/^static ssize_t sculld_aio_write(struct kiocb *iocb,$/;"	f	file:
+sculld_cleanup	sculld/main.c	/^module_exit(sculld_cleanup);$/;"	v
+sculld_cleanup	sculld/main.c	/^void sculld_cleanup(void)$/;"	f
+sculld_defer_op	sculld/main.c	/^static ssize_t sculld_defer_op(int write, struct kiocb *iocb, const struct iovec *iov,$/;"	f	file:
+sculld_dev	sculld/sculld.h	/^struct sculld_dev {$/;"	s
+sculld_devices	sculld/main.c	/^struct sculld_dev *sculld_devices; \/* allocated in sculld_init *\/$/;"	v	typeref:struct:sculld_dev
+sculld_devs	sculld/main.c	/^int sculld_devs =    SCULLD_DEVS;	\/* number of bare sculld devices *\/$/;"	v
+sculld_do_deferred_op	sculld/main.c	/^static void sculld_do_deferred_op(struct work_struct *work)$/;"	f	file:
+sculld_driver	sculld/main.c	/^static struct ldd_driver sculld_driver = {$/;"	v	typeref:struct:ldd_driver	file:
+sculld_follow	sculld/main.c	/^struct sculld_dev *sculld_follow(struct sculld_dev *dev, int n)$/;"	f
+sculld_fops	sculld/main.c	/^struct file_operations sculld_fops = {$/;"	v	typeref:struct:file_operations
+sculld_init	sculld/main.c	/^int sculld_init(void)$/;"	f
+sculld_init	sculld/main.c	/^module_init(sculld_init);$/;"	v
+sculld_ioctl	sculld/main.c	/^int sculld_ioctl (struct inode *inode, struct file *filp,$/;"	f
+sculld_llseek	sculld/main.c	/^loff_t sculld_llseek (struct file *filp, loff_t off, int whence)$/;"	f
+sculld_major	sculld/main.c	/^int sculld_major =   SCULLD_MAJOR;$/;"	v
+sculld_mmap	sculld/mmap.c	/^int sculld_mmap(struct file *filp, struct vm_area_struct *vma)$/;"	f
+sculld_open	sculld/main.c	/^int sculld_open (struct inode *inode, struct file *filp)$/;"	f
+sculld_order	sculld/main.c	/^int sculld_order =   SCULLD_ORDER;$/;"	v
+sculld_proc_offset	sculld/main.c	/^void sculld_proc_offset(char *buf, char **start, off_t *offset, int *len)$/;"	f
+sculld_qset	sculld/main.c	/^int sculld_qset =    SCULLD_QSET;$/;"	v
+sculld_read	sculld/main.c	/^ssize_t sculld_read (struct file *filp, char __user *buf, size_t count,$/;"	f
+sculld_read_procmem	sculld/main.c	/^int sculld_read_procmem(char *buf, char **start, off_t offset,$/;"	f
+sculld_register_dev	sculld/main.c	/^static int sculld_register_dev(struct sculld_dev *dev, int index)$/;"	f	file:
+sculld_release	sculld/main.c	/^int sculld_release (struct inode *inode, struct file *filp)$/;"	f
+sculld_setup_cdev	sculld/main.c	/^static void sculld_setup_cdev(struct sculld_dev *dev, int index)$/;"	f	file:
+sculld_show_dev	sculld/main.c	/^static ssize_t sculld_show_dev(struct device *ddev,$/;"	f	file:
+sculld_trim	sculld/main.c	/^int sculld_trim(struct sculld_dev *dev)$/;"	f
+sculld_vm_ops	sculld/mmap.c	/^struct vm_operations_struct sculld_vm_ops = {$/;"	v	typeref:struct:vm_operations_struct
+sculld_vma_close	sculld/mmap.c	/^void sculld_vma_close(struct vm_area_struct *vma)$/;"	f
+sculld_vma_nopage	sculld/mmap.c	/^struct page *sculld_vma_nopage(struct vm_area_struct *vma,struct vm_fault *vmf) $/;"	f
+sculld_vma_open	sculld/mmap.c	/^void sculld_vma_open(struct vm_area_struct *vma)$/;"	f
+sculld_write	sculld/main.c	/^ssize_t sculld_write (struct file *filp, const char __user *buf, size_t count,$/;"	f
+sculldev	scull/access.c	/^	struct scull_dev *sculldev;$/;"	m	struct:scull_adev_info	typeref:struct:scull_adev_info::scull_dev	file:
+scullp-objs	scullp/Makefile	/^scullp-objs := main.o mmap.o$/;"	m
+scullp_aio_read	scullp/main.c	/^static ssize_t scullp_aio_read(struct kiocb *iocb,$/;"	f	file:
+scullp_aio_write	scullp/main.c	/^static ssize_t scullp_aio_write(struct kiocb *iocb,$/;"	f	file:
+scullp_cleanup	scullp/main.c	/^module_exit(scullp_cleanup);$/;"	v
+scullp_cleanup	scullp/main.c	/^void scullp_cleanup(void)$/;"	f
+scullp_defer_op	scullp/main.c	/^static ssize_t scullp_defer_op(int write, struct kiocb *iocb, const struct iovec *iov,$/;"	f	file:
+scullp_dev	scullp/scullp.h	/^struct scullp_dev {$/;"	s
+scullp_devices	scullp/main.c	/^struct scullp_dev *scullp_devices; \/* allocated in scullp_init *\/$/;"	v	typeref:struct:scullp_dev
+scullp_devs	scullp/main.c	/^int scullp_devs =    SCULLP_DEVS;	\/* number of bare scullp devices *\/$/;"	v
+scullp_do_deferred_op	scullp/main.c	/^static void scullp_do_deferred_op(struct work_struct *work)$/;"	f	file:
+scullp_follow	scullp/main.c	/^struct scullp_dev *scullp_follow(struct scullp_dev *dev, int n)$/;"	f
+scullp_fops	scullp/main.c	/^struct file_operations scullp_fops = {$/;"	v	typeref:struct:file_operations
+scullp_init	scullp/main.c	/^int scullp_init(void)$/;"	f
+scullp_init	scullp/main.c	/^module_init(scullp_init);$/;"	v
+scullp_ioctl	scullp/main.c	/^int scullp_ioctl (struct inode *inode, struct file *filp,$/;"	f
+scullp_llseek	scullp/main.c	/^loff_t scullp_llseek (struct file *filp, loff_t off, int whence)$/;"	f
+scullp_major	scullp/main.c	/^int scullp_major =   SCULLP_MAJOR;$/;"	v
+scullp_mmap	scullp/mmap.c	/^int scullp_mmap(struct file *filp, struct vm_area_struct *vma)$/;"	f
+scullp_open	scullp/main.c	/^int scullp_open (struct inode *inode, struct file *filp)$/;"	f
+scullp_order	scullp/main.c	/^int scullp_order =   SCULLP_ORDER;$/;"	v
+scullp_proc_offset	scull/pipe.c	/^static void scullp_proc_offset(char *buf, char **start, off_t *offset, int *len)$/;"	f	file:
+scullp_proc_offset	scullp/main.c	/^void scullp_proc_offset(char *buf, char **start, off_t *offset, int *len)$/;"	f
+scullp_qset	scullp/main.c	/^int scullp_qset =    SCULLP_QSET;$/;"	v
+scullp_read	scullp/main.c	/^ssize_t scullp_read (struct file *filp, char __user *buf, size_t count,$/;"	f
+scullp_read_procmem	scullp/main.c	/^int scullp_read_procmem(char *buf, char **start, off_t offset,$/;"	f
+scullp_release	scullp/main.c	/^int scullp_release (struct inode *inode, struct file *filp)$/;"	f
+scullp_setup_cdev	scullp/main.c	/^static void scullp_setup_cdev(struct scullp_dev *dev, int index)$/;"	f	file:
+scullp_trim	scullp/main.c	/^int scullp_trim(struct scullp_dev *dev)$/;"	f
+scullp_vm_ops	scullp/mmap.c	/^struct vm_operations_struct scullp_vm_ops = {$/;"	v	typeref:struct:vm_operations_struct
+scullp_vma_close	scullp/mmap.c	/^void scullp_vma_close(struct vm_area_struct *vma)$/;"	f
+scullp_vma_nopage	scullp/mmap.c	/^struct page *scullp_vma_nopage(struct vm_area_struct *vma,struct vm_fault *vmf)$/;"	f
+scullp_vma_open	scullp/mmap.c	/^void scullp_vma_open(struct vm_area_struct *vma)$/;"	f
+scullp_write	scullp/main.c	/^ssize_t scullp_write (struct file *filp, const char __user *buf, size_t count,$/;"	f
+scullv-objs	scullv/Makefile	/^scullv-objs := main.o mmap.o$/;"	m
+scullv_aio_read	scullv/main.c	/^static ssize_t scullv_aio_read(struct kiocb *iocb,$/;"	f	file:
+scullv_aio_write	scullv/main.c	/^static ssize_t scullv_aio_write(struct kiocb *iocb,$/;"	f	file:
+scullv_cleanup	scullv/main.c	/^module_exit(scullv_cleanup);$/;"	v
+scullv_cleanup	scullv/main.c	/^void scullv_cleanup(void)$/;"	f
+scullv_defer_op	scullv/main.c	/^static ssize_t scullv_defer_op(int write, struct kiocb *iocb, const struct iovec *iov,$/;"	f	file:
+scullv_dev	scullv/scullv.h	/^struct scullv_dev {$/;"	s
+scullv_devices	scullv/main.c	/^struct scullv_dev *scullv_devices; \/* allocated in scullv_init *\/$/;"	v	typeref:struct:scullv_dev
+scullv_devs	scullv/main.c	/^int scullv_devs =    SCULLV_DEVS;	\/* number of bare scullv devices *\/$/;"	v
+scullv_do_deferred_op	scullv/main.c	/^static void scullv_do_deferred_op(struct work_struct *work)$/;"	f	file:
+scullv_follow	scullv/main.c	/^struct scullv_dev *scullv_follow(struct scullv_dev *dev, int n)$/;"	f
+scullv_fops	scullv/main.c	/^struct file_operations scullv_fops = {$/;"	v	typeref:struct:file_operations
+scullv_init	scullv/main.c	/^int scullv_init(void)$/;"	f
+scullv_init	scullv/main.c	/^module_init(scullv_init);$/;"	v
+scullv_ioctl	scullv/main.c	/^int scullv_ioctl (struct inode *inode, struct file *filp,$/;"	f
+scullv_llseek	scullv/main.c	/^loff_t scullv_llseek (struct file *filp, loff_t off, int whence)$/;"	f
+scullv_major	scullv/main.c	/^int scullv_major =   SCULLV_MAJOR;$/;"	v
+scullv_mmap	scullv/mmap.c	/^int scullv_mmap(struct file *filp, struct vm_area_struct *vma)$/;"	f
+scullv_open	scullv/main.c	/^int scullv_open (struct inode *inode, struct file *filp)$/;"	f
+scullv_order	scullv/main.c	/^int scullv_order =   SCULLV_ORDER;$/;"	v
+scullv_proc_offset	scullv/main.c	/^void scullv_proc_offset(char *buf, char **start, off_t *offset, int *len)$/;"	f
+scullv_qset	scullv/main.c	/^int scullv_qset =    SCULLV_QSET;$/;"	v
+scullv_read	scullv/main.c	/^ssize_t scullv_read (struct file *filp, char __user *buf, size_t count,$/;"	f
+scullv_read_procmem	scullv/main.c	/^int scullv_read_procmem(char *buf, char **start, off_t offset,$/;"	f
+scullv_release	scullv/main.c	/^int scullv_release (struct inode *inode, struct file *filp)$/;"	f
+scullv_setup_cdev	scullv/main.c	/^static void scullv_setup_cdev(struct scullv_dev *dev, int index)$/;"	f	file:
+scullv_trim	scullv/main.c	/^int scullv_trim(struct scullv_dev *dev)$/;"	f
+scullv_vm_ops	scullv/mmap.c	/^struct vm_operations_struct scullv_vm_ops = {$/;"	v	typeref:struct:vm_operations_struct
+scullv_vma_close	scullv/mmap.c	/^void scullv_vma_close(struct vm_area_struct *vma)$/;"	f
+scullv_vma_nopage	scullv/mmap.c	/^struct page *scullv_vma_nopage(struct vm_area_struct *vma,$/;"	f
+scullv_vma_open	scullv/mmap.c	/^void scullv_vma_open(struct vm_area_struct *vma)$/;"	f
+scullv_write	scullv/main.c	/^ssize_t scullv_write (struct file *filp, const char __user *buf, size_t count,$/;"	f
+sem	scull/pipe.c	/^        struct semaphore sem;              \/* mutual exclusion semaphore *\/$/;"	m	struct:scull_pipe	typeref:struct:scull_pipe::semaphore	file:
+sem	scull/scull.h	/^	struct semaphore sem;     \/* mutual exclusion semaphore     *\/$/;"	m	struct:scull_dev	typeref:struct:scull_dev::semaphore
+sem	scullc/scullc.h	/^	struct semaphore sem;     \/* Mutual exclusion *\/$/;"	m	struct:scullc_dev	typeref:struct:scullc_dev::semaphore
+sem	sculld/sculld.h	/^	struct semaphore sem;     \/* Mutual exclusion *\/$/;"	m	struct:sculld_dev	typeref:struct:sculld_dev::semaphore
+sem	scullp/scullp.h	/^	struct semaphore sem;     \/* Mutual exclusion *\/$/;"	m	struct:scullp_dev	typeref:struct:scullp_dev::semaphore
+sem	scullv/scullv.h	/^	struct semaphore sem;     \/* Mutual exclusion *\/$/;"	m	struct:scullv_dev	typeref:struct:scullv_dev::semaphore
+sem	tty/tiny_tty.c	/^	struct semaphore	sem;		\/* locks this structure *\/$/;"	m	struct:tiny_serial	typeref:struct:tiny_serial::semaphore	file:
+serial	tty/tiny_tty.c	/^	struct serial_struct	serial;$/;"	m	struct:tiny_serial	typeref:struct:tiny_serial::serial_struct	file:
+serial_ops	tty/tiny_tty.c	/^static struct tty_operations serial_ops = {$/;"	v	typeref:struct:tty_operations	file:
+setup_device	sbull/sbull.c	/^static void setup_device(struct sbull_dev *dev, int which)$/;"	f	file:
+share	short/short.c	/^static int share = 0;	\/* select at load time whether install a shared irq *\/$/;"	v	file:
+short_base	short/short.c	/^unsigned long short_base = 0;$/;"	v
+short_buffer	short/short.c	/^unsigned long short_buffer = 0;$/;"	v
+short_cleanup	short/short.c	/^module_exit(short_cleanup);$/;"	v
+short_cleanup	short/short.c	/^void short_cleanup(void)$/;"	f
+short_do_tasklet	short/short.c	/^void short_do_tasklet (unsigned long unused)$/;"	f
+short_do_work	short/short.c	/^void short_do_work(struct work_struct *work)$/;"	f
+short_fops	short/short.c	/^struct file_operations short_fops = {$/;"	v	typeref:struct:file_operations
+short_head	short/short.c	/^unsigned long volatile short_head;$/;"	v
+short_i_fops	short/short.c	/^struct file_operations short_i_fops = {$/;"	v	typeref:struct:file_operations
+short_i_read	short/short.c	/^ssize_t short_i_read (struct file *filp, char __user *buf, size_t count, loff_t *f_pos)$/;"	f
+short_i_write	short/short.c	/^ssize_t short_i_write (struct file *filp, const char __user *buf, size_t count,$/;"	f
+short_incr_bp	short/short.c	/^static inline void short_incr_bp(volatile unsigned long *index, int delta)$/;"	f	file:
+short_incr_tv	short/short.c	/^static inline void short_incr_tv(volatile struct timeval **tvp)$/;"	f	file:
+short_init	short/short.c	/^int short_init(void)$/;"	f
+short_init	short/short.c	/^module_init(short_init);$/;"	v
+short_interrupt	short/short.c	/^irqreturn_t short_interrupt(int irq, void *dev_id)$/;"	f
+short_irq	short/short.c	/^volatile int short_irq = -1;$/;"	v
+short_kernelprobe	short/short.c	/^void short_kernelprobe(void)$/;"	f
+short_modes	short/short.c	/^enum short_modes {SHORT_DEFAULT=0, SHORT_PAUSE, SHORT_STRING, SHORT_MEMORY};$/;"	g	file:
+short_open	short/short.c	/^int short_open (struct inode *inode, struct file *filp)$/;"	f
+short_poll	short/short.c	/^unsigned int short_poll(struct file *filp, poll_table *wait)$/;"	f
+short_probing	short/short.c	/^irqreturn_t short_probing(int irq, void *dev_id)$/;"	f
+short_queue	short/short.c	/^DECLARE_WAIT_QUEUE_HEAD(short_queue);$/;"	v
+short_read	short/short.c	/^ssize_t short_read(struct file *filp, char __user *buf, size_t count, loff_t *f_pos)$/;"	f
+short_release	short/short.c	/^int short_release (struct inode *inode, struct file *filp)$/;"	f
+short_selfprobe	short/short.c	/^void short_selfprobe(void)$/;"	f
+short_sh_interrupt	short/short.c	/^irqreturn_t short_sh_interrupt(int irq, void *dev_id)$/;"	f
+short_tail	short/short.c	/^volatile unsigned long short_tail;$/;"	v
+short_tl_interrupt	short/short.c	/^irqreturn_t short_tl_interrupt(int irq, void *dev_id)$/;"	f
+short_wq	short/short.c	/^static struct work_struct short_wq;$/;"	v	typeref:struct:work_struct	file:
+short_wq_count	short/short.c	/^int short_wq_count = 0;$/;"	v
+short_wq_interrupt	short/short.c	/^irqreturn_t short_wq_interrupt(int irq, void *dev_id)$/;"	f
+short_write	short/short.c	/^ssize_t short_write(struct file *filp, const char __user *buf, size_t count,$/;"	f
+shortp_base	shortprint/shortprint.c	/^unsigned long shortp_base = 0;$/;"	v
+shortp_cleanup	shortprint/shortprint.c	/^module_exit(shortp_cleanup);$/;"	v
+shortp_cleanup	shortprint/shortprint.c	/^static void shortp_cleanup(void)$/;"	f	file:
+shortp_delay	shortprint/shortprint.c	/^static int shortp_delay;$/;"	v	file:
+shortp_do_work	shortprint/shortprint.c	/^static void shortp_do_work(struct work_struct *work)$/;"	f	file:
+shortp_do_write	shortprint/shortprint.c	/^static void shortp_do_write(void)$/;"	f	file:
+shortp_empty_queue	shortprint/shortprint.c	/^DECLARE_WAIT_QUEUE_HEAD(shortp_empty_queue); \/* waked when queue empties *\/$/;"	v
+shortp_fops	shortprint/shortprint.c	/^static struct file_operations shortp_fops = {$/;"	v	typeref:struct:file_operations	file:
+shortp_in_buffer	shortprint/shortprint.c	/^static unsigned long shortp_in_buffer = 0;$/;"	v	file:
+shortp_in_head	shortprint/shortprint.c	/^static unsigned long volatile shortp_in_head;$/;"	v	file:
+shortp_in_queue	shortprint/shortprint.c	/^DECLARE_WAIT_QUEUE_HEAD(shortp_in_queue);$/;"	v
+shortp_in_tail	shortprint/shortprint.c	/^static volatile unsigned long shortp_in_tail;$/;"	v	file:
+shortp_incr_bp	shortprint/shortprint.c	/^static inline void shortp_incr_bp(volatile unsigned long *index, int delta)$/;"	f	file:
+shortp_incr_out_bp	shortprint/shortprint.c	/^static inline void shortp_incr_out_bp(volatile unsigned char **bp, int incr)$/;"	f	file:
+shortp_init	shortprint/shortprint.c	/^module_init(shortp_init);$/;"	v
+shortp_init	shortprint/shortprint.c	/^static int shortp_init(void)$/;"	f	file:
+shortp_interrupt	shortprint/shortprint.c	/^static irqreturn_t shortp_interrupt(int irq, void *dev_id)$/;"	f	file:
+shortp_irq	shortprint/shortprint.c	/^static int shortp_irq = -1;$/;"	v	file:
+shortp_open	shortprint/shortprint.c	/^static int shortp_open(struct inode *inode, struct file *filp)$/;"	f	file:
+shortp_out_buffer	shortprint/shortprint.c	/^static unsigned char *shortp_out_buffer = NULL;$/;"	v	file:
+shortp_out_head	shortprint/shortprint.c	/^static volatile unsigned char *shortp_out_head, *shortp_out_tail;$/;"	v	file:
+shortp_out_lock	shortprint/shortprint.c	/^static spinlock_t shortp_out_lock;$/;"	v	file:
+shortp_out_sem	shortprint/shortprint.c	/^static struct semaphore shortp_out_sem;$/;"	v	typeref:struct:semaphore	file:
+shortp_out_space	shortprint/shortprint.c	/^static inline int shortp_out_space(void)$/;"	f	file:
+shortp_out_tail	shortprint/shortprint.c	/^static volatile unsigned char *shortp_out_head, *shortp_out_tail;$/;"	v	file:
+shortp_output_active	shortprint/shortprint.c	/^volatile static int shortp_output_active;$/;"	v	file:
+shortp_poll	shortprint/shortprint.c	/^static unsigned int shortp_poll(struct file *filp, poll_table *wait)$/;"	f	file:
+shortp_read	shortprint/shortprint.c	/^static ssize_t shortp_read(struct file *filp, char __user *buf, size_t count, loff_t *f_pos)$/;"	f	file:
+shortp_release	shortprint/shortprint.c	/^static int shortp_release(struct inode *inode, struct file *filp)$/;"	f	file:
+shortp_start_output	shortprint/shortprint.c	/^static void shortp_start_output(void)$/;"	f	file:
+shortp_timeout	shortprint/shortprint.c	/^static void shortp_timeout(unsigned long unused)$/;"	f	file:
+shortp_timer	shortprint/shortprint.c	/^static struct timer_list shortp_timer;$/;"	v	typeref:struct:timer_list	file:
+shortp_tv	shortprint/shortprint.c	/^static struct timeval shortp_tv;  \/* When the interrupt happened. *\/$/;"	v	typeref:struct:timeval	file:
+shortp_wait	shortprint/shortprint.c	/^static void shortp_wait(void)$/;"	f	file:
+shortp_workqueue	shortprint/shortprint.c	/^static struct workqueue_struct *shortp_workqueue;$/;"	v	typeref:struct:workqueue_struct	file:
+shortp_write	shortprint/shortprint.c	/^static ssize_t shortp_write(struct file *filp, const char __user *buf, size_t count,$/;"	f	file:
+show_bus_version	lddbus/lddbus.c	/^static ssize_t show_bus_version(struct bus_type *bus, char *buf)$/;"	f	file:
+show_version	lddbus/lddbus.c	/^static ssize_t show_version(struct device_driver *driver, char *buf)$/;"	f	file:
+sighandler	misc-progs/asynctest.c	/^void sighandler(int signo)$/;"	f
+silly_cleanup	misc-modules/silly.c	/^module_exit(silly_cleanup);$/;"	v
+silly_cleanup	misc-modules/silly.c	/^void silly_cleanup(void)$/;"	f
+silly_fops	misc-modules/silly.c	/^struct file_operations silly_fops = {$/;"	v	typeref:struct:file_operations
+silly_init	misc-modules/silly.c	/^int silly_init(void)$/;"	f
+silly_init	misc-modules/silly.c	/^module_init(silly_init);$/;"	v
+silly_major	misc-modules/silly.c	/^int silly_major = 0;$/;"	v
+silly_modes	misc-modules/silly.c	/^enum silly_modes {M_8=0, M_16, M_32, M_memcpy};$/;"	g	file:
+silly_open	misc-modules/silly.c	/^int silly_open(struct inode *inode, struct file *filp)$/;"	f
+silly_poll	misc-modules/silly.c	/^unsigned int silly_poll(struct file *filp, poll_table *wait)$/;"	f
+silly_read	misc-modules/silly.c	/^ssize_t silly_read(struct file *filp, char __user *buf, size_t count, loff_t *f_pos)$/;"	f
+silly_release	misc-modules/silly.c	/^int silly_release(struct inode *inode, struct file *filp)$/;"	f
+silly_write	misc-modules/silly.c	/^ssize_t silly_write(struct file *filp, const char __user *buf, size_t count,$/;"	f
+simple_cleanup	simple/simple.c	/^module_exit(simple_cleanup);$/;"	v
+simple_cleanup	simple/simple.c	/^static void simple_cleanup(void)$/;"	f	file:
+simple_init	simple/simple.c	/^module_init(simple_init);$/;"	v
+simple_init	simple/simple.c	/^static int simple_init(void)$/;"	f	file:
+simple_major	simple/simple.c	/^static int simple_major = 0;$/;"	v	file:
+simple_nopage_mmap	simple/simple.c	/^static int simple_nopage_mmap(struct file *filp, struct vm_area_struct *vma)$/;"	f	file:
+simple_nopage_ops	simple/simple.c	/^static struct file_operations simple_nopage_ops = {$/;"	v	typeref:struct:file_operations	file:
+simple_nopage_vm_ops	simple/simple.c	/^static struct vm_operations_struct simple_nopage_vm_ops = {$/;"	v	typeref:struct:vm_operations_struct	file:
+simple_open	simple/simple.c	/^static int simple_open (struct inode *inode, struct file *filp)$/;"	f	file:
+simple_release	simple/simple.c	/^static int simple_release(struct inode *inode, struct file *filp)$/;"	f	file:
+simple_remap_mmap	simple/simple.c	/^static int simple_remap_mmap(struct file *filp, struct vm_area_struct *vma)$/;"	f	file:
+simple_remap_ops	simple/simple.c	/^static struct file_operations simple_remap_ops = {$/;"	v	typeref:struct:file_operations	file:
+simple_remap_vm_ops	simple/simple.c	/^static struct vm_operations_struct simple_remap_vm_ops = {$/;"	v	typeref:struct:vm_operations_struct	file:
+simple_setup_cdev	simple/simple.c	/^static void simple_setup_cdev(struct cdev *dev, int minor,$/;"	f	file:
+simple_vma_close	simple/simple.c	/^void simple_vma_close(struct vm_area_struct *vma)$/;"	f
+simple_vma_nopage	simple/simple.c	/^struct page *simple_vma_nopage(struct vm_area_struct *vma,$/;"	f
+simple_vma_open	simple/simple.c	/^void simple_vma_open(struct vm_area_struct *vma)$/;"	f
+size	sbull/sbull.c	/^        int size;                       \/* Device size in sectors *\/$/;"	m	struct:sbull_dev	file:
+size	sbull/sbull.h	/^   int size;$/;"	m	struct:Sbull_Dev
+size	scull/scull.h	/^	unsigned long size;       \/* amount of data stored here *\/$/;"	m	struct:scull_dev
+size	scullc/scullc.h	/^	size_t size;              \/* 32-bit will suffice *\/$/;"	m	struct:scullc_dev
+size	sculld/sculld.h	/^	size_t size;              \/* 32-bit will suffice *\/$/;"	m	struct:sculld_dev
+size	scullp/scullp.h	/^	size_t size;              \/* 32-bit will suffice *\/$/;"	m	struct:scullp_dev
+size	scullv/scullv.h	/^	size_t size;              \/* 32-bit will suffice *\/$/;"	m	struct:scullv_dev
+skb	snull/snull.c	/^	struct sk_buff *skb;$/;"	m	struct:snull_priv	typeref:struct:snull_priv::sk_buff	file:
+skel_class	usb/usb-skeleton.c	/^static struct usb_class_driver skel_class = {$/;"	v	typeref:struct:usb_class_driver	file:
+skel_delete	usb/usb-skeleton.c	/^static void skel_delete(struct kref *kref)$/;"	f	file:
+skel_disconnect	usb/usb-skeleton.c	/^static void skel_disconnect(struct usb_interface *interface)$/;"	f	file:
+skel_driver	usb/usb-skeleton.c	/^static struct usb_driver skel_driver = {$/;"	v	typeref:struct:usb_driver	file:
+skel_driver	usb/usb-skeleton.c	/^static struct usb_driver skel_driver;$/;"	v	typeref:struct:usb_driver	file:
+skel_fops	usb/usb-skeleton.c	/^static struct file_operations skel_fops = {$/;"	v	typeref:struct:file_operations	file:
+skel_get_revision	pci/pci_skel.c	/^static unsigned char skel_get_revision(struct pci_dev *dev)$/;"	f	file:
+skel_open	usb/usb-skeleton.c	/^static int skel_open(struct inode *inode, struct file *file)$/;"	f	file:
+skel_probe	usb/usb-skeleton.c	/^static int skel_probe(struct usb_interface *interface, const struct usb_device_id *id)$/;"	f	file:
+skel_read	usb/usb-skeleton.c	/^static ssize_t skel_read(struct file *file, char __user *buffer, size_t count, loff_t *ppos)$/;"	f	file:
+skel_release	usb/usb-skeleton.c	/^static int skel_release(struct inode *inode, struct file *file)$/;"	f	file:
+skel_table	usb/usb-skeleton.c	/^static struct usb_device_id skel_table [] = {$/;"	v	typeref:struct:usb_device_id	file:
+skel_write	usb/usb-skeleton.c	/^static ssize_t skel_write(struct file *file, const char __user *user_buffer, size_t count, loff_t *ppos)$/;"	f	file:
+skel_write_bulk_callback	usb/usb-skeleton.c	/^static void skel_write_bulk_callback(struct urb *urb)$/;"	f	file:
+skull_cleanup	skull/skull_clean.c	/^module_exit(skull_cleanup);$/;"	v
+skull_cleanup	skull/skull_clean.c	/^void skull_cleanup(void)$/;"	f
+skull_detect	skull/skull_init.c	/^static int skull_detect(unsigned int port, unsigned int range)$/;"	f	file:
+skull_find_hw	skull/skull_init.c	/^static int skull_find_hw(void) \/* returns the # of devices *\/$/;"	f	file:
+skull_fn1	skull/skull_init.c	/^       void skull_fn1(void){}$/;"	f
+skull_fn1	skull/skull_init.c	/^EXPORT_SYMBOL (skull_fn1);$/;"	v
+skull_fn2	skull/skull_init.c	/^EXPORT_SYMBOL (skull_fn2);$/;"	v
+skull_fn2	skull/skull_init.c	/^static void skull_fn2(void){}$/;"	f	file:
+skull_init	skull/skull_init.c	/^int skull_init(void)$/;"	f
+skull_init	skull/skull_init.c	/^module_init(skull_init);$/;"	v
+skull_init_board	skull/skull_init.c	/^int skull_init_board(unsigned int port)$/;"	f
+skull_port_base	skull/skull_init.c	/^static int skull_port_base=0; \/* 0 forces autodetection *\/$/;"	v	file:
+skull_probe_hw	skull/skull_init.c	/^int skull_probe_hw(unsigned int port, unsigned int range)$/;"	f
+skull_release	skull/skull_clean.c	/^void skull_release(unsigned int port, unsigned int range)$/;"	f
+skull_variable	skull/skull_init.c	/^       int  skull_variable;$/;"	v
+skull_variable	skull/skull_init.c	/^EXPORT_SYMBOL (skull_variable);$/;"	v
+sleepy_cleanup	misc-modules/sleepy.c	/^module_exit(sleepy_cleanup);$/;"	v
+sleepy_cleanup	misc-modules/sleepy.c	/^void sleepy_cleanup(void)$/;"	f
+sleepy_fops	misc-modules/sleepy.c	/^struct file_operations sleepy_fops = {$/;"	v	typeref:struct:file_operations
+sleepy_init	misc-modules/sleepy.c	/^int sleepy_init(void)$/;"	f
+sleepy_init	misc-modules/sleepy.c	/^module_init(sleepy_init);$/;"	v
+sleepy_major	misc-modules/sleepy.c	/^static int sleepy_major = 0;$/;"	v	file:
+sleepy_read	misc-modules/sleepy.c	/^ssize_t sleepy_read (struct file *filp, char __user *buf, size_t count, loff_t *pos)$/;"	f
+sleepy_write	misc-modules/sleepy.c	/^ssize_t sleepy_write (struct file *filp, const char __user *buf, size_t count,$/;"	f
+snull_change_mtu	snull/snull.c	/^int snull_change_mtu(struct net_device *dev, int new_mtu)$/;"	f
+snull_cleanup	snull/snull.c	/^module_exit(snull_cleanup);$/;"	v
+snull_cleanup	snull/snull.c	/^void snull_cleanup(void)$/;"	f
+snull_config	snull/snull.c	/^int snull_config(struct net_device *dev, struct ifmap *map)$/;"	f
+snull_dequeue_buf	snull/snull.c	/^struct snull_packet *snull_dequeue_buf(struct net_device *dev)$/;"	f
+snull_devs	snull/snull.c	/^struct net_device *snull_devs[2];$/;"	v	typeref:struct:net_device
+snull_enqueue_buf	snull/snull.c	/^void snull_enqueue_buf(struct net_device *dev, struct snull_packet *pkt)$/;"	f
+snull_get_tx_buffer	snull/snull.c	/^struct snull_packet *snull_get_tx_buffer(struct net_device *dev)$/;"	f
+snull_header	snull/snull.c	/^int snull_header(struct sk_buff *skb, struct net_device *dev,$/;"	f
+snull_header_ops	snull/snull.c	/^static const struct header_ops snull_header_ops = {$/;"	v	typeref:struct:header_ops	file:
+snull_hw_tx	snull/snull.c	/^static void snull_hw_tx(char *buf, int len, struct net_device *dev)$/;"	f	file:
+snull_init	snull/snull.c	/^void snull_init(struct net_device *dev)$/;"	f
+snull_init_module	snull/snull.c	/^int snull_init_module(void)$/;"	f
+snull_init_module	snull/snull.c	/^module_init(snull_init_module);$/;"	v
+snull_interrupt	snull/snull.c	/^static void (*snull_interrupt)(int, void *, struct pt_regs *);$/;"	v	file:
+snull_ioctl	snull/snull.c	/^int snull_ioctl(struct net_device *dev, struct ifreq *rq, int cmd)$/;"	f
+snull_napi_interrupt	snull/snull.c	/^static void snull_napi_interrupt(int irq, void *dev_id, struct pt_regs *regs)$/;"	f	file:
+snull_open	snull/snull.c	/^int snull_open(struct net_device *dev)$/;"	f
+snull_packet	snull/snull.c	/^struct snull_packet {$/;"	s	file:
+snull_poll	snull/snull.c	/^static int snull_poll(struct napi_struct *napi, int budget)$/;"	f	file:
+snull_priv	snull/snull.c	/^struct snull_priv {$/;"	s	file:
+snull_rebuild_header	snull/snull.c	/^int snull_rebuild_header(struct sk_buff *skb)$/;"	f
+snull_regular_interrupt	snull/snull.c	/^static void snull_regular_interrupt(int irq, void *dev_id, struct pt_regs *regs)$/;"	f	file:
+snull_release	snull/snull.c	/^int snull_release(struct net_device *dev)$/;"	f
+snull_release_buffer	snull/snull.c	/^void snull_release_buffer(struct snull_packet *pkt)$/;"	f
+snull_rx	snull/snull.c	/^void snull_rx(struct net_device *dev, struct snull_packet *pkt)$/;"	f
+snull_rx_ints	snull/snull.c	/^static void snull_rx_ints(struct net_device *dev, int enable)$/;"	f	file:
+snull_setup_pool	snull/snull.c	/^void snull_setup_pool(struct net_device *dev)$/;"	f
+snull_stats	snull/snull.c	/^struct net_device_stats *snull_stats(struct net_device *dev)$/;"	f
+snull_teardown_pool	snull/snull.c	/^void snull_teardown_pool(struct net_device *dev)$/;"	f
+snull_tx	snull/snull.c	/^int snull_tx(struct sk_buff *skb, struct net_device *dev)$/;"	f
+snull_tx_timeout	snull/snull.c	/^void snull_tx_timeout (struct net_device *dev)$/;"	f
+spacefree	scull/pipe.c	/^static int spacefree(struct scull_pipe *dev)$/;"	f	file:
+stats	snull/snull.c	/^	struct net_device_stats stats;$/;"	m	struct:snull_priv	typeref:struct:snull_priv::net_device_stats	file:
+status	snull/snull.c	/^	int status;$/;"	m	struct:snull_priv	file:
+t	misc-modules/kdataalign.c	/^struct c   {char c;  char      t;} c;$/;"	m	struct:c	file:
+t	misc-modules/kdataalign.c	/^struct i   {char c;  int       t;} i;$/;"	m	struct:i	file:
+t	misc-modules/kdataalign.c	/^struct l   {char c;  long      t;} l;$/;"	m	struct:l	file:
+t	misc-modules/kdataalign.c	/^struct ll  {char c;  long long t;} ll;$/;"	m	struct:ll	file:
+t	misc-modules/kdataalign.c	/^struct p   {char c;  void *    t;} p;$/;"	m	struct:p	file:
+t	misc-modules/kdataalign.c	/^struct s   {char c;  short     t;} s;$/;"	m	struct:s	file:
+t	misc-modules/kdataalign.c	/^struct u1b {char c;  __u8      t;} u1b;$/;"	m	struct:u1b	file:
+t	misc-modules/kdataalign.c	/^struct u2b {char c;  __u16     t;} u2b;$/;"	m	struct:u2b	file:
+t	misc-modules/kdataalign.c	/^struct u4b {char c;  __u32     t;} u4b;$/;"	m	struct:u4b	file:
+t	misc-modules/kdataalign.c	/^struct u8b {char c;  __u64     t;} u8b;$/;"	m	struct:u8b	file:
+t	misc-progs/dataalign.c	/^struct c   {char c;  char      t;} c;$/;"	m	struct:c	file:
+t	misc-progs/dataalign.c	/^struct i   {char c;  int       t;} i;$/;"	m	struct:i	file:
+t	misc-progs/dataalign.c	/^struct l   {char c;  long      t;} l;$/;"	m	struct:l	file:
+t	misc-progs/dataalign.c	/^struct ll  {char c;  long long t;} ll;$/;"	m	struct:ll	file:
+t	misc-progs/dataalign.c	/^struct p   {char c;  void *    t;} p;$/;"	m	struct:p	file:
+t	misc-progs/dataalign.c	/^struct s   {char c;  short     t;} s;$/;"	m	struct:s	file:
+t	misc-progs/dataalign.c	/^struct u1b {char c;  __u8      t;} u1b;$/;"	m	struct:u1b	file:
+t	misc-progs/dataalign.c	/^struct u2b {char c;  __u16     t;} u2b;$/;"	m	struct:u2b	file:
+t	misc-progs/dataalign.c	/^struct u4b {char c;  __u32     t;} u4b;$/;"	m	struct:u4b	file:
+t	misc-progs/dataalign.c	/^struct u8b {char c;  __u64     t;} u8b;$/;"	m	struct:u8b	file:
+tasklet	short/short.c	/^static int tasklet = 0;	\/* select whether a tasklet is used *\/$/;"	v	file:
+tdelay	misc-modules/jit.c	/^int tdelay = 10;$/;"	v
+timeout	snull/snull.c	/^static int timeout = SNULL_TIMEOUT;$/;"	v	file:
+timer	misc-modules/jit.c	/^	struct timer_list timer;$/;"	m	struct:jit_data	typeref:struct:jit_data::timer_list	file:
+timer	sbull/sbull.c	/^        struct timer_list timer;        \/* For simulated media changes *\/$/;"	m	struct:sbull_dev	typeref:struct:sbull_dev::timer_list	file:
+timer	sbull/sbull.h	/^   struct timer_list timer;$/;"	m	struct:Sbull_Dev	typeref:struct:Sbull_Dev::timer_list
+timer	tty/tiny_serial.c	/^static struct timer_list *timer;$/;"	v	typeref:struct:timer_list	file:
+timer	tty/tiny_tty.c	/^	struct timer_list	*timer;$/;"	m	struct:tiny_serial	typeref:struct:tiny_serial::timer_list	file:
+tiny_break_ctl	tty/tiny_serial.c	/^static void tiny_break_ctl(struct uart_port *port, int break_state)$/;"	f	file:
+tiny_close	tty/tiny_tty.c	/^static void tiny_close(struct tty_struct *tty, struct file *file)$/;"	f	file:
+tiny_config_port	tty/tiny_serial.c	/^static void tiny_config_port(struct uart_port *port, int flags)$/;"	f	file:
+tiny_enable_ms	tty/tiny_serial.c	/^static void tiny_enable_ms(struct uart_port *port)$/;"	f	file:
+tiny_exit	tty/tiny_tty.c	/^module_exit(tiny_exit);$/;"	v
+tiny_exit	tty/tiny_tty.c	/^static void __exit tiny_exit(void)$/;"	f	file:
+tiny_get_mctrl	tty/tiny_serial.c	/^static unsigned int tiny_get_mctrl(struct uart_port *port)$/;"	f	file:
+tiny_init	tty/tiny_serial.c	/^module_init(tiny_init);$/;"	v
+tiny_init	tty/tiny_serial.c	/^static int __init tiny_init(void)$/;"	f	file:
+tiny_init	tty/tiny_tty.c	/^module_init(tiny_init);$/;"	v
+tiny_init	tty/tiny_tty.c	/^static int __init tiny_init(void)$/;"	f	file:
+tiny_ioctl	tty/tiny_tty.c	/^static int tiny_ioctl(struct tty_struct *tty, struct file *file,$/;"	f	file:
+tiny_ioctl	tty/tiny_tty.c	383;"	d	file:
+tiny_ioctl	tty/tiny_tty.c	416;"	d	file:
+tiny_ioctl	tty/tiny_tty.c	418;"	d	file:
+tiny_ioctl	tty/tiny_tty.c	456;"	d	file:
+tiny_ioctl	tty/tiny_tty.c	458;"	d	file:
+tiny_ioctl	tty/tiny_tty.c	486;"	d	file:
+tiny_open	tty/tiny_tty.c	/^static int tiny_open(struct tty_struct *tty, struct file *file)$/;"	f	file:
+tiny_ops	tty/tiny_serial.c	/^static struct uart_ops tiny_ops = {$/;"	v	typeref:struct:uart_ops	file:
+tiny_port	tty/tiny_serial.c	/^static struct uart_port tiny_port = {$/;"	v	typeref:struct:uart_port	file:
+tiny_read_proc	tty/tiny_tty.c	/^static int tiny_read_proc(char *page, char **start, off_t off, int count,$/;"	f	file:
+tiny_reg	tty/tiny_serial.c	/^static struct uart_driver tiny_reg = {$/;"	v	typeref:struct:uart_driver	file:
+tiny_release_port	tty/tiny_serial.c	/^static void tiny_release_port(struct uart_port *port)$/;"	f	file:
+tiny_request_port	tty/tiny_serial.c	/^static int tiny_request_port(struct uart_port *port)$/;"	f	file:
+tiny_serial	tty/tiny_tty.c	/^struct tiny_serial {$/;"	s	file:
+tiny_set_mctrl	tty/tiny_serial.c	/^static void tiny_set_mctrl(struct uart_port *port, unsigned int mctrl)$/;"	f	file:
+tiny_set_termios	tty/tiny_serial.c	/^static void tiny_set_termios(struct uart_port *port,$/;"	f	file:
+tiny_set_termios	tty/tiny_tty.c	/^static void tiny_set_termios(struct tty_struct *tty, struct ktermios *old_termios)$/;"	f	file:
+tiny_shutdown	tty/tiny_serial.c	/^static void tiny_shutdown(struct uart_port *port)$/;"	f	file:
+tiny_start_tx	tty/tiny_serial.c	/^static void tiny_start_tx(struct uart_port *port)$/;"	f	file:
+tiny_startup	tty/tiny_serial.c	/^static int tiny_startup(struct uart_port *port)$/;"	f	file:
+tiny_stop_rx	tty/tiny_serial.c	/^static void tiny_stop_rx(struct uart_port *port)$/;"	f	file:
+tiny_stop_tx	tty/tiny_serial.c	/^static void tiny_stop_tx(struct uart_port *port)$/;"	f	file:
+tiny_table	tty/tiny_tty.c	/^static struct tiny_serial *tiny_table[TINY_TTY_MINORS];	\/* initially all NULL *\/$/;"	v	typeref:struct:tiny_serial	file:
+tiny_timer	tty/tiny_serial.c	/^static void tiny_timer(unsigned long data)$/;"	f	file:
+tiny_timer	tty/tiny_tty.c	/^static void tiny_timer(unsigned long timer_data)$/;"	f	file:
+tiny_tiocmget	tty/tiny_tty.c	/^static int tiny_tiocmget(struct tty_struct *tty, struct file *file)$/;"	f	file:
+tiny_tiocmset	tty/tiny_tty.c	/^static int tiny_tiocmset(struct tty_struct *tty, struct file *file,$/;"	f	file:
+tiny_tty_driver	tty/tiny_tty.c	/^static struct tty_driver *tiny_tty_driver;$/;"	v	typeref:struct:tty_driver	file:
+tiny_tx_chars	tty/tiny_serial.c	/^static void tiny_tx_chars(struct uart_port *port)$/;"	f	file:
+tiny_tx_empty	tty/tiny_serial.c	/^static unsigned int tiny_tx_empty(struct uart_port *port)$/;"	f	file:
+tiny_type	tty/tiny_serial.c	/^static const char *tiny_type(struct uart_port *port)$/;"	f	file:
+tiny_verify_port	tty/tiny_serial.c	/^static int tiny_verify_port(struct uart_port *port, struct serial_struct *ser)$/;"	f	file:
+tiny_write	tty/tiny_tty.c	/^static int tiny_write(struct tty_struct *tty, $/;"	f	file:
+tiny_write_room	tty/tiny_tty.c	/^static int tiny_write_room(struct tty_struct *tty) $/;"	f	file:
+tlet	misc-modules/jit.c	/^	struct tasklet_struct tlet;$/;"	m	struct:jit_data	typeref:struct:jit_data::tasklet_struct	file:
+to_ldd_device	include/lddbus.h	34;"	d
+to_ldd_driver	include/lddbus.h	22;"	d
+to_skel_dev	usb/usb-skeleton.c	52;"	d	file:
+tty	tty/tiny_tty.c	/^	struct tty_struct	*tty;		\/* pointer to the tty for this device *\/$/;"	m	struct:tiny_serial	typeref:struct:tiny_serial::tty_struct	file:
+tv_data	short/short.c	/^struct timeval tv_data[NR_TIMEVAL]; \/* too lazy to allocate it *\/$/;"	v	typeref:struct:timeval
+tv_head	short/short.c	/^volatile struct timeval *tv_head=tv_data;$/;"	v	typeref:struct:timeval
+tv_tail	short/short.c	/^volatile struct timeval *tv_tail=tv_data;$/;"	v	typeref:struct:timeval
+tx_packetdata	snull/snull.c	/^	u8 *tx_packetdata;$/;"	m	struct:snull_priv	file:
+tx_packetlen	snull/snull.c	/^	int tx_packetlen;$/;"	m	struct:snull_priv	file:
+u1b	misc-modules/kdataalign.c	/^struct u1b {char c;  __u8      t;} u1b;$/;"	s	file:
+u1b	misc-modules/kdataalign.c	/^struct u1b {char c;  __u8      t;} u1b;$/;"	v	typeref:struct:u1b
+u1b	misc-progs/dataalign.c	/^struct u1b {char c;  __u8      t;} u1b;$/;"	s	file:
+u1b	misc-progs/dataalign.c	/^struct u1b {char c;  __u8      t;} u1b;$/;"	v	typeref:struct:u1b
+u2b	misc-modules/kdataalign.c	/^struct u2b {char c;  __u16     t;} u2b;$/;"	s	file:
+u2b	misc-modules/kdataalign.c	/^struct u2b {char c;  __u16     t;} u2b;$/;"	v	typeref:struct:u2b
+u2b	misc-progs/dataalign.c	/^struct u2b {char c;  __u16     t;} u2b;$/;"	s	file:
+u2b	misc-progs/dataalign.c	/^struct u2b {char c;  __u16     t;} u2b;$/;"	v	typeref:struct:u2b
+u4b	misc-modules/kdataalign.c	/^struct u4b {char c;  __u32     t;} u4b;$/;"	s	file:
+u4b	misc-modules/kdataalign.c	/^struct u4b {char c;  __u32     t;} u4b;$/;"	v	typeref:struct:u4b
+u4b	misc-progs/dataalign.c	/^struct u4b {char c;  __u32     t;} u4b;$/;"	s	file:
+u4b	misc-progs/dataalign.c	/^struct u4b {char c;  __u32     t;} u4b;$/;"	v	typeref:struct:u4b
+u8b	misc-modules/kdataalign.c	/^struct u8b {char c;  __u64     t;} u8b;$/;"	s	file:
+u8b	misc-modules/kdataalign.c	/^struct u8b {char c;  __u64     t;} u8b;$/;"	v	typeref:struct:u8b
+u8b	misc-progs/dataalign.c	/^struct u8b {char c;  __u64     t;} u8b;$/;"	s	file:
+u8b	misc-progs/dataalign.c	/^struct u8b {char c;  __u64     t;} u8b;$/;"	v	typeref:struct:u8b
+udev	usb/usb-skeleton.c	/^	struct usb_device *	udev;			\/* the usb device for this device *\/$/;"	m	struct:usb_skel	typeref:struct:usb_skel::usb_device	file:
+unregister_ldd_device	lddbus/lddbus.c	/^EXPORT_SYMBOL(unregister_ldd_device);$/;"	v
+unregister_ldd_device	lddbus/lddbus.c	/^void unregister_ldd_device(struct ldd_device *ldddev)$/;"	f
+unregister_ldd_driver	lddbus/lddbus.c	/^EXPORT_SYMBOL(unregister_ldd_driver);$/;"	v
+unregister_ldd_driver	lddbus/lddbus.c	/^void unregister_ldd_driver(struct ldd_driver *driver)$/;"	f
+usage	sbull/sbull.h	/^   int usage;$/;"	m	struct:Sbull_Dev
+usb_skel	usb/usb-skeleton.c	/^struct usb_skel {$/;"	s	file:
+usb_skel_exit	usb/usb-skeleton.c	/^module_exit (usb_skel_exit);$/;"	v
+usb_skel_exit	usb/usb-skeleton.c	/^static void __exit usb_skel_exit(void)$/;"	f	file:
+usb_skel_init	usb/usb-skeleton.c	/^module_init (usb_skel_init);$/;"	v
+usb_skel_init	usb/usb-skeleton.c	/^static int __init usb_skel_init(void)$/;"	f	file:
+use_mem	short/short.c	/^static int use_mem = 0;	\/* default is I\/O-mapped *\/$/;"	v	file:
+use_napi	snull/snull.c	/^static int use_napi = 0;$/;"	v	file:
+users	sbull/sbull.c	/^        short users;                    \/* How many users *\/$/;"	m	struct:sbull_dev	file:
+version	include/lddbus.h	/^	char *version;$/;"	m	struct:ldd_driver
+version_attr	include/lddbus.h	/^	struct driver_attribute version_attr;$/;"	m	struct:ldd_driver	typeref:struct:ldd_driver::driver_attribute
+vmas	scullc/scullc.h	/^	int vmas;                 \/* active mappings *\/$/;"	m	struct:scullc_dev
+vmas	sculld/sculld.h	/^	int vmas;                 \/* active mappings *\/$/;"	m	struct:sculld_dev
+vmas	scullp/scullp.h	/^	int vmas;                 \/* active mappings *\/$/;"	m	struct:scullp_dev
+vmas	scullv/scullv.h	/^	int vmas;                 \/* active mappings *\/$/;"	m	struct:scullv_dev
+wait	misc-modules/jit.c	/^	wait_queue_head_t wait;$/;"	m	struct:jit_data	file:
+wait	tty/tiny_tty.c	/^	wait_queue_head_t	wait;$/;"	m	struct:tiny_serial	file:
+whom	misc-modules/hellop.c	/^static char *whom = "world";$/;"	v	file:
+work	misc-modules/jiq.c	/^        struct delayed_work work;$/;"	m	struct:clientdata	typeref:struct:clientdata::delayed_work	file:
+work	scullc/main.c	/^	struct delayed_work work;$/;"	m	struct:async_work	typeref:struct:async_work::delayed_work	file:
+work	sculld/main.c	/^        struct delayed_work work;$/;"	m	struct:async_work	typeref:struct:async_work::delayed_work	file:
+work	scullp/main.c	/^        struct delayed_work work;$/;"	m	struct:async_work	typeref:struct:async_work::delayed_work	file:
+work	scullv/main.c	/^        struct delayed_work work;$/;"	m	struct:async_work	typeref:struct:async_work::delayed_work	file:
+wp	scull/pipe.c	/^        char *rp, *wp;                     \/* where to read, where to write *\/$/;"	m	struct:scull_pipe	file:
+wq	short/short.c	/^static int wq = 0;	\/* select at load time whether a workqueue is used *\/$/;"	v	file:
+write_one	misc-progs/outp.c	/^static int write_one(unsigned int port, unsigned int val, int size)$/;"	f	file:

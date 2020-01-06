@@ -1,0 +1,278 @@
+#!/bin/sh
+
+
+# mpatrol
+# A library for controlling and tracing dynamic memory allocations.
+# Copyright (C) 1997-2008 Graeme S. Roy <graemeroy@users.sourceforge.net>
+#
+# This program is free software: you can redistribute it and/or modify it
+# under the terms of the GNU Lesser General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or (at
+# your option) any later version.
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser
+# General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
+# UNIX shell script to parse an mpatrol log file and use a debugger to
+# append symbol names and source level information to code addresses in
+# stack tracebacks
+
+
+# $Id$
+
+
+# Program version.
+
+VERSION="1.5"
+
+
+# Parse the command line options.
+
+error=0
+help=0
+skip=0
+version=0
+progname=`basename "$0"`
+
+for option in "$@"
+do
+    case "$option" in
+      -h|--help)
+        help=1
+        shift;;
+      -s|--skip)
+        skip=1
+        shift;;
+      -V|--version)
+        version=1
+        shift;;
+      -hV|-Vh)
+        help=1
+        version=1
+        shift;;
+      --)
+        shift
+        break;;
+      -)
+        break;;
+      -*)
+        echo "$progname: Illegal option \`$option'" >&2
+        error=1
+        shift;;
+      *)
+        break;;
+    esac
+done
+
+
+# Parse the command line arguments.
+
+if [ $# != 0 ]
+then
+    progfile="$1"
+    shift
+else
+    progfile="a.out"
+fi
+
+if [ $# != 0 ]
+then
+    logfile="$1"
+    shift
+else
+    logfile="mpatrol.log"
+fi
+
+if [ $# != 0 ]
+then
+    error=1
+fi
+
+
+# Display the program version.
+
+if [ $version = 1 ]
+then
+    echo "$progname $VERSION"
+    echo "Copyright (C) 1997-2008 Graeme S. Roy"
+    echo
+    echo "This is free software, and you are welcome to redistribute it under certain"
+    echo "conditions; see the GNU Lesser General Public License for details."
+    echo
+    echo "For the latest mpatrol release and documentation,"
+    echo "visit http://sourceforge.net/projects/mpatrol."
+    echo
+fi
+
+
+# Display the program usage.
+
+if [ $error = 1 -o $help = 1 ]
+then
+    echo "Usage: $progname [options] [progfile [logfile]]"
+    echo
+    if [ $help = 0 ]
+    then
+        echo "Type \`$progname --help' for a complete list of options."
+    else
+cat <<EOF
+Options:
+  -h  --help
+        Displays this quick-reference option summary.
+  -s  --skip
+        Skip symbols marked as ??? in the log file.
+  -V  --version
+        Displays the version number of this program.
+EOF
+    fi
+    if [ $error = 1 ]
+    then
+        exit 1
+    fi
+    exit
+fi
+
+
+# Check that the input files exist.
+
+if [ ! -f "$progfile" ]
+then
+    echo "$progname: Cannot open file \`$progfile'" >&2
+    exit 1
+fi
+
+if [ ! -f "$logfile" ]
+then
+    logfile2="$progfile.log"
+    if [ ! -f "$logfile2" ]
+    then
+        echo "$progname: Cannot open file \`$logfile'" >&2
+        exit 1
+    fi
+    logfile="$logfile2"
+fi
+
+
+# Attempt to determine how pointers are formatted in the mpatrol log file.
+# It is only necessary if perl is not being used to process the log file.
+
+grep '^processor word size: *64-bit$' "$logfile" >/dev/null 2>&1
+if [ $? = 0 ]
+then
+    POINTER="0x%016X"
+else
+    POINTER="0x%08X"
+fi
+
+
+# Set up the temporary files.
+
+if [ "$TMPDIR" = "" ]
+then
+    TMPDIR="/tmp"
+fi
+
+dbtemp="$TMPDIR/$progname_$$.db"
+edtemp="$TMPDIR/$progname_$$.ed"
+
+trap "rm -f \"$dbtemp\" \"$edtemp\"" 0 1 2 3 15
+
+
+# The GDB debugger is currently used to give us the symbol and source level
+# information that we need from the code address.  I could have used addr2line
+# to do this but that would not work if the program called functions in shared
+# libraries.  Also, since we will be running the program through the debugger
+# (at least up until it reaches main()), we don't want to overwrite the
+# original log file.  To prevent that we just set the log file to be /dev/null.
+
+MPATROL_OPTIONS="LOGFILE=/dev/null"
+export MPATROL_OPTIONS
+
+
+# Write out the debugger command file containing the sequence of commands that
+# will display the symbolic information for each code address.  If the program
+# that produced the mpatrol log file was dynamically linked then the symbols
+# from all of the shared libraries it requires must be loaded into the debugger,
+# just in case some of the code addresses reside in these libraries.  This can
+# be achieved by setting a breakpoint at main() and running the program up to
+# that point.  However, this won't catch any shared libraries that are loaded
+# explicitly by the program after main().
+
+echo "set print symbol-filename on" >"$dbtemp"
+echo "set width 0" >>"$dbtemp"
+echo "break main" >>"$dbtemp"
+echo "run" >>"$dbtemp"
+if [ $skip = 1 ]
+then
+    awk '/^\t0x[0-9A-F]+ [^ ]/ && ! /\?\?\?/ { printf("x %s\n", $1); }' "$logfile" |
+        sort -u >>"$dbtemp"
+else
+    awk '/^\t0x[0-9A-F]+ [^ ]/ { printf("x %s\n", $1); }' "$logfile" |
+        sort -u >>"$dbtemp"
+fi
+echo "quit" >>"$dbtemp"
+
+
+# If perl is available then use it to process the debugger output, otherwise use
+# awk and sed which can be much slower when replacing lots of symbols in large
+# mpatrol log files.
+
+which perl >/dev/null 2>&1
+if [ $? = 0 ]
+then
+    # Using perl, construct a hash table containing code addresses and their
+    # associated symbols.  Then process the log file, changing instances of
+    # addresses to the symbols they reference.
+
+    gdb --batch --nx --command "$dbtemp" "$progfile" 2>/dev/null |
+        perl -e 'my %hash;
+                 while (<STDIN>)
+                 {
+                     my $val;
+                     if (m/^(0x[\dA-Fa-f]+)\s+\<(.+)\>:/ &&
+                         !exists($hash{$val = hex($1)}))
+                     {
+                         $hash{$val} = $2;
+                     }
+                 }
+                 open STDIN, "<" . $ARGV[0] or die($ARGV[0], ": $!\n");
+                 while (<STDIN>)
+                 {
+                     my $val;
+                     if (m/^\t(0x[\dA-F]+)( [^ ]|$)/ &&
+                         defined($val = $hash{hex($1)}))
+                     {
+                         printf("\t%s %s\n", $1, $val);
+                     }
+                     else
+                     {
+                         print $_;
+                     }
+                 }' "$logfile"
+else
+    # Write out the stream editor command file containing the sequence of
+    # commands that will convert the code addresses to symbolic information in
+    # the mpatrol log file.  We use a semicolon instead of a forward slash to
+    # delimit the replacement strings in the final command file since that is
+    # highly unlikely to appear in either a symbol name or a file name.
+
+    gdb --batch --nx --command "$dbtemp" "$progfile" 2>/dev/null |
+        sed -n 's/>:.*$//p' | sed 's/ </|/' |
+        awk 'BEGIN { FS = "|"; }
+             { printf("s;\t'$POINTER';\t'$POINTER' %s;\n", $1, $1, $2); }' >$edtemp
+
+    # Finally, scan through the mpatrol log file again, this time replacing any
+    # existing symbols that appear after any code addresses with the new symbol
+    # that has been obtained from the debugger.
+
+    awk 'BEGIN { output = 1; }
+         /^\t0x[0-9A-F]+ [^ ]/ { printf("\t%s\n", $1); output = 0; }
+         { if (output == 1) print; else output = 1; }' "$logfile" |
+        sed -f "$edtemp"
+fi

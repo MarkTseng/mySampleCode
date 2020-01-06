@@ -1,0 +1,136 @@
+'\" t
+.\"
+.\" mpatrol
+.\" A library for controlling and tracing dynamic memory allocations.
+.\" Copyright (C) 1997-2008 Graeme S. Roy <graemeroy@users.sourceforge.net>
+.\"
+.\" This program is free software: you can redistribute it and/or modify it
+.\" under the terms of the GNU Lesser General Public License as published by
+.\" the Free Software Foundation, either version 3 of the License, or (at
+.\" your option) any later version.
+.\"
+.\" This program is distributed in the hope that it will be useful, but
+.\" WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser
+.\" General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU Lesser General Public License
+.\" along with this program.  If not, see <http://www.gnu.org/licenses/>.
+.\"
+.\" UNIX Manual Page
+.\"
+.\" $Id$
+.\"
+.TH HEXWORDS 1 "16 December 2008" "Release 1.5" "mpatrol library"
+.SH NAME
+hexwords \- extracts any words from a file that can be written as hex numbers
+.SH SYNOPSIS
+\fBhexwords\fP [\fIoptions\fP] [\fIdictfile\fP]
+.SH DESCRIPTION
+The \fBhexwords\fP command is a little tool that can be used to generate
+hexadecimal constants from a dictionary of known words.  Such numerical
+constants can be used in source files for a variety of debugging problems, and
+problems with uninitialised variables are especially relevant since these
+special numbers will stand out if seen from within a debugger.  For example,
+here are some common (and some not-so-common) 32-bit hexadecimal constants that
+can be used as debugging aids:
+
+.TS
+r l.
+\fIword\fP	\fIhex constant\fP
+addedbad	0xaddedbad
+allocate	0xa110ca7e
+badlabel	0xbad1abe1
+baseball	0xba5eba11
+codebabe	0xc0debabe
+codedbad	0xc0dedbad
+deadbeef	0xdeadbeef
+deadcode	0xdeadc0de
+failsafe	0xfa115afe
+feedface	0xfeedface
+freedata	0xf4eeda7a
+goodcode	0x600dc0de
+.TE
+.PP
+As can be seen above, many decimal digits can be used to represent the letters
+that they most closely resemble, along with the hexadecimal digits \fIA\fP
+through \fPF\fP.  This provides a much larger selection of words that can be
+matched, although the digits \fI3\fP and \fI8\fP cannot be used due to the lack
+of any similar-looking letters.  The digits and their corresponding letters are
+given in the following table.
+
+.TS
+l l.
+\fIdigit\fP	\fIletter\fP
+0	O, o or Q
+1	I, i or l
+2	Z or z
+3	-
+4	q or R
+5	S or s
+6	G
+7	J or T
+8	-
+9	g
+A-F	A-F
+a-f	a-f
+.TE
+.PP
+The \fIdictfile\fP argument must be a valid dictionary filename but if
+\fIdictfile\fP is omitted then \fBhexwords\fP will use \fI/usr/dict/words\fP as
+the name of the dictionary file to use.  If that cannot be found then
+\fBhexwords\fP will try \fI/usr/lib/dict/words\fP and
+\fI/usr/share/dict/words\fP.  The dictionary file must be a plain text file
+that contains one word per line, otherwise few to no words will be matched.
+.PP
+The \fBhexwords\fP command currently makes use of several UNIX text processing
+commands in order to extract the words and their hexadecimal equivalents.  As a
+result, the \fBhexwords\fP command is only likely to work on UNIX platforms or
+on systems which have the necessary commands installed.
+.SH OPTIONS
+.TP
+\fB\-\-help\fP [\fB\-h\fP]
+Displays a quick-reference option summary.
+.TP
+\fB\-\-match\fP <\fIexact\fP|\fIlower\fP|\fIupper\fP|\fIany\fP> [\fB\-m\fP]
+Sets the type of case-sensitivity to use.  A setting of \fIexact\fP performs a
+case-sensitive comparison of all of the words in the dictionary file and the
+hexadecimal digits, whereas a setting of \fIany\fP does not.  The \fIlower\fP
+and \fIupper\fP settings convert the words in the dictionary file to lower and
+upper case respectively before performing a case-sensitive comparison.  The
+default case-sensitivity is \fIexact\fP.
+.TP
+\fB\-\-maximum\fP <\fIcount\fP> [\fB\-u\fP]
+Sets the maximum number of letters to match.  None of the hexadecimal numbers
+displayed will have any more digits than this.  The default is \fI8\fP.
+.TP
+\fB\-\-minimum\fP <\fIcount\fP> [\fB\-l\fP]
+Sets the minimum number of letters to match.  None of the hexadecimal numbers
+displayed will have any less digits than this.  The default is \fI4\fP.
+.TP
+\fB\-\-version\fP [\fB\-V\fP]
+Displays the version number of the \fBhexwords\fP command.
+.SH SEE ALSO
+\fBmpatrol\fP(1), \fBmprof\fP(1), \fBmptrace\fP(1), \fBmleak\fP(1),
+\fBmpsym\fP(1), \fBmpedit\fP(1), \fBlibmpatrol\fP(3), \fBlibmpalloc\fP(3).
+.PP
+The mpatrol manual and reference card.
+.PP
+http://heanet.dl.sourceforge.net/sourceforge/mpatrol/
+.SH AUTHOR
+Graeme S. Roy <graemeroy@users.sourceforge.net>
+.SH COPYRIGHT
+Copyright (C) 1997-2008 Graeme S. Roy <graemeroy@users.sourceforge.net>
+.PP
+This program is free software: you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License as published by
+the Free Software Foundation, either version 3 of the License, or (at
+your option) any later version.
+.PP
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser
+General Public License for more details.
+.PP
+You should have received a copy of the GNU Lesser General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.

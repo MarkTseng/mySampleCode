@@ -1,5 +1,5 @@
 # Digital UNIX 4.0 compilation flags:
-CFLAGS=-std1 -pthread -g -w1 $(DEBUGFLAGS)
+CFLAGS= -pthread -g $(DEBUGFLAGS)
 RTFLAGS=-lrt
 
 # Solaris 2.5 compilation flags:

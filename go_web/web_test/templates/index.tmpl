@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>weboauth</title>
+  </head>
+  <body>
+    <h1>weboauth</h1>
+
+    {{ if .logged_in }}
+    Logged in: {{ .login }} ({{ .name }})
+    {{ else }}
+    <a href="/signin">Sign in with GitHub</a>
+    {{ end }}
+  </body>
+</html>
+

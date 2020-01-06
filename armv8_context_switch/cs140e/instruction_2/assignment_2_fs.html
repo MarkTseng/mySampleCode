@@ -1,0 +1,2856 @@
+<!DOCTYPE html>
+<!-- saved from url=(0055)https://web.stanford.edu/class/cs140e/assignments/2-fs/ -->
+<html lang="en" class="hb-loaded"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <title>Stanford CS140e - Operating Systems</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="./assignment_2_fs_files/bootstrap.min.css" media="screen">
+    <link rel="stylesheet" href="./assignment_2_fs_files/hugo-bootswatch.css">
+    <link rel="stylesheet" href="./assignment_2_fs_files/extra.css">
+  </head>
+  <body huaban_collector_injected="true" style="">
+
+<nav class="navbar navbar-default">
+<div class="container">
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <a href="https://web.stanford.edu/class/cs140e/" class="navbar-brand">CS140e</a>
+  </div>
+  <div id="navbar" class="navbar-collapse collapse">
+    <ul class="nav navbar-nav">
+        
+        
+          
+            
+            <li>
+              <a href="https://web.stanford.edu/class/cs140e/">Home</a>
+            </li>
+            
+          
+        
+          
+            <li class="dropdown  active">
+              <a href="https://web.stanford.edu/class/cs140e/assignments/2-fs/#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                Assignments<span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" role="menu">
+                
+                  
+                  <li>
+                    <a href="https://web.stanford.edu/class/cs140e/assignments/info/"> Grading and Policies </a>
+                  </li>
+                  
+                
+                  
+                  <li>
+                    <a href="https://web.stanford.edu/class/cs140e/assignments/submission/"> Submission and Grades </a>
+                  </li>
+                  
+                
+                  <li class="divider"></li>
+                  <li>
+                    <a href="https://web.stanford.edu/class/cs140e/assignments/0-blinky/"> Assignment 0: Blinky </a>
+                  </li>
+                  
+                
+                  
+                  <li>
+                    <a href="https://web.stanford.edu/class/cs140e/assignments/1-shell/"> Assignment 1: Shell </a>
+                  </li>
+                  
+                
+                  
+                  <li class="active">
+                    <a href="https://web.stanford.edu/class/cs140e/assignments/2-fs/"> Assignment 2: File System </a>
+                  </li>
+                  
+                
+                  
+                  <li>
+                    <a href="https://web.stanford.edu/class/cs140e/assignments/3-spawn/"> Assignment 3: Spawn </a>
+                  </li>
+                  
+                
+              </ul>
+            </li>
+          
+        
+          
+            
+            <li>
+              <a href="https://web.stanford.edu/class/cs140e/about/">General Information</a>
+            </li>
+            
+          
+        
+          
+            
+            <li>
+              <a href="https://web.stanford.edu/class/cs140e/syllabus/">Syllabus</a>
+            </li>
+            
+          
+        
+
+    </ul>
+  </div>
+</div>
+</nav>
+
+
+<div class="container">
+   <div class="row pad-top">
+      <article class="col-md-9">
+         <h1>Assignment 2 <small>File System</small></h1>
+         <h4>Due:<b> Sunday March 4, 2018 11:59PM</b></h4>
+         <hr>
+         
+
+<h3 id="overview">Overview</h3>
+
+<p>In this assignment, you will enable the use of Rust’s <a href="https://doc.rust-lang.org/std/collections/index.html">collections</a> module
+(<code>Vec</code>, <code>String</code>, <code>HashMap</code>, and friends) by writing a memory allocator,
+implement the FAT32 file system, implement a Rust interface for a driver for the
+Raspberry Pi’s EMMC (SD card controller), and extend your shell with <code>cd</code>, <code>ls</code>,
+<code>pwd</code>, and <code>cat</code>, commands.</p>
+
+<hr>
+
+<h3 id="phase-0-getting-started">Phase 0: Getting Started</h3>
+
+<p>As with previous assignments, ensure that you are using a compatible machine:</p>
+
+<ul>
+<li>Runs a modern Unix natively: Linux, BSD, or macOS</li>
+<li>Runs a 64-bit variant of the OS</li>
+<li>Has a USB-A port or USB-C to USB-A adapter</li>
+</ul>
+
+<p>And has the following software installed: <code>git</code>, <code>wget</code>, <code>tar</code>, <code>screen</code>,
+<code>make</code>, and the software from previous assignments.</p>
+
+<h4 id="getting-the-skeleton-code">Getting the Skeleton Code</h4>
+
+<p>Clone the assignment 2 skeleton git repository to your <code>cs140e</code> working directory:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">git clone https://web.stanford.edu/class/cs140e/assignments/2-fs/skeleton.git <span style="color:#1c01ce">2</span>-fs</code></pre></div>
+<p>After cloning, your <code>cs140e</code> directory tree should look as follows:</p>
+
+<pre><code>cs140e
+├── 0-blinky
+├── 1-shell
+├── 2-fs
+└── os
+</code></pre>
+
+<p>Inside of the <code>os</code> repository, checkout the <code>2-fs</code> git branch and merge your
+changes from assignment 1:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh"><span style="color:#a90d91">cd</span> os
+git fetch
+git checkout <span style="color:#1c01ce">2</span>-fs
+git merge master</code></pre></div>
+<p>You may need to resolve conflicts before continuing. For example, if you see a
+message that looks like:</p>
+
+<pre><code>Auto-merging kernel/src/kmain.rs
+CONFLICT (content): Merge conflict in kernel/src/kmain.rs
+Automatic merge failed; fix conflicts and then commit the result.
+</code></pre>
+
+<p>You will need to manually modify the <code>kmain.rs</code> file to resolve the conflict.
+Ensure you keep all of your changes from assignment 1. Once all conflicts are
+resolved, add the resolved files with <code>git add</code> and commit. For more information
+on resolving merge conflicts, <a href="https://githowto.com/resolving_conflicts">see this tutorial on
+githowto.com</a>.</p>
+
+<h4 id="firmware-update">Firmware Update</h4>
+
+<p>Download the new firmware files by running <code>make fetch</code> inside of the <code>2-fs</code>
+repository. The command will download and extract files to the <code>files/</code>
+subdirectory. Copy <code>firmware/bootcode.bin</code>, <code>firmware/config.txt</code>,
+<code>firmware/fixup.dat</code>, and <code>firmware/start.elf</code> to the root of your MicroSD card.
+<strong>If <code>kernel8.img</code> is your bootloader from assignment 1, add the following line
+to <code>config.txt</code></strong>:</p>
+
+<pre><code>kernel_address=0x4000000
+</code></pre>
+
+<h4 id="installing-ttywrite">Installing <code>ttywrite</code></h4>
+
+<p>The <code>kernel</code> <code>Makefile</code> now includes a new target, <code>install</code>, that builds the
+kernel binary and calls <code>ttywrite</code> to send it to the Raspberry Pi for the
+bootloader to load. As a result, assuming the bootloader is installed as
+<code>kernel8.img</code>, you will be able to test new binaries simply by resetting your
+Raspberry Pi and running <code>make install</code>.</p>
+
+<p>The target calls <code>ttywrite</code> directly. This means that the <code>ttywrite</code> utility
+needs to be present on your system. To install your utility, run <code>cargo install</code>
+in the <code>1-shell/ttywrite</code> directory. Ensure that the utility was properly
+installed by running <code>ttywrite --help</code>.</p>
+
+<p>The <code>make install</code> target is configured to write to <code>/dev/tty.SLAB_USBtoUART</code> by
+default. If your TTY device differs, modify the <code>PI_TTY</code> declaration on line 6
+of <code>kernel/Makefile</code> appropriately.</p>
+
+
+<div class="alert alert-dismissible alert-warning">
+   <p style="font-size: 16px; font-weight: bold;">
+      
+         <span class="glyphicon glyphicon-warning-sign" aria-hidden="true" style="margin-right: 3px"></span>
+      
+      The <code>ALLOCATOR.initialize()</code> call panics!
+   </p>
+   <p></p><p>Your shell should continue to function as before. If you test the <code>make
+  install</code> target now, however, you’ll likely find that you shell appears to no
+  longer work. The likely culprit is an <code>ALLOCATOR.initialize()</code> call preceding
+  your <code>shell()</code> call. Because there is no memory allocator yet, the call will
+  lead to a <code>panic!()</code>, halting your system without warning. We’ll fix this
+  soon. Feel free to comment out the line temporarily to ensure everything is
+  working as expected.</p>
+<p></p>
+</div>
+
+
+
+<hr>
+
+<h3 id="phase-1-memory-lane">Phase 1: Memory Lane</h3>
+
+<p>In this phase you will implement two memory allocators: a simple <em>bump</em>
+allocator and a more fully-featured <em>bin</em> allocator. These will immediately
+enable the use of heap allocating structures such as <code>Vec</code>, <code>Box</code>, and <code>String</code>.
+To determine the available memory on the system for allocation, you will read
+ARM tags (<a href="http://www.simtec.co.uk/products/SWLINUX/files/booting_article.html#d0e428">ATAGS</a>). You will also implement the <code>panic_fmt</code> language item to
+properly handle <code>panic!</code> calls.</p>
+
+<hr>
+
+<h4 id="subphase-a-panic">Subphase A: Panic!</h4>
+
+<p>In this subphase you will implement the <code>panic_fmt</code> <em>language item</em>. You will
+be working in <code>kernel/src/lang_items.rs</code>.</p>
+
+<h5 id="language-items">Language Items</h5>
+
+<p>When the Rust compiler is instructed to compile a Rust program for a target
+without operating system support, such as we do for our Raspberry Pi, the
+compiler requires the manual implementation of several <em>language items</em>. These
+items are functions that the compiler inserts calls to under certain conditions.
+We can register our functions of choice for a given language item by annotating
+the function with the <code>#[lang_item]</code> attribute.</p>
+
+<p>At present, Rust requires <em>two</em> such language items:</p>
+
+<ul>
+<li><p><code>panic_fmt</code>: <code>(fmt: ::std::fmt::Arguments, file: &amp;str, line: u32, col: u32) -&gt; !</code></p>
+
+<p>Called when a <code>panic!</code> occurs. The arguments in the <code>panic!</code> call are passed
+in as <code>fmt</code> while the file name, line number, and column where the <code>panic!</code>
+occurred are passed in as <code>file</code>, <code>line</code>, and <code>col</code>.</p></li>
+
+<li><p><code>eh_personality</code>: OS/ABI dependent</p>
+
+<p>Called when <a href="https://doc.rust-lang.org/beta/nomicon/unwinding.html">unwinding</a>, or stack cleanup after an abort, is needed. This
+usually occurs when a <code>panic!</code> or thread exit occurs. We won’t be
+implementing this.</p></li>
+</ul>
+
+<p>We’ve provided simple implementations of both of these functions in
+<code>kernel/src/lang_items.rs</code>. You will extend the <code>panic_fmt</code> implementation so
+that it logs useful information to the console.</p>
+
+<h5 id="implement-panic-fmt">Implement <code>panic_fmt</code></h5>
+
+<p>Implement the <code>panic_fmt</code> function now. Your implementation should print the
+passed in information to the console and then allow the <code>loop</code> already in place
+to run. Note that the <code>fmt::Arguments</code> type implements <code>Display</code>, so you can
+print its value with <code>kprint!("{}", fmt)</code>. You’re free to implement the function
+as you like. As an example, our implementation takes inspiration from <a href="https://en.wikipedia.org/wiki/Linux_kernel_oops">Linux
+kernel oops</a> messages:</p>
+
+<pre><code>            (
+       (      )     )
+         )   (    (
+        (          `
+    .-""^"""^""^"""^""-.
+  (//\\//\\//\\//\\//\\//)
+   ~\^^^^^^^^^^^^^^^^^^/~
+     `================`
+
+    The pi is overdone.
+
+---------- PANIC ----------
+
+FILE: src/kmain.rs
+LINE: 40
+COL: 5
+
+index out of bounds: the len is 3 but the index is 4
+</code></pre>
+
+<p>Test your new <code>panic_fmt</code> implementation by having your kernel panic. Recall
+that you can use the new <code>make install</code> target to compile and send the kernel to
+your Raspberry Pi. Note that the <code>ALLOCATOR.initialize()</code> call already
+<code>panic!</code>s, so you shouldn’t need to make any changes. Ensure this function is
+called before your <code>shell()</code>.</p>
+
+<p>Then, try making your kernel panic in other ways: a rogue <code>unwrap()</code>, an
+explicit <code>panic!()</code>, or an <code>unreachable!()</code>: ensure they all work as expected.
+When you’re satisfied with your implementation, continue to next the subphase.</p>
+
+<hr>
+
+<h4 id="subphase-b-atags">Subphase B: ATAGS</h4>
+
+<p>In this subphase, you will implement an iterator over the ARM tags (ATAGS)
+loaded by the Raspberry Pi’s firmware. You will use your iterator to find the
+ATAG that specifies how much memory is available on the system. You will be
+working in the <code>pi/src/atags</code> directory and <code>kernel/src/allocator/mod.rs</code>.</p>
+
+<h5 id="arm-tags">ARM Tags</h5>
+
+<p><a href="http://www.simtec.co.uk/products/SWLINUX/files/booting_article.html#d0e428">ATAGS</a>, or ARM tags, are a mechanism used by ARM bootloaders and firmware to
+pass information about the system to the kernel. Linux, for example, can use
+ATAGS when configured for the ARM architecture.</p>
+
+<p>The Raspberry Pi places an array of ATAG structures at address 0x100. Each ATAG
+begins with an 8 byte header:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#a90d91">struct</span> <span style="color:#3f6e75">AtagHeader</span> {
+    <span style="color:#000">dwords</span>: <span style="color:#a90d91">u32</span>,
+    <span style="color:#000">tag</span>: <span style="color:#a90d91">u32</span>,
+}</code></pre></div>
+<p>The <code>dwords</code> field specifies the size of the complete ATAG in <em>double words</em>
+(32-bit words) and includes the header. Thus the minimum size is <code>2</code>. The <code>tag</code>
+field specifies the <em>type</em> of the ATAG. There are 10 different types of
+specified tags, all documented in the <a href="http://www.simtec.co.uk/products/SWLINUX/files/booting_article.html#d0e428">ATAGS reference</a>. The Raspberry Pi only
+makes use of four. These are documented below:</p>
+
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type (<code>tag</code>)</th>
+<th>Size</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><a href="http://www.simtec.co.uk/products/SWLINUX/files/booting_article.html#ATAG_CORE">CORE</a></td>
+<td>0x54410001</td>
+<td>5 or 2 if empty</td>
+<td>First tag used to start list</td>
+</tr>
+
+<tr>
+<td><a href="http://www.simtec.co.uk/products/SWLINUX/files/booting_article.html#ATAG_NONE">NONE</a></td>
+<td>0x00000000</td>
+<td>2</td>
+<td>Empty tag used to end list</td>
+</tr>
+
+<tr>
+<td><a href="http://www.simtec.co.uk/products/SWLINUX/files/booting_article.html#ATAG_MEM">MEM</a></td>
+<td>0x54410002</td>
+<td>4</td>
+<td>Describes a physical area of memory</td>
+</tr>
+
+<tr>
+<td><a href="http://www.simtec.co.uk/products/SWLINUX/files/booting_article.html#ATAG_CMDLINE">CMDLINE</a></td>
+<td>0x54410009</td>
+<td>variable</td>
+<td>Command line to pass to kernel</td>
+</tr>
+</tbody>
+</table>
+
+<p>The type of tag determines how the data after the header should be interpreted.
+Clicking on the name of the tag in the table above directs you to the reference
+for that particular tag which includes the layout of the tag’s data. The <code>MEM</code>
+tag data, for instance, is structured as below:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#a90d91">struct</span> <span style="color:#3f6e75">Mem</span> {
+    <span style="color:#000">size</span>: <span style="color:#a90d91">u32</span>,
+    <span style="color:#000">start</span>: <span style="color:#a90d91">u32</span>
+}</code></pre></div>
+<p>Tags are laid out sequentially in memory with zero padding between each tag. The
+first tag is specified to be a <code>CORE</code> tag while the final tag is indicated by
+the <code>NONE</code> tag. Other tags can appear in any order. The <code>dwords</code> field is used
+to determine the address of the adjacent ATAG. The diagram below depicts the
+general layout.</p>
+
+<figure style="
+   
+    padding: 10px; 
+">
+   <img src="./assignment_2_fs_files/atags-diagram.svg" alt="ATAGS array layout" style="
+          display: block; margin: 0 auto; 
+      ">
+   
+</figure>
+
+
+<h5 id="unions-safety">Unions &amp; Safety</h5>
+
+<p>The raw ATAG data structures are declared in <code>pi/src/atags/raw.rs</code>. The main
+declaration, copied below, makes use of a Rust <code>union</code>. Rust’s unions are
+identical to C unions: they define a structure where all fields share common
+storage.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#a90d91">pub</span> <span style="color:#a90d91">struct</span> <span style="color:#3f6e75">Atag</span> {
+    <span style="color:#000">dwords</span>: <span style="color:#a90d91">u32</span>,
+    <span style="color:#000">tag</span>: <span style="color:#a90d91">u32</span>,
+    <span style="color:#000">kind</span>: <span style="color:#3f6e75">Kind</span>
+}
+
+<span style="color:#a90d91">pub</span> <span style="color:#a90d91">union</span> <span style="color:#3f6e75">Kind</span> {
+    <span style="color:#000">core</span>: <span style="color:#3f6e75">Core</span>,
+    <span style="color:#000">mem</span>: <span style="color:#3f6e75">Mem</span>,
+    <span style="color:#000">cmd</span>: <span style="color:#3f6e75">Cmd</span>
+}</code></pre></div>
+<p>In effect, unions allow memory to be cast into arbitrary structures without
+regard for whether the cast is correct. As a result, accessing union fields in
+Rust is <code>unsafe</code>.</p>
+
+<p>We’ve already handled most of the <code>unsafe</code> in the <code>atags</code> module for you, so you
+don’t need to worry about handling unions yourself. Nonetheless, exposing unions
+to end-users of our <code>pi</code> library is a bad idea. Because of this, we’ve declared
+a <em>second</em> <code>Atag</code> structure in <code>pi/src/atags/atag.rs</code>. This structure is
+entirely safe to use and access. This is the structure that the <code>pi</code> library
+will expose. When you finish the implementation of the <code>atag</code> module later in
+this subphase, you’ll write conversions from the <code>raw</code> structures to the safe
+structures.</p>
+
+<div class="panel panel-question">
+  <div class="panel-heading">
+     <div class="badge pull-right">
+        <code>
+           enduser-unsafe
+        </code>
+     </div>
+    <h3 class="panel-title">
+       <span class="glyphicon glyphicon-question-sign" aria-hidden="true" style="padding-right: 5px"></span>
+       Why is it a bad idea to expose unions to end-users?
+    </h3>
+  </div>
+  <div class="panel-body">
+     <p></p><p>We’re going through a lot of effort to expose a safe interface to unsafe data
+  structures. You’ll see this over and over again in Rust, with the standard
+  library as a prime example. What benefit is there to exposing safe interfaces
+  to unsafe structures or operations in Rust? Could we yield the same benefits
+  in a language like C?</p>
+<p></p>
+  </div>
+</div>
+
+
+<h5 id="command-line-arguments">Command Line Arguments</h5>
+
+<p>The <code>CMDLINE</code> tag deserve special attention. Its declaration is:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#a90d91">struct</span> <span style="color:#3f6e75">Cmd</span> {
+    <span style="color:#c41a16">/// The first byte of the command line string.
+</span><span style="color:#c41a16"></span>    <span style="color:#000">cmd</span>: <span style="color:#a90d91">u8</span>
+}</code></pre></div>
+<p>As indicated by the comment, the <code>cmd</code> field holds the <em>first byte</em> of the
+command line string. In other words, <code>&amp;cmd</code> is a pointer to a null-terminated,
+C-like string. The safe version of the <code>Cmd</code> tag is <code>Cmd(&amp;'static str)</code>. When
+you write the conversion from the <code>raw</code> to safe version of the <code>Cmd</code> tag, you’ll
+need to determine the size of the C-like string by searching for the null
+terminator in the string. You’ll then need to cast the address and size into a
+slice using <code>slice::from_raw_parts()</code> and finally cast the slice into a string
+using <code>str::from_utf8()</code> or <code>str::from_utf8_unchecked()</code>. You used both of these
+functions before in assignment 1.</p>
+
+<h5 id="implement-atags">Implement <code>atags</code></h5>
+
+<p>You’re ready to implement the <code>atags</code> module in <code>pi/src/atags</code>. Start by
+implementing the <code>raw::Atag::next()</code> method in <code>atags/raw.rs</code>. The method
+determines the address of the ATAG following <code>self</code> and returns a reference to
+it. You’ll need to use <code>unsafe</code> in your implementation. Then implement the
+helper methods and conversion traits from raw structures to safe structures in
+<code>atags/atag.rs</code>. You should only need to use <code>unsafe</code> when implementing
+<code>From&lt;&amp;'a raw::Cmd&gt; for Atag</code>. Finally, finish the implementation of the
+<code>Iterator</code> trait for <code>Atags</code> in <code>atags/mod.rs</code>. This requires no <code>unsafe</code>.</p>
+
+<div class="alert alert-dismissible alert-success">
+   <p style="font-size: 16px;">
+   <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+   <span style="font-weight: bold;">Hint:</span> You can (and should try to!) implement the <code>Atags::next()</code> iterator method in just three lines.</p>
+</div>
+
+
+
+<div class="alert alert-dismissible alert-success">
+   <p style="font-size: 16px;">
+   <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+   <span style="font-weight: bold;">Hint:</span> You can convert from <code>x: &amp;T</code> to <code>*const u32</code> using <code>x as *const T as *const u32</code>.</p>
+</div>
+
+
+
+<div class="alert alert-dismissible alert-success">
+   <p style="font-size: 16px;">
+   <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+   <span style="font-weight: bold;">Hint:</span> You can convert from <code>x: *const T</code> to <code>&amp;T</code> using <code>&amp;*x</code>.</p>
+</div>
+
+
+
+<div class="alert alert-dismissible alert-success">
+   <p style="font-size: 16px;">
+   <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+   <span style="font-weight: bold;">Hint:</span> You can perform pointer arithmetic with <a href="https://doc.rust-lang.org/std/primitive.pointer.html#method.add">add()</a>, <a href="https://doc.rust-lang.org/std/primitive.pointer.html#method.sub">sub()</a>, or <a href="https://doc.rust-lang.org/std/primitive.pointer.html#method.offset">offset()</a>.</p>
+</div>
+
+
+
+<h5 id="testing-atags">Testing <code>atags</code></h5>
+
+<p>Test your ATAGS implementation by iterating over all of the ATAGS and debug
+printing them to your console in <code>kernel/src/kmain.rs</code>. You should see at least
+one of each of the three non-<code>NONE</code> tags. Verify that the value of each ATAG
+matches your expectations. Once your implementation performs as expected,
+proceed to the next subphase.</p>
+
+<div class="alert alert-dismissible alert-success">
+   <p style="font-size: 16px;">
+   <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+   <span style="font-weight: bold;">Hint:</span> The <code>{:#?}</code> format specifier prettifies the debug output of a structure.</p>
+</div>
+
+
+
+<div class="panel panel-question">
+  <div class="panel-heading">
+     <div class="badge pull-right">
+        <code>
+           atag-cmdline
+        </code>
+     </div>
+    <h3 class="panel-title">
+       <span class="glyphicon glyphicon-question-sign" aria-hidden="true" style="padding-right: 5px"></span>
+       What does the <code>CMDLINE</code> ATAG contain?
+    </h3>
+  </div>
+  <div class="panel-body">
+     <p></p><p>What is the value of the command line string in the <code>CMDLINE</code> ATAG found on
+  your Raspberry Pi? What do you think the parameters control?</p>
+<p></p>
+  </div>
+</div>
+
+
+<div class="panel panel-question">
+  <div class="panel-heading">
+     <div class="badge pull-right">
+        <code>
+           atag-mem
+        </code>
+     </div>
+    <h3 class="panel-title">
+       <span class="glyphicon glyphicon-question-sign" aria-hidden="true" style="padding-right: 5px"></span>
+       How much memory is reported by the <code>MEM</code> tag?
+    </h3>
+  </div>
+  <div class="panel-body">
+     <p></p><p>What is the exact start address and size of the available memory reported by
+  the <code>MEM</code> ATAG? How close is this to the Raspberry Pi’s purported 1GB or RAM?</p>
+<p></p>
+  </div>
+</div>
+
+
+<hr>
+
+<h4 id="subphase-c-warming-up">Subphase C: Warming Up</h4>
+
+<p>In this subphase, we’ll set the stage to write our two memory allocators in the
+next subphases. You’ll implement two utility functions, <code>align_up</code> and
+<code>align_down</code>, that align addresses to a power of two. You’ll also implement the
+<code>memory_map</code> function that returns the start and end address of the available
+memory on the system. Your <code>memory_map</code> function will be used by both memory
+allocators to determine the available memory for allocation.</p>
+
+<h5 id="alignment">Alignment</h5>
+
+<p>A memory address is <em>n-byte aligned</em> if it is a multiple of <code>n</code>. Said another
+way, a memory address <code>k</code> is <em>n-byte aligned</em> if <code>k % n == 0</code>. We don’t
+<em>usually</em> need to be concerned about the alignment of our memory addresses, but
+as budding system’s programmers, we do! This is because hardware, protocols, and
+other external forces enjoin alignment properties. For example, the ARM 32-bit
+architecture requires the stack pointer to be 8-byte aligned. The AArch64
+architecture, our operating system’s architecture of choice, requires the stack
+pointer to be <em>16</em>-byte aligned; x86-64 requires the same alignment. Page
+addresses used for virtual memory typically need to be 4k-byte aligned. And
+there are many more examples, but it suffices to say that alignment of memory
+addresses is important.</p>
+
+<p>In C, the alignment of a memory address returned from a libC allocator is
+guaranteed to be 8-byte aligned on 32-bit systems and 16-byte aligned on 64-bit
+systems. Beyond this, the caller has no control over the alignment of the
+returned memory address and must fend for themselves (POSIX functions like
+<code>posix_memalign</code> later corrected for this).</p>
+
+<div class="panel panel-question">
+  <div class="panel-heading">
+     <div class="badge pull-right">
+        <code>
+           libc-align
+        </code>
+     </div>
+    <h3 class="panel-title">
+       <span class="glyphicon glyphicon-question-sign" aria-hidden="true" style="padding-right: 5px"></span>
+       Why did C choose these alignments?
+    </h3>
+  </div>
+  <div class="panel-body">
+     <p></p><p>The choice to guarantee 8 or 16-byte alignment from libC’s <code>malloc</code> is not
+  without reason. Why did libC choose these particular alignment guarantees?</p>
+<p></p>
+  </div>
+</div>
+
+
+<p>Recall the signatures for <code>malloc()</code> and <code>free()</code> in C:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#a90d91">void</span> <span style="color:#000">*</span><span style="color:#000">malloc</span>(<span style="color:#000">size_t</span> <span style="color:#000">size</span>);
+
+<span style="color:#a90d91">void</span> <span style="color:#000">free</span>(<span style="color:#a90d91">void</span> <span style="color:#000">*</span><span style="color:#000">pointer</span>);</code></pre></div>
+<p>In contrast, Rust’s low-level, unsafe, never-used-by-users <code>alloc</code> and <code>dealloc</code>
+have the following signature:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#177500">// `layout.size()` is the requested size, `layout.align()` the requested alignment
+</span><span style="color:#177500"></span><span style="color:#a90d91">unsafe</span> <span style="color:#a90d91">fn</span> <span style="color:#000">alloc</span>(<span style="color:#000">&amp;</span><span style="color:#a90d91">mut</span> <span style="color:#5b269a">self</span>, <span style="color:#000">layout</span>: <span style="color:#3f6e75">Layout</span>) -&gt; <span style="color:#a90d91">Result</span><span style="color:#000">&lt;*</span><span style="color:#a90d91">mut</span> <span style="color:#a90d91">u8</span>, <span style="color:#000">AllocErr</span><span style="color:#000">&gt;</span>;
+
+<span style="color:#177500">// `layout` should be the same as was used for the call that returned `ptr`
+</span><span style="color:#177500"></span><span style="color:#a90d91">unsafe</span> <span style="color:#a90d91">fn</span> <span style="color:#000">dealloc</span>(<span style="color:#000">&amp;</span><span style="color:#a90d91">mut</span> <span style="color:#5b269a">self</span>, <span style="color:#000">ptr</span>: <span style="color:#000">*</span><span style="color:#a90d91">mut</span> <span style="color:#a90d91">u8</span>, <span style="color:#000">layout</span>: <span style="color:#3f6e75">Layout</span>);</code></pre></div>
+<p>Note that the caller can specify the alignment. As a result, the onus is on the
+allocator, <em>not</em> the caller, to return a properly aligned memory address. When
+you implement memory allocators in the next phase, you’ll need to ensure that
+the address you return is properly aligned.</p>
+
+<p>The second thing to note is that the <code>dealloc</code> function, analogous to C’s
+<code>free</code>, requires the caller to pass in the <code>Layout</code> used for the original call
+to <code>alloc</code>. As a result, the onus is on the caller, <em>not</em> the allocator, to
+remember the requested size and alignment of an allocation.</p>
+
+<div class="panel panel-question">
+  <div class="panel-heading">
+     <div class="badge pull-right">
+        <code>
+           onus
+        </code>
+     </div>
+    <h3 class="panel-title">
+       <span class="glyphicon glyphicon-question-sign" aria-hidden="true" style="padding-right: 5px"></span>
+       Why do you think Rust split responsibilities in this way?
+    </h3>
+  </div>
+  <div class="panel-body">
+     <p></p><p>In C, the allocator has fewer restrictions on the alignment of memory
+  addresses it returns but must record the size of an allocation for later use.
+  The inverse is true in Rust. Why do you think Rust chose the opposite path
+  here? What advantages does it have for the allocator and for the caller?</p>
+<p></p>
+  </div>
+</div>
+
+
+<h5 id="utilities-align-up-and-align-down">Utilities: <code>align_up</code> and <code>align_down</code></h5>
+
+<p>When you implement your allocators in the next subphases, you’ll find it useful
+to, given a memory address <code>u</code>, be able to determine the first address <code>&gt;=</code> or
+<code>&lt;=</code> <code>u</code> that is aligned to a power of two. The (unimplemented) <code>align_up</code> and
+<code>align_down</code> functions in <code>kernel/src/allocator/util.rs</code> do exactly this:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#c41a16">/// Align `addr` downwards to the nearest multiple of `align`.
+</span><span style="color:#c41a16">/// Panics if `align` is not a power of 2.
+</span><span style="color:#c41a16"></span><span style="color:#a90d91">fn</span> <span style="color:#000">align_down</span>(<span style="color:#000">addr</span>: <span style="color:#a90d91">usize</span>, <span style="color:#000">align</span>: <span style="color:#a90d91">usize</span>) -&gt; <span style="color:#a90d91">usize</span>;
+
+<span style="color:#c41a16">/// Align `addr` upwards to the nearest multiple of `align`.
+</span><span style="color:#c41a16">/// Panics if `align` is not a power of 2.
+</span><span style="color:#c41a16"></span><span style="color:#a90d91">fn</span> <span style="color:#000">align_up</span>(<span style="color:#000">addr</span>: <span style="color:#a90d91">usize</span>, <span style="color:#000">align</span>: <span style="color:#a90d91">usize</span>) -&gt; <span style="color:#a90d91">usize</span>;</code></pre></div>
+<p>Implement these functions now. You can unit test your implementations by calling
+<code>make test</code> or <code>cargo test</code> in the <code>kernel</code> directory. This will run the tests
+in <code>kernel/src/allocator/tests.rs</code>. All of the <code>align_util</code> unit tests should
+pass.</p>
+
+
+<div class="alert alert-dismissible alert-warning">
+   <p style="font-size: 16px; font-weight: bold;">
+      
+         <span class="glyphicon glyphicon-warning-sign" aria-hidden="true" style="margin-right: 3px"></span>
+      
+      During testing, calls to <code>kprint{ln}!</code> become calls to <code>print{ln}!</code>.
+   </p>
+   <p></p>
+</div>
+
+
+
+<div class="alert alert-dismissible alert-success">
+   <p style="font-size: 16px;">
+   <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+   <span style="font-weight: bold;">Hint:</span> You can implement each function in 1 or 2 simple lines.</p>
+</div>
+
+
+
+<div class="alert alert-dismissible alert-success">
+   <p style="font-size: 16px;">
+   <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+   <span style="font-weight: bold;">Hint:</span> Implement <code>align_up</code> in terms of <code>align_down</code>.</p>
+</div>
+
+
+
+<h5 id="thread-safety">Thread Safety</h5>
+
+<p>Memory allocators like libC’s <code>malloc()</code> and the two you will soon implement are
+<em>global</em>: they can be called by any thread at any point in time. As such, the
+allocator needs to be <em>thread safe</em>. Rust takes thread safety very seriously,
+and so it is difficult to implement an allocator that isn’t thread-safe even if
+our system doesn’t have any concurrency mechanisms like threads just yet.</p>
+
+<p>The topic of thread-safe memory allocators is extensive, and many research
+papers have been published on exactly this topic. To avoid a deep tangent, we’ll
+ignore the topic altogether and wrap our allocator in a <code>Mutex</code> ensuring that it
+is thread-safe by virtue of exclusion. We’ve provided the code that will wrap
+<em>your</em> allocators in <code>kernel/src/allocator/mod.rs</code>. Read through the code now.
+Notice how it implements Rust’s <a href="https://doc.rust-lang.org/alloc/allocator/trait.Alloc.html">Alloc</a> trait; this is how Rust knows that it is
+a valid allocator. An implementation of this trait is required to register an
+instance of the struct as a <code>#[global_allocator]</code>, which we’ve done for you in
+<code>kmain.rs</code>. Once an instance is registered via the <code>#[global_allocator]</code>
+annotation, we can use structures like <code>Vec</code>, <code>String</code>, and <code>Box</code> and Rust will
+forward the <code>alloc()</code> and <code>dealloc()</code> calls to our registered instance.</p>
+
+<h5 id="switching-implementations">Switching Implementations</h5>
+
+<p>The <code>Alloc</code> implementation for <code>Allocator</code> in <code>kernel/src/allocator/mod.rs</code>
+simply forwards calls to an internal <code>imp::Allocator</code> after taking a lock. The
+<code>imp</code> module is <em>virtual</em>: it isn’t backed by any file in the file system.
+Instead, we use the <code>#[path = "bump.rs"]</code> annotation to tell Rust where to find
+the file for that module. This lets us switch the actual allocator
+implementation we’re using by modifying the file in the <code>#[path]</code>. We’ll start
+with the bump allocator in <code>bump.rs</code> and later switch to the bin allocator in
+<code>bin.rs</code>.</p>
+
+<h5 id="utility-memory-map">Utility: <code>memory_map</code></h5>
+
+<p>The final item in the <code>kernel/src/allocator/mod.rs</code> file is the <code>memory_map</code>
+function. This function is called by the <code>Allocator::initialize()</code> method which
+in-turn is called in <code>kmain()</code>. The <code>initialize()</code> method constructs an instance
+of the internal <code>imp::Allocator</code> structure for use in later allocations and
+deallocations.</p>
+
+<p>The <code>memory_map</code> function is responsible for returning the start and end address
+of all of the <em>free</em> memory on the system. Note that the amount of <em>free</em> memory
+is unlikely to be equal to the <em>total</em> amount of memory on the system, the
+latter of which is identified by ATAGS. This is because memory is already being
+used by data like the kernel’s binary. <code>memory_map</code> should take care not to mark
+used memory as free. To assist you with this, we’ve declared the <code>binary_end</code>
+variable which holds the first address after the kernel’s binary.</p>
+
+<p>Implement the <code>memory_map</code> function now by using your <code>Atags</code> implementation
+from Subphase B and the <code>binary_end</code> variable. Ensure that the function returns
+the expected values. Then add a call to <code>String::from("Hi!")</code> (or any other
+allocating call) and ensure that a <code>panic!()</code> occurs because of an unimplemented
+bump allocator. If <code>memory_map()</code> returns what you expect and a call to
+<code>imp::Allocator::new()</code> panics because the bump allocator hasn’t been
+implemented yet, proceed to the next subphase.</p>
+
+<hr>
+
+<h4 id="subphase-d-bump-allocator">Subphase D: Bump Allocator</h4>
+
+<p>In this subphase, you will implement the simplest of allocators: the <em>bump</em>
+allocator. You will be working in <code>kernel/src/allocator/bump.rs</code>.</p>
+
+<p>A bump allocator works like this: on <code>alloc</code>, the allocator returns a <code>current</code>
+pointer, modified as necessary to guarantee the requested alignment, and <em>bumps</em>
+the <code>current</code> pointer up by the size of the requested allocation plus whatever
+was necessary to fulfill the alignment request. If the allocator runs out of
+memory, it returns an error. On <code>dealloc</code>, the allocator does nothing.</p>
+
+<p>The diagram below depicts what happens to the <code>current</code> pointer after a <code>1k</code>
+byte allocation and a subsequent <code>512</code> byte allocation. Note that alignment
+concerns are absent in the diagram.</p>
+
+<figure style="
+   
+    padding: 10px; 
+">
+   <img src="./assignment_2_fs_files/bump-diagram.svg" alt="Bump Allocator Diagram" style="
+          display: block; margin: 0 auto; 
+      ">
+   
+</figure>
+
+
+<p>Your task is to implement a bump allocator in <code>kernel/src/allocator/bump.rs</code>. In
+particular, implement the <code>new()</code>, <code>alloc()</code>, and <code>dealloc()</code> methods of
+<code>bump::Allocator</code>. Use your <code>align_up</code> and <code>align_down</code> utility functions as
+necessary to guarantee the proper alignment of the returned addresses. We’ve
+provided unit tests that check the basic correctness of your implementation. You
+can run them with <code>make test</code> or <code>cargo test</code> in the <code>kernel</code> directory. You
+should pass all of the <code>allocator::bump_</code> unit tests.</p>
+
+
+<div class="alert alert-dismissible alert-warning">
+   <p style="font-size: 16px; font-weight: bold;">
+      
+         <span class="glyphicon glyphicon-warning-sign" aria-hidden="true" style="margin-right: 3px"></span>
+      
+      Ensure that you don’t perform any potentially overflowing operations!
+   </p>
+   <p></p><p>Use the <a href="https://doc.rust-lang.org/std/primitive.usize.html#method.saturating_add">saturating_add</a>
+  and <a href="https://doc.rust-lang.org/std/primitive.usize.html#method.saturating_sub">saturating_sub</a>
+  methods as necessary to prevent arithmetic overflow.</p>
+<p></p>
+</div>
+
+
+
+<p>Once all of the unit tests pass, try alloacting memory in <code>kmain()</code> to “see”
+your allocator in action. Here’s a simple test:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#a90d91">let</span> <span style="color:#a90d91">mut</span> <span style="color:#000">v</span> <span style="color:#000">=</span> <span style="color:#000">vec</span><span style="color:#000">!</span>[];
+<span style="color:#a90d91">for</span> <span style="color:#000">i</span> <span style="color:#a90d91">in</span> <span style="color:#1c01ce">0</span>..<span style="color:#1c01ce">1000</span> {
+    <span style="color:#000">v</span>.<span style="color:#000">push</span>(<span style="color:#000">i</span>);
+    <span style="color:#000">kprintln</span><span style="color:#000">!</span>(<span style="color:#c41a16">"{:?}"</span>, <span style="color:#000">v</span>);
+}</code></pre></div>
+<p>Once your implementation works as expected, proceed to the next subphase.</p>
+
+<div class="panel panel-question">
+  <div class="panel-heading">
+     <div class="badge pull-right">
+        <code>
+           bump-chain
+        </code>
+     </div>
+    <h3 class="panel-title">
+       <span class="glyphicon glyphicon-question-sign" aria-hidden="true" style="padding-right: 5px"></span>
+       What does the <code>alloc</code> call chain look like?
+    </h3>
+  </div>
+  <div class="panel-body">
+     <p></p><p>If you paused execution when <code>bump::Allocator::alloc()</code> gets called, what
+  would the backtrace look like? Asked another way: explain in detail how a call
+  like <code>v.push(i)</code> leads to a call to your <code>bump::Allocator::alloc()</code> method.</p>
+<p></p>
+  </div>
+</div>
+
+
+<hr>
+
+<h4 id="subphase-e-bin-allocator">Subphase E: Bin Allocator</h4>
+
+<p>In this subphase, you will implement a more complete allocator: the <em>bin</em>
+allocator. You will be working in <code>kernel/src/allocator/bin.rs</code>.</p>
+
+<p>A bin allocator segments memory allocations into size <em>classes</em>, or <em>bins</em>. The
+specific size classes are decided arbitrarily by the allocator. Each bin holds a
+linked-list of pointers to memory of the bin’s size class. Allocations are
+rounded up to the nearest bin: if there is an item in the bin’s linked list, it
+is popped and returned. If there is no free memory in that bin, new memory is
+allocated from the global pool and returned. Deallocation pushes an item to the
+linked list in the corresponding bin.</p>
+
+<p>One popular approach is to divide bins into powers of two. For example, an
+allocator might choose to divide memory allocations into <code>k - 2</code> bins with sizes
+<code>2^n</code> for <code>n</code> from <code>3</code> to <code>k</code> (<code>2^3</code>, <code>2^4</code>, …, <code>2^k</code>). Any allocation or
+deallocation request for less than or equal to <code>2^3</code> bytes would be handled by
+the <code>2^3</code> bin, requests between <code>2^3</code> and <code>2^4</code> bytes from the <code>2^4</code> bin, and so
+on:</p>
+
+<ul>
+<li>bin 0 (<code>2^3</code> bytes): handles allocations in <code>(0, 2^3]</code></li>
+<li>bin 1 (<code>2^4</code> bytes): handles allocations in <code>(2^3, 2^4]</code></li>
+<li>bin k (<code>2^k</code> bytes): handles allocations in <code>(2^(k - 1), 2^k]</code></li>
+</ul>
+
+<h5 id="linked-list">Linked List</h5>
+
+<p>We’ve provided an implementation of an <em>intrusive</em> linked list of memory
+addresses in <code>kernel/src/allocator/linked_list.rs</code>. We’ve also imported the
+<code>LinkedList</code> struct in <code>kernel/src/allocator/bin.rs</code>.</p>
+
+
+<div class="alert alert-dismissible alert-info">
+   <p style="font-size: 16px; font-weight: bold;">
+      
+         <span class="glyphicon glyphicon-info-sign" aria-hidden="true" style="margin-right: 3px"></span>
+      
+      What’s an <em>instrusive</em> linked list?
+   </p>
+   <p></p><p>In an intrusive linked list, <code>next</code> and <code>previous</code> pointers, if any, are
+  stored in the <code>push</code>ed items themselves. An intrusive linked list requires no
+  additional memory, beyond the item, to manage an item. On the other hand, the
+  user must provide valid storage in the item for these pointers.</p>
+<p></p>
+</div>
+
+
+
+<p>A new, empty list is created using <code>LinkedList::new()</code>. A new address can be
+prepended to the list using <code>push()</code>. The first address in the list, if any, can
+be removed and returned using <code>pop()</code> or returned (but not removed) using
+<code>peek()</code>:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#a90d91">let</span> <span style="color:#a90d91">mut</span> <span style="color:#000">list</span> <span style="color:#000">=</span> <span style="color:#000">LinkedList</span>::<span style="color:#000">new</span>();
+<span style="color:#a90d91">unsafe</span> {
+    <span style="color:#000">list</span>.<span style="color:#000">push</span>(<span style="color:#000">address_1</span>);
+    <span style="color:#000">list</span>.<span style="color:#000">push</span>(<span style="color:#000">address_2</span>);
+}
+
+<span style="color:#000">assert_eq</span><span style="color:#000">!</span>(<span style="color:#000">list</span>.<span style="color:#000">peek</span>(), <span style="color:#a90d91">Some</span>(<span style="color:#000">address_2</span>));
+<span style="color:#000">assert_eq</span><span style="color:#000">!</span>(<span style="color:#000">list</span>.<span style="color:#000">pop</span>(), <span style="color:#a90d91">Some</span>(<span style="color:#000">address_2</span>));
+<span style="color:#000">assert_eq</span><span style="color:#000">!</span>(<span style="color:#000">list</span>.<span style="color:#000">pop</span>(), <span style="color:#a90d91">Some</span>(<span style="color:#000">address_1</span>));
+<span style="color:#000">assert_eq</span><span style="color:#000">!</span>(<span style="color:#000">list</span>.<span style="color:#000">pop</span>(), <span style="color:#a90d91">None</span>);</code></pre></div>
+<p><code>LinkedList</code> exposes two iterators. The first, obtained via <code>iter()</code>, iterates
+over all of the addresses in the list. The second, returned from <code>iter_mut()</code>,
+returns <code>Node</code>s that refer to each address in the list. The <code>value()</code> and
+<code>pop()</code> methods of <code>Node</code> can be used to read the value or pop the value from
+the list, respectively.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#a90d91">let</span> <span style="color:#a90d91">mut</span> <span style="color:#000">list</span> <span style="color:#000">=</span> <span style="color:#000">LinkedList</span>::<span style="color:#000">new</span>();
+<span style="color:#a90d91">unsafe</span> {
+    <span style="color:#000">list</span>.<span style="color:#000">push</span>(<span style="color:#000">address_1</span>);
+    <span style="color:#000">list</span>.<span style="color:#000">push</span>(<span style="color:#000">address_2</span>);
+    <span style="color:#000">list</span>.<span style="color:#000">push</span>(<span style="color:#000">address_3</span>);
+}
+
+<span style="color:#a90d91">for</span> <span style="color:#000">node</span> <span style="color:#a90d91">in</span> <span style="color:#000">list</span>.<span style="color:#000">iter_mut</span>() {
+    <span style="color:#a90d91">if</span> <span style="color:#000">node</span>.<span style="color:#000">value</span>() <span style="color:#000">==</span> <span style="color:#000">address_2</span> {
+        <span style="color:#000">node</span>.<span style="color:#000">pop</span>();
+    }
+}
+
+<span style="color:#000">assert_eq</span><span style="color:#000">!</span>(<span style="color:#000">list</span>.<span style="color:#000">pop</span>(), <span style="color:#a90d91">Some</span>(<span style="color:#000">address_3</span>));
+<span style="color:#000">assert_eq</span><span style="color:#000">!</span>(<span style="color:#000">list</span>.<span style="color:#000">pop</span>(), <span style="color:#a90d91">Some</span>(<span style="color:#000">address_1</span>));
+<span style="color:#000">assert_eq</span><span style="color:#000">!</span>(<span style="color:#000">list</span>.<span style="color:#000">pop</span>(), <span style="color:#a90d91">None</span>);</code></pre></div>
+<p>Read through the code for <code>LinkedList</code> now. Pay special attention to the safety
+properties required to call <code>push()</code> safely. You’ll likely want to use
+<code>LinkedList</code> to manage the bins in your memory allocator.</p>
+
+<div class="panel panel-question">
+  <div class="panel-heading">
+     <div class="badge pull-right">
+        <code>
+           ll-alloc
+        </code>
+     </div>
+    <h3 class="panel-title">
+       <span class="glyphicon glyphicon-question-sign" aria-hidden="true" style="padding-right: 5px"></span>
+       Why is it convenient to use an intrusive linked list?
+    </h3>
+  </div>
+  <div class="panel-body">
+     <p></p><p>Using an <em>intrusive</em> linked list for our memory allocators turns out to be a
+  very convenient decision. What issues would arise if we had instead decided to
+  use a regular, allocate-additional-memory-on-push, linked list?</p>
+<p></p>
+  </div>
+</div>
+
+
+<h5 id="fragmentation">Fragmentation</h5>
+
+<p>The concept of <em>fragmentation</em> refers to memory that is unused but
+unallocatable. An allocator incurs or creates <em>high fragmentation</em> if it creates
+a lot of unusable memory throughout the course of handling allocations. An
+<em>ideal</em> allocator has zero fragmentation: it never uses more memory than
+necessary to handle a request and it can always use available memory to handle
+new requests. In practice, this is neither desired nor achievable given other
+design constraints. But striving for low fragmentation is a key quality of good
+memory allocators.</p>
+
+<p>We typically define two kinds of fragmentation:</p>
+
+<ul>
+<li><p><strong><em>internal</em> fragmentation</strong></p>
+
+<p>The amount of memory wasted by an allocator to due to rounding up
+allocations. For a bin allocator, this is the difference between a request’s
+allocation size and the size class of the bin it is handled from.</p></li>
+
+<li><p><strong><em>external</em> fragmentation</strong></p>
+
+<p>The amount of memory wasted by an allocator due to being unable to use free
+memory for new allocations. For a bin allocator, this is equivalent to the
+amount of free space in every bin that can’t be used to handle an allocation
+for a larger request even though the sum of all of the free space meets or
+exceeds the requested size.</p></li>
+</ul>
+
+<p>Your allocator should try to keep fragmentation down within reason.</p>
+
+<h5 id="implementation">Implementation</h5>
+
+<p>Implement a bin allocator in <code>kernel/src/allocator/bin.rs</code>. Besides being a
+bin-like allocator, the design of the allocator is entirely up to you. The
+allocator <em>must</em> be able to reuse freed memory. The allocator must also not
+incur excessive internal or external fragmentation. Our unit tests, which you
+can run with <code>make test</code> or <code>cargo test</code> check these properties. Remember to
+change <code>bump.rs</code> to <code>bin.rs</code> in the <code>#[path]</code> annotation in
+<code>kernel/src/allocator/mod.rs</code> so that your bin allocator is used for global
+allocations.</p>
+
+<p>Once your allocator passes all tests and is set as the global allocator, proceed
+to the next phase.</p>
+
+<div class="panel panel-question">
+  <div class="panel-heading">
+     <div class="badge pull-right">
+        <code>
+           bin-about
+        </code>
+     </div>
+    <h3 class="panel-title">
+       <span class="glyphicon glyphicon-question-sign" aria-hidden="true" style="padding-right: 5px"></span>
+       What does your allocator look like?
+    </h3>
+  </div>
+  <div class="panel-body">
+     <p></p><p>Briefly explain the design of your allocator. In particular answer the
+  following questions:</p>
+
+<ul>
+<li>Which size classes did you choose and why?</li>
+<li>How does your allocator handle alignment?</li>
+<li>What are the bounds on internal and external fragmentation for your design
+ choices?</li>
+</ul>
+<p></p>
+  </div>
+</div>
+
+
+<div class="panel panel-question">
+  <div class="panel-heading">
+     <div class="badge pull-right">
+        <code>
+           bin-frag
+        </code>
+     </div>
+    <h3 class="panel-title">
+       <span class="glyphicon glyphicon-question-sign" aria-hidden="true" style="padding-right: 5px"></span>
+       How could you decrease your allocator’s fragmentation?
+    </h3>
+  </div>
+  <div class="panel-body">
+     <p></p><p>Your allocator probably creates more fragmentation that it needs to, and
+  that’s okay! How could you do better? Sketch (only in writing) two brief
+  design ideas for improving your allocator’s fragmentation.</p>
+<p></p>
+  </div>
+</div>
+
+
+<hr>
+
+<h3 id="phase-2-32-bit-lipids">Phase 2: 32-bit Lipids</h3>
+
+<p>In this phase, you will implement a read-only FAT32 file system. You will be
+working primarily in the <code>2-fs/fat32</code> directory.</p>
+
+<hr>
+
+<h4 id="disks-and-file-systems">Disks and File Systems</h4>
+
+<p>Data on a disk is managed by one or more file systems. Much like a memory
+allocator, a file system is responsible for managing, allocating, and
+deallocating free disk space. Unlike the memory managed by an allocator, the
+disk is <em>persistent</em>: barring disk failure, a write to allocated disk space is
+visible at any point in the future, including after machine reboots. Common file
+systems include EXT4 on Linux, HFS+ and APFS on macOS, and NTFS on Windows.
+FAT32 is another file system that is implemented by most operating systems,
+including Linux, macOS, and Windows, and was used in older versions of Windows
+and later versions of DOS. Its main advantage is its ubiquity: no other file
+system sees such cross-platform support.</p>
+
+<p>To allow more than one file system to reside on a physical disk, a disk can be
+<em>partitioned</em>. Each partition can <em>formatted</em> for a different file system. To
+partition the disk, a table is written out to a known location on the disk that
+indicates where each partition begins and ends and the type of file system the
+partition uses. One commonly used partitioning scheme uses a master boot record,
+or MBR, that contains a table of four partition entries, each potentially
+unused, marking the start and size of a partition. GPT is a more modern
+partitioning scheme that, among other things, allows for more than four
+partitions.</p>
+
+<p>In this assignment you will be writing the code to interpret an MBR partitioned
+disk that includes a FAT32 partition. This is the combination used by the
+Raspberry Pi: the SD card uses the MBR scheme with one partition formatted to
+FAT32.</p>
+
+<hr>
+
+<h4 id="disk-layout">Disk Layout</h4>
+
+<p>The following diagram shows the physical layout of an MBR-partitioned disk with
+a FAT32 file system:</p>
+
+<figure style="
+   
+    padding: 10px; 
+">
+   <img src="./assignment_2_fs_files/mbr-fat-diagram.svg" alt="Disk Layout" style="
+          display: block; margin: 0 auto; 
+      ">
+   
+</figure>
+
+
+<p>The <a href="https://web.stanford.edu/class/cs140e/notes/lec7/fat-structs.pdf">FAT structures</a> PDF contains the specific details about all of these
+structures including their sizes, field locations, and field descriptions. You
+will be referring to this document when you implement your file system. You may
+also find the <a href="https://en.wikipedia.org/wiki/Design_of_the_FAT_file_system">FAT32 design Wikipedia entry</a> useful while implementing your file
+system.</p>
+
+<h5 id="master-boot-record">Master Boot Record</h5>
+
+<p>The MBR is always located on sector 0 of the disk. The MBR contains four
+partition entries, each indicating the partition type (the file system on the
+partition), the offset in sectors of the partition from the start of the disk,
+and a boot/active indicator that dictates whether the partition is being used by
+a bootable system. Note that the CHS (cylinder, header, sector) fields are
+typically ignored by modern implementations; your should ignore these fields as
+well. FAT32 partitions have a <a href="https://en.wikipedia.org/wiki/Partition_type">partition type</a> of <code>0xB</code> or <code>0xC</code>.</p>
+
+<h5 id="extended-bios-parameter-block">Extended Bios Parameter Block</h5>
+
+<p>The first sector of a FAT32 partition contains the extended BIOS parameter
+block, or EBPB. The EBPB itself starts with a BIOS parameter block, or BPB.
+Together, these structures define the layout of the FAT file system.</p>
+
+<p>One particularly important field in the EBPB indicates the “number of reserved
+sectors”. This is an offset from the start of the FAT32 partition, in sectors,
+where the FATs (described next) can be found. Immediately after the last FAT is
+the <em>data region</em> which holds the data for <em>clusters</em>. FATs, the data region,
+and clusters are explained next.</p>
+
+<h5 id="clusters">Clusters</h5>
+
+<p>All data stored in a FAT file system in separated into <em>clusters</em>. The size of a
+cluster is determined by the “number of sectors per cluster” field of the EBPB.
+Clusters are numbered starting at 2. As seen in the diagram, the data for
+cluster 2 is located at the start of the data region, the data for cluster 3 is
+located immediately after cluster 2, and so on.</p>
+
+<h5 id="file-allocation-table">File Allocation Table</h5>
+
+<p><em>FAT</em> stands for “file allocation table”. As the name implies, a FAT is a table
+(an array) of FAT entries. In FAT32, each entry is 32-bits wide; this is where
+the name comes from. The size of a complete FAT is determined by the “sectors
+per FAT” and “bytes per sectors” fields of the EBPB. For redundancy, there can
+be more than one FAT in a FAT32 file system. The number of FATs is determined by
+a field of the same name in the EBPB.</p>
+
+<p>Besides entries 0 and 1, each entry in the FAT determines the <em>status</em> of a
+cluster. Entry 2 determines the status of cluster 2, entry 3 the status of
+cluster 3, and so on. Every cluster has an associated FAT entry in the FAT.</p>
+
+<p>FAT entries 0 and 1 are special:</p>
+
+<ul>
+<li><strong>Entry 0</strong>: <code>0xFFFFFFFN</code>, an ID.</li>
+<li><strong>Entry 1</strong>: The <em>end of chain</em> marker.</li>
+</ul>
+
+<p>Aside from these two entries, all other entries correspond to a cluster whose
+data is in the data region. While FAT entries are physically 32-bits wide, only
+28-bits are actually used; the upper 4 bits are ignored. The value is one of:</p>
+
+<ul>
+<li><code>0x?0000000</code>: A free, unused cluster.</li>
+<li><code>0x?0000001</code>: Reserved.</li>
+<li><code>0x?0000002</code>-<code>0x?FFFFFEF</code>: A data cluster; value points to next cluster in
+chain.</li>
+<li><code>0x?FFFFFF0</code>-<code>0x?FFFFFF6</code>: Reserved.</li>
+<li><code>0x?FFFFFF7</code>: Bad sector in cluster or reserved cluster.</li>
+<li><code>0x?FFFFFF8</code>-<code>0x?FFFFFFF</code>: Last cluster in chain. Should be, but may not be,
+the EOC marker.</li>
+</ul>
+
+<h5 id="cluster-chains">Cluster Chains</h5>
+
+<p>Clusters form <em>chains</em>, or linked lists of clusters. If a cluster is being used
+for data, its corresponding FAT entry value either points to the next cluster in
+the chain or is the EOC marker indicating it is the final cluster in the chain.</p>
+
+<p>As an example, consider the diagram below which depicts a FAT with 8 entries.</p>
+
+<figure style="
+   
+    padding: 10px; 
+">
+   <img src="./assignment_2_fs_files/cluster-chains.svg" alt="FAT Chains" style="
+          display: block; margin: 0 auto; 
+      ">
+   
+</figure>
+
+
+<p>The clusters are color coded to indicate which chain they belong to. The first
+two entries are the ID and EOC marker, respectively. Entry 2 indicates that
+cluster 2 is a data cluster; its chain is 1 cluster long. Entry 3 indicates that
+cluster 3 is a data cluster; the next cluster in the chain is cluster 5 followed
+by the final cluster in the chain, cluster 6. Similarly, clusters 7 and 5 form a
+chain. Cluster 8 is free and unused.</p>
+
+<h5 id="directories-and-entries">Directories and Entries</h5>
+
+<p>A chain of clusters makes up the data for a file or directory. <em>Directories</em> are
+special files that map file names and associated metadata to the starting
+cluster for a file’s date. Specifically, a directory is an array of directory
+entries. Each entry indicates, among other things, the name of the entry,
+whether the entry is a file or directory, and its starting cluster.</p>
+
+<p>The root directory is the only file or directory that is not linked to via a
+directory entry. The starting cluster for the root directory is instead recorded
+in the EBPB. From there, the location of all other files can be determined.</p>
+
+<p>For historical reasons, every physical directory entry can be interpreted in two
+different ways. The attributes field of an entry is overloaded to indicate which
+way an entry should be interpreted. An entry is either:</p>
+
+<ul>
+<li>A regular directory entry.</li>
+<li>A <em>long file name</em> entry.</li>
+</ul>
+
+<p>Long file name (LFN) entries were added to FAT32 to allow for filenames greater
+than 11 characters in length. If an entry has a name greater than 11 characters
+in length, then its regular directory entry is preceded by as many LFN entries
+as needed to store the bytes for the entry’s name. LFN entries are not ordered
+physically. Instead, they contain a field that indicates their sequence. As
+such, you cannot rely on the physical order of LFN entries to determine how the
+individual components are joined together.</p>
+
+<h5 id="wrap-up">Wrap Up</h5>
+
+<p>Before continuing, cross-reference your understanding with the <a href="https://web.stanford.edu/class/cs140e/notes/lec7/fat-structs.pdf">FAT structures</a>
+PDF. Then, answer the following questions:</p>
+
+<div class="panel panel-question">
+  <div class="panel-heading">
+     <div class="badge pull-right">
+        <code>
+           mbr-magic
+        </code>
+     </div>
+    <h3 class="panel-title">
+       <span class="glyphicon glyphicon-question-sign" aria-hidden="true" style="padding-right: 5px"></span>
+       How do you determine if the first sector is an MBR?
+    </h3>
+  </div>
+  <div class="panel-body">
+     <p></p><p>The first sector of a disk may not necessarily contain an MBR. How would you
+  determine if the first sector contains a valid MBR?</p>
+<p></p>
+  </div>
+</div>
+
+
+<div class="panel panel-question">
+  <div class="panel-heading">
+     <div class="badge pull-right">
+        <code>
+           max-clusters
+        </code>
+     </div>
+    <h3 class="panel-title">
+       <span class="glyphicon glyphicon-question-sign" aria-hidden="true" style="padding-right: 5px"></span>
+       What is the maximum number of FAT32 clusters?
+    </h3>
+  </div>
+  <div class="panel-body">
+     <p></p><p>The FAT32 design enjoins several file limitations. What is the maximum number
+  of clusters that a FAT32 file system can contain, and what dictates this
+  limitation? Would you expect this limitation to be the same or different in a
+  file system named FAT16?</p>
+<p></p>
+  </div>
+</div>
+
+
+<div class="panel panel-question">
+  <div class="panel-heading">
+     <div class="badge pull-right">
+        <code>
+           max-file-size
+        </code>
+     </div>
+    <h3 class="panel-title">
+       <span class="glyphicon glyphicon-question-sign" aria-hidden="true" style="padding-right: 5px"></span>
+       What is the maximum size of one file?
+    </h3>
+  </div>
+  <div class="panel-body">
+     <p></p><p>Is there a limit to the size of a file? If so, what is the maximum size, in
+  bytes, of a file, and what determines it?</p>
+
+<p></p><div class="alert alert-dismissible alert-success">
+   <p style="font-size: 16px;">
+   <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+   <span style="font-weight: bold;">Hint:</span> Take a close look at the structure of a directory entry.</p>
+</div><p></p>
+<p></p>
+  </div>
+</div>
+
+
+<div class="panel panel-question">
+  <div class="panel-heading">
+     <div class="badge pull-right">
+        <code>
+           lfn-identity
+        </code>
+     </div>
+    <h3 class="panel-title">
+       <span class="glyphicon glyphicon-question-sign" aria-hidden="true" style="padding-right: 5px"></span>
+       How do you determine if an entry is an LFN?
+    </h3>
+  </div>
+  <div class="panel-body">
+     <p></p><p>Given the bytes for a directory entry, how, precisely, do you determine
+  whether the entry is an LFN entry or a regular directory entry? Be specific
+  about which bytes you read and what their values should be.</p>
+<p></p>
+  </div>
+</div>
+
+
+<div class="panel panel-question">
+  <div class="panel-heading">
+     <div class="badge pull-right">
+        <code>
+           manual-lookup
+        </code>
+     </div>
+    <h3 class="panel-title">
+       <span class="glyphicon glyphicon-question-sign" aria-hidden="true" style="padding-right: 5px"></span>
+       How would you lookup <code>/a/b/c.txt</code>?
+    </h3>
+  </div>
+  <div class="panel-body">
+     <p></p><p>Given an EBPB, describe the series of steps you would take to find the
+  starting cluster for the file <code>/a/b/c.txt</code>.</p>
+<p></p>
+  </div>
+</div>
+
+
+<hr>
+
+<h4 id="code-structure">Code Structure</h4>
+
+<p>Writing a file system of any kind is a serious undertaking, and a read-only
+FAT32 file system is no exception. The code that we’ve provided for you in the
+<code>2-fs/fat32</code> Cargo project provides a basic structure for implementation, but
+many of the design decisions and the majority of the implementation are up to
+you.</p>
+
+<p>We’ll describe this structure now. You should read the relevant code in the
+<code>fat32/src</code> directory as we describe the various components and how they fit
+together.</p>
+
+<h5 id="file-system-traits">File System Traits</h5>
+
+<p>The <code>traits</code> module, rooted at <code>traits/mod.rs</code>, provides <strong>7</strong> trait
+declarations and <strong>1</strong> struct declaration. Your file system implementation will
+largely be centered on implementing these seven traits.</p>
+
+<p>The single struct, <code>Dummy</code>, is a type that provides a dummy implementation of
+five of the seven traits. The type is useful as a place-holder. You’ll see that
+we’ve used this type already in several places in the code. You may find this
+type useful while you work on the assignment as well.</p>
+
+<p>You should read the code in the <code>traits/</code> directory in the following order:</p>
+
+<ul>
+<li><p>Read the <code>BlockDevice</code> trait documentation in <code>traits/block_device.rs</code>.</p>
+
+<p>The file system will be written generic to the physical or virtual backing
+storage. In other words, the file system will work on <em>any</em> device as long
+as the device implements the <code>BlockDevice</code> trait. When we test your file
+system, the <code>BlockDevice</code> will generally be backed by a file on your local
+file system. When your run the file system on the Raspberry Pi, the
+<code>BlockDevice</code> will be backed by a physical SD card and EMMC controller.</p></li>
+
+<li><p>Read the <code>File</code>, <code>Dir</code>, and <code>Entry</code> traits in <code>traits/fs.rs</code>.</p>
+
+<p>These traits define what it (minimally) means to be a file, directory, or
+directory entry in the file system. You’ll notice that the associated types
+of the trait depend on each other. For example, the <code>Entry</code> trait requires
+its associated type <code>File</code> to implement the <code>File</code> trait.</p></li>
+
+<li><p>Read the <code>FileSystem</code> traits in <code>traits/fs.rs</code>.</p>
+
+<p>This trait defines what it means to be a file system and unifies the rest of
+the traits through its associated types. In particular, it requires a <code>File</code>
+that implements the <code>File</code> trait, a <code>Dir</code> that implements the <code>Dir</code> trait
+whose <code>Entry</code> associated type is the same as the associated type of file
+system’s <code>Entry</code> associated type, and finally an <code>Entry</code> associated type
+that implements <code>Entry</code> with the same <code>File</code> and <code>Dir</code> associated types as
+the file system. These constraints together ensure that there is only one
+concrete <code>File</code>, <code>Dir</code>, and <code>Entry</code> type.</p></li>
+
+<li><p>Read the <code>Metadata</code> and <code>Timestamp</code> traits in <code>traits/metadata.rs</code>.</p>
+
+<p>Every <code>Entry</code> must be associated with <code>Metadata</code> which allows access to
+details about a file or directory. The <code>Timestamp</code> trait defines the
+operations requires by a type that specifies a point in time.</p></li>
+</ul>
+
+<h5 id="cached-device">Cached Device</h5>
+
+<p>Because accessing a disk directly is very expensive, all disk accesses will be
+performed on <em>cached</em> sectors. The <code>CachedDevice</code> struct in <code>vfat/cache.rs</code>
+provides both transparent and explicit access to a sector cache. It wraps any
+<code>BlockDevice</code> and caches sectors in a <code>HashMap</code> keyed by the sector number. Once
+you implement it, it can be used transparently as a caching <code>BlockDevice</code>.
+Alternatively, the <code>get()</code> and <code>get_mut()</code> methods allow for a sector to be
+referenced from the cache directly.</p>
+
+<p>The <code>CachedDevice</code> structure should also take care to map logical sectors, as
+specified by the EBPB, to physical sectors, as specified by the disk. We have
+provided an implementation of a method that does exactly this:
+<code>virtual_to_physical()</code>. You should use this method when determining which and
+how many physical sectors to read from the disk.</p>
+
+<h5 id="utilities">Utilities</h5>
+
+<p>The <code>util.rs</code> file contains two declarations and implementations of <em>extension
+traits</em> for slices (<code>&amp;[T]</code>) and vectors (<code>Vec&lt;T&gt;</code>). These traits can be used to
+cast a vector or slice of one type into a vector or slice of another type as
+long as certain conditions hold on the two types. For instance, to cast from an
+<code>&amp;[u32]</code> to an <code>&amp;[u8]</code>, you might write:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#a90d91">use</span> <span style="color:#000">util</span>::<span style="color:#000">SliceExt</span>;
+
+<span style="color:#a90d91">let</span> <span style="color:#000">x</span>: <span style="color:#a90d91">&amp;</span>[<span style="color:#a90d91">u32</span>] <span style="color:#000">=</span> <span style="color:#000">&amp;</span>[<span style="color:#1c01ce">1</span>, <span style="color:#1c01ce">2</span>, <span style="color:#1c01ce">3</span>, <span style="color:#1c01ce">4</span>];
+<span style="color:#000">assert_eq</span><span style="color:#000">!</span>(<span style="color:#000">x</span>.<span style="color:#000">len</span>(), <span style="color:#1c01ce">4</span>);
+
+<span style="color:#a90d91">let</span> <span style="color:#000">y</span>: <span style="color:#a90d91">&amp;</span>[<span style="color:#a90d91">u8</span>] <span style="color:#000">=</span> <span style="color:#a90d91">unsafe</span> { <span style="color:#000">x</span>.<span style="color:#000">cast</span>() };
+<span style="color:#000">assert_eq</span><span style="color:#000">!</span>(<span style="color:#000">y</span>.<span style="color:#000">len</span>(), <span style="color:#1c01ce">16</span>);</code></pre></div>
+<h5 id="mbr-and-ebpb">MBR and EBPB</h5>
+
+<p>The <code>MasterBootRecord</code> structure in <code>mbr.rs</code> is responsible for reading and
+parsing an MBR from a <code>BlockDevice</code>. Similarly, the <code>BiosParameterBlock</code>
+structure in <code>vfat/ebpb.rs</code> is responsible for reading and parsing the BPB and
+EBPB of a FAT32 partition.</p>
+
+<h5 id="shared">Shared</h5>
+
+<p>The <code>Shared&lt;T&gt;</code> struct in <code>vfat/shared.rs</code> can be used to safely share mutable
+access to a value of type <code>T</code>. When implementing your file system, you’ll likely
+need to share mutably access to the file system itself among your file and
+directory structures. You’ll use this type to do so. Ensure you understand how
+to use a value of type <code>Shared&lt;T&gt;</code> before continuing.</p>
+
+<h5 id="file-system">File System</h5>
+
+<p>The <code>vfat/vfat.rs</code> file contains the <code>VFat</code> structure, the file system itself.
+You’ll note that the structure contains a <code>CachedDevice</code>: your implementation
+must wrap the provided <code>BlockDevice</code> in a <code>CachedDevice</code>.</p>
+
+
+<div class="alert alert-dismissible alert-info">
+   <p style="font-size: 16px; font-weight: bold;">
+      
+         <span class="glyphicon glyphicon-info-sign" aria-hidden="true" style="margin-right: 3px"></span>
+      
+      What is VFAT?
+   </p>
+   <p></p><p>VFAT is another file system from Microsoft that is a precursor to FAT32. The
+  name has unfortunately become synonymous with FAT32, and we continue this poor
+  tradition here.</p>
+<p></p>
+</div>
+
+
+
+<p>We’ve started an implementation of the <code>FileSystem</code> trait for <code>&amp;Shared&lt;VFat&gt;</code>
+already. You’ll also note that the <code>from()</code> method of <code>FileSystem</code> returns a
+<code>Shared&lt;VFat&gt;</code>. Your main task will be to complete the implementation of the
+<code>from()</code> method and of the <code>FileSystem</code> trait for <code>&amp;Shared&lt;VFat&gt;</code>. This will
+require you to implement structures that implement the remainder of the file
+system traits.</p>
+
+<p>We’ve provided the following code in <code>vfat/</code> to assist you with this:</p>
+
+<ul>
+<li><p><code>error.rs</code></p>
+
+<p>Contains an <code>Error</code> enum indicating the possible FAT32
+initialization errors.</p></li>
+
+<li><p><code>file.rs</code></p>
+
+<p>Contains an incomplete <code>File</code> struct with an incomplete <code>traits::File</code>
+implementation.</p></li>
+
+<li><p><code>dir.rs</code></p>
+
+<p>Contains an incomplete <code>Dir</code> struct which you will implement <code>trait::Dir</code>
+for. Also contains incomplete definitions for raw, on-disk directory entry
+  structures.</p></li>
+
+<li><p><code>entry.rs</code></p>
+
+<p>Contains an incomplete <code>Entry</code> struct which you will implement
+<code>traits::Entry</code> for.</p></li>
+
+<li><p><code>metadata.rs</code></p>
+
+<p>Contains structures (<code>Date</code>, <code>Time</code>, <code>Attributes</code>) that map to raw, on-disk
+entry metadata as well as incomplete structures (<code>Timestamp</code>, <code>Metadata</code>)
+which you should implement the appropriate file system traits for.</p></li>
+
+<li><p><code>fat.rs</code></p>
+
+<p>Contains the <code>FatEntry</code> structure which wraps a value for a FAT entry and
+which can be used to easily read the status of the cluster corresponding to
+the FAT entry.</p></li>
+
+<li><p><code>cluster.rs</code></p>
+
+<p>Contains the <code>Cluster</code> structure which wraps a raw cluster number and can be
+used to read the logical cluster number.</p></li>
+</ul>
+
+<p>When you implement your file system, you should complete and use each of these
+structures and types. Don’t be afraid to add extra helper methods to any of
+these structure. Do not, however, change any of the trait definitions or
+existing method signatures that we have provided for you.</p>
+
+<p>Read through all of the code now, starting with <code>vfat.rs</code>, and ensure you
+understand how everything fits together.</p>
+
+<hr>
+
+<h4 id="implementation-1">Implementation</h4>
+
+<p>You’re now ready to implement a read-only FAT32 file system. You may approach
+the implementation in any order you see fit.</p>
+
+
+<div class="alert alert-dismissible alert-warning">
+   <p style="font-size: 16px; font-weight: bold;">
+      
+         <span class="glyphicon glyphicon-warning-sign" aria-hidden="true" style="margin-right: 3px"></span>
+      
+      Ensure your skeletons are up-to-date!
+   </p>
+   <p></p><p>Ensure your skeletons are up-to-date by committing or discarding any changes
+  and pulling the latest <code>2-fs</code> and <code>os</code> skeletons with <code>git pull</code>.</p>
+<p></p>
+</div>
+
+
+
+<p>We have provided a somewhat rigorous set of tests to check your implementation.
+Prior to running the tests, run <code>make clean &amp;&amp; make fetch</code> in the <code>2-fs</code>
+directory. This will download and extract test resources to
+<code>2-fs/files/resources/</code> which are used by the unit tests. In this directory you
+will find several real MBR, EBPB, and FAT32 file system images as well as hash
+values for file system traversals as run against our reference implementation.
+You may find it useful to analyze and check your understanding again the raw
+binaries by using a hex editor such as <strong>Bless</strong> on Linux and <strong>Hex Fiend</strong> on
+Mac.</p>
+
+<p>You can run the tests with <code>cargo test</code>. While debugging, you may wish to run
+the tests with <code>cargo test -- --nocapture</code> to prevent Cargo from capturing
+output to <code>stdout</code> or <code>stderr</code>. You may also find it useful to add new tests as
+you progress. To prevent future merge conflicts, you should add new tests in a
+file different from <code>tests.rs</code>.</p>
+
+<p>Your implementation should adhere to the following guidelines:</p>
+
+<ul>
+<li><p><strong>Use meaningful types where you can.</strong></p>
+
+<p>For instance, instead of using a <code>u16</code> to represent a raw time field, use
+the <code>Time</code> struct.</p></li>
+
+<li><p><strong>Avoid <code>unsafe</code> code as much as possible.</strong></p>
+
+<p>Our implementation uses a total of four non-<code>union</code> lines of <code>unsafe</code>.
+Additionally, our implementation uses three lines of <code>unsafe</code> related to
+accessing unions. Your implementation should use no more than these.</p></li>
+
+<li><p><strong>Avoid duplication by using helpers methods as necessary.</strong></p>
+
+<p>It’s often useful to abstract common behavior into helper methods. You
+should do so when it makes sense.</p></li>
+
+<li><p><strong>Ensure your implementation is cluster size and sector size agnostic.</strong></p>
+
+<p>Do not hard-code or assume any particular values for sector sizes or cluster
+sizes. Your implementation <em>must</em> function with any cluster and sector sizes
+that are integer multiples of 512 as recorded in the EBPB.</p></li>
+
+<li><p><strong>Don’t double buffer unnecessarily.</strong></p>
+
+<p>Ensure that you don’t read a sector into memory that is already held in the
+sector cache to conserve memory.</p></li>
+</ul>
+
+<p>Our recommended implementation approach is as follows:</p>
+
+<ol>
+<li><p><strong>Implement MBR parsing in <code>mbr.rs</code>.</strong></p>
+
+<p>Your implementation will likely require the use of an <code>unsafe</code> method, but
+ no more than one line. Possible candidates are
+ <a href="https://doc.rust-lang.org/nightly/std/slice/fn.from_raw_parts_mut.html">slice::from_raw_parts_mut()</a> or <a href="https://doc.rust-lang.org/std/mem/fn.transmute.html">mem::transmute()</a>. <code>mem::transmute()</code> is
+ an incredibly powerful method. You should avoid it if you can. Otherwise,
+ you should understand its implications thoroughly before using it.</p>
+
+<p>When you implement <code>Debug</code>, use the <a href="https://doc.rust-lang.org/std/fmt/struct.Formatter.html#method.debug_struct">debug_struct()</a> method on <code>Formatter</code>.
+ You can use the <code>Debug</code> implementation we have provided for <code>CachedDevice</code>
+ as a reference.</p></li>
+
+<li><p><strong>Implement EBPB parsing in <code>vfat/ebpb.rs</code>.</strong></p>
+
+<p>As with the MBR, your implementation will likely require the use of an
+ <code>unsafe</code> method, but no more than one line.</p></li>
+
+<li><p><strong>Test your MBR and EBPB implementation.</strong></p>
+
+<p>Mock-up MBRs and EBPBs and ensure that you parse the values successfully.
+ Note that we have provided an implementation of <code>BlockDevice</code> for
+ <code>Cursor&lt;&amp;mut [u8]&gt;</code>. Remember that you can pretty-print a structure using:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"> <span style="color:#000">println</span><span style="color:#000">!</span>(<span style="color:#c41a16">"{:#?}"</span>, <span style="color:#000">x</span>);</code></pre></div></li>
+
+<li><p><strong>Implement <code>CachedDevice</code> in <code>vfat/cached.rs</code>.</strong></p></li>
+
+<li><p><strong>Implement <code>VFat::from()</code> in <code>vfat/vfat.rs</code>.</strong></p>
+
+<p>Use your <code>MasterBootRecord</code>, <code>BiosParameterBlock</code>, and <code>CachedDevice</code>
+ implementations to implement <code>VFat::from()</code>. Test your implementation as
+ you did your MBR and EBPB implementations.</p></li>
+
+<li><p><strong>Implement <code>FatEntry</code> in <code>vfat/fat.rs</code>.</strong></p></li>
+
+<li><p><strong>Implement <code>VFat::fat_entry</code>, <code>VFat::read_cluster()</code>, and
+ <code>VFat::read_chain()</code>.</strong></p>
+
+<p>These helpers methods abstract reading from a <code>Cluster</code> or a chain starting
+ from a <code>Cluster</code> into a buffer. You’ll likely need other helper methods,
+ like one to calculate the disk sector from a cluster number, to implement
+ these methods. You may wish to add helper methods to the <code>Cluster</code> type.
+ You should use the <code>VFat::fat_entry()</code> method when implementing
+ <code>read_cluster()</code> and <code>read_chain()</code>.</p></li>
+
+<li><p><strong>Complete the <code>vfat/metadata.rs</code> file.</strong></p>
+
+<p>The <code>Date</code>, <code>Time</code>, and <code>Attributes</code> types should map directly to fields in
+ the on-disk directory entry. Refer to the <a href="https://web.stanford.edu/class/cs140e/notes/lec7/fat-structs.pdf">FAT structures</a> PDF when
+ implementing them. The <code>Timestamp</code> and <code>Metadata</code> types do not have an
+ analogous on-disk structure, but they serve as nicer abstractions over the
+ raw, on-disk structures and will be useful when implementing the <code>Entry</code>,
+ <code>File</code>, and <code>Dir</code> traits.</p></li>
+
+<li><p><strong>Implement <code>Dir</code> in <code>vfat/dir.rs</code> and <code>Entry</code> in <code>vfat/entry.rs</code>.</strong></p>
+
+<p>Start by adding fields that store the directory’s first <code>Cluster</code> and a
+ <code>Shared&lt;VFat&gt;</code> to <code>Dir</code>. Then implement the <code>trait::Dir</code> trait for <code>Dir</code>.
+ You may wish to provide dummy trait implementations for the <code>File</code> type in
+ <code>vfat/file.rs</code> while implementing <code>Dir</code>. You’ll want to create a secondary
+ struct that implements <code>Iterator&lt;Item = Entry&gt;</code> and return this struct from
+ your <code>entries()</code> method. You will likely need to use at-most one line of
+ <code>unsafe</code> when implementing <code>entries()</code>; you may find the <code>VecExt</code> and
+ <code>SliceExt</code> trait implementations we have provided particularly useful here.
+ Note that you will frequently need to refer to the <a href="https://web.stanford.edu/class/cs140e/notes/lec7/fat-structs.pdf">FAT structures</a> PDF
+ while implementing <code>Dir</code>.</p>
+
+<p><strong>Parsing an Entry</strong></p>
+
+<p>Because the on-disk entry may be either an LFN entry or a regular entry,
+ you must use a <code>union</code> to represent an on-disk entry. We have provided such
+ a union for you: <code>VFatDirEntry</code>. You can read about unions in Rust
+ <a href="https://doc.rust-lang.org/nightly/reference/items/unions.html">in the Rust reference</a> and about unions in general in the
+ <a href="https://en.wikipedia.org/wiki/Union_type">union type Wikipedia entry</a>.</p>
+
+<p>You should first interpret a directory entry as an unknown entry, use that
+ structure to determine whether there is an entry, and if so, the true kind
+ of entry, and finally interpret the entry as that structure. Working with
+ <code>union</code>s will require using <code>unsafe</code>. Do so sparingly. Our implementation
+ uses one line of <code>unsafe</code> three times, one to access each variant.</p>
+
+<p>When parsing a directory entry’s name, you must manually add a <code>.</code> to the
+ non-LFN based directory entries to demarcate the file’s extension. You
+ should only add a <code>.</code> if the file’s extension is non-empty.</p>
+
+<p>Finally, you’ll need to decode UTF-16 characters when parsing LFN entries.
+ Use the <a href="https://doc.rust-lang.org/std/char/fn.decode_utf16.html">decode_utf16()</a> function to do so. You will find it useful to
+ store UTF-16 characters in one or more <code>Vec&lt;u16&gt;</code> while parsing a long
+ filename.</p>
+
+<p><strong><code>Dir::find()</code></strong></p>
+
+<p>You should implement <code>Dir::find()</code> <em>after</em> you implement the <code>traits::Dir</code>
+ trait for <code>Dir</code>. Note that <code>Dir::find()</code> must be case-insensitive. Your
+ implementation should be relatively short. You can use the
+ <a href="https://doc.rust-lang.org/std/primitive.str.html#method.eq_ignore_ascii_case">eq_ignore_ascii_case()</a> method to perform case-insensitive comparisons.</p></li>
+
+<li><p><strong>Implement <code>File</code> in <code>vfat/file.rs</code>.</strong></p>
+
+<p>Start by adding a fields that store the file’s first <code>Cluster</code> and a
+ <code>Shared&lt;VFat&gt;</code> to <code>Dir</code>. Then implement the <code>trait::File</code> trait and any
+ required supertraits. Modify the iterator you return from <code>entries()</code> as
+ necessary.</p></li>
+
+<li><p><strong>Implement <code>VFat::open()</code> in <code>vfat/vfat.rs</code>.</strong></p>
+
+<p>Finally, implement the <code>VFat::open()</code> method. Use the <a href="https://doc.rust-lang.org/std/path/struct.Path.html#method.components">components()</a> method
+ to iterate over a <code>Path</code>’s components. Note that the <code>Path</code> implementation
+ we have provided for you in the <code>std</code> library does not contain any of the
+ methods that require a file system. These include <code>read_dir()</code>,
+ <code>is_file()</code>, <code>is_dir()</code>, and others.</p>
+
+<p>Use your <code>Dir::find()</code> method in your implementation. Your <code>VFat::open()</code>
+ implementation should be short: ours is a total of 17 lines. You may find
+ it useful to add a helper method to <code>Dir</code>.</p></li>
+</ol>
+
+<p>Once your implementation passes all of the unit tests and works as you expect,
+you may once again revel; you have implemented a real file system! After
+sufficient reveling, proceed to the next phase.</p>
+
+<hr>
+
+<h3 id="phase-3-saddle-up">Phase 3: Saddle Up</h3>
+
+<p>In this phase, you will interface with an existing SD card controller driver for
+the Raspberry Pi 3 using Rust’s <a href="https://en.wikipedia.org/wiki/Foreign_function_interface">foreign function interface</a>, or FFI. You can
+read more about <a href="https://doc.rust-lang.org/book/second-edition/ch19-01-unsafe-rust.html#extern--functions-for-calling-external-code-are-unsafe">Rust’s FFI in TRPL</a>. You will also create a global handle the
+file system for your operating system to use. You will be working primarily in
+<code>os/kernel/src/fs</code>.</p>
+
+<hr>
+
+<h4 id="subphase-a-sd-driver-ffi">Subphase A: SD Driver FFI</h4>
+
+<p>Rust’s foreign function interface allows Rust code to interact with software
+written in other programming languages and vice-versa. Foreign items are
+declared in an <code>extern</code> block:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#a90d91">extern</span> {
+    <span style="color:#a90d91">static</span> <span style="color:#000">outside_global</span>: <span style="color:#a90d91">u32</span>;
+    <span style="color:#a90d91">fn</span> <span style="color:#000">outside_function</span>(<span style="color:#000">param</span>: <span style="color:#a90d91">i16</span>) -&gt; <span style="color:#a90d91">i32</span>;
+}</code></pre></div>
+<p>This declares an external <code>outside_function</code> as well as an <code>outside_global</code>. The
+function and global be used as follows:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#a90d91">unsafe</span> {
+    <span style="color:#a90d91">let</span> <span style="color:#000">y</span> <span style="color:#000">=</span> <span style="color:#000">outside_function</span>(<span style="color:#1c01ce">10</span>);
+    <span style="color:#a90d91">let</span> <span style="color:#000">global</span> <span style="color:#000">=</span> <span style="color:#000">outside_global</span>;
+}</code></pre></div>
+<p>Note the required use of unsafe. Rust requires the use of <code>unsafe</code> because it
+cannot ensure that the signatures you have specified are correct. The Rust
+compiler will blindly emit function calls and variable reads as requested. In
+other words, as with every other use of <code>unsafe</code>, the compiler assumes that what
+you’ve done is correct. At link-time, symbols named <code>outside_function</code> and
+<code>outside_global</code> must exist for the program to successfully link.</p>
+
+<p>For a Rust function to be called from a foreign program, the function’s location
+(its memory address) must be exported with a known symbol. Typically, Rust
+<em>mangles</em> function symbols for versioning and namespacing reasons in an
+unspecified manner. As such, by default, it is not possible to know the symbol
+that Rust will generate for a given function and thus not possible to call that
+function from an external program. To prevent Rust from mangling symbols, you
+can use the <code>#[no_mangle]</code> attribute:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#633820">#[no_mangle]</span>
+<span style="color:#a90d91">fn</span> <span style="color:#000">call_me_maybe</span>(<span style="color:#000">ptr</span>: <span style="color:#000">*</span><span style="color:#a90d91">mut</span> <span style="color:#a90d91">u8</span>) { .. }</code></pre></div>
+<p>A C program would then be able to call this function as follows:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#a90d91">void</span> <span style="color:#000">call_me_maybe</span>(<span style="color:#a90d91">unsigned</span> <span style="color:#a90d91">char</span> <span style="color:#000">*</span>);
+
+<span style="color:#000">call_me_maybe</span>(...);</code></pre></div>
+<div class="panel panel-question">
+  <div class="panel-heading">
+     <div class="badge pull-right">
+        <code>
+           foreign-safety
+        </code>
+     </div>
+    <h3 class="panel-title">
+       <span class="glyphicon glyphicon-question-sign" aria-hidden="true" style="padding-right: 5px"></span>
+       Why can’t Rust ensure that using foreign code is safe?
+    </h3>
+  </div>
+  <div class="panel-body">
+     <p></p><p>Explain why Rust cannot ensure that using foreign code is safe. In particular,
+  explain why Rust can ensure that <em>other</em> Rust code is safe, even when it lives
+  outside of the current crate, but it cannot do the same for non-Rust code.</p>
+<p></p>
+  </div>
+</div>
+
+
+<div class="panel panel-question">
+  <div class="panel-heading">
+     <div class="badge pull-right">
+        <code>
+           mangling
+        </code>
+     </div>
+    <h3 class="panel-title">
+       <span class="glyphicon glyphicon-question-sign" aria-hidden="true" style="padding-right: 5px"></span>
+       Why does Rust mangle symbols?
+    </h3>
+  </div>
+  <div class="panel-body">
+     <p></p><p>C does not mangle symbols. C++ and Rust, on the other hand, do. What’s
+  different about these languages that necessitates name mangling? Provide a
+  concrete example of what would go wrong if Rust <em>didn’t</em> name mangle.</p>
+<p></p>
+  </div>
+</div>
+
+
+<h5 id="sd-driver">SD Driver</h5>
+
+<p>We have provided a precompiled SD card driver library in
+<code>os/kernel/ext/libsd.a</code>. We’ve also modified the build process so that the
+library is linked into the kernel. We’ve provided the definitions for the items
+exported from the library in an <code>extern</code> block in <code>os/kernel/src/sd.rs</code>.</p>
+
+<p>The library depends on a <code>wait_micros</code> function which it expects to find in your
+kernel. The function should sleep for the number of microseconds passed in. You
+will need to create and export this function for your kernel to successfully
+link. The C signature for the function is:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C" data-lang="C"><span style="color:#177500">/*
+</span><span style="color:#177500"> * Sleep for `us` microseconds.
+</span><span style="color:#177500"> */</span>
+<span style="color:#a90d91">void</span> <span style="color:#000">wait_micros</span>(<span style="color:#a90d91">unsigned</span> <span style="color:#a90d91">int</span> <span style="color:#000">us</span>);</code></pre></div>
+<p>Your task is to wrap the unsafe external API in a safe, Rusty API. Implement an
+<code>Sd</code> struct that initializes the SD card controller in its <code>new()</code> method. Then,
+implement the <code>BlockDevice</code> trait for <code>Sd</code>. You will need to use <code>unsafe</code> to
+interact with the foreign items. Test your implementation by manually reading
+the card’s MBR in <code>kmain</code>. Ensure that the bytes read match what you expect.
+When everything works as expected, proceed to the next subphase.</p>
+
+<div class="alert alert-dismissible alert-success">
+   <p style="font-size: 16px;">
+   <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+   <span style="font-weight: bold;">Hint:</span> On 64-bit ARM, an <code>unsigned int</code> in C is a <code>u32</code> in Rust.</p>
+</div>
+
+
+
+<div class="panel panel-question">
+  <div class="panel-heading">
+     <div class="badge pull-right">
+        <code>
+           foreign-sync
+        </code>
+     </div>
+    <h3 class="panel-title">
+       <span class="glyphicon glyphicon-question-sign" aria-hidden="true" style="padding-right: 5px"></span>
+       Is your implementation thread-safe?
+    </h3>
+  </div>
+  <div class="panel-body">
+     <p></p><p>The precompiled SD driver we’ve provided you uses a global variable (<code>sd_err</code>)
+  to keep track of error states without any kind of synchronization. As such, it
+  has no hope of being thread-safe. How does this affect the correctness of your
+  bindings? Recall that you must uphold Rust’s data race guarantees in any
+  <code>unsafe</code> code. Are your binding thread-safe as required? Why or why not?</p>
+
+<p></p><div class="alert alert-dismissible alert-success">
+   <p style="font-size: 16px;">
+   <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+   <span style="font-weight: bold;">Hint:</span> They probably are! (If not, they should be.) What makes them so?</p>
+</div><p></p>
+<p></p>
+  </div>
+</div>
+
+
+<hr>
+
+<h4 id="subphase-b-file-system">Subphase B: File System</h4>
+
+<p>In this subphase you will expose and initialize a global file system for use by
+your kernel. You will be working primarily in <code>kernel/src/fs/mod.rs</code>.</p>
+
+<p>Like the memory allocator, the file system is a <em>global</em> resource: we want it to
+always be available so that we can access the data on the disk at any point. To
+enable this, we’ve created a global <code>static FILE_SYSTEM: FileSystem</code> in
+<code>kernel/src/kmain.rs</code>; it will serve as the global handle to your file system.
+Like the allocator, the file system begins uninitialized.</p>
+
+<h5 id="tying-the-knot">Tying the Knot</h5>
+
+<p>You’ve now implemented both a disk driver and a file system: it’s time to tie
+them together. Finish the implementation of the <code>FileSystem</code> struct in
+<code>kernel/src/fs/mod.rs</code> by using your FAT32 file-system and your Rusty bindings
+to the foreign SD card driver. You should initialize your file-system using the
+<code>Sd</code> <code>BlockDevice</code> in the <code>initialize()</code> function. Then, implement the
+<code>FileSystem</code> trait for the structure, deferring all calls to the internal
+<code>VFat</code>. Finally, ensure that you initialize the file system in <code>kmain</code>, just
+after the allocator.</p>
+
+<p>Test your implementation by printing the files at the root (<code>"/"</code>) of your SD
+card in <code>kmain</code>. Once everything works as your expect, proceed to the next
+phase.</p>
+
+<hr>
+
+<h3 id="phase-4-mo-sh">Phase 4: Mo’sh</h3>
+
+<p>In this phase, you will implement the  <code>cd</code>, <code>ls</code>, <code>pwd</code>, and <code>cat</code> shell
+commands. You will be working primarily in <code>os/kernel/src/shell.rs</code>.</p>
+
+<figure style="
+   
+    padding: 10px; 
+">
+   <img src="./assignment_2_fs_files/shell.gif" alt="&#39;Finished&#39; Product" width="700px" style="
+          display: block; margin: 0 auto; 
+      ">
+   
+      <figcaption style="text-align: center;">
+         <small>'Finished' Product</small>
+      </figcaption>
+   
+</figure>
+
+
+<h4 id="working-directory">Working Directory</h4>
+
+<p>You’re likely familiar with the notion of a <em>working directory</em> already. The
+<em>current working directory</em> (or <code>cwd</code>) is the directory under which relative
+file accesses are rooted under. For example, if the <code>cwd</code> is <code>/a</code>, then
+accessing <code>hello</code> will result in accessing the file <code>/a/hello</code>. If the <code>cwd</code> is
+switched to <code>/a/b/c</code>, accessing <code>hello</code> will access <code>/a/b/c/hello</code>, and so on.
+The <code>/</code> character can be prepended to any path to make it <em>absolute</em> so that it
+is not relative to the current working directory. As such, <code>/hello</code> will always
+refer to the file named <code>hello</code> in the root directory regardless of the current
+working directory.</p>
+
+<p>In a shell, the current working directory can be changed to <code>dir</code> with the <code>cd
+&lt;dir&gt;</code> command. For example, running <code>cd /hello/there</code> will change the <code>cwd</code> to
+<code>/hello/there</code>. Running <code>cd you</code> after this will result in the <code>cwd</code> being
+<code>/hello/there/you</code>.</p>
+
+<p>Most operating systems provide a system call that changes a process’s working
+directory. Because our operating system has neither processes nor system calls
+yet, you’ll be keeping track of the <code>cwd</code> directly in the shell.</p>
+
+<h4 id="commands">Commands</h4>
+
+<p>You will implement four commands that expose expose the file system through your
+operating system’s primary interface: the shell. These are <code>cd</code>, <code>ls</code>, <code>pwd</code>,
+and <code>cat</code>. For the purposes of this assignment, they are specified as follows:</p>
+
+<ul>
+<li><p><code>pwd</code> - print the working directory</p>
+
+<p>Prints the full path of the current working directory.</p></li>
+
+<li><p><code>cd &lt;directory&gt;</code> - change (working) directory</p>
+
+<p>Changes the current working directory to <code>directory</code>. The <code>directory</code>
+ argument is required.</p></li>
+
+<li><p><code>ls [-a] [directory]</code> - list the files in a directory</p>
+
+<p>Lists the entries of a directory. Both <code>-a</code> and <code>directory</code> are optional
+arguments. If <code>-a</code> is passed in, hidden files are displayed. Otherwise,
+hidden files are not displayed. If <code>directory</code> is not passed in, the entries
+in the current working directory are displayed. Otherwise, the entries in
+<code>directory</code> are displayed. The arguments may be used together, but <code>-a</code>
+must be provided before <code>directory</code>.</p>
+
+<p>Invalid arguments results in an error. It is also an error if <code>directory</code>
+does not correspond to a valid, existing directory.</p></li>
+
+<li><p><code>cat &lt;path..&gt;</code> - concatenate files</p>
+
+<p>Prints the contents of the files at the provided <code>path</code>s, one after the
+other. At least one <code>path</code> argument is required.</p>
+
+<p>It is an error if a <code>path</code> does not point to a valid, existing file. It is
+an error if an otherwise valid file contains invalid UTF-8.</p></li>
+</ul>
+
+<p>All non-absolute paths must be must be treated as relative to the current
+working directory if they are not absolute. For an example of these commands in
+action, see the GIF above. When you implement these commands yourself, you are
+free to display directory entries and errors in any way that you’d like as long
+as all of the information is present.</p>
+
+<h4 id="implementation-2">Implementation</h4>
+
+<p>Extend your shell in <code>os/kernel/src/shell.rs</code> with these four commands. Use a
+mutable <a href="https://doc.rust-lang.org/std/path/struct.PathBuf.html">PathBuf</a> to keep track of the current working directory; this <code>PathBuf</code>
+should be modified by the <code>cd</code> command. You will find it useful to create
+functions with a common signature for each of your commands. For an extra level
+of type-safety, you can abstract the concept of an executable command into a
+trait that is implemented for each of your commands.</p>
+
+<p>Once you have implemented, tested, and verified your four commands against the
+specifications above, you’re ready to submit your assignment. Congratulations!</p>
+
+
+<div class="alert alert-dismissible alert-warning">
+   <p style="font-size: 16px; font-weight: bold;">
+      
+         <span class="glyphicon glyphicon-warning-sign" aria-hidden="true" style="margin-right: 3px"></span>
+      
+      Ensure you’re using your bin allocator!
+   </p>
+   <p></p><p>Your file system is likely very memory intensive. To avoid running out of
+  memory, ensure you’re using your bin allocator.</p>
+<p></p>
+</div>
+
+
+
+<div class="alert alert-dismissible alert-success">
+   <p style="font-size: 16px;">
+   <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+   <span style="font-weight: bold;">Hint:</span> Use the existing methods of <code>PathBuf</code> and <code>Path</code> to your advantage.</p>
+</div>
+
+
+
+<div class="alert alert-dismissible alert-success">
+   <p style="font-size: 16px;">
+   <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+   <span style="font-weight: bold;">Hint:</span> You’ll need to handle <code>..</code> and <code>.</code> specially in <code>cd</code>.</p>
+</div>
+
+
+
+<hr>
+
+<h3 id="span-class-glyphicon-glyphicon-flag-aria-hidden-true-span-submission"><span class="glyphicon glyphicon-flag" aria-hidden="true"></span> Submission</h3>
+
+<p>Once you’ve completed the tasks above, you’re done and ready to submit!
+Congratulations!</p>
+
+<p>Before submitting, check that you are using the latest skeletons by committing
+or discarding any changes and pulling the latest <code>2-fs</code> and <code>os</code> skeletons with
+<code>git pull</code>. We have added unit tests as new material was released. Your code
+should pass these unit tests as well.</p>
+
+<p>From inside of the <code>2-fs</code> assignment 2 skeleton directory, you can call <code>make
+check</code> to check if you’ve answered every question and <code>make test</code> to run the
+unit tests for code in <code>2-fs</code> and <code>os</code>. Note that there are no unit tests for
+some tasks in <code>os</code>. You’re responsible for ensuring that they work as expected.</p>
+
+<p>When you’re ready, commit your changes. <strong>Any uncommitted changes will not be
+submitted with your assignment.</strong> Then, run <code>make submission</code> from the <code>2-fs</code>
+directory and proceed to the <a href="https://web.stanford.edu/class/cs140e/assignments/submission">submission page</a> to upload your submission.</p>
+
+      </article>
+
+      <div class="col-md-3 sidebar">
+         
+            <h3>Table of Contents</h3>
+            
+
+
+ 
+
+
+
+
+
+
+<div class="table-of-contents toc bd-callout">
+    
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/2-fs/#overview">
+                    <li>Overview</li>
+                </a>
+                
+                
+                    </ul>
+                
+             
+        
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/2-fs/#phase-0-getting-started">
+                    <li>Phase 0: Getting Started</li>
+                </a>
+                
+                
+                    </ul>
+                
+             
+        
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                    <ul class="toc-h4">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/2-fs/#getting-the-skeleton-code">
+                    <li>Getting the Skeleton Code</li>
+                </a>
+                
+                
+                    </ul>
+                
+                    </ul>
+                
+             
+        
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                    <ul class="toc-h4">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/2-fs/#firmware-update">
+                    <li>Firmware Update</li>
+                </a>
+                
+                
+                    </ul>
+                
+                    </ul>
+                
+             
+        
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                    <ul class="toc-h4">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/2-fs/#installing-ttywrite">
+                    <li>Installing ttywrite</li>
+                </a>
+                
+                
+                    </ul>
+                
+                    </ul>
+                
+             
+        
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/2-fs/#phase-1-memory-lane">
+                    <li>Phase 1: Memory Lane</li>
+                </a>
+                
+                
+                    </ul>
+                
+             
+        
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                    <ul class="toc-h4">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/2-fs/#subphase-a-panic">
+                    <li>Subphase A: Panic!</li>
+                </a>
+                
+                
+                    </ul>
+                
+                    </ul>
+                
+             
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                    <ul class="toc-h4">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/2-fs/#subphase-b-atags">
+                    <li>Subphase B: ATAGS</li>
+                </a>
+                
+                
+                    </ul>
+                
+                    </ul>
+                
+             
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                    <ul class="toc-h4">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/2-fs/#subphase-c-warming-up">
+                    <li>Subphase C: Warming Up</li>
+                </a>
+                
+                
+                    </ul>
+                
+                    </ul>
+                
+             
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                    <ul class="toc-h4">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/2-fs/#subphase-d-bump-allocator">
+                    <li>Subphase D: Bump Allocator</li>
+                </a>
+                
+                
+                    </ul>
+                
+                    </ul>
+                
+             
+        
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                    <ul class="toc-h4">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/2-fs/#subphase-e-bin-allocator">
+                    <li>Subphase E: Bin Allocator</li>
+                </a>
+                
+                
+                    </ul>
+                
+                    </ul>
+                
+             
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/2-fs/#phase-2-32-bit-lipids">
+                    <li>Phase 2: 32-bit Lipids</li>
+                </a>
+                
+                
+                    </ul>
+                
+             
+        
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                    <ul class="toc-h4">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/2-fs/#disks-and-file-systems">
+                    <li>Disks and File Systems</li>
+                </a>
+                
+                
+                    </ul>
+                
+                    </ul>
+                
+             
+        
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                    <ul class="toc-h4">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/2-fs/#disk-layout">
+                    <li>Disk Layout</li>
+                </a>
+                
+                
+                    </ul>
+                
+                    </ul>
+                
+             
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                    <ul class="toc-h4">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/2-fs/#code-structure">
+                    <li>Code Structure</li>
+                </a>
+                
+                
+                    </ul>
+                
+                    </ul>
+                
+             
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                    <ul class="toc-h4">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/2-fs/#implementation-1">
+                    <li>Implementation</li>
+                </a>
+                
+                
+                    </ul>
+                
+                    </ul>
+                
+             
+        
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/2-fs/#phase-3-saddle-up">
+                    <li>Phase 3: Saddle Up</li>
+                </a>
+                
+                
+                    </ul>
+                
+             
+        
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                    <ul class="toc-h4">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/2-fs/#subphase-a-sd-driver-ffi">
+                    <li>Subphase A: SD Driver FFI</li>
+                </a>
+                
+                
+                    </ul>
+                
+                    </ul>
+                
+             
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                    <ul class="toc-h4">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/2-fs/#subphase-b-file-system">
+                    <li>Subphase B: File System</li>
+                </a>
+                
+                
+                    </ul>
+                
+                    </ul>
+                
+             
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/2-fs/#phase-4-mo-sh">
+                    <li>Phase 4: Mo’sh</li>
+                </a>
+                
+                
+                    </ul>
+                
+             
+        
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                    <ul class="toc-h4">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/2-fs/#working-directory">
+                    <li>Working Directory</li>
+                </a>
+                
+                
+                    </ul>
+                
+                    </ul>
+                
+             
+        
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                    <ul class="toc-h4">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/2-fs/#commands">
+                    <li>Commands</li>
+                </a>
+                
+                
+                    </ul>
+                
+                    </ul>
+                
+             
+        
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                    <ul class="toc-h4">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/2-fs/#implementation-2">
+                    <li>Implementation</li>
+                </a>
+                
+                
+                    </ul>
+                
+                    </ul>
+                
+             
+        
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/2-fs/#span-class-glyphicon-glyphicon-flag-aria-hidden-true-span-submission">
+                    <li>Submission</li>
+                </a>
+                
+                
+                    </ul>
+                
+             
+        
+    
+</div>
+
+
+         
+
+         
+            <h3>References</h3>
+            
+               <p>
+                  <a href="https://doc.rust-lang.org/book/second-edition/">The Rust Programming Language v2</a>
+                   <br> TRPL v2, an introductory book about Rust and required reading material for this course. 
+               </p>
+            
+               <p>
+                  <a href="https://doc.rust-lang.org/nightly/std/">Rust Standard Library Documentation</a>
+                   <br> The rustdocs for Rust's standard library, a staple while writing any Rust software. 
+               </p>
+            
+               <p>
+                  <a href="https://web.stanford.edu/class/cs140e/docs/BCM2837-ARM-Peripherals.pdf">BCM2837 Documentation</a>
+                   <br> Our modified version of the BCM2835 documentation with fixes for the BCM2837 and known errata. 
+               </p>
+            
+               <p>
+                  <a href="http://www.simtec.co.uk/products/SWLINUX/files/booting_article.html#d0e428">ATAGS Reference</a>
+                   <br> Reference-level explanation of ARM tags and their structure. 
+               </p>
+            
+               <p>
+                  <a href="https://web.stanford.edu/class/cs140e/notes/lec7/fat-structs.pdf">FAT Structures</a>
+                   <br> Concise definitions of on-disk FAT file system structures. 
+               </p>
+            
+               <p>
+                  <a href="https://en.wikipedia.org/wiki/Design_of_the_FAT_file_system">FAT32 Design Wikipedia Entry</a>
+                   <br> Very detailed description of the design and data structures of the FAT32 file system. 
+               </p>
+            
+         
+      </div>
+   </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+    <script src="./assignment_2_fs_files/jquery-1.10.2.min.js"></script>
+    <script src="./assignment_2_fs_files/moment.min.js"></script>
+    <script src="./assignment_2_fs_files/bootstrap.min.js"></script>
+    <script src="./assignment_2_fs_files/bootswatch.js"></script>
+    <script src="./assignment_2_fs_files/schedule.js" type="text/javascript" charset="utf-8"></script>
+  
+
+
+
+<div id="HUABAN_WIDGETS"><div class="HUABAN-f-button" style="display: none;">采集</div><style>#HUABAN_WIDGETS  {font-family: "helvetica neue",arial,sans-serif; color: #444; font-size: 14px;} #HUABAN_WIDGETS * {box-sizing: content-box;} #HUABAN_WIDGETS .HUABAN-main {position: fixed; left: 0; top: 0; width: 100%; height: 100%; background: #e5e5e5; background: rgba(229,229,229,.95); max-height: 100%; overflow: hidden; z-index: 9999999999999;} #HUABAN_WIDGETS a img {border: 0;} #HUABAN_WIDGETS .HUABAN-header {height: 50px; background: white; box-shadow: 0 0 4px rgba(0,0,0,.2); width: 100%; left: 0; top: 0; position: absolute;} #HUABAN_WIDGETS .HUABAN-header .HUABAN-inner {margin: 0 auto; position: relative;} #HUABAN_WIDGETS .HUABAN-header .HUABAN-close {width: 60px; height: 50px; border-left: 1px solid #ddd; position: absolute; right: 0; top: 0; background: url(https://huaban.com/img/widgets/btn_close.png) 20px 14px no-repeat; cursor: pointer;} #HUABAN_WIDGETS .HUABAN-header .HUABAN-close:hover {background-position: 20px -26px;} #HUABAN_WIDGETS .HUABAN-header .HUABAN-close:active {background-position: 20px -66px;} #HUABAN_WIDGETS .HUABAN-header .HUABAN-logo {display: block; position: absolute; top: 12px;} #HUABAN_WIDGETS .HUABAN-waterfall-holder {position: relative; overflow-y: auto; height: 100%;} #HUABAN_WIDGETS .HUABAN-waterfall {position: relative; margin-top: 50px;} #HUABAN_WIDGETS .HUABAN-waterfall .HUABAN-empty {position: absolute; left: 50%; top: 30px; height: 36px; line-height: 36px; width: 216px; text-align: left; margin-left: -128px; color: #777; background: url(https://huaban.com/img/widgets/icon_notice.png) 12px 8px no-repeat white; padding-left: 40px; font-size: 15px;} #HUABAN_WIDGETS .HUABAN-btn {display: inline-block; border-radius: 2px; font-size: 14px; padding: 0 12px; height: 30px; line-height: 30px; cursor: pointer; text-decoration: none; white-space: nowrap; -moz-user-select: none; -webkit-user-select: none; user-select: none; text-align: center; background: #D53939; color: white;} #HUABAN_WIDGETS .HUABAN-btn:hover {background: #E54646;} #HUABAN_WIDGETS .HUABAN-btn:active {background: #C52424;} #HUABAN_WIDGETS .HUABAN-wbtn {background: #EDEDED; color: #444;} #HUABAN_WIDGETS .HUABAN-wbtn:hover {background: #F2F2F2;} #HUABAN_WIDGETS .HUABAN-wbtn:active {background: #DDD;} #HUABAN_WIDGETS .HUABAN-f-button {position: absolute; display: none; z-index: 9999999999998; box-shadow: 0 0 0 2px rgba(255,255,255,.2); background: #aaa; background: rgba(0,0,0,.3); color: white; cursor: pointer; padding: 0 12px; height: 30px; line-height: 30px; border-radius: 2px; font-size: 14px} #HUABAN_WIDGETS .HUABAN-f-button:hover {background-color: #999; background-color: rgba(0,0,0,.5);} #HUABAN_WIDGETS .HUABAN-f-button:active {background-color: rgba(0,0,0,.6);} #HUABAN_WIDGETS .HUABAN-red-normal-icon-button {width: 36px; height: 24px; border: 0px; line-height: 24px; padding-left: 24px; padding-right: 0px; text-align: left; background: url(https://huaban.com/img/widgets/widget_icons.png) 0 -200px no-repeat; box-shadow: none !important; font-size: 14px; background-color: transparent !important;} #HUABAN_WIDGETS .HUABAN-red-normal-icon-button:hover {background-position: -130px -200px;} #HUABAN_WIDGETS .HUABAN-red-normal-icon-button:active {background-position: -260px -200px;} #HUABAN_WIDGETS .HUABAN-red-large-icon-button {width: 80px; height: 24px; border: 0px; line-height: 24px; padding-left: 24px; padding-right: 0px; text-align: left; background: url(https://huaban.com/img/widgets/widget_icons.png) 0 -150px no-repeat; box-shadow: none !important; font-size: 14px; background-color: transparent !important;} #HUABAN_WIDGETS .HUABAN-red-large-icon-button:hover {background-position: -130px -150px;} #HUABAN_WIDGETS .HUABAN-red-large-icon-button:active {background-position: -260px -150px;} #HUABAN_WIDGETS .HUABAN-red-small-icon-button {width: 30px; height: 21px; border: 0px; line-height: 21px; padding-left: 20px; padding-right: 0px; text-align: left; background: url(https://huaban.com/img/widgets/widget_icons.png) 0 -250px no-repeat; box-shadow: none !important; font-size: 12px; background-color: transparent !important;} #HUABAN_WIDGETS .HUABAN-red-small-icon-button:hover {background-position: -130px -250px;} #HUABAN_WIDGETS .HUABAN-red-small-icon-button:active {background-position: -260px -250px;} #HUABAN_WIDGETS .HUABAN-white-normal-icon-button {width: 36px; height: 24px; border: 0px; line-height: 24px; padding-left: 24px; padding-right: 0px; text-align: left; background: url(https://huaban.com/img/widgets/widget_icons.png) 0 -500px no-repeat; box-shadow: none !important; color: #444; font-size: 14px; background-color: transparent !important;} #HUABAN_WIDGETS .HUABAN-white-normal-icon-button:hover {background-position: -130px -500px;} #HUABAN_WIDGETS .HUABAN-white-normal-icon-button:active {background-position: -260px -500px;} #HUABAN_WIDGETS .HUABAN-white-large-icon-button {width: 80px; height: 24px; border: 0px; line-height: 24px; padding-left: 24px; padding-right: 0px; text-align: left; background: url(https://huaban.com/img/widgets/widget_icons.png) 0 -450px no-repeat; box-shadow: none !important; color: #444; font-size: 14px; background-color: transparent !important;} #HUABAN_WIDGETS .HUABAN-white-large-icon-button:hover {background-position: -130px -450px;} #HUABAN_WIDGETS .HUABAN-white-large-icon-button:active {background-position: -260px -450px;} #HUABAN_WIDGETS .HUABAN-white-small-icon-button {width: 30px; height: 21px; border: 0px; line-height: 21px; padding-left: 20px; padding-right: 0px; text-align: left; background: url(https://huaban.com/img/widgets/widget_icons.png) 0 -550px no-repeat; box-shadow: none !important; color: #444; font-size: 12px; background-color: transparent !important;} #HUABAN_WIDGETS .HUABAN-white-small-icon-button:hover {background-position: -130px -550px;} #HUABAN_WIDGETS .HUABAN-white-small-icon-button:active {background-position: -260px -550px;} #HUABAN_WIDGETS .HUABAN-cell {width: 236px; position: absolute; background: white; box-shadow: 0 1px 3px rgba(0,0,0,.3); transition: left .3s ease-in-out, top .3s linear;} #HUABAN_WIDGETS .HUABAN-cell .HUABAN-img-holder {overflow: hidden; position: relative;} #HUABAN_WIDGETS .HUABAN-cell .HUABAN-img-holder:hover img.HUABAN-cell-img {opacity: .8} #HUABAN_WIDGETS .HUABAN-cell .HUABAN-video-icon {width: 72px; height: 62px; position: absolute; left: 50%; top: 50%; margin: -31px auto auto -36px; background: url(https://huaban.com/img/widgets/media_video.png) 0 0 no-repeat; display: none;} #HUABAN_WIDGETS .HUABAN-cell.HUABAN-video .HUABAN-video-icon {display: block;} #HUABAN_WIDGETS .HUABAN-cell .HUABAN-over {display: none;} #HUABAN_WIDGETS .HUABAN-cell:hover .HUABAN-over {display: block;} #HUABAN_WIDGETS .HUABAN-cell .HUABAN-over .HUABAN-btn {width: 60px; height: 34px; padding: 0; position: absolute; left: 50%; top: 50%; margin: -18px 0 0 -31px; line-height: 34px; box-shadow: 0 0 0 2px rgba(255,255,255,.2); font-size: 16px;} #HUABAN_WIDGETS .HUABAN-cell.HUABAN-long .HUABAN-img-holder {height: 600px;} #HUABAN_WIDGETS .HUABAN-cell.HUABAN-long .HUABAN-img-holder:after {content: ""; display: block; position: absolute; width: 236px; height: 12px; left: 0; bottom: 0; background: url(https://huaban.com/img/widgets/long_image_shadow_2.png) repeat-x 4px top;} #HUABAN_WIDGETS .HUABAN-cell img {width: 236px; display: block;} #HUABAN_WIDGETS .HUABAN-cell .HUABAN-size {margin: 8px 16px; font-size: 12px; color: #999} #HUABAN_WIDGETS .HUABAN-cell .HUABAN-description {display: block; width: 202px; margin: 0 6px 6px; padding: 6px 10px; border: 0; resize: none; outline: 0; border: 1px solid transparent; line-height: 18px; font-size: 13px; overflow: hidden; word-wrap: break-word; background: url(https://huaban.com/img/widgets/icon_edit.png) 500px center no-repeat;} #HUABAN_WIDGETS .HUABAN-cell:hover .HUABAN-description {background-color: #fff9e0; background-position: right top;} #HUABAN_WIDGETS .HUABAN-cell .HUABAN-description:focus {background-color: #F9F9F9; background-position: 500px center;} #HUABAN_WIDGETS .HUABAN-cell .HUABAN-select-btn {width: 34px; height:34px; background: url(https://huaban.com/img/widgets/checkbox.png) 0 0 no-repeat; position: absolute; right: 5px; top: 5px; cursor: pointer;} #HUABAN_WIDGETS .HUABAN-cell .HUABAN-pinned-label {position: absolute; left: 0; top: 10px; height: 24px; line-height: 24px; padding: 0 10px; background: #CE0000; background: rgba(200, 0, 0, 0.9); color: white; font-size: 12px; display: none;} #HUABAN_WIDGETS .HUABAN-cell.HUABAN-pinned .HUABAN-pinned-label {display: block;} #HUABAN_WIDGETS .HUABAN-selected .HUABAN-select-btn {background-position: 0 -40px;} #HUABAN_WIDGETS .HUABAN-multi .HUABAN-cell .HUABAN-img-holder {cursor: pointer;} #HUABAN_WIDGETS .HUABAN-multi .HUABAN-cell .HUABAN-cell-pin-btn {display: none;} #HUABAN_WIDGETS .HUABAN-multi .HUABAN-cell .HUABAN-over {display: block;} #HUABAN_WIDGETS .HUABAN-header .HUABAN-multi-buttons {position: absolute; top: 10px; left: 0; display: none;} #HUABAN_WIDGETS .HUABAN-header .HUABAN-multi-buttons .HUABAN-btn {margin-right: 10px;} #HUABAN_WIDGETS .HUABAN-header .HUABAN-multi-noti {display: none; height: 50px; line-height: 50px; text-align: center; font-size: 16px; color: #999; font-weight: bold;} #HUABAN_WIDGETS .HUABAN-header .HUABAN-multi-noti span {font-weight: normal;} #HUABAN_WIDGETS .HUABAN-header .HUABAN-multi-noti i {font-style: normal;} #HUABAN_WIDGETS .HUABAN-header .HUABAN-notice {padding: 0 10px; height:30px; line-height: 30px; position: absolute; left: 50%; top: 10px; margin-left: -83px; background: #fff9e2; text-align: center;} #HUABAN_WIDGETS .HUABAN-header .HUABAN-notice i {display: inline-block; width: 18px; height: 18px; background: url(https://huaban.com/img/widgets/icon_notice.png) 0 0 no-repeat; vertical-align: top; margin: 6px 6px 0 0;} #HUABAN_WIDGETS .HUABAN-switcher {height: 50px; width: 100px; position: relative;} #HUABAN_WIDGETS .HUABAN-switcher .HUABAN-title {position: absolute; right: 75px; top: 13px; color: #999; white-space: nowrap; line-height: 24px; opacity: 0; visibility: hidden;} #HUABAN_WIDGETS .HUABAN-switcher:hover .HUABAN-title {visibility: visible; opacity: 1; -webkit-transition: opacity .2s linear; -webkit-transition-delay: .2s; transition: opacity .2s linear; transition-delay: .2s;} #HUABAN_WIDGETS .HUABAN-switcher .HUABAN-bar {width: 40px; height: 24px; background: #EB595F; border-radius: 12px; color: white; position: absolute; right: 0; top: 13px; cursor: pointer; font-size: 14px; -webkit-transition: all .2s linear; transition: all .2s linear;} #HUABAN_WIDGETS .HUABAN-switcher:hover .HUABAN-bar {width: 64px;} #HUABAN_WIDGETS .HUABAN-switcher.HUABAN-on .HUABAN-bar {background: #7DD100;} #HUABAN_WIDGETS .HUABAN-switcher .HUABAN-bar .HUABAN-round {width: 20px; height: 20px; background: white; border-radius: 50%; position: absolute; left: 2px; top: 2px; -webkit-transition: left .2s linear; box-shadow: 0px 0px 3px rgba(0,0,0,0.15); transition: left .2s linear; box-shadow: 0px 0px 3px rgba(0,0,0,0.15);} #HUABAN_WIDGETS .HUABAN-switcher.HUABAN-on .HUABAN-bar .HUABAN-round {left: 17px;} #HUABAN_WIDGETS .HUABAN-switcher.HUABAN-on:hover .HUABAN-bar .HUABAN-round {left: 41px;} #HUABAN_WIDGETS .HUABAN-switcher .HUABAN-bar .HUABAN-text-1 {height: 24px; line-height: 24px; position: absolute; right:17px; top: 0; opacity: 0; visibility: hidden; -webkit-transition: all .2s linear; transition: all .2s linear;} #HUABAN_WIDGETS .HUABAN-switcher:hover .HUABAN-bar .HUABAN-text-1 {right: 9px; opacity: 1; visibility: visible;} #HUABAN_WIDGETS .HUABAN-switcher.HUABAN-on:hover .HUABAN-bar .HUABAN-text-1 {right: 17px; opacity: 0; visibility: hidden;} #HUABAN_WIDGETS .HUABAN-switcher .HUABAN-bar .HUABAN-text-2 {height: 24px; line-height: 24px; position: absolute; left:17px; top: 0; opacity: 0; visibility: hidden; -webkit-transition: all .2s linear; transition: all .2s linear;} #HUABAN_WIDGETS .HUABAN-switcher:hover .HUABAN-bar .HUABAN-text-2 {left: 17px; opacity: 0; visibility: hidden;} #HUABAN_WIDGETS .HUABAN-switcher.HUABAN-on:hover .HUABAN-bar .HUABAN-text-2 {left: 9px; opacity: 1; visibility: visible;} #HUABAN_WIDGETS .HUABAN-header .HUABAN-switcher {position: absolute; right: 0; top: 0;} <!--[if IE 6]>#HUABAN_WIDGETS .HUABAN-red-normal-icon-button, .HUABAN-red-large-icon-button, .HUABAN-red-small-icon-button, .HUABAN-white-normal-icon-button, .HUABAN-white-large-icon-button, .HUABAN-white-small-icon-button { background-image: url({{imgBase}}/widget_icons_ie6.png) <![endif]--></style></div><iframe frameborder="0" scrolling="no" style="background-color: transparent; border: 0px; display: none;" src="./assignment_2_fs_files/saved_resource.html"></iframe><div id="GOOGLE_INPUT_CHEXT_FLAG" input="" input_stat="{&quot;tlang&quot;:true,&quot;tsbc&quot;:true,&quot;pun&quot;:false,&quot;mk&quot;:true,&quot;ss&quot;:true}" style="display: none;"></div></body></html>

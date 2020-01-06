@@ -1,0 +1,14 @@
+--- mpatrol.orig/build/unix/Makefile	2009-02-25 12:33:56.000000000 -0500
++++ mpatrol/build/unix/Makefile	2009-02-25 12:33:59.000000000 -0500
+@@ -38,9 +38,9 @@
+ GUISUP	= false
+ 
+ ifeq ($(GUISUP),true)
+-CFLAGS	= -I$(SOURCE) -I$(TOOLS) -I/usr/X11R6/include -I/usr/X11R5/include -I/usr/X11/include -I/usr/X/include -DMP_GUI_SUPPORT=1
++CFLAGS	= -I$(SOURCE) -I$(TOOLS) -I/usr/X11R6/include -I/usr/X11R5/include -I/usr/X11/include -I/usr/X/include $(UNWIND_CFLAGS) -DMP_GUI_SUPPORT=1
+ else
+-CFLAGS	= -I$(SOURCE) -I$(TOOLS)
++CFLAGS	= -I$(SOURCE) -I$(TOOLS) $(UNWIND_CFLAGS)
+ endif
+ OFLAGS	= -O3 -fno-inline-functions
+ SFLAGS	= -fPIC

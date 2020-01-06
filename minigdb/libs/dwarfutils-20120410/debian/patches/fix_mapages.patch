@@ -1,0 +1,13 @@
+diff --git a/dwarfdump2/dwarfdump.1 b/dwarfdump2/dwarfdump.1
+index 4e7a40b..22c15cb 100644
+--- a/dwarfdump2/dwarfdump.1
++++ b/dwarfdump2/dwarfdump.1
+@@ -500,8 +500,6 @@ dwarfdump
+ 
+ dwarfdump.conf
+ 
+-./dwarfdump.conf
+-
+ $(HOME)/.dwarfdump.conf
+ 
+ $(HOME)/dwarfdump.conf

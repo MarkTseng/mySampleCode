@@ -1,0 +1,30 @@
+From 6bf03d4a3f2badac3d353d376501574204688c0f Mon Sep 17 00:00:00 2001
+From: Mark Wielaard <mjw@redhat.com>
+Date: Wed, 13 Jan 2016 22:49:02 +0100
+Subject: [PATCH] tests: Guard linux specific header includes with ifdef
+ __linux__.
+
+Signed-off-by: Mark Wielaard <mjw@redhat.com>
+diff --git a/tests/dwfl-proc-attach.c b/tests/dwfl-proc-attach.c
+index 0ba0be2..e7bb201 100644
+--- a/tests/dwfl-proc-attach.c
++++ b/tests/dwfl-proc-attach.c
+@@ -22,6 +22,7 @@
+ #include <errno.h>
+ #include <error.h>
+ #include <unistd.h>
++#ifdef __linux__
+ #include <sys/types.h>
+ #include <sys/stat.h>
+ #include <sys/user.h>
+@@ -29,6 +30,7 @@
+ #include <string.h>
+ #include ELFUTILS_HEADER(dwfl)
+ #include <pthread.h>
++#endif
+ 
+ #ifndef __linux__
+ int
+-- 
+2.5.0
+

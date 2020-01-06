@@ -1,0 +1,66 @@
+README FOR THE MPATROL LIBRARY
+
+
+This file contains an overview of the mpatrol library.  The documentation for
+the library currently exists as a manual in TeXinfo format located in the doc
+directory or as a set of UNIX manual pages located in the man directory.  A
+quick reference card is also available.  For instructions on how to build and
+install the mpatrol library and its tools please see the mpatrol manual.
+
+
+Introduction
+
+    The mpatrol library is yet another link library that attempts to diagnose
+    run-time errors that are caused by the wrong use of dynamically allocated
+    memory.  If you don't know what the malloc() function or operator new[] do
+    then this library is probably not for you.  You have to have a certain
+    amount of programming expertise and a knowledge of how to run a command
+    line compiler and linker before you should attempt to use this.
+
+    Along with providing a comprehensive and configurable log of all dynamic
+    memory operations that occurred during the lifetime of a program, the
+    mpatrol library performs extensive checking to detect any misuse of
+    dynamically allocated memory.  All of this functionality can be integrated
+    into existing code through the inclusion of a single header file at
+    compile-time.  On UNIX and Windows platforms (and AmigaOS when using gcc)
+    this may not even be necessary as the mpatrol library can be linked with
+    existing object files at link-time or, on some platforms, even dynamically
+    linked with existing programs at run-time.
+
+    All logging and tracing output from the mpatrol library is sent to a
+    separate log file in order to keep its diagnostics separate from any that
+    the program being tested might generate.  A wide variety of library settings
+    can also be changed at run-time via an environment variable, thus removing
+    the need to recompile or relink in order to change the library's behaviour.
+
+
+Further information
+
+    Due to their very nature, problems with dynamic memory allocations are
+    notoriously difficult to reproduce and debug, and this is likely to be the
+    case if you find a bug in the mpatrol library as it might be extremely hard
+    to reproduce on another system.  Details on how to report bugs are given in
+    the manual, but it would be very useful if you could try to provide as much
+    information as possible when reporting a problem, and that includes having a
+    look in the library source code to see if it's obvious what is wrong.
+    However, please try to read the frequently asked questions first in case
+    your question or problem is covered there since they are usually updated
+    every time I receive a question about mpatrol.
+
+    The latest version of the mpatrol library can always be found at
+    `http://sourceforge.net/projects/mpatrol/', and any correspondence relating
+    to mpatrol (bug reports, enhancement requests, compliments ;-) should be
+    sent to <graemeroy@users.sourceforge.net>.  I normally only check my e-mail
+    about once or twice a week, so don't expect an immediate response.  There
+    is also a discussion group at `http://groups.yahoo.com/group/mpatrol/'
+    where you can post mpatrol-related questions but you must first subscribe
+    to the group before you can send mail to it.
+
+    Oh, and always remember to do final release builds without the mpatrol
+    library as the library is much slower than normal malloc implementations and
+    uses much more memory.
+
+    Happy debugging!
+
+    Graeme Roy, 11th October, 1999.
+    Edinburgh, Scotland.

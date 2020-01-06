@@ -1,0 +1,52 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+CC	Makefile	/^CC=gcc$/;"	m
+CFLAGS	Makefile	/^CFLAGS=-c -Wall$/;"	m
+EXECUTABLE	Makefile	/^EXECUTABLE=workqueue$/;"	m
+JOB	jobqueue.h	11;"	d
+LDFLAGS	Makefile	/^LDFLAGS= -pthread$/;"	m
+OBJECTS	Makefile	/^OBJECTS=$(SOURCES:.c=.o)$/;"	m
+SOURCES	Makefile	/^SOURCES=jobqueue.c thpool.c workqueue.c$/;"	m
+__JOBQUEUE_H__	jobqueue.h	2;"	d
+__THPOOL_H__	thpool.h	2;"	d
+args	jobqueue.h	/^    void* args;                      \/\/ function's argument$/;"	m	struct:__anon2
+entry_t	jobqueue.c	/^} entry_t;$/;"	t	typeref:struct:__anon1	file:
+function	jobqueue.h	/^    void* (*function)(void* args);   \/\/ function pointer$/;"	m	struct:__anon2
+head	jobqueue.c	/^    entry_t* head;$/;"	m	struct:jobqueue	file:
+job	jobqueue.c	/^    job_t job;$/;"	m	struct:__anon1	file:
+job_t	jobqueue.h	/^} job_t;$/;"	t	typeref:struct:__anon2
+jobqueue	jobqueue.c	/^struct jobqueue {$/;"	s	file:
+jobqueue_destroy	jobqueue.c	/^void jobqueue_destroy(jobqueue_t* q) {$/;"	f
+jobqueue_init	jobqueue.c	/^jobqueue_t* jobqueue_init() {$/;"	f
+jobqueue_is_empty	jobqueue.c	/^bool jobqueue_is_empty(const jobqueue_t* q) {$/;"	f
+jobqueue_pop	jobqueue.c	/^bool jobqueue_pop (jobqueue_t* q, job_t* j) {$/;"	f
+jobqueue_push	jobqueue.c	/^bool jobqueue_push(jobqueue_t* q, job_t j) {$/;"	f
+jobqueue_size	jobqueue.c	/^unsigned int jobqueue_size(const jobqueue_t* q) {$/;"	f
+jobqueue_t	jobqueue.h	/^typedef struct jobqueue jobqueue_t;$/;"	t	typeref:struct:jobqueue
+jobqueue_top	jobqueue.c	/^job_t* jobqueue_top(jobqueue_t* q) {$/;"	f
+lock	jobqueue.c	/^    pthread_mutex_t lock;$/;"	m	struct:jobqueue	file:
+main	workqueue.c	/^int main(int argv, char *argc[])$/;"	f
+next	jobqueue.c	/^    void* next;$/;"	m	struct:__anon1	file:
+num_threads	thpool.c	/^    unsigned int num_threads;$/;"	m	struct:thpool	file:
+queue	thpool.c	/^    jobqueue_t* queue;$/;"	m	struct:thpool	file:
+quitJob	workqueue.c	/^int quitJob = 0;$/;"	v
+read_file_func	workqueue.c	/^void read_file_func(void* new) {$/;"	f
+read_file_pool	workqueue.c	/^thpool_t* read_file_pool;$/;"	v
+running	thpool.c	/^    bool running;$/;"	m	struct:thpool	file:
+sighandler	workqueue.c	/^void sighandler(int signum)$/;"	f
+size	jobqueue.c	/^    unsigned int size;$/;"	m	struct:jobqueue	file:
+tail	jobqueue.c	/^    entry_t* tail;$/;"	m	struct:jobqueue	file:
+thpool	thpool.c	/^struct thpool {$/;"	s	file:
+thpool_add_job	thpool.c	/^bool thpool_add_job(thpool_t* p, void *(*function)(void*), void* args) {$/;"	f
+thpool_destroy	thpool.c	/^void thpool_destroy(thpool_t* p) {$/;"	f
+thpool_init	thpool.c	/^thpool_t* thpool_init(unsigned int num_threads) {$/;"	f
+thpool_size	thpool.c	/^unsigned int thpool_size(const thpool_t* p) {$/;"	f
+thpool_t	thpool.h	/^typedef struct thpool thpool_t;$/;"	t	typeref:struct:thpool
+thread_do	thpool.c	/^static void* thread_do(thpool_t* p) {$/;"	f	file:
+threads	thpool.c	/^    pthread_t* threads;$/;"	m	struct:thpool	file:
+update_cv	thpool.c	/^    pthread_cond_t  update_cv;$/;"	m	struct:thpool	file:
+update_mutex	thpool.c	/^    pthread_mutex_t update_mutex;$/;"	m	struct:thpool	file:

@@ -1,0 +1,141 @@
+dwarfutils (20120410-2+deb7u2build0.16.04.1) xenial-security; urgency=medium
+
+  * fake sync from Debian
+
+ -- Tyler Hicks <tyhicks@canonical.com>  Mon, 31 Oct 2016 21:15:51 +0000
+
+dwarfutils (20120410-2+deb7u2) wheezy-security; urgency=high
+
+  * New maintainer.
+  * Add patch CVE-2015-8538.patch to fix CVE-2015-8538 (Closes: #807817).
+  * Add patch CVE-2015-8750.patch to fix CVE-2015-8750 (Closes: #813182).
+  * Add patch CVE-2016-2050.patch to fix CVE-2016-2050.
+  * Add patch CVE-2016-2091.patch to fix CVE-2016-2091 (Closes: #813148).
+  * Add patch CVE-2016-5034.patch to fix CVE-2016-5034.
+  * Add patch CVE-2016-5036.patch to fix CVE-2016-5036.
+  * Add patch CVE-2016-5038.patch to fix CVE-2016-5038.
+  * Add patch CVE-2016-5039.patch to fix CVE-2016-5039.
+  * Add patch CVE-2016-5042.patch to fix CVE-2016-5042.
+
+ -- Daniel Stender <stender@debian.org>  Wed, 19 Oct 2016 00:29:41 +0200
+
+dwarfutils (20120410-2+deb7u1) wheezy-security; urgency=high
+
+  * Specify "3.0 (quilt)" in debian/source/format to enforce clarity of
+    patches.
+  * CVE-2016-7510, CVE-2016-7511: Fix out-of-bounds read in range handling.
+
+ -- Chris Lamb <lamby@debian.org>  Sat, 24 Sep 2016 13:18:41 +0200
+
+dwarfutils (20120410-2) unstable; urgency=low
+
+  * Fix FTBFS on Debian GNU/Hurd by Barry deFreese <bdefreese@debian.org>
+    (closes: #678173) 
+
+ -- Troy Heber <troyh@debian.org>  Mon, 25 Jun 2012 09:42:10 -0600
+
+dwarfutils (20120410-1) unstable; urgency=low
+
+  * New upstream release 20120410.
+  * libdwarf.h: A pointer "*" was right next to a "/*" so a space introduced
+    between them for clarity. Fixed comments on DW_DLC_SIZE_64 and
+    DW_DLC_SIZE_32.
+  * dwarf_die_deliv.c: Two local variables were declared in the middle of
+    code, accidentally creating C99 dependencies. Both trivially fixed with
+    no change in logic.
+
+ -- Troy Heber <troyh@debian.org>  Mon, 21 May 2012 09:25:24 -0600
+
+dwarfutils (20111214-1) unstable; urgency=low
+
+  * New upstream release: 20111214. 
+  * dwarfdump[2]: Added support for DW_OP_GNU operators. Enhanced the
+    extended-extensions table so known GNU tag-attr dependencies get no
+    warning.  Added support for DWARF3/4 line table values. libdwarf: Added
+    support for DW_OP_GNU operators. Added dwarf_lineoff_b() function making
+    dwarf_lineoff() obsolete (but still present). Added
+    dwarf_add_lineentry_b() as part of preparation for creating DWARF3/4 line
+    output (including isa and discriminator fields). Added
+    dwarf_prologue_end_etc() function to access line entry new fields. The
+    consumer documentation is now at version 2.02 and producer doc at version
+    1.32 . dwarfgen: Added example code generating line tables.
+  * Now libdwarf and dwarfdump/dwarfdump2 support reading and printing the
+    DWARF4 .debug_types section.
+  * dwarfdump2: Major change! Now works just like dwarfdump -- with the same
+    options and capabilities as dwarfdump but by taking advantage of C++
+    features it is simpler to read and a bit faster than C dwarfdump.
+    dwarfdump: Fixed some (minor) problems in detecting compilation units and
+    showing errors. libdwarf: Now a bit more robust in detecting errors in
+    object files
+  * Some minor changes. libdwarf: added -fPIC to enable-shared builds, and
+    implemented the ability to declare (in dwarfdump.conf) that address-size
+    is 4 or 8. dwarfdump: Fixed tsearch related call with a memory leak, added
+    a dwarfdump.conf example showing new includeabi: and address_size: command
+    lines, configure now sets HAVE_STDAFX_H if that header (non-Linux) exists,
+    verify checking is on before doing a duplicate-fde check. dwarfdump2:
+    verify checking is on before doing a duplicate-fde check. 
+
+ -- Troy Heber <troyh@debian.org>  Fri, 16 Dec 2011 10:50:08 -0700
+
+dwarfutils (20110612-2) unstable; urgency=low
+
+  * Fix the description for dwarfdump to reflect it is built with the newer
+    C++ "dwarfdump2" version. (Closes: #633513)
+
+ -- Troy Heber <troyh@debian.org>  Tue, 12 Jul 2011 08:49:43 -0600
+
+dwarfutils (20110612-1) unstable; urgency=low
+
+  * New upstream version.
+  - A function is in the producer: dwarf_producer_init_c(). This provides a
+  user-defined void* pointer passed through from dwarf_producer_init_c() to
+  the callback so the user code can provide whatever data it wishes to itself
+  (in the callback). The library does not inspect the value in any way
+  - Now DW_FORM_sdata/udata allowed for DW_AT_data_member_location
+  - A very old bug (looking past the end of .debug_abbrev) fixed
+  - Added a new function making it easier to get the 'class' of an attribute.
+  Issues addressed, dwarfdump
+  - Corrected some line-table error checking and made the options work more
+  like they are described in a few cases
+  - Added a new function making it easier to get the 'class' of an
+  attribute.
+  - dwarfdump had unused local variables and critical missing () in two tests
+  made if statements incorrec
+  - One place = was used in a test erroneously
+  - The dwarfdump.1 man page is more informative about the -k options now
+
+ -- Troy Heber <troyh@debian.org>  Mon, 11 Jul 2011 14:51:21 -0600
+
+dwarfutils (20100214-1) unstable; urgency=low
+
+  * New upstream version.
+  - Dwarfdump now prints generic register names in frame printing instead of
+  using MIPS register names as the default
+  - Fixed libdwarf and dwarfdump to handle all DW_OP operators correctly
+  - Fixed libdwarf and dwarfdump to handle mismatch between elf63 object type
+  and compilation unity type (32bit).
+  - Fixed dwarfdump -M option to print all FORMs.
+
+ -- Troy Heber <troyh@debian.org>  Tue, 09 Mar 2010 08:25:12 -0700
+
+dwarfutils (20091012-1) unstable; urgency=low
+
+  * New upstream version.
+  - Lots of small bug fixes see the ChangeLog in the source for details
+  - Adds dwarfdump2 package
+  - Adds examples
+
+ -- Troy Heber <troyh@debian.org>  Thu, 05 Nov 2009 09:10:19 -0700
+
+dwarfutils (20080409-2) unstable; urgency=low
+
+  * conflicts with libdw-dev, as both packages provide /usr/include/dwarf.h,
+    (Closes: #479503)
+
+ -- Troy Heber <troyh@debian.org>  Mon, 05 May 2008 07:31:47 -0600
+
+dwarfutils (20080409-1) unstable; urgency=low
+
+  * Initial Release (Closes: #447775)
+
+ -- Troy Heber <troyh@debian.org>  Wed, 16 Apr 2008 09:49:33 -0600

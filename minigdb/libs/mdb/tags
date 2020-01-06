@@ -1,0 +1,126 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+BREAK	mdb.c	/^typedef enum {CONTINUE, BREAK, KILL, NEXT, REGISTER}mdb_cmd;$/;"	e	enum:__anon2	file:
+CONTINUE	mdb.c	/^typedef enum {CONTINUE, BREAK, KILL, NEXT, REGISTER}mdb_cmd;$/;"	e	enum:__anon2	file:
+ELMT_FROM_HH	uthash.h	54;"	d
+HASH_ADD	uthash.h	121;"	d
+HASH_ADD_INT	uthash.h	208;"	d
+HASH_ADD_KEYPTR	uthash.h	124;"	d
+HASH_ADD_STR	uthash.h	204;"	d
+HASH_ADD_TO_BKT	uthash.h	616;"	d
+HASH_ADD_UNIQUE	uthash.h	856;"	d
+HASH_BER	uthash.h	295;"	d
+HASH_BKT_CAPACITY_THRESH	uthash.h	51;"	d
+HASH_BLOOM_ADD	uthash.h	89;"	d
+HASH_BLOOM_ADD	uthash.h	98;"	d
+HASH_BLOOM_BITLEN	uthash.h	70;"	d
+HASH_BLOOM_BITSET	uthash.h	86;"	d
+HASH_BLOOM_BITTEST	uthash.h	87;"	d
+HASH_BLOOM_BYTELEN	uthash.h	71;"	d
+HASH_BLOOM_FREE	uthash.h	81;"	d
+HASH_BLOOM_FREE	uthash.h	97;"	d
+HASH_BLOOM_MAKE	uthash.h	72;"	d
+HASH_BLOOM_MAKE	uthash.h	96;"	d
+HASH_BLOOM_SIGNATURE	uthash.h	904;"	d
+HASH_BLOOM_TEST	uthash.h	92;"	d
+HASH_BLOOM_TEST	uthash.h	99;"	d
+HASH_CLEAR	uthash.h	846;"	d
+HASH_CNT	uthash.h	880;"	d
+HASH_COUNT	uthash.h	879;"	d
+HASH_DEL	uthash.h	210;"	d
+HASH_DELETE	uthash.h	166;"	d
+HASH_DEL_IN_BKT	uthash.h	630;"	d
+HASH_EMIT_KEY	uthash.h	277;"	d
+HASH_EMIT_KEY	uthash.h	284;"	d
+HASH_EXPAND_BUCKETS	uthash.h	671;"	d
+HASH_FCN	uthash.h	289;"	d
+HASH_FCN	uthash.h	291;"	d
+HASH_FIND	uthash.h	56;"	d
+HASH_FIND_INT	uthash.h	206;"	d
+HASH_FIND_IN_BKT	uthash.h	605;"	d
+HASH_FIND_STR	uthash.h	202;"	d
+HASH_FNV	uthash.h	317;"	d
+HASH_FREE	uthash.h	867;"	d
+HASH_FSCK	uthash.h	218;"	d
+HASH_FSCK	uthash.h	270;"	d
+HASH_INITIAL_NUM_BUCKETS	uthash.h	49;"	d
+HASH_INITIAL_NUM_BUCKETS_LOG2	uthash.h	50;"	d
+HASH_JEN	uthash.h	356;"	d
+HASH_JEN_MIX	uthash.h	343;"	d
+HASH_KEYCMP	uthash.h	602;"	d
+HASH_MAKE_TABLE	uthash.h	102;"	d
+HASH_MUR	uthash.h	464;"	d
+HASH_MUR	uthash.h	466;"	d
+HASH_MUR_ALIGNED	uthash.h	504;"	d
+HASH_MUR_UNALIGNED	uthash.h	470;"	d
+HASH_OAT	uthash.h	327;"	d
+HASH_OOPS	uthash.h	217;"	d
+HASH_SAX	uthash.h	307;"	d
+HASH_SELECT	uthash.h	808;"	d
+HASH_SFH	uthash.h	408;"	d
+HASH_SIGNATURE	uthash.h	903;"	d
+HASH_SORT	uthash.h	723;"	d
+HASH_SRT	uthash.h	724;"	d
+HASH_TO_BKT	uthash.h	149;"	d
+KILL	mdb.c	/^typedef enum {CONTINUE, BREAK, KILL, NEXT, REGISTER}mdb_cmd;$/;"	e	enum:__anon2	file:
+NEXT	mdb.c	/^typedef enum {CONTINUE, BREAK, KILL, NEXT, REGISTER}mdb_cmd;$/;"	e	enum:__anon2	file:
+REGISTER	mdb.c	/^typedef enum {CONTINUE, BREAK, KILL, NEXT, REGISTER}mdb_cmd;$/;"	e	enum:__anon2	file:
+Symbol	mdb.c	/^}SymbolTable, Symbol;$/;"	t	typeref:struct:__anon1	file:
+SymbolTable	mdb.c	/^}SymbolTable, Symbol;$/;"	t	typeref:struct:__anon1	file:
+TYPEOF	uthash.h	35;"	d
+TYPEOF	uthash.h	37;"	d
+UTHASH_H	uthash.h	25;"	d
+UTHASH_VERSION	uthash.h	31;"	d
+UT_hash_bucket	uthash.h	/^typedef struct UT_hash_bucket {$/;"	s
+UT_hash_bucket	uthash.h	/^} UT_hash_bucket;$/;"	t	typeref:struct:UT_hash_bucket
+UT_hash_handle	uthash.h	/^typedef struct UT_hash_handle {$/;"	s
+UT_hash_handle	uthash.h	/^} UT_hash_handle;$/;"	t	typeref:struct:UT_hash_handle
+UT_hash_table	uthash.h	/^typedef struct UT_hash_table {$/;"	s
+UT_hash_table	uthash.h	/^} UT_hash_table;$/;"	t	typeref:struct:UT_hash_table
+addr	mdb.c	/^    long addr;         \/*symbol address*\/$/;"	m	struct:__anon1	file:
+bloom_bv	uthash.h	/^   uint8_t *bloom_bv;$/;"	m	struct:UT_hash_table
+bloom_nbits	uthash.h	/^   char bloom_nbits;$/;"	m	struct:UT_hash_table
+bloom_sig	uthash.h	/^   uint32_t bloom_sig; \/* used only to test bloom exists in external analysis *\/$/;"	m	struct:UT_hash_table
+buckets	uthash.h	/^   UT_hash_bucket *buckets;$/;"	m	struct:UT_hash_table
+count	uthash.h	/^   unsigned count;$/;"	m	struct:UT_hash_bucket
+disassemble	mdb.c	/^void disassemble(void *buf, unsigned long size)$/;"	f
+expand_mult	uthash.h	/^   unsigned expand_mult;$/;"	m	struct:UT_hash_bucket
+get16bits	uthash.h	398;"	d
+get16bits	uthash.h	401;"	d
+get16bits	uthash.h	405;"	d
+hashv	uthash.h	/^   unsigned hashv;                   \/* result of hash-fcn(key)        *\/$/;"	m	struct:UT_hash_handle
+hh	mdb.c	/^    UT_hash_handle hh; \/*uthash handle*\/$/;"	m	struct:__anon1	file:
+hh_head	uthash.h	/^   struct UT_hash_handle *hh_head;$/;"	m	struct:UT_hash_bucket	typeref:struct:UT_hash_bucket::UT_hash_handle
+hh_next	uthash.h	/^   struct UT_hash_handle *hh_next;   \/* next hh in bucket order        *\/$/;"	m	struct:UT_hash_handle	typeref:struct:UT_hash_handle::UT_hash_handle
+hh_prev	uthash.h	/^   struct UT_hash_handle *hh_prev;   \/* previous hh in bucket order    *\/$/;"	m	struct:UT_hash_handle	typeref:struct:UT_hash_handle::UT_hash_handle
+hho	uthash.h	/^   ptrdiff_t hho; \/* hash handle offset (byte pos of hash handle in element *\/$/;"	m	struct:UT_hash_table
+ideal_chain_maxlen	uthash.h	/^   unsigned ideal_chain_maxlen;$/;"	m	struct:UT_hash_table
+ineff_expands	uthash.h	/^   unsigned ineff_expands, noexpand;$/;"	m	struct:UT_hash_table
+key	uthash.h	/^   void *key;                        \/* ptr to enclosing struct's key  *\/$/;"	m	struct:UT_hash_handle
+keylen	uthash.h	/^   unsigned keylen;                  \/* enclosing struct's key len     *\/$/;"	m	struct:UT_hash_handle
+log2_num_buckets	uthash.h	/^   unsigned num_buckets, log2_num_buckets;$/;"	m	struct:UT_hash_table
+main	mdb.c	/^int main(int argc, char **argv)$/;"	f
+main	test.c	/^int main(int argc, char **argv)$/;"	f
+mdb_cmd	mdb.c	/^typedef enum {CONTINUE, BREAK, KILL, NEXT, REGISTER}mdb_cmd;$/;"	t	typeref:enum:__anon2	file:
+next	uthash.h	/^   void *next;                       \/* next element in app order      *\/$/;"	m	struct:UT_hash_handle
+next_cmd	mdb.c	/^mdb_cmd next_cmd(char **argv)$/;"	f
+noexpand	uthash.h	/^   unsigned ineff_expands, noexpand;$/;"	m	struct:UT_hash_table
+nonideal_items	uthash.h	/^   unsigned nonideal_items;$/;"	m	struct:UT_hash_table
+num_buckets	uthash.h	/^   unsigned num_buckets, log2_num_buckets;$/;"	m	struct:UT_hash_table
+num_items	uthash.h	/^   unsigned num_items;$/;"	m	struct:UT_hash_table
+opc	mdb.c	/^    long opc;          \/*wrod at symbol*\/$/;"	m	struct:__anon1	file:
+prev	uthash.h	/^   void *prev;                       \/* prev element in app order      *\/$/;"	m	struct:UT_hash_handle
+say_hello	test.c	/^int say_hello(int x, int y, int z)$/;"	f
+signature	uthash.h	/^   uint32_t signature; \/* used only to find hash tables in external analysis *\/$/;"	m	struct:UT_hash_table
+sym	mdb.c	/^    char *sym;         \/*symbol*\/$/;"	m	struct:__anon1	file:
+tail	uthash.h	/^   struct UT_hash_handle *tail; \/* tail hh in app order, for fast append    *\/$/;"	m	struct:UT_hash_table	typeref:struct:UT_hash_table::UT_hash_handle
+tbl	uthash.h	/^   struct UT_hash_table *tbl;$/;"	m	struct:UT_hash_handle	typeref:struct:UT_hash_handle::UT_hash_table
+uthash_expand_fyi	uthash.h	46;"	d
+uthash_fatal	uthash.h	41;"	d
+uthash_free	uthash.h	43;"	d
+uthash_malloc	uthash.h	42;"	d
+uthash_noexpand_fyi	uthash.h	45;"	d

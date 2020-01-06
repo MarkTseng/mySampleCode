@@ -1,0 +1,3193 @@
+<!DOCTYPE html>
+<!-- saved from url=(0058)https://web.stanford.edu/class/cs140e/assignments/1-shell/ -->
+<html lang="en" class="hb-loaded"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <title>Stanford CS140e - Operating Systems</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="./1-shell_files/bootstrap.min.css" media="screen">
+    <link rel="stylesheet" href="./1-shell_files/hugo-bootswatch.css">
+    <link rel="stylesheet" href="./1-shell_files/extra.css">
+  </head>
+  <body huaban_collector_injected="true" style="">
+
+<nav class="navbar navbar-default">
+<div class="container">
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <a href="https://web.stanford.edu/class/cs140e/" class="navbar-brand">CS140e</a>
+  </div>
+  <div id="navbar" class="navbar-collapse collapse">
+    <ul class="nav navbar-nav">
+        
+        
+          
+            
+            <li>
+              <a href="https://web.stanford.edu/class/cs140e/">Home</a>
+            </li>
+            
+          
+        
+          
+            <li class="dropdown  active">
+              <a href="https://web.stanford.edu/class/cs140e/assignments/1-shell/#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                Assignments<span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" role="menu">
+                
+                  
+                  <li>
+                    <a href="https://web.stanford.edu/class/cs140e/assignments/info/"> Grading and Policies </a>
+                  </li>
+                  
+                
+                  
+                  <li>
+                    <a href="https://web.stanford.edu/class/cs140e/assignments/submission/"> Submission and Grades </a>
+                  </li>
+                  
+                
+                  <li class="divider"></li>
+                  <li>
+                    <a href="https://web.stanford.edu/class/cs140e/assignments/0-blinky/"> Assignment 0: Blinky </a>
+                  </li>
+                  
+                
+                  
+                  <li class="active">
+                    <a href="https://web.stanford.edu/class/cs140e/assignments/1-shell/"> Assignment 1: Shell </a>
+                  </li>
+                  
+                
+                  
+                  <li>
+                    <a href="https://web.stanford.edu/class/cs140e/assignments/2-fs/"> Assignment 2: File System </a>
+                  </li>
+                  
+                
+              </ul>
+            </li>
+          
+        
+          
+            
+            <li>
+              <a href="https://web.stanford.edu/class/cs140e/about/">General Information</a>
+            </li>
+            
+          
+        
+          
+            
+            <li>
+              <a href="https://web.stanford.edu/class/cs140e/syllabus/">Syllabus</a>
+            </li>
+            
+          
+        
+
+    </ul>
+  </div>
+</div>
+</nav>
+
+
+<div class="container">
+   <div class="row pad-top">
+      <article class="col-md-9">
+         <h1>Assignment 1 <small>Shell</small></h1>
+         <h4>Due:<b> Tuesday February 6, 2018 11:59PM</b></h4>
+         <hr>
+         
+
+<h3 id="overview">Overview</h3>
+
+<p>In this assignment, you will sharpen your <a href="https://www.rust-lang.org/en-US/">Rust</a> skills by fixing Rust programs,
+writing useful utilities and libraries, and writing a simple shell for your
+Raspberry Pi. You’ll also write generic drivers for GPIO, <a href="https://en.wikipedia.org/wiki/Universal_asynchronous_receiver-transmitter">UART</a>, and the
+built-in timer. Finally, you’ll write a “bootloader” using your new drivers that
+loads program binaries over UART using the XMODEM protocol and executes them.</p>
+
+<p>Before starting assignment 1, we strongly recommend that you complete the
+required course readings:</p>
+
+<ul>
+<li><a href="https://web.stanford.edu/class/cs140e/notes/lec2/code.pdf">Rust Syntax Walkthrough</a></li>
+<li><a href="https://doc.rust-lang.org/book/second-edition/">TRPL v2</a> chapters 1 - 11 and chapters 13 - 19</li>
+<li>[Excerpts from Rusty Types for Solid Safety]</li>
+</ul>
+
+<hr>
+
+<h3 id="phase-0-getting-started">Phase 0: Getting Started</h3>
+
+<p>As with assignment 0, ensure that you are using a compatible machine:</p>
+
+<ul>
+<li>Runs a modern Unix natively: Linux, BSD, or macOS</li>
+<li>Runs a 64-bit variant of the OS</li>
+<li>Has a USB-A port or USB-C to USB-A adapter</li>
+</ul>
+
+<p>And has the following software installed: <code>git</code>, <code>wget</code>, <code>tar</code>, <code>screen</code>,
+<code>make</code>, and the software from assignment 0.</p>
+
+<p><strong>For assignment 1, you will also need to install the <code>socat</code> utility.</strong></p>
+
+<p>If you are running Windows and successfully completed assignment 0, it is likely
+you will have no issue completing assignment 1. As before, please note that we
+won’t be providing support for or answering questions about Windows
+configurations.</p>
+
+<h4 id="getting-the-skeleton-code">Getting the Skeleton Code</h4>
+
+<p>Clone the assignment 1 skeleton git repository to your development machine:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">git clone https://web.stanford.edu/class/cs140e/assignments/1-shell/skeleton.git <span style="color:#1c01ce">1</span>-shell</code></pre></div>
+<p>Feel free to explore the contents of the repository.</p>
+
+<h4 id="questions">Questions</h4>
+
+<p>This and future assignments include <em>writing questions</em> that you must respond
+to. Here’s an example of such a question:</p>
+
+<div class="panel panel-question">
+  <div class="panel-heading">
+     <div class="badge pull-right">
+        <code>
+           assignment0
+        </code>
+     </div>
+    <h3 class="panel-title">
+       <span class="glyphicon glyphicon-question-sign" aria-hidden="true" style="padding-right: 5px"></span>
+       How do you set other GPIO pins?
+    </h3>
+  </div>
+  <div class="panel-body">
+     <p></p><p>In assignment 0, you enabled GPIO pin 16 as an output and then repeatedly set
+  and cleared it by writing to registers <code>GPFSEL1</code>, <code>GPSET0</code>, and <code>GPCLR0</code>.
+  <strong>Which three registers would you write to to do the same for GPIO pin 27?</strong>
+  <strong>Which physical pin on the Raspberry Pi maps to GPIO pin 27?</strong></p>
+<p></p>
+  </div>
+</div>
+
+
+<p>The badge on the right of the question panel indicates the name of a file
+located inside of a <code>questions/</code> directory relative to the phase in which the
+question is being asked. For instance, phase 1’s directory is <code>ferris-wheel/</code>.
+As such, a question named <code>modules</code> in phase 1 would have its answer recorded in
+<code>ferris-wheel/questions/modules</code>. Note that we have pre-generated empty files
+for every question.</p>
+
+<p>Practice responding to questions now by answering the <code>assignment0</code> question
+above.</p>
+
+<hr>
+
+<h3 id="phase-1-ferris-wheel">Phase 1: Ferris Wheel</h3>
+
+<p>In this phase, you will modify Rust programs so that they compile, fail to
+compile, or pass tests. Answers to questions in this phase should be recorded in
+the <code>ferris-wheel/questions/</code> directory.</p>
+
+<figure style="
+   float: right; 
+    padding: 10px; 
+">
+   <img src="./1-shell_files/ferris.svg" alt="Ferris: The Unofficial Rust Mascot" width="200px" style="
+         
+      ">
+   
+      <figcaption style="text-align: center;">
+         <small>Ferris: The Unofficial Rust Mascot</small>
+      </figcaption>
+   
+</figure>
+
+
+<p>In the <code>ferris-wheel/</code> directory, you will have find four subdirectories:</p>
+
+<ul>
+<li><code>compile-fail</code> - contains programs that you should modify so that they <strong>do
+not</strong> compile</li>
+<li><code>compile-pass</code> - contains programs that you should modify so that they
+compile</li>
+<li><code>run-pass</code> - contains programs that you should modify so that the assertions
+pass</li>
+<li><code>questions</code> - directory containing your answers to questions for this phase</li>
+</ul>
+
+<p>You will also find a <code>test.sh</code> script. This script checks whether you have
+properly modified these programs. Here’s what its output should look like on the
+first run:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">$ ./test.sh
+ERROR: compile-pass/borrow-1.rs failed to compile!
+
+ERROR: compile-pass/const.rs failed to compile!
+
+...
+
+<span style="color:#1c01ce">0</span> passes, <span style="color:#1c01ce">25</span> failures</code></pre></div>
+<p>The test script accepts a <code>-v</code> flag. With <code>-v</code>, the script will emit the error
+output from the Rust compiler for each failure:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">$ ./test.sh -v
+ERROR: compile-pass/borrow-1.rs failed to compile!
+---------------------- stderr --------------------------
+warning: unused variable: <span style="color:#c41a16">`</span>z<span style="color:#c41a16">`</span>
+ --&gt; /.../ferris-wheel/compile-pass/borrow-1.rs:9:9
+  |
+<span style="color:#1c01ce">9</span> |     <span style="color:#a90d91">let</span> <span style="color:#000">z</span> <span style="color:#000">=</span> *y;
+  |         ^
+  |
+  <span style="color:#000">=</span> note: <span style="color:#177500">#[warn(unused_variables)] on by default
+</span><span style="color:#177500"></span>  <span style="color:#000">=</span> note: to avoid this warning, consider using <span style="color:#c41a16">`</span>_z<span style="color:#c41a16">`</span> instead
+
+error<span style="color:#000">[</span>E0507<span style="color:#000">]</span>: cannot move out of borrowed content
+ --&gt; /.../ferris-wheel/compile-pass/borrow-1.rs:9:13
+  |
+<span style="color:#1c01ce">9</span> |     <span style="color:#a90d91">let</span> <span style="color:#000">z</span> <span style="color:#000">=</span> *y;
+  |             ^^
+  |             |
+  |             cannot move out of borrowed content
+  |             help: consider using a reference instead: <span style="color:#c41a16">`</span>&amp;*y<span style="color:#c41a16">`</span>
+
+error: aborting due to previous error
+
+...
+
+<span style="color:#1c01ce">0</span> passes, <span style="color:#1c01ce">25</span> failures</code></pre></div>
+<p>Finally, the script accepts a <em>filter</em> string. When a filter is provided, only
+paths (<code>$directory/$filename</code>) that contain the filter string will be tested:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">./test.sh trait
+ERROR: compile-pass/trait-namespace.rs failed to compile!
+
+ERROR: run-pass/trait-impl.rs failed to compile!
+
+<span style="color:#1c01ce">0</span> passes, <span style="color:#1c01ce">2</span> failures</code></pre></div>
+<p>You can combine the two options as well: <code>./test.sh -v filter</code>.</p>
+
+<h4 id="diff-budget">Diff Budget</h4>
+
+<p>Every file contains a comment indicating the diff budget for that file. The
+budget is the maximum number of changes that you are allowed to make to fix the
+program. Solutions that exceed the diff budget will receive no credit.</p>
+
+<p>As an example, consider <code>compile-pass/try.rs</code>, which contains the comment:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#000">//</span> <span style="color:#000">FIXME</span>: <span style="color:#3f6e75">Make</span> <span style="color:#000">me</span> <span style="color:#000">compile</span>. <span style="color:#000">Diff</span> <span style="color:#000">budget</span>: <span style="color:#1c01ce">12</span> <span style="color:#000">line</span> <span style="color:#000">additions</span> <span style="color:#000">and</span> <span style="color:#1c01ce">2</span> <span style="color:#000">characters</span>.</code></pre></div>
+<p>This means that you can <em>add</em> at most 12 lines (including new lines) to the file
+as well as <em>change</em> (add/remove/modify) at most 2 characters. Use <code>git diff</code> to
+display line changes and <code>git diff --word-diff-regex=.</code> to display character
+changes.</p>
+
+<p>As another example, consider the comment in <code>compile-pass/privacy.rs</code>:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#000">//</span> <span style="color:#000">FIXME</span>: <span style="color:#3f6e75">Make</span> <span style="color:#000">me</span> <span style="color:#000">compile</span><span style="color:#000">!</span> <span style="color:#000">Diff</span> <span style="color:#000">budget</span>: <span style="color:#1c01ce">1</span> <span style="color:#000">line</span>.</code></pre></div>
+<p>This means you can change (add/remove/modify) at most one line. Note that new
+lines count towards your line budget.</p>
+
+<h4 id="the-rules">The Rules</h4>
+
+<p>All of your changes should preserve the intended functionality of the program in
+question. For instance, if the body of some function must be modified so that it
+compiles, it is not a valid solution to fill the body with <code>unimplemented!()</code>.
+When in doubt, use your best judgement or ask during lab, office hours, or on
+Piazza.</p>
+
+<p>Under no circumstances should you:</p>
+
+<ul>
+<li>Modify any <code>assert!</code>s.</li>
+<li>Modify any statement, expression, block, or item marked with “do not
+modify”.</li>
+<li>Violate comments in the source code about acceptable changes.</li>
+<li>Change the name of any file or move files between directories.</li>
+<li>Add any file to the <code>ferris-wheel</code> directory.</li>
+</ul>
+
+<h4 id="modify-away">Modify Away!</h4>
+
+<p>Modify each of the 25 programs in the <code>ferris-wheel/</code> subdirectories so that
+they compile, fail to compile, or pass tests. When you have correctly modified
+all of the files, <code>test.sh</code> will report <code>25 passes, 0 failures</code>.</p>
+
+<div class="alert alert-dismissible alert-success">
+   <p style="font-size: 16px;">
+   <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+   <span style="font-weight: bold;">Hint:</span> A file’s name may contain clues towards a solution!</p>
+</div>
+
+
+
+<div class="panel panel-question">
+  <div class="panel-heading">
+     <div class="badge pull-right">
+        <code>
+           *
+        </code>
+     </div>
+    <h3 class="panel-title">
+       <span class="glyphicon glyphicon-question-sign" aria-hidden="true" style="padding-right: 5px"></span>
+       What was wrong? How did you fix it? Why did that work?
+    </h3>
+  </div>
+  <div class="panel-body">
+     <p></p><p>For every program you modify, explain what was wrong with the original
+  program. Then, explain what changes you made to fix the program and why your
+  changes fix the program. Record your explanations in the file with the same
+  name as the program in the <code>questions/</code> directory. Pithy explanations are
+  appreciated.</p>
+<p></p>
+  </div>
+</div>
+
+
+<hr>
+
+<h3 id="phase-2-oxidation">Phase 2: Oxidation</h3>
+
+<p>In this phase, you will write two libraries, one command-line utility, and
+review one library. You will be working in the <code>stack-vec</code>, <code>volatile</code>,
+<code>ttywrite</code>, and <code>xmodem</code> skeleton subdirectories. Subdirectories may contain a
+<code>questions</code> directory in which you should record your answers to questions
+corresponding to the respective subphase.</p>
+
+<p>All projects are being managed with Cargo. You will find the following <code>cargo</code>
+commands useful:</p>
+
+<ul>
+<li><code>cargo build</code> - build an application or library</li>
+<li><code>cargo test</code> - test an application or library</li>
+<li><code>cargo run</code> - run an application</li>
+<li><code>cargo run -- $flags</code> - run an application and pass arbitrary flags to it</li>
+</ul>
+
+<p>For more information on using Cargo and how Cargo works, see the <a href="https://doc.rust-lang.org/cargo/index.html">Cargo Book</a>.</p>
+
+<hr>
+
+<h4 id="subphase-a-stackvec-allocation-free-vectors">Subphase A: <code>StackVec</code> - allocation-free vectors</h4>
+
+<p>One important facility that operating systems provide is memory allocation. When
+a C, Rust, Java, Python, or just about <em>any</em> application calls <code>malloc()</code> and
+<code>malloc()</code> has run out of memory from the operating system, a system call is
+eventually made to request additional memory. The operating system determines if
+there is memory available, and if so, fulfills the request for memory.</p>
+
+
+<div class="alert alert-dismissible alert-info">
+   <p style="font-size: 16px; font-weight: bold;">
+      
+         <span class="glyphicon glyphicon-info-sign" aria-hidden="true" style="margin-right: 3px"></span>
+      
+      Memory allocation is a complicated story.
+   </p>
+   <p></p><p>In practice, modern operating systems like Linux have a complicated
+  relationship with memory allocation. For instance, as an optimization, most
+  requests for memory allocation are only “virtually” handled: no physical
+  memory is actually allocated until the application tries to use the newly
+  allocated memory. Nonetheless, most operating systems aim to provide the
+  <em>illusion</em> that they are allocating memory in the simplistic manner we’ve
+  described. Operating systems are master liars (🍰).</p>
+<p></p>
+</div>
+
+
+
+<p>Heap-allocated structures like <code>Vec</code>, <code>String</code>, and <code>Box</code> internally call
+<code>malloc()</code> to allocate memory as necessary. This means that these structures
+require operating system support to function. In particular, they require the
+operating system to support memory allocation. We haven’t yet started writing
+our operating system, so clearly there’s no memory allocation support for our
+tiny bare-metal programs to make use of. As such, we can’t use heap-allocated
+structures like <code>Vec</code> until our operating system is further along.</p>
+
+<p>This is a real shame because <code>Vec</code> is a nice abstraction! It allows us to think
+about <code>push</code>ing and <code>pop</code>ing elements without having to keep track of memory
+ourselves. <em>How we can get the benefits of the <code>Vec</code> abstraction without
+supporting memory allocation?</em></p>
+
+<p>One common technique is to <em>pre-allocate</em> memory and then hand that memory to a
+structure to abstract away. Some ways to pre-allocate memory include using
+<code>static</code> declarations to set apart memory in the static section of a binary or
+through stack allocations from local variable declarations. In any case, the
+allocations is of a fixed, predetermined size.</p>
+
+<p>In this subphase, you will implement the <code>StackVec</code> structure, a structure that
+exposes a <code>Vec</code>-like API when given pre-allocated memory. You will use the
+<code>StackVec</code> type later in phase 3 when implementing a shell for your Raspberry
+Pi. You will work in the <code>stack-vec</code> skeleton subdirectory. The subdirectory
+contains the following files:</p>
+
+<ul>
+<li><code>Cargo.toml</code> - configuration file for Cargo</li>
+<li><code>src/lib.rs</code> - where you will write your code</li>
+<li><code>src/tests.rs</code> - tests that will run when <code>cargo test</code> is called</li>
+<li><code>questions/</code> - where you should record answers to questions</li>
+</ul>
+
+<h5 id="the-stackvec-interface">The <code>StackVec</code> Interface</h5>
+
+<p>A <code>StackVec&lt;T&gt;</code> is created by calling <code>StackVec::new()</code>, passing in a mutable
+slice to values of any type <code>T</code>. The <code>StackVec&lt;T&gt;</code> type implements many of the
+methods that <a href="https://doc.rust-lang.org/nightly/std/vec/struct.Vec.html">Vec</a> implements and is used in much the same way. Here’s an
+example of a <code>StackVec&lt;u8&gt;</code> being used:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#a90d91">let</span> <span style="color:#a90d91">mut</span> <span style="color:#000">storage</span> <span style="color:#000">=</span> [<span style="color:#1c01ce">0</span><span style="color:#a90d91">u8</span>; <span style="color:#1c01ce">1024</span>];
+<span style="color:#a90d91">let</span> <span style="color:#a90d91">mut</span> <span style="color:#000">vec</span> <span style="color:#000">=</span> <span style="color:#000">StackVec</span>::<span style="color:#000">new</span>(<span style="color:#000">&amp;</span><span style="color:#a90d91">mut</span> <span style="color:#000">storage</span>);
+
+<span style="color:#a90d91">for</span> <span style="color:#000">i</span> <span style="color:#a90d91">in</span> <span style="color:#1c01ce">0</span>..<span style="color:#1c01ce">10</span> {
+    <span style="color:#000">vec</span>.<span style="color:#000">push</span>(<span style="color:#000">i</span> <span style="color:#000">*</span> <span style="color:#000">i</span>).<span style="color:#000">expect</span>(<span style="color:#c41a16">"can push 1024 times"</span>);
+}
+
+<span style="color:#a90d91">for</span> (<span style="color:#000">i</span>, <span style="color:#000">v</span>) <span style="color:#a90d91">in</span> <span style="color:#000">vec</span>.<span style="color:#000">iter</span>().<span style="color:#000">enumerate</span>() {
+    <span style="color:#000">assert_eq</span><span style="color:#000">!</span>(<span style="color:#000">*</span><span style="color:#000">v</span>, (<span style="color:#000">i</span> <span style="color:#000">*</span> <span style="color:#000">i</span>) <span style="color:#a90d91">as</span> <span style="color:#a90d91">u8</span>);
+}
+
+<span style="color:#a90d91">let</span> <span style="color:#000">last_element</span> <span style="color:#000">=</span> <span style="color:#000">vec</span>.<span style="color:#000">pop</span>().<span style="color:#000">expect</span>(<span style="color:#c41a16">"has elements"</span>);
+<span style="color:#000">assert_eq</span><span style="color:#000">!</span>(<span style="color:#000">last_element</span>, <span style="color:#1c01ce">9</span> <span style="color:#000">*</span> <span style="color:#1c01ce">9</span>);</code></pre></div>
+<p>We’ve declared the <code>StackVec</code> structure for you already:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#a90d91">pub</span> <span style="color:#a90d91">struct</span> <span style="color:#3f6e75">StackVec</span><span style="color:#000">&lt;</span><span style="color:#836c28">'a</span>, <span style="color:#000">T</span>: <span style="color:#836c28">'a</span><span style="color:#000">&gt;</span> {
+    <span style="color:#000">storage</span>: <span style="color:#a90d91">&amp;</span><span style="color:#836c28">'a</span> <span style="color:#a90d91">mut</span> [<span style="color:#000">T</span>],
+    <span style="color:#000">len</span>: <span style="color:#a90d91">usize</span>
+}</code></pre></div>
+<h5 id="understanding-stackvec">Understanding <code>StackVec</code></h5>
+
+<p>The following questions test your understanding about the <code>StackVec</code> interface:</p>
+
+<div class="panel panel-question">
+  <div class="panel-heading">
+     <div class="badge pull-right">
+        <code>
+           push-fails
+        </code>
+     </div>
+    <h3 class="panel-title">
+       <span class="glyphicon glyphicon-question-sign" aria-hidden="true" style="padding-right: 5px"></span>
+       Why does <code>push</code> return a <code>Result</code>?
+    </h3>
+  </div>
+  <div class="panel-body">
+     <p></p><p>The <code>push</code> method from <code>Vec</code> in the standard libary has no return value, but
+  the <code>push</code> method from our <code>StackVec</code> does: it returns a <code>Result</code> indicating
+  that it can fail. Why can <code>StackVec::push()</code> fail where <code>Vec::push()</code> does
+  not?</p>
+<p></p>
+  </div>
+</div>
+
+
+<div class="panel panel-question">
+  <div class="panel-heading">
+     <div class="badge pull-right">
+        <code>
+           lifetime
+        </code>
+     </div>
+    <h3 class="panel-title">
+       <span class="glyphicon glyphicon-question-sign" aria-hidden="true" style="padding-right: 5px"></span>
+       Why is the <code>'a</code> bound on <code>T</code> required?
+    </h3>
+  </div>
+  <div class="panel-body">
+     <p></p><p>The compiler would reject the following <code>StackVec</code> declaration:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#a90d91">struct</span> <span style="color:#3f6e75">StackVec</span><span style="color:#000">&lt;</span><span style="color:#836c28">'a</span>, <span style="color:#000">T</span><span style="color:#000">&gt;</span> { <span style="color:#000">buffer</span>: <span style="color:#a90d91">&amp;</span><span style="color:#836c28">'a</span> <span style="color:#a90d91">mut</span> [<span style="color:#000">T</span>], <span style="color:#000">len</span>: <span style="color:#a90d91">usize</span> }</code></pre></div>
+<p>If we add an <code>'a</code> bound to <code>T</code>, however, the compiler is satisifed:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#a90d91">struct</span> <span style="color:#3f6e75">StackVec</span><span style="color:#000">&lt;</span><span style="color:#836c28">'a</span>, <span style="color:#000">T</span>: <span style="color:#836c28">'a</span><span style="color:#000">&gt;</span> { <span style="color:#000">buffer</span>: <span style="color:#a90d91">&amp;</span><span style="color:#836c28">'a</span> <span style="color:#a90d91">mut</span> [<span style="color:#000">T</span>], <span style="color:#000">len</span>: <span style="color:#a90d91">usize</span> }</code></pre></div>
+<p>Why is the bound required? What could go wrong if that bound wasn’t enforced
+  by Rust?</p>
+<p></p>
+  </div>
+</div>
+
+
+<div class="panel panel-question">
+  <div class="panel-heading">
+     <div class="badge pull-right">
+        <code>
+           clone-for-pop
+        </code>
+     </div>
+    <h3 class="panel-title">
+       <span class="glyphicon glyphicon-question-sign" aria-hidden="true" style="padding-right: 5px"></span>
+       Why does <code>StackVec</code> require <code>T: Clone</code> to <code>pop()</code>?
+    </h3>
+  </div>
+  <div class="panel-body">
+     <p></p><p>The <code>pop</code> method from <code>Vec&lt;T&gt;</code> in the standard libary is implemented for all
+  <code>T</code>, but the <code>pop</code> method from our <code>StackVec</code> is only implemented when <code>T</code>
+  implements the <code>Clone</code> trait. Why might that be? What goes wrong when the
+  bound is removed?</p>
+<p></p>
+  </div>
+</div>
+
+
+<h5 id="implementing-stackvec">Implementing <code>StackVec</code></h5>
+
+<p>Implement all of the <code>unimplemented!()</code> <code>StackVec</code> methods in
+<code>stack-vec/src/lib.rs</code>. Each method is documented in the source code. We have
+also provided tests in <code>src/tests.rs</code> that help ensure that your implementations
+are correct. You can run these tests with <code>cargo test</code>. You’ll also need to
+implement the <code>Deref</code>, <code>DerefMut</code>, and <code>IntoIterator</code> traits for <code>StackVec</code> as
+well as the <code>IntoIterator</code> trait for <code>&amp;StackVec</code> for all of the <code>cargo test</code>
+tests to pass. Once you feel confident that you implementation is correct and
+have answered this subphase’s questions, proceed to the next subphase.</p>
+
+<div class="panel panel-question">
+  <div class="panel-heading">
+     <div class="badge pull-right">
+        <code>
+           deref-in-tests
+        </code>
+     </div>
+    <h3 class="panel-title">
+       <span class="glyphicon glyphicon-question-sign" aria-hidden="true" style="padding-right: 5px"></span>
+       Which tests make use of the <code>Deref</code> implementations?
+    </h3>
+  </div>
+  <div class="panel-body">
+     <p></p><p>Read through the tests we have provided in <code>src/tests.rs</code>. Which tests would
+  fail to compile if the <code>Deref</code> implementation did not exist? What about the
+  <code>DerefMut</code> implementation? Why?</p>
+<p></p>
+  </div>
+</div>
+
+
+
+<div class="alert alert-dismissible alert-warning">
+   <p style="font-size: 16px; font-weight: bold;">
+      
+         <span class="glyphicon glyphicon-warning-sign" aria-hidden="true" style="margin-right: 3px"></span>
+      
+      Our unit tests are incomplete!
+   </p>
+   <p></p><p>Our unit tests provide a <em>baseline</em> truth, but they are not complete! We will
+  run additional tests when we grade your assignment. You may wish to find the
+  gaps in our tests and add additional tests of your own to fill them.</p>
+<p></p>
+</div>
+
+
+
+<div class="alert alert-dismissible alert-success">
+   <p style="font-size: 16px;">
+   <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+   <span style="font-weight: bold;">Hint:</span> You may find your solutions to the <code>lifetimes</code> challanges from phase 0 helpful.</p>
+</div>
+
+
+
+<hr>
+
+<h4 id="subphase-b-volatile-wrappers-that-ensure-volatile-memory-accesses">Subphase B: <code>volatile</code> - wrappers that ensure volatile memory accesses</h4>
+
+<p>In this subphase, you will learn about volatile memory accesses, read the source
+code in the <code>volatile</code> skeleton subdirectory, and answer questions related to
+the source code. You won’t be writing any code in this subphase.</p>
+
+<p>Like operating systems, compilers are masters at making things <em>appear</em> as if
+they’re doing what you think they’re doing when in reality, they’re really doing
+something entirely different for the sake of optimization. One such optimization
+is dead-access elimination: compilers remove memory accesses (reads and writes)
+when they can prove doing so has no observable effect on the program’s
+execution. For instance, consider the following program:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#a90d91">fn</span> <span style="color:#000">f</span>() {
+    <span style="color:#a90d91">let</span> <span style="color:#a90d91">mut</span> <span style="color:#000">x</span> <span style="color:#000">=</span> <span style="color:#1c01ce">0</span>;
+    <span style="color:#a90d91">let</span> <span style="color:#000">y</span> <span style="color:#000">=</span> <span style="color:#000">&amp;</span><span style="color:#a90d91">mut</span> <span style="color:#000">x</span>;
+    <span style="color:#000">*</span><span style="color:#000">y</span> <span style="color:#000">=</span> <span style="color:#1c01ce">10</span>;
+}</code></pre></div>
+<p>The compiler can completely eliminate the write to <code>*y</code> by reasoning that <code>*y</code>
+is never read after it’s written. The compiler concludes that as a result, the
+write cannot possibly effect the program, and eliminates it in the compiled
+binary. For the same reason, it can then proceed to eliminate the declaration
+for <code>y</code>, the declaration for <code>x</code>, and calls to <code>f()</code> entirely.</p>
+
+<p>These kinds of optimizations are almost exclusively beneficial: they speed up
+our programs without affecting their outcome. But sometimes these optimizations
+can have unintended consequences. Say, for example, that <code>y</code> was pointing to a
+write-only memory-mapped register. Then, writes to <code>*y</code> <em>will</em> have observable
+effects <em>without</em> having to read <code>*y</code> thereafter. If the compiler is not aware
+of this, it will optimize away these writes, and our program will not function
+correctly.</p>
+
+<p>How can we force the compiler to keep around reads and writes that appear to
+have no effects at the source code level? This is where <code>volatile</code> memory
+accesses come in: the compiler promises <em>not</em> to optimize away volatile memory
+accesses. So if we want to ensure a read or write occurs at runtime, we must
+perform a volatile memory access.</p>
+
+<h5 id="rusty-volatile">Rusty <code>volatile</code></h5>
+
+<p>In Rust, we use the <a href="https://doc.rust-lang.org/nightly/std/ptr/fn.read_volatile.html"><code>read_volatile</code></a> and <a href="https://doc.rust-lang.org/nightly/std/ptr/fn.write_volatile.html"><code>write_volatile</code></a> methods to perform
+volatile reads and writes to a raw pointer.</p>
+
+
+<div class="alert alert-dismissible alert-info">
+   <p style="font-size: 16px; font-weight: bold;">
+      
+         <span class="glyphicon glyphicon-info-sign" aria-hidden="true" style="margin-right: 3px"></span>
+      
+      What’s a <em>raw</em> pointer?
+   </p>
+   <p></p><p>By now you’re familiar with references (<code>&amp;T</code> and <code>&amp;mut T</code>). A raw pointer in
+  Rust (<code>*const T</code> and <code>*mut T</code>) is a “reference” that isn’t tracked with
+  lifetimes by Rust’s borrow checker. Because of this, read or writes to these
+  pointers may be invalid, just as in C. Rust considers them <code>unsafe</code>, and code
+  that reads or writes them must be annotated with <code>unsafe</code> to indicate this.
+  You can read more about <a href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">raw pointers in the rustdocs</a>.</p>
+<p></p>
+</div>
+
+
+
+<p>Calling <a href="https://doc.rust-lang.org/nightly/std/ptr/fn.read_volatile.html"><code>read_volatile</code></a> and <a href="https://doc.rust-lang.org/nightly/std/ptr/fn.write_volatile.html"><code>write_volatile</code></a> every time we want to perform a
+volatile read or write is error prone and frustrating. Thankfully Rust provides
+us the tools to make this easier and safer. Ideally we can simply declare a
+pointer as volatile (as in C) and ensure that every read or write thereafter is
+volatile. Even better, we should be able declare a pointer as read-only,
+write-only (unlike in C), or read/write and ensure only the appropriate memory
+accesses can be made.</p>
+
+<h5 id="introducing-volatile-readvolatile-writevolatile-and-uniquevolatile">Introducing <code>Volatile</code>, <code>ReadVolatile</code>, <code>WriteVolatile</code>, and <code>UniqueVolatile</code></h5>
+
+<p>The <code>volatile</code> crate in the <code>volatile/</code> skeleton subdirectory implements these
+four types that allow us to do just this. Read the documentation for these types
+now by running <code>cargo doc --open</code> inside of the <code>volatile/</code> directory.</p>
+
+<div class="panel panel-question">
+  <div class="panel-heading">
+     <div class="badge pull-right">
+        <code>
+           unique-volatile
+        </code>
+     </div>
+    <h3 class="panel-title">
+       <span class="glyphicon glyphicon-question-sign" aria-hidden="true" style="padding-right: 5px"></span>
+       Why does <code>UniqueVolatile</code> exist?
+    </h3>
+  </div>
+  <div class="panel-body">
+     <p></p><p>Both <code>Volatile</code> and <code>UniqueVolatile</code> allow read/write volatile accesses to an
+  underlying pointer. According to the documentation, what is the difference
+  between these two types?</p>
+<p></p>
+  </div>
+</div>
+
+
+<p>Now open the source code in <code>src/lib.rs</code>. Read through the source code to the
+best of your abilities. When you’re ready, answer the following questions. Once
+you have answered these questions, you’re ready to move on to the next subphase.</p>
+
+<div class="panel panel-question">
+  <div class="panel-heading">
+     <div class="badge pull-right">
+        <code>
+           enforcing
+        </code>
+     </div>
+    <h3 class="panel-title">
+       <span class="glyphicon glyphicon-question-sign" aria-hidden="true" style="padding-right: 5px"></span>
+       How are read-only and write-only accesses enforced?
+    </h3>
+  </div>
+  <div class="panel-body">
+     <p></p><p>The <code>ReadVolatile</code> and <code>WriteVolatile</code> types make it impossible to write and
+  read, respectively, the underlying pointer. How do they accomplish this?</p>
+<p></p>
+  </div>
+</div>
+
+
+<div class="panel panel-question">
+  <div class="panel-heading">
+     <div class="badge pull-right">
+        <code>
+           traits
+        </code>
+     </div>
+    <h3 class="panel-title">
+       <span class="glyphicon glyphicon-question-sign" aria-hidden="true" style="padding-right: 5px"></span>
+       What is the benefit of using traits instead of inherent methods?
+    </h3>
+  </div>
+  <div class="panel-body">
+     <p></p><p>You’ll notice that each type only implements one inherent method: <code>new</code>. The
+  rest of a type’s methods come from implementations of the <code>Readable</code>,
+  <code>Writeable</code>, and <code>ReadableWriteable</code> traits. What is the benefit to doing
+  this? Describe at least two benefits to this approach.</p>
+<p></p>
+  </div>
+</div>
+
+
+<div class="panel panel-question">
+  <div class="panel-heading">
+     <div class="badge pull-right">
+        <code>
+           safety
+        </code>
+     </div>
+    <h3 class="panel-title">
+       <span class="glyphicon glyphicon-question-sign" aria-hidden="true" style="padding-right: 5px"></span>
+       Why are <code>read</code> and <code>write</code> safe while <code>new</code> is unsafe?
+    </h3>
+  </div>
+  <div class="panel-body">
+     <p></p><p>What must be true of the inputs to <code>new</code> for <code>read</code> and <code>write</code> to be safe?
+  Would it be safe to instead mark <code>new</code> as safe and <code>read</code>/<code>write</code> as <code>unsafe</code>?</p>
+
+<p></p><div class="alert alert-dismissible alert-success">
+   <p style="font-size: 16px;">
+   <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+   <span style="font-weight: bold;">Hint:</span> You may find the documentation for these methods helpful.</p>
+</div><p></p>
+<p></p>
+  </div>
+</div>
+
+
+<div class="panel panel-question">
+  <div class="panel-heading">
+     <div class="badge pull-right">
+        <code>
+           pub-constructor
+        </code>
+     </div>
+    <h3 class="panel-title">
+       <span class="glyphicon glyphicon-question-sign" aria-hidden="true" style="padding-right: 5px"></span>
+       Why force construction through <code>new</code>?
+    </h3>
+  </div>
+  <div class="panel-body">
+     <p></p><p>If the <code>Volatile</code> type had been declared as follows instead:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#a90d91">struct</span> <span style="color:#3f6e75">Volatile</span><span style="color:#000">&lt;</span><span style="color:#000">T</span><span style="color:#000">&gt;</span>(<span style="color:#a90d91">pub</span> <span style="color:#000">*</span><span style="color:#a90d91">mut</span> <span style="color:#000">T</span>);</code></pre></div>
+<p>A value of type <code>Volatile</code> could be constructed with <code>Volatile(ptr)</code> instead
+  of having to call <code>new</code>. What benefit is there to ensuring that all values are
+  constructed through the <code>new</code> static method?</p>
+
+<p></p><div class="alert alert-dismissible alert-success">
+   <p style="font-size: 16px;">
+   <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+   <span style="font-weight: bold;">Hint:</span> Consider the safety implications.</p>
+</div><p></p>
+<p></p>
+  </div>
+</div>
+
+
+<div class="panel panel-question">
+  <div class="panel-heading">
+     <div class="badge pull-right">
+        <code>
+           macros
+        </code>
+     </div>
+    <h3 class="panel-title">
+       <span class="glyphicon glyphicon-question-sign" aria-hidden="true" style="padding-right: 5px"></span>
+       What do the macros do?
+    </h3>
+  </div>
+  <div class="panel-body">
+     <p></p><p>What do the <code>readable!</code>, <code>writeable!</code>, and <code>readable_writeable!</code> macros do?</p>
+<p></p>
+  </div>
+</div>
+
+
+<hr>
+
+<h4 id="subphase-c-xmodem-xmodem-protocol-implementation">Subphase C: <code>xmodem</code> - XMODEM protocol implementation</h4>
+
+<p>In this subphase, you will implement the XMODEM file transfer protocol in the
+<code>xmodem</code> library in the <code>xmodem/</code> skeleton subdirectory. You will primarily be
+working in <code>xmodem/src/lib.rs</code>.</p>
+
+<p>XMODEM is a simple file transfer protocol originally developed in 1977. It
+features packet checksums, cancellation, and automatic retries. It is widely
+implemented and used for transfers through serial interfaces. Its best feature,
+however, is its simplicity. For more about its history, see the <a href="https://en.wikipedia.org/wiki/XMODEM">XMODEM
+Wikipedia article</a>.</p>
+
+<p>We will use the XMODEM protocol to transfer files to the Raspberry Pi. While we
+could use existing implementations of the XMODEM protocol to <em>send</em> data to the
+Pi, we will still need to write our own receiver. So, while we’re at it, we’ll
+be implementing XMODEM transmission as well.</p>
+
+<h5 id="the-protocol">The Protocol</h5>
+
+<p>The XMODEM protocol is described in detail in the <a href="https://web.stanford.edu/class/cs140e/assignments/1-shell/data/XMODEM.txt">Understanding The X-Modem
+File Transfer Protocol</a> txt file. We describe it again here, for posterity.</p>
+
+
+<div class="alert alert-dismissible alert-warning">
+   <p style="font-size: 16px; font-weight: bold;">
+      
+         <span class="glyphicon glyphicon-warning-sign" aria-hidden="true" style="margin-right: 3px"></span>
+      
+      Do not base your implementation off of Wikipedia’s explanation!
+   </p>
+   <p></p><p>While Wikipedia’s explanation is helpful at a high level, many of the details
+  presented there are different from the protocol we’ll be implementing here. As
+  such, do not use the article as a reference for this subphase.</p>
+<p></p>
+</div>
+
+
+
+<p>XMODEM is a binary protocol: bytes are sent and received in the raw. It is also
+“half duplex”: at any point in time, either the sender or receiver is sending
+data, but never both. Finally it is packet-based: data is separated into 128
+byte chunks known as packets. The protocol dictates which bytes are sent when,
+what they mean, and how they’re interpreted.</p>
+
+<p>First, we define a few constants:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#a90d91">const</span> <span style="color:#000">SOH</span>: <span style="color:#a90d91">u8</span> <span style="color:#000">=</span> <span style="color:#1c01ce">0x01</span>;
+<span style="color:#a90d91">const</span> <span style="color:#000">EOT</span>: <span style="color:#a90d91">u8</span> <span style="color:#000">=</span> <span style="color:#1c01ce">0x04</span>;
+<span style="color:#a90d91">const</span> <span style="color:#000">ACK</span>: <span style="color:#a90d91">u8</span> <span style="color:#000">=</span> <span style="color:#1c01ce">0x06</span>;
+<span style="color:#a90d91">const</span> <span style="color:#000">NAK</span>: <span style="color:#a90d91">u8</span> <span style="color:#000">=</span> <span style="color:#1c01ce">0x15</span>;
+<span style="color:#a90d91">const</span> <span style="color:#000">CAN</span>: <span style="color:#a90d91">u8</span> <span style="color:#000">=</span> <span style="color:#1c01ce">0x18</span>;</code></pre></div>
+<p>To start the file transfer, the receiver sends a <code>NAK</code> byte while the sender
+waits for a <code>NAK</code> byte. Once the sender has received the <code>NAK</code> byte, packet
+transmission begins. The receiver only sends a <code>NAK</code> byte to begin the file
+transfer, not once for every packet.</p>
+
+<p>Once file transfer has begun, each packet’s transmission and reception is
+identical. Packets are numbered in sequential order starting at <code>1</code> and wrap
+around to <code>0</code> after <code>255</code>.</p>
+
+<figure style="
+   float: right; 
+    padding: 10px; 
+">
+   <img src="./1-shell_files/xmodem-diagram.svg" alt="XMODEM protocol diagram." width="250px" style="
+         
+      ">
+   
+      <figcaption style="text-align: center;">
+         <small>XMODEM protocol diagram.</small>
+      </figcaption>
+   
+</figure>
+
+
+<p>To send a packet, the sender:</p>
+
+<ol>
+<li>Sends an <code>SOH</code> byte.</li>
+<li>Sends the packet number.</li>
+<li>Sends the 1s complement of the packet number (<code>255 - $packet_number</code>).</li>
+<li>Sends the packet itself.</li>
+<li>Sends the packet checksum.
+
+<ul>
+<li>The checksum is the sum of all of the bytes in the packet mod 256.</li>
+</ul></li>
+<li>Reads a byte from the receiver.
+
+<ul>
+<li>If the byte is <code>NAK</code>, transmission for the same packet is retried up to 10 times.</li>
+<li>If the byte is <code>ACK</code>, the next packet is sent.</li>
+</ul></li>
+</ol>
+
+<p>The receive a packet, the receiver performs the inverse:</p>
+
+<ol>
+<li>Waits for an <code>SOH</code> or <code>EOT</code> byte from the sender.
+
+<ul>
+<li>If a different byte is received, the receiver cancels the transfer.</li>
+<li>If an <code>EOT</code> byte is received, the receiver performs end of transmission.</li>
+</ul></li>
+<li>Reads the next byte and compares it to the current packet number.
+
+<ul>
+<li>If the wrong packet number is received, the receiver cancels the transfer.</li>
+</ul></li>
+<li>Reads the next byte and compares it to the 1s complement of the packet number.
+
+<ul>
+<li>If the wrong number is received, the receiver cancels the transfer.</li>
+</ul></li>
+<li>Reads a packet (128 bytes) from the sender.</li>
+<li>Computes the checksum for the packet.
+
+<ul>
+<li>The checksum is the sum of all of the bytes in the packet mod 256.</li>
+</ul></li>
+<li>Reads the next byte and compares it to the computed checksum.
+
+<ul>
+<li>If the checksum differs, sends a <code>NAK</code> byte and retries reception for the
+same packet.</li>
+<li>If the checksum is the same, sends an <code>ACK</code> byte and receives the next
+packet.</li>
+</ul></li>
+</ol>
+
+<p>To cancel a transfer, a <code>CAN</code> byte is sent by either the receiver or sender.
+When either side receives a <code>CAN</code> byte, it errors out, aborting the connection.</p>
+
+<p>To end the transmission, the sender:</p>
+
+<ol>
+<li>Sends an <code>EOT</code> byte.</li>
+<li>Waits for a <code>NAK</code> byte. If a different byte is received, the sender errors
+ out.</li>
+<li>Sends a second <code>EOT</code> byte.</li>
+<li>Waits for an <code>ACK</code> byte. If a different byte is received, the sender errors
+ out.</li>
+</ol>
+
+<p>To end the transmission, the receiver performs the following after receiving the
+first <code>EOT</code>:</p>
+
+<ol>
+<li>Sends a <code>NAK</code> byte.</li>
+<li>Waits for a second <code>EOT</code> byte. If a different byte is received, the
+ receiver cancels the transfer.</li>
+<li>Sends an <code>ACK</code> byte.</li>
+</ol>
+
+<h5 id="implementing-xmodem">Implementing XMODEM</h5>
+
+<p>We have provided an unfinished implementation of the XMODEM protocol in the
+<code>xmodem</code> skeleton subdirectory. Your task is to complete the implementation by
+writing the <code>expect_byte</code>, <code>expect_byte_or_cancel</code>, <code>read_packet</code>, and
+<code>write_packet</code> methods in <code>src/lib.rs</code>. Your implementations should make use of
+the internal state of the <code>Xmodem</code> type: <code>packet</code> and <code>started</code>. We recommend
+reading over the existing code before starting.</p>
+
+<p>You should begin by implementing the <code>expect_byte</code> and <code>expect_byte_or_cancel</code>
+methods. You should then make use of all four of the helper methods (including
+<code>read_byte</code> and <code>write_byte</code>) to implement <code>read_packet</code> and <code>write_packet</code>. To
+see how these methods are used, read the <code>transmit</code> and <code>receive</code>
+implementations which transmit or receive a complete data stream using XMODEM
+via these methods. Be mindful of the specifications in the doc-comments. You can
+test your implementation using <code>cargo test</code>. Once you are confident that your
+implementation is correct, proceed to the next subphase.</p>
+
+
+<div class="alert alert-dismissible alert-danger">
+   <p style="font-size: 16px; font-weight: bold;">
+      
+         <span class="glyphicon glyphicon-ban-circle" aria-hidden="true" style="margin-right: 3px"></span>
+      
+      Do not use any additional items from <code>std</code>.
+   </p>
+   <p></p><p>Your implementation should only use items from <code>std::io</code>. It should not use
+  other items from <code>std</code> or any other libraries.</p>
+<p></p>
+</div>
+
+
+
+<div class="alert alert-dismissible alert-success">
+   <p style="font-size: 16px;">
+   <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+   <span style="font-weight: bold;">Hint:</span> Our reference implementations for <code>{read,write}_packet</code> are roughly 33 lines of code each.</p>
+</div>
+
+
+
+<div class="alert alert-dismissible alert-success">
+   <p style="font-size: 16px;">
+   <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+   <span style="font-weight: bold;">Hint:</span> The <a href="https://doc.rust-lang.org/nightly/std/io/trait.Read.html">io::Read</a> and <a href="https://doc.rust-lang.org/nightly/std/io/trait.Write.html">io::Write</a> rustdocs will be useful.</p>
+</div>
+
+
+
+<div class="alert alert-dismissible alert-success">
+   <p style="font-size: 16px;">
+   <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+   <span style="font-weight: bold;">Hint:</span> Use the <code>?</code> operator generously.</p>
+</div>
+
+
+
+<div class="alert alert-dismissible alert-success">
+   <p style="font-size: 16px;">
+   <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+   <span style="font-weight: bold;">Hint:</span> The test source code can be a helpful guide.</p>
+</div>
+
+
+
+<hr>
+
+<h4 id="subphase-d-ttywrite-a-utility-to-write-to-a-serial-device">Subphase D: <code>ttywrite</code> - a utility to write to a serial device</h4>
+
+<p>In this subphase, you will write a command line utility, <code>ttywrite</code>, that will
+allow you to send data to your Raspberry Pi in the raw or via the XMODEM
+protocol. You will use your <code>xmodem</code> library from the previous subphase in your
+implementation. You will write your code in <code>ttywrite/src/main.rs</code>. To test your
+<code>ttywrite</code> implementation, use the provided <code>test.sh</code> script. You will need to
+install the <code>socat</code> utility to use this script.</p>
+
+
+<div class="alert alert-dismissible alert-info">
+   <p style="font-size: 16px; font-weight: bold;">
+      
+         <span class="glyphicon glyphicon-info-sign" aria-hidden="true" style="margin-right: 3px"></span>
+      
+      What is a serial device?
+   </p>
+   <p></p><p>A serial device is any device that accepts communication one bit at a time.
+  This is known as <em>serial communication</em>. In contrast, in <em>parallel
+  communication</em> multiple bits are being transferred at any point in time in
+  parallel. We will be communicating with our Raspberry Pi via its UART device,
+  a serial communication device.</p>
+<p></p>
+</div>
+
+
+
+
+<div class="alert alert-dismissible alert-info">
+   <p style="font-size: 16px; font-weight: bold;">
+      
+         <span class="glyphicon glyphicon-info-sign" aria-hidden="true" style="margin-right: 3px"></span>
+      
+      What is a <em>TTY</em>?
+   </p>
+   <p></p><p>A <em>TTY</em> is a “teletypewriter”. It is a vestigial term that was adopted in
+  computing to describe computer terminals. The term later become more general,
+  coming to describe any device intended to be communicated with over serial.
+  For this reason, your computer calls the device mapping to your Raspberry Pi a
+  TTY.</p>
+<p></p>
+</div>
+
+
+
+<h5 id="command-line-interface">Command-Line Interface</h5>
+
+<p>The skeleton code we have provided for <code>ttywrite</code> already parses and validates
+command-line arguments. To do so, it uses the <a href="https://github.com/TeXitoi/structopt">structopt</a> crate from <a href="https://crates.io/">crates.io</a>
+which itself uses <a href="https://clap.rs/">clap</a>. You’ll notice that we list it as a dependency in the
+<code>Cargo.toml</code> file. <a href="https://github.com/TeXitoi/structopt">structopt</a> works through code generation. We simply annotate
+a structure and its fields with a declaration of our command-line arguments and
+<a href="https://github.com/TeXitoi/structopt">structopt</a> generates the code to actually parse the command-line flags.</p>
+
+<p>To see the interface that <a href="https://github.com/TeXitoi/structopt">structopt</a> generates, call the application with
+<code>--help</code>. Remember that you can pass arbitrary flags when using <code>cargo run</code>:
+<code>cargo run -- --help</code>. Take a look at the interface now. Then, take a look at
+the <code>Opt</code> structure in <code>main.rs</code> and compare the interface with its definition.</p>
+
+<div class="panel panel-question">
+  <div class="panel-heading">
+     <div class="badge pull-right">
+        <code>
+           invalid
+        </code>
+     </div>
+    <h3 class="panel-title">
+       <span class="glyphicon glyphicon-question-sign" aria-hidden="true" style="padding-right: 5px"></span>
+       What happens when a flag’s input is invalid?
+    </h3>
+  </div>
+  <div class="panel-body">
+     <p></p><p>Try passing in some invalid values for flags. For instance, it should not be
+  possible to set <code>-f</code> to <code>idk</code>. How does <code>structopt</code> know to reject invalid
+  values?</p>
+<p></p>
+  </div>
+</div>
+
+
+<p>You’ll notice that there are plenty of options. All of these correspond to
+settings available on a serial device. For now it’s not important to know
+exactly what these settings do.</p>
+
+<h5 id="talking-to-a-serial-device">Talking to a Serial Device</h5>
+
+<p>In <code>main</code>, you’ll see a call to <a href="https://docs.rs/serial/0.4.0/serial/fn.open.html">serial::open</a>. This is calling the <code>open</code>
+function from the <a href="https://docs.rs/serial/0.4.0/serial/">serial</a> crate, also on <a href="https://crates.io/">crates.io</a>. This <code>open</code> function
+returns a <a href="https://docs.rs/serial-unix/0.4.0/serial_unix/struct.TTYPort.html">TTYPort</a> which allows you to read and write to the serial device (via
+its <code>io::Read</code> and <code>io::Write</code> trait implementations) as well as read and set
+settings on a serial device (via its <code>SerialDevice</code> trait implementation).</p>
+
+<h5 id="writing-the-code">Writing the Code</h5>
+
+<p>Implement the <code>ttywrite</code> utility. Your implementation should set all of the
+appropriate settings passed in via the command-line stored in the <code>opt</code> variable
+in <code>main</code>. It should read from <code>stdin</code> if no input file is passed in or from the
+input file if one is passed in. It should write the input data to the passed in
+serial device. If the <code>-r</code> flag is set, it should send the data as it is.
+Otherwise, you should use your <code>xmodem</code> implementation from the previous
+subphase to send the data using the XMODEM protocol. You should print the number
+of bytes sent on a successful transmission.</p>
+
+<p>To transmit using the XMODEM protocol, your code should use either the
+<code>Xmodem::transmit</code> or <code>Xmodem::transmit_with_progress</code> methods from the <code>xmodem</code>
+library. We recommend using <code>transmit_with_progress</code> so that your utility
+indicates progress throughput the transmission. In its simplest form, this might
+look as follows:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#a90d91">fn</span> <span style="color:#000">progress_fn</span>(<span style="color:#000">progress</span>: <span style="color:#3f6e75">Progress</span>) {
+    <span style="color:#000">println</span><span style="color:#000">!</span>(<span style="color:#c41a16">"Progress: {:?}"</span>, <span style="color:#000">progress</span>);
+}
+
+<span style="color:#000">Xmodem</span>::<span style="color:#000">transmit_with_progress</span>(<span style="color:#000">data</span>, <span style="color:#000">to</span>, <span style="color:#000">progress_fn</span>)</code></pre></div>
+<p>You can test the baseline correctness of your implementation using the <code>test.sh</code>
+script in the <code>ttywrite</code> directory. When your implementation is at least
+somewhat correct, you will see the following when the script is run:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">Opening PTYs...
+Running <span style="color:#a90d91">test</span> <span style="color:#1c01ce">1</span>/10.
+wrote <span style="color:#1c01ce">333</span> bytes to input
+...
+Running <span style="color:#a90d91">test</span> <span style="color:#1c01ce">10</span>/10.
+wrote <span style="color:#1c01ce">232</span> bytes to input
+SUCCESS</code></pre></div>
+<div class="alert alert-dismissible alert-success">
+   <p style="font-size: 16px;">
+   <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+   <span style="font-weight: bold;">Hint:</span> You can retrieve a handle to <code>stdin</code> with <a href="https://doc.rust-lang.org/nightly/std/io/fn.stdin.html">io::stdin()</a>.</p>
+</div>
+
+
+
+<div class="alert alert-dismissible alert-success">
+   <p style="font-size: 16px;">
+   <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+   <span style="font-weight: bold;">Hint:</span> You may find the <a href="https://doc.rust-lang.org/nightly/std/io/fn.copy.html">io::copy()</a> function useful.</p>
+</div>
+
+
+
+<div class="alert alert-dismissible alert-success">
+   <p style="font-size: 16px;">
+   <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+   <span style="font-weight: bold;">Hint:</span> The <code>main()</code> function in our reference implementation is roughly 35 lines of code.</p>
+</div>
+
+
+
+<div class="alert alert-dismissible alert-success">
+   <p style="font-size: 16px;">
+   <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+   <span style="font-weight: bold;">Hint:</span> Keep the <a href="https://docs.rs/serial-unix/0.4.0/serial_unix/struct.TTYPort.html">TTYPort</a> documentation open while writing your code.</p>
+</div>
+
+
+
+<div class="panel panel-question">
+  <div class="panel-heading">
+     <div class="badge pull-right">
+        <code>
+           bad-tests
+        </code>
+     </div>
+    <h3 class="panel-title">
+       <span class="glyphicon glyphicon-question-sign" aria-hidden="true" style="padding-right: 5px"></span>
+       Why does the <code>test.sh</code> script always set <code>-r</code>?
+    </h3>
+  </div>
+  <div class="panel-body">
+     <p></p><p>The <code>test.sh</code> script that we have provided always uses the <code>-r</code> flag; it
+  doesn’t test that your utility uses the XMODEM protocol when it is asked to.
+  Why might that be? What does the XMODEM protocol expect that sending data in
+  the raw doesn’t that makes testing its functionality difficult?</p>
+<p></p>
+  </div>
+</div>
+
+
+<hr>
+
+<h3 id="phase-3-not-a-seashell">Phase 3: <em>Not</em> a Seashell</h3>
+
+<p>In this phase, you will be implementing drivers for the built-in timer, GPIO,
+and UART devices. You’ll use then these drivers to implement a simple shell. In
+the next phase, you’ll use the same drivers to implement a bootloader.</p>
+
+
+<div class="alert alert-dismissible alert-info">
+   <p style="font-size: 16px; font-weight: bold;">
+      
+         <span class="glyphicon glyphicon-info-sign" aria-hidden="true" style="margin-right: 3px"></span>
+      
+      What’s a driver?
+   </p>
+   <p></p><p>The term <em>driver</em>, or <em>device driver</em>, describes software that directly
+  interacts with and controls a hardware device. Drivers expose a higher-level
+  interface to the hardware they control. Operating systems may interact with
+  device drivers to expose an even higher-level interface. For instance, the
+  Linux kernel exposes ALSA (Advanced Linux Sound Architecture), an audio API,
+  which interacts with device drivers that in-turn interact directly with sound
+  cards.</p>
+<p></p>
+</div>
+
+
+
+<hr>
+
+<h4 id="subphase-a-getting-started">Subphase A: Getting Started</h4>
+
+<p>In the remainder of the assignment, you will be working inside a repository,
+<code>os</code>, that is assignment-independent. This is the beginning of the operating
+system that you will complete by the end of the course. Responses to questions
+in the remainder of the assignment should be recorded in the <code>questions</code>
+directory of the assignment 1 skeleton.</p>
+
+<p>We recommend the following directory structure for your assignments, where
+<code>0-blinky</code> and <code>1-shell</code> are the repositories for assignment 0 and 1,
+respectively, and <code>os</code> is the repository you will soon clone:</p>
+
+<pre><code>cs140e
+├── 0-blinky
+│&nbsp;&nbsp; ├── Makefile
+│&nbsp;&nbsp; ├── phase3
+│&nbsp;&nbsp; └── phase4
+├── 1-shell
+│&nbsp;&nbsp; ├── ferris-wheel
+│&nbsp;&nbsp; ├── getting-started
+│&nbsp;&nbsp; ├── stack-vec
+│&nbsp;&nbsp; ├── ttywrite
+│&nbsp;&nbsp; ├── volatile
+│&nbsp;&nbsp; └── xmodem
+└── os
+ &nbsp;&nbsp; ├── Makefile
+ &nbsp;&nbsp; ├── bootloader*
+ &nbsp;&nbsp; ├── kernel
+ &nbsp;&nbsp; ├── pi
+ &nbsp;&nbsp; ├── std
+ &nbsp;&nbsp; └── volatile
+</code></pre>
+
+<p>Recreate this directory structure now, which may involve renaming your
+assignment 0/1 repositories. You’ll need to clone the <code>os</code> repository:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">git clone https://web.stanford.edu/class/cs140e/os.git os</code></pre></div>
+<p>Confirm that your directories are properly laid out by running <code>make</code> inside the
+<code>os/kernel</code> directory now. If all is well, the command will return successfully.</p>
+
+<h5 id="project-structure">Project Structure</h5>
+
+<p>The <code>os</code> directory contains the following subdirectories:</p>
+
+<ul>
+<li><code>pi</code> - library containing drivers and other low-level code for the OS</li>
+<li><code>volatile</code> - a second version of the <code>volatile</code> library from phase 2
+suitable for writing device drivers</li>
+<li><code>std</code> - a minimal, dependency-free version of Rust’s <code>std</code> library</li>
+<li><code>bootloader*</code> - the bootloader you will write in phase 4 (<strong>note: not yet
+available</strong>)</li>
+<li><code>kernel</code> - the main operating system kernel</li>
+</ul>
+
+<p>All of your driver code will reside in the <code>pi</code> library. The <code>pi</code> library makes
+use of the <code>volatile</code> library. It also optionally depends on the <code>std</code> library.
+<code>bootloader</code> and <code>kernel</code> make use of the <code>pi</code> library to communicate with
+hardware. They also depend on <code>std</code>. The <code>volatile</code> library has no dependencies.
+The diagram below illustrates these relationships:</p>
+
+<figure style="
+   
+    padding: 10px; 
+">
+   <img src="./1-shell_files/dep-diagram.svg" alt="Dependency Diagram" width="300px" style="
+          display: block; margin: 0 auto; 
+      ">
+   
+</figure>
+
+
+<h5 id="firmware">Firmware</h5>
+
+<p>We’ll need to update the firmware on our Raspberry Pi before continuing.
+Download the new firmware files by running <code>make fetch</code> inside of the <code>os</code>
+repository. The command will download and extract files to the <code>files/</code>
+subdirectory. Copy <code>firmware/bootcode.bin</code>, <code>firmware/config.txt</code>, and
+<code>firmware/start.elf</code> to the root of your MicroSD card. You can also copy the
+<code>act-led-blink.bin</code> file, renamed to <code>kernel8.img</code>, to the root of the MicroSD
+card to confirm that the new firmware is loaded properly. When started, you
+should see a green LED on the Raspberry Pi blink on and off repeatedly.</p>
+
+<h5 id="updated-volatile">Updated <code>volatile</code></h5>
+
+<p>The <code>volatile</code> library in the <code>os</code> directory is subtly different than the
+<code>volatile</code> library in the assignment 1 skeleton repository. These changes make
+it easier and more convenient to use the <code>volatile</code> library for writing device
+drivers. On the whole, the library is effectively the same, and your intuitions
+and answers to questions from phase 2 all carry over. The main differences are:</p>
+
+<ol>
+<li><code>UniqueVolatile</code> was replaced with <code>Unique&lt;Volatile&gt;</code>.</li>
+<li>A <code>Reserved</code> type with no capabilities was added.</li>
+</ol>
+
+<p>The third major difference is that wrapper types wrap a <code>T</code>, not a <code>*mut T</code>.
+This allows you to treat a raw address as volatile by casting it instead of
+wrapping it: <code>0x1000 as *mut Volatile&lt;T&gt;</code>. This implies that we can cast an
+address into a structure containing <code>Volatile</code> wrappers and have writes to its
+fields transparently be volatile:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#633820">#[repr(C)]</span>
+<span style="color:#a90d91">struct</span> <span style="color:#3f6e75">Registers</span> {
+    <span style="color:#000">REG_A</span>: <span style="color:#3f6e75">Volatile</span><span style="color:#000">&lt;</span><span style="color:#a90d91">u32</span><span style="color:#000">&gt;</span>,
+    <span style="color:#000">REG_B</span>: <span style="color:#3f6e75">Volatile</span><span style="color:#000">&lt;</span><span style="color:#a90d91">u8</span><span style="color:#000">&gt;</span>
+}
+
+<span style="color:#177500">// This says that there's a `Registers` structure at address `0x4000`. In this
+</span><span style="color:#177500">// case, this means that we expect a `u32` followed by a `u8` at that address.
+</span><span style="color:#177500"></span><span style="color:#a90d91">let</span> <span style="color:#000">x</span>: <span style="color:#000">*</span><span style="color:#a90d91">mut</span> <span style="color:#000">Registers</span> <span style="color:#000">=</span> <span style="color:#1c01ce">0x4000</span> <span style="color:#a90d91">as</span> <span style="color:#000">*</span><span style="color:#a90d91">mut</span> <span style="color:#000">Registers</span>;
+
+<span style="color:#177500">// We need to use `unsafe` because we're dereferencing a raw pointer.
+</span><span style="color:#177500"></span><span style="color:#a90d91">unsafe</span> {
+    <span style="color:#177500">// Rust does not automatically dereference raw pointers.
+</span><span style="color:#177500"></span>    (<span style="color:#000">*</span><span style="color:#000">x</span>).<span style="color:#000">REG_A</span>.<span style="color:#000">write</span>(<span style="color:#1c01ce">434</span>);
+    <span style="color:#a90d91">let</span> <span style="color:#000">val</span>: <span style="color:#a90d91">u8</span> <span style="color:#000">=</span> (<span style="color:#000">*</span><span style="color:#000">x</span>).<span style="color:#000">REG_B</span>.<span style="color:#000">read</span>();
+}</code></pre></div>
+
+<div class="alert alert-dismissible alert-info">
+   <p style="font-size: 16px; font-weight: bold;">
+      
+         <span class="glyphicon glyphicon-info-sign" aria-hidden="true" style="margin-right: 3px"></span>
+      
+      What’s with <code>#[repr(C)]</code>?
+   </p>
+   <p></p><p>The <code>#[repr(C)]</code> annotation forces Rust to lay out the structure’s fields in
+  the same way that C would. In general, Rust optimizes the order and padding
+  between fields of structures in an unspecified way. When we cast a raw address
+  to a pointer to a structure, we typically have a very specific memory layout
+  in mind. The <code>#[repr(C)]</code> annotation lets us confide that Rust will arrange
+  the structure as we intend it to, not as it wishes.</p>
+<p></p>
+</div>
+
+
+
+<h5 id="kernel">Kernel</h5>
+
+<p>The <code>os/kernel</code> directory contains the code for the operating system kernel: the
+core of your operating system. Calling <code>make</code> inside this directory builds the
+kernel. The build output is stored in the <code>build/</code> directory. To run the kernel,
+copy the <code>build/kernel.bin</code> file to the root of the MicroSD card as
+<code>kernel8.img</code>. At present, the kernel does absolutely nothing. By the end of
+this phase, the kernel will start up a shell which you can communicate with.</p>
+
+<p>The <code>kernel</code> crate depends on the <code>pi</code> library: you can see the <code>extern crate
+pi</code> statement declaring this dependency in <code>kernel/src/kmain.rs</code>. As a result,
+you can use all of the types and items from the <code>pi</code> library in the kernel.</p>
+
+<h5 id="documentation">Documentation</h5>
+
+<p>While writing your device drivers, you’ll want to keep the <a href="https://web.stanford.edu/class/cs140e/docs/BCM2837-ARM-Peripherals.pdf">BCM2837 ARM
+Peripherals Manual</a> open.</p>
+
+<hr>
+
+<h4 id="subphase-b-system-timer">Subphase B: System Timer</h4>
+
+<p>In this subphase, you will write a device driver for the ARM system timer. You
+will primarily be working in <code>os/pi/src/timer.rs</code> and <code>os/kernel/src/kmain.rs</code>.
+The ARM system timer is documented on page 172 (section 12) of the <a href="https://web.stanford.edu/class/cs140e/docs/BCM2837-ARM-Peripherals.pdf">BCM2837 ARM
+Peripherals Manual</a>.</p>
+
+<p>Start by looking at the existing code in <code>os/pi/src/timer.rs</code>. In particular,
+note the relationship between the following sections:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#a90d91">const</span> <span style="color:#000">TIMER_REG_BASE</span>: <span style="color:#a90d91">usize</span> <span style="color:#000">=</span> <span style="color:#000">IO_BASE</span> <span style="color:#000">+</span> <span style="color:#1c01ce">0x3000</span>;
+
+<span style="color:#633820">#[repr(C)]</span>
+<span style="color:#a90d91">struct</span> <span style="color:#3f6e75">Registers</span> {
+    <span style="color:#000">CS</span>: <span style="color:#3f6e75">Volatile</span><span style="color:#000">&lt;</span><span style="color:#a90d91">u32</span><span style="color:#000">&gt;</span>,
+    <span style="color:#000">CLO</span>: <span style="color:#3f6e75">ReadVolatile</span><span style="color:#000">&lt;</span><span style="color:#a90d91">u32</span><span style="color:#000">&gt;</span>,
+    <span style="color:#000">CHI</span>: <span style="color:#3f6e75">ReadVolatile</span><span style="color:#000">&lt;</span><span style="color:#a90d91">u32</span><span style="color:#000">&gt;</span>,
+    <span style="color:#000">COMPARE</span>: [<span style="color:#000">Volatile</span><span style="color:#000">&lt;</span><span style="color:#a90d91">u32</span><span style="color:#000">&gt;</span>; <span style="color:#1c01ce">4</span>]
+}
+
+<span style="color:#a90d91">pub</span> <span style="color:#a90d91">struct</span> <span style="color:#3f6e75">Timer</span> {
+    <span style="color:#000">registers</span>: <span style="color:#a90d91">&amp;</span><span style="color:#a90d91">'static</span> <span style="color:#a90d91">mut</span> <span style="color:#000">Registers</span>
+}
+
+<span style="color:#a90d91">impl</span> <span style="color:#000">Timer</span> {
+    <span style="color:#a90d91">pub</span> <span style="color:#a90d91">fn</span> <span style="color:#000">new</span>() -&gt; <span style="color:#3f6e75">Timer</span> {
+        <span style="color:#000">Timer</span> {
+            <span style="color:#000">registers</span>: <span style="color:#3f6e75">unsafe</span> { <span style="color:#000">&amp;</span><span style="color:#a90d91">mut</span> <span style="color:#000">*</span>(<span style="color:#000">TIMER_REG_BASE</span> <span style="color:#a90d91">as</span> <span style="color:#000">*</span><span style="color:#a90d91">mut</span> <span style="color:#000">Registers</span>) },
+        }
+    }
+}</code></pre></div>
+<p>The one line of <code>unsafe</code> in this program is very important: it casts the
+<code>TIMER_REG_BASE</code> address to a <code>*mut Registers</code> and then casts that to an
+<code>&amp;'static mut Registers</code>. We are telling Rust that we have a static reference to
+a <code>Registers</code> structure at address <code>TIMER_REG_BASE</code>.</p>
+
+<p>What is at the <code>TIMER_REG_BASE</code> address? On page 172 of the <a href="https://web.stanford.edu/class/cs140e/docs/BCM2837-ARM-Peripherals.pdf">BCM2837 ARM
+Peripherals Manual</a>, you’ll find that <code>0x3000</code> is the peripheral offset for the
+ARM system timer. Thus, <code>TIMER_REG_BASE</code> is the address at which the ARM system
+timer registers start! After this one line of <code>unsafe</code>, we can use the
+<code>registers</code> field to access the timer’s registers safely. We can read the <code>CLO</code>
+register with <code>self.registers.CLO.read()</code> and write the <code>CS</code> register with
+<code>self.registers.CS.write()</code>.</p>
+
+<div class="panel panel-question">
+  <div class="panel-heading">
+     <div class="badge pull-right">
+        <code>
+           restricted-reads
+        </code>
+     </div>
+    <h3 class="panel-title">
+       <span class="glyphicon glyphicon-question-sign" aria-hidden="true" style="padding-right: 5px"></span>
+       Why can’t you write to CLO or CHI?
+    </h3>
+  </div>
+  <div class="panel-body">
+     <p></p><p>The BCM2837 documentation states that the <code>CLO</code> and <code>CHI</code> registers are
+  read-only. Our code enforces this property. How? What prevents us from writing
+  to <code>CLO</code> or <code>CHI</code>?</p>
+<p></p>
+  </div>
+</div>
+
+
+
+<div class="alert alert-dismissible alert-info">
+   <p style="font-size: 16px; font-weight: bold;">
+      
+         <span class="glyphicon glyphicon-info-sign" aria-hidden="true" style="margin-right: 3px"></span>
+      
+      What exactly is <em>unsafe</em>?
+   </p>
+   <p></p><p>In short, <code>unsafe</code> is a marker for the Rust compiler that you’re taking
+  control of memory safety: the compiler won’t protect you from memory issues.
+  As a result, in <code>unsafe</code> sections, Rust lets you do anything you can do in C.
+  In particular, you can cast between types with more freedom, dereference raw
+  pointers, and fabricate lifetimes.</p>
+
+<p>But note that <code>unsafe</code> is <em>very</em> unsafe. You must ensure that everything you
+  do in an <code>unsafe</code> section is, in fact <em>safe</em>. This is more difficult than it
+  sounds, especially when Rust’s idea of <em>safe</em> is much stricter than in other
+  languages. As such, you should try not to use <code>unsafe</code> at all. For operating
+  systems, unfortunately, we <em>must</em> use <code>unsafe</code> so that we can directly speak
+  to hardware, but we’ll typically limit our use to <strong>one</strong> line per driver.</p>
+
+<p>If you want to learn more about <code>unsafe</code>, read <a href="https://doc.rust-lang.org/nightly/nomicon/meet-safe-and-unsafe.html">Chapter 1 of the Nomicon</a>.</p>
+<p></p>
+</div>
+
+
+
+<h5 id="implement-the-driver">Implement the Driver</h5>
+
+<p>Implement the <code>Timer::read()</code> method and <code>current_time()</code>, <code>spin_sleep_us()</code>,
+and <code>spin_sleep_ms()</code> in <code>os/pi/src/timer.rs</code>. The signatures on these items
+indicate their expected functionality. You’ll need to read the timer’s
+documentation in the BCM manual to implement <code>Timer::read()</code>. In particular, you
+should understand which registers to read to obtain the timer’s current <code>u64</code>
+value. You can build the <code>pi</code> library with <code>cargo build</code>. You can also use
+<code>cargo check</code> to type-check the library without actually compiling it.</p>
+
+<h5 id="testing-your-driver">Testing Your Driver</h5>
+
+<p>Let’s test your driver by ensuring that <code>spin_sleep_ms()</code> is accurate. We’ll
+write the code to do this in <code>kernel/src/kmain.rs</code>.</p>
+
+<p>Copy your LED blinky code from phase 4 of assignment 0 into <code>kmain.rs</code>. Instead
+of the <code>for</code> loop based sleep function, use your newly written <code>spin_sleep_ms()</code>
+function to pause between blinks. Compile the kernel, load it onto the MicroSD
+card as <code>kernel8.img</code>, and then run it on the Raspberry Pi. Ensure that the LED
+blinks at the frequency that you intended it to. Try other pause times and
+ensure that they all work as expected. Until you write the bootloader in phase
+4, you’ll need to keep swapping the MicroSD card between the Pi and your
+computer to try out different binaries.</p>
+
+<p>If your timer driver is working as expected, proceed to the next subphase.</p>
+
+<hr>
+
+<h4 id="subphase-c-gpio">Subphase C: GPIO</h4>
+
+<p>In this subphase, you will write a generic, pin-independent device driver for
+GPIO. You will primarily be working in <code>os/pi/src/gpio.rs</code> and
+<code>os/kernel/src/kmain.rs</code>. The GPIO subsystem is documented on page 89 (section
+6) of the <a href="https://web.stanford.edu/class/cs140e/docs/BCM2837-ARM-Peripherals.pdf">BCM2837 ARM Peripherals Manual</a>.</p>
+
+<h5 id="state-machines">State Machines</h5>
+
+<p>All hardware devices are <a href="https://en.wikipedia.org/wiki/Finite-state_machine">state machines</a>: they begin at a predetermined state
+and transition to different states based on explicit or implicit inputs. The
+device exposes different functionality depending on which state it is in. In
+other words, only <em>some</em> transitions are valid in <em>some</em> states. Importantly,
+this implies that some transitions are <em>invalid</em> when the device is in a given
+state.</p>
+
+<p>Most programming languages make it impossible to faithfully encode the semantics
+of a state machine in hardware, but not Rust! Rust lets us <em>perfectly</em> encode
+state machine semantics, and we’ll take advantage of this to implement a
+safer-than-safe device driver for the GPIO subsystem. Our driver will ensure
+that a GPIO pin is never misused, and it will do so at compile-time.</p>
+
+
+<div class="alert alert-dismissible alert-info">
+   <p style="font-size: 16px; font-weight: bold;">
+      
+         <span class="glyphicon glyphicon-info-sign" aria-hidden="true" style="margin-right: 3px"></span>
+      
+      This seems a little…<em>researchy</em>.
+   </p>
+   <p></p><p>You got me. This is, in fact, my active area of research!
+  <small>- Sergio</small></p>
+<p></p>
+</div>
+
+
+
+<p>Below is the state diagram for a subset of the GPIO state machine for a single
+pin:</p>
+
+<figure style="
+   
+    padding: 10px; 
+">
+   <img src="./1-shell_files/gpio-diagram.svg" alt="GPIO State Diagram" width="400px" style="
+          display: block; margin: 0 auto; 
+      ">
+   
+      <figcaption style="text-align: center;">
+         <small>GPIO State Diagram</small>
+      </figcaption>
+   
+</figure>
+
+
+<p>Our goal is to encode this state machine in Rust. Let’s start by interpreting
+the diagram:</p>
+
+<ul>
+<li>The GPIO starts in the <code>START</code> state.</li>
+<li>From the <code>START</code> state it can transition to one of three states:
+
+<ol>
+<li><code>ALT</code> - no transitions are possible from this state</li>
+<li><code>OUTPUT</code> - two “self” transitions are possible: <code>SET</code> and <code>CLEAR</code></li>
+<li><code>INPUT</code> - one “self” transition is possible: <code>LEVEL</code></li>
+</ol></li>
+</ul>
+
+<div class="panel panel-question">
+  <div class="panel-heading">
+     <div class="badge pull-right">
+        <code>
+           blinky-states
+        </code>
+     </div>
+    <h3 class="panel-title">
+       <span class="glyphicon glyphicon-question-sign" aria-hidden="true" style="padding-right: 5px"></span>
+       Which transitions did you follow in your assignment 0 <code>blinky</code>?
+    </h3>
+  </div>
+  <div class="panel-body">
+     <p></p><p>When you implementing the blinky code in phase 4 of assignment 0, you
+  implicitly implemented a subset of this state machine. Which transitions did
+  your code implement?</p>
+<p></p>
+  </div>
+</div>
+
+
+<p>We’ll use Rust’s type system to ensure that a pin can only be <code>SET</code> and
+<code>CLEAR</code>ed if it has been transitioned to the <code>OUTPUT</code> state and the <code>LEVEL</code> read
+if it is in the <code>INPUT</code> state. Take a look at the declaration for the <code>GPIO</code>
+structure in <code>pi/src/gpio.rs</code>:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#a90d91">pub</span> <span style="color:#a90d91">struct</span> <span style="color:#3f6e75">Gpio</span><span style="color:#000">&lt;</span><span style="color:#000">State</span><span style="color:#000">&gt;</span> {
+    <span style="color:#000">pin</span>: <span style="color:#a90d91">u8</span>,
+    <span style="color:#000">registers</span>: <span style="color:#a90d91">&amp;</span><span style="color:#a90d91">'static</span> <span style="color:#a90d91">mut</span> <span style="color:#000">Registers</span>,
+    <span style="color:#000">_state</span>: <span style="color:#3f6e75">PhantomData</span><span style="color:#000">&lt;</span><span style="color:#000">State</span><span style="color:#000">&gt;</span>
+}</code></pre></div>
+<p>The structure has one generic argument, <code>State</code>. Except for <code>PhantomData</code>,
+nothing actually <em>uses</em> this argument. This is what <a href="https://doc.rust-lang.org/nightly/std/marker/struct.PhantomData.html">PhantomData</a> is there for:
+to convince Rust that the structure somehow uses the generic even though it
+otherwise wouldn’t. We’re going to use the <code>State</code> generic to encode which state
+the <code>Gpio</code> device is in. Unlike other generics, <em>we</em> must control this parameter
+and ensure that a client can never fabricate it.</p>
+
+<p>The <code>state!</code> macro generates types that represent the states a <code>Gpio</code> can be in:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#000">states</span><span style="color:#000">!</span> {
+    <span style="color:#000">Uninitialized</span>, <span style="color:#000">Input</span>, <span style="color:#000">Output</span>, <span style="color:#000">Alt</span>
+}
+
+<span style="color:#177500">// Each parameter expands to an `enum` that looks like:
+</span><span style="color:#177500"></span><span style="color:#a90d91">enum</span> <span style="color:#3f6e75">Input</span> { }</code></pre></div>
+<p>This is <em>also</em> weird; why would we create an <code>enum</code> with no variants? <code>enum</code>’s
+with no variants have a nice property: they can <em>never</em> be instantiated. In this
+way, these types act purely as markers. No one can ever pass us a value of type
+<code>Input</code> because such a value can never be constructed. They exist purely at the
+type-level.</p>
+
+<p>We can then implement methods corresponding to valid transitions given that a
+<code>Gpio</code> is in a certain state:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#a90d91">impl</span> <span style="color:#000">Gpio</span><span style="color:#000">&lt;</span><span style="color:#000">Output</span><span style="color:#000">&gt;</span> {
+    <span style="color:#c41a16">/// Sets (turns on) the pin.
+</span><span style="color:#c41a16"></span>    <span style="color:#a90d91">pub</span> <span style="color:#a90d91">fn</span> <span style="color:#000">set</span>(<span style="color:#000">&amp;</span><span style="color:#a90d91">mut</span> <span style="color:#5b269a">self</span>) { ... }
+
+    <span style="color:#c41a16">/// Clears (turns off) the pin.
+</span><span style="color:#c41a16"></span>    <span style="color:#a90d91">pub</span> <span style="color:#a90d91">fn</span> <span style="color:#000">clear</span>(<span style="color:#000">&amp;</span><span style="color:#a90d91">mut</span> <span style="color:#5b269a">self</span>) { ... }
+}
+
+<span style="color:#a90d91">impl</span> <span style="color:#000">Gpio</span><span style="color:#000">&lt;</span><span style="color:#000">Input</span><span style="color:#000">&gt;</span> {
+    <span style="color:#c41a16">/// Reads the pin's value.
+</span><span style="color:#c41a16"></span>    <span style="color:#a90d91">pub</span> <span style="color:#a90d91">fn</span> <span style="color:#000">level</span>(<span style="color:#000">&amp;</span><span style="color:#a90d91">mut</span> <span style="color:#5b269a">self</span>) -&gt; <span style="color:#a90d91">bool</span> { ... }
+}</code></pre></div>
+<p>This ensures that a <code>Gpio</code> can only be <code>set</code> and <code>clear</code>ed when it is a
+<code>Gpio&lt;Output&gt;</code> and its <code>level</code> read when it is a <code>Gpio&lt;Input&gt;</code>. Perfect! But how
+do we actually transition between states? Hello, <code>Gpio::transition()</code>!</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#a90d91">impl</span><span style="color:#000">&lt;</span><span style="color:#000">T</span><span style="color:#000">&gt;</span> <span style="color:#000">Gpio</span><span style="color:#000">&lt;</span><span style="color:#000">T</span><span style="color:#000">&gt;</span> {
+    <span style="color:#a90d91">fn</span> <span style="color:#000">transition</span><span style="color:#000">&lt;</span><span style="color:#000">S</span><span style="color:#000">&gt;</span>(<span style="color:#5b269a">self</span>) -&gt; <span style="color:#3f6e75">Gpio</span><span style="color:#000">&lt;</span><span style="color:#000">S</span><span style="color:#000">&gt;</span> {
+        <span style="color:#000">Gpio</span> {
+            <span style="color:#000">pin</span>: <span style="color:#3f6e75">self</span>.<span style="color:#000">pin</span>,
+            <span style="color:#000">registers</span>: <span style="color:#3f6e75">self</span>.<span style="color:#000">registers</span>,
+            <span style="color:#000">_state</span>: <span style="color:#3f6e75">PhantomData</span>
+        }
+    }
+}</code></pre></div>
+<p>This method lets us transition a <code>Gpio</code> from any state to any other state. Given
+a <code>Gpio</code> in state <code>T</code>, this method returns a <code>Gpio</code> in state <code>S</code>. Note that it
+works for <em>all</em> <code>S</code> and <code>T</code>. We must be very careful when calling this method.
+When called, we are encoding the specification of a transition in the state
+diagram. If we get the specification or encoding wrong, our driver is wrong.</p>
+
+<p>To use the <code>transition()</code> method, we need to tell Rust which type we want as an
+output <code>S</code> in <code>Gpio&lt;S&gt;</code>. We do this by giving Rust enough information so that it
+can infer the <code>S</code> type. For instance, consider the implementation of the
+<code>into_output</code> method:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#a90d91">pub</span> <span style="color:#a90d91">fn</span> <span style="color:#000">into_output</span>(<span style="color:#5b269a">self</span>) -&gt; <span style="color:#3f6e75">Gpio</span><span style="color:#000">&lt;</span><span style="color:#000">Output</span><span style="color:#000">&gt;</span> {
+    <span style="color:#5b269a">self</span>.<span style="color:#000">into_alt</span>(<span style="color:#000">Function</span>::<span style="color:#000">Output</span>).<span style="color:#000">transition</span>()
+}</code></pre></div>
+<p>This method requires its return type to be <code>Gpio&lt;Output&gt;</code>. When the Rust type
+system inspects the call to <code>transition()</code>, it will search for a
+<code>Gpio::transition()</code> method that returns a <code>Gpio&lt;Output&gt;</code> to satisfy the
+requirement. Since our <code>transition</code> method returns <code>Gpio&lt;S&gt;</code> for any <code>S</code>, Rust
+will replace <code>S</code> with <code>Output</code> and use that method. The result is that we’ve
+transformed our <code>Gpio&lt;Alt&gt;</code> (from the <code>into_alt()</code> call) into a <code>Gpio&lt;Output&gt;</code>.</p>
+
+<div class="panel panel-question">
+  <div class="panel-heading">
+     <div class="badge pull-right">
+        <code>
+           fake-states
+        </code>
+     </div>
+    <h3 class="panel-title">
+       <span class="glyphicon glyphicon-question-sign" aria-hidden="true" style="padding-right: 5px"></span>
+       What would go wrong if a client fabricates states?
+    </h3>
+  </div>
+  <div class="panel-body">
+     <p></p><p>Consider what would happen if we let the user choose the initial state for a
+  <code>Gpio</code> structure. What could go wrong?</p>
+<p></p>
+  </div>
+</div>
+
+
+
+<div class="alert alert-dismissible alert-info">
+   <p style="font-size: 16px; font-weight: bold;">
+      
+         <span class="glyphicon glyphicon-info-sign" aria-hidden="true" style="margin-right: 3px"></span>
+      
+      Why is this only possible with Rust?
+   </p>
+   <p></p><p>Notice that the <code>into_</code> transition methods take a <code>Gpio</code> by move. This means
+  that once a <code>Gpio</code> is transitioned into a another state, it can never be
+  accessed in the previous state. Rust’s move semantics make this possible. As
+  long as a type doesn’t implement <code>Clone</code>, <code>Copy</code>, or some other means of
+  duplication, there is no coming back from a transition. No other language, not
+  even C++, affords us this guarantee at compile-time.</p>
+<p></p>
+</div>
+
+
+
+<h5 id="implement-the-driver-1">Implement the Driver</h5>
+
+<p>Implement the <code>unimplemented!()</code> methods in <code>pi/src/gpio.rs</code>. The signatures on
+these items indicate their expected functionality. You’ll need to read the GPIO
+documentation (page 89, section 6 of the <a href="https://web.stanford.edu/class/cs140e/docs/BCM2837-ARM-Peripherals.pdf">BCM2837 ARM Peripherals Manual</a>) to
+implement your driver. Remember that you can use <code>cargo check</code> to type-check the
+library without actually compiling it.</p>
+
+<div class="alert alert-dismissible alert-success">
+   <p style="font-size: 16px;">
+   <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+   <span style="font-weight: bold;">Hint:</span> Remember that you can create arbitrary lexical scopes with <code>{ .. }</code>.</p>
+</div>
+
+
+
+<h5 id="testing-your-driver-1">Testing Your Driver</h5>
+
+<p>We’ll again write code in <code>kernel/src/kmain.rs</code> to ensure that our driver works
+as expected.</p>
+
+<p>Instead of reading/writing to raw memory addresses, use your new GPIO driver to
+set and clear GPIO pin 16. Your code should get a lot cleaner. Compile the
+kernel, load it onto the MicroSD card as <code>kernel8.img</code>, run it on the Raspberry
+Pi, and ensure your LED blinks as before.</p>
+
+<p>Now, connect more LEDs to your Raspberry Pi. Use GPIO pins 5, 6, 13, 19, and 26.
+Refer to the <a href="https://web.stanford.edu/class/cs140e/assignments/0-blinky/#powering-the-pi">pin numbering diagram</a> from assignment 0 to determine their
+physical location. Have your kernel blink all of the LEDs in a pattern of your
+choice.</p>
+
+<div class="panel panel-question">
+  <div class="panel-heading">
+     <div class="badge pull-right">
+        <code>
+           led-pattern
+        </code>
+     </div>
+    <h3 class="panel-title">
+       <span class="glyphicon glyphicon-question-sign" aria-hidden="true" style="padding-right: 5px"></span>
+       Which pattern did you choose?
+    </h3>
+  </div>
+  <div class="panel-body">
+     <p></p><p>What pattern did you have your LEDs blink in? If you haven’t yet decided, one
+  fun idea is to have them imitate a “loading spinner” by arranging the LEDs in
+  a circle and turning them on/off in a sequential, circular pattern.
+  <img src="./1-shell_files/spinner.svg" style="margin: -10px;"></p>
+<p></p>
+  </div>
+</div>
+
+
+<p>Once your GPIO driver is working as expected, proceed to the next subphase.</p>
+
+<hr>
+
+<h4 id="subphase-d-uart">Subphase D: UART</h4>
+
+<p>In this subphase, you will write a device driver for the mini UART device on the
+Raspberry Pi. You will primarily be working in <code>os/pi/src/uart.rs</code> and
+<code>os/kernel/src/kmain.rs</code>. The mini UART is documented on page 8 and page 10
+(sections 2.1 and 2.2) of the <a href="https://web.stanford.edu/class/cs140e/docs/BCM2837-ARM-Peripherals.pdf">BCM2837 ARM Peripherals Manual</a>.</p>
+
+<h5 id="uart-universal-asynchronous-rx-tx">UART: Universal Asynchronous RX/TX</h5>
+
+<p>A <a href="https://en.wikipedia.org/wiki/Universal_asynchronous_receiver-transmitter">UART</a>, or universal asynchronous receiver-transmitter, is a device and serial
+protocol for communicating over two wires. These are the two wires (rx/tx) that
+you used in phase 1 of assignment 0 to connect the UART device on the CP2102 USB
+module to the UART device on the Pi. You can send any kind of data over UART:
+text, binaries, images, anything! As an example, in the next subphase, you’ll
+implement a shell by reading from the UART device on the Pi and writing to the
+UART device on the CP2102 USB module. In phase 4, you’ll read from the UART on
+the Pi to download a binary being sent via the UART on the CP2102 USB module.</p>
+
+<p>The UART protocol has several configuration parameters, and both the receiver
+and transmitter need to be configured identically to communicate. These
+parameters are:</p>
+
+<ul>
+<li><strong>Data Size</strong>: length of a single data frame (8 or 9 bits)</li>
+<li><strong>Parity Bit</strong>: whether to send a parity (checksum) bit after the data</li>
+<li><strong>Stop Bits</strong>: how many bits to use to signal the end of the data (1 or 2)</li>
+<li><strong>Baud Rate</strong>: transmission rate in bits/second</li>
+</ul>
+
+<p>The mini UART on the Pi does not support parity bits and only supports 1 stop
+bit. As such, only the baud rate and data frame length need to be configured.
+To learn more about UART, see the <a href="https://web.stanford.edu/class/cs140e/notes/lec4/uart-basics.pdf">Basics of UART Communication</a> article.</p>
+
+<h5 id="implement-the-driver-2">Implement the Driver</h5>
+
+<p>At this point, you have all of the tools to write a device driver without
+additional background information (congratulations! 🎉).</p>
+
+<p>Implement the mini UART device driver in <code>pi/src/uart.rs</code>. You’ll need to
+complete the definition of the <code>Registers</code> structure. Ensure that you use the
+<code>Volatile</code> type with the <em>minimal set of capabilities</em> for each register:
+read-only registers should use <code>ReadVolatile</code>, write-only registers should use
+<code>WriteVolatile</code>, and reserved space should use <code>Reserved</code>. Then, initialize the
+device in <code>new()</code> by setting the baud rate to <code>115200</code> (a divider of <code>270</code>) and
+data length to <code>8</code> bits. Finally, implement the remaining <code>unimplemented!()</code>
+methods and the <code>fmt::Write</code>, <code>io::Read</code> and <code>io::Write</code> traits for <code>MiniUart</code>.</p>
+
+<div class="alert alert-dismissible alert-success">
+   <p style="font-size: 16px;">
+   <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+   <span style="font-weight: bold;">Hint:</span> You’ll need to write to the <code>LCR</code>, <code>BAUD</code>, and <code>CNTL</code> registers in <code>new</code>.</p>
+</div>
+
+
+
+<div class="alert alert-dismissible alert-success">
+   <p style="font-size: 16px;">
+   <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+   <span style="font-weight: bold;">Hint:</span> Use your GPIO driver from the previous subphase.</p>
+</div>
+
+
+
+<h5 id="testing-your-driver-2">Testing Your Driver</h5>
+
+<p>Test your driver by writing a simple “echo” program in <code>kernel/src/kmain.rs</code>:
+sit in a hot loop writing out every byte you read in. In pseudocode, this looks
+like:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#a90d91">loop</span> {
+    <span style="color:#000">write_byte</span>(<span style="color:#000">read_byte</span>())
+}</code></pre></div>
+<p>Use <code>screen /dev/&lt;your-path&gt; 115200</code> to communicate over UART. <code>screen</code> sends
+every keypress over the TTY, so if your echo program works correctly, you’ll see
+every character you type. It might help to send an extra character or two each
+time you receive a byte to convince yourself things are working as you expect:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#a90d91">loop</span> {
+    <span style="color:#000">write_byte</span>(<span style="color:#000">read_byte</span>())
+    <span style="color:#000">write_str</span>(<span style="color:#c41a16">"&lt;-"</span>)
+}</code></pre></div>
+<p>Once your driver works as expected, proceed to the next subphase.</p>
+
+<hr>
+
+<h4 id="subphase-e-the-shell">Subphase E: The Shell</h4>
+
+<p>In this subphase, you’ll use your new UART driver to implement a simple shell
+that will be the interface to your operating system. You will be working in
+<code>os/kernel/src/console.rs</code>, <code>os/kernel/src/shell.rs</code>,  and
+<code>os/kernel/src/kmain.rs</code>.</p>
+
+<h5 id="the-console">The <code>Console</code></h5>
+
+<p>To write our shell, we’ll need some notion of a global default input and output.
+Unix and friends typically refer to this is as <code>stdin</code> and <code>stdout</code>; we’ll be
+calling it <code>Console</code>. <code>Console</code> will allow us to implement the <code>kprint!</code> and
+<code>kprintln!</code> macros, our kernel-space versions of the familiar <code>print!</code> and
+<code>println!</code>, and give us a default source for reading user input. We’ll use
+<code>Console</code> and these macros to implement our shell.</p>
+
+<p>Take a peek at <code>os/kernel/src/console.rs</code>. The file contains an unfinished
+implementation of the <code>Console</code> struct. <code>Console</code> is a <em>singleton</em> wrapper
+around a <code>MiniUart</code>: only one instance of <code>Console</code> will ever exist in our
+kernel. That instance will be globally available, for use anywhere and by
+anything. This will allow us to read and write to the mini UART without
+explicitly passing around an instance of <code>MiniUart</code> or <code>Console</code>.</p>
+
+<!--
+
+  FIXME: Start with the `static` decl and work your way out from there.
+
+  So say: What we want is something like the following:
+
+      static CONSOLE: _ = MiniUart::new();
+
+  But this doesn't work for two reasons:
+
+    1. It's not Sync. (need a Mutex)
+    2. It's not `const`. (needs to be `None`)
+    3. It's not `mut`. `static mut` would be unsafe to use.
+
+  Then can dive into the craziness.
+-->
+
+<h5 id="global-mutability">Global Mutability</h5>
+
+<p>The notion of a globally mutable structure is a scary thought, especially in the
+face of Rust. After all, Rust doesn’t allow more than one mutable reference to a
+value, so how can we possibly convince it to allow <em>as many as we want</em>? The
+trick, of course, relies on <code>unsafe</code>. The idea is as follows: we’ll <em>tell</em> Rust
+that we’re only going to read a value by using an immutable reference, but what
+we <em>actually</em> do is use <code>unsafe</code> to “cast” that immutable reference to a mutable
+reference. Because we can create as many immutable references as we want, Rust
+will be none the wiser, and we’ll have all of the mutable references we desire!</p>
+
+<p>Such a function might look like this:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#177500">// This function must never exist.
+</span><span style="color:#177500"></span><span style="color:#a90d91">fn</span> <span style="color:#000">make_mut</span><span style="color:#000">&lt;</span><span style="color:#000">T</span><span style="color:#000">&gt;</span>(<span style="color:#000">value</span>: <span style="color:#a90d91">&amp;</span><span style="color:#3f6e75">T</span>) -&gt; <span style="color:#a90d91">&amp;</span><span style="color:#3f6e75">mut</span> <span style="color:#000">T</span> {
+   <span style="color:#a90d91">unsafe</span> { <span style="color:#177500">/* magic */</span> }
+}</code></pre></div>
+<p>Your alarm bells should be ringing: what we’ve proposed so far is wildly unsafe.
+Recall that we still need to ensure that everything we do in <code>unsafe</code> upholds
+Rust’s rules. What we’ve proposed thus far clearly does not. As it stands, we’re
+violating the “at most one mutable reference at a time” rule. The rule states
+that at any point in the program, a value should have at most one mutable
+reference to it.</p>
+
+<p>The key insight to maintaining this rule while meeting our requirements is as
+follows: instead of the <em>compiler</em> checking the rule for us with its borrow and
+ownership checker, <em>we</em> will ensure that the rule is upheld <em>dynamically, at
+run-time</em>. As a result, we’ll be able to share references to a structure as many
+times as we want (via an <code>&amp;</code> reference) while also being able to safely retrieve
+a mutable reference when we need it (via our <code>&amp;T -&gt; &amp;mut T</code> dynamic borrow
+checking function).</p>
+
+<p>There are many concrete implementations of this idea. One such implementation
+ensures that only one mutable reference is returned at a time using a lock:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#a90d91">fn</span> <span style="color:#000">lock</span><span style="color:#000">&lt;</span><span style="color:#000">T</span><span style="color:#000">&gt;</span>(<span style="color:#000">value</span>: <span style="color:#a90d91">&amp;</span><span style="color:#3f6e75">T</span>) -&gt; <span style="color:#3f6e75">Locked</span><span style="color:#000">&lt;&amp;</span><span style="color:#a90d91">mut</span> <span style="color:#000">T</span><span style="color:#000">&gt;</span> {
+   <span style="color:#a90d91">unsafe</span> { <span style="color:#000">lock</span>(<span style="color:#000">value</span>); <span style="color:#000">cast</span> <span style="color:#000">value</span> <span style="color:#000">to</span> <span style="color:#000">Locked</span><span style="color:#000">&lt;&amp;</span><span style="color:#a90d91">mut</span> <span style="color:#000">T</span><span style="color:#000">&gt;</span> }
+}
+
+<span style="color:#a90d91">impl</span> <span style="color:#a90d91">Drop</span> <span style="color:#a90d91">for</span> <span style="color:#000">Locked</span><span style="color:#000">&lt;&amp;</span><span style="color:#a90d91">mut</span> <span style="color:#000">T</span><span style="color:#000">&gt;</span> {
+   <span style="color:#a90d91">fn</span> <span style="color:#000">drop</span>(<span style="color:#000">&amp;</span><span style="color:#a90d91">mut</span> <span style="color:#5b269a">self</span>) { <span style="color:#000">unlock</span>(<span style="color:#5b269a">self</span>.<span style="color:#000">value</span>) }
+}</code></pre></div>
+<p>This is known as <a href="https://doc.rust-lang.org/nightly/std/sync/struct.Mutex.html">Mutex</a> in the standard library. Another way is to abort the
+program if more than one mutable reference is about to be created:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#a90d91">fn</span> <span style="color:#000">get_mut</span><span style="color:#000">&lt;</span><span style="color:#000">T</span><span style="color:#000">&gt;</span>(<span style="color:#000">value</span>: <span style="color:#a90d91">&amp;</span><span style="color:#3f6e75">T</span>) -&gt; <span style="color:#3f6e75">Mut</span><span style="color:#000">&lt;&amp;</span><span style="color:#a90d91">mut</span> <span style="color:#000">T</span><span style="color:#000">&gt;</span> {
+   <span style="color:#a90d91">unsafe</span> {
+      <span style="color:#a90d91">if</span> <span style="color:#000">ref_count</span>(<span style="color:#000">value</span>) <span style="color:#000">!=</span> <span style="color:#1c01ce">0</span> { <span style="color:#000">panic</span><span style="color:#000">!</span>() }
+      <span style="color:#000">ref_count</span>(<span style="color:#000">value</span>) <span style="color:#000">+=</span> <span style="color:#1c01ce">1</span>;
+      <span style="color:#000">cast</span> <span style="color:#000">value</span> <span style="color:#000">to</span> <span style="color:#000">Mut</span><span style="color:#000">&lt;&amp;</span><span style="color:#a90d91">mut</span> <span style="color:#000">T</span><span style="color:#000">&gt;</span>
+   }
+}
+
+<span style="color:#a90d91">impl</span> <span style="color:#a90d91">Drop</span> <span style="color:#a90d91">for</span> <span style="color:#000">Mut</span><span style="color:#000">&lt;&amp;</span><span style="color:#a90d91">mut</span> <span style="color:#000">T</span><span style="color:#000">&gt;</span> {
+   <span style="color:#a90d91">fn</span> <span style="color:#000">drop</span>(<span style="color:#000">&amp;</span><span style="color:#a90d91">mut</span> <span style="color:#5b269a">self</span>) { <span style="color:#000">ref_count</span>(<span style="color:#000">value</span>) <span style="color:#000">-=</span> <span style="color:#1c01ce">1</span>; }
+}</code></pre></div>
+<p>This is <a href="https://doc.rust-lang.org/nightly/std/cell/struct.RefCell.html#method.borrow_mut">RefCell::borrow_mut()</a>. And yet another is to only return a mutable
+reference if it is known to be exclusive:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#a90d91">fn</span> <span style="color:#000">get_mut</span><span style="color:#000">&lt;</span><span style="color:#000">T</span><span style="color:#000">&gt;</span>(<span style="color:#000">value</span>: <span style="color:#a90d91">&amp;</span><span style="color:#3f6e75">T</span>) -&gt; <span style="color:#a90d91">Option</span><span style="color:#000">&lt;</span><span style="color:#000">Mut</span><span style="color:#000">&lt;&amp;</span><span style="color:#a90d91">mut</span> <span style="color:#000">T</span><span style="color:#000">&gt;&gt;</span> {
+   <span style="color:#a90d91">unsafe</span> {
+      <span style="color:#a90d91">if</span> <span style="color:#000">ref_count</span>(<span style="color:#000">value</span>) <span style="color:#000">!=</span> <span style="color:#1c01ce">0</span> { <span style="color:#a90d91">None</span> }
+      <span style="color:#a90d91">else</span> {
+         <span style="color:#000">ref_count</span>(<span style="color:#000">value</span>) <span style="color:#000">+=</span> <span style="color:#1c01ce">1</span>;
+         <span style="color:#a90d91">Some</span>(<span style="color:#000">cast</span> <span style="color:#000">value</span> <span style="color:#000">to</span> <span style="color:#000">Mut</span><span style="color:#000">&lt;&amp;</span><span style="color:#a90d91">mut</span> <span style="color:#000">T</span><span style="color:#000">&gt;</span>)
+      }
+   }
+}
+
+<span style="color:#a90d91">impl</span> <span style="color:#a90d91">Drop</span> <span style="color:#a90d91">for</span> <span style="color:#000">Mut</span><span style="color:#000">&lt;&amp;</span><span style="color:#a90d91">mut</span> <span style="color:#000">T</span><span style="color:#000">&gt;</span> {
+   <span style="color:#a90d91">fn</span> <span style="color:#000">drop</span>(<span style="color:#000">&amp;</span><span style="color:#a90d91">mut</span> <span style="color:#5b269a">self</span>) { <span style="color:#000">ref_count</span>(<span style="color:#000">value</span>) <span style="color:#000">-=</span> <span style="color:#1c01ce">1</span>; }
+}</code></pre></div>
+<p>This is <a href="https://doc.rust-lang.org/nightly/std/cell/struct.RefCell.html#method.try_borrow_mut">RefCell::try_borrow_mut()</a>. All of these examples implement some form
+of “interior mutability”: they allow a value to be mutated through an immutable
+reference. For our <code>Console</code>, we’ll be using <code>Mutex</code> to accomplish the same
+goal. Since the <code>std::Mutex</code> implementation requires operating system support,
+we’ve implemented our own <code>Mutex</code> in <code>kernel/src/mutex.rs</code>. Our implementation
+is correct for now, but we’ll need to fix it when we introduce caching or
+concurrency to continue to uphold Rust’s rules. You don’t need to understand the
+<code>Mutex</code> implementation for now, but you should understand how to use one.</p>
+
+<p>The global singleton is declared as <code>CONSOLE</code> in <code>kernel/src/console.rs</code>. The
+global variable is used by the <code>kprint!</code> and <code>kprintln!</code> macros defined below
+below. Once you’ve implemented <code>Console</code>, you’ll be able to use <code>kprint!</code> and
+<code>kprintln!</code> to print to the console. You’ll also be able to use <code>CONSOLE</code> to
+globally access the console.</p>
+
+
+<div class="alert alert-dismissible alert-info">
+   <p style="font-size: 16px; font-weight: bold;">
+      
+         <span class="glyphicon glyphicon-info-sign" aria-hidden="true" style="margin-right: 3px"></span>
+      
+      Rust also requires <code>static</code> globals to be <code>Sync</code>.
+   </p>
+   <p></p><p>In order to store a value of type <code>T</code> in a <code>static</code> global, <code>T</code> must
+   implement <code>Sync</code>. This is because Rust also guarantees data race safety at
+   compile-time. Because global values can be accessed from any thread, Rust
+   must ensure that those accesses are thread-safe. The <code>Send</code> and <code>Sync</code>
+   traits, along with Rust’s ownership system, ensure data race freedom.</p>
+<p></p>
+</div>
+
+
+
+<div class="panel panel-question">
+  <div class="panel-heading">
+     <div class="badge pull-right">
+        <code>
+           drop-container
+        </code>
+     </div>
+    <h3 class="panel-title">
+       <span class="glyphicon glyphicon-question-sign" aria-hidden="true" style="padding-right: 5px"></span>
+       Why should we never return an <code>&amp;mut T</code> directly?
+    </h3>
+  </div>
+  <div class="panel-body">
+     <p></p><p>You’ll notice that every example we’ve provided wraps the mutable reference in
+  a container and then implements <code>Drop</code> for that container. What would go wrong
+  if we returned an <code>&amp;mut T</code> directly instead?</p>
+<p></p>
+  </div>
+</div>
+
+
+<div class="panel panel-question">
+  <div class="panel-heading">
+     <div class="badge pull-right">
+        <code>
+           write-fmt
+        </code>
+     </div>
+    <h3 class="panel-title">
+       <span class="glyphicon glyphicon-question-sign" aria-hidden="true" style="padding-right: 5px"></span>
+       Where does the <code>write_fmt</code> call go?
+    </h3>
+  </div>
+  <div class="panel-body">
+     <p></p><p>The <code>_print</code> helper function calls <code>write_fmt</code> on an instance of
+  <code>MutexGuard&lt;Console&gt;</code>, the return value from <code>Mutex&lt;Console&gt;::lock()</code>. Which
+  type will have its <code>write_fmt</code> method called, and where does the method
+  implementation come from?</p>
+<p></p>
+  </div>
+</div>
+
+
+<h5 id="implement-and-test-console">Implement and Test <code>Console</code></h5>
+
+<p>implement all of the <code>unimplemented!()</code> methods in <code>kernel/src/console.rs</code>. once
+you’ve implemented everything, use the <code>kprint!</code> and <code>kprintln!</code> macros in
+<code>kernel/src/kmain.rs</code> to write to the console when you receive a character. you
+can use these macros exactly like <code>print!</code> and <code>println!</code>. use <code>screen
+/dev/&lt;your-path&gt; 115200</code> to communicate with your pi and ensure that your kernel
+works as expected.</p>
+
+
+<div class="alert alert-dismissible alert-info">
+   <p style="font-size: 16px; font-weight: bold;">
+      
+         <span class="glyphicon glyphicon-info-sign" aria-hidden="true" style="margin-right: 3px"></span>
+      
+      If this were C…
+   </p>
+   <p></p><p>The fact that we get a <code>println!</code> implementation for free with zero effort is
+   just another advantage to using Rust. If this were C, we’d need to implement
+   <code>printf</code> ourselves. In Rust, the compiler provides a generic, abstracted, and
+   safe OS-independent implementation. Whew!</p>
+<p></p>
+</div>
+
+
+
+<div class="alert alert-dismissible alert-success">
+   <p style="font-size: 16px;">
+   <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+   <span style="font-weight: bold;">Hint:</span> Your <code>Console</code> implementations should be very short: about a line each.</p>
+</div>
+
+
+
+<h5 id="implement-the-shell">Implement the Shell</h5>
+
+<figure style="
+   
+    padding: 10px; 
+">
+   <img src="./1-shell_files/shell.gif" alt="&#39;Finished&#39; Product" width="400px" style="
+          display: block; margin: 0 auto; 
+      ">
+   
+      <figcaption style="text-align: center;">
+         <small>'Finished' Product</small>
+      </figcaption>
+   
+</figure>
+
+
+<p>You’re now ready to implement the shell in <code>kernel/src/shell.rs</code>. We’ve provided
+a <code>Command</code> structure for your use. The <code>Command::parse()</code> method provides a
+simple command-line argument parser, returning a <code>Command</code> struct. The parse
+method splits the passed in string on spaces and stores all of the non-empty
+arguments in the <code>args</code> field as a <code>StackVec</code> using the passed in <code>buf</code> as
+storage. You must implement <code>Command::path()</code> yourself.</p>
+
+<p>Use all of your available libraries (<code>Command</code>, <code>StackVec</code>, <code>Console</code> via
+<code>CONSOLE</code>, <code>kprint!</code>, <code>kprintln!</code>, and anything else!) to implement a shell in
+the <code>shell</code> function. Your shell should print the <code>prefix</code> string on each line
+it waits for input. In the GIF above, for instance, <code>"&gt; "</code> is being used as the
+prefix. Your shell should then read a line of input from the user, parse the
+line into a command, and attempt to execute it. It should do this ad-infinitum.
+Since our operating system is only just beginning, we can’t run any interesting
+commands just yet. We can, however, build known commands like <code>echo</code> into the
+shell.</p>
+
+<p>To complete your implementation, your shell should…</p>
+
+<ul>
+<li>implement the <code>echo</code> built-in: <code>echo $a $b $c</code> should print <code>$a $b $c</code></li>
+<li>accept both <code>\r</code> and <code>\n</code> as “enter”, marking the end of a line</li>
+<li>accept both backspace and delete (ASCII <code>8</code> and <code>127</code>) to erase a single
+ character</li>
+<li>ring the bell (ASCII <code>7</code>) if an unrecognized non-visible character is
+ sent to it</li>
+<li>print <code>unknown command: $command</code> for an unknown command <code>$command</code></li>
+<li>disallow backspacing through the prefix</li>
+<li>disallow typing more characters than allowed</li>
+<li>accept commands at most 512 bytes in length</li>
+<li>accept at most 64 arguments per command</li>
+<li>start a new line, without error, with the <code>prefix</code> if the user enters an
+ empty command</li>
+<li>print <code>error: too many arguments</code> if the user passes in too many arguments</li>
+</ul>
+
+<p>Test your implementation by calling your new <code>shell()</code> function in
+<code>kernel/src/kmain.rs</code>. Minus the “SOS” banner, you should be able to replicate
+the GIF above. You should also be able to test all of the requirements we’ve
+set. Once your shell works as expected, revel in your accomplishments. Then,
+proceed to the next phase.</p>
+
+<div class="alert alert-dismissible alert-success">
+   <p style="font-size: 16px;">
+   <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+   <span style="font-weight: bold;">Hint:</span> A byte literal, <code>b'a'</code> is the <code>u8</code> ASCII value for a character <code>'a'</code>.</p>
+</div>
+
+
+
+<div class="alert alert-dismissible alert-success">
+   <p style="font-size: 16px;">
+   <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+   <span style="font-weight: bold;">Hint:</span> Use <code>\u{b}</code> in a string literal to print any character with ASCII byte value <code>b</code>.</p>
+</div>
+
+
+
+<div class="alert alert-dismissible alert-success">
+   <p style="font-size: 16px;">
+   <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+   <span style="font-weight: bold;">Hint:</span> You must print both <code>\r</code> and <code>\n</code> to begin a new line at the line start.</p>
+</div>
+
+
+
+<div class="alert alert-dismissible alert-success">
+   <p style="font-size: 16px;">
+   <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+   <span style="font-weight: bold;">Hint:</span> To erase a character, backspace, print a space, then backspace again.</p>
+</div>
+
+
+
+<div class="alert alert-dismissible alert-success">
+   <p style="font-size: 16px;">
+   <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+   <span style="font-weight: bold;">Hint:</span> Use <code>StackVec</code> to buffer the user’s input.</p>
+</div>
+
+
+
+<div class="alert alert-dismissible alert-success">
+   <p style="font-size: 16px;">
+   <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+   <span style="font-weight: bold;">Hint:</span> You’ll find the <a href="https://doc.rust-lang.org/nightly/std/str/fn.from_utf8.html">std::str::from_utf8()</a> function useful.</p>
+</div>
+
+
+
+
+<div class="alert alert-dismissible alert-warning">
+   <p style="font-size: 16px; font-weight: bold;">
+      
+         <span class="glyphicon glyphicon-warning-sign" aria-hidden="true" style="margin-right: 3px"></span>
+      
+      You’re not using the real <code>std</code>!
+   </p>
+   <p></p><p>Recall that we’re using a custom implementation of <code>std</code> in our kernel. The
+   implementation is, necessarily, incomplete, lacking lots of useful
+   functionality. Run <code>xargo doc --open</code> in the <code>os/std</code> directory to see what
+   it <em>does</em> contain.</p>
+<p></p>
+</div>
+
+
+
+<div class="panel panel-question">
+  <div class="panel-heading">
+     <div class="badge pull-right">
+        <code>
+           shell-lookback
+        </code>
+     </div>
+    <h3 class="panel-title">
+       <span class="glyphicon glyphicon-question-sign" aria-hidden="true" style="padding-right: 5px"></span>
+       How does your shell tie the many pieces together?
+    </h3>
+  </div>
+  <div class="panel-body">
+     <p></p><p>Your shell makes use of much of the code you’ve written. Briefly explain:
+  which pieces does it makes use of and in what way?</p>
+<p></p>
+  </div>
+</div>
+
+
+<hr>
+
+<h3 id="phase-4-boot-em-up">Phase 4: Boot ‘em Up</h3>
+
+<p>In this phase, you’ll use everything you’ve written thus far to implement a
+bootloader for your Raspberry Pi. You’ll be working primarily in
+<code>os/bootloader/src/kmain.rs</code>.</p>
+
+<p>You’ve likely become frustrated with the monotonous motions of swapping MicroSD
+cards to load a new binary onto your Pi. The bootloader you will write in this
+phase eliminates that process entirely. You’ll replace the binary on the MicroSD
+<em>one more time</em>, this time with the bootloader. From then on, you can load new
+binaries remotely from your computer without ever touching the MicroSD card
+again.</p>
+
+<p>The bootloader itself is a “kernel” of sorts that accepts XMODEM file transfers
+over UART. It writes the data received into memory at a known address and then
+executes it. We’ll use our <code>ttywrite</code> utility to send it binaries. As a result,
+the process to load a new binary onto the Pi will be as simple as:</p>
+
+<ol>
+<li>Resetting the Pi to start the bootloader.</li>
+<li>Running <code>ttywrite -i my-new-binary.bin /dev/&lt;your-device&gt;</code>.</li>
+</ol>
+
+<h4 id="loading-binaries">Loading Binaries</h4>
+
+<p>By default, the Raspberry Pi 3 loads files named <code>kernel8.img</code> at address
+<code>0x80000</code>. Said another way, the Pi will sequentially copy the contents of
+<code>kernel8.img</code> to <code>0x80000</code> and, after some initialization, set the ARM’s program
+counter to <code>0x80000</code>. As a result, we must ensure that our binary expects to be
+loaded at this address. This means that all of the addresses in the binary
+should begin at <code>0x80000</code>.</p>
+
+<p>Because the <strong>linker</strong> is what decides the addresses for all symbols in our
+binary, we must somehow inform the linker of this desire. To do this, we use a
+<em>linker script</em>: a file read by the linker that describes how we want it to
+assign addresses to symbols in our binary. Our kernel’s linker script can be
+found in <code>os/kernel/ext/layout.ld</code>. You’ll notice the address <code>0x80000</code> on the
+second line. Indeed, this line instructs the linker to begin allocating
+addresses at <code>0x80000</code>.</p>
+
+<p>To maintain compatibility with these defaults, our bootloader will <em>also</em> load
+binaries at address <code>0x80000</code>. But this raises an issue: if our bootloader’s
+binary is at address <code>0x80000</code>, loading a different binary at the same address
+will result in overwriting our bootloader <em>as we’re executing it!</em> To avoid this
+conflict, we <strong>must</strong> use different start addresses for the bootloader and the
+binaries it loads. We’d like to maintain compatibility with the Pi’s defaults,
+so we’ll need to change the start address of the bootloader. How?</p>
+
+<h4 id="making-space">Making Space</h4>
+
+<p>The first step is to choose a new address. As you can see in
+<code>os/bootloader/ext/layout.ld</code>, we’ve chosen <code>0x4000000</code> as the start address
+for our bootloader. While this fixes the addresses in the binary, the Pi will
+continue to load it at <code>0x80000</code>. Thankfully, we can ask the Pi to load our
+binary at a different address via a <code>kernel_address</code> parameter in the firmware’s
+<code>config.txt</code>. We’ve included a fixed version of the file in
+<code>bootloader/ext/config.txt</code> that does just this. Ensure you use this
+<code>config.txt</code> when running your bootloader by copying it to the root of the
+MicroSD card.</p>
+
+<p>As a result of this change, the memory between <code>0x80000</code> and <code>0x4000000</code> will be
+entirely unused by the bootloader, and we can load binaries up to <code>0x4000000 -
+0x80000</code> bytes in size without conflict.</p>
+
+<div class="panel panel-question">
+  <div class="panel-heading">
+     <div class="badge pull-right">
+        <code>
+           small-kernels
+        </code>
+     </div>
+    <h3 class="panel-title">
+       <span class="glyphicon glyphicon-question-sign" aria-hidden="true" style="padding-right: 5px"></span>
+       Is 63.5MiB really enough?
+    </h3>
+  </div>
+  <div class="panel-body">
+     <p></p><p>You might be thinking that the free space we’ve set apart isn’t enough. This
+  is a fair concern. One way to answer the question is to look at the file size
+  of kernels from successful operating systems. Would they fit?</p>
+
+<p>Determine how large the kernel binary is for the operating system you’re
+  running now. On newer versions of macOS, the binary is
+  <code>/System/Library/Kernels/kernel</code>. On older versions of macOS, the binary is
+  <code>/mach_kernel</code>. On Linux, the binary is usually located in <code>/boot/</code> and is
+  named either <code>vmlinuz</code>, <code>vmlinux</code>, or <code>bzImage</code>. How big is your kernel’s
+  binary? Would it fit in the 63.5MiB free space we’ve created?</p>
+<p></p>
+  </div>
+</div>
+
+
+<h4 id="implement-the-bootloader">Implement the Bootloader</h4>
+
+<p>Implement the bootloader in <code>bootloader/src/kmain.rs</code>. We’ve declared the
+bootloader’s start address, the loaded binary’s start address, and the maximum
+binary size in <code>const</code> declarations at the top of the file. We’ve also provided
+a <code>jump_to</code> function that unconditionally branches to the address <code>addr</code>. This
+has the effect of setting the program counter to that address. Your bootloader
+should use these declarations along with your existing code from the <code>pi</code> and
+<code>xmodem</code> libraries to receive a transmission over UART and write it to the
+memory address the binary expects to be loaded at. When the transmission is
+complete, your bootloader should execute the new binary.</p>
+
+<p>Be aware that your bootloader should continuously attempt to initiate an XMODEM
+reception by setting a low timeout value (say, 750ms) and attempting a new
+reception if a timeout occurs. If a reception fails for any other reason, print
+an error message and try again. Once you’ve implemented the bootloader, test it
+by sending your kernel binary from <code>os/kernel/build/kernel.bin</code> to your Pi using
+your <code>ttywrite</code> utility. If all is well, you should see your shell when you
+<code>screen</code> into your Pi.</p>
+
+<div class="panel panel-question">
+  <div class="panel-heading">
+     <div class="badge pull-right">
+        <code>
+           bootloader-timeout
+        </code>
+     </div>
+    <h3 class="panel-title">
+       <span class="glyphicon glyphicon-question-sign" aria-hidden="true" style="padding-right: 5px"></span>
+       Why is the timeout necessary?
+    </h3>
+  </div>
+  <div class="panel-body">
+     <p></p><p>Without the bootloader timing out and retrying a reception, it is possible for
+  the transmitter to stall indefinitely under some conditions. What are those
+  conditions, and why would the transmitter stall indefinitely?</p>
+<p></p>
+  </div>
+</div>
+
+
+
+<div class="alert alert-dismissible alert-warning">
+   <p style="font-size: 16px; font-weight: bold;">
+      
+         <span class="glyphicon glyphicon-warning-sign" aria-hidden="true" style="margin-right: 3px"></span>
+      
+      Remember to use the version of <code>config.txt</code> compatible with bootloader binaries!
+   </p>
+   <p></p>
+</div>
+
+
+
+<div class="alert alert-dismissible alert-success">
+   <p style="font-size: 16px;">
+   <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+   <span style="font-weight: bold;">Hint:</span> Our reference <code>kmain()</code> function is 15 lines of code.</p>
+</div>
+
+
+
+<div class="alert alert-dismissible alert-success">
+   <p style="font-size: 16px;">
+   <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+   <span style="font-weight: bold;">Hint:</span> You’ll find the <a href="https://doc.rust-lang.org/std/slice/fn.from_raw_parts_mut.html">std::slice::from_raw_parts_mut()</a> function useful.</p>
+</div>
+
+
+
+<div class="alert alert-dismissible alert-success">
+   <p style="font-size: 16px;">
+   <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+   <span style="font-weight: bold;">Hint:</span> The <code>&amp;mut [u8]</code> type implements <code>io::Write</code>.</p>
+</div>
+
+
+
+<hr>
+
+<h3 id="span-class-glyphicon-glyphicon-flag-aria-hidden-true-span-submission"><span class="glyphicon glyphicon-flag" aria-hidden="true"></span> Submission</h3>
+
+<p>Once you’ve completed the tasks above, you’re done and ready to submit!
+Congratulations!</p>
+
+<p>From inside of the <code>1-shell</code> assignment 1 skeleton directory, you can call <code>make
+check</code> to check if you’ve answered every question and <code>make test</code> to run the
+unit tests for projects in <code>1-shell</code>. Note that there are no unit tests for
+projects in <code>os</code>. You’re responsible for ensuring that they work as expected.</p>
+
+<p>When you’re ready, commit your changes. <strong>Any uncommitted changes will not be
+submitted with your assignment.</strong> Then, run <code>make submission</code> from the <code>1-shell</code>
+directory and proceed to the <a href="https://web.stanford.edu/class/cs140e/assignments/submission">submission page</a> to upload your submission.</p>
+
+      </article>
+
+      <div class="col-md-3 sidebar">
+         
+            <h3>Table of Contents</h3>
+            
+
+
+ 
+
+
+
+
+
+
+<div class="table-of-contents toc bd-callout">
+    
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/1-shell/#overview">
+                    <li>Overview</li>
+                </a>
+                
+                
+                    </ul>
+                
+             
+        
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/1-shell/#phase-0-getting-started">
+                    <li>Phase 0: Getting Started</li>
+                </a>
+                
+                
+                    </ul>
+                
+             
+        
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                    <ul class="toc-h4">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/1-shell/#getting-the-skeleton-code">
+                    <li>Getting the Skeleton Code</li>
+                </a>
+                
+                
+                    </ul>
+                
+                    </ul>
+                
+             
+        
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                    <ul class="toc-h4">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/1-shell/#questions">
+                    <li>Questions</li>
+                </a>
+                
+                
+                    </ul>
+                
+                    </ul>
+                
+             
+        
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/1-shell/#phase-1-ferris-wheel">
+                    <li>Phase 1: Ferris Wheel</li>
+                </a>
+                
+                
+                    </ul>
+                
+             
+        
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                    <ul class="toc-h4">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/1-shell/#diff-budget">
+                    <li>Diff Budget</li>
+                </a>
+                
+                
+                    </ul>
+                
+                    </ul>
+                
+             
+        
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                    <ul class="toc-h4">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/1-shell/#the-rules">
+                    <li>The Rules</li>
+                </a>
+                
+                
+                    </ul>
+                
+                    </ul>
+                
+             
+        
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                    <ul class="toc-h4">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/1-shell/#modify-away">
+                    <li>Modify Away!</li>
+                </a>
+                
+                
+                    </ul>
+                
+                    </ul>
+                
+             
+        
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/1-shell/#phase-2-oxidation">
+                    <li>Phase 2: Oxidation</li>
+                </a>
+                
+                
+                    </ul>
+                
+             
+        
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                    <ul class="toc-h4">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/1-shell/#subphase-a-stackvec-allocation-free-vectors">
+                    <li>Subphase A: StackVec - allocation-free vectors</li>
+                </a>
+                
+                
+                    </ul>
+                
+                    </ul>
+                
+             
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                    <ul class="toc-h4">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/1-shell/#subphase-b-volatile-wrappers-that-ensure-volatile-memory-accesses">
+                    <li>Subphase B: volatile - wrappers that ensure volatile memory accesses</li>
+                </a>
+                
+                
+                    </ul>
+                
+                    </ul>
+                
+             
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                    <ul class="toc-h4">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/1-shell/#subphase-c-xmodem-xmodem-protocol-implementation">
+                    <li>Subphase C: xmodem - XMODEM protocol implementation</li>
+                </a>
+                
+                
+                    </ul>
+                
+                    </ul>
+                
+             
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                    <ul class="toc-h4">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/1-shell/#subphase-d-ttywrite-a-utility-to-write-to-a-serial-device">
+                    <li>Subphase D: ttywrite - a utility to write to a serial device</li>
+                </a>
+                
+                
+                    </ul>
+                
+                    </ul>
+                
+             
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/1-shell/#phase-3-not-a-seashell">
+                    <li>Phase 3: Not a Seashell</li>
+                </a>
+                
+                
+                    </ul>
+                
+             
+        
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                    <ul class="toc-h4">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/1-shell/#subphase-a-getting-started">
+                    <li>Subphase A: Getting Started</li>
+                </a>
+                
+                
+                    </ul>
+                
+                    </ul>
+                
+             
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                    <ul class="toc-h4">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/1-shell/#subphase-b-system-timer">
+                    <li>Subphase B: System Timer</li>
+                </a>
+                
+                
+                    </ul>
+                
+                    </ul>
+                
+             
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                    <ul class="toc-h4">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/1-shell/#subphase-c-gpio">
+                    <li>Subphase C: GPIO</li>
+                </a>
+                
+                
+                    </ul>
+                
+                    </ul>
+                
+             
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                    <ul class="toc-h4">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/1-shell/#subphase-d-uart">
+                    <li>Subphase D: UART</li>
+                </a>
+                
+                
+                    </ul>
+                
+                    </ul>
+                
+             
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                    <ul class="toc-h4">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/1-shell/#subphase-e-the-shell">
+                    <li>Subphase E: The Shell</li>
+                </a>
+                
+                
+                    </ul>
+                
+                    </ul>
+                
+             
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+        
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/1-shell/#phase-4-boot-em-up">
+                    <li>Phase 4: Boot ‘em Up</li>
+                </a>
+                
+                
+                    </ul>
+                
+             
+        
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                    <ul class="toc-h4">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/1-shell/#loading-binaries">
+                    <li>Loading Binaries</li>
+                </a>
+                
+                
+                    </ul>
+                
+                    </ul>
+                
+             
+        
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                    <ul class="toc-h4">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/1-shell/#making-space">
+                    <li>Making Space</li>
+                </a>
+                
+                
+                    </ul>
+                
+                    </ul>
+                
+             
+        
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                    <ul class="toc-h4">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/1-shell/#implement-the-bootloader">
+                    <li>Implement the Bootloader</li>
+                </a>
+                
+                
+                    </ul>
+                
+                    </ul>
+                
+             
+        
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/1-shell/#span-class-glyphicon-glyphicon-flag-aria-hidden-true-span-submission">
+                    <li>Submission</li>
+                </a>
+                
+                
+                    </ul>
+                
+             
+        
+    
+</div>
+
+
+         
+
+         
+            <h3>References</h3>
+            
+               <p>
+                  <a href="https://doc.rust-lang.org/book/second-edition/">The Rust Programming Language v2</a>
+                   <br> TRPL v2, an introductory book about Rust and required reading material for this course. 
+               </p>
+            
+               <p>
+                  <a href="https://doc.rust-lang.org/nightly/std/">Rust Standard Library Documentation</a>
+                   <br> The rustdocs for Rust's standard library, a staple while writing any Rust software. 
+               </p>
+            
+               <p>
+                  <a href="https://docs.rs/">Docs.rs</a>
+                   <br> Hosted documentation for every crate published to crates.io. 
+               </p>
+            
+               <p>
+                  <a href="https://linux.die.net/man/">Searchable Linux man Pages (die.net)</a>
+                   <br> A searchable corpus of Linux manual pages. Can be used to find system call documentation. 
+               </p>
+            
+               <p>
+                  <a href="https://en.wikipedia.org/wiki/XMODEM">XMODEM Wikipedia Article</a>
+                   <br> Wikipedia article explaining the history and general implementation of the XMODEM protocol. Do NOT base your implementation on the details described in this article. 
+               </p>
+            
+               <p>
+                  <a href="https://web.stanford.edu/class/cs140e/assignments/1-shell/data/XMODEM.txt">XMODEM Reference</a>
+                   <br> Concise explanation of the XMODEM protocol. 
+               </p>
+            
+               <p>
+                  <a href="https://web.stanford.edu/class/cs140e/docs/BCM2837-ARM-Peripherals.pdf">BCM2837 Documentation</a>
+                   <br> Our modified version of the BCM2835 documentation with fixes for the BCM2837 and known errata. 
+               </p>
+            
+         
+      </div>
+   </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+    <script src="./1-shell_files/jquery-1.10.2.min.js"></script>
+    <script src="./1-shell_files/moment.min.js"></script>
+    <script src="./1-shell_files/bootstrap.min.js"></script>
+    <script src="./1-shell_files/bootswatch.js"></script>
+    <script src="./1-shell_files/schedule.js" type="text/javascript" charset="utf-8"></script>
+  
+
+
+
+<iframe frameborder="0" scrolling="no" style="background-color: transparent; border: 0px; display: none;" src="./1-shell_files/saved_resource.html"></iframe><div id="GOOGLE_INPUT_CHEXT_FLAG" style="display: none;" input="" input_stat="{&quot;tlang&quot;:true,&quot;tsbc&quot;:true,&quot;pun&quot;:false,&quot;mk&quot;:true,&quot;ss&quot;:true}"></div><div id="HUABAN_WIDGETS"><div class="HUABAN-f-button" style="display: none;">采集</div><style>#HUABAN_WIDGETS  {font-family: "helvetica neue",arial,sans-serif; color: #444; font-size: 14px;} #HUABAN_WIDGETS * {box-sizing: content-box;} #HUABAN_WIDGETS .HUABAN-main {position: fixed; left: 0; top: 0; width: 100%; height: 100%; background: #e5e5e5; background: rgba(229,229,229,.95); max-height: 100%; overflow: hidden; z-index: 9999999999999;} #HUABAN_WIDGETS a img {border: 0;} #HUABAN_WIDGETS .HUABAN-header {height: 50px; background: white; box-shadow: 0 0 4px rgba(0,0,0,.2); width: 100%; left: 0; top: 0; position: absolute;} #HUABAN_WIDGETS .HUABAN-header .HUABAN-inner {margin: 0 auto; position: relative;} #HUABAN_WIDGETS .HUABAN-header .HUABAN-close {width: 60px; height: 50px; border-left: 1px solid #ddd; position: absolute; right: 0; top: 0; background: url(https://huaban.com/img/widgets/btn_close.png) 20px 14px no-repeat; cursor: pointer;} #HUABAN_WIDGETS .HUABAN-header .HUABAN-close:hover {background-position: 20px -26px;} #HUABAN_WIDGETS .HUABAN-header .HUABAN-close:active {background-position: 20px -66px;} #HUABAN_WIDGETS .HUABAN-header .HUABAN-logo {display: block; position: absolute; top: 12px;} #HUABAN_WIDGETS .HUABAN-waterfall-holder {position: relative; overflow-y: auto; height: 100%;} #HUABAN_WIDGETS .HUABAN-waterfall {position: relative; margin-top: 50px;} #HUABAN_WIDGETS .HUABAN-waterfall .HUABAN-empty {position: absolute; left: 50%; top: 30px; height: 36px; line-height: 36px; width: 216px; text-align: left; margin-left: -128px; color: #777; background: url(https://huaban.com/img/widgets/icon_notice.png) 12px 8px no-repeat white; padding-left: 40px; font-size: 15px;} #HUABAN_WIDGETS .HUABAN-btn {display: inline-block; border-radius: 2px; font-size: 14px; padding: 0 12px; height: 30px; line-height: 30px; cursor: pointer; text-decoration: none; white-space: nowrap; -moz-user-select: none; -webkit-user-select: none; user-select: none; text-align: center; background: #D53939; color: white;} #HUABAN_WIDGETS .HUABAN-btn:hover {background: #E54646;} #HUABAN_WIDGETS .HUABAN-btn:active {background: #C52424;} #HUABAN_WIDGETS .HUABAN-wbtn {background: #EDEDED; color: #444;} #HUABAN_WIDGETS .HUABAN-wbtn:hover {background: #F2F2F2;} #HUABAN_WIDGETS .HUABAN-wbtn:active {background: #DDD;} #HUABAN_WIDGETS .HUABAN-f-button {position: absolute; display: none; z-index: 9999999999998; box-shadow: 0 0 0 2px rgba(255,255,255,.2); background: #aaa; background: rgba(0,0,0,.3); color: white; cursor: pointer; padding: 0 12px; height: 30px; line-height: 30px; border-radius: 2px; font-size: 14px} #HUABAN_WIDGETS .HUABAN-f-button:hover {background-color: #999; background-color: rgba(0,0,0,.5);} #HUABAN_WIDGETS .HUABAN-f-button:active {background-color: rgba(0,0,0,.6);} #HUABAN_WIDGETS .HUABAN-red-normal-icon-button {width: 36px; height: 24px; border: 0px; line-height: 24px; padding-left: 24px; padding-right: 0px; text-align: left; background: url(https://huaban.com/img/widgets/widget_icons.png) 0 -200px no-repeat; box-shadow: none !important; font-size: 14px; background-color: transparent !important;} #HUABAN_WIDGETS .HUABAN-red-normal-icon-button:hover {background-position: -130px -200px;} #HUABAN_WIDGETS .HUABAN-red-normal-icon-button:active {background-position: -260px -200px;} #HUABAN_WIDGETS .HUABAN-red-large-icon-button {width: 80px; height: 24px; border: 0px; line-height: 24px; padding-left: 24px; padding-right: 0px; text-align: left; background: url(https://huaban.com/img/widgets/widget_icons.png) 0 -150px no-repeat; box-shadow: none !important; font-size: 14px; background-color: transparent !important;} #HUABAN_WIDGETS .HUABAN-red-large-icon-button:hover {background-position: -130px -150px;} #HUABAN_WIDGETS .HUABAN-red-large-icon-button:active {background-position: -260px -150px;} #HUABAN_WIDGETS .HUABAN-red-small-icon-button {width: 30px; height: 21px; border: 0px; line-height: 21px; padding-left: 20px; padding-right: 0px; text-align: left; background: url(https://huaban.com/img/widgets/widget_icons.png) 0 -250px no-repeat; box-shadow: none !important; font-size: 12px; background-color: transparent !important;} #HUABAN_WIDGETS .HUABAN-red-small-icon-button:hover {background-position: -130px -250px;} #HUABAN_WIDGETS .HUABAN-red-small-icon-button:active {background-position: -260px -250px;} #HUABAN_WIDGETS .HUABAN-white-normal-icon-button {width: 36px; height: 24px; border: 0px; line-height: 24px; padding-left: 24px; padding-right: 0px; text-align: left; background: url(https://huaban.com/img/widgets/widget_icons.png) 0 -500px no-repeat; box-shadow: none !important; color: #444; font-size: 14px; background-color: transparent !important;} #HUABAN_WIDGETS .HUABAN-white-normal-icon-button:hover {background-position: -130px -500px;} #HUABAN_WIDGETS .HUABAN-white-normal-icon-button:active {background-position: -260px -500px;} #HUABAN_WIDGETS .HUABAN-white-large-icon-button {width: 80px; height: 24px; border: 0px; line-height: 24px; padding-left: 24px; padding-right: 0px; text-align: left; background: url(https://huaban.com/img/widgets/widget_icons.png) 0 -450px no-repeat; box-shadow: none !important; color: #444; font-size: 14px; background-color: transparent !important;} #HUABAN_WIDGETS .HUABAN-white-large-icon-button:hover {background-position: -130px -450px;} #HUABAN_WIDGETS .HUABAN-white-large-icon-button:active {background-position: -260px -450px;} #HUABAN_WIDGETS .HUABAN-white-small-icon-button {width: 30px; height: 21px; border: 0px; line-height: 21px; padding-left: 20px; padding-right: 0px; text-align: left; background: url(https://huaban.com/img/widgets/widget_icons.png) 0 -550px no-repeat; box-shadow: none !important; color: #444; font-size: 12px; background-color: transparent !important;} #HUABAN_WIDGETS .HUABAN-white-small-icon-button:hover {background-position: -130px -550px;} #HUABAN_WIDGETS .HUABAN-white-small-icon-button:active {background-position: -260px -550px;} #HUABAN_WIDGETS .HUABAN-cell {width: 236px; position: absolute; background: white; box-shadow: 0 1px 3px rgba(0,0,0,.3); transition: left .3s ease-in-out, top .3s linear;} #HUABAN_WIDGETS .HUABAN-cell .HUABAN-img-holder {overflow: hidden; position: relative;} #HUABAN_WIDGETS .HUABAN-cell .HUABAN-img-holder:hover img.HUABAN-cell-img {opacity: .8} #HUABAN_WIDGETS .HUABAN-cell .HUABAN-video-icon {width: 72px; height: 62px; position: absolute; left: 50%; top: 50%; margin: -31px auto auto -36px; background: url(https://huaban.com/img/widgets/media_video.png) 0 0 no-repeat; display: none;} #HUABAN_WIDGETS .HUABAN-cell.HUABAN-video .HUABAN-video-icon {display: block;} #HUABAN_WIDGETS .HUABAN-cell .HUABAN-over {display: none;} #HUABAN_WIDGETS .HUABAN-cell:hover .HUABAN-over {display: block;} #HUABAN_WIDGETS .HUABAN-cell .HUABAN-over .HUABAN-btn {width: 60px; height: 34px; padding: 0; position: absolute; left: 50%; top: 50%; margin: -18px 0 0 -31px; line-height: 34px; box-shadow: 0 0 0 2px rgba(255,255,255,.2); font-size: 16px;} #HUABAN_WIDGETS .HUABAN-cell.HUABAN-long .HUABAN-img-holder {height: 600px;} #HUABAN_WIDGETS .HUABAN-cell.HUABAN-long .HUABAN-img-holder:after {content: ""; display: block; position: absolute; width: 236px; height: 12px; left: 0; bottom: 0; background: url(https://huaban.com/img/widgets/long_image_shadow_2.png) repeat-x 4px top;} #HUABAN_WIDGETS .HUABAN-cell img {width: 236px; display: block;} #HUABAN_WIDGETS .HUABAN-cell .HUABAN-size {margin: 8px 16px; font-size: 12px; color: #999} #HUABAN_WIDGETS .HUABAN-cell .HUABAN-description {display: block; width: 202px; margin: 0 6px 6px; padding: 6px 10px; border: 0; resize: none; outline: 0; border: 1px solid transparent; line-height: 18px; font-size: 13px; overflow: hidden; word-wrap: break-word; background: url(https://huaban.com/img/widgets/icon_edit.png) 500px center no-repeat;} #HUABAN_WIDGETS .HUABAN-cell:hover .HUABAN-description {background-color: #fff9e0; background-position: right top;} #HUABAN_WIDGETS .HUABAN-cell .HUABAN-description:focus {background-color: #F9F9F9; background-position: 500px center;} #HUABAN_WIDGETS .HUABAN-cell .HUABAN-select-btn {width: 34px; height:34px; background: url(https://huaban.com/img/widgets/checkbox.png) 0 0 no-repeat; position: absolute; right: 5px; top: 5px; cursor: pointer;} #HUABAN_WIDGETS .HUABAN-cell .HUABAN-pinned-label {position: absolute; left: 0; top: 10px; height: 24px; line-height: 24px; padding: 0 10px; background: #CE0000; background: rgba(200, 0, 0, 0.9); color: white; font-size: 12px; display: none;} #HUABAN_WIDGETS .HUABAN-cell.HUABAN-pinned .HUABAN-pinned-label {display: block;} #HUABAN_WIDGETS .HUABAN-selected .HUABAN-select-btn {background-position: 0 -40px;} #HUABAN_WIDGETS .HUABAN-multi .HUABAN-cell .HUABAN-img-holder {cursor: pointer;} #HUABAN_WIDGETS .HUABAN-multi .HUABAN-cell .HUABAN-cell-pin-btn {display: none;} #HUABAN_WIDGETS .HUABAN-multi .HUABAN-cell .HUABAN-over {display: block;} #HUABAN_WIDGETS .HUABAN-header .HUABAN-multi-buttons {position: absolute; top: 10px; left: 0; display: none;} #HUABAN_WIDGETS .HUABAN-header .HUABAN-multi-buttons .HUABAN-btn {margin-right: 10px;} #HUABAN_WIDGETS .HUABAN-header .HUABAN-multi-noti {display: none; height: 50px; line-height: 50px; text-align: center; font-size: 16px; color: #999; font-weight: bold;} #HUABAN_WIDGETS .HUABAN-header .HUABAN-multi-noti span {font-weight: normal;} #HUABAN_WIDGETS .HUABAN-header .HUABAN-multi-noti i {font-style: normal;} #HUABAN_WIDGETS .HUABAN-header .HUABAN-notice {padding: 0 10px; height:30px; line-height: 30px; position: absolute; left: 50%; top: 10px; margin-left: -83px; background: #fff9e2; text-align: center;} #HUABAN_WIDGETS .HUABAN-header .HUABAN-notice i {display: inline-block; width: 18px; height: 18px; background: url(https://huaban.com/img/widgets/icon_notice.png) 0 0 no-repeat; vertical-align: top; margin: 6px 6px 0 0;} #HUABAN_WIDGETS .HUABAN-switcher {height: 50px; width: 100px; position: relative;} #HUABAN_WIDGETS .HUABAN-switcher .HUABAN-title {position: absolute; right: 75px; top: 13px; color: #999; white-space: nowrap; line-height: 24px; opacity: 0; visibility: hidden;} #HUABAN_WIDGETS .HUABAN-switcher:hover .HUABAN-title {visibility: visible; opacity: 1; -webkit-transition: opacity .2s linear; -webkit-transition-delay: .2s; transition: opacity .2s linear; transition-delay: .2s;} #HUABAN_WIDGETS .HUABAN-switcher .HUABAN-bar {width: 40px; height: 24px; background: #EB595F; border-radius: 12px; color: white; position: absolute; right: 0; top: 13px; cursor: pointer; font-size: 14px; -webkit-transition: all .2s linear; transition: all .2s linear;} #HUABAN_WIDGETS .HUABAN-switcher:hover .HUABAN-bar {width: 64px;} #HUABAN_WIDGETS .HUABAN-switcher.HUABAN-on .HUABAN-bar {background: #7DD100;} #HUABAN_WIDGETS .HUABAN-switcher .HUABAN-bar .HUABAN-round {width: 20px; height: 20px; background: white; border-radius: 50%; position: absolute; left: 2px; top: 2px; -webkit-transition: left .2s linear; box-shadow: 0px 0px 3px rgba(0,0,0,0.15); transition: left .2s linear; box-shadow: 0px 0px 3px rgba(0,0,0,0.15);} #HUABAN_WIDGETS .HUABAN-switcher.HUABAN-on .HUABAN-bar .HUABAN-round {left: 17px;} #HUABAN_WIDGETS .HUABAN-switcher.HUABAN-on:hover .HUABAN-bar .HUABAN-round {left: 41px;} #HUABAN_WIDGETS .HUABAN-switcher .HUABAN-bar .HUABAN-text-1 {height: 24px; line-height: 24px; position: absolute; right:17px; top: 0; opacity: 0; visibility: hidden; -webkit-transition: all .2s linear; transition: all .2s linear;} #HUABAN_WIDGETS .HUABAN-switcher:hover .HUABAN-bar .HUABAN-text-1 {right: 9px; opacity: 1; visibility: visible;} #HUABAN_WIDGETS .HUABAN-switcher.HUABAN-on:hover .HUABAN-bar .HUABAN-text-1 {right: 17px; opacity: 0; visibility: hidden;} #HUABAN_WIDGETS .HUABAN-switcher .HUABAN-bar .HUABAN-text-2 {height: 24px; line-height: 24px; position: absolute; left:17px; top: 0; opacity: 0; visibility: hidden; -webkit-transition: all .2s linear; transition: all .2s linear;} #HUABAN_WIDGETS .HUABAN-switcher:hover .HUABAN-bar .HUABAN-text-2 {left: 17px; opacity: 0; visibility: hidden;} #HUABAN_WIDGETS .HUABAN-switcher.HUABAN-on:hover .HUABAN-bar .HUABAN-text-2 {left: 9px; opacity: 1; visibility: visible;} #HUABAN_WIDGETS .HUABAN-header .HUABAN-switcher {position: absolute; right: 0; top: 0;} <!--[if IE 6]>#HUABAN_WIDGETS .HUABAN-red-normal-icon-button, .HUABAN-red-large-icon-button, .HUABAN-red-small-icon-button, .HUABAN-white-normal-icon-button, .HUABAN-white-large-icon-button, .HUABAN-white-small-icon-button { background-image: url({{imgBase}}/widget_icons_ie6.png) <![endif]--></style></div></body></html>

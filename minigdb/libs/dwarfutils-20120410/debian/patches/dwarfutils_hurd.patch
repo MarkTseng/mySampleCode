@@ -1,0 +1,26 @@
+Index: dwarfutils-20120410/dwarfdump2/print_die.cc
+===================================================================
+--- dwarfutils-20120410.orig/dwarfdump2/print_die.cc	2012-06-19 16:52:34.000000000 +0000
++++ dwarfutils-20120410/dwarfdump2/print_die.cc	2012-06-19 16:53:19.000000000 +0000
+@@ -1222,8 +1222,8 @@
+         /* Get the global offset for reference */
+         res = dwarf_global_formref(attrib, &ref_off, &err);
+         if (res != DW_DLV_OK) {
+-            int errno = dwarf_errno(err);
+-            if (errno == DW_DLE_REF_SIG8_NOT_HANDLED ) {
++            int ferrno = dwarf_errno(err);
++            if (ferrno == DW_DLE_REF_SIG8_NOT_HANDLED ) {
+                 // No need to stop, ref_sig8 refers out of
+                 // the current section.
+                 break;
+@@ -1234,8 +1234,8 @@
+         }
+         res = dwarf_dieoffset(die, &die_off, &err);
+         if (res != DW_DLV_OK) {
+-            int errno = dwarf_errno(err);
+-            if (errno == DW_DLE_REF_SIG8_NOT_HANDLED ) {
++            int ferrno = dwarf_errno(err);
++            if (ferrno == DW_DLE_REF_SIG8_NOT_HANDLED ) {
+                 // No need to stop, ref_sig8 refers out of
+                 // the current section.
+                 break;

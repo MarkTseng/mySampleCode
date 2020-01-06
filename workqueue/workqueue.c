@@ -13,11 +13,13 @@ int quitJob = 0;
 void taskthread(void* new) {
     int i = (int)new;
     printf("[%s] called %d\n",__func__, i );
+    sleep(1);
 }
 
 void taskthreadHigh(void* new) {
     int i = (int)new;
     printf("[%s] called %d\n",__func__, i );
+    sleep(1);
 }
 
 void sighandler(int signum)

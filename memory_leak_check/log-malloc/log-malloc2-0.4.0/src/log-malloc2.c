@@ -415,7 +415,6 @@ static inline void log_trace(char *str, size_t len, size_t max_size, int print_s
 	return;
 }
 
-
 /*
  *  LIBRARY FUNCTIONS
  */
@@ -449,11 +448,10 @@ void *malloc(size_t size)
 		int s;
 		char buf[LOG_BUFSIZE];
 
-		s = snprintf(buf, sizeof(buf), "+ malloc %zu %p [%u:%u]\n",
-			size, MEM_PTR(mem),
-			memuse, memruse);
-
-		log_trace(buf, s, sizeof(buf), 1);
+        s = snprintf(buf, sizeof(buf), "+ malloc %zu %p [%u:%u]\n",
+                size,MEM_PTR(mem),
+                memuse, memruse);
+        log_trace(buf, s, sizeof(buf), 1);
 	}
 	return MEM_PTR(mem);
 }

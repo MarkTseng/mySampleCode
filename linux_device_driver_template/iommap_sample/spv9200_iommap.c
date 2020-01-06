@@ -37,10 +37,11 @@
 #include <linux/platform_device.h> /* platform device structure*/
 #include <linux/ioport.h> /* resource structure */
 
-
+#if 0
 #include <asm/mach-spv9200/regmap_9200.h> /* SPV9200 CPU Register */
 #include <asm/mach-spv9200/spv9200_memlayout.h> /* SPV9200 memory layout */
 #include <asm/mach-spv9200/sizes.h> /* SZ_XX for resource structure */
+#endif
 #include <asm/cacheflush.h>
 #include <asm/uaccess.h>
 #include <asm/page.h>
@@ -53,8 +54,8 @@
  * The phys start addr : base address in dram 
  * The phys end addr   : end addree in dram 
  */
-static unsigned long phys_start_addr = 0x13000000;
-static unsigned long phys_end_addr	 = 0x13ffffff;
+static unsigned long phys_start_addr = 0x20000000;
+static unsigned long phys_end_addr	 = 0x201fffff;
 module_param(phys_start_addr, ulong, S_IRUGO);
 module_param(phys_end_addr, ulong, S_IRUGO);
 
@@ -69,9 +70,9 @@ static int iommap_mmap(struct file *file, struct vm_area_struct *vma)
     printk("mmap: vma->vm_end       = 0x%lx\n", vma->vm_end);
     printk("mmap: size              = 0x%lx\n", vma->vm_end - vma->vm_start);
 	printk("mmap: SDRAMB virtual    = 0x%lx\n", (unsigned long)phys_start_addr >> PAGE_SHIFT);
-    printk("mmap: vm_page_prot      = 0x%lx\n", vma->vm_page_prot);
-    printk("mmap: vm_page_prot nocache = 0x%lx\n", pgprot_noncached(vma->vm_page_prot));
-    printk("mmap: vm_page_prot cache   = 0x%lx\n", __pgprot(pgprot_val(vma->vm_page_prot)));
+    printk("mmap: vm_page_prot      = 0x%lx\n", (unsigned long)vma->vm_page_prot);
+    printk("mmap: vm_page_prot nocache = 0x%lx\n",(unsigned long) pgprot_noncached(vma->vm_page_prot));
+    printk("mmap: vm_page_prot cache   = 0x%lx\n",(unsigned long) __pgprot(pgprot_val(vma->vm_page_prot)));
 
 	/* no such device */
 	if (!pIOMMAPDev->virtual_mem_base)
@@ -83,7 +84,7 @@ static int iommap_mmap(struct file *file, struct vm_area_struct *vma)
     vma->vm_page_prot = pgprot_noncached(vma->vm_page_prot);
 	//vma->vm_page_prot = __pgprot(pgprot_val(vma->vm_page_prot));
 
-    vma->vm_flags |= VM_RESERVED | VM_IO;
+    vma->vm_flags |=  VM_IO;
 
 	// mmap : convert phys addr to virt addr in 3rd argument
     if (io_remap_pfn_range(vma, vma->vm_start, phys_start_addr >> PAGE_SHIFT,

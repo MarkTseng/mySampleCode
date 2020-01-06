@@ -18,6 +18,29 @@ static struct file *log_file;
 static int log_file_error = 0;
 unsigned long cycle_mb = 25;
 
+int DrvVif_MCULoadBin(char *path)
+{
+    struct file *MCUBinFd = NULL;
+    mm_segment_t old_fs;
+	char buf[2048];
+	int i;
+
+    // load file from FS
+    MCUBinFd = filp_open(path, O_RDONLY, 0);
+    if (MCUBinFd == NULL)
+    {
+        pr_info("open MCU bin file error!!\n");
+    }
+    old_fs = get_fs();
+    set_fs(get_ds());
+    MCUBinFd->f_op->read(MCUBinFd, buf, 2048, &MCUBinFd->f_pos);
+    set_fs(old_fs);
+    filp_close(MCUBinFd,NULL);
+	for(i=0;i<0x20;i++)
+		pr_info("buf[%d]:%x\n", i, buf[i]);
+	return 0;
+}
+
 static void log_write( char *fmt, int len)
 {
   if ( len <= 0 || 0 == fmt[0] )
@@ -90,6 +113,8 @@ static int __init log_init(void)
     int ret = 0;
 
 	// test
+	DrvVif_MCULoadBin("/ext/bin/iperf");
+	return ret;
 	log_write( "*** trace_indent < 0\n", sizeof("*** trace_indent < 0\n")-1 );
 
     return ret;
@@ -106,6 +131,7 @@ module_init(log_init);
 module_exit(log_cleanup);
 MODULE_AUTHOR("Mark Tseng, mark.tseng@realtek.com");
 MODULE_LICENSE("Dual BSD/GPL");
+MODULE_INFO(intree, "Y");
 MODULE_DESCRIPTION("VFS debug msg to file");
 
 

@@ -86,14 +86,15 @@ static void output(char *kbuf, dma_addr_t handle, size_t size, char *string)
 		(unsigned long *)handle, (int)size);
 	pr_info("(kbuf-handle)= %12p, %12lu, PAGE_OFFSET=%12lu, compare=%lu\n",
 		(void *)diff, diff, PAGE_OFFSET, diff - PAGE_OFFSET);
-	strcpy(kbuf, string);
+	//strcpy(kbuf, string);
 	pr_info("string written was, %s\n", kbuf);
 }
 
 static int __init my_init(void)
 {
+    int ret = 0;
 	dev_set_name(&dev, "my0");
-	device_register(&dev);
+	ret = device_register(&dev);
 
 	/* dma_alloc_coherent method */
 
@@ -108,19 +109,20 @@ static int __init my_init(void)
 	pr_info("\nTesting dma_map_single()................\n\n");
 	kbuf = kmalloc(size, GFP_KERNEL);
 	handle = dma_map_single(&dev, kbuf, size, direction);
-	output(kbuf, handle, size, "This is the dma_map_single() string");
+    output(kbuf, handle, size, "This is the dma_map_single() string");
 	dma_unmap_single(&dev, handle, size, direction);
 	kfree(kbuf);
 
-	/* dma_pool method */
 
+	/* dma_pool method */
+#if 0
 	pr_info("\nTesting dma_pool_alloc()..........\n\n");
 	mypool = dma_pool_create("mypool", NULL, pool_size, pool_align, 0);
 	kbuf = dma_pool_alloc(mypool, GFP_KERNEL, &handle);
 	output(kbuf, handle, size, "This is the dma_pool_alloc() string");
 	dma_pool_free(mypool, kbuf, handle);
 	dma_pool_destroy(mypool);
-
+#endif
 	device_unregister(&dev);
 
 	return 0;

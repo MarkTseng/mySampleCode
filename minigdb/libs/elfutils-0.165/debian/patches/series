@@ -1,0 +1,15 @@
+hppa_backend.diff
+arm_backend.diff
+mips_backend.diff
+m68k_backend.diff
+testsuite-ignore-elflint.diff
+mips_readelf_w.patch
+kfreebsd_path.patch
+0001-Ignore-differences-between-mips-machine-identifiers.patch
+0002-Add-support-for-mips64-abis-in-mips_retval.c.patch
+0003-Add-mips-n64-relocation-format-hack.patch
+old_glibc.patch
+0001-tests-Skip-dwfl-bug-fd-leak-test-if-dwfl_linux_proc_.patch
+0001-elflint-Recognize-ELFOSABI_FREEBSD-which-Debian-kFre.patch
+0001-tests-Guard-linux-specific-header-includes-with-ifde.patch
+find-debuginfo.patch

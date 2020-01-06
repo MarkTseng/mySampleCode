@@ -1,0 +1,1322 @@
+<!DOCTYPE html>
+<!-- saved from url=(0059)https://web.stanford.edu/class/cs140e/assignments/0-blinky/ -->
+<html lang="en" class="hb-loaded"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <title>Stanford CS140e - Operating Systems</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="./0-blinky_files/bootstrap.min.css" media="screen">
+    <link rel="stylesheet" href="./0-blinky_files/hugo-bootswatch.css">
+    <link rel="stylesheet" href="./0-blinky_files/extra.css">
+  </head>
+  <body huaban_collector_injected="true" style="">
+
+<nav class="navbar navbar-default">
+<div class="container">
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <a href="https://web.stanford.edu/class/cs140e/" class="navbar-brand">CS140e</a>
+  </div>
+  <div id="navbar" class="navbar-collapse collapse">
+    <ul class="nav navbar-nav">
+        
+        
+          
+            
+            <li>
+              <a href="https://web.stanford.edu/class/cs140e/">Home</a>
+            </li>
+            
+          
+        
+          
+            <li class="dropdown  active">
+              <a href="https://web.stanford.edu/class/cs140e/assignments/0-blinky/#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                Assignments<span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" role="menu">
+                
+                  
+                  <li>
+                    <a href="https://web.stanford.edu/class/cs140e/assignments/info/"> Grading and Policies </a>
+                  </li>
+                  
+                
+                  
+                  <li>
+                    <a href="https://web.stanford.edu/class/cs140e/assignments/submission/"> Submission and Grades </a>
+                  </li>
+                  
+                
+                  <li class="divider"></li>
+                  <li class="active">
+                    <a href="https://web.stanford.edu/class/cs140e/assignments/0-blinky/"> Assignment 0: Blinky </a>
+                  </li>
+                  
+                
+                  
+                  <li>
+                    <a href="https://web.stanford.edu/class/cs140e/assignments/1-shell/"> Assignment 1: Shell </a>
+                  </li>
+                  
+                
+                  
+                  <li>
+                    <a href="https://web.stanford.edu/class/cs140e/assignments/2-fs/"> Assignment 2: File System </a>
+                  </li>
+                  
+                
+              </ul>
+            </li>
+          
+        
+          
+            
+            <li>
+              <a href="https://web.stanford.edu/class/cs140e/about/">General Information</a>
+            </li>
+            
+          
+        
+          
+            
+            <li>
+              <a href="https://web.stanford.edu/class/cs140e/syllabus/">Syllabus</a>
+            </li>
+            
+          
+        
+
+    </ul>
+  </div>
+</div>
+</nav>
+
+
+<div class="container">
+   <div class="row pad-top">
+      <article class="col-md-9">
+         <h1>Assignment 0 <small>Blinky</small></h1>
+         <h4>Due:<b> Monday January 15, 2018 11:59PM</b></h4>
+         <hr>
+         
+
+<h3 id="preface">Preface</h3>
+
+<p>Welcome to CS140e! We’re really excited that you’ve decided to join us for
+this inaugural incarnation. We hope you have as much fun taking this class as
+we’ve had developing it! And, of course, we hope you learn a ton.</p>
+
+<p>We’re hoping to do things a little differently in CS140e than the norm. In
+particular, we want <em>you</em> to write the majority of the code, and we want your
+code to execute on <em>real</em> hardware, doing <em>real</em> things. There’s going to be
+very little scaffolding provided for you, and all of your code will target and
+run on the Raspberry Pi 3, a quad-core ARMv8 Cortex-A53 based embedded platform.</p>
+
+<p>In CS140e, you’ll be programming in <a href="https://www.rust-lang.org/en-US/">Rust</a>, a “a systems programming language
+that runs blazingly fast, prevents segfaults, and guarantees thread safety.” You
+can think of Rust as a successor to C and C++, but it’s  more useful to think of
+it as a brand new language with new concepts. Don’t try to program in Rust as if
+it’s C, C++, Java, or any other language you’re used to. Instead, see it as an
+opportunity to learn a new way to write software - a new <em>rusty</em> way. By the end
+of the term, we think you’ll agree that Rust helps your write more correct, more
+reliable software - key properties for operating systems!</p>
+
+<p>You’ll be writing a lot of code in CS140e, though we think that the majority of
+your time will be spent thinking about what needs to happen. We expect that most
+assignments will take about 10 - 15 hours a week to complete. You should, under
+no circumstance, procrastinate in CS140e. Start early, ask questions, and have
+fun - you’ll learn much more if you give yourself a chance to think through hard
+problems.</p>
+
+<p>We’re here to answer any and all questions. Please don’t hesitate to reach out
+to us. Best of luck!</p>
+
+<hr>
+
+<h3 id="overview">Overview</h3>
+
+<p>In this assignment, you will set up and test a Raspberry Pi 3, ARM64 development
+environment for your use throughout the rest of the course. You’ll install the
+necessary tools and write your first bare-metal application, an LED blinky
+program, in two languages: C and Rust.</p>
+
+<p>This assignment is divided into 4 phases. In the first phase, you’ll install the
+necessary software to communicate with your Pi from your machine. You’ll also
+ensure that your Pi works as expected by running a pre-compiled program. In the
+second phase, you’ll connect GPIO pin 16 on your Raspberry Pi to an LED on a
+breadboard and run a second pre-compiled program to ensure your connections are
+sound. In the third phase, you’ll install an <code>aarch64-none-elf</code> cross-compiler,
+allowing you to compile and link programs for your Pi from your machine. You’ll
+write, compile, and link a C program that toggles GPIO pin 16 on and off,
+blinking the LED connected to your Pi. Finally, in phase 4, you’ll install
+<a href="https://www.rust-lang.org/en-US/">Rust</a> and the necessary toolchain to write, compile, and link the same program
+in Rust.</p>
+
+<hr>
+
+<h3 id="phase-0-getting-started">Phase 0: Getting Started</h3>
+
+<p>First, ensure that you are working on this assignment using a compatible
+machine. For CS140e, compatible means that the machine meets the following
+requirements:</p>
+
+<ul>
+<li>Runs a modern Unix natively: Linux, BSD, or macOS</li>
+<li>Runs a 64-bit variant of the OS</li>
+<li>Has a USB-A port or USB-C to USB-A adapter</li>
+</ul>
+
+<p>And has the following software installed: <code>git</code>, <code>wget</code>, <code>tar</code>, <code>screen</code>, and
+<code>make</code>.</p>
+
+<p>If you are running Windows, we suggest that you partition your boot disk now and
+install <a href="https://www.ubuntu.com/download/desktop">Ubuntu LTS</a> or <a href="https://getfedora.org/en/workstation/download/">Fedora</a> on a secondary partition. You may also have
+luck working on assignments using the <a href="https://docs.microsoft.com/en-us/windows/wsl/install-win10">Linux Subsystem for Windows</a>, but we
+won’t be providing support for or answering questions about this configuration.</p>
+
+<h4 id="getting-your-pi-ready">Getting your Pi Ready</h4>
+
+<p>Check that your Raspberry Pi kit includes all of the following materials:</p>
+
+<ul>
+<li>1 Raspberry Pi 3</li>
+<li>1 <sup>1</sup>⁄<sub>2</sub>-sized breadboard</li>
+<li>1 4GiB microSD card</li>
+<li>1 microSD card USB adapter</li>
+<li>1 CP2102 USB TTL adapter w/4 jumper cables</li>
+<li>10 multicolored LEDs</li>
+<li>4 100 ohm resistors</li>
+<li>4 1k ohm resistors</li>
+<li>10 male-male DuPont jumper cables</li>
+<li>10 female-male DuPont jumper cables</li>
+</ul>
+
+<p>To set up for this assignment, unbox your Raspberry Pi, micro SD card,
+breadboard, and USB CP2102 module. Electronics are sensitive to electrostatic
+discharge, so ensure that you ground yourself by touching something conductive
+before touching any electronics. Prepare two male to female jumper cables for
+use as well as one resistor (any resistor!) and one LED. Finally, ready the USB
+microSD card adapter.</p>
+
+<h4 id="getting-the-skeleton-code">Getting the Skeleton Code</h4>
+
+<p>Clone the assignment 0 skeleton git repository to your development machine and
+then fetch the required files by running <code>make fetch</code> inside the directory:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">git clone https://web.stanford.edu/class/cs140e/assignments/0-blinky/skeleton.git <span style="color:#1c01ce">0</span>-blinky
+<span style="color:#a90d91">cd</span> assignment0
+make fetch</code></pre></div>
+<p>Feel free to explore the contents of the repository.</p>
+
+<h3 id="phase-1-baking-pi">Phase 1: Baking Pi</h3>
+
+<figure style="
+   float: right; 
+    padding: 10px; 
+">
+   <img src="./0-blinky_files/usb-module.jpg" alt="CP2102 USB Module" width="240px" style="
+         
+      ">
+   
+</figure>
+
+
+<p>The primary means through which you’ll be powering and communicating with your
+Pi is via a CP2102 USB module. That’s the red USB dongle with the five pins.</p>
+
+<h4 id="installing-drivers">Installing Drivers</h4>
+
+<p>If you’re running Linux, you don’t have to do anything for your machine to
+recognize the module correctly. If you’re running macOS, you’ll need to install
+a driver. <a href="https://www.silabs.com/documents/public/software/Mac_OSX_VCP_Driver.zip">Download this zip
+file</a>,
+double-click to unzip it, and then double-click the resulting
+<code>SiLabsUSBDriverDisk.dmg</code> file. Accept the terms. In the newly mounted volume,
+you’ll see a <code>Silicon Labs VPC Driver.pkg</code> file. Double-click to run and follow
+the on-screen prompts to install the driver. Once complete, restart your
+machine. After rebooting, you’ll be ready to continue.</p>
+
+<p>Insert the CP2102 module into a USB slot on your machine. If everything worked
+well, you should see a new file in <code>/dev</code> corresponding to the device. On macOS,
+this will be <code>/dev/tty.SLAB_USBtoUART</code>. On Linux, this will likely be
+<code>/dev/ttyUSB0</code>. Before continuing, you may wish to record this path. You’ll be
+referring to it a lot in the future.</p>
+
+<p>Now unplug the CP2102 module from your machine.</p>
+
+<h4 id="powering-the-pi">Powering the Pi</h4>
+
+<p>We’ll now connect the Raspberry Pi to the CP2102 module using the four
+female-female jumper cables included in the module’s package. The table below
+shows which pins on the CP2102 module you should connect to which pins on the
+Raspberry Pi:</p>
+
+<table>
+<thead>
+<tr>
+<th>CP2102 Pin</th>
+<th>Pi Physical Pin</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>+5v</td>
+<td>4</td>
+</tr>
+
+<tr>
+<td>GND</td>
+<td>6</td>
+</tr>
+
+<tr>
+<td>RXD</td>
+<td>8</td>
+</tr>
+
+<tr>
+<td>TXD</td>
+<td>10</td>
+</tr>
+</tbody>
+</table>
+
+<p>Here’s how the pins are numbered on the Raspberry Pi 3:</p>
+
+<figure style="
+   
+    padding: 10px; 
+">
+   <img src="./0-blinky_files/pi3-gpio-pinout.svg" alt="Raspberry Pi 3 GPIO Pinout" width="550px" style="
+          display: block; margin: 0 auto; 
+      ">
+   
+</figure>
+
+
+<p>Here’s what the connections should look like:</p>
+
+<figure style="
+   
+    padding: 10px; 
+">
+   <img src="./0-blinky_files/usb-ttl-pi3.png" alt="USB TTL Connections" width="450px" style="
+          display: block; margin: 0 auto; 
+      ">
+   
+</figure>
+
+
+<p>Double-check, triple-check, and quadruple-check your connections! Then, get a
+friend to double-check your connections! Incorrect wiring can result in a fried
+Raspberry Pi, which will result in an automatic F in this course. Okay, that
+last bit isn’t true, but Raspberry Pi 3’s are expensive, and we don’t want to
+pass out additional ones if we can prevent it. So, quintuple-check your
+connections before continuing!</p>
+
+<p>If you’re confident in your connections, it’s time to plug in your CP2102 module
+into your computer. If all went well, you should see a red LED light on your
+Raspberry Pi shining bright. Congratulations! You’re now able to power and
+communicate with your Pi.</p>
+
+<h4 id="running-programs">Running Programs</h4>
+
+<p>As discussed in lecture, the Raspberry Pi loads programs on boot from the
+on-board microSD card. We’ll now set up our microSD card with a custom program
+for the Raspberry Pi to load.</p>
+
+<p>Take the microSD card and insert it into the USB microSD card adapter. Then,
+plug the adapter into your machine. You should see a new volume mounted on your
+machine. Copy the three files inside of the <code>files/firmware</code> directory in the
+skeleton (<code>bootcode.bin</code>, <code>config.txt</code>, and <code>start.elf</code>) to the root of the
+microSD card. (If you don’t see these files, make sure you’ve run <code>make fetch</code>
+inside the skeleton repository.) As discussed in lecture, these are three of the
+four files read by the GPU on boot. The fourth, <code>kernel8.img</code>, is the boot
+program, which we are about to install.</p>
+
+
+<div class="alert alert-dismissible alert-info">
+   <p style="font-size: 16px; font-weight: bold;">
+      
+         <span class="glyphicon glyphicon-info-sign" aria-hidden="true" style="margin-right: 3px"></span>
+      
+      What are bootcode.bin, config.txt, and start.elf?
+   </p>
+   <p></p><p>These specially-named files are recognized by the Raspberry Pi’s GPU on
+  boot-up and used to configure and boostrap the system. <code>bootcode.bin</code> is the
+  GPU’s first-stage bootloader. Its primary job is to load <code>start.elf</code>, the
+  GPU’s second-stage bootloader. <code>start.elf</code> initializes the ARM CPU,
+  configuring it as indicated in <code>config.txt</code>, loads <code>kernel8.img</code> into memory,
+  and instructs the CPU to start executing the newly loaded code from
+  <code>kernel8.img</code>.</p>
+<p></p>
+</div>
+
+
+
+<p>Now, copy <code>files/activity-led-blink.bin</code> from the skeleton to the root of the
+microSD card and name the file <code>kernel8.img</code>. Unmount the microSD card,
+disconnect the USB adapter from your machine, and remove the microSD card from
+the USB adapter. Ensure your Raspberry Pi 3 isn’t currently powered. Then,
+insert the microSD card into the Rasperry Pi 3. Plug in the Pi. In just a short
+moment, you should see a green LED on the Raspberry Pi board blinking once every
+two seconds for one second at a time. You should also see a blue LED on the USB
+CP2102 adapter blinking at the same frequency. This indicates that data is being
+sent to/from the Raspberry Pi.</p>
+
+<p>But what data? To see the data the Raspberry Pi is sending, you’ll need to run a
+serial console emulator that connects to the CP2102 module and reads the
+incoming data. We’ll use <a href="https://www.gnu.org/software/screen/manual/screen.html#Overview">screen</a> since it comes preinstalled on Linux and
+macOS. Recalling the <code>/dev</code> path from before, connect to the CP2102 USB module
+with screen by running:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">screen /dev/&lt;your-path&gt; <span style="color:#1c01ce">115200</span></code></pre></div>
+<p>On Linux, you may have to use <code>sudo</code> to run the command. Alternatively, you can
+add yourself to the <code>dialout</code> user group to avoid using <code>sudo</code>: <code>sudo gpasswd
+--add &lt;your-username&gt; dialout</code>.</p>
+
+<p>You should see friendly messages from your Raspberry Pi. To exit <code>screen</code>, use
+<code>&lt;ctrl-a&gt; k</code> then answer <code>y</code> at the prompt.</p>
+
+<hr>
+
+<h3 id="phase-2-led-there-be-light">Phase 2: LED There Be Light</h3>
+
+<p>In this phase, you’ll connect GPIO pin 16 (physical pin 36) on the Raspberry Pi
+to an LED light on a breadboard. You’ll test the LED using a pre-compiled
+binary. Before starting, ensure your Raspberry Pi is unplugged.</p>
+
+
+<div class="alert alert-dismissible alert-info">
+   <p style="font-size: 16px; font-weight: bold;">
+      
+         <span class="glyphicon glyphicon-info-sign" aria-hidden="true" style="margin-right: 3px"></span>
+      
+      Is it <em>safe</em> to simply unplug the USB TTL adapter?
+   </p>
+   <p></p><p>Yes! On a traditional computer, and later on in the course, removing the power
+  source without consideration is a bad idea because operations, typically on
+  the disk, may be in-flight. Stopping these operations midway can result in
+  damaged hardware or inconsistent state on the next boot-up. For now, our Pis
+  have no state or moving hardware, so we don’t need to worry about this. Feel
+  free to simply unplug its power source!</p>
+<p></p>
+</div>
+
+
+
+<h4 id="gpio-general-purpose-i-o">GPIO: General Purpose I/O</h4>
+
+<p>GPIO stands for General Purpose Input/Output. As the name implies, GPIO is a
+general mechanism for transmitting data/signals into and out of some
+device through electrical pins, known as GPIO pins.</p>
+
+<p>A GPIO pin can act as either an output or input. When a GPIO pin is acting as an
+output, it can either be set on or off. When on, the Raspberry Pi drives the pin
+at 3.3v. When the GPIO pin is off, no current flows through the pin. When a GPIO
+pin is acting as an input, the Raspberry Pi reports whether the pin is being
+driven at 3.3v or not.</p>
+
+<p>GPIO pins are incredibly versatile and can be used to implement a wide array of
+functionality. You can read more about GPIO on the Raspberry Pi Foundation’s
+<a href="https://www.raspberrypi.org/documentation/usage/gpio-plus-and-raspi2/README.md">GPIO Usage Documentation</a>.</p>
+
+<h4 id="testing-the-led">Testing the LED</h4>
+
+<p>We’ll start by constructing the circuit below:</p>
+
+<figure style="
+   
+    padding: 10px; 
+">
+   <img src="./0-blinky_files/always-on-led-circuit.svg" alt="Raspberry Pi 3 Always-On LED" style="
+          display: block; margin: 0 auto; 
+      ">
+   
+</figure>
+
+
+<p>If you’ve never used a breadboard, we suggest reading through <a href="https://learn.sparkfun.com/tutorials/how-to-use-a-breadboard">SparkFun’s “How
+to Use a Breadboard” guide</a>. This circuit connects an LED to always-on 3.3v
+power on the Raspberry Pi. Note that pin 1 (+3.3v) on the Raspberry Pi should go
+to the <em>longer</em> leg of your LED. The shorter leg is connected to the resistor
+which in-turn is connected to pin 14 (ground) on the Pi.</p>
+
+<p>After you’ve confirmed your connections, plug the Raspberry Pi in. Your LED
+should turn on. After you’ve confirmed that the LED works as expected, unplug
+your Rapsberry Pi. Then, move the jumper cable from pin 1 on the Pi to pin 36
+(GPIO Pin 16) as illustrated below:</p>
+
+<figure style="
+   
+    padding: 10px; 
+">
+   <img src="./0-blinky_files/gpio-16-led-circuit.svg" alt="Raspberry Pi 3 GPIO LED" style="
+          display: block; margin: 0 auto; 
+      ">
+   
+</figure>
+
+
+<p>Copy <code>files/gpio16-blink.bin</code> from the skeleton repository to the microSD card
+as <code>kernel8.img</code>, replacing any existing <code>kernel8.img</code> file on the card. Start
+the Raspberry Pi with the new image. Your LED should start blinking.</p>
+
+<hr>
+
+<h3 id="phase-3-shining-c">Phase 3: Shining C</h3>
+
+<p>In this phase, you’ll write the program that produced <code>gpio16-blink.bin</code> in C.
+You’ll write your code in <code>phase3/blinky.c</code>. To be able to compile C and assembly
+programs for the Raspberry Pi, we’ll install a cross compiler for the
+<code>aarch64-none-elf</code> target.</p>
+
+<h4 id="installing-a-cross-compiler">Installing a Cross-Compiler</h4>
+
+<p>We’ll now install the <code>aarch64-none-elf</code> GNU toolchain (<code>gcc</code> and friends),
+allowing you to compile and link C and assembly code for our Raspberry Pi from a
+non-Raspberry Pi machine.</p>
+
+<ul>
+<li><p><strong>macOS Installation Steps</strong></p>
+
+<p>First, we’ll install <a href="https://brew.sh/">homebrew</a>, a popular package manager for macOS. If you
+already have <code>brew</code> installed, skip this step.</p>
+
+<ol>
+<li><p>Install the Xcode command line tools by running the shell command below. A
+ dialog should pop up on your screen. Click “Install” when it appears.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">xcode-select --install</code></pre></div></li>
+
+<li><p>Run Homebrew’s install script by using the command below. The script will
+ guide you through the rest of the install process.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">/usr/bin/ruby -e <span style="color:#c41a16">"</span><span style="color:#a90d91">$(</span>curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install<span style="color:#a90d91">)</span><span style="color:#c41a16">"</span></code></pre></div></li>
+</ol>
+
+<p>We’ll now install the <code>aarch64-none-elf</code> toolchain using homebrew.</p>
+
+<ol>
+<li><p>“Tap” into a custom set of macOS cross-compilation packages and install
+ the toolchain using the command below.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">brew tap SergioBenitez/osxct
+brew install aarch64-none-elf</code></pre></div></li>
+
+<li><p>Ensure it works by running the following command and checking that its
+ output is identical to what is displayed below:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">$ aarch64-none-elf-gcc --version
+aarch64-none-elf-gcc <span style="color:#000">(</span>GCC<span style="color:#000">)</span> <span style="color:#1c01ce">7</span>.2.0
+Copyright <span style="color:#000">(</span>C<span style="color:#000">)</span> <span style="color:#1c01ce">2017</span> Free Software Foundation, Inc.
+This is free software; see the <span style="color:#a90d91">source</span> <span style="color:#a90d91">for</span> copying conditions.  There is NO
+warranty; not even <span style="color:#a90d91">for</span> MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.</code></pre></div></li>
+</ol></li>
+
+<li><p>Linux Installation Steps</p>
+
+<ol>
+<li><p>Download and unarchive <a href="https://web.stanford.edu/class/cs140e/files/aarch64-none-elf-linux-x64.tar.gz">aarch64-none-elf-linux-x64.tar.gz</a>, then move the
+ resulting <code>arch64-none-elf</code> directory to <code>/usr/local/bin</code>:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">wget https://web.stanford.edu/class/cs140e/files/aarch64-none-elf-linux-x64.tar.gz
+tar -xzvf aarch64-none-elf-linux-x64.tar.gz
+sudo mv aarch64-none-elf /usr/local/bin</code></pre></div></li>
+
+<li><p>Add <code>/usr/local/bin/aarch64-none-elf/bin</code> to your <code>$PATH</code>. The exact means
+ to do this depends on your Linux distribution. For most, adding the
+ following to <code>~/.profile</code> should suffice:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh"><span style="color:#000">PATH</span><span style="color:#000">=</span><span style="color:#c41a16">"/usr/local/bin/aarch64-none-elf/bin:</span><span style="color:#000">$PATH</span><span style="color:#c41a16">"</span></code></pre></div></li>
+
+<li><p>Ensure it works by running the following command and ensuring you get a GCC
+ version number as output:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">aarch64-none-elf-gcc --version</code></pre></div></li>
+</ol></li>
+</ul>
+
+<h4 id="talking-to-hardware">Talking to Hardware</h4>
+
+<p>The vast majority of modern hardware devices communicate with software through
+<em>memory-mapped I/O</em>. The concept is simple: devices expose their functionality
+through the machine’s memory and provide a specification about what will happen
+if certain addresses are read or written to. Addresses are usually separated
+into 32 or 64-bit sized regions known as <em>registers</em>. Registers are usually
+named to indicate their functionality. Registers can be read-only, write-only,
+or read/write.</p>
+
+<p>How do we know which registers a device exposes, where in memory they’re mapped,
+and what they do? Device manufacturers document all of this information in what
+is typically referred to as a “data sheet”, “device manual”, or simply
+“documentation”. There is no widespread format for how devices are documented,
+and documentation quality is hit or miss. Reading and understanding hardware
+documentation is a skill and art.</p>
+
+<h4 id="gpio-memory-mapped-interface">GPIO Memory-Mapped Interface</h4>
+
+<p>The documentation for many of the peripherals on-board the Rasperry Pi can be
+found in Broadcom’s <a href="https://web.stanford.edu/class/cs140e/docs/BCM2837-ARM-Peripherals.pdf">BCM2837 ARM Peripherals Manual</a>. The documentation for
+GPIO, for example, is on page 89.</p>
+
+
+<div class="alert alert-dismissible alert-info">
+   <p style="font-size: 16px; font-weight: bold;">
+      
+         <span class="glyphicon glyphicon-info-sign" aria-hidden="true" style="margin-right: 3px"></span>
+      
+      Wait, aren’t we using a BCM2837 chip?
+   </p>
+   <p></p><p>If you open the manual we’ve linked you to, you’ll see references to the
+  BCM2835 chip everywhere. This is because we’ve simply taken the documentation
+  for the BCM2835 chip, fixed relevant errata, and fixed the title to say
+  BCM2837.</p>
+
+<p>The BCM2837 and BCM2835 share the same peripherals with the same <em>relative</em>
+  memory-mapped interfaces. The main difference is that the chips differ in
+  their physical memory configuration. This results in the BCM2837 having a
+  peripheral physical base address of <code>0x3F000000</code> as opposed to the BCM2835’s
+  <code>0x20000000</code>. But both chips map this range to the <em>peripheral</em> base address
+  of <code>0x7E000000</code>. In short, a peripheral address <code>0x7EXXXXXX</code> is at physical
+  address <code>0x3FXXXXXX</code> on the BCM2837. The “BCM2837” documentation we’ve linked
+  to contains this change.</p>
+<p></p>
+</div>
+
+
+
+<p>For this assignment, we’ll only need to use the following three registers:</p>
+
+<table>
+<thead>
+<tr>
+<th>name</th>
+<th>peripheral address</th>
+<th>description</th>
+<th>size</th>
+<th>read/write</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>GPFSEL1</td>
+<td>0x7E200004</td>
+<td>GPIO Function Select 1</td>
+<td>32 bits</td>
+<td>R/W</td>
+</tr>
+
+<tr>
+<td>GPSET0</td>
+<td>0x7E20001C</td>
+<td>GPIO Pin Output Set 0</td>
+<td>32 bits</td>
+<td>W</td>
+</tr>
+
+<tr>
+<td>GPCLR0</td>
+<td>0x7E200028</td>
+<td>GPIO Pin Output Clear 0</td>
+<td>32 bits</td>
+<td>W</td>
+</tr>
+</tbody>
+</table>
+
+<p>We’ve copied this information directly from page 90 of the documentation.</p>
+
+<p>Now, read the documentation for <code>GPFSELn</code> register on pages 91 and 92. We write
+to this register to set up a pin as an output or input. Which value to which
+field in register <code>GPFSEL1</code> must be written so that GPIO pin 16 is set as an
+output?</p>
+
+<p>Now, read the documentation for the <code>GPSET0</code> and <code>GPCLR0</code> registers on page 95.
+We write to <code>GPSET0</code> to <em>set</em> a pin (turn it on) and write to <code>GPCLR0</code> to
+<em>clear</em> a pin (turn it off). Which value do we write to which field in these
+registers to set/clear pin 16?</p>
+
+<h4 id="writing-the-code">Writing the Code</h4>
+
+<p>The <code>phase3/</code> directory in the assignment skeleton contains a scaffold for
+building a binary suitable for running on the Raspberry Pi 3. We won’t explain
+<code>crt0.S</code>, <code>layout.ld</code>, or <code>Makefile</code> for now. Instead, you’ll work on
+<code>blinky.c</code>.</p>
+
+<p>In <code>blinky.c</code>, you’ll find that we’ve declared the physical addresses of the
+three relevant registers at the top of the file. Your task is to complete the
+<code>main()</code> function so that GPIO pin 16 is set-up as an output and then
+continuously set and cleared to blink the LED. We’ve also provided rudimentary
+“sleep” functions that stall the CPU for roughly the amount of time the function
+name indicates. You can use these to pause between sets and clears.</p>
+
+<p>When you are ready to test your program, compile it by running <code>make</code> in your
+shell. If all goes well, this will create the file <code>blinky.bin</code> which you can
+rename <code>kernel8.img</code> and copy to your microSD card to run on your Raspberry Pi.
+When you have a working <code>kernel8.img</code>, proceed to phase 4.</p>
+
+<div class="alert alert-dismissible alert-success">
+   <p style="font-size: 16px;">
+   <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+   <span style="font-weight: bold;">Hint:</span> Pin function selection, setting, and clearing can each be implemented in one line of code.</p>
+</div>
+
+
+
+<div class="alert alert-dismissible alert-success">
+   <p style="font-size: 16px;">
+   <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+   <span style="font-weight: bold;">Hint:</span> Recall the <code>&lt;&lt;</code>, <code>|</code>, <code>&amp;</code>, and <code>~</code> bitwise operators in C.</p>
+</div>
+
+
+
+<div class="alert alert-dismissible alert-success">
+   <p style="font-size: 16px;">
+   <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+   <span style="font-weight: bold;">Hint:</span> Recall that binary/hex numbers in C are written as <code>0b011</code> and <code>0x03</code>, respectively.</p>
+</div>
+
+
+
+<hr>
+
+<h3 id="phase-4-rusting-away">Phase 4: Rusting Away</h3>
+
+<p>In this phase, you’ll write the program that produced <code>gpio16-blink.bin</code> in
+Rust. You’ll write your code in <code>phase4/src/lib.rs</code>.</p>
+
+<h4 id="installing-rust-and-xargo">Installing Rust and Xargo</h4>
+
+<p>To compile Rust programs, we first need to install the Rust compiler. We’ll also
+install <code>xargo</code>, a wrapper around Rust’s package manager <code>cargo</code> that lets us
+easily compile for targets like the Raspberry Pi.</p>
+
+<ol>
+<li><p>Go to <a href="https://rustup.rs/">https://rustup.rs</a> and follow the instructions to install <code>rustup</code>.
+ Ensure that Rust was installed successfully by running <code>rustc --version</code>.</p></li>
+
+<li><p>We’ll now use <code>rustup</code> and <code>cargo</code> to switch to a <em>nightly</em> release of
+ Rust, install the source code for Rust’s standard libraries onto our
+ machine, and install <code>xargo</code>:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">rustup default nightly-2018-01-09
+rustup component add rust-src
+cargo install xargo</code></pre></div></li>
+
+<li><p>Test the installed commands and ensure your versions match:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">$ rustc --version
+rustc <span style="color:#1c01ce">1</span>.25.0-nightly <span style="color:#000">(</span>b5392f545 <span style="color:#1c01ce">2018</span>-01-08<span style="color:#000">)</span>
+$ xargo --version
+xargo <span style="color:#1c01ce">0</span>.3.10
+cargo <span style="color:#1c01ce">0</span>.25.0-nightly <span style="color:#000">(</span>a88fbace4 <span style="color:#1c01ce">2017</span>-12-29<span style="color:#000">)</span></code></pre></div></li>
+</ol>
+
+<p>That’s it! You now have a working Rust compiler running on your system.</p>
+
+<h4 id="writing-the-code-1">Writing the Code</h4>
+
+<p>To write the required code in <code>phase4/src/lib.rs</code>, you’ll only need to know the
+following Rust:</p>
+
+<ol>
+<li><p>You can read and write from a raw pointer (<code>*mut T</code>) using the
+ <code>read_volatile()</code> and <code>write_volatile()</code> methods.</p>
+
+<p>For example, if we have the following declarations:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#a90d91">const</span> <span style="color:#000">A</span>: <span style="color:#000">*</span><span style="color:#a90d91">mut</span> <span style="color:#a90d91">u32</span> <span style="color:#000">=</span> <span style="color:#1c01ce">0x12</span> <span style="color:#a90d91">as</span> <span style="color:#000">*</span><span style="color:#a90d91">mut</span> <span style="color:#a90d91">u32</span>;
+<span style="color:#a90d91">const</span> <span style="color:#000">B</span>: <span style="color:#000">*</span><span style="color:#a90d91">mut</span> <span style="color:#a90d91">u32</span> <span style="color:#000">=</span> <span style="color:#1c01ce">0x34</span> <span style="color:#a90d91">as</span> <span style="color:#000">*</span><span style="color:#a90d91">mut</span> <span style="color:#a90d91">u32</span>;</code></pre></div>
+<p>We can write the 32-bit unsigned integer at address <code>0x12</code> to <code>0x34</code> with
+ the following:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#000">B</span>.<span style="color:#000">write_volatile</span>(<span style="color:#000">A</span>.<span style="color:#000">read_volatile</span>());</code></pre></div></li>
+
+<li><p>Local variables can be declared with <code>let variable_name = expression;</code>.</p>
+
+<p>Using the <code>A</code> declaration from the previous example, we can read the value
+ at address <code>0x12</code> to a local variable <code>value</code> as follows:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#a90d91">let</span> <span style="color:#000">value</span> <span style="color:#000">=</span> <span style="color:#000">A</span>.<span style="color:#000">read_volatile</span>()</code></pre></div></li>
+
+<li><p>You can call a function <code>fn f(param: usize);</code> with <code>f(123);</code>.</p></li>
+
+<li><p>A <code>loop</code> block can be used to repeat a block infinitely:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#a90d91">loop</span> {
+    <span style="color:#000">do_this_again_and_again</span>();
+}</code></pre></div></li>
+
+<li><p>Rust defines the following bitwise operators:</p>
+
+<ul>
+<li><code>!</code> - unary bitwise inversion</li>
+<li><code>&lt;&lt;</code> - left shift binary operator</li>
+<li><code>&gt;&gt;</code> - right shift binary operator</li>
+<li><code>|</code> - bitwise OR binary operator</li>
+<li><code>&amp;</code> - bitwise AND binary operator</li>
+</ul></li>
+</ol>
+
+<p>You are now ready to implement the blink program in <code>phase4/src/lib.rs</code>.
+Translate your C implementation into Rust in the <code>kmain</code> function. You’ll find
+that we’ve declared the physical addresses of the three relevant registers at
+the top of the file. We’ve also provided a rudimentary “sleep” function that
+stalls the CPU for roughly the amount of time the function name indicates. You
+can use the function to pause between sets and clears.</p>
+
+<p>When you are ready to test your program, compile it by running <code>make</code> from the
+<code>phase4</code> directory in your shell. If all goes well, this will create the file
+<code>build/blinky.bin</code> which you can rename <code>kernel8.img</code> and copy to your microSD
+card to run on your Raspberry Pi. When you have a working <code>kernel8.img</code>, you
+have completed assignment 0! Proceed to the next phase for submission
+instructions.</p>
+
+<div class="alert alert-dismissible alert-success">
+   <p style="font-size: 16px;">
+   <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+   <span style="font-weight: bold;">Hint:</span> Your Rust and C code should look <em>very</em> similar.</p>
+</div>
+
+
+
+<h3 id="span-class-glyphicon-glyphicon-flag-aria-hidden-true-span-submission"><span class="glyphicon glyphicon-flag" aria-hidden="true"></span> Submission</h3>
+
+<p>Once you’ve completed the tasks above, you’re done and ready to submit! Ensure
+you’ve commited your changes. Any uncommited changes <em>will not</em> be submitted
+with your assignment. When you’re ready, run <code>make submission</code> from the
+<code>assignment0</code> directory and then proceed to the <a href="https://web.stanford.edu/class/cs140e/assignments/submission">submission page</a> to upload your
+submission.</p>
+
+      </article>
+
+      <div class="col-md-3 sidebar">
+         
+            <h3>Table of Contents</h3>
+            
+
+
+ 
+
+
+
+
+
+
+<div class="table-of-contents toc bd-callout">
+    
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/0-blinky/#preface">
+                    <li>Preface</li>
+                </a>
+                
+                
+                    </ul>
+                
+             
+        
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/0-blinky/#overview">
+                    <li>Overview</li>
+                </a>
+                
+                
+                    </ul>
+                
+             
+        
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/0-blinky/#phase-0-getting-started">
+                    <li>Phase 0: Getting Started</li>
+                </a>
+                
+                
+                    </ul>
+                
+             
+        
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                    <ul class="toc-h4">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/0-blinky/#getting-your-pi-ready">
+                    <li>Getting your Pi Ready</li>
+                </a>
+                
+                
+                    </ul>
+                
+                    </ul>
+                
+             
+        
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                    <ul class="toc-h4">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/0-blinky/#getting-the-skeleton-code">
+                    <li>Getting the Skeleton Code</li>
+                </a>
+                
+                
+                    </ul>
+                
+                    </ul>
+                
+             
+        
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/0-blinky/#phase-1-baking-pi">
+                    <li>Phase 1: Baking Pi</li>
+                </a>
+                
+                
+                    </ul>
+                
+             
+        
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                    <ul class="toc-h4">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/0-blinky/#installing-drivers">
+                    <li>Installing Drivers</li>
+                </a>
+                
+                
+                    </ul>
+                
+                    </ul>
+                
+             
+        
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                    <ul class="toc-h4">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/0-blinky/#powering-the-pi">
+                    <li>Powering the Pi</li>
+                </a>
+                
+                
+                    </ul>
+                
+                    </ul>
+                
+             
+        
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                    <ul class="toc-h4">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/0-blinky/#running-programs">
+                    <li>Running Programs</li>
+                </a>
+                
+                
+                    </ul>
+                
+                    </ul>
+                
+             
+        
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/0-blinky/#phase-2-led-there-be-light">
+                    <li>Phase 2: LED There Be Light</li>
+                </a>
+                
+                
+                    </ul>
+                
+             
+        
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                    <ul class="toc-h4">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/0-blinky/#gpio-general-purpose-i-o">
+                    <li>GPIO: General Purpose I/O</li>
+                </a>
+                
+                
+                    </ul>
+                
+                    </ul>
+                
+             
+        
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                    <ul class="toc-h4">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/0-blinky/#testing-the-led">
+                    <li>Testing the LED</li>
+                </a>
+                
+                
+                    </ul>
+                
+                    </ul>
+                
+             
+        
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/0-blinky/#phase-3-shining-c">
+                    <li>Phase 3: Shining C</li>
+                </a>
+                
+                
+                    </ul>
+                
+             
+        
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                    <ul class="toc-h4">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/0-blinky/#installing-a-cross-compiler">
+                    <li>Installing a Cross-Compiler</li>
+                </a>
+                
+                
+                    </ul>
+                
+                    </ul>
+                
+             
+        
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                    <ul class="toc-h4">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/0-blinky/#talking-to-hardware">
+                    <li>Talking to Hardware</li>
+                </a>
+                
+                
+                    </ul>
+                
+                    </ul>
+                
+             
+        
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                    <ul class="toc-h4">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/0-blinky/#gpio-memory-mapped-interface">
+                    <li>GPIO Memory-Mapped Interface</li>
+                </a>
+                
+                
+                    </ul>
+                
+                    </ul>
+                
+             
+        
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                    <ul class="toc-h4">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/0-blinky/#writing-the-code">
+                    <li>Writing the Code</li>
+                </a>
+                
+                
+                    </ul>
+                
+                    </ul>
+                
+             
+        
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/0-blinky/#phase-4-rusting-away">
+                    <li>Phase 4: Rusting Away</li>
+                </a>
+                
+                
+                    </ul>
+                
+             
+        
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                    <ul class="toc-h4">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/0-blinky/#installing-rust-and-xargo">
+                    <li>Installing Rust and Xargo</li>
+                </a>
+                
+                
+                    </ul>
+                
+                    </ul>
+                
+             
+        
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                    <ul class="toc-h4">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/0-blinky/#writing-the-code-1">
+                    <li>Writing the Code</li>
+                </a>
+                
+                
+                    </ul>
+                
+                    </ul>
+                
+             
+        
+    
+        
+        
+            
+            
+               
+               
+                
+                
+                    <ul class="toc-h3">
+                
+                <a href="https://web.stanford.edu/class/cs140e/assignments/0-blinky/#span-class-glyphicon-glyphicon-flag-aria-hidden-true-span-submission">
+                    <li>Submission</li>
+                </a>
+                
+                
+                    </ul>
+                
+             
+        
+    
+</div>
+
+
+         
+
+         
+            <h3>References</h3>
+            
+               <p>
+                  <a href="https://web.stanford.edu/class/cs140e/docs/BCM2837-ARM-Peripherals.pdf">BCM2837 ARM Peripherals Manual</a>
+                   <br> Broadcom supplied manual for peripherals on-board the Raspberry Pi. 
+               </p>
+            
+               <p>
+                  <a href="https://learn.sparkfun.com/tutorials/how-to-use-a-breadboard">How to Use a Breadboard</a>
+                   <br> Introductory guide by SparkFun on how to use a breadboard. 
+               </p>
+            
+               <p>
+                  <a href="https://www.raspberrypi.org/documentation/usage/gpio-plus-and-raspi2/README.md">Raspberry Pi Foundation's GPIO Usage</a>
+                   <br> The Raspberry Pi Foundation's introduction to GPIO on the Raspberry Pi. 
+               </p>
+            
+         
+      </div>
+   </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+    <script src="./0-blinky_files/jquery-1.10.2.min.js"></script>
+    <script src="./0-blinky_files/moment.min.js"></script>
+    <script src="./0-blinky_files/bootstrap.min.js"></script>
+    <script src="./0-blinky_files/bootswatch.js"></script>
+    <script src="./0-blinky_files/schedule.js" type="text/javascript" charset="utf-8"></script>
+  
+
+
+
+<div id="HUABAN_WIDGETS"><div class="HUABAN-f-button" style="display: none; left: 553.75px; top: 2987.36px;">采集</div><style>#HUABAN_WIDGETS  {font-family: "helvetica neue",arial,sans-serif; color: #444; font-size: 14px;} #HUABAN_WIDGETS * {box-sizing: content-box;} #HUABAN_WIDGETS .HUABAN-main {position: fixed; left: 0; top: 0; width: 100%; height: 100%; background: #e5e5e5; background: rgba(229,229,229,.95); max-height: 100%; overflow: hidden; z-index: 9999999999999;} #HUABAN_WIDGETS a img {border: 0;} #HUABAN_WIDGETS .HUABAN-header {height: 50px; background: white; box-shadow: 0 0 4px rgba(0,0,0,.2); width: 100%; left: 0; top: 0; position: absolute;} #HUABAN_WIDGETS .HUABAN-header .HUABAN-inner {margin: 0 auto; position: relative;} #HUABAN_WIDGETS .HUABAN-header .HUABAN-close {width: 60px; height: 50px; border-left: 1px solid #ddd; position: absolute; right: 0; top: 0; background: url(https://huaban.com/img/widgets/btn_close.png) 20px 14px no-repeat; cursor: pointer;} #HUABAN_WIDGETS .HUABAN-header .HUABAN-close:hover {background-position: 20px -26px;} #HUABAN_WIDGETS .HUABAN-header .HUABAN-close:active {background-position: 20px -66px;} #HUABAN_WIDGETS .HUABAN-header .HUABAN-logo {display: block; position: absolute; top: 12px;} #HUABAN_WIDGETS .HUABAN-waterfall-holder {position: relative; overflow-y: auto; height: 100%;} #HUABAN_WIDGETS .HUABAN-waterfall {position: relative; margin-top: 50px;} #HUABAN_WIDGETS .HUABAN-waterfall .HUABAN-empty {position: absolute; left: 50%; top: 30px; height: 36px; line-height: 36px; width: 216px; text-align: left; margin-left: -128px; color: #777; background: url(https://huaban.com/img/widgets/icon_notice.png) 12px 8px no-repeat white; padding-left: 40px; font-size: 15px;} #HUABAN_WIDGETS .HUABAN-btn {display: inline-block; border-radius: 2px; font-size: 14px; padding: 0 12px; height: 30px; line-height: 30px; cursor: pointer; text-decoration: none; white-space: nowrap; -moz-user-select: none; -webkit-user-select: none; user-select: none; text-align: center; background: #D53939; color: white;} #HUABAN_WIDGETS .HUABAN-btn:hover {background: #E54646;} #HUABAN_WIDGETS .HUABAN-btn:active {background: #C52424;} #HUABAN_WIDGETS .HUABAN-wbtn {background: #EDEDED; color: #444;} #HUABAN_WIDGETS .HUABAN-wbtn:hover {background: #F2F2F2;} #HUABAN_WIDGETS .HUABAN-wbtn:active {background: #DDD;} #HUABAN_WIDGETS .HUABAN-f-button {position: absolute; display: none; z-index: 9999999999998; box-shadow: 0 0 0 2px rgba(255,255,255,.2); background: #aaa; background: rgba(0,0,0,.3); color: white; cursor: pointer; padding: 0 12px; height: 30px; line-height: 30px; border-radius: 2px; font-size: 14px} #HUABAN_WIDGETS .HUABAN-f-button:hover {background-color: #999; background-color: rgba(0,0,0,.5);} #HUABAN_WIDGETS .HUABAN-f-button:active {background-color: rgba(0,0,0,.6);} #HUABAN_WIDGETS .HUABAN-red-normal-icon-button {width: 36px; height: 24px; border: 0px; line-height: 24px; padding-left: 24px; padding-right: 0px; text-align: left; background: url(https://huaban.com/img/widgets/widget_icons.png) 0 -200px no-repeat; box-shadow: none !important; font-size: 14px; background-color: transparent !important;} #HUABAN_WIDGETS .HUABAN-red-normal-icon-button:hover {background-position: -130px -200px;} #HUABAN_WIDGETS .HUABAN-red-normal-icon-button:active {background-position: -260px -200px;} #HUABAN_WIDGETS .HUABAN-red-large-icon-button {width: 80px; height: 24px; border: 0px; line-height: 24px; padding-left: 24px; padding-right: 0px; text-align: left; background: url(https://huaban.com/img/widgets/widget_icons.png) 0 -150px no-repeat; box-shadow: none !important; font-size: 14px; background-color: transparent !important;} #HUABAN_WIDGETS .HUABAN-red-large-icon-button:hover {background-position: -130px -150px;} #HUABAN_WIDGETS .HUABAN-red-large-icon-button:active {background-position: -260px -150px;} #HUABAN_WIDGETS .HUABAN-red-small-icon-button {width: 30px; height: 21px; border: 0px; line-height: 21px; padding-left: 20px; padding-right: 0px; text-align: left; background: url(https://huaban.com/img/widgets/widget_icons.png) 0 -250px no-repeat; box-shadow: none !important; font-size: 12px; background-color: transparent !important;} #HUABAN_WIDGETS .HUABAN-red-small-icon-button:hover {background-position: -130px -250px;} #HUABAN_WIDGETS .HUABAN-red-small-icon-button:active {background-position: -260px -250px;} #HUABAN_WIDGETS .HUABAN-white-normal-icon-button {width: 36px; height: 24px; border: 0px; line-height: 24px; padding-left: 24px; padding-right: 0px; text-align: left; background: url(https://huaban.com/img/widgets/widget_icons.png) 0 -500px no-repeat; box-shadow: none !important; color: #444; font-size: 14px; background-color: transparent !important;} #HUABAN_WIDGETS .HUABAN-white-normal-icon-button:hover {background-position: -130px -500px;} #HUABAN_WIDGETS .HUABAN-white-normal-icon-button:active {background-position: -260px -500px;} #HUABAN_WIDGETS .HUABAN-white-large-icon-button {width: 80px; height: 24px; border: 0px; line-height: 24px; padding-left: 24px; padding-right: 0px; text-align: left; background: url(https://huaban.com/img/widgets/widget_icons.png) 0 -450px no-repeat; box-shadow: none !important; color: #444; font-size: 14px; background-color: transparent !important;} #HUABAN_WIDGETS .HUABAN-white-large-icon-button:hover {background-position: -130px -450px;} #HUABAN_WIDGETS .HUABAN-white-large-icon-button:active {background-position: -260px -450px;} #HUABAN_WIDGETS .HUABAN-white-small-icon-button {width: 30px; height: 21px; border: 0px; line-height: 21px; padding-left: 20px; padding-right: 0px; text-align: left; background: url(https://huaban.com/img/widgets/widget_icons.png) 0 -550px no-repeat; box-shadow: none !important; color: #444; font-size: 12px; background-color: transparent !important;} #HUABAN_WIDGETS .HUABAN-white-small-icon-button:hover {background-position: -130px -550px;} #HUABAN_WIDGETS .HUABAN-white-small-icon-button:active {background-position: -260px -550px;} #HUABAN_WIDGETS .HUABAN-cell {width: 236px; position: absolute; background: white; box-shadow: 0 1px 3px rgba(0,0,0,.3); transition: left .3s ease-in-out, top .3s linear;} #HUABAN_WIDGETS .HUABAN-cell .HUABAN-img-holder {overflow: hidden; position: relative;} #HUABAN_WIDGETS .HUABAN-cell .HUABAN-img-holder:hover img.HUABAN-cell-img {opacity: .8} #HUABAN_WIDGETS .HUABAN-cell .HUABAN-video-icon {width: 72px; height: 62px; position: absolute; left: 50%; top: 50%; margin: -31px auto auto -36px; background: url(https://huaban.com/img/widgets/media_video.png) 0 0 no-repeat; display: none;} #HUABAN_WIDGETS .HUABAN-cell.HUABAN-video .HUABAN-video-icon {display: block;} #HUABAN_WIDGETS .HUABAN-cell .HUABAN-over {display: none;} #HUABAN_WIDGETS .HUABAN-cell:hover .HUABAN-over {display: block;} #HUABAN_WIDGETS .HUABAN-cell .HUABAN-over .HUABAN-btn {width: 60px; height: 34px; padding: 0; position: absolute; left: 50%; top: 50%; margin: -18px 0 0 -31px; line-height: 34px; box-shadow: 0 0 0 2px rgba(255,255,255,.2); font-size: 16px;} #HUABAN_WIDGETS .HUABAN-cell.HUABAN-long .HUABAN-img-holder {height: 600px;} #HUABAN_WIDGETS .HUABAN-cell.HUABAN-long .HUABAN-img-holder:after {content: ""; display: block; position: absolute; width: 236px; height: 12px; left: 0; bottom: 0; background: url(https://huaban.com/img/widgets/long_image_shadow_2.png) repeat-x 4px top;} #HUABAN_WIDGETS .HUABAN-cell img {width: 236px; display: block;} #HUABAN_WIDGETS .HUABAN-cell .HUABAN-size {margin: 8px 16px; font-size: 12px; color: #999} #HUABAN_WIDGETS .HUABAN-cell .HUABAN-description {display: block; width: 202px; margin: 0 6px 6px; padding: 6px 10px; border: 0; resize: none; outline: 0; border: 1px solid transparent; line-height: 18px; font-size: 13px; overflow: hidden; word-wrap: break-word; background: url(https://huaban.com/img/widgets/icon_edit.png) 500px center no-repeat;} #HUABAN_WIDGETS .HUABAN-cell:hover .HUABAN-description {background-color: #fff9e0; background-position: right top;} #HUABAN_WIDGETS .HUABAN-cell .HUABAN-description:focus {background-color: #F9F9F9; background-position: 500px center;} #HUABAN_WIDGETS .HUABAN-cell .HUABAN-select-btn {width: 34px; height:34px; background: url(https://huaban.com/img/widgets/checkbox.png) 0 0 no-repeat; position: absolute; right: 5px; top: 5px; cursor: pointer;} #HUABAN_WIDGETS .HUABAN-cell .HUABAN-pinned-label {position: absolute; left: 0; top: 10px; height: 24px; line-height: 24px; padding: 0 10px; background: #CE0000; background: rgba(200, 0, 0, 0.9); color: white; font-size: 12px; display: none;} #HUABAN_WIDGETS .HUABAN-cell.HUABAN-pinned .HUABAN-pinned-label {display: block;} #HUABAN_WIDGETS .HUABAN-selected .HUABAN-select-btn {background-position: 0 -40px;} #HUABAN_WIDGETS .HUABAN-multi .HUABAN-cell .HUABAN-img-holder {cursor: pointer;} #HUABAN_WIDGETS .HUABAN-multi .HUABAN-cell .HUABAN-cell-pin-btn {display: none;} #HUABAN_WIDGETS .HUABAN-multi .HUABAN-cell .HUABAN-over {display: block;} #HUABAN_WIDGETS .HUABAN-header .HUABAN-multi-buttons {position: absolute; top: 10px; left: 0; display: none;} #HUABAN_WIDGETS .HUABAN-header .HUABAN-multi-buttons .HUABAN-btn {margin-right: 10px;} #HUABAN_WIDGETS .HUABAN-header .HUABAN-multi-noti {display: none; height: 50px; line-height: 50px; text-align: center; font-size: 16px; color: #999; font-weight: bold;} #HUABAN_WIDGETS .HUABAN-header .HUABAN-multi-noti span {font-weight: normal;} #HUABAN_WIDGETS .HUABAN-header .HUABAN-multi-noti i {font-style: normal;} #HUABAN_WIDGETS .HUABAN-header .HUABAN-notice {padding: 0 10px; height:30px; line-height: 30px; position: absolute; left: 50%; top: 10px; margin-left: -83px; background: #fff9e2; text-align: center;} #HUABAN_WIDGETS .HUABAN-header .HUABAN-notice i {display: inline-block; width: 18px; height: 18px; background: url(https://huaban.com/img/widgets/icon_notice.png) 0 0 no-repeat; vertical-align: top; margin: 6px 6px 0 0;} #HUABAN_WIDGETS .HUABAN-switcher {height: 50px; width: 100px; position: relative;} #HUABAN_WIDGETS .HUABAN-switcher .HUABAN-title {position: absolute; right: 75px; top: 13px; color: #999; white-space: nowrap; line-height: 24px; opacity: 0; visibility: hidden;} #HUABAN_WIDGETS .HUABAN-switcher:hover .HUABAN-title {visibility: visible; opacity: 1; -webkit-transition: opacity .2s linear; -webkit-transition-delay: .2s; transition: opacity .2s linear; transition-delay: .2s;} #HUABAN_WIDGETS .HUABAN-switcher .HUABAN-bar {width: 40px; height: 24px; background: #EB595F; border-radius: 12px; color: white; position: absolute; right: 0; top: 13px; cursor: pointer; font-size: 14px; -webkit-transition: all .2s linear; transition: all .2s linear;} #HUABAN_WIDGETS .HUABAN-switcher:hover .HUABAN-bar {width: 64px;} #HUABAN_WIDGETS .HUABAN-switcher.HUABAN-on .HUABAN-bar {background: #7DD100;} #HUABAN_WIDGETS .HUABAN-switcher .HUABAN-bar .HUABAN-round {width: 20px; height: 20px; background: white; border-radius: 50%; position: absolute; left: 2px; top: 2px; -webkit-transition: left .2s linear; box-shadow: 0px 0px 3px rgba(0,0,0,0.15); transition: left .2s linear; box-shadow: 0px 0px 3px rgba(0,0,0,0.15);} #HUABAN_WIDGETS .HUABAN-switcher.HUABAN-on .HUABAN-bar .HUABAN-round {left: 17px;} #HUABAN_WIDGETS .HUABAN-switcher.HUABAN-on:hover .HUABAN-bar .HUABAN-round {left: 41px;} #HUABAN_WIDGETS .HUABAN-switcher .HUABAN-bar .HUABAN-text-1 {height: 24px; line-height: 24px; position: absolute; right:17px; top: 0; opacity: 0; visibility: hidden; -webkit-transition: all .2s linear; transition: all .2s linear;} #HUABAN_WIDGETS .HUABAN-switcher:hover .HUABAN-bar .HUABAN-text-1 {right: 9px; opacity: 1; visibility: visible;} #HUABAN_WIDGETS .HUABAN-switcher.HUABAN-on:hover .HUABAN-bar .HUABAN-text-1 {right: 17px; opacity: 0; visibility: hidden;} #HUABAN_WIDGETS .HUABAN-switcher .HUABAN-bar .HUABAN-text-2 {height: 24px; line-height: 24px; position: absolute; left:17px; top: 0; opacity: 0; visibility: hidden; -webkit-transition: all .2s linear; transition: all .2s linear;} #HUABAN_WIDGETS .HUABAN-switcher:hover .HUABAN-bar .HUABAN-text-2 {left: 17px; opacity: 0; visibility: hidden;} #HUABAN_WIDGETS .HUABAN-switcher.HUABAN-on:hover .HUABAN-bar .HUABAN-text-2 {left: 9px; opacity: 1; visibility: visible;} #HUABAN_WIDGETS .HUABAN-header .HUABAN-switcher {position: absolute; right: 0; top: 0;} <!--[if IE 6]>#HUABAN_WIDGETS .HUABAN-red-normal-icon-button, .HUABAN-red-large-icon-button, .HUABAN-red-small-icon-button, .HUABAN-white-normal-icon-button, .HUABAN-white-large-icon-button, .HUABAN-white-small-icon-button { background-image: url({{imgBase}}/widget_icons_ie6.png) <![endif]--></style></div><iframe frameborder="0" scrolling="no" style="background-color: transparent; border: 0px; display: none;" src="./0-blinky_files/saved_resource.html"></iframe><div id="GOOGLE_INPUT_CHEXT_FLAG" input="" input_stat="{&quot;tlang&quot;:true,&quot;tsbc&quot;:true,&quot;pun&quot;:false,&quot;mk&quot;:true,&quot;ss&quot;:true}" style="display: none;"></div></body></html>

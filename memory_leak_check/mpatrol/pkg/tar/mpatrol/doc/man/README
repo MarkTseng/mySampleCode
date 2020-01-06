@@ -1,0 +1,74 @@
+README FOR THE MPATROL LIBRARY MANUAL PAGES
+
+
+This directory may contain preformatted manual pages for the mpatrol library.
+The manual pages will have been generated from the troff source using a variety
+of tools and are provided partly for convenience and partly for people who do
+not have suitable formatting tools installed on their system.  In all cases
+these manual pages can be regenerated from the source, although there may be
+slight changes in some files due to differences in the systems that they were
+generated on.
+
+
+The following files contain all of the information necessary to generate each of
+the preformatted files.
+
+  * man1/*.1 & man3/*.3
+        Format:    TROFF
+                   http://www.kohala.com/start/troff/troff.html
+        Notes:     The unprocessed source of the mpatrol manual pages.
+
+
+The following files are all formatted for on-line documentation.  They generally
+contain little or no formatting codes, leaving the final formatting up to the
+viewer program.
+
+  * cat1/*.1 & cat3/*.3
+        Format:    ASCII text
+                   http://www.bbsinc.com/iso8859.html
+        Generator: GROFF
+                   http://www.gnu.org/software/groff/groff.html
+        Viewer:    Any text viewer that can handle formatted manual pages.
+        Notes:     Plain text with basic formatting codes.
+
+  * html/*.html
+        Format:    Hypertext Markup Language (HTML)
+                   http://www.w3c.org/MarkUp/
+        Generator: Man2HTML
+                   http://www.win.tue.nl/~rcb5/man2html.html
+        Viewer:    Any web browser
+        Notes:     Contains hypertext links with formatting codes.
+
+
+The following files are all formatted for printed manuals.  All can be viewed
+with a variety of programs, not just the ones listed here.
+
+  * dvi/*.dvi
+        Format:    Device Independent format (DVI)
+                   http://www.tug.org/
+        Generator: GROFF
+                   http://www.gnu.org/software/groff/groff.html
+        Viewer:    XDVI
+                   http://www.math.berkeley.edu/~vojta/xdvi.html
+        Notes:     Bitmapped fonts are built on demand to a suitable resolution
+                   when viewing or printing.
+
+  * ps/*.ps
+        Format:    Adobe Postscript
+                   http://www.adobe.com/
+        Generator: GROFF
+                   http://www.gnu.org/software/groff/groff.html
+        Viewer:    Ghostview
+                   http://www.cs.wisc.edu/~ghost/ghostview/
+        Notes:     Contains standard Postscript Type 1 fonts.
+
+  * pdf/*.pdf
+        Format:    Adobe Portable Document Format (PDF)
+                   http://www.adobe.com/
+        Generator: PStill
+                   http://www.this.net/~frank/pstill.html
+        Viewer:    Adobe Reader
+                   http://www.adobe.com/
+                   XPDF
+                   http://www.foolabs.com/xpdf/
+        Notes:     Contains standard Postscript Type 1 fonts.

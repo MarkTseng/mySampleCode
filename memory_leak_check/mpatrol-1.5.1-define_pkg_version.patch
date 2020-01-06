@@ -1,0 +1,15 @@
+This patch fixes build error with newer binutils.
+
+Thanks Tadayoshi Arai for this patch
+
+diff -Nuar mpatrol-orig/src/symbol.c mpatrol/src/symbol.c
+--- mpatrol-orig/src/symbol.c	2008-12-16 09:28:55.000000000 -0500
++++ mpatrol/src/symbol.c	2013-08-29 19:05:57.419294198 -0400
+@@ -29,6 +29,7 @@
+  */
+ 
+ 
++#define PACKAGE_VERSION ""
+ #include "symbol.h"
+ #include "diag.h"
+ #include "utils.h"

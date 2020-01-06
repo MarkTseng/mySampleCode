@@ -1,0 +1,6 @@
+2011-04-10  DavidAnderson <davea42@earthlink.net>
+     * config.h.in: Add HAVE_INTPTR_T
+     * configure.in: Test for intptr_t
+     * configure: Regenerated
+     * irepattrtodbg.cc: Add typedef and test for INTPTR_T
+

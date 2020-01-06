@@ -1,0 +1,295 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+CFLAGS2	examples/Makefile	/^CFLAGS2 = -Wall -rdynamic -fPIC -g -I..\/include$/;"	m
+CFLAGS_API	examples/Makefile	/^CFLAGS_API = $(shell pkg-config --cflags log-malloc2)$/;"	m
+CFLAGS_API	examples/Makefile	/^CFLAGS_API = -I..\/include$/;"	m
+CWD	examples/Makefile	/^CWD := $(shell pwd)$/;"	m
+CreateProcess	ltmain.sh	/^   CreateProcess().  We must quote the arguments since Win32 CreateProcess()$/;"	f
+DL_RESOLVE	src/log-malloc2.c	120;"	d	file:
+DL_RESOLVE_CHECK	src/log-malloc2.c	122;"	d	file:
+LDLIBS_API	examples/Makefile	/^LDLIBS_API = $(shell pkg-config --libs log-malloc2)$/;"	m
+LDLIBS_API	examples/Makefile	/^LDLIBS_API = -L..\/.libs -llog-malloc2 -Wl,-rpath,$(realpath $(CWD)\/..\/.libs)$/;"	m
+LOCK	src/log-malloc2_internal.h	41;"	d
+LOCK	src/log-malloc2_internal.h	45;"	d
+LOCK_INIT	src/log-malloc2_internal.h	40;"	d
+LOCK_INIT	src/log-malloc2_internal.h	44;"	d
+LOG_BUFSIZE	src/log-malloc2.c	76;"	d	file:
+LOG_BUFSIZE	src/log-malloc2.c	78;"	d	file:
+LOG_BUFSIZE	src/log-malloc2.c	81;"	d	file:
+LOG_MALLOC2_H	include/log-malloc2.h	2;"	d
+LOG_MALLOC2_INTERNAL_H	src/log-malloc2_internal.h	2;"	d
+LOG_MALLOC2_UTIL_H	include/log-malloc2_util.h	2;"	d
+LOG_MALLOC_ASSERT	include/log-malloc2.h	77;"	d
+LOG_MALLOC_ASSERT	include/log-malloc2.h	86;"	d
+LOG_MALLOC_ASSERT	include/log-malloc2.h	95;"	d
+LOG_MALLOC_BACKTRACE_COUNT	include/log-malloc2.h	26;"	d
+LOG_MALLOC_BACKTRACE_SIZE	include/log-malloc2_util.h	21;"	d
+LOG_MALLOC_COMPARE	include/log-malloc2.h	63;"	d
+LOG_MALLOC_COMPARE	include/log-malloc2.h	94;"	d
+LOG_MALLOC_CTX_INIT	src/log-malloc2_internal.h	90;"	d
+LOG_MALLOC_CTX_INIT	src/log-malloc2_internal.h	96;"	d
+LOG_MALLOC_CTX_INIT_BASE	src/log-malloc2_internal.h	79;"	d
+LOG_MALLOC_FINI_DONE	src/log-malloc2_internal.h	53;"	d
+LOG_MALLOC_INIT_DONE	src/log-malloc2_internal.h	52;"	d
+LOG_MALLOC_INIT_NULL	src/log-malloc2_internal.h	51;"	d
+LOG_MALLOC_MAPS_PATH	include/log-malloc2.h	34;"	d
+LOG_MALLOC_SAVE	include/log-malloc2.h	43;"	d
+LOG_MALLOC_SAVE	include/log-malloc2.h	92;"	d
+LOG_MALLOC_STATM_PATH	include/log-malloc2.h	30;"	d
+LOG_MALLOC_TRACE_FD	include/log-malloc2.h	22;"	d
+LOG_MALLOC_UPDATE	include/log-malloc2.h	54;"	d
+LOG_MALLOC_UPDATE	include/log-malloc2.h	93;"	d
+LOG_MALLOC_WRITE	include/log-malloc2_util.h	31;"	d
+LOG_MALLOC_WRITE	include/log-malloc2_util.h	82;"	d
+MEM_HEAD	src/log-malloc2.c	117;"	d	file:
+MEM_OFF	src/log-malloc2.c	114;"	d	file:
+MEM_PTR	src/log-malloc2.c	116;"	d	file:
+PROCESS	scripts/log-malloc-trackusage.pl	/^PROCESS:$/;"	l
+PROGRAMS	examples/Makefile	/^PROGRAMS = leak-01 leak-02 leak-03 api-01 segv-01$/;"	m
+SYMBOLS_ONLY	scripts/log-malloc-findleak.pl	/^SYMBOLS_ONLY:$/;"	l
+UNLOCK	src/log-malloc2_internal.h	42;"	d
+UNLOCK	src/log-malloc2_internal.h	46;"	d
+UNW_LOCAL_ONLY	src/log-malloc2.c	63;"	d	file:
+_GNU_SOURCE	src/log-malloc2.c	46;"	d	file:
+__fini_lib	src/log-malloc2.c	/^static void __fini_lib(void)$/;"	f	file:
+__init_lib	src/log-malloc2.c	/^static void *__init_lib(void)$/;"	f	file:
+ac_fn_c_check_func	configure	/^ac_fn_c_check_func ()$/;"	f
+ac_fn_c_check_header_compile	configure	/^ac_fn_c_check_header_compile ()$/;"	f
+ac_fn_c_check_header_mongrel	configure	/^ac_fn_c_check_header_mongrel ()$/;"	f
+ac_fn_c_try_compile	configure	/^ac_fn_c_try_compile ()$/;"	f
+ac_fn_c_try_cpp	configure	/^ac_fn_c_try_cpp ()$/;"	f
+ac_fn_c_try_link	configure	/^ac_fn_c_try_link ()$/;"	f
+ac_fn_c_try_run	configure	/^ac_fn_c_try_run ()$/;"	f
+ac_fn_cxx_try_compile	configure	/^ac_fn_cxx_try_compile ()$/;"	f
+ac_fn_cxx_try_cpp	configure	/^ac_fn_cxx_try_cpp ()$/;"	f
+ac_fn_cxx_try_link	configure	/^ac_fn_cxx_try_link ()$/;"	f
+addr2libname	scripts/backtrace2line.pl	/^sub addr2libname(\\%$)$/;"	s
+addr2line	scripts/backtrace2line.pl	/^sub addr2line($@)$/;"	s
+addr2num	scripts/backtrace2line.pl	/^sub addr2num($)$/;"	s
+as_fn_append	configure	/^  as_fn_append ()$/;"	f
+as_fn_arith	configure	/^  as_fn_arith ()$/;"	f
+as_fn_error	configure	/^as_fn_error ()$/;"	f
+as_fn_executable_p	configure	/^as_fn_executable_p ()$/;"	f
+as_fn_exit	configure	/^as_fn_exit ()$/;"	f
+as_fn_failure	configure	/^as_fn_failure () { as_fn_return 1; }$/;"	f
+as_fn_mkdir_p	configure	/^as_fn_mkdir_p ()$/;"	f
+as_fn_ret_failure	configure	/^as_fn_ret_failure () { return 1; }$/;"	f
+as_fn_ret_success	configure	/^as_fn_ret_success () { return 0; }$/;"	f
+as_fn_set_status	configure	/^as_fn_set_status ()$/;"	f
+as_fn_success	configure	/^as_fn_success () { as_fn_return 0; }$/;"	f
+as_fn_unset	configure	/^as_fn_unset ()$/;"	f
+bool	src/log-malloc2_internal.h	28;"	d
+calloc	src/log-malloc2.c	/^void *calloc(size_t nmemb, size_t size)$/;"	f
+calloc	src/log-malloc2_internal.h	/^		sig_atomic_t calloc;$/;"	m	struct:log_malloc_ctx_s::__anon1
+cb	src/log-malloc2.c	/^	size_t cb;		\/* size check bits *\/$/;"	m	struct:log_malloc_s	file:
+checkASLR	scripts/backtrace2line.pl	/^sub checkASLR()$/;"	s
+clock_start	src/log-malloc2_internal.h	/^	clock_t clock_start;$/;"	m	struct:log_malloc_ctx_s
+copyfile	src/log-malloc2.c	/^static inline void copyfile(const char *head, size_t head_len,$/;"	f	file:
+false	src/log-malloc2_internal.h	29;"	d
+free	src/log-malloc2.c	/^void free(void *ptr)$/;"	f
+free	src/log-malloc2_internal.h	/^		sig_atomic_t free;$/;"	m	struct:log_malloc_ctx_s::__anon1
+func_add_hook	ltmain.sh	/^func_add_hook ()$/;"	f
+func_append	ltmain.sh	/^  func_append ()$/;"	f
+func_append_quoted	ltmain.sh	/^  func_append_quoted ()$/;"	f
+func_append_uniq	ltmain.sh	/^func_append_uniq ()$/;"	f
+func_arith	ltmain.sh	/^  func_arith ()$/;"	f
+func_cc_basename	configure	/^func_cc_basename ()$/;"	f
+func_check_prog_grep	ltmain.sh	/^  func_check_prog_grep ()$/;"	f
+func_check_prog_sed	ltmain.sh	/^  func_check_prog_sed ()$/;"	f
+func_check_version_match	ltmain.sh	/^func_check_version_match ()$/;"	f
+func_config	ltmain.sh	/^func_config ()$/;"	f
+func_convert_core_file_wine_to_w32	ltmain.sh	/^func_convert_core_file_wine_to_w32 ()$/;"	f
+func_convert_core_msys_to_w32	ltmain.sh	/^func_convert_core_msys_to_w32 ()$/;"	f
+func_convert_core_path_wine_to_w32	ltmain.sh	/^func_convert_core_path_wine_to_w32 ()$/;"	f
+func_convert_file_check	ltmain.sh	/^func_convert_file_check ()$/;"	f
+func_convert_file_cygwin_to_w32	ltmain.sh	/^func_convert_file_cygwin_to_w32 ()$/;"	f
+func_convert_file_msys_to_cygwin	ltmain.sh	/^func_convert_file_msys_to_cygwin ()$/;"	f
+func_convert_file_msys_to_w32	ltmain.sh	/^func_convert_file_msys_to_w32 ()$/;"	f
+func_convert_file_nix_to_cygwin	ltmain.sh	/^func_convert_file_nix_to_cygwin ()$/;"	f
+func_convert_file_nix_to_w32	ltmain.sh	/^func_convert_file_nix_to_w32 ()$/;"	f
+func_convert_file_noop	ltmain.sh	/^func_convert_file_noop ()$/;"	f
+func_convert_path_check	ltmain.sh	/^func_convert_path_check ()$/;"	f
+func_convert_path_cygwin_to_w32	ltmain.sh	/^func_convert_path_cygwin_to_w32 ()$/;"	f
+func_convert_path_front_back_pathsep	ltmain.sh	/^func_convert_path_front_back_pathsep ()$/;"	f
+func_convert_path_msys_to_cygwin	ltmain.sh	/^func_convert_path_msys_to_cygwin ()$/;"	f
+func_convert_path_msys_to_w32	ltmain.sh	/^func_convert_path_msys_to_w32 ()$/;"	f
+func_convert_path_nix_to_cygwin	ltmain.sh	/^func_convert_path_nix_to_cygwin ()$/;"	f
+func_convert_path_nix_to_w32	ltmain.sh	/^func_convert_path_nix_to_w32 ()$/;"	f
+func_convert_path_noop	ltmain.sh	/^func_convert_path_noop ()$/;"	f
+func_cygming_dll_for_implib	ltmain.sh	/^func_cygming_dll_for_implib ()$/;"	f
+func_cygming_dll_for_implib_fallback	ltmain.sh	/^func_cygming_dll_for_implib_fallback ()$/;"	f
+func_cygming_dll_for_implib_fallback_core	ltmain.sh	/^func_cygming_dll_for_implib_fallback_core ()$/;"	f
+func_cygming_gnu_implib_p	ltmain.sh	/^func_cygming_gnu_implib_p ()$/;"	f
+func_cygming_ms_implib_p	ltmain.sh	/^func_cygming_ms_implib_p ()$/;"	f
+func_cygpath	ltmain.sh	/^func_cygpath ()$/;"	f
+func_dll_def_p	ltmain.sh	/^func_dll_def_p ()$/;"	f
+func_echo	ltmain.sh	/^func_echo ()$/;"	f
+func_echo_all	configure	/^func_echo_all ()$/;"	f
+func_echo_all	ltmain.sh	/^func_echo_all ()$/;"	f
+func_echo_infix_1	ltmain.sh	/^func_echo_infix_1 ()$/;"	f
+func_emit_cwrapperexe_src	ltmain.sh	/^func_emit_cwrapperexe_src ()$/;"	f
+func_emit_wrapper	ltmain.sh	/^func_emit_wrapper ()$/;"	f
+func_enable_tag	ltmain.sh	/^func_enable_tag ()$/;"	f
+func_error	ltmain.sh	/^func_error ()$/;"	f
+func_exec_program	ltmain.sh	/^func_exec_program ()$/;"	f
+func_exec_program_core	ltmain.sh	/^func_exec_program_core ()$/;"	f
+func_executable_p	ltmain.sh	/^func_executable_p ()$/;"	f
+func_execute_cmds	ltmain.sh	/^func_execute_cmds ()$/;"	f
+func_extract_an_archive	ltmain.sh	/^func_extract_an_archive ()$/;"	f
+func_extract_archives	ltmain.sh	/^func_extract_archives ()$/;"	f
+func_fallback_echo	configure	/^  func_fallback_echo ()$/;"	f
+func_fallback_echo	configure	/^func_fallback_echo ()$/;"	f
+func_fallback_echo	ltmain.sh	/^func_fallback_echo ()$/;"	f
+func_fatal_configuration	ltmain.sh	/^func_fatal_configuration ()$/;"	f
+func_fatal_error	ltmain.sh	/^func_fatal_error ()$/;"	f
+func_fatal_help	ltmain.sh	/^func_fatal_help ()$/;"	f
+func_features	ltmain.sh	/^func_features ()$/;"	f
+func_generate_dlsyms	ltmain.sh	/^func_generate_dlsyms ()$/;"	f
+func_generated_by_libtool_p	ltmain.sh	/^func_generated_by_libtool_p ()$/;"	f
+func_grep	ltmain.sh	/^func_grep ()$/;"	f
+func_help	ltmain.sh	/^func_help ()$/;"	f
+func_hookable	ltmain.sh	/^func_hookable ()$/;"	f
+func_infer_tag	ltmain.sh	/^func_infer_tag ()$/;"	f
+func_init_to_host_path_cmd	ltmain.sh	/^func_init_to_host_path_cmd ()$/;"	f
+func_lalib_p	ltmain.sh	/^func_lalib_p ()$/;"	f
+func_lalib_unsafe_p	ltmain.sh	/^func_lalib_unsafe_p ()$/;"	f
+func_len	ltmain.sh	/^  func_len ()$/;"	f
+func_lo2o	ltmain.sh	/^  func_lo2o ()$/;"	f
+func_lt_dump_args	ltmain.sh	/^func_lt_dump_args ()$/;"	f
+func_lt_ver	ltmain.sh	/^func_lt_ver ()$/;"	f
+func_ltwrapper_executable_p	ltmain.sh	/^func_ltwrapper_executable_p ()$/;"	f
+func_ltwrapper_p	ltmain.sh	/^func_ltwrapper_p ()$/;"	f
+func_ltwrapper_script_p	ltmain.sh	/^func_ltwrapper_script_p ()$/;"	f
+func_ltwrapper_scriptname	ltmain.sh	/^func_ltwrapper_scriptname ()$/;"	f
+func_missing_arg	ltmain.sh	/^func_missing_arg ()$/;"	f
+func_mkdir_p	ltmain.sh	/^func_mkdir_p ()$/;"	f
+func_mktempdir	ltmain.sh	/^func_mktempdir ()$/;"	f
+func_mode_compile	ltmain.sh	/^func_mode_compile ()$/;"	f
+func_mode_execute	ltmain.sh	/^func_mode_execute ()$/;"	f
+func_mode_finish	ltmain.sh	/^func_mode_finish ()$/;"	f
+func_mode_help	ltmain.sh	/^func_mode_help ()$/;"	f
+func_mode_install	ltmain.sh	/^func_mode_install ()$/;"	f
+func_mode_link	ltmain.sh	/^func_mode_link ()$/;"	f
+func_mode_uninstall	ltmain.sh	/^func_mode_uninstall ()$/;"	f
+func_munge_path_list	configure	/^func_munge_path_list ()$/;"	f
+func_normal_abspath	ltmain.sh	/^func_normal_abspath ()$/;"	f
+func_notquiet	ltmain.sh	/^func_notquiet ()$/;"	f
+func_options	ltmain.sh	/^func_options ()$/;"	f
+func_options_prep	ltmain.sh	/^func_options_prep ()$/;"	f
+func_parse_lt_options	ltmain.sh	/^func_parse_lt_options ()$/;"	f
+func_parse_options	ltmain.sh	/^func_parse_options ()$/;"	f
+func_path_progs	ltmain.sh	/^func_path_progs ()$/;"	f
+func_quote_for_eval	ltmain.sh	/^func_quote_for_eval ()$/;"	f
+func_quote_for_expand	ltmain.sh	/^func_quote_for_expand ()$/;"	f
+func_relative_path	ltmain.sh	/^func_relative_path ()$/;"	f
+func_remove_hook	ltmain.sh	/^func_remove_hook ()$/;"	f
+func_replace_sysroot	ltmain.sh	/^func_replace_sysroot ()$/;"	f
+func_require_term_colors	ltmain.sh	/^func_require_term_colors ()$/;"	f
+func_resolve_sysroot	ltmain.sh	/^func_resolve_sysroot ()$/;"	f
+func_run_hooks	ltmain.sh	/^func_run_hooks ()$/;"	f
+func_show_eval	ltmain.sh	/^func_show_eval ()$/;"	f
+func_show_eval_locale	ltmain.sh	/^func_show_eval_locale ()$/;"	f
+func_sort_ver	ltmain.sh	/^func_sort_ver ()$/;"	f
+func_source	ltmain.sh	/^func_source ()$/;"	f
+func_split_equals	ltmain.sh	/^  func_split_equals ()$/;"	f
+func_split_short_opt	ltmain.sh	/^  func_split_short_opt ()$/;"	f
+func_stripname	ltmain.sh	/^  func_stripname ()$/;"	f
+func_stripname_cnf	configure	/^func_stripname_cnf ()$/;"	f
+func_suncc_cstd_abi	ltmain.sh	/^func_suncc_cstd_abi ()$/;"	f
+func_to_host_file	ltmain.sh	/^func_to_host_file ()$/;"	f
+func_to_host_path	ltmain.sh	/^func_to_host_path ()$/;"	f
+func_to_tool_file	ltmain.sh	/^func_to_tool_file ()$/;"	f
+func_tr_sh	ltmain.sh	/^func_tr_sh ()$/;"	f
+func_usage	ltmain.sh	/^func_usage ()$/;"	f
+func_usage_message	ltmain.sh	/^func_usage_message ()$/;"	f
+func_validate_options	ltmain.sh	/^func_validate_options ()$/;"	f
+func_verbose	ltmain.sh	/^func_verbose ()$/;"	f
+func_version	ltmain.sh	/^func_version ()$/;"	f
+func_warn_and_continue	ltmain.sh	/^func_warn_and_continue ()$/;"	f
+func_warning	ltmain.sh	/^func_warning ()$/;"	f
+func_win32_import_lib_p	ltmain.sh	/^func_win32_import_lib_p ()$/;"	f
+func_win32_libid	ltmain.sh	/^func_win32_libid ()$/;"	f
+func_write_libtool_object	ltmain.sh	/^func_write_libtool_object ()$/;"	f
+func_xform	ltmain.sh	/^  func_xform ()$/;"	f
+g_ctx	src/log-malloc2.c	/^static log_malloc_ctx_t g_ctx = LOG_MALLOC_CTX_INIT;$/;"	v	file:
+g_maps_path	src/log-malloc2.c	/^static const char *g_maps_path	= LOG_MALLOC_MAPS_PATH;$/;"	v	file:
+g_statm_path	src/log-malloc2.c	/^static const char *g_statm_path = LOG_MALLOC_STATM_PATH;$/;"	v	file:
+get_libmap	scripts/backtrace2line.pl	/^sub get_libmap(@)$/;"	s
+get_wd	scripts/backtrace2line.pl	/^sub get_wd($$)$/;"	s
+init_done	src/log-malloc2_internal.h	/^	sig_atomic_t init_done;$/;"	m	struct:log_malloc_ctx_s
+int2hex	src/log-malloc2.c	/^static inline size_t int2hex(unsigned long int num, char *str, size_t max_size)$/;"	f	file:
+libtool_options_prep	ltmain.sh	/^libtool_options_prep ()$/;"	f
+libtool_parse_options	ltmain.sh	/^libtool_parse_options ()$/;"	f
+libtool_validate_options	ltmain.sh	/^libtool_validate_options ()$/;"	f
+log_malloc	scripts/log-malloc.pl	/^package log_malloc;$/;"	p
+log_malloc2_fini	src/log-malloc2.c	/^static void __attribute__ ((destructor))log_malloc2_fini(void)$/;"	f	file:
+log_malloc2_init	src/log-malloc2.c	/^static void __attribute__ ((constructor))log_malloc2_init(void)$/;"	f	file:
+log_malloc::backtrace2line	scripts/backtrace2line.pl	/^package log_malloc::backtrace2line;$/;"	p
+log_malloc::findleak	scripts/log-malloc-findleak.pl	/^package log_malloc::findleak;$/;"	p
+log_malloc::trackusage	scripts/log-malloc-trackusage.pl	/^package log_malloc::trackusage;$/;"	p
+log_malloc_backtrace	include/log-malloc2_util.h	/^static inline ssize_t log_malloc_backtrace(int fd)$/;"	f
+log_malloc_backtrace_init	include/log-malloc2_util.h	/^static inline void log_malloc_backtrace_init(void)$/;"	f
+log_malloc_ctx_get	src/log-malloc2.c	/^log_malloc_ctx_t *log_malloc_ctx_get(void)$/;"	f
+log_malloc_ctx_s	src/log-malloc2_internal.h	/^typedef struct log_malloc_ctx_s {$/;"	s
+log_malloc_ctx_t	src/log-malloc2_internal.h	/^} log_malloc_ctx_t;$/;"	t	typeref:struct:log_malloc_ctx_s
+log_malloc_get_usage	src/log-malloc2_api.c	/^size_t log_malloc_get_usage(void)$/;"	f
+log_malloc_s	src/log-malloc2.c	/^struct log_malloc_s {$/;"	s	file:
+log_malloc_trace_disable	src/log-malloc2_api.c	/^void log_malloc_trace_disable(void)$/;"	f
+log_malloc_trace_enable	src/log-malloc2_api.c	/^void log_malloc_trace_enable(void)$/;"	f
+log_malloc_trace_printf	src/log-malloc2_api.c	/^int log_malloc_trace_printf(const char *fmt, ...)$/;"	f
+log_trace	src/log-malloc2.c	/^static inline void log_trace(char *str, size_t len, size_t max_size, int print_stack)$/;"	f	file:
+loglock	src/log-malloc2_internal.h	/^	pthread_mutex_t loglock;$/;"	m	struct:log_malloc_ctx_s
+main	config.guess	/^		main()$/;"	f
+main	config.guess	/^	main ()$/;"	f
+main	examples/api-01.c	/^int main()$/;"	f
+main	examples/leak-01.c	/^int main()$/;"	f
+main	examples/leak-02.c	/^int main()$/;"	f
+main	examples/leak-03.c	/^int main()$/;"	f
+main	examples/segv-01.c	/^int main()$/;"	f
+main	scripts/backtrace2line.pl	/^sub main(@)$/;"	s
+main	scripts/log-malloc-findleak.pl	/^sub main(@)$/;"	s
+main	scripts/log-malloc-trackusage.pl	/^sub main(@)$/;"	s
+main	scripts/log-malloc.pl	/^sub main(@)$/;"	s
+malloc	src/log-malloc2.c	/^void *malloc(size_t size)$/;"	f
+malloc	src/log-malloc2_internal.h	/^		sig_atomic_t malloc;$/;"	m	struct:log_malloc_ctx_s::__anon1
+mem_rused	src/log-malloc2_internal.h	/^	sig_atomic_t mem_rused;$/;"	m	struct:log_malloc_ctx_s
+mem_used	src/log-malloc2_internal.h	/^        sig_atomic_t mem_used;$/;"	m	struct:log_malloc_ctx_s
+memalign	src/log-malloc2.c	/^void *memalign(size_t boundary, size_t size)$/;"	f
+memalign	src/log-malloc2_internal.h	/^		sig_atomic_t memalign;$/;"	m	struct:log_malloc_ctx_s::__anon1
+memlog_disabled	src/log-malloc2_internal.h	/^	bool memlog_disabled;$/;"	m	struct:log_malloc_ctx_s
+memlog_fd	src/log-malloc2_internal.h	/^	int memlog_fd;$/;"	m	struct:log_malloc_ctx_s
+own	examples/leak-03.c	/^void __attribute__ ((noinline)) own(char **ptr)$/;"	f
+parse	scripts/log-malloc-findleak.pl	/^sub parse(\\@)$/;"	s
+posix_memalign	src/log-malloc2.c	/^int posix_memalign(void **memptr, size_t alignment, size_t size)$/;"	f
+posix_memalign	src/log-malloc2_internal.h	/^		sig_atomic_t posix_memalign;$/;"	m	struct:log_malloc_ctx_s::__anon1
+process	scripts/backtrace2line.pl	/^sub process($$$@)$/;"	s
+process	scripts/log-malloc-findleak.pl	/^sub process($\\@%)$/;"	s
+process	scripts/log-malloc-trackusage.pl	/^sub process(\\@;$)$/;"	s
+prototypes	configure	/^   function prototypes and stuff, but not '\\xHH' hex character constants.$/;"	f
+ptr	src/log-malloc2.c	/^	char   ptr[0] __attribute__((__aligned__));	\/* user memory begin *\/$/;"	m	struct:log_malloc_s	file:
+readFile	scripts/backtrace2line.pl	/^sub readFile($)$/;"	s
+read_mapsFile	scripts/backtrace2line.pl	/^sub read_mapsFile($$)$/;"	s
+real_calloc	src/log-malloc2.c	/^static void *(*real_calloc)(size_t nmemb, size_t size)	= NULL;$/;"	v	file:
+real_free	src/log-malloc2.c	/^static void  (*real_free)(void *ptr)		= NULL;$/;"	v	file:
+real_malloc	src/log-malloc2.c	/^static void *(*real_malloc)(size_t size)	= NULL;$/;"	v	file:
+real_memalign	src/log-malloc2.c	/^static void *(*real_memalign)(size_t boundary, size_t size)	= NULL;$/;"	v	file:
+real_posix_memalign	src/log-malloc2.c	/^static int   (*real_posix_memalign)(void **memptr, size_t alignment, size_t size)	= NULL;$/;"	v	file:
+real_realloc	src/log-malloc2.c	/^static void *(*real_realloc)(void *ptr, size_t size)	= NULL;$/;"	v	file:
+real_valloc	src/log-malloc2.c	/^static void *(*real_valloc)(size_t size)	= NULL;$/;"	v	file:
+realloc	src/log-malloc2.c	/^void *realloc(void *ptr, size_t size)$/;"	f
+realloc	src/log-malloc2_internal.h	/^		sig_atomic_t realloc;$/;"	m	struct:log_malloc_ctx_s::__anon1
+rotateFile	scripts/log-malloc.pl	/^sub rotateFile($)$/;"	s
+rsize	src/log-malloc2.c	/^	size_t rsize;		\/* really allocated size *\/$/;"	m	struct:log_malloc_s	file:
+sighandler	examples/segv-01.c	/^static void sighandler(int signo)$/;"	f	file:
+size	src/log-malloc2.c	/^	size_t size;		\/* allocation size *\/$/;"	m	struct:log_malloc_s	file:
+stat	src/log-malloc2_internal.h	/^	} stat;$/;"	m	struct:log_malloc_ctx_s	typeref:struct:log_malloc_ctx_s::__anon1
+statm_fd	src/log-malloc2_internal.h	/^	int statm_fd;$/;"	m	struct:log_malloc_ctx_s
+true	src/log-malloc2_internal.h	30;"	d
+unrel_sum	src/log-malloc2_internal.h	/^		sig_atomic_t unrel_sum; \/* unrealiable call count sum *\/$/;"	m	struct:log_malloc_ctx_s::__anon1
+valloc	src/log-malloc2.c	/^void *valloc(size_t size)$/;"	f
+valloc	src/log-malloc2_internal.h	/^		sig_atomic_t valloc;$/;"	m	struct:log_malloc_ctx_s::__anon1
+verbose	scripts/backtrace2line.pl	/^sub verbose($$)$/;"	s

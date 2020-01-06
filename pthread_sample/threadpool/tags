@@ -1,0 +1,69 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+CFLAGS	Makefile	/^CFLAGS = -D_REENTRANT -Wall -pedantic -Isrc$/;"	m
+LDLIBS	Makefile	/^LDLIBS = -lpthread$/;"	m
+MAX_QUEUE	src/threadpool.h	46;"	d
+MAX_THREADS	src/threadpool.h	45;"	d
+QUEUE	tests/thrdtest.c	2;"	d	file:
+QUEUES	tests/heavy.c	10;"	d	file:
+SIZE	tests/heavy.c	9;"	d	file:
+SIZE	tests/shutdown.c	9;"	d	file:
+TARGETS	Makefile	/^TARGETS = tests\/thrdtest tests\/heavy tests\/shutdown \\$/;"	m
+THREAD	tests/heavy.c	8;"	d	file:
+THREAD	tests/shutdown.c	8;"	d	file:
+THREAD	tests/thrdtest.c	1;"	d	file:
+_THREADPOOL_H_	src/threadpool.h	30;"	d
+argument	src/threadpool.c	/^    void *argument;$/;"	m	struct:__anon4	file:
+count	src/threadpool.c	/^  int count;$/;"	m	struct:threadpool_t	file:
+done	tests/thrdtest.c	/^int tasks = 0, done = 0;$/;"	v
+dummy_task	tests/heavy.c	/^void dummy_task(void *arg) {$/;"	f
+dummy_task	tests/shutdown.c	/^void dummy_task(void *arg) {$/;"	f
+dummy_task	tests/thrdtest.c	/^void dummy_task(void *arg) {$/;"	f
+error	tests/heavy.c	/^int error;$/;"	v
+error	tests/shutdown.c	/^int error;$/;"	v
+function	src/threadpool.c	/^    void (*function)(void *);$/;"	m	struct:__anon4	file:
+graceful_shutdown	src/threadpool.c	/^    graceful_shutdown  = 2$/;"	e	enum:__anon3	file:
+head	src/threadpool.c	/^  int head;$/;"	m	struct:threadpool_t	file:
+immediate_shutdown	src/threadpool.c	/^    immediate_shutdown = 1,$/;"	e	enum:__anon3	file:
+left	tests/heavy.c	/^int tasks[SIZE], left;$/;"	v
+left	tests/shutdown.c	/^int left;$/;"	v
+lock	src/threadpool.c	/^  pthread_mutex_t lock;$/;"	m	struct:threadpool_t	file:
+lock	tests/heavy.c	/^pthread_mutex_t lock;$/;"	v
+lock	tests/shutdown.c	/^pthread_mutex_t lock;$/;"	v
+lock	tests/thrdtest.c	/^pthread_mutex_t lock;$/;"	v
+main	tests/heavy.c	/^int main(int argc, char **argv)$/;"	f
+main	tests/shutdown.c	/^int main(int argc, char **argv)$/;"	f
+main	tests/thrdtest.c	/^int main(int argc, char **argv)$/;"	f
+notify	src/threadpool.c	/^  pthread_cond_t notify;$/;"	m	struct:threadpool_t	file:
+pool	tests/heavy.c	/^threadpool_t *pool[QUEUES];$/;"	v
+pool	tests/shutdown.c	/^threadpool_t *pool;$/;"	v
+queue	src/threadpool.c	/^  threadpool_task_t *queue;$/;"	m	struct:threadpool_t	file:
+queue_size	src/threadpool.c	/^  int queue_size;$/;"	m	struct:threadpool_t	file:
+shutdown	src/threadpool.c	/^  int shutdown;$/;"	m	struct:threadpool_t	file:
+started	src/threadpool.c	/^  int started;$/;"	m	struct:threadpool_t	file:
+tail	src/threadpool.c	/^  int tail;$/;"	m	struct:threadpool_t	file:
+tasks	tests/heavy.c	/^int tasks[SIZE], left;$/;"	v
+tasks	tests/thrdtest.c	/^int tasks = 0, done = 0;$/;"	v
+thread_count	src/threadpool.c	/^  int thread_count;$/;"	m	struct:threadpool_t	file:
+threadpool_add	src/threadpool.c	/^int threadpool_add(threadpool_t *pool, void (*function)(void *),$/;"	f
+threadpool_create	src/threadpool.c	/^threadpool_t *threadpool_create(int thread_count, int queue_size, int flags)$/;"	f
+threadpool_destroy	src/threadpool.c	/^int threadpool_destroy(threadpool_t *pool, int flags)$/;"	f
+threadpool_destroy_flags_t	src/threadpool.h	/^} threadpool_destroy_flags_t;$/;"	t	typeref:enum:__anon2
+threadpool_error_t	src/threadpool.h	/^} threadpool_error_t;$/;"	t	typeref:enum:__anon1
+threadpool_free	src/threadpool.c	/^int threadpool_free(threadpool_t *pool)$/;"	f
+threadpool_graceful	src/threadpool.h	/^    threadpool_graceful       = 1$/;"	e	enum:__anon2
+threadpool_invalid	src/threadpool.h	/^    threadpool_invalid        = -1,$/;"	e	enum:__anon1
+threadpool_lock_failure	src/threadpool.h	/^    threadpool_lock_failure   = -2,$/;"	e	enum:__anon1
+threadpool_queue_full	src/threadpool.h	/^    threadpool_queue_full     = -3,$/;"	e	enum:__anon1
+threadpool_shutdown	src/threadpool.h	/^    threadpool_shutdown       = -4,$/;"	e	enum:__anon1
+threadpool_shutdown_t	src/threadpool.c	/^} threadpool_shutdown_t;$/;"	t	typeref:enum:__anon3	file:
+threadpool_t	src/threadpool.c	/^struct threadpool_t {$/;"	s	file:
+threadpool_t	src/threadpool.h	/^typedef struct threadpool_t threadpool_t;$/;"	t	typeref:struct:threadpool_t
+threadpool_task_t	src/threadpool.c	/^} threadpool_task_t;$/;"	t	typeref:struct:__anon4	file:
+threadpool_thread	src/threadpool.c	/^static void *threadpool_thread(void *threadpool)$/;"	f	file:
+threadpool_thread_failure	src/threadpool.h	/^    threadpool_thread_failure = -5$/;"	e	enum:__anon1
+threads	src/threadpool.c	/^  pthread_t *threads;$/;"	m	struct:threadpool_t	file:

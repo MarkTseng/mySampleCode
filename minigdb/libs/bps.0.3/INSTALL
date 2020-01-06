@@ -1,0 +1,35 @@
+bps - Breakpoint Shenanigans - K Sheldrake
+
+Copyright (C) 2015  Kevin Sheldrake
+
+This file is part of bps.
+
+Bps is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+
+
+Install
+-------
+
+Edit the Makefile so that the variable ARCH is correct.
+
+For x86 (32 bit), use ARCH=-DARCHX86   (this is the current setting).
+For ARM (v4-v6), use ARCH=-DARCHARM
+
+You can easily change it from the current X86 setting to ARM with:
+$ sed -i -e 's/ARCHX86/ARCHARM/' Makefile
+
+You should then be able to just run 'make'.
+
+

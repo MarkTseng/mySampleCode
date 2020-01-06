@@ -1,0 +1,94 @@
+.\" mpatrol
+.\" A library for controlling and tracing dynamic memory allocations.
+.\" Copyright (C) 1997-2008 Graeme S. Roy <graemeroy@users.sourceforge.net>
+.\"
+.\" This program is free software: you can redistribute it and/or modify it
+.\" under the terms of the GNU Lesser General Public License as published by
+.\" the Free Software Foundation, either version 3 of the License, or (at
+.\" your option) any later version.
+.\"
+.\" This program is distributed in the hope that it will be useful, but
+.\" WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser
+.\" General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU Lesser General Public License
+.\" along with this program.  If not, see <http://www.gnu.org/licenses/>.
+.\"
+.\" UNIX Manual Page
+.\"
+.\" $Id$
+.\"
+.TH MPSYM 1 "16 December 2008" "Release 1.5" "mpatrol library"
+.SH NAME
+mpsym \- locates missing symbolic information in an mpatrol log file
+.SH SYNOPSIS
+\fBmpsym\fP [\fIoptions\fP] [\fIprogfile\fP [\fIlogfile\fP]]
+.SH DESCRIPTION
+The \fBmpsym\fP command is used to parse a log file produced by the mpatrol
+library and uses a debugger to append symbol names and source level information
+to code addresses in stack tracebacks.  This should be used if the
+\fBUSEDEBUG\fP option is not supported on a particular platform or does not work
+properly with a specific program.  It will replace all existing symbols and
+source level information associated with the stack tracebacks in the mpatrol log
+file and will display the resulting log file on the standard output file stream.
+.PP
+The \fIprogfile\fP argument must be the filename of the executable file that
+produced the mpatrol log file but if \fIprogfile\fP is omitted then \fBmpsym\fP
+will use \fIa.out\fP as the name of the executable file to use.  The \fBmpsym\fP
+command will read the symbol table and debugging sections from this file in
+order to map the code addresses that appear in the mpatrol log file into symbol
+names and source level information.  If the executable file does not contain a
+symbol table then no symbol names will be available and if it does not contain
+the appropriate debugging sections then no source level information will be
+available either.  Obviously, if the executable file is not the same as the one
+that created the mpatrol log file then the final output will be wrong.
+.PP
+The \fIlogfile\fP argument must be a valid mpatrol log filename but if
+\fIlogfile\fP is omitted then \fBmpsym\fP will use \fImpatrol.log\fP as the
+name of the log file to use, or \fIprogfile.log\fP if it can't find that.  The
+\fBmpsym\fP command makes two passes over the log file so the file must be
+randomly-accessable.
+.PP
+The \fBmpsym\fP command currently uses \fBgdb\fP as the debugger with which to
+obtain the additional information about the code addresses in the mpatrol log
+file.  It also makes use of several UNIX text processing commands, including
+\fBperl\fP if it is installed, in order to extract information from the
+debugger's output and from the log file.  As a result, the \fBmpsym\fP command
+is only likely to work on UNIX platforms or on systems which have the necessary
+commands installed.
+.SH OPTIONS
+.TP
+\fB\-\-help\fP [\fB\-h\fP]
+Displays a quick-reference option summary.
+.TP
+\fB\-\-skip\fP [\fB\-s\fP]
+Skip symbols marked as \fI???\fP in the log file.
+.TP
+\fB\-\-version\fP [\fB\-V\fP]
+Displays the version number of the \fBmpsym\fP command.
+.SH SEE ALSO
+\fBmpatrol\fP(1), \fBmprof\fP(1), \fBmptrace\fP(1), \fBmleak\fP(1),
+\fBmpedit\fP(1), \fBhexwords\fP(1), \fBgdb\fP(1), \fBperl\fP(1),
+\fBlibmpatrol\fP(3), \fBlibmpalloc\fP(3).
+.PP
+The mpatrol manual and reference card.
+.PP
+http://heanet.dl.sourceforge.net/sourceforge/mpatrol/
+.SH AUTHOR
+Graeme S. Roy <graemeroy@users.sourceforge.net>
+.SH COPYRIGHT
+Copyright (C) 1997-2008 Graeme S. Roy <graemeroy@users.sourceforge.net>
+.PP
+This program is free software: you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License as published by
+the Free Software Foundation, either version 3 of the License, or (at
+your option) any later version.
+.PP
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser
+General Public License for more details.
+.PP
+You should have received a copy of the GNU Lesser General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.

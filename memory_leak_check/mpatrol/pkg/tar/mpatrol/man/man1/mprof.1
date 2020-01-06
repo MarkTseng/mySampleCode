@@ -1,0 +1,130 @@
+.\" mpatrol
+.\" A library for controlling and tracing dynamic memory allocations.
+.\" Copyright (C) 1997-2008 Graeme S. Roy <graemeroy@users.sourceforge.net>
+.\"
+.\" This program is free software: you can redistribute it and/or modify it
+.\" under the terms of the GNU Lesser General Public License as published by
+.\" the Free Software Foundation, either version 3 of the License, or (at
+.\" your option) any later version.
+.\"
+.\" This program is distributed in the hope that it will be useful, but
+.\" WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser
+.\" General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU Lesser General Public License
+.\" along with this program.  If not, see <http://www.gnu.org/licenses/>.
+.\"
+.\" UNIX Manual Page
+.\"
+.\" $Id$
+.\"
+.TH MPROF 1 "16 December 2008" "Release 1.5" "mpatrol library"
+.SH NAME
+mprof \- displays profiling information produced by the mpatrol library
+.SH SYNOPSIS
+\fBmprof\fP [\fIoptions\fP] [\fIfile\fP]
+.SH DESCRIPTION
+The \fBmprof\fP command is a tool designed to read a profiling output file
+produced by the mpatrol library and display the profiling information that
+was obtained.  The profiling information includes summaries of all of the
+memory allocations listed by size and the function that allocated them and a
+list of memory leaks with the call stack of the allocating function.  It also
+includes a graph of all memory allocations listed in tabular form, and an
+optional graph specification file for later processing by the \fBdot\fP graph
+visualisation package.
+.PP
+When the \fBPROF\fP option is used with the mpatrol library, statistics for
+all dynamic memory allocations and deallocations are written to a profiling
+output file.  The name of this file can be changed with the \fBPROFFILE\fP
+option and the frequency at which the file is written can be specified with
+the \fBAUTOSAVE\fP option.  The bounds for small allocations, medium
+allocations, large allocations and extra large allocations can be set with
+the \fBSMALLBOUND\fP, \fBMEDIUMBOUND\fP and \fBLARGEBOUND\fP options.
+.PP
+Only allocations and deallocations are recorded, with each reallocation being
+treated as a deallocation immediately followed by an allocation.  For full
+memory allocation profiling support, call stack traversal must be supported in
+the mpatrol library and all of the program's symbols must have been successfully
+read by the mpatrol library before the program was run.  The \fBmprof\fP command
+will attempt to compensate if either of these requirements are not met, but the
+displayed tables may contain less meaningful information.
+.PP
+The \fIfile\fP argument must be a valid mpatrol profiling output filename but
+if \fIfile\fP is omitted then \fBmprof\fP will use \fImpatrol.out\fP as the
+name of the profiling output file to use.  If \fIfile\fP is given as \fI\-\fP
+then the standard input file stream will be used as the profiling output file.
+.PP
+Much of the functionality of this tool is based upon \fBmprof\fP by Benjamin
+Zorn and Paul Hilfinger, which was written as a research project and ran on
+MIPS, SPARC and VAX machines.  However, the profiling output files are
+incompatible, the tables displayed have a different format, and the way they
+are implemented is entirely different.
+.SH OPTIONS
+.TP
+\fB\-\-addresses\fP [\fB\-a\fP]
+Specifies that different call sites from within the same function are to be
+differentiated and that the names of all functions should be displayed with
+their call site offset in bytes.  This affects the direct allocation and
+memory leak tables, as well as the allocation call graph and the graph
+specification file.
+.TP
+\fB\-\-call\-graph\fP [\fB\-v\fP]
+Specifies that the allocation call graph should be displayed.  This is not
+displayed by default as it can get very large for even a moderately sized
+profiling output file.
+.TP
+\fB\-\-counts\fP [\fB\-c\fP]
+Specifies that certain tables should be sorted by the number of allocations or
+deallocations rather than the total number of bytes allocated or deallocated.
+This affects the direct allocation and memory leak tables, as well as the
+allocation call graph and the graph specification file.
+.TP
+\fB\-\-graph\-file\fP \fIfile\fP [\fB\-g\fP]
+Specifies that the allocation call graph should also be written to a graph
+specification file for later visualisation with \fBdot\fP.  If \fIfile\fP is
+given as \fIstdout\fP or \fIstderr\fP then the corresponding file stream will
+be used as the target for the graph specification file.
+.TP
+\fB\-\-help\fP [\fB\-h\fP]
+Displays a quick-reference option summary.
+.TP
+\fB\-\-leaks\fP [\fB\-l\fP]
+Specifies that memory leaks rather than memory allocations are to be written to
+the graph specification file.  This option only affects the output from the
+\fB\-\-graph\-file\fP option.
+.TP
+\fB\-\-stack\-depth\fP \fIdepth\fP [\fB\-n\fP]
+Specifies the maximum stack depth to use when calculating if one call site has
+the same call stack as another call site.  This also specifies the maximum
+number of functions to display in a call stack.  If \fIdepth\fP is \fI0\fP then
+the call stack depth will be unlimited in size.  The default call stack depth
+is \fI1\fP.  This affects the memory leak table.
+.TP
+\fB\-\-version\fP [\fB\-V\fP]
+Displays the version number of the \fBmprof\fP command.
+.SH SEE ALSO
+\fBmpatrol\fP(1), \fBmptrace\fP(1), \fBmleak\fP(1), \fBmpsym\fP(1),
+\fBmpedit\fP(1), \fBhexwords\fP(1), \fBprof\fP(1), \fBgprof\fP(1), \fBdot\fP(1),
+\fBlibmpatrol\fP(3), \fBlibmpalloc\fP(3).
+.PP
+The mpatrol manual and reference card.
+.PP
+http://heanet.dl.sourceforge.net/sourceforge/mpatrol/
+.SH AUTHOR
+Graeme S. Roy <graemeroy@users.sourceforge.net>
+.SH COPYRIGHT
+Copyright (C) 1997-2008 Graeme S. Roy <graemeroy@users.sourceforge.net>
+.PP
+This program is free software: you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License as published by
+the Free Software Foundation, either version 3 of the License, or (at
+your option) any later version.
+.PP
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser
+General Public License for more details.
+.PP
+You should have received a copy of the GNU Lesser General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.

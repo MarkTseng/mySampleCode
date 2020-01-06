@@ -1,0 +1,35 @@
+From 1dfe8770f682534605d9eda7749afb86bd528165 Mon Sep 17 00:00:00 2001
+From: Mark Wielaard <mjw@redhat.com>
+Date: Wed, 13 Jan 2016 23:06:33 +0100
+Subject: [PATCH] tests: Skip dwfl-bug-fd-leak test if dwfl_linux_proc_report
+ is unsupported.
+
+Signed-off-by: Mark Wielaard <mjw@redhat.com>
+diff --git a/tests/dwfl-bug-fd-leak.c b/tests/dwfl-bug-fd-leak.c
+index bcbfb29..689cdd7 100644
+--- a/tests/dwfl-bug-fd-leak.c
++++ b/tests/dwfl-bug-fd-leak.c
+@@ -27,6 +27,15 @@
+ #include <error.h>
+ #include <unistd.h>
+ #include <dwarf.h>
++
++#ifndef __linux__
++int
++main (void)
++{
++  return 77; /* dwfl_linux_proc_report is linux specific.  */
++}
++#else
++
+ #include <sys/resource.h>
+ #include ELFUTILS_HEADER(dwfl)
+ 
+@@ -104,3 +113,4 @@ main (void)
+ 
+   return 0;
+ }
++#endif
+-- 
+2.5.0
+

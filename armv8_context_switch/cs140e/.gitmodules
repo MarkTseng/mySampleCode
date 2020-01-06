@@ -1,0 +1,15 @@
+[submodule "0-blinky"]
+	path = 0-blinky
+	url = https://github.com/clearlycloudy/cs140e_blinky
+[submodule "1-shell"]
+	path = 1-shell
+	url = https://github.com/clearlycloudy/cs140e_shell
+[submodule "2-fs"]
+	path = 2-fs
+	url = https://github.com/clearlycloudy/cs140e_fs
+[submodule "3-spawn"]
+	path = 3-spawn
+	url = https://github.com/clearlycloudy/cs140e_fs
+[submodule "os"]
+	path = os
+	url = https://github.com/clearlycloudy/cs140e_os

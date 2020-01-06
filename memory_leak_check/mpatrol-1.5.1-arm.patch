@@ -1,0 +1,67 @@
+diff -ur build_armv5l-timesys-linux-gnueabi/mpatrol-1.4.8/mpatrol/src/machine.c mpatrol/src/machine.c
+--- build_armv5l-timesys-linux-gnueabi/mpatrol-1.4.8/mpatrol/src/machine.c	2008-12-08 13:45:13.000000000 -0500
++++ mpatrol/src/machine.c	2008-12-04 17:17:02.000000000 -0500
+@@ -185,6 +185,34 @@
+ 	.section .fini,"ax"
+ 	bl	__mp_fini
+ #endif /* MP_USE_ATEXIT */
++#elif ARCH == ARCH_ARM
++/* Define the __mp_initsection variable.
++ */
++
++	.section .data,"aw"
++	.align	2
++__mp_initsection:
++	.long	1
++	.globl	__mp_initsection
++	.type	__mp_initsection,#object
++	.size	__mp_initsection,4
++
++
++/* Place calls to initialise the mpatrol mutexes and data structures into
++ * the .init section and a call to terminate the mpatrol library in the
++ * .fini section.
++ */
++
++	.section .init,"ax"
++#if MP_THREADS_SUPPORT
++	bl	__mp_initmutexes
++#endif /* MP_THREADS_SUPPORT */
++	bl	__mp_init
++
++#if !MP_USE_ATEXIT
++	.section .fini,"ax"
++	bl	__mp_fini
++#endif /* MP_USE_ATEXIT */
+ #endif /* ARCH */
+ #endif /* MP_INIT_SUPPORT */
+ 
+diff -ur build_armv5l-timesys-linux-gnueabi/mpatrol-1.4.8/mpatrol/src/target.h mpatrol/src/target.h
+--- build_armv5l-timesys-linux-gnueabi/mpatrol-1.4.8/mpatrol/src/target.h	2002-01-08 15:13:59.000000000 -0500
++++ mpatrol/src/target.h	2008-12-05 15:26:36.000000000 -0500
+@@ -226,6 +226,7 @@
+ #define ARCH_POWER   8  /* IBM RS/6000 */
+ #define ARCH_POWERPC 9  /* PowerPC */
+ #define ARCH_SPARC   10 /* SPARC */
++#define ARCH_ARM     11 /* ARM */
+ 
+ 
+ #ifndef ARCH
+@@ -269,6 +270,8 @@
+ #elif defined(sparc) || defined(_sparc) || defined(__sparc) || \
+       defined(__sparc__)
+ #define ARCH ARCH_SPARC
++#elif defined(__arm__)
++#define ARCH ARCH_ARM
+ #else /* ARCH */
+ #define ARCH ARCH_ANY
+ #endif /* ARCH */
+@@ -298,6 +301,8 @@
+ #define ARCH_STR "PowerPC"
+ #elif ARCH == ARCH_SPARC
+ #define ARCH_STR "SPARC"
++#elif ARCH == ARCH_ARM
++#define ARCH_STR "ARM"
+ #else /* ARCH */
+ #define ARCH_STR "Unknown"
+ #endif /* ARCH */

@@ -1,0 +1,45 @@
+/* List the relocation types for m68k.  -*- C -*-
+   Copyright (C) 2007 Kurt Roeckx <kurt@roeckx.be>
+
+   This software is free software; you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by the
+   Free Software Foundation; version 2 of the License.
+
+   This software is distributed in the hope that it will be useful, but
+   WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+   General Public License for more details.
+
+   You should have received a copy of the GNU General Public License along
+   with this software; if not, write to the Free Software Foundation,
+   Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301 USA.
+*/
+
+/* 	    NAME,		REL|EXEC|DYN	*/
+
+RELOC_TYPE (NONE,		0)
+RELOC_TYPE (32,			REL|EXEC|DYN)
+RELOC_TYPE (16,			REL)
+RELOC_TYPE (8,			REL)
+RELOC_TYPE (PC32,		REL|EXEC|DYN)
+RELOC_TYPE (PC16,		REL)
+RELOC_TYPE (PC8,		REL)
+RELOC_TYPE (GOT32,		REL)
+RELOC_TYPE (GOT16,		REL)
+RELOC_TYPE (GOT8,		REL)
+RELOC_TYPE (GOT32O,		REL)
+RELOC_TYPE (GOT16O,		REL)
+RELOC_TYPE (GOT8O,		REL)
+RELOC_TYPE (PLT32,		REL)
+RELOC_TYPE (PLT16,		REL)
+RELOC_TYPE (PLT8,		REL)
+RELOC_TYPE (PLT32O,		REL)
+RELOC_TYPE (PLT16O,		REL)
+RELOC_TYPE (PLT8O,		REL)
+RELOC_TYPE (COPY,		EXEC)
+RELOC_TYPE (GLOB_DAT,		EXEC|DYN)
+RELOC_TYPE (JMP_SLOT,		EXEC|DYN)
+RELOC_TYPE (RELATIVE,		EXEC|DYN)
+RELOC_TYPE (GNU_VTINHERIT,	REL)
+RELOC_TYPE (GNU_VTENTRY,	REL)
+

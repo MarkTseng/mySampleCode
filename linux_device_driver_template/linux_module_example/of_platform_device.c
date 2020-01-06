@@ -70,8 +70,9 @@ static void __exit of_device_exit_driver(void)
     pr_info("of_device_exit_driver\n");
 }
 
-subsys_initcall(of_device_init_driver);
+module_init(of_device_init_driver);
 module_exit(of_device_exit_driver);
+
 
 MODULE_DESCRIPTION("OF platform_device driver");
 MODULE_AUTHOR("Mark Tseng");

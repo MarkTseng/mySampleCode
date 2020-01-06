@@ -1,0 +1,57 @@
+#!/usr/bin/make -f
+
+# Uncomment this to turn on verbose mode.
+export DH_VERBOSE=1
+
+#!/usr/bin/make -f
+
+%:
+	dh $@ --with quilt
+
+override_dh_auto_build:
+	# configure and build library
+	cd libdwarf; ./configure --prefix=$(CURDIR)/debian/libdwarf-dev
+	cd libdwarf; make
+	# configure and build dwarfdump
+	cd dwarfdump; ./configure --prefix=$(CURDIR)/debian/dwarfdump
+	cd dwarfdump; make
+	# configure and build dwarfdump2
+	cd dwarfdump2; ./configure --prefix=$(CURDIR)/debian/dwarfdump2
+	cd dwarfdump2; make
+	dh_auto_build
+
+override_dh_auto_clean:
+	# configure and build library
+	cd libdwarf; ./configure --prefix=$(CURDIR)/debian/libdwarf-dev
+	cd libdwarf; make distclean
+	# configure and build dwarfdump
+	cd dwarfdump; ./configure --prefix=$(CURDIR)/debian/dwarfdump
+	cd dwarfdump; make distclean
+	# configure and build dwarfdump2
+	cd dwarfdump2; ./configure --prefix=$(CURDIR)/debian/dwarfdump2
+	cd dwarfdump2; make distclean
+	dh_auto_clean
+
+override_dh_auto_install:
+	cp libdwarf/libdwarf.a $(CURDIR)/debian/libdwarf-dev/usr/lib/
+	cp libdwarf/dwarf.h libdwarf/libdwarf.h $(CURDIR)/debian/libdwarf-dev/usr/include/
+	cp libdwarf/*.pdf $(CURDIR)/debian/libdwarf-dev/usr/share/doc/libdwarf-dev
+	cp libdwarf/[NR]* $(CURDIR)/debian/libdwarf-dev/usr/share/doc/libdwarf-dev
+	/bin/gzip -9 < libdwarf/ChangeLog > $(CURDIR)/debian/libdwarf-dev/usr/share/doc/libdwarf-dev/changelog.gz
+	/bin/gzip -9 < libdwarf/ChangeLog2008 > $(CURDIR)/debian/libdwarf-dev/usr/share/doc/libdwarf-dev/changelog2008.gz
+	/bin/gzip -9 < libdwarf/ChangeLog2007 > $(CURDIR)/debian/libdwarf-dev/usr/share/doc/libdwarf-dev/changelog2007.gz
+	/bin/gzip -9 < libdwarf/ChangeLog2006 > $(CURDIR)/debian/libdwarf-dev/usr/share/doc/libdwarf-dev/changelog2006.gz
+	cp dwarfexample/*  $(CURDIR)/debian/libdwarf-dev/usr/share/doc/libdwarf-dev/examples/
+	cp dwarfdump2/dwarfdump $(CURDIR)/debian/dwarfdump/usr/bin/
+	/bin/gzip -9 < dwarfdump2/dwarfdump.1 > $(CURDIR)/debian/dwarfdump/usr/share/man/man1/dwarfdump.1.gz
+	/bin/gzip -9 < dwarfdump/README > $(CURDIR)/debian/dwarfdump/usr/share/doc/dwarfdump/README.gz
+	/bin/gzip -9 < dwarfdump/ChangeLog > $(CURDIR)/debian/dwarfdump/usr/share/doc/dwarfdump/changelog.gz
+	cp dwarfdump2/dwarfdump.conf $(CURDIR)/debian/dwarfdump/usr/share/doc/dwarfdump/examples/dwarfdump.conf
+	dh_auto_install
+
+override_dh_install:
+	# everything is installed
+
+override_dh_auto_test:
+	# dwarfutils does not provide a testsuite
+

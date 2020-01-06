@@ -1,0 +1,4844 @@
+2008-11-27  Graeme Roy  <graemeroy@users.sourceforge.net>
+
+	* src/target.h: Added detection of 64-bit x86 processors.
+
+2008-11-26  Graeme Roy  <graemeroy@users.sourceforge.net>
+
+	* doc/mpatrol.texi: Mentioned using backtrace() from glibc.
+
+2008-11-26  Graeme Roy  <graemeroy@users.sourceforge.net>
+
+	* src/memory.c, src/machine.c, src/machine.h, src/stack.c, src/stack.h,
+	  src/signals.c:
+	Added support for backtrace() and libunwind.
+
+2008-11-26  Graeme Roy  <graemeroy@users.sourceforge.net>
+
+	* src/config.h:
+	Added the MP_GLIBCBACKTRACE_SUPPORT feature and made it the default
+	for 64-bit x86 Linux systems.
+
+2008-11-26  Graeme Roy  <graemeroy@users.sourceforge.net>
+
+	* src/inter.c: Various fixes for checkalloca().  Courtesy of Daniel
+	Jacobowitz.
+
+2008-11-26  Graeme Roy  <graemeroy@users.sourceforge.net>
+
+	* src/addr.c:
+	Moved the backup copy of the call stack context to a more appropriate
+	position within __mp_getaddrs().  Courtesy of Daniel Jacobowitz.
+
+2008-11-25  Graeme Roy  <graemeroy@users.sourceforge.net>
+
+	* THANKS, doc/mpatrol.texi, extra/mpatrol.m4, man/man3/libmpatrol.3,
+	  src/config.h, src/stack.c, src/stack.h, src/inter.c:
+	Added support for using libunwind for call stack traversal. Turn on
+	with the macro MP_LIBUNWIND_SUPPORT when building mpatrol.  This has
+	been made the default for ARM and IA64 processors.  Courtesy of Daniel
+	Jacobowitz.
+
+2008-11-25  Graeme Roy  <graemeroy@users.sourceforge.net>
+
+	* src/symbol.c:
+	Added support for reading external debugging files created by gcc and
+	now use dl_iterate_phdr() on Linux to read the dynamic linker data
+	structures rather than _DYNAMIC.  Courtesy of Daniel Jacobowitz.
+
+2008-07-17  Graeme Roy  <graemeroy@users.sourceforge.net>
+
+	* doc/mpatrol.texi:
+	Updated the details on the machines I have access to.
+
+2007-08-14  Graeme Roy  <graemeroy@users.sourceforge.net>
+
+	* build/windows/Makefile.mingw: New Makefile for MinGW on Windows.
+
+	* doc/mpatrol.texi: Mentioned MinGW.
+
+	* pkg/rpm/mpatrol.spec: Added symbolic links.
+
+	* src/config.h, src/inter.c, man/man3/libmpatrol.3, extra/mpatrol.m4,
+	  doc/mpatrol.texi:
+	Added libintl when using the BFD library.
+
+	* src/inter.c: Fixed changes for MingW32.
+
+	* src/symbol.c: Fixed problem if LoadedImageName is "" on Windows.
+
+	* src/target.h:
+	Added BFD as supported format for MingW32 and added XP and Vista to
+	list of Microsoft operating systems, removing support for DOS-based 95,
+	98 and ME.
+
+2007-08-13  Graeme Roy  <graemeroy@users.sourceforge.net>
+
+	* THANKS:
+	Removed the email addresses.  Revised into just one list.  Added
+	more people to thank.
+
+	* doc/mpatrol.texi:
+	Mentioned that need to use mpatrol's capabilities with system C library
+	and removed lots of email addresses.  Added a link to Robert Schmitt's
+	tutorial.  Mentioned about working with JNI and adding a signal-handler
+	for debugging daemon processes.  Added Valgrind to software links.
+
+	* extra/mpatrol.m4: Fixed the call to AC_TRY_LINK.
+
+	* src/cplus.c: Updated the name mangling for gcc.
+
+	* src/config.h, src/inter.c, src/stack.c, src/target.h:
+	Added support for MinGW32.
+
+	* src/machine.c: Use hard register names for HP/UX.
+
+	* src/machine.c, src/target.h: Added preliminary support for ARM.
+
+	* src/symbol.c:
+	Fixed an intermittent bug with the BFD library and symbol reading on
+	Linux.
+
+	* src/sbrk.c, src/symbol.c, src/symbol.h, src/trace.c, src/trace.h,
+	  src/diag.c, src/diag.h, src/heap.h, src/memory.c, src/memory.h:
+	Changed meminfo structure to memoryinfo to prevent clash on Solaris.
+
+2007-04-26  Graeme Roy  <graemeroy@users.sourceforge.net>
+
+	* all files from DEV_INTERIX branch:
+	Merged the Interix branch back to mainline.
+
+	* doc/texinfo.tex: No longer required
+
+2005-03-10  Graeme Roy  <graemeroy@users.sourceforge.net>
+
+	* THANKS: Credited Greg Chicares.
+
+	* doc/mpatrol.texi, doc/refcard.tex, man/man1/mpatrol.1,
+	  man/man3/libmpatrol.3:
+	Updated CHECKMEMORY to check for zero-length memory operations.
+
+	* src/mpatrol.c:
+	Updated --check-memory to check for zero-length memory operations.
+
+	* src/option.c: Updated documentation for CHECKMEMORY.
+
+	* src/symbol.c:
+	Fixed a problem with later BFD libraries and not reading the dynamic
+	symbol table if a normal symbol table doesn't exist.
+
+2005-03-09  Graeme Roy  <graemeroy@users.sourceforge.net>
+
+	* doc/mpatrol.texi, doc/refcard.tex:
+	Documented the ZEROPN diagnostic message.
+
+	* src/diag.c, src/diag.h, src/mpatrol.h:
+	Added the ZEROPN diagnostic message.
+
+	* src/info.c, src/inter.c:
+	Added ZEROPN diagnostic in __mp_checkmemory().  Correctly handle
+	memmem() if search memory is zero-length.
+
+2003-11-27  Graeme Roy  <graemeroy@users.sourceforge.net>
+
+	* config/depcomp: Added automake installation file.
+
+	* pkg/auto/cleanup, pkg/auto/setup: Added depcomp.
+
+2003-11-26  Graeme Roy  <graemeroy@users.sourceforge.net>
+
+	* doc/Makefile:
+	thumbpdf now cleans up a lot of its temporary files by default.  No
+	longer use texi2html.
+
+	* doc/README:
+	Added Adobe Reader information and changed texinfo site.  No longer
+	use texi2html.
+
+	* doc/mpatrol.texi:
+	Removed the explicit page breaks as they are no longer needed.
+
+	* man/Makefile:
+	Use -r for man2html.  Simplified the invocation of groff.  Simplified
+	the commands.  Explicitly specify page sizes.  Now always call tbl
+	beforehand.
+
+	* man/README: Mentioned Adobe Reader.
+
+2003-11-25  Graeme Roy  <graemeroy@users.sourceforge.net>
+
+	* doc/Makefile:
+	Added font subset writing to pstill invocation.  Removed workaround
+	for bad HTML production by a previous release of makeinfo.  Added
+	support for building a DocBook version of the mpatrol manual.
+
+	* doc/README:
+	Mentioned Texi2html.  Added information about the DocBook version
+	of the mpatrol manual.
+
+	* doc/mpatrol.texi:
+	Added EXAMPLEIMAGES flag.  Added the TITLEIMAGES flag.  Mentioned
+	about DocBook format.  Simplified macro handling.
+
+	* man/Makefile:
+	Added binary output and font subset writing to pstill options.
+
+2003-11-24  Graeme Roy  <graemeroy@users.sourceforge.net>
+
+	* doc/Makefile:
+	Remove .tpt files.  Added binary output to pstill.  Change dvips
+	option from -Pcmz to -Ppdf.
+
+2002-07-23  Graeme Roy  <graemeroy@users.sourceforge.net>
+
+	* doc/mpatrol.texi: Added examples for the tools.
+
+2002-03-11  Graeme Roy  <graemeroy@users.sourceforge.net>
+
+	* doc/mpatrol.texi: Updated information about MP_ALIGN().
+
+	* src/list.c, src/list.h: Added __mp_joinlist().
+
+	* src/mpatrol.h: Added a better default for MP_ALIGN().
+
+2002-02-05  Graeme Roy  <graemeroy@users.sourceforge.net>
+
+	* src/diag.c, src/diag.h:
+	Added __mp_getenv().  Fixed the problem with getenv() in a
+	multi-threaded Windows process.
+
+	* src/option.c: Now use __mp_getenv().
+
+2002-02-04  Graeme Roy  <graemeroy@users.sourceforge.net>
+
+	* doc/mpatrol.texi: Added information about autoconf setup.
+
+	* man/man3/libmpatrol.3: Added ldfcn as a reference.
+
+2002-01-08  Graeme Roy  <graeme.roy@analog.com>
+
+	* THANKS: Credited Peter Zijlstra.
+
+	* bin/mpedit: Forgot to update the version number from last change.
+
+	* config/configure: Updated to latest configure.in.
+
+	* doc/mpatrol.texi:
+	Added more references.  Added information about diagnostics.
+
+	* src/mutex.c: Added Tru64 TIS support.
+
+2001-12-18  Graeme Roy  <graeme.roy@analog.com>
+
+	* src/diag.c:
+	Added support for logging when not enough information is available.
+
+	* src/diag.h:
+	Added 1 onto the end of the functionnames and lognames arrays.
+
+	* src/info.c:
+	Added calls to __mp_log() before ALLOVF, FRDOVF, FRDCOR and FRECOR
+	errors.  Added logging before NULOPN, FREOPN, FRDOPN, RNGOVF and STROVF
+	errors.
+
+	* src/getopt.c, src/getopt.h: Added __mp_match().
+
+2001-12-11  Graeme Roy  <graeme.roy@analog.com>
+
+	* src/diag.c, src/diag.h:
+	Unified all logging functions into __mp_log().  Moved checking of
+	recursive logging to __mp_log().  Added __mp_lognames.
+
+	* src/info.c:
+	Moved checking of recursive logging to __mp_log().
+
+	* src/inter.c:
+	Added default ltype to the logging information structures.
+
+2001-12-06  Graeme Roy  <graeme.roy@analog.com>
+
+	* src/diag.c, src/diag.h:
+	Added the logged flag.  Changed some of the logging functions.  Removed
+	parameters from other logging functions.
+
+	* src/info.c:
+	Remove the logging flags.  Removed more parameters from the logging
+	functions.
+
+	* src/info.h:
+	Added the logged flag.  Added some variants to loginfo.  Added the
+	logtype enumeration.  Added the other logging types.
+
+	* src/inter.c: Added the logged flag.
+
+2001-12-05  Graeme Roy  <graeme.roy@analog.com>
+
+	* THANKS: Documented Gerrit's help.
+
+	* doc/mpatrol.texi: New changes documented.
+
+	* doc/refcard.tex: Added the --skip and --read-env options.
+
+	* man/man1/mpatrol.1: Added the --read-env option.
+
+	* man/man1/mpsym.1: Added the --skip option.
+
+	* src/target.h: Don't define POSIX_SOURCE for BSD systems.
+
+	* src/diag.h:
+	Removed alloctype from parameters as it is no longer needed.
+
+	* src/profile.c:
+	Now check if there is a problem when writing the profiling file.
+
+	* src/trace.c: Added checking when writing the trace file.
+
+	* src/info.c:
+	First set of changes to remove alloctype as an argument.  No longer need
+	the alloctype when logging operations.
+
+	* src/info.h:
+	Added the type field to the loginfo structure.  Removed alloctype
+	parameters as they are no longer needed.
+
+	* src/inter.c:
+	Added the alloctype function details to the loginfo structure.  Changes
+	for removing alloctype.
+
+	* src/mpatrol.c: Added the --read-env option.
+
+2001-10-10  Graeme Roy  <graeme.roy@analog.com>
+
+	* src/symbol.c: Fix for FORMAT_AOUT when finding symbols.
+
+2001-10-08  Graeme Roy  <graeme.roy@analog.com>
+
+	* src/diag.c:
+	Correctly format stack traces and symbol listings for HTML support.
+	Improved logging for HTML.
+
+2001-10-05  Graeme Roy  <graeme.roy@analog.com>
+
+	* src/symbol.c: Added a bit of HTML support.
+
+	* src/diag.c:
+	Finished __mp_printversion().  Started adding HTML support to
+	__mp_printsummary().
+
+2001-10-04  Graeme Roy  <graeme.roy@analog.com>
+
+	* src/diag.c: Converted some of the header to support HTML.
+
+	* src/inter.c: Draw a horizontal rule after the header for HTML.
+
+2001-10-03  Graeme Roy  <graeme.roy@analog.com>
+
+	* bin/mupdate: MP_VERSION is now defined in version.h.
+
+	* src/version.c, src/version.h:
+	Moved MP_VERSION to version.h.  Added __mp_author and __mp_email.
+
+	* src/mleak.c, src/mpatrol.c, src/mprof.c, src/mptrace.c:
+	Added __mp_author.
+
+2001-09-30  Graeme Roy  <graeme.roy@analog.com>
+
+	* THANKS: Added Diego Santa Cruz.
+
+	* bin/mpsym: Added the --skip option.
+
+	* doc/Makefile:
+	Added --no-split to the makeinfo command for producing HTML.
+
+2001-09-27  Graeme Roy  <graeme.roy@analog.com>
+
+	* src/diag.c, src/diag.h:
+	HTML-ised __mp_diag().  Added FLG_HTMLNEXT.  Fixed problem with the HTML
+	option changing formatting in the middle of a text file.
+
+	* src/option.c, src/mpatrol.h, src/option.h:
+	Added the HTML option.  Only flag the next log file to be formatted in
+	HTML, not the current one.
+
+	* src/mpatrol.c: Added the --html option.
+
+2001-09-26  Graeme Roy  <graeme.roy@analog.com>
+
+	* config/aclocal.m4: Added AM_CONDITIONAL.
+
+	* config/configure: Updated to latest configure.in.
+
+	* config/configure.in: Added the XSUPPORT automake conditional.
+
+	* config/src.in, config/src.am:
+	Added XSUPPORT.  Make use of X_CFLAGS.  Added INCLUDES.
+
+	* doc/mpatrol.texi: Documented more about GUI support.
+
+	* src/diag.c, src/diag.h: Added __mp_diagtag().  Started HTML support.
+
+	* src/info.c:
+	Removed __mp_closelogfile() out of __mp_deleteinfo().  Fixed a bug with
+	calculating the total size of marked allocations.
+
+	* src/inter.c: Moved __mp_closelogfile() out of __mp_deleteinfo().
+
+2001-09-25  Graeme Roy  <graeme.roy@analog.com>
+
+	* bin/mpsym: Now automatically detect the value for POINTER.
+
+	* config/configure.in, config/configure.in:
+	Added support for SETVBUF_REVERSED and X_DISPLAY_MISSING.
+
+	* config/src.in, config/tools.in, config/tsrc.in, config/configure.in,
+	  config/configure:
+	Added X support.
+
+	* doc/mpatrol.texi:
+	Documented POINTER no longer required to be set in mpsym.
+
+	* man/man1/mpsym.1: No longer require POINTER to be set in mpsym.
+
+	* src/config.h:
+	Now define MP_GUI_SUPPORT if autoconf has determined that we have X
+	support.
+
+	* src/diag.c, tools/mgauge.c: Added support for SETVBUF_REVERSED.
+
+2001-09-23  Graeme Roy  <graeme.roy@analog.com>
+
+	* config/acconfig.h: New file for additional macros for autoheader.
+
+	* config/configure.h.in: Added more macros.
+
+	* config/configure, config/configure.in: Added a lot more tests.
+
+	* config/configure.in:
+	Added AC_CHECK_SIZEOF(void *) and AC_CHECK_FUNCS(memalign mincore).
+
+	* config/bin.in, config/doc.in, config/extra.in, config/images.in,
+	  config/man.in, config/src.in, config/tools.in, config/top.in,
+	  config/tsrc.in:
+	Added ability to build on Cygwin.
+
+	* pkg/auto/cleanup, pkg/auto/setup, pkg/auto/.cvsignore:
+	Added acconfig.h.
+
+	* src/config.h:
+	Added autoconf support for determining memalign and mincore support.
+
+	* src/target.h: ENVIRON now has autoconf support.
+
+2001-09-21  Graeme Roy  <graeme.roy@analog.com>
+
+	* pkg/auto/build: Added a new build script.
+
+2001-09-20  Graeme Roy  <graeme.roy@analog.com>
+
+	* config/aclocal.m4: Added AM_CONFIG_HEADER.
+
+	* config/configure: Added ability to build configure.h.
+
+	* config/configure.h.in:
+	Added configure.h.in template generated by autoheader.
+
+	* config/configure.h.in, config/configure, config/configure.in:
+	Added AC_FUNC_MMAP.
+
+	* config/bin.in, config/doc.in, config/extra.in, config/images.in,
+	  config/man.in, config/src.in, config/tools.in, config/top.in,
+	  config/tsrc.in:
+	Added the configure.h header file.
+
+	* pkg/auto/.cvsignore: New .cvsignore file for pkg/auto.
+
+	* pkg/auto/setup:
+	Added configure.h.in.  configure.h.in is now automatically generated by
+	autoheader.
+
+	* src/config.h:
+	Now also use configure.h to determine if mmap() is supported.
+
+2001-09-19  Graeme Roy  <graeme.roy@analog.com>
+
+	* config/configure.in: Added ability to build configure.h.
+
+	* config/configure.in, config/configure, config/top.am, config/top.in:
+	Added the extra directory.
+
+	* config/extra.am, config/extra.in:
+	Added new makefiles for the extra directory.
+
+	* config/src.am, config/src.in, config/tools.am, config/tools.in,
+	  config/tsrc.am, config/tsrc.in:
+	Added -release options to version the libraries.
+
+	* pkg/auto/cleanup, pkg/auto/setup:
+	Added cleanup for configure.h.in and stamp-h.in.  Added the extra
+	directory.
+
+	* src/target.h:
+	Changed so that Alpha and IA64 processors always define
+	ENVIRON=ENVIRON_64.  Now include configure.h if HAVE_CONFIG_H is
+	defined.
+
+2001-09-17  Graeme Roy  <graeme.roy@analog.com>
+
+	* doc/mpatrol.texi:
+	Added more things to do and documented the pkg/auto directory.
+
+2001-09-13  Graeme Roy  <graeme.roy@analog.com>
+
+	* config/configure.in:
+	Updated to 1.4.8 and removed the requirement for CPP.
+
+	* config/top.am, config/top.in: Don't need EXTRA_DIST.
+
+	* config/src.am, config/src.in, config/tsrc.am, config/tsrc.in:
+	Completely revised.  Cleaner way to compile machine.c.
+
+	* config/tools.am, config/tools.in: Revised the LDFLAGS argument.
+
+	* config/bin.in, config/doc.in, config/images.in, config/man.in,
+	  config/src.in, config/tools.in, config/top.in, config/tsrc.in,
+	  config/configure:
+	No longer check for CPP.
+
+	* doc/mpatrol.texi: Documented Windows NT symbols setup.
+
+	* man/man3/libmpatrol.3: Now 42 functions.
+
+2001-09-09  Graeme Roy  <graeme.roy@analog.com>
+
+	* pkg/debian/.cvsignore: New .cvsignore file for Debian.
+
+	* pkg/debian/build: New build script for Debian.
+
+2001-09-06  Graeme Roy  <graeme.roy@analog.com>
+
+	* build/unix/mpalloc.exp, build/unix/mpatrol.exp: Added __mp_memhead().
+
+	* doc/mpatrol.texi: Documented mpatrol patch 5.
+
+	* src/target.h: Added support for the Intel Itanium processor.
+
+	* src/symbol.c:
+	Fixed diagnostics for number of symbols read from Windows DLLs.
+
+2001-09-05  Graeme Roy  <graeme.roy@analog.com>
+
+	* bin/mupdate: Also remove any .cvsignore files.
+
+	* build/windows/.cvsignore, build/unix/.cvsignore,
+	  build/netware/.cvsignore, build/amiga/.cvsignore, doc/.cvsignore,
+	  man/ps/.cvsignore, man/pdf/.cvsignore, man/html/.cvsignore,
+	  man/dvi/.cvsignore, man/cat3/.cvsignore, man/cat1/.cvsignore,
+	  pkg/sdux/.cvsignore, pkg/rpm/.cvsignore, pkg/pkg/.cvsignore,
+	  pkg/zip/.cvsignore, pkg/tar/.cvsignore, pkg/lha/.cvsignore:
+	Added .cvsignore files.
+
+	* doc/mpatrol.texi:
+	Added information about the Debian package format.  Added information
+	about pageheap on Windows 2000.
+
+	* pkg/debian/README.debian, pkg/debian/changelog, pkg/debian/copyright,
+	  pkg/debian/dirs, pkg/debian/docs, pkg/debian/doc-base,
+	  pkg/debian/info, pkg/debian/rules, pkg/debian/watch:
+	Added Debian package files.
+
+2001-09-04  Graeme Roy  <graeme.roy@analog.com>
+
+	* INSTALL:
+	New top-level INSTALL with information on how to build and install
+	mpatrol with autoconf, automake and libtool.
+
+	* THANKS:
+	Added Jerome Marant for his work on producing a debian package.
+
+	* build/windows/mpalloc.def, build/windows/mpatrol.def,
+	  build/windows/mpatrolmt.def, build/unix/mpalloc.exp,
+	  build/unix/mpatrol.exp:
+	Added __mp_symbol().
+
+	* doc/mpatrol.texi, doc/refcard.tex:
+	Added the __mp_symbol() function.  Documented that Tru64 stack unwinding
+	is sort of fixed.  Documented that Jerome Marant did the Debian port.
+
+	* man/man3/libmpatrol.3:
+	Added the __mp_symbol() function.
+
+	* pkg/debian/control: New control file for Debian.
+
+	* src/stack.c: Fixed Tru64 stack unwinding (for now).
+
+	* src/inter.c: Added init_flag for Tru64 stack unwinding.
+
+	* src/inter.c, src/inter.h, src/mpalloc.c, src/mpatrol.h:
+	Added the __mp_symbol() function.
+
+2001-09-03  Graeme Roy  <graeme.roy@analog.com>
+
+	* README:
+	Elaborated slightly about seeing the manual for more information.
+
+	* bin/mpsym: Removed need for printf command by replacing it with awk.
+
+	* bin/mpedit:
+	Added support for elvis, pico and nano.  Use awk if nl is not available.
+
+	* build/unix/Makefile:
+	Changed ln -fs to ln -f -s for full portability.  MP_GUI_SUPPORT is 0
+	by default so remove explicit default.
+
+	* build/windows/mpalloc.def, build/windows/mpatrol.def,
+	  build/windows/mpatrolmt.def:
+	Restored the EXPORTS lists.  Added __mp_memhead().
+
+	* doc/mpatrol.texi:
+	Documented that elvis, pico and nano are now supported with mpedit and
+	that it now works fully on FreeBSD and LynxOS.  Forgot to add that LIST
+	now works with the previous change.  Documented that mpsym now works on
+	LynxOS since the printf command is no longer required.
+
+	* man/man1/mpedit.1: Added elvis, pico and nano.
+
+	* src/config.h: Now default MP_API to nothing.
+
+2001-08-29  Graeme Roy  <graeme.roy@analog.com>
+
+	* doc/mpatrol.texi: Updated some of the things to do.
+
+2001-08-27  Graeme Roy  <graeme.roy@analog.com>
+
+	* build/unix/Makefile.aix: Explicitly add MP_GUI_SUPPORT.
+
+	* config/bin.am, config/doc.am, config/images.am, config/man.am,
+	  config/src.am, config/tools.am, config/top.am, config/tsrc.am:
+	Automake makefile templates.
+
+	* config/bin.in, config/doc.in, config/images.in, config/man.in,
+	  config/src.in, config/tools.in, config/top.in, config/tsrc.in:
+	Automatically-generated Makefile.in files.
+
+	* config/configure.in: Initial configure.in for mpatrol.
+
+	* config/aclocal.m4, config/configure: Autoconf-generated files.
+
+	* doc/README, doc/mpatrol.texi:
+	Documented the source code documentation.  Revised some text in the
+	About the Author chapter.
+
+	* pkg/auto/setup: Added images.in and images.am.
+
+	* src/config.h: Always default to not using GUI support.
+
+2001-08-24  Graeme Roy  <graeme.roy@analog.com>
+
+	* build/unix/Makefile:
+	Added more default include and library directories.  Added two more
+	required libraries when building mptrace.
+
+	* build/unix/Makefile.aix:
+	Removed an erroneous library path when building mptrace.
+
+	* doc/Makefile:
+	Don't delete in bin, src and tools directories until the thumbnails have
+	been produced.
+
+	* doc/mpatrol.texi:
+	Documented Red Hat 7.x supported.  Added the About the author chapter.
+
+	* doc/source.tex: Added the a4wide package.
+
+	* src/memory.c, src/mpalloc.c: The BSD systems don't have sysconf().
+
+2001-08-23  Graeme Roy  <graeme.roy@analog.com>
+
+	* build/unix/Makefile:
+	Added /usr/X11R6/include to the include directory path when building
+	mptrace with GUI support.
+
+2001-08-22  Graeme Roy  <graeme.roy@analog.com>
+
+	* doc/Makefile: Need -expand none when invoking texi2html.
+
+	* doc/mpatrol.texi: Added third author of HATF.
+
+2001-08-19  Graeme Roy  <graeme.roy@analog.com>
+
+	* pkg/auto/cleanup, pkg/auto/setup: Added the doc and man directories.
+
+2001-08-02  Graeme Roy  <graeme.roy@analog.com>
+
+	* config/ltconfig, config/ltmain.sh, config/config.guess,
+	  config/config.sub:
+	libtool installation files.
+
+	* config/install-sh, config/missing, config/mkinstalldirs,
+	  config/INSTALL:
+	automake installation files.
+
+	* pkg/auto/setup: New file for setting up directory structure.
+
+	* pkg/auto/cleanup: New file to remove directory structure.
+
+2001-08-01  Graeme Roy  <graeme.roy@analog.com>
+
+	* build/windows/mpalloc.def, build/windows/mpatrol.def,
+	  build/windows/mpatrolmt.def:
+	Removed all exports as they are now defined by MP_API.
+
+	* doc/mpatrol.texi, man/man3/libmpatrol.3:
+	Added the alignment argument to the prologue function.
+
+	* src/info.h, src/info.c: Added the __mp_fixalign() function.
+
+	* src/info.h, src/inter.c, src/mpatrol.h:
+	Added alignment argument to prologue function.
+
+	* src/inter.c: Added MP_API to the __mp_lib* functions.
+
+	* src/mpcalloc.c, src/mpmalloc.c, src/mprealloc.c, src/mpsetfail.c,
+	  src/mpstrdup.c, src/cplus.c, src/malloc.c, src/sbrk.c, src/sbrk.h:
+	Added the MP_API macro.
+
+	* src/mleak.c, src/mpatrol.c, src/mprof.c, src/mptrace.c:
+	Changed VERSION to PROGVERSION to prevent conflicts with automake.
+
+	* tests/pass/test2.c: Added alignment to prologue function.
+
+	* tools/dmalloc.c: Added support for alignment in the tracker function.
+
+	* tools/heapdiff.c, tools/mtrace.c:
+	Added alignment support to the prologue function.
+
+2001-07-26  Graeme Roy  <graeme.roy@analog.com>
+
+	* doc/mpatrol.texi, man/man3/libmpatrol.3:
+	Documented the additional 3 arguments passed to the prologue and
+	epilogue functions.  Documented the additional arguments to the
+	low-memory handler.
+
+	* src/config.h: Added MP_API.
+
+	* src/diag.c, src/info.c, src/inter.c, src/inter.h, src/mpalloc.c:
+	Converted some function prototypes to include MP_API.
+
+	* src/info.h, src/mpatrol.h:
+	Added function name, file name and line number to the prologue and
+	epilogue handlers.  Added 4 extra arguments to the low memory handler.
+
+	* src/cplus.c, src/inter.c, src/mpatrol.h:
+	Added an additional 3 arguments to the prologue and epilogue functions.
+	Added new arguments to the nomemory handler.
+
+	* tests/pass/test2.c:
+	Added new arguments to the prologue and epilogue handlers.
+
+	* tests/pass/test3.c: Added extra arguments to the low memory handler.
+
+	* tools/dmalloc.c, tools/dmalloc.h:
+	Now pass source file and line number to malloc tracker function.
+
+	* tools/heapdiff.c: Updated prologue function arguments.
+
+	* tools/mgauge.c: Updated the arguments passed to the epilogue function.
+
+	* tools/mtrace.c:
+	Updated the arguments for the prologue and epilogue handlers.  Can now
+	get the function name, file name and line number if that was available
+	in the source code.
+
+2001-07-25  Graeme Roy  <graeme.roy@analog.com>
+
+	* build/windows/mpalloc.def, build/windows/mpatrol.def,
+	  build/windows/mpatrolmt.def, build/unix/mpalloc.exp,
+	  build/unix/mpatrol.exp:
+	Added __cyg_profile_func_enter() and __cyg_profile_func_exit().
+
+	* doc/mpatrol.texi:
+	Documented mpatrol patch 4 and GUISUP.  Changed test to use
+	__mp_prologuehandler and __mp_epiloguehandler.  Updated __mp_prologue
+	and __mp_epilogue.  Converted __mp_nomemory().
+
+	* man/man3/libmpatrol.3:
+	Updated __mp_prologue and __mp_epilogue.  Converted __mp_nomemory().
+
+	* pkg/sdux/build, pkg/pkg/build:
+	Added GUISUP=true when building mptrace.
+
+	* src/info.h:
+	Added prologuehandler, epiloguehandler and nomemoryhandler typedefs.
+
+	* src/inter.h, src/mpalloc.c:
+	Changed the definitions of __mp_prologue, __mp_epilogue and
+	__mp_nomemory.
+
+	* src/inter.c, src/inter.h, src/mpalloc.c:
+	Added __cyg_profile_func_enter() and __cyg_profile_func_exit().
+
+	* src/cplus.c: Added an extra cast in case __mp_nomemory() is redefined.
+
+	* src/mpatrol.h:
+	Added __mp_prologuehandler and __mp_epiloguehandler.  Defined
+	__mp_prologue and __mp_epilogue in terms of __mp_prologuehandler and
+	__mp_epiloguehandler.  Added __mp_nomemoryhandler.
+
+	* tests/pass/test2.c:
+	Changed test to use __mp_prologuehandler and __mp_epiloguehandler.
+
+	* tools/dmalloc.c, tools/heapdiff.c, tools/mgauge.c, tools/mtrace.c:
+	Now use definitions of __mp_prologuehandler and __mp_epiloguehandler.
+
+2001-07-19  Graeme Roy  <graeme.roy@analog.com>
+
+	* doc/mpatrol.texi:
+	Finally got around to documenting the libiberty.so problem in the FAQ.
+	Added more related software.
+
+	* src/config.h:
+	Increased MP_BUFFER_SIZE to 8192 due to the length of C++ identifiers.
+
+	* src/target.h:
+	Don't redefine _POSIX_SOURCE, etc, if they are already defined.
+
+	* src/getopt.c, src/getopt.h:
+	Added __mp_basename().  Use the basename of the program name for any
+	diagnostics.
+
+	* src/mleak.c, src/mpatrol.c, src/mprof.c, src/mptrace.c:
+	Now make progname the basename of argv[0].
+
+	* src/mptrace.c:
+	Now only display source if available rather than a blank line.
+
+2001-07-12  Graeme Roy  <graeme.roy@analog.com>
+
+	* doc/Makefile: Added ability to build the source code documentation.
+
+	* doc/source.tex: New file for source code documentation.
+
+	* build/unix/Makefile: Added the GUISUP flag.
+
+2001-06-13  Graeme Roy  <graeme@epc.co.uk>
+
+	* THANKS: Credited Michael Anthony.
+
+	* doc/mpatrol.texi: Brought documentation slightly more up to date.
+
+	* doc/refcard.tex:
+	Added the --source, --check-fork and CHECKFORK options.
+
+	* man/man1/mptrace.1: Documented the --source option.
+
+	* man/man1/mpatrol.1: Added the --check-fork option.
+
+	* man/man3/libmpatrol.3:
+	Added the CHECKFORK option.  Documented the mpatrol_* versions of
+	functions.
+
+2001-06-12  Graeme Roy  <graeme@epc.co.uk>
+
+	* src/info.h, src/inter.c, src/mpatrol.c, src/mpatrol.h, src/option.c,
+	  src/option.h:
+	Added the CHECKFORK option.
+
+	* src/inter.c:
+	Allow removal of allocation contents files for freed allocations.
+
+	* tools/heapdiff.c, tools/heapdiff.h: Added the HD_CONTENTS flag.
+
+2001-06-07  Graeme Roy  <graeme@epc.co.uk>
+
+	* src/config.h: Added MP_NAMECACHE_SIZE.
+
+	* src/info.c, src/inter.c, src/trace.c, src/trace.h:
+	Now pass thread id, source function name, file name and line number for
+	placing in tracing output file.  Added name caches for tracing function
+	names and file names.
+
+	* src/mprof.c: Don't close the graph file if it is stdout or stderr.
+
+	* src/mptrace.c:
+	Don't close the simulation file or the HATF file if they are stdout or
+	stderr and also always read the whole of a reallocation record, even if
+	the allocation index does not exist.  Added support for reading the
+	thread id, source function name, file name and line number from the
+	tracing output file.  Added ability to reach cached tracing files.
+	Added the --source option and changed the short option for --sim-file to
+	be -S.
+
+2001-05-30  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/mpatrol.texi, doc/refcard.tex, man/man3/libmpatrol.3:
+	Brought the documentation a bit more up to date.  Added the
+	__mp_*contents() functions.  Documented __mp_libversion().  Added the
+	--hatf-file option.
+
+	* man/man3/libmpatrol.3:
+	Document __mp_libversion() and the fact that the fork() bug has been
+	fixed.
+
+2001-05-23  Graeme Roy  <graeme@epc.co.uk>
+
+	* THANKS: Added Richard Jones for HATF and MetaTF.
+
+	* extra/hatf.dtd: New DTD file for HATF.
+
+	* src/inter.c, src/inter.h, src/mpalloc.c: Added __mp_libversion().
+
+	* src/mpatrol.h:
+	Added __mp_libversion() and also a definition of __mp_atexit() when
+	NDEBUG is used as this was unintentionally left out before.  Also added
+	mpatrol_* versions of the __mp_* functions.
+
+	* src/mptrace.c:
+	Added the --hatf-file option.  Added running statistics when verbose is
+	used.
+
+2001-05-22  Graeme Roy  <graeme@epc.co.uk>
+
+	* THANKS: Added Andreas Schallenberg for his help with the SuSE port.
+
+	* doc/mpatrol.texi:
+	Added more credits and documented the SuSE port.  Also listed the target
+	environment information in the log file and documented the *_STR macros.
+
+	* man/man3/libmpatrol.3, man/man1/mptrace.1, doc/mpatrol.texi:
+	Documented that tracing now supports reallocations.
+
+	* src/info.c, src/info.h: Added the pid field.
+
+	* src/inter.c, src/inter.h, src/mpalloc.c, src/mpatrol.h, src/trace.c,
+	  src/trace.h:
+	Now remove the traced flag from any memory allocations that are in
+	existence in a child process after a fork.  Added __mp_changetrace().
+
+	* src/mptrace.c:
+	Added realloc() support to the simfile.  Provided a bit more backwards
+	compatibility.
+
+2001-05-17  Graeme Roy  <graeme@epc.co.uk>
+
+	* src/diag.c, src/target.h:
+	Added string representations of the configuration constants for printing
+	out in the summary.
+
+	* src/config.h, src/diag.c, src/memory.c, src/mpalloc.c, src/mutex.c,
+	  src/option.c, src/signals.c, src/target.h, src/version.c:
+	Added support for automatic compilation when TARGET is TARGET_ANY and
+	ARCH is ARCH_ANY.
+
+	* src/info.c:
+	Fixed a bug when using alloca() without full stack support.
+
+	* src/symbol.c:
+	Added the addsymname() function for more centralised control of whether
+	symbols should be stored or not.
+
+2001-05-16  Graeme Roy  <graeme@epc.co.uk>
+
+	* src/diag.c, src/diag.h, src/inter.c, src/inter.h, src/mpalloc.c,
+	  src/mpatrol.h:
+	Added ability to compare memory allocations with their contents on disk.
+
+2001-05-14  Graeme Roy  <graeme@epc.co.uk>
+
+	* src/inter.h, src/mpalloc.c, src/mpatrol.h, src/config.h, src/diag.c,
+	  src/diag.h, src/inter.c:
+	Added the ability to read, write and delete allocation contents files.
+
+2001-05-07  Graeme Roy  <graeme@epc.co.uk>
+
+	* THANKS: Added more credits.
+
+	* man/man1/mleak.1, doc/refcard.tex, doc/mpatrol.texi:
+	Added the --max-stack option.
+
+2001-05-06  Graeme Roy  <graeme@epc.co.uk>
+
+	* src/memory.c:
+	Fixed a problem on Windows when protecting pages allocated by different
+	calls to VirtualAlloc().
+
+2001-04-26  Graeme Roy  <graeme@epc.co.uk>
+
+	* src/info.c, src/trace.c, src/trace.h: Added __mp_tracerealloc().
+
+	* src/mptrace.c: Added support for reallocations.
+
+	* src/mleak.c: Added the --max-stack option.
+
+2001-03-22  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/mpatrol.texi: Updated the chapters on profiling and tracing.
+
+	* doc/refcard.tex: Added the --call-graph, --gui and --verbose options.
+
+	* man/man1/mprof.1: Added the --call-graph option.
+
+	* man/man1/mptrace.1: Added the --gui and --verbose options.
+
+	* src/mprof.c:
+	Added the --call-graph option and fixed a problem with the call graph
+	and leak table when call sites with no symbols were encountered.
+
+	* src/mptrace.c:
+	Added the --gui and --verbose options and added the statistics.
+
+2001-03-21  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/mpatrol.texi: Added the porting chapter.
+
+	* man/man1/hexwords.1: Added more example constants.
+
+2001-03-19  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/mpatrol.texi:
+	Added the heap corruption chapter and more references.
+
+2001-03-14  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/mpatrol.texi:
+	Added the memory leaks chapter.  Mentioned the authors of Dbmalloc and
+	Dmalloc.  Moved the Utilities and Tools sections to the top level.
+
+	* tools/dbmalloc.h, tools/dmalloc.h:
+	Fixed a minor spelling mistake in the description.
+
+2001-03-13  Graeme Roy  <graeme@epc.co.uk>
+
+	* src/signals.c:
+	Added ability to detect illegal memory access address on Linux Alpha.
+
+2001-03-12  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/mpatrol.texi:
+	Added more things to do and revised the timing results.
+
+	* src/target.h: Default to GNU BFD for Tru64.
+
+2001-03-11  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/mpatrol.texi, doc/refcard.tex, man/man3/libmpatrol.3:
+	Documented __mp_errno.  Documented the __mp_fini_ functions.
+
+2001-03-10  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/mpatrol.texi: Added the leak table chapter.
+
+	* src/inter.c:
+	Made the __init and __fini functions for Tru64 global since they cannot
+	be static in order to work.
+
+	* src/mpatrol.h: Fixed the values of MP_LT_*.
+
+2001-03-09  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/mpatrol.texi: Added more items to do.
+
+	* man/man3/libmpatrol.3:
+	Documented that the SHOWUNFREED and UNFREEDABORT options will not
+	consider marked allocations as unfreed.
+
+2001-03-08  Graeme Roy  <graeme@epc.co.uk>
+
+	* THANKS: Added Adam Zell and Per Winkvist.
+
+	* bin/mpsym: Now also check %p.log if mpatrol.log does not exist.
+
+	* build/windows/Makefile, build/windows/NMakefile, build/unix/Makefile,
+	  build/unix/Makefile.aix, build/netware/Makefile, build/amiga/Makefile,
+	  build/amiga/SMakefile:
+	Added slots module to mptrace.
+
+	* man/man1/mptrace.1: Document the --sim-file option.
+
+	* man/man1/mpsym.1:
+	Document use progfile.log if mpatrol.log cannot be found.
+
+	* src/symbol.c:
+	Improved the virtual address mapping of symbols for the OSF dynamic
+	linker.
+
+	* src/inter.c:
+	Revised crt_initialised() to be a macro.  Ensure that the C run-time
+	library is initialised on Tru64.
+
+	* src/mptrace.c: Added trace-driven simulation generation support.
+
+	* tools/dbmalloc.h: Fixed an error in the last change.
+
+2001-03-07  Graeme Roy  <graeme@epc.co.uk>
+
+	* THANKS:
+	Added CheeChun Kok for his help on delaying the initialisation of the
+	mpatrol library until the environment is set up.
+
+	* build/windows/Makefile, build/windows/NMakefile, build/unix/Makefile,
+	  build/unix/Makefile.aix, build/netware/Makefile, build/amiga/Makefile,
+	  build/amiga/SMakefile:
+	Added more leaktab dependencies.  Added diag.h dependencies to all files
+	that include inter.h.
+
+	* doc/mpatrol.texi:
+	Brought documentation up to date.  Added more information about the leak
+	table.
+
+	* doc/refcard.tex: Brought reference card up to date.
+
+	* src/config.h: Define MP_USE_ATEXIT to 0 by default on Tru64.
+
+	* src/target.h: Added DYNLINK_OSF.
+
+	* src/symbol.c: Added support for the OSF dynamic linker.
+
+	* src/info.c, src/info.h:
+	Added the mtotal field.  Updated the marked total for reallocations.
+	Also added marked allocation count.
+
+	* src/diag.c:
+	Don't show marked allocations with SHOWUNFREED or UNFREEDABORT.  Added
+	marked blocks to summary.
+
+	* src/inter.c:
+	Don't allow marked allocations to be remarked and update the marked
+	total.  Added the marked allocation count.  Don't show marked
+	allocations with SHOWUNFREED or UNFREEDABORT.  Added finishmarked() to
+	profile and trace the automatic freeing of marked allocations.
+
+	* src/inter.h, src/mpatrol.h: Added marked block statistics.
+
+	* src/cplus.c: Added #pragma implementation new for g++.
+
+	* src/machine.c: Added __mp_stackpointer() for Linux SPARC.
+
+	* tools/dbmalloc.c, tools/dbmalloc.h:
+	Fixed the malloc_inuse() function for marked allocations.
+
+	* tools/mgauge.c: Now consider marked allocations.
+
+2001-03-06  Graeme Roy  <graeme@epc.co.uk>
+
+	* bin/mpsym: Added set width 0.
+
+	* build/windows/Makefile, build/windows/NMakefile, build/unix/Makefile,
+	  build/unix/Makefile.aix, build/netware/Makefile, build/amiga/Makefile,
+	  build/amiga/SMakefile:
+	Added leaktab module dependencies.
+
+	* build/windows/mpalloc.def, build/windows/mpatrol.def,
+	  build/windows/mpatrolmt.def, build/unix/mpalloc.exp,
+	  build/unix/mpatrol.exp:
+	Added __mp_addallocentry() and __mp_addfreeentry().
+
+	* man/man1/mpatrol.1: Added the --leak-table option.
+
+	* man/man3/libmpatrol.3: Added more functions.
+
+	* src/config.h:
+	Reduced the size of the leak table from 97 to 47 slots.  Also added
+	support for functions whose names begin with __mp_fini_*.
+
+	* src/info.c, src/info.h: Added __mp_atfini().
+
+	* src/symbol.c: Added __mp_fini_* function support.
+
+	* src/diag.c: Added totals to __mp_printleaktab().
+
+	* src/inter.c, src/inter.h, src/mpalloc.c, src/mpatrol.h:
+	Added __mp_addallocentry() and __mp_addfreeentry().  Added a return
+	value to __mp_startleaktable() and __mp_stopleaktable().
+
+	* src/mpatrol.h: Added a definition for __mp_errno when NDEBUG is used.
+
+	* tests/pass/test4.c, tests/pass/test10.c:
+	Made use of the allocated flag.
+
+	* tools/dbmalloc.c, tools/dmalloc.c:
+	Changed to make use of the allocated flag.
+
+	* tools/dmalloc.c, tools/dmalloc.h:
+	Added support for the leak table.  Added calls to __mp_startleaktable()
+	and __mp_stopleaktable().
+
+2001-03-05  Graeme Roy  <graeme@epc.co.uk>
+
+	* build/windows/Makefile, build/windows/NMakefile, build/unix/Makefile,
+	  build/unix/Makefile.aix, build/netware/Makefile, build/amiga/Makefile,
+	  build/amiga/SMakefile:
+	Added the leaktab module.
+
+	* build/windows/mpalloc.def, build/windows/mpatrol.def,
+	  build/windows/mpatrolmt.def, build/unix/mpalloc.exp,
+	  build/unix/mpatrol.exp:
+	Added __mp_clearleaktable(), __mp_startleaktable() and
+	__mp_stopleaktable().  Added __mp_leaktable().
+
+	* man/man3/libmpatrol.3: Added more functions.
+
+	* pkg/pkg/build: Forgot to delete the share directory when cleaning up.
+
+	* src/config.h: Added MP_LEAKTAB_SIZE.
+
+	* src/target.h: Also need to define _XOPEN_SOURCE_EXTENDED for Tru64.
+
+	* src/memory.c: Added way to get program name on Tru64.
+
+	* src/info.c, src/info.h:
+	Added support for the leak table.  Added FLG_LEAKTABLE.
+
+	* src/stack.c: Completed Tru64 stack traversal support.
+
+	* src/leaktab.c, src/leaktab.h: New files for implementing a leak table.
+
+	* src/diag.c, src/diag.h:
+	Added __mp_printleaktab().  Added FLG_COUNTS and FLG_BOTTOM.  Added a
+	flags argument to __mp_printleaktab().
+
+	* src/option.c, src/option.h, src/mpatrol.h: Added the LEAKTABLE option.
+
+	* src/inter.c:
+	Added support for free blocks in __mp_info().  Added LEAKTABLE support.
+	Don't initialise the library on Linux until the environment is set up.
+
+	* src/inter.c, src/inter.h, src/mpatrol.h: Added new allocated field.
+
+	* src/inter.c, src/inter.h, src/mpalloc.c, src/mpatrol.h:
+	Added __mp_clearleaktable(), __mp_startleaktable() and
+	__mp_stopleaktable().  Added __mp_leaktable().
+
+	* src/library.c:
+	Added the leaktab module.
+
+	* src/mpatrol.c: Added the --leak-table option.
+
+2001-03-04  Graeme Roy  <graeme@epc.co.uk>
+
+	* build/windows/mpalloc.def, build/windows/mpatrol.def,
+	  build/windows/mpatrolmt.def, build/unix/mpalloc.exp,
+	  build/unix/mpatrol.exp:
+	Added __mp_iterateall().  Added __mp_errno and __mp_strerror().
+
+	* doc/mpatrol.texi: Quick update.
+
+	* src/info.c: Converted the error messages.
+
+	* src/diag.c:
+	Added the format field to errordetails.  Added the error strings for
+	__mp_strerror().  Added NOERR.  Added the errorinfo structure.
+
+	* src/diag.h: Added ET_NONE.
+
+	* src/diag.h, src/mpatrol.h: Added __mp_errortype.
+
+	* src/diag.c, src/diag.h, src/inter.c, src/inter.h, src/mpalloc.c,
+	  src/mpatrol.h:
+	Made __mp_errno an mpatrol global variable.
+
+	* src/inter.c, src/inter.h, src/mpalloc.c, src/mpatrol.h:
+	Added __mp_iterateall().  Added __mp_strerror().
+
+	* src/inter.c:
+	Added more information about free memory blocks in __mp_printinfo().
+
+	* src/cplus.c, src/inter.c: Updated the error messages.
+
+	* tools/dbmalloc.c, tools/dbmalloc.h: Added malloc_perror().
+
+	* tools/dbmalloc.h:
+	Added __mp_errno and mapped error codes onto the mpatrol error codes.
+
+	* tools/dmalloc.c: Added __mpt_dmallocstrerror().
+
+	* tools/dmalloc.h: Added support for __mp_errno and __mp_strerror().
+
+2001-03-03  Graeme Roy  <graeme@epc.co.uk>
+
+	* THANKS: Added Ivan Finch for his help with the Tru64 port.
+
+	* src/config.h, src/target.h: Added DEC Alpha Tru64 support.
+
+	* src/stack.c, src/stack.h: Added MP_LIBRARYSTACK_SUPPORT for Tru64.
+
+	* src/inter.c: Added Tru64 __init_* and __fini_* support.
+
+	* src/mpatrol.h: Added __mp_locprintf().
+
+	* tools/dmalloc.h: Fixed the GNU variable arguments list.
+
+2001-03-02  Graeme Roy  <graeme@epc.co.uk>
+
+	* build/windows/mpalloc.def, build/windows/mpatrol.def,
+	  build/windows/mpatrolmt.def, build/unix/mpalloc.exp,
+	  build/unix/mpatrol.exp:
+	Added __mp_trap(), __mp_printfwithloc() and __mp_vprintfwithloc().
+
+	* src/info.c:
+	Have to declare __mp_trap() here since we don't want to include inter.h.
+
+	* src/signals.c, src/signals.h, src/inter.c, src/inter.h:
+	Moved __mp_trap() from the signals module.
+
+	* src/inter.c:
+	Don't allow marking of allocations made by alloc(), strdupa() or
+	strndupa().
+
+	* src/inter.c, src/inter.h, src/mpatrol.h, src/mpalloc.c:
+	Added __mp_printfwithloc() and __mp_vprintfwithloc().
+
+	* src/mpalloc.c: New definition of __mp_trap().
+
+	* src/mpatrol.h:
+	Added __mp_vlocprintf().  Added NDEBUG definitions of __mp_locprintf().
+
+2001-03-01  Graeme Roy  <graeme@epc.co.uk>
+
+	* build/windows/NMakefile, build/windows/Makefile, build/unix/Makefile,
+	  build/unix/Makefile.aix, build/netware/Makefile, build/amiga/Makefile,
+	  build/amiga/SMakefile:
+	Added the Dmalloc tool.
+
+	* pkg/sdux/mpatrol.psf, pkg/pkg/prototype:
+	Added the dmalloc.h header file.
+
+	* src/config.h, src/inter.c, src/sbrk.c:
+	Changed MP_DELETE to MP_DELETEHEAP to avoid a clash with mpatrol.h.
+
+	* tools/dmalloc.c, tools/dmalloc.h:
+	New files for implementing a Dmalloc library interface.
+
+	* tools/dmalloc.h:
+	Removed __mpt_dmalloclogunfreed.  Finished documentation.
+
+	* tools/dmalloc.c:
+	Added more features.  Finished the basic functionality.
+
+2001-02-28  Graeme Roy  <graeme@epc.co.uk>
+
+	* THANKS: Added more people.
+
+	* bin/mupdate: Now generate the CHECKSUMS file.
+
+	* pkg/zip/build.bat, pkg/tar/build, pkg/sdux/build,
+	  pkg/sdux/mpatrol.psf, pkg/rpm/mpatrol.spec, pkg/pkg/build,
+	  pkg/pkg/prototype, pkg/lha/build:
+	Added the AUTHORS and THANKS files.
+
+	* src/config.h:
+	Don't define MP_INITFUNC_SUPPORT if AIX or LynxOS PowerPC.
+
+	* tools/dbmalloc.c, tools/dbmalloc.h: Fixed a few minor errors.
+
+2001-02-27  Graeme Roy  <graeme@epc.co.uk>
+
+	* THANKS: Added the THANKS file.
+
+	* AUTHORS: Added the AUTHORS file.
+
+	* build/windows/Makefile, build/windows/NMakefile, build/unix/Makefile,
+	  build/unix/Makefile.aix, build/netware/Makefile, build/amiga/Makefile,
+	  build/amiga/SMakefile:
+	Forgot to add the dbmalloc module.
+
+	* pkg/sdux/mpatrol.psf, pkg/pkg/prototype: Forgot to install dbmalloc.h.
+
+	* src/config.h:
+	Added MP_MAXINITS.  Added MP_INITFUNC_SUPPORT.  Mentioned that
+	MP_INITFUNC_SUPPORT will not work if the object file has been stripped.
+
+	* src/memory.c:
+	Removed calls to ZeroMemory(), etc. for Windows as they are actually
+	defined to call memset() etc. in the system header files!!!  Bang goes
+	that good idea!
+
+	* src/info.h: Added the array of initialisation functions.
+
+	* src/info.c:
+	Initialised initcount.  Added the __mp_atinit() function.  Added
+	__mp_atinit().  Added the extra argument to the call to
+	__mp_newsymbols().
+
+	* src/symbol.c, src/symbol.h:
+	Added the inits field for initialisation functions.  Added support for
+	registering initialisation functions.
+
+	* src/inter.c: Call the initialisation functions.
+
+	* src/cplus.c, src/mpatrol.h:
+	Fixed std namespace problems for set_new_handler() and old libraries.
+
+	* src/mpatrol.h: Added MP_VOLATILE.
+
+	* tools/dbmalloc.h:
+	Provided documentation.  Added the settings for the MALLOC_WARN and
+	MALLOC_FATAL options.  Added dbmallinit().  Changed the integer part of
+	dbmalloptarg to be long so that it works on 64-bit platforms.  Added
+	__mpt_init_dbmalloc to force the linking of the dbmalloc object file
+	from the mptools library.
+
+	* tools/dbmalloc.c:
+	Added more options.  The default overflow size should be 1 byte.  Fixed
+	the behaviour of MALLOC_REUSE and added PRESERVE to the options set by
+	the MALLOC_FILLAREA option.  Added __mp_init_dbmalloc().  Now read
+	environment variables.  Added the 3 other environment variables that
+	cannot be set with dbmallopt().
+
+2001-02-26  Graeme Roy  <graeme@epc.co.uk>
+
+	* build/windows/mpalloc.def, build/windows/mpatrol.def,
+	  build/windows/mpatrolmt.def, build/unix/mpalloc.exp,
+	  build/unix/mpatrol.exp:
+	Added __mp_checkheap().
+
+	* man/man3/libmpatrol.3: Added __mp_atexit() and __mp_setmark().
+
+	* src/info.c, src/diag.c, src/diag.h: Added the FREMRK error.
+
+	* src/inter.c, src/inter.h, src/mpalloc.c, src/mpatrol.h:
+	Reintroduced __mp_check().
+
+	* tools/heapdiff.h, tools/mgauge.h, tools/mtrace.h:
+	Added the MPT_* prefix to the inclusion-protection macros defined by the
+	header files.  Added support for NDEBUG.
+
+	* tools/dbmalloc.c, tools/dbmalloc.h: New files for Dbmalloc interface.
+
+2001-02-25  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/mpatrol.texi:
+	Added more information in NOTES and FAQ.  Changed example 4 for new
+	flags.
+
+	* src/info.c: Fixed problem with profiling reallocations.  Oops!
+
+	* src/info.c, src/info.h, src/inter.c:
+	Added file and line information to __mp_checkinfo().
+
+	* src/inter.c, src/inter.h, src/mpalloc.c:
+	Changed __mp_check() to __mp_checkheap().
+
+	* src/mpatrol.h:
+	Added __mp_checkheap() in order to add source-level information to the
+	__mp_check() call.
+
+	* tests/pass/test4.c: Added the extra flags.
+
+	* tools/heapdiff.c, tools/heapdiff.h:
+	Changed HEAPDIFFSTART() and HEAPDIFFEND() to lower case.  Added the
+	HD_MARKED flag.
+
+2001-02-23  Graeme Roy  <graeme@epc.co.uk>
+
+	* build/windows/Makefile, build/windows/NMakefile, build/unix/Makefile,
+	  build/unix/Makefile.aix, build/netware/Makefile, build/amiga/Makefile,
+	  build/amiga/SMakefile:
+	Added config.h and target.h to tools.
+
+	* build/windows/mpalloc.def, build/windows/mpatrol.def,
+	  build/windows/mpatrolmt.def, build/unix/mpalloc.exp,
+	  build/unix/mpatrol.exp:
+	Added __mp_setmark().
+
+	* src/info.h: Added FLG_MARKED.
+
+	* src/inter.h, src/mpatrol.h: Added the marked field.
+
+	* src/inter.h, src/inter.c, src/mpatrol.h: Added other flags.
+
+	* src/inter.h, src/inter.c, src/mpatrol.h, src/mpalloc.c:
+	Added __mp_setmark().
+
+	* tools/heapdiff.c, tools/mgauge.c, tools/mtrace.c: Added config.h.
+
+	* tools/mtrace.c, tools/mtrace.h, tools/mgauge.c, tools/mgauge.h,
+	  tools/heapdiff.c, tools/heapdiff.h:
+	Added the __mpt_* prefixes to the global symbols.
+
+2001-02-22  Graeme Roy  <graeme@epc.co.uk>
+
+	* build/unix/mpalloc.exp, build/unix/mpatrol.exp,
+	  build/windows/mpatrol.def, build/windows/mpatrolmt.def,
+	  build/windows/mpalloc.def:
+	Added the __mp_atexit() function.
+
+	* doc/mpatrol.texi:
+	Fixed a few problems that showed up in the 1.4.0 release.  Added
+	MemTrace from Frank Pilhofer to related software.
+
+	* man/man1/hexwords.1: Fixed a formatting problem.
+
+	* pkg/sdux/mpatrol.psf, pkg/pkg/prototype: Forgot to add pass/test10.c.
+
+	* src/config.h, src/mpatrol.h, src/mpalloc.h:
+	Define MP_CONST and MP_VOLATILE if C++ as well.
+
+	* src/config.h: Added the MP_MAXFINIS definition.
+
+	* src/info.c: Initialised the finicount field.
+
+	* src/info.h: Added the finalisation function array.
+
+	* src/info.h, src/option.h:
+	Commented that some definitions must be kept up to date with mpatrol.h.
+
+	* src/inter.c:
+	Fixed a typing error on Windows platforms.  Added the __mp_atexit()
+	function.
+
+	* src/inter.h, src/mpalloc.c, src/mpatrol.h:
+	Added the __mp_atexit() function.
+
+	* tools/mtrace.c:
+	Added a call to __mp_atexit() to terminate the trace file.
+
+2001-02-21  Graeme Roy  <graeme@epc.co.uk>
+
+	* bin/mupdate: No longer build the documentation archives.
+
+	* build/windows/Makefile, build/windows/NMakefile, build/unix/Makefile,
+	  build/unix/Makefile.aix, build/netware/Makefile, build/amiga/Makefile,
+	  build/amiga/SMakefile:
+	Added dependencies for tools.  Added mptools definitions.
+
+	* build/unix/Makefile, build/unix/Makefile.aix:
+	Added the mptools lint library.
+
+	* doc/Makefile: No longer have a rule to make the documentation archive.
+
+	* doc/README:
+	Removed distinction between main distribution and documentation archive.
+
+	* doc/mpatrol.txt, doc/mpatrol.html, doc/mpatrol.info,
+	  doc/mpatrol.guide:
+	The documentation is now built automatically when a release is made so
+	there is no point in having preformatted manual pages in CVS.
+
+	* doc/mpatrol.texi:
+	Removed all references to the documentation and manual page archives.
+	Added the tools section.
+
+	* doc/texinfo.tex: Updated to the latest version of texinfo.tex.
+
+	* man/Makefile:
+	Changed PAGES to CATPAGES.  No longer have a rule to make the manual
+	page archive.
+
+	* man/README:
+	Removed distinction between main distribution and manual page archive.
+
+	* man/cat3/libmpalloc.3, man/cat3/libmpatrol.3, man/cat1/hexwords.1,
+	  man/cat1/mleak.1, man/cat1/mpatrol.1, man/cat1/mpedit.1,
+	  man/cat1/mprof.1, man/cat1/mpsym.1, man/cat1/mptrace.1,
+	  man/html/hexwords.html, man/html/libmpalloc.html,
+	  man/html/libmpatrol.html, man/html/mleak.html, man/html/mpatrol.html,
+	  man/html/mpedit.html, man/html/mprof.html, man/html/mpsym.html,
+	  man/html/mptrace.html:
+	The manual pages are now automatically built when a release is made so
+	there is no point in having preformatted manual pages in CVS.
+
+	* man/man3/libmpatrol.3: Added information about mptools.
+
+	* pkg/lsm/mpatrol.lsm: Updated file sizes.
+
+	* pkg/rpm/build, pkg/rpm/mpatrol.spec, pkg/lsm/mpatrol.lsm:
+	Removed references to the documentation and manual page archives.
+
+	* pkg/zip/build.bat, pkg/tar/build, pkg/sdux/build,
+	  pkg/sdux/mpatrol.psf, pkg/rpm/mpatrol.spec, pkg/pkg/build,
+	  pkg/pkg/prototype, pkg/lha/build:
+	Added the tools headers to include/mpatrol.  Added libmptools.
+
+	* tools/README:
+	Documented that the package scripts already install mptools.
+
+2001-02-20  Graeme Roy  <graeme@epc.co.uk>
+
+	* build/windows/mpalloc.def, build/windows/mpatrol.def,
+	  build/windows/mpatrolmt.def, build/unix/mpalloc.exp,
+	  build/unix/mpatrol.exp:
+	Added the __mp_stats() function.
+
+	* doc/mpatrol.html, doc/mpatrol.info, doc/mpatrol.texi, doc/mpatrol.txt,
+	  doc/mpatrol.guide:
+	Updated more of the manual.  Added more functions.  Final changes to get
+	the documentation up to date.  Phew!  Added the example for MP_MALLOC().
+
+	* doc/refcard.tex:
+	Added the C dynamic memory alternative functions and __mp_stats().
+
+	* extra/.gdbinit:
+	Cannot break at __mp_trap() by running to _start() since the shared
+	version of mpatrol will not work correctly when setting the environment.
+
+2001-02-19  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/mpatrol.html, doc/mpatrol.info, doc/mpatrol.texi, doc/mpatrol.txt,
+	  doc/mpatrol.guide:
+	Added the removing mpatrol section.
+
+2001-02-18  Graeme Roy  <graeme@epc.co.uk>
+
+	* tools/mgauge.c: Didn't need the prologue handler.
+
+2001-02-16  Graeme Roy  <graeme@epc.co.uk>
+
+	* man/man3/libmpatrol.3, man/html/libmpatrol.html,
+	  man/cat3/libmpatrol.3:
+	Added __mp_stats().
+
+	* src/inter.c, src/inter.h, src/mpalloc.c, src/mpatrol.h:
+	Added __mp_stats().
+
+	* tests/pass/test2.c, tests/pass/test4.c, tests/pass/test10.c:
+	Changed the format strings for pointers.
+
+	* tools/mgauge.c, tools/mgauge.h:
+	Added new files for a memory allocation gauge.
+
+2001-02-15  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/mpatrol.info, doc/mpatrol.texi, doc/mpatrol.txt,
+	  doc/mpatrol.guide, doc/mpatrol.html:
+	Documented mtrace() and muntrace() now implemented.
+
+	* man/man3/libmpatrol.3, man/html/libmpatrol.html,
+	  man/cat3/libmpatrol.3:
+	Added the return address argument to the prologue and epilogue
+	functions.
+
+	* src/inter.c:
+	Added return address arguments to the prologue and epilogue functions
+	and fixed some bugs in __mp_strdup() and __mp_realloc() that would be
+	triggered if they ran out memory.
+
+	* src/mpalloc.c, src/info.h, src/inter.h, src/mpatrol.h:
+	Added a return address argument to the prologue and epilogue functions.
+
+	* tests/pass/test2.c:
+	Added an extra return address argument to the prologue and epilogue
+	functions.
+
+	* tools/README: New file describing the tools directory.
+
+	* tools/heapdiff.c, tools/heapdiff.h:
+	New files for logging changes in the heap between two points in a
+	program's execution.
+
+	* tools/mtrace.c, tools/mtrace.h:
+	New files implementating mtrace() and muntrace().
+
+2001-02-14  Graeme Roy  <graeme@epc.co.uk>
+
+	* build/windows/mpatrol.def, build/windows/mpatrolmt.def,
+	  build/unix/mpatrol.exp:
+	Added library identifiers.
+
+	* doc/mpatrol.guide, doc/mpatrol.html, doc/mpatrol.info,
+	  doc/mpatrol.texi, doc/mpatrol.txt:
+	Added more things to do.
+
+	* extra/.gdbinit:
+	Added ability to set a breakpoint at __mp_trap().  Added allocstop,
+	reallocstop and freestop.
+
+	* extra/mpatrol.m4: New file for use with automake.
+
+	* man/man3/libmpatrol.3, man/html/libmpatrol.html,
+	  man/cat3/libmpatrol.3:
+	Changed the meaning of NOFREE and added an extra argument to
+	__mp_iterate().
+
+	* pkg/sdux/build, pkg/sdux/mpatrol.psf, pkg/pkg/build,
+	  pkg/pkg/prototype, pkg/zip/build.bat, pkg/tar/build, pkg/lha/build,
+	  pkg/rpm/mpatrol.spec:
+	Added mpatrol.m4 to installation.
+
+	* src/inter.c, src/mpalloc.c, src/mpatrol.h:
+	Added an extra argument to __mp_iterate().
+
+	* src/inter.c:
+	Added the __mp_lib* functions to help with autoconf configuration.
+
+	* src/mpatrol.h: Added GNU's mallopt() flags.
+
+	* tests/pass/test2.c, tests/pass/test10.c:
+	Changed const to MP_CONST.  Added a new argument to __mp_iterate().
+
+2001-02-13  Graeme Roy  <graeme@epc.co.uk>
+
+	* src/alloc.c: Changed the meaning of NOFREE=0.
+
+	* src/option.c:
+	Added support for getting the value of and setting the CHECK option.
+	Changed the behaviour of the NOFREE option.
+
+	* src/inter.h, src/mpatrol.h: Changed arguments to __mp_iterate().
+
+	* src/mpatrol.h, src/option.h:
+	Split up the CHECK option into its constituent parts.
+
+2001-02-12  Graeme Roy  <graeme@epc.co.uk>
+
+	* build/windows/mpalloc.def, build/windows/mpatrol.def,
+	  build/windows/mpatrolmt.def, build/unix/mpalloc.exp,
+	  build/unix/mpatrol.exp:
+	Added more functions.  Added __mp_getoption() and __mp_setuser()
+
+	* man/man3/libmpatrol.3, man/html/libmpatrol.html,
+	  man/cat3/libmpatrol.3:
+	Added the __mp_getoption() and __mp_setuser() functions.
+
+	* src/memory.c: Call optimised memory operation routines for Windows.
+
+	* src/info.c, src/info.h: Added the userdata field.
+
+	* src/option.c, src/option.h: Added __mp_get().
+
+	* src/mpalloc.c, src/mpalloc.h, src/mpatrol.h, src/inter.c, src/inter.h:
+	Added __mp_getoption() and __mp_setuser().
+
+	* tests/pass/test4.c: Added the userdata field.
+
+	* tests/pass/test10.c:
+	The callback function should take a const argument.
+
+2001-02-11  Graeme Roy  <graeme@epc.co.uk>
+
+	* man/man3/libmpalloc.3, man/html/libmpalloc.html,
+	  man/cat3/libmpalloc.3:
+	Changed the arguments to MP_MALLOC() and family.
+
+	* src/alloc.c, src/alloc.h: Made __mp_recyclefreed() global.
+
+	* src/option.c: Added NOFREE support to __mp_setopt().
+
+2001-02-10  Graeme Roy  <graeme@epc.co.uk>
+
+	* src/mpalloc.h, src/mpatrol.h:
+	Changed the arguments to MP_MALLOC(), MP_CALLOC() and MP_STRDUP().
+
+	* src/mpdebug.h: New file for overall inclusion.
+
+	* tests/pass/test9.c: Changed the arguments to some of the functions.
+
+2001-02-09  Graeme Roy  <graeme@epc.co.uk>
+
+	* src/info.c:
+	Use the default system alignment if alignment is zero in memalign().
+
+	* src/mpatrol.h:
+	Added const parameter to __mp_iterate's callback function.
+
+2001-02-08  Graeme Roy  <graeme@epc.co.uk>
+
+	* man/Makefile: Added the libmpalloc manual page.
+
+	* man/html/libmpalloc.html, man/cat3/libmpalloc.3,
+	  man/man3/libmpalloc.3:
+	New manual page for the mpalloc library.
+
+	* man/man3/libmpatrol.3, man/cat3/libmpatrol.3:
+	Added reference to libmpalloc.
+
+	* man/man3/libmpatrol.3, man/html/libmpatrol.html,
+	  man/cat3/libmpatrol.3:
+	Documented seven new functions.  Documented another six functions.
+
+	* man/man1/hexwords.1, man/html/hexwords.html, man/cat1/hexwords.1:
+	Documented the other dictionaries tried if the first cannot be found.
+
+	* pkg/sdux/mpatrol.psf, pkg/pkg/prototype: Added test9.c.
+
+	* pkg/zip/build.bat, pkg/tar/build, pkg/sdux/build, pkg/pkg/build,
+	  pkg/lha/build:
+	Use wildcards when copying manual pages.  Use wildcards when copying
+	images.
+
+	* src/info.c, src/info.h, src/inter.c, src/option.c:
+	Added a frequency to CHECK and made the default zero.
+
+	* src/option.c, src/option.h: Added the __mp_setopt() function.
+
+	* src/inter.c:
+	For MP_MALLOC(), MP_CALLOC() and MP_REALLOC(), if size is zero, make it
+	the size of the type being allocated if available.
+
+	* src/inter.c, src/inter.h, src/mpalloc.c, src/mpatrol.h:
+	Added the __mp_setoption(), __mp_function(), __mp_syminfo(),
+	__mp_vprintf(), __mp_logaddr() and __mp_view() functions.
+
+	* src/mpcalloc.c, src/mpmalloc.c, src/mprealloc.c:
+	If size is zero, make it the size of the type being allocated if
+	available.
+
+	* tests/pass/test3.c:
+	Added call to __mp_setoption() rather than relying on the user to set
+	the LIMIT option.
+
+	* tests/pass/test4.c:
+	Now make use of __mp_function() and __mp_syminfo().
+
+	* tests/pass/test9.c:
+	Added new test for the MP_MALLOC() family of functions.
+
+	* tests/pass/test10.c:
+	New file demonstrating __mp_snapshot() and __mp_iterate().
+
+2001-02-07  Graeme Roy  <graeme@epc.co.uk>
+
+	* src/diag.c: Added the check frequency.
+
+2001-02-06  Graeme Roy  <graeme@epc.co.uk>
+
+	* README: The discussion group is now at yahoo.
+
+	* build/windows/mpalloc.def, build/windows/mpatrol.def,
+	  build/windows/mpatrolmt.def, build/unix/mpalloc.exp,
+	  build/unix/mpatrol.exp:
+	Added reallocf(), __mp_snapshot(), __mp_iterate(), __mp_printf(),
+	__mp_logmemory(), __mp_logstack(), __mp_edit() and __mp_list().
+
+	* src/config.h: Added MP_PRINTPREFIX.
+
+	* src/info.c, src/info.h: Added the last modification event.
+
+	* src/diag.c, src/diag.h: Made __mp_editfile() global.
+
+	* src/info.c, src/inter.c, src/malloc.c, src/mpalloc.c, src/mpatrol.h,
+	  src/diag.c, src/info.h:
+	Added the reallocf() function.
+
+	* src/inter.c, src/inter.h, src/mpalloc.c, src/mpatrol.h:
+	Added the __mp_snapshot(), __mp_iterate(), __mp_printf(),
+	__mp_logmemory(), __mp_logstack(), __mp_edit() and __mp_list()
+	functions.
+
+	* tests/pass/test4.c: Added allocation event.
+
+2001-02-05  Graeme Roy  <graeme@epc.co.uk>
+
+	* bin/hexwords: Check for locations of other dictionaries if not found.
+
+	* build/windows/Makefile, build/windows/NMakefile, build/unix/Makefile,
+	  build/unix/Makefile.aix, build/netware/Makefile, build/amiga/Makefile,
+	  build/amiga/SMakefile:
+	Added the mpalloc object library.  Updated dependencies for the object
+	library.  Added the dependencies for the object libmpalloc library.
+	Added the cplus module.  Added the dependencies for the threadsafe
+	cplus module.
+
+	* build/windows/Makefile, build/windows/NMakefile:
+	Added DLL versions of libmpalloc.
+
+	* build/windows/main.c:
+	Added alternative RCS ids if not MP_IDENT_SUPPORT.
+
+	* build/windows/main2.c: Added new file for DllMain for libmpalloc.
+
+	* pkg/zip/build.bat: Added the mpalloc DLL.
+
+	* src/memory.c:
+	Changed names of some variables to avoid clashes when building object
+	library.
+
+	* src/inter.c: Added the type information to __mp_printinfo().
+
+	* src/malloc.c:
+	Make sure no macros are defined which will conflict with the new
+	definitions.
+
+	* src/cplus.c:
+	Moved C++ functions to cplus.c.  Provide better out of memory
+	diagnostics when this file is compiled with a C compiler.
+
+	* src/library.c: Added cplus.c.
+
+	* src/library2.c: New file for building the mpalloc object library.
+
+2001-02-04  Graeme Roy  <graeme@epc.co.uk>
+
+	* build/amiga/Makefile: Now build with a C++ compiler.
+
+	* build/netware/Makefile: Now use a C++ compiler to build with.
+
+	* build/unix/Makefile: Now build with a C++ compiler.
+
+	* build/unix/mpatrol.exp: Added new mangled names for C++ operators.
+
+	* build/windows/Makefile, build/windows/NMakefile:
+	Now compile files as C++.
+
+	* src/config.h: Added MP_MEMALIGN_SUPPORT.
+
+	* src/symbol.c: Added recognition of GNU C++ destructor symbols.
+
+	* src/inter.c:
+	No longer abort when operator new or operator new[] runs out of memory.
+
+	* src/malloc.c, src/mpatrol.h:
+	Added new Standard C++ implementations of the C++ operators.
+
+	* src/mpalloc.c:
+	Now use memalign() if available.  Need to include malloc.h on Linux to
+	get definition of memalign().
+
+2001-02-01  Graeme Roy  <graeme@epc.co.uk>
+
+	* build/windows/Makefile, build/windows/mpalloc.def,
+	  build/windows/NMakefile, build/unix/Makefile, build/unix/Makefile.aix,
+	  build/unix/mpalloc.exp, build/netware/Makefile, build/amiga/Makefile,
+	  build/amiga/SMakefile:
+	Added the mpalloc module.
+
+	* src/info.c:
+	Changed the default alignment for memalign() when it is zero.
+
+	* src/symbol.c:
+	Added ability to determine the program filename from the dynamic linker.
+
+	* src/inter.c:
+	alloca(), strdupa() and strndupa() now no longer return NULL on error.
+
+	* src/mpalloc.c:
+	New file replacing inter.c for release mode.  Don't free() if
+	dealloca().
+
+2001-01-31  Graeme Roy  <graeme@epc.co.uk>
+
+	* src/inter.c, src/symbol.c, src/symbol.h:
+	Now display information about the symbols loaded from each object file.
+	Read symbols from any shared libraries before reading symbols from the
+	executable file.  This allows us to use the dynamic linker to determine
+	the executable filename where possible.  Added the meminfo extra
+	argument to __mp_addextsymbols().
+
+2001-01-25  Graeme Roy  <graeme@epc.co.uk>
+
+	* build/windows/mpalloc.def: New DLL definition file for libmpalloc.
+
+	* doc/mpatrol.txt, doc/mpatrol.guide, doc/mpatrol.html,
+	  doc/mpatrol.info, doc/mpatrol.texi:
+	Document no longer need a script to combine archive libraries.
+
+	* man/Makefile:
+	Automatically supply the HTML pages with the main distribution.
+
+	* man/README: Documented HTML manual pages.
+
+	* man/html/mleak.html, man/html/mpatrol.html, man/html/mpedit.html,
+	  man/html/mprof.html, man/html/mpsym.html, man/html/mptrace.html,
+	  man/html/hexwords.html, man/html/libmpatrol.html:
+	Added HTML manual pages.
+
+	* pkg/zip/build.bat, pkg/tar/build, pkg/sdux/build,
+	  pkg/sdux/mpatrol.psf, pkg/rpm/mpatrol.spec, pkg/pkg/build,
+	  pkg/pkg/prototype, pkg/lha/build:
+	Added the HTML manual pages.
+
+	* src/config.h: Added MP_MINCORE_SUPPORT and support for Cygwin.
+
+	* src/target.h: Added recognition of Cygwin systems.
+
+	* src/memory.c:
+	Implemented __mp_memquery() for Windows platforms.  Now use the
+	MP_MINCORE_SUPPORT macro.
+
+	* src/inter.c:
+	Added the msvcrt_initialised() function to clean up the Windows
+	initialisation checking code.  Only call msvcrt_initialised() if not
+	using gcc on Windows.
+
+2001-01-24  Graeme Roy  <graeme@epc.co.uk>
+
+	* build/unix/Makefile.aix:
+	Now use a different C compiler for threadsafe code.
+
+	* doc/mpatrol.guide, doc/mpatrol.html, doc/mpatrol.info,
+	  doc/mpatrol.txt, doc/mpatrol.texi:
+	Added more related software for objective C, added information about
+	libld for COFF and XCOFF, and mentioned that shared libraries now
+	supported on AIX.  Described in FAQ why AIX shared libraries are
+	different.
+
+	* man/man3/libmpatrol.3, man/cat3/libmpatrol.3:
+	Added information about libld and libpthreads on AIX.
+
+	* src/config.h: Added libld and libpthreads for AIX.
+
+	* src/target.h: Added more target feature macros.
+
+	* src/memory.c, src/memory.h:
+	Added __mp_memquery().  Completed __mp_memquery() for UNIX systems.
+
+	* src/symbol.c, src/symbol.h:
+	Added libld for reading COFF and XCOFF executables and archives and
+	added support for reading archive files with libbfd.  Fix the base
+	address for XCOFF shared libraries.
+
+	* src/inter.c: Added archive member argument to __mp_addsymbols().
+
+2001-01-22  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/mpatrol.guide, doc/mpatrol.html, doc/mpatrol.info,
+	  doc/mpatrol.texi, doc/mpatrol.txt:
+	Documented mpatrol can now be built as a shared library on AIX.
+
+	* build/unix/Makefile.aix, build/unix/mpatrol.exp:
+	New files for building AIX shared libraries.
+
+	* build/unix/Makefile, build/unix/Makefile.aix:
+	Missing dependencies for lint trace modules.
+
+	* src/target.h:
+	Made AIX default to XCOFF.  Defined _ALL_SOURCE for AIX.
+
+	* src/memory.c: Added stack program name for AIX.
+
+2001-01-21  Graeme Roy  <graeme@epc.co.uk>
+
+	* src/mpcalloc.c, src/mpfailure.c, src/mpmalloc.c, src/mprealloc.c,
+	  src/mpsetfail.c, src/mpstrdup.c:
+	Added new files for libmpalloc.
+
+2001-01-18  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/mpatrol.texi, doc/mpatrol.txt, doc/mpatrol.guide,
+	  doc/mpatrol.html, doc/mpatrol.info:
+	Brought the documentation slightly more up to date.
+
+	* pkg/zip/build.bat, pkg/tar/build, pkg/sdux/build,
+	  pkg/sdux/mpatrol.psf, pkg/rpm/mpatrol.spec, pkg/pkg/build,
+	  pkg/pkg/prototype, pkg/lha/build:
+	Added mpalloc.h.
+
+	* src/target.h:
+	Added the target feature macro section.  Define _GNU_SOURCE for Linux.
+
+	* src/mleak.c:
+	Changed getline() to getnextline() since it clashes with a function on
+	Linux.
+
+	* src/mpatrol.h:
+	Removed NDEBUG definitions of MP_MALLOC(), etc, as they will exist in
+	mpalloc.h.  Include mpalloc.h if NDEBUG is defined.
+
+	* src/mpalloc.h: New file for inclusion when mpatrol is not being used.
+
+2001-01-17  Graeme Roy  <graeme@epc.co.uk>
+
+	* src/target.h:
+	Added FORMAT_AOUT and changed the UNIX default to FORMAT_NONE.
+
+	* src/info.c: Added xmalloc() support.
+
+	* src/symbol.c:
+	Added FORMAT_AOUT and fixed a problem with reading from _DYNAMIC when
+	using DYNLINK_BSD.
+
+	* src/inter.c:
+	Added xmalloc() support and changed the behaviour of the no memory
+	handler.
+
+	* src/malloc.c, src/diag.c, src/info.h, src/mpatrol.h:
+	Added xmalloc() and family.
+
+	* tests/pass/test3.c: Changed the no memory handler test.
+
+2001-01-16  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/mpatrol.html, doc/mpatrol.info, doc/mpatrol.txt,
+	  doc/mpatrol.guide:
+	Mentioned FreeBSD support.
+
+	* src/memory.c: Use getpagesize() for SunOS.
+
+	* src/mpatrol.h: Added the MP_MALLOC() family of macros.
+
+2001-01-15  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/mpatrol.texi: Mentioned FreeBSD support.
+
+	* src/config.h, src/signals.c:
+	Added support for detecting illegal memory accesses on SunOS.
+
+	* src/memory.c: Added support for detecting the program name on SunOS.
+
+	* src/info.c, src/info.h:
+	Added type and type size of memory allocations.  Added typestr and
+	typesize.  Added type information to __mp_alloc() and __mp_realloc().
+	Revised the information that is stored after a realloc().
+
+	* src/diag.c, src/diag.h:
+	Added the __mp_printtype() function.  Changed logcall() to show
+	information about types.
+
+	* src/mpatrol.h, src/malloc.c, src/inter.c, src/inter.h:
+	Added type information to __mp_alloc() and __mp_realloc().  Added
+	typestr and typesize.
+
+	* src/machine.c, src/machine.h, src/stack.c: Added SunOS stack support.
+
+	* tests/pass/test4.c:
+	Added information about the types stored in allocations.
+
+2001-01-14  Graeme Roy  <graeme@epc.co.uk>
+
+	* src/config.h: Added SunOS support.
+
+	* src/target.h: Added the DYNLINK macros and SunOS suppport.
+
+	* src/symbol.c:
+	Added the DYNLINK macros and also added support for the BSD dynamic
+	linker.
+
+2001-01-12  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/mpatrol.html, doc/mpatrol.info, doc/mpatrol.txt,
+	  doc/mpatrol.guide, doc/mpatrol.texi:
+	Documented all BSD systems supported.
+
+2001-01-11  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/mpatrol.txt, doc/mpatrol.guide, doc/mpatrol.html,
+	  doc/mpatrol.info, doc/mpatrol.texi:
+	Added information about FreeBSD port.
+
+	* src/memory.c, src/config.h, src/symbol.c, src/target.h:
+	Added FreeBSD, NetBSD and OpenBSD support.
+
+2001-01-05  Graeme Roy  <graeme@epc.co.uk>
+
+	* bin/mupdate: Now also build the documentation archives.
+
+	* doc/mpatrol.html, doc/mpatrol.info, doc/mpatrol.texi, doc/mpatrol.txt,
+	  doc/mpatrol.guide:
+	Updated just before 1.3.3 release.
+
+2001-01-04  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/mpatrol.guide, doc/mpatrol.html, doc/mpatrol.info,
+	  doc/mpatrol.texi, doc/mpatrol.txt:
+	Added information about mpsym now using perl.
+
+	* doc/refcard.tex: Added the hexwords command.
+
+	* man/man3/libmpatrol.3, man/man1/mpatrol.1, man/cat3/libmpatrol.3,
+	  man/cat1/mpatrol.1:
+	Documented the change to the USEMMAP option.
+
+	* man/man1/mpsym.1, man/cat1/mpsym.1:
+	Document that mpsym now uses perl if it is installed.
+
+2001-01-03  Graeme Roy  <graeme@epc.co.uk>
+
+	* bin/hexwords:
+	New command for obtaining hexadecimal words from a dictionary.
+
+	* bin/mpsym: Added perl support.
+
+	* pkg/zip/build.bat, pkg/tar/build, pkg/sdux/build,
+	  pkg/sdux/mpatrol.psf, pkg/rpm/mpatrol.spec, pkg/pkg/build,
+	  pkg/pkg/prototype, pkg/lha/build:
+	Added the hexwords command.
+
+	* src/config.h: Added MP_USE_ATEXIT.
+
+	* src/memory.h, src/memory.c, src/option.c, src/mpatrol.c:
+	Changed the behaviour of USEMMAP.
+
+	* src/inter.c, src/machine.c: Added support for MP_USE_ATEXIT.
+
+2001-01-02  Graeme Roy  <graeme@epc.co.uk>
+
+	* src/memory.h, src/memory.c:
+	Added an extra argument to the __mp_memalloc() function.  Made use of
+	mmap() to allocate internal memory, or sbrk() if USEMMAP is used.
+
+	* src/heap.c, src/sbrk.c:
+	Added an extra argument to the call to __mp_memalloc().
+
+	* src/mptrace.c:
+	Don't set the addrbase variable for internal allocations.
+
+2000-12-24  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/mpatrol.txt, doc/mpatrol.guide, doc/mpatrol.html,
+	  doc/mpatrol.info, doc/mpatrol.texi:
+	Added two more items of related software.
+
+	* pkg/sdux/mpatrol.psf, pkg/pkg/prototype: Added new tests.
+
+	* src/inter.c: Use debug information if available for checker functions.
+
+	* tests/fail/test17.c, tests/fail/test18.c:
+	New tests for -fcheck-memory-usage.
+
+2000-12-22  Graeme Roy  <graeme@epc.co.uk>
+
+	* src/info.c, src/info.h:
+	Added file and line number information to __mp_checkrange() and
+	__mp_checkstring().
+
+	* src/inter.c:
+	Added more information to the calls to __mp_checkrange() and
+	__mp_checkstring().
+
+2000-12-21  Graeme Roy  <graeme@epc.co.uk>
+
+	* build/windows/mpatrol.def, build/windows/mpatrolmt.def:
+	Added the Checker interface functions.
+
+	* src/diag.c, src/diag.h:
+	Changed the __mp_log* functions to use the loginfo structure.
+
+	* src/info.c, src/info.h: Changed the functions to use loginfo.
+
+	* src/inter.c, src/inter.h:
+	Added the first implementation of the Checker functions.  Now use the
+	loginfo structure.
+
+2000-12-20  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/mpatrol.texi, doc/mpatrol.txt, doc/mpatrol.guide,
+	  doc/mpatrol.html, doc/mpatrol.info:
+	Added information about MTrace.
+
+	* build/windows/main.c, src/utils.c, src/tree.c, src/trace.c,
+	  src/symbol.c, src/strtab.c, src/stack.c, src/slots.c, src/signals.c,
+	  src/sbrk.c, src/profile.c, src/option.c, src/mutex.c, src/mptrace.c,
+	  src/mprof.c, src/mpatrol.h, src/mpatrol.c, src/mleak.c, src/memory.c,
+	  src/malloc.c, src/list.c, src/inter.c, src/info.c, src/heap.c,
+	  src/graph.c, src/getopt.c, src/diag.c, src/alloc.c, src/addr.c:
+	Changed the function declarations to the GNU-style.
+
+	* src/utils.c: Fixed LEB128 calculations for 64-bit platforms.
+
+2000-12-18  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/README, doc/Makefile: Added the tracing image files.
+
+	* doc/mpatrol.guide, doc/mpatrol.html, doc/mpatrol.info,
+	  doc/mpatrol.txt, doc/mpatrol.texi:
+	Added a chapter on tracing.
+
+	* doc/refcard.tex: Added the mptrace command.
+
+	* doc/images/trace.jpg: Added JPEG file for tracing chapter.
+
+	* doc/images/trace.eps: Added postscript file for tracing chapter.
+
+	* doc/images/trace.pdf: Added PDF file for tracing chapter.
+
+	* extra/cc1.trace, extra/collect2.trace, extra/cpp.trace,
+	  extra/gcc.trace:
+	New files for the tracing chapter.
+
+	* man/README, man/Makefile: Added the PDF pages.
+
+	* pkg/zip/build.bat, pkg/tar/build, pkg/sdux/build,
+	  pkg/sdux/mpatrol.psf, pkg/pkg/build, pkg/pkg/prototype, pkg/lha/build:
+	Added the tracing images.  Added the PDF manual pages.
+
+2000-12-14  Graeme Roy  <graeme@epc.co.uk>
+
+	* man/Makefile:
+	Added the mpatrol_man.tar.gz target.  Added the DVI and postscript
+	manual pages.
+
+	* man/README: New file describing the manual page formats.
+
+	* man/cat1/mptrace.1, man/man1/mptrace.1: Documented the GUI.
+
+	* man/cat3/libmpatrol.3, man/man3/libmpatrol.3:
+	Added an indicator in the first line of the file that the manual page
+	should be processed by tbl first.
+
+	* pkg/zip/build.bat, pkg/tar/build, pkg/sdux/build,
+	  pkg/sdux/mpatrol.psf, pkg/rpm/mpatrol.spec, pkg/pkg/build,
+	  pkg/pkg/prototype, pkg/lha/build:
+	Added the new formats of manual pages.
+
+	* pkg/lsm/mpatrol.lsm: Added mpatrol_man.tar.gz.
+
+	* src/mptrace.c: Added the --base option and also lifetime information.
+
+2000-12-13  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/mpatrol.txt, doc/mpatrol.guide, doc/mpatrol.html,
+	  doc/mpatrol.info, doc/mpatrol.texi:
+	Changed mpatrol.3 to libmpatrol.3.
+
+	* man/Makefile: Changed from nroff to groff.
+
+	* man/cat1/mptrace.1, man/man1/mptrace.1:
+	New manual page for the mptrace command.
+
+	* man/man1/mleak.1, man/man1/mpatrol.1, man/man1/mpedit.1,
+	  man/man1/mprof.1, man/man1/mpsym.1, man/cat1/mleak.1,
+	  man/cat1/mpatrol.1, man/cat1/mpedit.1, man/cat1/mprof.1,
+	  man/cat1/mpsym.1:
+	Changed mpatrol.3 to libmpatrol.3.
+
+	* man/cat3/libmpatrol.3, man/cat3/mpatrol.3, man/man3/libmpatrol.3,
+	  man/man3/mpatrol.3:
+	Changed the mpatrol.3 manual page to libmpatrol.3.
+
+	* pkg/zip/build.bat, pkg/tar/build, pkg/sdux/build,
+	  pkg/sdux/mpatrol.psf, pkg/rpm/mpatrol.spec, pkg/pkg/build,
+	  pkg/pkg/prototype, pkg/lha/build:
+	Changed the mpatrol.3 manual page to libmpatrol.3 and added the mptrace
+	manual page.
+
+2000-12-12  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/mpatrol.html, doc/mpatrol.info, doc/mpatrol.texi, doc/mpatrol.txt,
+	  doc/mpatrol.guide:
+	Brought the documentation slightly more up to date with recent changes.
+	Documented the tracing output file format.
+
+	* doc/refcard.tex: Added TRACE, TRACEFILE and SHOWFREE.
+
+	* man/man1/mleak.1, man/man1/mpatrol.1, man/man1/mpedit.1,
+	  man/man1/mprof.1, man/man1/mpsym.1, man/cat1/mpedit.1,
+	  man/cat1/mprof.1, man/cat1/mpsym.1, man/cat1/mleak.1,
+	  man/cat1/mpatrol.1:
+	Documented the --show-free, --trace and --trace-file options.
+
+	* man/man3/mpatrol.3, man/cat3/mpatrol.3:
+	Documented the new SHOWFREE, TRACE and TRACEFILE options, as well as the
+	TRACEDIR environment variable.
+
+2000-12-10  Graeme Roy  <graeme@epc.co.uk>
+
+	* src/diag.c, src/info.c, src/info.h:
+	Added information about peak number of allocations.
+
+	* src/mpatrol.h, src/option.h, src/option.c, src/inter.c:
+	Added the SHOWFREE option.
+
+	* src/mpatrol.c: Added the --show-free option.
+
+2000-12-08  Graeme Roy  <graeme@epc.co.uk>
+
+	* src/config.h:
+	Added MP_RESCACHE_SIZE and increase MP_ALLOCFACTOR from 2 to 4.
+
+	* src/strtab.c:
+	Multiply the allocated page size for strings by MP_ALLOCFACTOR.
+
+	* src/trace.c:
+	Added the traceready flag since there were still problems determining
+	when the tracing output file was ready to be written.
+
+	* src/mptrace.c:
+	The drawing area is from 0 to width - 1 and not 0 to width.
+
+	* src/mpatrol.h: Added the mallinfo structure.
+
+2000-12-07  Graeme Roy  <graeme@epc.co.uk>
+
+	* build/windows/Makefile, build/windows/NMakefile, build/unix/Makefile,
+	  build/netware/Makefile, build/amiga/Makefile, build/amiga/SMakefile:
+	Added trace.h to the dependencies for heap.o.
+
+	* src/option.c, src/heap.c, src/heap.h:
+	Added support for heap reservation tracing.
+
+	* src/trace.c, src/trace.h: Added __mp_traceheap().
+
+	* src/mptrace.c: Added support for reserved and internal blocks.
+
+2000-12-06  Graeme Roy  <graeme@epc.co.uk>
+
+	* build/unix/Makefile:
+	Added the X libraries to the link line for mptrace.  Added the default
+	X library directory to the mptrace link line.
+
+	* src/heap.c, src/heap.h, src/addr.c, src/alloc.c, src/info.c,
+	  src/profile.c, src/strtab.c, src/symbol.c:
+	Added the internal flag to __mp_heapalloc().
+
+	* src/mptrace.c: Added the start of the GUI support.
+
+2000-12-05  Graeme Roy  <graeme@epc.co.uk>
+
+	* src/config.h: Added MP_GUI_SUPPORT.
+
+	* src/diag.c, src/diag.h:
+	Added __mp_printfree() and the %d, %f and %n filename characters.
+
+2000-12-04  Graeme Roy  <graeme@epc.co.uk>
+
+	* src/config.h: Documented that mptrace also uses MP_BUFFER_SIZE.
+
+	* src/mptrace.c, src/trace.c, src/trace.h:
+	Removed the time information since it is not accurate enough.
+
+2000-12-03  Graeme Roy  <graeme@epc.co.uk>
+
+	* build/windows/Makefile, build/windows/NMakefile, build/unix/Makefile,
+	  build/netware/Makefile, build/amiga/Makefile, build/amiga/SMakefile:
+	Added the mptrace command.
+
+	* pkg/zip/build.bat, pkg/tar/build, pkg/sdux/build,
+	  pkg/sdux/mpatrol.psf, pkg/rpm/mpatrol.spec, pkg/pkg/build,
+	  pkg/pkg/prototype, pkg/lha/build:
+	Added the mptrace command.
+
+	* src/mptrace.c, src/trace.c, src/trace.h:
+	Added the mptrace command and added time to the tracing file.
+
+2000-11-30  Graeme Roy  <graeme@epc.co.uk>
+
+	* build/windows/Makefile, build/windows/NMakefile, build/unix/Makefile,
+	  build/amiga/Makefile, build/amiga/SMakefile, build/netware/Makefile:
+	Added the trace module.
+
+	* extra/magic: Added the mpatrol tracing output file.
+
+	* src/config.h:
+	Added the MP_TRACEFILE and MP_TRACEDIR definitions.  Added
+	MP_TRACEMAGIC.
+
+	* src/utils.c, src/utils.h: Added the LEB128 support routines.
+
+	* src/info.c, src/info.h: Added support for tracing.
+
+	* src/diag.c, src/diag.h:
+	Added the __mp_tracefile() function.  Added information about the
+	tracing file.
+
+	* src/trace.c, src/trace.h:
+	Added new module for tracing.  Deal with the tracing output file in the
+	same way as the log file and the profiling output file.  Added a
+	prologue and epilogue to the tracing output file.  Output the values in
+	LEB128 format.  The __mp_endtrace() function should now return an error
+	status.
+
+	* src/mpatrol.h, src/option.h, src/option.c:
+	Added the TRACE and TRACEFILE options.
+
+	* src/inter.c: Close the tracing output file in __mp_fini().
+
+	* src/library.c: Added trace.c.
+
+	* src/mpatrol.c: Added the --trace and --trace-file options.
+
+2000-11-22  Graeme Roy  <graeme@epc.co.uk>
+
+	* build/windows/Makefile, build/windows/NMakefile, build/unix/Makefile,
+	  build/netware/Makefile, build/amiga/Makefile, build/amiga/SMakefile:
+	Changed the dependencies following the movement of library
+	initialisation to inter.c.
+
+	* doc/mpatrol.texi:
+	Documented the SD/UX package and how to create shared libraries from
+	archive libraries.
+
+	* pkg/lha/build, pkg/tar/build: Added more files to the extra directory.
+
+	* pkg/sdux/build, pkg/sdux/mpatrol.psf:
+	New files to build an SD/UX package.
+
+2000-11-21  Graeme Roy  <graeme@epc.co.uk>
+
+	* build/unix/Makefile:
+	Figured out why the .init and .fini sections never worked with the GNU
+	linker.  It's because you've got to call the compiler driver to process
+	them via collect2.  Why?  The ELF linkers on other systems don't need
+	this so why should Linux and other GCC-based systems?
+
+	* src/config.h: Changed the documentation for the MP_INIT_SUPPORT macro.
+
+	* src/machine.c:
+	Added support for placing calls in the .fini section to terminate the
+	mpatrol library.
+
+	* src/machine.h:
+	The __mp_initsection variable should now be visible even when not
+	building a threadsafe library.
+
+	* src/mutex.c: Moved library initialisation code to inter.c.
+
+	* src/inter.c:
+	Now always initialise the library before main() and terminate it after
+	exit() if possible, even if we are not creating a threadsafe library.
+
+2000-11-20  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/mpatrol.guide, doc/mpatrol.html, doc/mpatrol.info,
+	  doc/mpatrol.texi, doc/mpatrol.txt:
+	Added more related software.
+
+	* pkg/rpm/mpatrol.spec:
+	Updated to PowerTools spec.  Use the install command and also use the
+	built-in default directories.  Now mark documentation as such.
+
+2000-11-19  Graeme Roy  <graeme@epc.co.uk>
+
+	* bin/mupdate: Also update the MP_VERNUM preprocessor macro.
+
+2000-11-18  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/Makefile, doc/README: Added the test images.
+
+	* doc/mpatrol.html, doc/mpatrol.info, doc/mpatrol.txt,
+	  doc/mpatrol.guide, doc/mpatrol.texi:
+	Added information about the --graph-file and --leaks options.
+
+	* doc/images/test.jpg: Added JPEG file for example graph.
+
+	* doc/images/test.eps: Added EPS file for example graph.
+
+	* doc/images/test.pdf: Added PDF file for example graph.
+
+	* extra/test.dot, extra/test.out:
+	New files for the example in the mpatrol manual.
+
+	* pkg/zip/build.bat, pkg/tar/build, pkg/rpm/mpatrol.spec, pkg/pkg/build,
+	  pkg/pkg/prototype, pkg/lha/build:
+	Added the test graph images to the packages.
+
+2000-11-17  Graeme Roy  <graeme@epc.co.uk>
+
+	* bin/mpedit, bin/mpsym:
+	Send the output of --help and --version to stdout instead of stderr.
+
+	* doc/mpatrol.guide, doc/mpatrol.html, doc/mpatrol.info,
+	  doc/mpatrol.texi, doc/mpatrol.txt:
+	Added the allocation call graph.
+
+	* src/getopt.c: Send the output of --help to stdout instead of stderr.
+
+	* src/mleak.c, src/mpatrol.c:
+	Send the output of --help and --version to stdout instead of stderr.
+
+	* src/mprof.c:
+	Send the output of --help and --version to stdout instead of stderr and
+	also finished the allocation call graph table.
+
+2000-11-16  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/mpatrol.txt, doc/mpatrol.guide, doc/mpatrol.html,
+	  doc/mpatrol.info, doc/mpatrol.texi:
+	Added lots more things to do.  Added information on StackTrace.
+	Documented the LOGDIR and PROFDIR environment variables.
+
+	* doc/refcard.tex:
+	Added the EDIT and LIST options and also documented the mpedit command.
+	Added error abbreviation codes.
+
+	* pkg/zip/build.bat: Now use WinZip instead of PKZip.
+
+2000-11-15  Graeme Roy  <graeme@epc.co.uk>
+
+	* build/windows/Makefile, build/windows/NMakefile, build/unix/Makefile,
+	  build/netware/Makefile, build/amiga/Makefile, build/amiga/SMakefile:
+	Added version.h to the dependencies for profile.o.
+
+	* doc/Makefile:
+	Added support for building thumbnails.  Changed SPLITHTML to SPLIT since
+	we may want to split the info file as well.  Remove the split info
+	files.
+
+	* doc/texinfo.tex: Added support for thumbpdf.
+
+	* extra/cc1.out, extra/collect2.out, extra/cpp.out, extra/gcc.out:
+	Added the profiling output files used to produce the examples.
+
+	* src/profile.c: Added version information to the profiling output file.
+
+2000-11-14  Graeme Roy  <graeme@epc.co.uk>
+
+	* bin/mpedit:
+	Add a message describing the file and line number when --list is used.
+
+	* doc/Makefile: Specify that the postscript manual should be A4.
+
+	* doc/mpatrol.texi, doc/mpatrol.txt, doc/mpatrol.guide,
+	  doc/mpatrol.html, doc/mpatrol.info:
+	Added information about the error abbreviation codes and specified A4
+	paper.
+
+	* man/Makefile: Added the mpedit manual page.
+
+	* man/man3/mpatrol.3, man/man1/mleak.1, man/man1/mpatrol.1,
+	  man/man1/mprof.1, man/man1/mpsym.1, man/cat3/mpatrol.3,
+	  man/cat1/mpatrol.1, man/cat1/mprof.1, man/cat1/mpsym.1,
+	  man/cat1/mleak.1:
+	Added references to the mpedit manual page.
+
+	* man/man1/mpedit.1, man/cat1/mpedit.1: New manual page for mpedit.
+
+	* man/man1/mpatrol.1, man/cat1/mpatrol.1:
+	Added the --edit and --list options.
+
+	* man/man3/mpatrol.3, man/cat3/mpatrol.3:
+	Documented the EDIT and LIST options, as well as the LOGDIR and PROFDIR
+	environment variables.
+
+	* pkg/zip/build.bat, pkg/tar/build, pkg/rpm/mpatrol.spec, pkg/pkg/build,
+	  pkg/pkg/prototype, pkg/lha/build:
+	Added the mpedit manual page to the distributions.
+
+	* src/config.h: Added MP_LOGDIR and MP_PROFDIR.
+
+	* src/version.h: Added MP_VERNUM.
+
+	* src/info.c:
+	Reformatted some of the error messages for the EDIT option.
+
+	* src/diag.c, src/diag.h:
+	Added support for the EDIT and LIST options, added recognition of the
+	LOGDIR and PROFDIR environment variables and made a change for --dynamic
+	support when editing files.  Don't alter the filenames of the log file
+	or the profiling output file if they are stderr or stdout.
+
+	* src/mpatrol.h, src/option.c, src/option.h:
+	Added the EDIT and LIST options.
+
+	* src/mpatrol.c: Added the --edit and --list options.
+
+	* src/mprof.c:
+	Now include the version number in the profiling output file.
+
+2000-11-13  Graeme Roy  <graeme@epc.co.uk>
+
+	* bin/mpedit:
+	New command for invoking an editor on a specific source file.
+
+	* doc/Makefile: Added the default rule.
+
+	* doc/mpatrol.guide, doc/mpatrol.html, doc/mpatrol.info,
+	  doc/mpatrol.texi, doc/mpatrol.txt:
+	Added the GNU Library General Public License.
+
+	* pkg/zip/build.bat, pkg/tar/build, pkg/rpm/mpatrol.spec, pkg/pkg/build,
+	  pkg/pkg/prototype, pkg/lha/build:
+	Added the mpedit command and also strip the executables.
+
+	* src/config.h: Added the MP_EDITOR definition.
+
+	* src/diag.c: Added the editfile() function.
+
+	* src/info.c, src/diag.c, src/diag.h, src/inter.c, src/option.c,
+	  src/profile.c, src/signals.c, src/symbol.c:
+	Added file and line number information to calls to __mp_error() and
+	__mp_warn().
+
+2000-11-12  Graeme Roy  <graeme@epc.co.uk>
+
+	* src/diag.c:
+	Modified the call to __mp_findsource() so that the address minus 1 byte
+	is searched.
+
+2000-11-11  Graeme Roy  <graeme@epc.co.uk>
+
+	* src/diag.c, src/diag.h, src/info.c, src/inter.c, src/option.c,
+	  src/profile.c, src/signals.c, src/symbol.c:
+	Added error abbreviation codes.
+
+2000-11-09  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/mpatrol.info, doc/mpatrol.texi, doc/mpatrol.txt,
+	  doc/mpatrol.guide, doc/mpatrol.html:
+	Documented a change to the strdup() functions and also documented that
+	Amiga and Netware development has stopped.  Added more entries to the
+	FAQ and added a description of another error message.  Documented the
+	MP_NONEWDELETE, MP_NEW and MP_DELETE macros.
+
+	* doc/refcard.tex:
+	Added information about mpsym, alloca() functions and the --threads
+	option.
+
+	* man/man1/mpatrol.1, man/cat1/mpatrol.1:
+	Fixed the name of the --allow-oflow option.
+
+	* man/man3/mpatrol.3, man/cat3/mpatrol.3:
+	Documented about strdup()'s handling of NULL.  Added information about
+	MP_NONEWDELETE, MP_NEW and MP_DELETE.
+
+	* pkg/pkg/prototype:
+	Added execution status to the shared libraries so that they can be
+	processed with ldd.
+
+	* src/info.c, src/info.h:
+	Modified __mp_checkstring() to return the length of the string.
+
+	* src/inter.c: Added better string checking to strdup() and family.
+
+	* src/mpatrol.h: Added MP_NONEWDELETE, MP_NEW and MP_DELETE.
+
+2000-11-08  Graeme Roy  <graeme@epc.co.uk>
+
+	* bin/mupdate: Remove the CVS directories from the release distribution.
+
+	* doc/README:
+	Documented that the PDF reference card is now generated by PStill.
+
+	* doc/Makefile:
+	Changed from using texi2dvi to pstill to create the PDF reference card.
+
+	* doc/mpatrol.texi, doc/mpatrol.txt, doc/mpatrol.guide,
+	  doc/mpatrol.html, doc/mpatrol.info:
+	Documented the --threads option and that the PDF reference card now no
+	longer has any problems with margins.
+
+	* doc/refcard.tex:
+	No longer need special measurements for the PDF version.
+
+	* src/info.c, src/info.h:
+	Added MP_GLOBAL to the definition of __mp_checkrange().  Added the
+	__mp_checkstring() function and fixed a problem reporting the overflow
+	boundaries in __mp_checkrange().
+
+	* src/inter.c: Fixed a bug in the strndup() family of functions.
+
+2000-11-07  Graeme Roy  <graeme@epc.co.uk>
+
+	* bin/mupdate: Changed from ksh to sh.
+
+	* man/man1/mpatrol.1, man/cat1/mpatrol.1:
+	Added the --threads option and revised the short options.
+
+	* pkg/pkg/prototype: Added test8.c and test16.c to the distribution.
+
+	* src/config.h: Completely revised the MP_PRELOAD_LIBS macros.
+
+	* src/mpatrol.c:
+	Fixed the problems with preloading a thread-safe library, added the
+	--threads option and revised a lot of the short options.
+
+2000-11-06  Graeme Roy  <graeme@epc.co.uk>
+
+	* build/windows/mpatrol.def, build/windows/mpatrolmt.def:
+	Added the alloca() family of functions.
+
+	* doc/README:
+	Documented that all formats of preformatted documentation are now
+	provided with the main distribution.
+
+	* doc/Makefile:
+	Revised to work with the latest version of texi2html.  Now no longer
+	include the GNUInfo, AmigaGuide and HTML formats of the mpatrol manual
+	in the documentation archive
+
+	* doc/mpatrol.texi, doc/mpatrol.txt:
+	Document alloca() and related functions.
+
+	* doc/mpatrol.guide, doc/mpatrol.html, doc/mpatrol.info:
+	Added new prebuilt formats of the mpatrol manual.
+
+	* man/man3/mpatrol.3, man/cat3/mpatrol.3:
+	Documented the alloca() functions.
+
+	* src/config.h: Added MP_FULLSTACK support.
+
+	* src/info.c: Added MP_FULLSTACK support.
+
+	* src/stack.c: Fixed bugs when checking for Netware.
+
+	* src/symbol.c:
+	No longer protect the string table in __mp_protectsymbols().
+
+	* src/inter.c:
+	Added MP_FULLSTACK support.  Added a minimum number of bytes of stack
+	frame difference when MP_FULLSTACK is not supported in checkalloca().
+
+	* src/mpatrol.h:
+	Added the definition of MP_INLINE for defining the C++ operators.
+
+2000-11-05  Graeme Roy  <graeme@epc.co.uk>
+
+	* src/addr.c: Added __mp_compareaddrs().
+
+	* src/addr.h:
+	Added the __mp_compareaddrs() function.
+	Added protection recursion count.
+
+	* src/profile.c, src/profile.h, src/alloc.c, src/alloc.h, src/heap.c,
+	  src/heap.h, src/symbol.c, src/symbol.h, src/strtab.c, src/strtab.h:
+	Improved the memory protection handling.
+
+2000-11-03  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/mpatrol.texi, doc/mpatrol.txt:
+	Brought the documentation slightly more up to date.
+
+	* man/man3/mpatrol.3, man/cat3/mpatrol.3:
+	Documented the alloca() change to __mp_check().
+
+	* src/diag.c, src/info.c, src/info.h, src/inter.c, src/malloc.c,
+	  src/mpatrol.h:
+	Added strdupa() and strndupa().
+
+	* tests/pass/test8.c: Added a new test demonstrating alloca().
+
+	* tests/fail/test16.c:
+	Added a new test demonstrating what errors can be detecting with
+	alloca().
+
+2000-11-02  Graeme Roy  <graeme@epc.co.uk>
+
+	* src/memory.c:
+	Forced stackdirection() to take the address of its parameter, otherwise
+	it may be inlined.
+
+	* src/diag.c, src/info.c, src/info.h:
+	Added more alloca() support.  Added the dealloca() function.
+
+	* src/malloc.c: Added alloca().  Added the dealloca() function.
+
+	* src/mpatrol.h: Added alloca() support.  Added the dealloca() function.
+
+	* src/mpatrol.c:
+	Added the execpath() function to fix the problem with no path to the
+	executable called via execvp().
+
+2000-11-01  Graeme Roy  <graeme@epc.co.uk>
+
+	* bin/mpsym: Fixed a problem working with different awks.
+
+	* doc/mpatrol.texi, doc/mpatrol.txt:
+	Updated example 7 and documented mpsym.
+
+	* pkg/tar/build, pkg/rpm/mpatrol.spec, pkg/pkg/build, pkg/pkg/prototype,
+	  pkg/lha/build, man/man1/mpsym.1, man/cat1/mpsym.1, man/Makefile:
+	Added the mpsym manual page.
+
+2000-10-31  Graeme Roy  <graeme@epc.co.uk>
+
+	* bin/mpsym:
+	New command for post-processing the mpatrol log file.  Fixed problem
+	with non-stack traceback lines that begin with an address.
+
+	* doc/mpatrol.texi, doc/mpatrol.txt:
+	Updated some of the examples to reflect the new function offsets in the
+	stack tracebacks.  Added information about the mallopt command.  Changed
+	almost all of the other examples to the new stack trace format.
+
+	* man/man3/mpatrol.3, man/man1/mprof.1, man/man1/mleak.1,
+	  man/man1/mpatrol.1, man/cat3/mpatrol.3, man/cat1/mprof.1,
+	  man/cat1/mleak.1, man/cat1/mpatrol.1:
+	Added a reference to the mpsym command.
+
+	* pkg/zip/build.bat, pkg/tar/build, pkg/rpm/mpatrol.spec, pkg/pkg/build,
+	  pkg/pkg/prototype, pkg/lha/build:
+	Added the mpsym command.
+
+2000-10-30  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/mpatrol.texi, doc/mpatrol.txt:
+	Changed the format of the USEDEBUG stack trace.
+
+	* extra/.cshrc, extra/.gdbinit, extra/.profile:
+	Added the mallopt command.
+
+	* src/diag.c, src/diag.h:
+	Changed the format of the USEDEBUG stack trace.  Tidied up
+	__mp_printsymbol() and added byte offset.
+
+	* src/signals.c: Removed the third parameter from __mp_printsymbol().
+
+2000-10-29  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/mpatrol.texi, doc/mpatrol.txt, doc/refcard.tex,
+	  man/man1/mpatrol.1, man/cat1/mpatrol.1:
+	Added the --check-* options.
+
+	* src/mpatrol.c: Added the --check-* options.
+
+2000-10-26  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/Makefile:
+	Now automatically include postscript fonts in postscript formats.
+
+	* doc/mpatrol.texi, doc/mpatrol.txt:
+	Added extra section on graphs in the profiling chapter.
+
+	* extra/cc1.dot, extra/collect2.dot, extra/cpp.dot, extra/gcc.dot:
+	New example graph specification files.
+
+2000-10-25  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/Makefile, doc/README:
+	Added the graph image files.  Also, the PDF image file is now really a
+	PDF file.
+
+	* doc/mpatrol.texi, doc/mpatrol.txt: Added the example graphs.
+
+	* doc/texinfo.tex: Updated to the latest texinfo file.
+
+	* doc/images/mpatrol.pdf: Reintroduced a proper PDF image this time.
+
+	* doc/images/cc1.pdf, doc/images/collect2.pdf, doc/images/cpp.pdf,
+	  doc/images/gcc.pdf:
+	Added PDF files for example graphs.
+
+	* doc/images/cc1.eps, doc/images/collect2.eps, doc/images/cpp.eps,
+	  doc/images/gcc.eps:
+	Added EPS files for example graphs.
+
+	* doc/images/cc1.jpg, doc/images/collect2.jpg, doc/images/cpp.jpg,
+	  doc/images/gcc.jpg:
+	Added JPEG files for example graphs.
+
+	* pkg/zip/build.bat, pkg/tar/build, pkg/rpm/mpatrol.spec, pkg/pkg/build,
+	  pkg/pkg/prototype, pkg/lha/build:
+	Added the graph image files.
+
+2000-10-19  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/mpatrol.texi, doc/mpatrol.txt:
+	Updated the mpatrol and mprof command line options.
+
+	* doc/refcard.tex:
+	Don't need the pdfcompress setting any more.  Updated the options for
+	mpatrol and mprof.
+
+	* man/man1/mpatrol.1, man/cat1/mpatrol.1:
+	Removed implicit LOGALL and added the --log* and --show* options.
+
+	* man/man1/mprof.1, man/cat1/mprof.1:
+	Added the --graph-file and the --leaks options.
+
+	* src/mpatrol.c: Added the --show* and --log* options.
+
+	* src/mprof.c: Added the -l option.
+
+2000-10-17  Graeme Roy  <graeme@epc.co.uk>
+
+	* build/windows/Makefile, build/windows/NMakefile, build/unix/Makefile,
+	  build/netware/Makefile, build/amiga/Makefile, build/amiga/SMakefile:
+	Added dependency to graph.h for mprof.
+
+	* src/mprof.c: Added the -g option.
+
+2000-10-16  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/mpatrol.txt: Updated to latest version of manual.
+
+2000-10-13  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/mpatrol.texi:
+	Added the long options and also the references section.
+
+2000-10-11  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/README:
+	Documented the texinfo.tex file.
+
+	* doc/Makefile:
+	Added texinfo.tex to the dvi and pdf file dependencies for the mpatrol
+	manual.
+
+	* doc/texinfo.tex:
+	Added the latest version of texinfo.tex to the distribution.
+
+	* man/Makefile: New Makefile for manual pages.
+
+2000-10-10  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/refcard.tex:
+	Added the long options.
+
+	* man/man1/mpatrol.1, man/cat1/mpatrol.1, man/man1/mprof.1,
+	  man/cat1/mprof.1, man/man1/mleak.1, man/cat1/mleak.1:
+	Added all of the long options.
+
+2000-10-09  Graeme Roy  <graeme@epc.co.uk>
+
+	* src/getopt.c: Changed the format of the quick reference table.
+
+	* src/mpatrol.c, src/mleak.c, src/mprof.c: Added the --help option.
+
+2000-10-03  Graeme Roy  <graeme@epc.co.uk>
+
+	* src/getopt.c, src/getopt.h: Added the __mp_shortopts() function.
+
+	* src/mpatrol.c, src/mprof.c:
+	Now call __mp_shortopts to get the short option string.
+
+	* src/mleak.c:
+	Added the ability to read the unfreed allocations table from the log
+	file and also added the -i option.
+
+2000-09-28  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/Makefile:
+	Removed mpatrol.txt from the documentation archive as it now comes with
+	the main mpatrol archive.
+
+	* doc/mpatrol.texi: Don't do anything with Xt functions.
+
+	* doc/mpatrol.txt:
+	Now provide the ASCII manual as part of the main distribution.
+
+2000-09-26  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/mpatrol.texi:
+	Added lots more related software and updated some of the links.
+
+2000-09-25  Graeme Roy  <graeme@epc.co.uk>
+
+	* build/windows/Makefile, build/windows/mpatrolmt.def,
+	  build/windows/NMakefile:
+	Added new definition file for the thread-safe DLL.
+
+	* doc/mpatrol.texi:
+	Added reference to MULTI and documented Red Hat 6.1 threads don't work.
+
+	* src/getopt.c, src/getopt.h:
+	Added long option support and __mp_showopts().  Added a description
+	field to the options structure.
+
+	* src/mleak.c, src/mprof.c: Revised options handling.
+
+	* src/mpatrol.c:
+	Now call __mp_showopts().  Changed the options table format.
+
+2000-08-31  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/mpatrol.texi:
+	Added more related software and documented a bit about choice of
+	ALLOCBYTE, FREEBYTE and OFLOWBYTE settings.  Added the CHECKMEMORY
+	option.
+
+	* doc/refcard.tex, man/cat3/mpatrol.3, man/cat1/mpatrol.1,
+	  man/man3/mpatrol.3, man/man1/mpatrol.1:
+	Added the CHECKMEMORY option.
+
+	* src/info.c, src/info.h: Added support for the CHECKMEMORY option.
+
+	* src/option.c, src/option.h, src/mpatrol.h:
+	Added the CHECKMEMORY option.
+
+2000-08-29  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/mpatrol.texi: Expanded the related software section.
+
+2000-07-31  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/mpatrol.texi: Added watch support for IRIX.
+
+	* src/config.h:
+	Revised /proc support, added watch support for IRIX and removed siginfo
+	support from IRIX again.
+
+	* src/target.h: Added detection of 64-bit MIPS on IRIX.
+
+	* src/memory.c:
+	Added watch support for IRIX, and figured out way to get the program
+	name on DRS/NX.
+
+	* src/signals.c: Fixed detection of illegal memory accesses on IRIX.
+
+2000-07-30  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/mpatrol.texi:
+	Added support for ICL DRS/NX.
+
+	* src/config.h, src/target.h:
+	Added support for ICL DRS/NX and removed automatic detection of
+	UnixWare.
+
+	* src/symbol.c:
+	Added support for DRS/NX.
+
+2000-07-26  Graeme Roy  <graeme@epc.co.uk>
+
+	* src/info.h: Added definition of an allocanode.
+
+2000-07-25  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/mpatrol.texi: Documented CHECK=0 and NOPROTECT with PROF.
+
+2000-07-24  Graeme Roy  <graeme@epc.co.uk>
+
+	* build/windows/NMakefile, build/windows/Makefile, build/unix/Makefile,
+	  build/netware/Makefile, build/amiga/Makefile, build/amiga/SMakefile:
+	Added graph module for mprof.
+
+	* src/graph.c, src/graph.h: New files for building a directed graph.
+
+	* src/symbol.c: Added support for SGI N32 object files.
+
+2000-07-20  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/mpatrol.texi: Added a section on diagnostic messages.
+
+2000-07-18  Graeme Roy  <graeme@epc.co.uk>
+
+	* tests/pass/test2.c, tests/pass/test4.c:
+	Added 64-bit support when displaying pointers.
+
+2000-07-17  Graeme Roy  <graeme@epc.co.uk>
+
+	* README:
+	Changed FAQ to frequently asked questions as it's now in the manual.
+
+	* Attic/FAQ: Moved frequently asked questions to the mpatrol manual.
+
+	* build/windows/NMakefile, build/windows/Makefile, build/unix/Makefile,
+	  build/netware/Makefile, build/amiga/SMakefile, build/amiga/Makefile:
+	Added mutex.h to the dependencies for the thread-safe signals module.
+
+	* doc/mpatrol.texi:
+	Added the FAQ as an appendix.  Added more things to do.
+
+	* man/man1/mpatrol.1, man/cat1/mpatrol.1:
+	Added an argument to the -n option.
+
+	* src/signals.c:
+	Fixed regression when displaying the summary after a crash and also made
+	the signal-handler thread-safe.
+
+2000-07-16  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/mpatrol.texi: Documented the changes to the NOFREE option.
+
+	* doc/refcard.tex: Added arguments to the NOFREE and -n options.
+
+	* man/cat3/mpatrol.3, man/man3/mpatrol.3:
+	Added an argument to the NOFREE option.
+
+	* src/alloc.c, src/alloc.h:
+	Added ability to recycle previously-freed memory allocations from a
+	queue.
+
+	* src/info.c: Added an extra argument to the call to __mp_newallocs().
+
+	* src/stack.c: Fixed problem with stack traversal for SPARC platforms.
+
+	* src/diag.c: Added freed queue size to the summary.
+
+	* src/option.c: Changed the NOFREE option to accept an argument.
+
+	* src/option.h, src/mpatrol.h:
+	The NOFREE option now accepts an argument.
+
+	* src/mpatrol.c: The -n option now takes an argument.
+
+2000-07-14  Graeme Roy  <graeme@epc.co.uk>
+
+	* src/memory.c:
+	Added a way to obtain the program name from the stack on 64-bit SPARC
+	platforms.  Changed all ints to longs in memory operation functions.
+
+2000-07-13  Graeme Roy  <graeme@epc.co.uk>
+
+	* FAQ: Added information about compiling on a 64-bit environment.
+
+	* doc/mpatrol.texi: Mentioned 64-bit support.
+
+	* src/config.h:
+	Added MAP_ANONYMOUS support for DYNIX/ptx and UnixWare, LD_PRELOAD
+	support for DYNIX/ptx and support for displaying pointers in 64-bit
+	environments.
+
+	* src/target.h:
+	Added the ENVIRON preprocessor macro for specifying whether mpatrol is
+	to be run in a 32-bit or a 64-bit environment.
+
+	* src/memory.c:
+	Added a way to determine the program name on DYNIX/ptx without
+	traversing the stack.
+
+	* src/stack.c:
+	Added support for traversing the stack on the SPARC V9 64-bit
+	architecture.
+
+	* src/strtab.c:
+	Adapted the hash() function to work in 64-bit environments as well.
+
+	* src/symbol.c:
+	Added support for reading symbols from shared libraries in a 64-bit ELF
+	environment.
+
+	* src/diag.c:
+	Added support for displaying diagnostics in a 64-bit environment.
+
+	* src/inter.c: Added explicit cast to the parameter of srand().
+
+	* src/sbrk.c, src/sbrk.h:
+	Changed the parameter of sbrk() from an int to a long.
+
+2000-07-12  Graeme Roy  <graeme@epc.co.uk>
+
+	* pkg/zip/build.bat, pkg/tar/build, pkg/rpm/mpatrol.spec, pkg/pkg/build,
+	  pkg/pkg/prototype, pkg/lha/build:
+	Include the tests in the packages.
+
+2000-07-11  Graeme Roy  <graeme@epc.co.uk>
+
+	* src/alloc.c:
+	Fixed a bug within __mp_resizealloc() when allocations are pages and
+	an allocation is increased in size using space from a free block.
+
+2000-07-07  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/README: Changed mpatrol.doc to mpatrol.txt.
+
+	* doc/mpatrol.texi:
+	Added the ZIP distribution build script and information about more
+	related software.
+
+	* extra/magic: New file for use with the file command.
+
+	* pkg/zip/build.bat: New build script for ZIP distributions.
+
+2000-07-02  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/mpatrol.texi:
+	Documented that the address of an illegal memory access can now be
+	detected on LynxOS.
+
+	* src/signals.c:
+	Added a way of determining the address of an illegal memory access on
+	LynxOS.
+
+2000-06-29  Graeme Roy  <graeme@epc.co.uk>
+
+	* build/unix/Makefile:
+	Changed lint rules to work with lints that don't support the -C option.
+
+	* doc/mpatrol.texi:
+	Documented that the address of an illegal memory access can now be found
+	on AIX and Linux.
+
+	* pkg/pkg/build:
+	The pkgmk and pkgtrans commands do not recognise . as a valid directory
+	on all systems.
+
+	* src/config.h, src/memory.c, src/option.c:
+	Added support for the MAP_ANONYMOUS flag in some versions of mmap().
+
+	* src/stack.c:
+	Fixed regression in detecting the address of illegal memory accesses
+	when siginfo support is enabled.
+
+	* src/signals.c:
+	Added detection of location of illegal memory access on Linux.
+
+2000-06-28  Graeme Roy  <graeme@epc.co.uk>
+
+	* src/signals.c:
+	Added detection of the address of an illegal memory access on AIX.
+
+2000-06-26  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/mpatrol.texi: Documented IRIX siginfo support.
+
+	* src/config.h:
+	Enabled library stack traversal for Windows platforms.  Reintroduced
+	siginfo support for IRIX.
+
+	* src/stack.c:
+	Forgot to initialise the first field for all types of stack traversal.
+
+	* src/symbol.c:
+	Moved the call to SymInitialize() earlier on and removed the call to
+	SymCleanup() completely.
+
+	* src/signals.c: Added handling of SIGBUS on UNIX platforms as well.
+
+2000-06-23  Graeme Roy  <graeme@epc.co.uk>
+
+	* FAQ:
+	Documented automatic name demangling, USEDEBUG and imagehlp.lib on
+	Windows platforms.  Added information about preserving debugging
+	information for symbols on Windows platforms.
+
+	* build/windows/Makefile, build/windows/NMakefile:
+	Added the imagehlp library when building DLLs.
+
+	* doc/mpatrol.texi:
+	Added more up to date information about Windows platforms.
+
+	* src/stack.c, src/stack.h:
+	Added support for library stack traversal on Windows platforms.
+
+	* src/signals.c:
+	Added support for determining the address of an illegal memory access on
+	Windows platforms.  Fixed problem when using library stack support on
+	Windows platforms.
+
+	* src/memory.c, src/inter.c: New interface for __mp_newframe().
+
+2000-06-22  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/mpatrol.texi:
+	Documented that problem with USEDEBUG and BFD has now been fixed.
+	Documented that symbols can now be read on Windows platforms and that
+	USEDEBUG also works there as well.
+
+	* src/target.h: Added the PE object file format.
+
+	* src/symbol.c: Added support for reading symbols on Windows platforms.
+
+2000-06-21  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/mpatrol.texi:
+	Documented that AIX and LynxOS have been tested with XCOFF object file
+	reader.
+
+2000-06-20  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/mpatrol.texi: Documented XCOFF and ELF64 object file formats.
+
+	* man/man3/mpatrol.3, man/cat3/mpatrol.3: Revised the library list.
+
+	* pkg/lsm/mpatrol.lsm:
+	Forgot to update the version in the archive files.
+
+	* src/config.h, src/target.h: Added XCOFF and ELF64 object file formats.
+
+	* src/symbol.c:
+	Added direct XCOFF support and provisional support for ELF64.
+
+2000-06-18  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/mpatrol.texi: Documented problems making library thread-safe.
+
+2000-06-17  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/mpatrol.texi:
+	Documented that thread-safety available on lots more platforms, and
+	that the program name can automatically be determined on DG/UX M88K
+	platforms.
+
+	* src/config.h:
+	Changed one of the macros to specify thread-safety on LynxOS.
+
+	* src/memory.c:
+	Added ability to determine the program name under DG/UX, LynxOS and
+	Solaris without traversing the stack.
+
+	* src/mutex.c: LynxOS doesn't have pthread_once().
+
+	* tests/pass/test5.c:
+	Added a non-NULL second argument to pthread_join() since LynxOS
+	requires it.
+
+2000-06-15  Graeme Roy  <graeme@epc.co.uk>
+
+	* build/windows/NMakefile, build/windows/Makefile, build/unix/Makefile,
+	  build/netware/Makefile, build/amiga/SMakefile, build/amiga/Makefile:
+	Revised the dependencies for the mutex module.
+
+	* doc/mpatrol.texi: Documented Intel Linux threads support.
+
+	* pkg/tar/build, pkg/lha/build:
+	Now also build the thread-safe libraries.
+
+	* pkg/rpm/mpatrol.spec, pkg/pkg/prototype, pkg/pkg/build:
+	Now also build and install the thread-safe libraries.
+
+	* src/config.h: Added the MP_INIT_SUPPORT preprocessor macro.
+
+	* src/mutex.c: Recursive mutexes are now working properly.
+
+	* src/machine.c, src/machine.h:
+	Added support for calling functions from the .init section of ELF files.
+
+2000-06-12  Graeme Roy  <graeme@epc.co.uk>
+
+	* FAQ: Removed references to problems on HP/UX as they are now fixed.
+
+	* build/windows/Makefile, build/windows/NMakefile, build/unix/Makefile,
+	  build/netware/Makefile, build/amiga/Makefile, build/amiga/SMakefile:
+	Added rules for the machine.c assembler module.  Added machine.h as a
+	dependency for the stack module.
+
+	* doc/mpatrol.texi:
+	Mentioned that problems on HP/UX are now fixed, as are some problems on
+	MIPS.
+
+	* man/man3/mpatrol.3, man/cat3/mpatrol.3:
+	Mentioned the libexc library on IRIX.
+
+	* src/config.h:
+	Removed siginfo support for IRIX as it doesn't appear to work as
+	advertised.
+
+	* src/stack.c:
+	Fixed problem with HP/UX and libcl.sl, and also removed need to call
+	getcontext on generic MIPS platforms.
+
+	* src/symbol.c:
+	Fixed problem with symbols read from HP/UX shared libraries.
+
+	* src/machine.c, src/machine.h:
+	New files containing processor-dependent assembler routines.
+
+2000-06-08  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/mpatrol.texi: Documented SINIX and UnixWare support.
+
+	* src/config.h: Added support for SINIX and UnixWare.
+
+	* src/target.h: Added SINIX and UnixWare.
+
+	* src/memory.c: Added program filenames for SINIX and UnixWare.
+
+	* src/stack.c: Some fixes for MIPS stack traversal.
+
+	* src/symbol.c: Added shared library support for SINIX and UnixWare.
+
+2000-06-07  Graeme Roy  <graeme@epc.co.uk>
+
+	* FAQ: Documented libexc.so on IRIX.
+
+	* doc/mpatrol.texi:
+	Documented a bit about the different types of call stack traversal.
+
+	* src/config.h: Added MP_LIBRARYSTACK_SUPPORT.
+
+	* src/memory.c: Modified for MP_LIBRARYSTACK_SUPPORT.
+
+	* src/stack.c, src/stack.h:
+	Added support for generic MIPS stack traversal.
+
+	* src/strtab.c, src/strtab.h: Changed MP_HASHTABSIZE to MP_HASHTAB_SIZE.
+
+2000-06-05  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/mpatrol.texi: Documented IRIX MIPS stack traversal.
+
+	* src/stack.c, src/stack.h: Added MIPS stack traversal.
+
+2000-06-01  Graeme Roy  <graeme@epc.co.uk>
+
+	* FAQ: Documented potential problems on HP/UX.
+
+	* doc/mpatrol.texi:
+	Documented HP/UX stack traversal and shared library symbol support.
+
+	* man/man3/mpatrol.3, man/cat3/mpatrol.3:
+	Documented that -lcl must be used when linking on HP/UX.
+
+	* src/memory.c: Added ability to determine program name on HP/UX.
+
+	* src/stack.c, src/stack.h: Fixed problem with HP/UX stack tracebacks.
+
+	* src/symbol.c:
+	Added support for reading symbols from shared libraries on HP/UX.
+
+	* src/mutex.c:
+	Recursive mutexes were working after all - it was just the mutex
+	initialisation code that wasn't working as expected!
+
+2000-05-31  Graeme Roy  <graeme@epc.co.uk>
+
+	* build/windows/Makefile, build/windows/NMakefile, build/unix/Makefile,
+	  build/netware/Makefile, build/amiga/SMakefile, build/amiga/Makefile:
+	Added memory.h as a dependency for stack.c.
+
+	* doc/mpatrol.texi: Mentioned about difficulties of porting.
+
+	* src/memory.c: Added reference for operating system memory management.
+
+	* src/stack.c, src/stack.h: Added HP/UX stack traversal.
+
+	* src/symbol.c: Added support for IRIX N32 shared objects.
+
+2000-05-30  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/mpatrol.texi:
+	Added stack traversal support for RS/6000 and PowerPC.  Symbols can now
+	be read from IRIX shared libraries.
+
+	* src/memory.c:
+	Added ability to determine program name on AIX and RS/6000 and PowerPC.
+
+	* src/stack.c:
+	Added support for traversing the stack on RS/6000 and PowerPC
+	architectures.
+
+	* src/symbol.c:
+	Added support for XCOFF symbol names.  Added support for reading shared
+	library symbols on IRIX.
+
+2000-05-29  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/mpatrol.texi: Documented Intel LynxOS now supported.
+
+	* src/memory.c:
+	Added support for determining the program name on Intel LynxOS.
+
+	* src/stack.c: Added support for traversing the stack on Intel LynxOS.
+
+	* src/symbol.c: Added COFF support for Intel LynxOS.
+
+	* src/mutex.c:
+	Removed recursive mutexes as they are too much bother to get working.
+
+2000-05-24  Graeme Roy  <graeme@epc.co.uk>
+
+	* src/mutex.c: Improved recursive mutexes.
+
+	* src/inter.c:
+	Now always lock and unlock the library mutexes in savesignals() and
+	restoresignals() since the mutexes are now recursive.
+
+2000-05-23  Graeme Roy  <graeme@epc.co.uk>
+
+	* build/windows/NMakefile, build/windows/Makefile, build/unix/Makefile,
+	  build/netware/Makefile, build/amiga/SMakefile, build/amiga/Makefile:
+	The mutex module no longer includes inter.h.
+
+	* doc/mpatrol.texi:
+	Documented the new LSM file and that mpatrol works with Solaris 2.5,
+	albeit without watch point support.
+
+	* pkg/lsm/mpatrol.lsm: New file for the Linux Software Map.
+
+	* src/mutex.h: Added the mutextype enumeration.
+
+	* src/mutex.c: Completely revised the mutex handling.
+
+	* src/inter.c:
+	Adapted to work with new style mutex module.  Call __mp_finimutexes()
+	only if we are cleaning up the end for systems that require it.
+
+2000-05-22  Graeme Roy  <graeme@epc.co.uk>
+
+	* src/mutex.h, src/mutex.c: Added recursive mutexes.
+
+2000-05-18  Graeme Roy  <graeme@epc.co.uk>
+
+	* src/config.h: Added MP_PROCFS_CMDNAME.
+
+	* src/memory.c:
+	Added better way of determining the program name under Linux.
+
+2000-05-16  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/mpatrol.texi: Documented the ALLOWOFLOW option.
+
+	* doc/refcard.tex: Added the ALLOWOFLOW and -M options.
+
+	* man/man1/mpatrol.1, man/cat1/mpatrol.1: Added the -M option.
+
+	* man/man3/mpatrol.3, man/cat3/mpatrol.3: Added the ALLOWOFLOW option.
+
+	* src/memory.h, src/memory.c:
+	Added determination of the system stack direction.
+
+	* src/memory.c: Fixed determination of program name under Intel Linux.
+
+	* src/info.c, src/info.h: Added support for the ALLOWOFLOW option.
+
+	* src/option.c, src/option.h, src/mpatrol.h:
+	Added the ALLOWOFLOW option.
+
+	* src/mpatrol.c: Added the -M option.
+
+	* src/mprof.c: Added explicit casting to characters in byteswap().
+
+2000-05-15  Graeme Roy  <graeme@epc.co.uk>
+
+	* FAQ: Added information about frame pointers.
+
+	* doc/README: Added the PDF version of the reference card.
+
+	* doc/Makefile: Added ability to build PDF reference card.
+
+	* doc/mpatrol.texi:
+	Added background information on memory allocation profiling.  Documented
+	the mprof command.
+
+	* doc/refcard.tex: Added PDF support and a second page.
+
+	* pkg/tar/build, pkg/rpm/mpatrol.spec, pkg/pkg/build, pkg/pkg/prototype,
+	  pkg/lha/build:
+	Added the PDF quick reference card.
+
+	* src/profile.c:
+	Added information about the endianness of the host machine in the
+	profiling output file.
+
+	* src/mprof.c: Added support for reading byte-swapped data.
+
+	* src/library.c:
+	Added the sbrk module for AmigaOS with GCC and Windows platforms.
+
+2000-05-14  Graeme Roy  <graeme@epc.co.uk>
+
+	* build/windows/mpatrol.def: Added memccpy().
+
+	* doc/mpatrol.texi:
+	Added memccpy().  Mentioned the %p component when specifying the log
+	file or profiling output file names.
+
+	* man/man3/mpatrol.3, man/cat3/mpatrol.3: Added the memccpy() function.
+
+	* src/inter.c, src/inter.h, src/malloc.c, src/mpatrol.h:
+	Added an extra argument to __mp_copymem().
+
+	* src/info.h, src/diag.c, src/malloc.c, src/mpatrol.h:
+	Added the memccpy() function.
+
+	* src/diag.c, src/diag.h: Added an extra argument to __mp_logmemcopy().
+
+	* src/info.c, src/info.h, src/inter.c:
+	Added an extra argument and return value to __mp_copymemory().
+
+	* src/stack.c:
+	Added signal handlers for UNIX when traversing the call stack.
+
+	* src/memory.c:
+	Now only fall back on /proc to get the program filename if other methods
+	don't work.
+
+	* src/diag.c: Added the %p log file variable.
+
+	* src/diag.c, src/diag.h, src/info.c, src/profile.c, src/option.c:
+	Added a meminfo header to __mp_logfile() and __mp_proffile().
+
+2000-05-13  Graeme Roy  <graeme@epc.co.uk>
+
+	* FAQ: Mentioned the reference card.
+
+2000-05-12  Graeme Roy  <graeme@epc.co.uk>
+
+	* README: Added information on the reference card.
+
+	* doc/README: Added details about the reference card.
+
+	* doc/Makefile: Added ability to build the quick reference card.
+
+	* doc/mpatrol.texi: Added information about the quick reference card.
+
+	* doc/refcard.tex: New quick reference card.
+
+	* man/man3/mpatrol.3, man/man1/mprof.1, man/man1/mleak.1,
+	  man/man1/mpatrol.1, man/cat3/mpatrol.3, man/cat1/mprof.1,
+	  man/cat1/mleak.1, man/cat1/mpatrol.1:
+	Added a reference to the quick reference card.
+
+	* pkg/tar/build, pkg/rpm/mpatrol.spec, pkg/pkg/prototype, pkg/pkg/build,
+	  pkg/lha/build:
+	Added the quick reference card.
+
+2000-05-11  Graeme Roy  <graeme@epc.co.uk>
+
+	* FAQ:
+	Mentioned -fno-inline-functions and how to suppress diagnostic messages.
+
+	* doc/README, doc/Makefile:
+	Added the ASCII art image file.  The HTML version of the manual when
+	split into separate nodes also relies on the JPEG image.
+
+	* doc/mpatrol.texi: Documented the NDEBUG macro.
+
+	* man/man3/mpatrol.3, man/man1/mprof.1, man/man1/mleak.1,
+	  man/man1/mpatrol.1, man/cat3/mpatrol.3, man/cat1/mprof.1,
+	  man/cat1/mleak.1, man/cat1/mpatrol.1:
+	Added the mpatrol homepage as a reference.
+
+	* pkg/tar/build, pkg/rpm/mpatrol.spec, pkg/pkg/build, pkg/pkg/prototype,
+	  pkg/lha/build:
+	Added doc/images/mpatrol.txt to the distribution.
+
+	* src/info.c:
+	Added an extra parameter to the calls to __mp_profilealloc() and
+	__mp_profilefree() to indicate whether the symbol table should be
+	unprotected or not.
+
+	* src/profile.c, src/profile.h, src/inter.c:
+	Fixed problem with write-protected symbols when writing an intermediate
+	profiling information file.
+
+	* src/inter.c:
+	The comparison in memcmp() should be between unsigned chars and not
+	plain chars.
+
+2000-05-10  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/mpatrol.texi, man/man3/mpatrol.3, man/cat3/mpatrol.3,
+	  src/mpatrol.h, src/malloc.c:
+	Added an extra argument to recalloc().
+
+	* doc/mpatrol.texi:
+	Mentioned that mpatrol can now be used with the IRIX _RLD_LIST
+	environment variable.  Added ASCII logo for info files.
+
+	* doc/images/mpatrol.txt:
+	New image file containing the word mpatrol in ASCII art.
+
+	* FAQ, man/man1/mpatrol.1, man/cat1/mpatrol.1, src/mpatrol.c:
+	Removed references to LD_PRELOAD.
+
+	* man/man1/mprof.1, man/cat1/mprof.1, man/man3/mpatrol.3,
+	  man/cat3/mpatrol.3:
+	Added extra references.
+
+	* src/config.h:
+	IRIX systems have support for preloading shared libraries, but the name
+	of the environment variable is _RLD_LIST and not LD_PRELOAD.
+
+	* src/diag.c: Added explicit return type to logcall().
+
+	* src/info.c:
+	The comparison in memcmp() should be between unsigned chars and not
+	plain chars.
+
+	* src/mpatrol.h: Disable all mpatrol features if NDEBUG is defined.
+
+	* tests/fail/test11.c, tests/fail/test12.c:
+	The option is PAGEALLOC and not PAGESIZE.
+
+2000-05-08  Graeme Roy  <graeme@epc.co.uk>
+
+	* build/amiga/Makefile, build/amiga/Makefile, build/netware/Makefile,
+	  build/unix/Makefile, build/windows/Makefile, build/windows/NMakefile:
+	Added mutex.h to threadsafe diagnostics module.
+
+	* src/diag.c, src/diag.h:
+	Added the __mp_logalloc(), __mp_logrealloc() and __mp_logfree()
+	functions.  Added the logcall() function.  Added __mp_logmemset(),
+	__mp_logmemcopy(), __mp_logmemlocate() and __mp_logmemcompare().
+
+	* src/info.c:
+	Added calls to __mp_logalloc(), __mp_logrealloc() and __mp_logfree().
+	Display the call details when CHECK* options are used, even if the LOG*
+	options are not used.  Added more display of call details when errors
+	occur and fixed a bug when profiling memory allocations of size 0.
+
+	* src/diag.c, src/diag.h, src/info.c, src/inter.c:
+	Changed __mp_alloctypenames[] to __mp_functionnames[].
+
+2000-05-04  Graeme Roy  <graeme@epc.co.uk>
+
+	* build/unix/Makefile: Added lint support.
+
+	* doc/mpatrol.texi:
+	Changed the arguments to cfree() and documented the lint make target.
+
+	* man/man3/mpatrol.3, man/cat3/mpatrol.3:
+	Added new parameters to cfree().
+
+	* pkg/pkg/prototype, pkg/pkg/build: Added the lint library.
+
+	* src/diag.c: Made the error and warning counts static.
+
+	* src/malloc.c, src/config.h:
+	Added MP_ALTFUNCNAMES and MP_ALTFUNCNAME().
+
+	* src/malloc.c, src/mpatrol.h:
+	cfree() takes two additional arguments, similar to calloc().
+
+2000-05-03  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/mpatrol.texi: Added more information on profiling.
+
+2000-05-02  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/mpatrol.texi:
+	Added information on the format of the profiling output file.
+
+	* src/mprof.c:
+	Need to always read the symbol name string table, even if it is size 1.
+
+2000-05-01  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/mpatrol.texi: Added the profiling chapter.
+
+	* man/man1/mpatrol.1, man/cat1/mpatrol.1:
+	Documented that the default profiling output filename is mpatrol.%n.out.
+
+	* man/man3/mpatrol.3, man/cat3/mpatrol.3: LARGEBOUND defaults to 2048.
+
+	* src/diag.c, src/diag.h: Added __mp_proffile().
+
+	* src/profile.c, src/option.c, src/mpatrol.c, src/config.h:
+	Allow the profiling output filename to contain special formatting
+	characters.
+
+	* tests/profile/test1.c: New profiling test.
+
+	* tests/profile/test2.c:
+	Added new profiling test with a fix for the previous test.
+
+2000-04-30  Graeme Roy  <graeme@epc.co.uk>
+
+	* man/man1/mpatrol.1, man/cat1/mpatrol.1: Added the profiling options.
+
+	* man/man1/mprof.1, man/cat1/mprof.1: New manual page for mprof.
+
+	* man/man3/mpatrol.3, man/cat3/mpatrol.3:
+	Added information and options about profiling.
+
+	* pkg/tar/build, pkg/rpm/mpatrol.spec, pkg/pkg/build, pkg/pkg/prototype,
+	  pkg/lha/build:
+	Added the mprof manual page.
+
+	* src/getopt.c, src/getopt.h: Added __mp_getnum().
+
+	* src/mprof.c: Added the memory leak table.
+
+2000-04-27  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/mpatrol.texi: Documented IRIX support.  Changed memleak to mleak.
+
+	* build/amiga/Makefile, build/amiga/Makefile, build/netware/Makefile,
+	  build/unix/Makefile, build/windows/Makefile, build/windows/NMakefile:
+	Renamed memleak to mleak.
+
+	* man/cat1/mpatrol.1, man/cat3/mpatrol.3, man/man1/mpatrol.1,
+	  man/man3/mpatrol.3, man/cat1/mleak.1, man/cat1/Attic/memleak.1,
+	  man/man1/mleak.1, man/man1/Attic/memleak.1:
+	Changed memleak to mleak.
+
+	* src/mleak.c, src/Attic/memleak.c:
+	Changed memleak to mleak.
+
+	* src/config.h, src/target.h, src/memory.c: Added IRIX support.
+
+	* src/mprof.c: Added support for symbol offsets.
+
+2000-04-26  Graeme Roy  <graeme@epc.co.uk>
+
+	* src/symbol.c, src/symbol.h: Added an index into the profiling table.
+
+	* src/profile.c:
+	Added the symbol address table to write to the profiling output file.
+
+	* src/mprof.c:
+	Added the cleardata() function and temporary data for sorting.
+
+2000-04-25  Graeme Roy  <graeme@epc.co.uk>
+
+	* build/amiga/Makefile, build/amiga/Makefile, build/netware/Makefile,
+	  build/unix/Makefile, build/windows/Makefile, build/windows/NMakefile:
+	Added the tree module to mprof.
+
+	* doc/mpatrol.texi, src/config.h, src/target.h: Added AIX support.
+
+	* src/mprof.c: Added the direct allocation table.
+
+2000-04-24  Graeme Roy  <graeme@epc.co.uk>
+
+	* pkg/tar/build, pkg/rpm/mpatrol.spec, pkg/pkg/build, pkg/pkg/prototype,
+	  pkg/lha/build, build/windows/NMakefile, build/windows/Makefile,
+	  build/unix/Makefile, build/netware/Makefile, build/amiga/Makefile,
+	  build/amiga/SMakefile:
+	Added the mprof tool.
+
+	* src/info.c:
+	Added symbol table parameter to the call to __mp_newprofile().
+
+	* src/info.h: The profile header file now also includes symbol.h.
+
+	* src/symbol.c: Set the profiling data offset for each symbol.
+
+	* src/symbol.h: Added a profiling table offset for each symbol.
+
+	* src/profile.c:
+	Changed the format of the profiling output file slightly.  The profdata
+	structures are now only allocated for leaf call sites.  Added support
+	for symbols.
+
+	* src/inter.c:
+	Need to make the symbol table writable before we can dump any profiling
+	information.
+
+	* src/mprof.c:
+	New tool for displaying profiling information from a profiling output
+	file produced by the mpatrol library.
+
+2000-04-23  Graeme Roy  <graeme@epc.co.uk>
+
+	* src/memory.c, src/slots.c, src/option.c:
+	Added some explicit casting for compiling with C++.
+
+	* src/profile.c, src/profile.h, src/diag.c:
+	Changed the list field to ilist.  Added support for full call graphs.
+	The profdata structures are now only allocated for leaf call sites.
+
+2000-04-20  Graeme Roy  <graeme@epc.co.uk>
+
+	* build/amiga/Makefile, build/amiga/Makefile, build/netware/Makefile,
+	  build/unix/Makefile, build/windows/Makefile, build/windows/NMakefile:
+	Added more dependencies for the profile module.
+
+	* src/config.h:
+	Mentioned that the profiling allocation bounds can now be overridden at
+	run-time.  Added MP_PROFMAGIC.
+
+	* src/info.c:
+	Always profile a reallocation when profiling is enabled, even if the new
+	size is the same as the old size.  Added protection of internal profiler
+	memory.
+
+	* src/diag.c:
+	Added display of boundaries and autosave count in the summary.
+
+	* src/option.c, src/option.h, src/mpatrol.h:
+	Added the AUTOSAVE, SMALLBOUND, MEDIUMBOUND and LARGEBOUND options.
+
+	* src/profile.h, src/profile.c, src/inter.c:
+	Implemented the autosave feature.  Added the allocation boundaries to
+	the profiling output file.  Added a magic sequence of characters to the
+	beginning and end of the profiling output file.
+
+	* src/mpatrol.c: Added the -1, -2, -3 and -Q options.
+
+2000-04-19  Graeme Roy  <graeme@epc.co.uk>
+
+	* build/amiga/Makefile, build/amiga/Makefile, build/netware/Makefile,
+	  build/unix/Makefile, build/windows/Makefile, build/windows/NMakefile:
+	Added profile.h for info.h.
+
+	* doc/mpatrol.texi, man/cat1/mpatrol.1, man/man1/mpatrol.1:
+	Converted the -P and -p options to -X and -x.
+
+	* src/config.h:
+	Added MP_BINSIZE, MP_SMALLBOUND, MP_MEDIUMBOUND and MP_LARGEBOUND.
+
+	* src/info.c, src/info.h, src/diag.c:
+	Added profiling support.
+
+	* src/option.c, src/option.h, src/mpatrol.h:
+	Added the PROF and PROFFILE options.
+
+	* src/profile.c, src/profile.h: Added __mp_writeprofile().
+
+	* src/inter.c: Added call to __mp_writeprofile().
+
+	* src/mpatrol.c:
+	Changed the -P and -p options to -X and -x respectively.  Added the -P
+	and -p options for profiling.
+
+	* src/library.c: Added the profile module.
+
+2000-04-18  Graeme Roy  <graeme@epc.co.uk>
+
+	* build/amiga/Makefile, build/amiga/Makefile, build/netware/Makefile,
+	  build/unix/Makefile, build/windows/Makefile, build/windows/NMakefile:
+	Added the profile module.
+
+	* doc/mpatrol.texi: Added more related software.
+
+	* src/config.h: Added the MP_PROFFILE definition.
+
+	* src/profile.c, src/profile.h: New files for memory profiling.
+
+2000-04-13  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/mpatrol.texi:
+	Added more related software and described how to embed object file
+	format access libraries into the shared version of the mpatrol library.
+	Documented the .gdbinit file provided, and also added more things to do.
+
+	* extra/.gdbinit: New file for using GDB with mpatrol.
+
+	* pkg/lha/build, pkg/tar/build: Added the GDB command file.
+
+	* src/malloc.c, src/mpatrol.h:
+	Made set_new_handler() have extern "C" linkage for G++.
+
+2000-04-11  Graeme Roy  <graeme@epc.co.uk>
+
+	* build/windows/Makefile, build/windows/NMakefile: Removed -noentry.
+
+	* doc/mpatrol.texi: Added documentation on the GNU C library.
+
+2000-04-06  Graeme Roy  <graeme@epc.co.uk>
+
+	* FAQ: Documented change to name of some object libraries.
+
+	* build/windows/Makefile, build/unix/Makefile, build/netware/Makefile,
+	  build/amiga/Makefile, build/amiga/SMakefile:
+	Added version module to mpatrol and memleak.
+
+	* build/windows/Makefile, build/netware/Makefile, build/amiga/SMakefile:
+	Changed the names of the object libraries to be prefixed by lib.
+
+	* build/amiga/Makefile:
+	Added dependencies for the sbrk module.  Also now use rm to remove
+	files.
+
+	* build/windows/Makefile, build/windows/NMakefile:
+	Added dependencies for sbrk.h.
+
+	* build/netware/Makefile, build/windows/Makefile, build/amiga/Makefile,
+	  build/amiga/SMakefile, pkg/lha/build:
+	Added the mpatrol tool.
+
+	* build/windows/Makefile: Added -noentry when building DLLs.
+
+	* build/windows/NMakefile: New Microsoft Makefile.
+
+	* doc/mpatrol.texi:
+	Documented that all platforms now have the mpatrol command.
+
+	* src/inter.c: Force initialisation of simulated UNIX heap.
+
+	* src/mpatrol.c, src/memleak.c: Added copyright information.
+
+	* src/mpatrol.c:
+	No longer look at the current setting of the MPATROL_OPTIONS environment
+	variable.  Also fixed return value of system() when gcc is used on
+	AmigaOS.
+
+2000-04-05  Graeme Roy  <graeme@epc.co.uk>
+
+	* FAQ, bin/Attic/mpatrol, pkg/tar/build, pkg/rpm/mpatrol.spec,
+	  pkg/pkg/build:
+	The mpatrol shell script is now a binary command.
+
+	* build/windows/Makefile, build/unix/Makefile, build/netware/Makefile,
+	  build/amiga/Makefile, build/amiga/SMakefile:
+	Added support for the getopt module.
+
+	* build/unix/Makefile: Added the mpatrol tool.
+
+	* doc/mpatrol.texi:
+	Documented that the mpatrol shell script is now a binary command.
+
+	* man/cat1/mpatrol.1, man/man1/mpatrol.1, doc/mpatrol.texi:
+	Existing MPATROL_OPTIONS settings are now no longer used with the
+	mpatrol command.
+
+	* man/cat1/mpatrol.1, man/man1/mpatrol.1, man/cat1/memleak.1,
+	  man/man1/memleak.1:
+	Added the -V option.
+
+	* pkg/lha/build:
+	Don't include the mpatrol shell script in the distribution.
+
+	* src/config.h:
+	Added MP_PRELOAD_SUPPORT, MP_PRELOAD_NAME and MP_PRELOAD_LIBS.
+
+	* src/getopt.h, src/getopt.c:
+	New files for parsing command line options.
+
+	* src/mpatrol.c: Converted UNIX shell script to be written in C.
+
+	* src/memleak.c: Added the -V option.
+
+2000-04-04  Graeme Roy  <graeme@epc.co.uk>
+
+	* build/windows/mpatrol.def: Added __mp_printinfo.
+
+	* doc/mpatrol.texi: Added __mp_printinfo and lots more related software.
+
+	* man/cat3/mpatrol.3, man/man3/mpatrol.3: Documented __mp_printinfo().
+
+	* src/inter.h, src/inter.c, src/mpatrol.h:
+	Added the __mp_printinfo() function.
+
+2000-04-03  Graeme Roy  <graeme@epc.co.uk>
+
+	* build/amiga/Makefile, build/amiga/SMakefile, build/netware/Makefile,
+	  build/windows/Makefile, build/unix/Makefile:
+	Changed mpatrol.c to library.c.
+
+	* doc/Makefile: Also remove compressed tar archive for clean target.
+
+	* doc/mpatrol.texi: Documented Inuse support.
+
+	* src/info.c: Added Inuse support.
+
+	* src/diag.c:
+	Added date and time of log file generation.  Also added information
+	about the mpatrol homepage.
+
+	* src/inter.c: Added Inuse support.
+
+	* src/mpatrol.c, src/library.c: Renamed mpatrol.c to library.c.
+
+	* src/version.h, src/version.c: Added a definition for __mp_homepage.
+
+2000-04-02  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/mpatrol.texi:
+	Documented the memleak command and that DG/UX now supports the
+	LD_PRELOAD feature, and updated some of the tests for C++.
+
+	* src/config.h: Provided support for Parasoft Inuse.
+
+	* src/heap.c: Added Inuse support.
+
+	* src/malloc.c: Changed set_new_handler name mangling for g++.
+
+	* tests/tutorial/test1.c, tests/tutorial/test2.c,
+	  tests/tutorial/test3.c, tests/pass/test2.c:
+	Updated some of the tests for C++.
+
+	* tests/fail/test13.c, tests/fail/test14.c:
+	New tests for freeing local and global variables.
+
+	* tests/fail/test15.c:
+	New test to highlight problems of overwriting pointer information.
+
+2000-03-31  Graeme Roy  <graeme@epc.co.uk>
+
+	* build/amiga/Makefile, build/amiga/SMakefile, build/netware/Makefile,
+	  build/windows/Makefile:
+	Added the memleak tool.
+
+	* build/unix/Makefile:
+	Added the memleak tool and fixed embedded shared library versions.
+
+2000-03-30  Graeme Roy  <graeme@epc.co.uk>
+
+	* man/cat1/memleak.1, man/man1/memleak.1:
+	New manual page for the memleak tool.
+
+	* man/cat1/mpatrol.1, man/cat3/mpatrol.3, man/man1/mpatrol.1,
+	  man/man3/mpatrol.3:
+	Added a reference to the memleak manual page.
+
+	* pkg/rpm/mpatrol.spec, pkg/pkg/build, pkg/pkg/prototype, pkg/tar/build,
+	  pkg/lha/build:
+	Added the memleak tool and manual pages.
+
+	* src/config.h: Added a definition for MP_BUFFER_SIZE.
+
+	* src/memleak.c: New file for detecting memory leaks in the log file.
+
+2000-03-26  Graeme Roy  <graeme@epc.co.uk>
+
+	* bin/mupdate:
+	Used colons instead of tabs as field separators for rcs2log.
+
+2000-03-24  Graeme Roy  <graeme@epc.co.uk>
+
+	* FAQ: Added lots more questions and answers.
+
+	* build/amiga/Makefile, build/windows/Makefile:
+	Added utils.h dependency to sbrk.o.
+
+	* src/sbrk.c: Added alignment restrictions to brk() and sbrk().
+
+	* tests/fail/test11.c: New test for post-read errors.
+
+	* tests/fail/test12.c: New test for pre-read errors.
+
+2000-03-23  Graeme Roy  <graeme@epc.co.uk>
+
+	* README: Mentioned that Windows now overrides malloc() as well.
+
+	* build/amiga/Makefile, build/windows/Makefile: Added the sbrk module.
+
+	* build/windows/Makefile: Added malloc module.
+
+	* build/windows/mpatrol.def:
+	Added overriding functions to the DLL specification.
+
+	* doc/mpatrol.texi: Brought documentation up to date with product.
+
+	* man/man3/mpatrol.3, man/cat3/mpatrol.3:
+	Mentioned that on Windows platforms, malloc() is overridden as well.
+
+	* pkg/lha/mpatrol.readme: New file for Aminet distributions.
+
+	* src/config.h: Added a definition for MP_BREAK_SIZE.
+
+	* src/memory.c:
+	Always round up the allocation size to 64K on Windows as this is what
+	the VirtualAlloc() function does.
+
+	* src/sbrk.c, src/sbrk.h: New files for brk() and sbrk().
+
+	* src/inter.c:
+	Added support for Microsoft's C run-time library calling malloc() before
+	it is fully set up.
+
+	* src/mpatrol.c: Include malloc.c if on Windows platforms as well.
+
+2000-03-22  Graeme Roy  <graeme@epc.co.uk>
+
+	* pkg/lha/build: Added Amiga LhA distribution archive build script.
+
+	* src/symbol.c: Always now include stdlib.h and string.h.
+
+2000-03-21  Graeme Roy  <graeme@epc.co.uk>
+
+	* README:
+	Mentioned that malloc() is automatically overridden when using AmigaOS
+	with gcc.
+
+	* FAQ: Mentioned that the Amiga gcc makefile also uses libmpatrol.o.
+
+	* doc/mpatrol.texi:
+	Updated documentation for AmigaOS when gcc is being used.
+
+	* man/man3/mpatrol.3, man/cat3/mpatrol.3:
+	Mentioned that malloc() is now automatically overridden on AmigaOS when
+	using gcc.
+
+	* src/symbol.c:
+	Fix base of first object file for AmigaOS with BFD support.
+
+	* src/inter.c: Don't call __mp_init() from memory operation functions.
+
+2000-03-20  Graeme Roy  <graeme@epc.co.uk>
+
+	* FAQ: Removed mention of Amiga shared library.
+
+	* build/amiga/Attic/mpatrol_pragmas.h, build/amiga/Attic/mpatrol_lib.fd:
+	Removed support for Amiga shared library.
+
+	* build/amiga/Makefile:
+	New GNU makefile for compiling with GCC.
+
+	* doc/mpatrol.texi: Removed support for Amiga shared libraries.
+
+	* src/config.h: Added limited stack traversal for AmigaOS.
+
+	* src/target.h: Added BFD support for AmigaOS when compiling with GCC.
+
+	* src/symbol.c: Added support for reading symbols on AmigaOS.
+
+	* src/inter.c, src/inter.h, src/mpatrol.h:
+	Removed Amiga shared library support.
+
+	* src/mpatrol.c:
+	Added replacements for malloc() when compiling on Amiga with GCC.
+
+2000-03-15  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/mpatrol.texi: Added a chapter on integration.
+
+	* man/cat3/mpatrol.3, man/man3/mpatrol.3:
+	Added information about the default new handler.
+
+	* src/config.h: Added the MP_ALLOCFACTOR macro.
+
+	* src/memory.c:
+	Fixed a rather important bug in __mp_memalloc() when allocating more
+	than one initial page of memory.
+
+	* src/strtab.c, src/alloc.c, src/addr.c, src/info.c, src/symbol.c,
+	  src/heap.c:
+	Made use of MP_ALLOCFACTOR.
+
+2000-03-14  Graeme Roy  <graeme@epc.co.uk>
+
+	* src/inter.c:
+	Added ability to determine source level information from call if
+	USEDEBUG is enabled, even if none was passed through.  Also added a
+	default low-memory handler for operators new and new[].
+
+	* src/malloc.c: Added special mangling for GNU C++ operators.
+
+2000-03-13  Graeme Roy  <graeme@epc.co.uk>
+
+	* build/windows/Makefile, build/netware/Makefile, build/amiga/SMakefile,
+	  build/unix/Makefile:
+	Added list.h to the dependencies for strtab.o.
+
+	* src/config.h: Added MP_HASHTABSIZE.
+
+	* src/strtab.c, src/strtab.h, src/diag.c:
+	Added slots and a list for internal nodes for the hash table.
+
+2000-03-09  Graeme Roy  <graeme@epc.co.uk>
+
+	* FAQ: Added the section on building.
+
+	* build/amiga/mpatrol_pragmas.h:
+	Added __mp_pushdelstack() and __mp_popdelstack().
+
+	* doc/mpatrol.texi:
+	Added section on threads and added information about the tape archive
+	distribution.
+
+	* src/symbol.c: Explicit casts to const to remove warnings.
+
+	* pkg/tar/build:
+	Initial revision for building a tape archive distribution.
+
+2000-03-08  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/mpatrol.texi: Updated with all the recent changes.
+
+2000-03-07  Graeme Roy  <graeme@epc.co.uk>
+
+	* build/windows/mpatrol.def, build/amiga/mpatrol_lib.fd:
+	Added __mp_pushdelstack() and __mp_popdelstack().
+
+	* src/config.h: Added the MP_CONST definition.
+
+	* src/inter.c:
+	Only call the prologue and epilogue functions if not recursive.  Allow
+	the memory operation functions to continue to operate even when the
+	mpatrol library has terminated.
+
+	* src/symbol.c:
+	Changed line field in sourcepos from long to int to match BFD
+	definition.
+
+	* src/malloc.c: Changed some parameters to be const.
+
+	* src/mpatrol.h:
+	Added the MP_NOCPLUSPLUS macro for disabling support for C++.
+
+	* man/cat1/mpatrol.1, man/man1/mpatrol.1, bin/mpatrol:
+	Added the -g option and changed the old -g option to -G.
+
+	* man/cat3/mpatrol.3, man/man3/mpatrol.3:
+	Documented the USEDEBUG option and added const to some function
+	prototypes.
+
+2000-03-06  Graeme Roy  <graeme@epc.co.uk>
+
+	* src/mpatrol.h:
+	Added MP_CONST and made many pointer parameters constant.
+
+2000-03-03  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/mpatrol.texi:
+	Added more platforms on which mpatrol has been tested.
+
+	* src/diag.c, src/diag.h:
+	Modify return address in print symbol when looking for line numbers.
+
+2000-03-01  Graeme Roy  <graeme@epc.co.uk>
+
+	* src/diag.c: Added source level information to __mp_printsymbol().
+
+	* src/option.c, src/option.h, src/mpatrol.h: Added the USEDEBUG option.
+
+2000-02-29  Graeme Roy  <graeme@epc.co.uk>
+
+	* src/symbol.c:
+	Added __mp_closesymbols() and support for caching BFD library handles.
+	Completed __mp_findsource() for BFD targets.
+
+	* src/symbol.h:
+	Added the __mp_closesymbols() function and the head and tail pointers
+	for the access library handles list.  Added line number information
+	flag.
+
+	* src/inter.c: Added a call to __mp_closesymbols().
+
+2000-02-24  Graeme Roy  <graeme@epc.co.uk>
+
+	* src/info.c:
+	Fixed problem when the allocation count gets incremented more than once
+	before being stored in an infonode if internal allocations are made.
+
+2000-02-22  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/mpatrol.texi:
+	The C++ operators now have source level information associated with
+	them.
+
+	* src/config.h: Added definition for MP_MAXDELSTACK.
+
+	* src/info.c: Added initialisation of delete stack pointer.
+
+	* src/info.h:
+	Added the delete stack for operator delete and operator delete[].
+
+	* src/inter.c, src/inter.h:
+	Added __mp_pushdelstack() and __mp_popdelstack().
+
+	* src/mpatrol.h:
+	Added the MP_FUNCNAME definition.  Added source level information to
+	operator new and operator new[].  Added __mp_pushdelstack() and
+	__mp_popdelstack() and added source level information to operator delete
+	and operator delete[].  Changed the semicolon to a comma in the macro
+	definition of delete as this caused problems in single statement blocks.
+
+	* tests/pass/test7.c: New C++ test for operators new and delete.
+
+2000-02-18  Graeme Roy  <graeme@epc.co.uk>
+
+	* FAQ: Added some information on the Amiga version of mpatrol.
+
+	* doc/mpatrol.texi: Added information on contributors.
+
+2000-02-10  Graeme Roy  <graeme@epc.co.uk>
+
+	* src/info.c:
+	Changed order of deletion of symbols, addrs and allocs since we may need
+	to call a library function to close any object files before we delete
+	the heap.
+
+	* src/symbol.c, src/symbol.h: Added the __mp_findsource() function.
+
+2000-02-07  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/mpatrol.texi: Added more related software.
+
+2000-01-31  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/Makefile: Added a target to build mpatrol_doc.tar.gz.
+
+	* doc/mpatrol.texi:
+	Forgot to add total bytes copied, etc. to the first example summary.
+
+	* src/utils.c, src/utils.h: Added __mp_squareroot().
+
+2000-01-30  Graeme Roy  <graeme@epc.co.uk>
+
+	* build/amiga/mpatrol_lib.fd, build/windows/mpatrol.def:
+	Added __mp_locatemem().
+
+	* build/amiga/mpatrol_pragmas.h:
+	Added __mp_comparemem() and __mp_locatemem().
+
+	* doc/README:
+	Added explanation about the different types of documentation formats.
+
+	* doc/mpatrol.texi:
+	Added more information about the format of memory operation functions
+	tracing and the memchr() and memmem() functions.
+
+	* man/man3/mpatrol.3, man/cat3/mpatrol.3: Added memchr() and memmem().
+
+	* pkg/pkg/build: Also remove all object files generated during build.
+
+	* src/memory.c, src/memory.h: Added the __mp_memfind() function.
+
+	* src/info.c, src/info.h: Added the __mp_locatememory() function.
+
+	* src/diag.c: Added memchr() and memmem().
+
+	* src/inter.c, src/inter.h: Added the __mp_locatemem() function.
+
+	* src/mpatrol.h, src/malloc.c:
+	Added the memchr() and memmem() functions.
+
+2000-01-28  Graeme Roy  <graeme@epc.co.uk>
+
+	* build/amiga/mpatrol_lib.fd, build/windows/mpatrol.def:
+	Added __mp_comparemem().
+
+	* doc/mpatrol.texi: Added documentation on memcmp() and bcmp().
+
+	* man/man3/mpatrol.3, man/cat3/mpatrol.3: Added memcmp() and bcmp().
+
+	* src/info.c:
+	Added __mp_comparememory() and also added a count for the total number
+	of bytes that have been compared.
+
+	* src/info.h:
+	Added __mp_comparememory(), memory operation types for memcmp() and
+	bcmp() and added a counter for the total number of bytes compared.
+
+	* src/diag.c:
+	Added names for memcmp() and bcmp() and added the bytes compared total
+	to the summary.
+
+	* src/inter.c, src/inter.h: Added the __mp_comparememory() function.
+
+	* src/malloc.c, src/mpatrol.h: Added memcmp() and bcmp().
+
+2000-01-27  Graeme Roy  <graeme@epc.co.uk>
+
+	* src/memory.c, src/memory.h: Added __mp_memcompare().
+
+	* src/malloc.c:
+	Added gcc-specific prototype for memcpy() since the builtin requires
+	const.
+
+	* doc/mpatrol.texi: Added the tutorial.
+
+	* tests/tutorial/test1.c, tests/tutorial/test2.c,
+	  tests/tutorial/test3.c:
+	New tutorial files.
+
+2000-01-25  Graeme Roy  <graeme@epc.co.uk>
+
+	* build/amiga/mpatrol_pragmas.h: Added __mp_setmem() and __mp_copymem().
+
+	* tests/pass/test6.c: New memory operation test.
+
+2000-01-24  Graeme Roy  <graeme@epc.co.uk>
+
+	* FAQ:
+	New information about non-fatal errors and added information on C++
+	name demangling.
+
+	* build/amiga/mpatrol_lib.fd, build/windows/mpatrol.def:
+	Added __mp_setmem() and __mp_copymem().
+
+	* doc/mpatrol.texi:
+	Mentioned all about the new memory operation replacement functions.
+	Added information about expand() and information about the bytes copied
+	and bytes set values in the summary.
+
+	* man/man1/mpatrol.1, man/cat1/mpatrol.1:
+	Added information about implicit LOGALL.
+
+	* man/man3/mpatrol.3, man/cat3/mpatrol.3:
+	Added details of memory operations and added the expand() function.
+
+	* pkg/rpm/build:
+	Added more information about building in a directory other than /usr.
+
+	* src/info.c, src/info.h:
+	Added the expand() function, added the total bytes copied and set counts
+	and fixed __mp_checkrange() for free and freed blocks.
+
+	* src/diag.c:
+	Added the expand() function and the total bytes copied and set to the
+	summary.
+
+	* src/malloc.c: Added the expand() function.
+
+	* src/mpatrol.h:
+	Added the expand function and increased to version 1.1.0.
+
+	* src/version.c: Updated to version 1.1.0.
+
+2000-01-21  Graeme Roy  <graeme@epc.co.uk>
+
+	* src/alloc.c, src/alloc.h:
+	Added an extra argument to __mp_findnode() for detecting if a node lies
+	in a range of addresses.
+
+	* src/info.c, src/info.h:
+	Added the __mp_setmemory(), __mp_copymemory() and __mp_checkrange()
+	functions.
+
+	* src/diag.c: Added new memory operation function names.
+
+	* src/option.c, src/option.h: Added the LOGMEMORY option.
+
+	* src/signals.c: Added an extra parameter to __mp_findnode().
+
+	* src/inter.c, src/inter.h: Added __mp_setmem() and __mp_copymem().
+
+	* src/mpatrol.h, src/malloc.c: Added new memory operation functions.
+
+	* tests/fail/test9.c:
+	New test which performs an illegal memset() operation.
+
+	* tests/fail/test10.c: New test showing the erroneous use of memcpy().
+
+2000-01-18  Graeme Roy  <graeme@epc.co.uk>
+
+	* FAQ: Listed more of the potential run-time problems.
+
+2000-01-13  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/mpatrol.texi, README:
+	Added information about the new discussion group at eGroups.com.
+
+2000-01-12  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/mpatrol.texi:
+	Added more information about SAFESIGNALS and more items of related
+	software.
+
+2000-01-11  Graeme Roy  <graeme@epc.co.uk>
+
+	* FAQ: Added the FILES section.
+
+	* doc/Makefile: Changed suffix of ASCII document from .doc to .txt.
+
+	* doc/mpatrol.texi, README:
+	Added point about reading the FAQ before reporting a bug.
+
+	* pkg/rpm/mpatrol.spec, pkg/pkg/prototype, pkg/pkg/build:
+	Changed the suffix of the ASCII documentation from .doc to .txt.
+
+2000-01-09  Graeme Roy  <graeme@epc.co.uk>
+
+	* build/amiga/SMakefile, build/netware/Makefile, build/unix/Makefile,
+	  build/windows/Makefile, build/windows/mpatrol.def:
+	Updated the library revision and prevented the object libraries from
+	being built when the all target is used.
+
+	* FAQ: Added information about signals being ignored.
+
+	* bin/mpatrol: Added the -g option.
+
+	* doc/mpatrol.texi: Added the SAFESIGNALS option.
+
+	* man/man1/mpatrol.1, man/cat1/mpatrol.1: Added the -g option.
+
+	* man/man3/mpatrol.3, man/cat3/mpatrol.3: Added the SAFESIGNALS option.
+
+	* src/info.h, src/option.c, src/inter.c:
+	Added support for the new SAFESIGNALS option.
+
+	* src/signals.c, src/signals.h:
+	Added extra flag to indicate if signals have been saved or not.
+
+1999-12-23  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/mpatrol.texi:
+	Added more related software and removed authors from the concept index.
+	Also added FreshMeat details and fixed line numbers in some examples.
+
+	* FAQ: New file containing the answers to frequently asked questions.
+
+	* pkg/pkg/pkginfo, pkg/pkg/prototype, pkg/pkg/build,
+	  pkg/rpm/mpatrol.spec, pkg/rpm/build:
+	Increased the version to 1.1.0 and added the FAQ.
+
+	* src/option.h: Added OPT_* definitions for use with mallopt().
+
+1999-12-21  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/mpatrol.texi: Added reference to the memory management reference.
+
+	* src/memory.c, src/alloc.c, src/info.c, src/strtab.c, src/option.c,
+	  src/inter.c:
+	Changed calls from memset() to __mp_memset() and calls from memcpy() to
+	__mp_memcopy().
+
+	* src/symbol.c:
+	Now automatically check for dynamic symbols when using GNU BFD as well.
+
+	* src/mpatrol.h: Added options and flags for use with mallopt().
+
+1999-12-20  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/mpatrol.texi: Added a section on using the library functions.
+
+	* src/target.h:
+	Now use BFD file format by default on Linux since later RedHat releases
+	don't come with libelf.
+
+	* src/symbol.c:
+	Made reading the ELF dynamic linker independent of file format.
+
+	* src/memory.h, src/memory.c: Added __mp_memset() and __mp_memcopy().
+
+1999-12-06  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/mpatrol.texi:
+	Added the utilities section and also documented the pkg directory and
+	how to use other libraries with mpatrol.
+
+	* man/man3/mpatrol.3, man/cat3/mpatrol.3:
+	Added information about core file sizes.
+
+1999-11-29  Graeme Roy  <graeme@epc.co.uk>
+
+	* pkg/pkg/build, pkg/pkg/prototype, pkg/pkg/pkginfo:
+	New files for use when building a PKG package.
+
+1999-11-28  Graeme Roy  <graeme@epc.co.uk>
+
+	* pkg/rpm/build, pkg/rpm/mpatrol.spec:
+	New files for use when building an RPM package.
+
+1999-11-27  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/mpatrol.texi: Added the how it works chapter.
+
+1999-11-26  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/mpatrol.texi:
+	Added the overwrites and underwrites, testing, library behaviour and
+	general errors sections.
+
+1999-11-25  Graeme Roy  <graeme@epc.co.uk>
+
+	* bin/mpatrol: Added the -Z and -z options.
+
+	* doc/mpatrol.texi:
+	Added the using mpatrol and the improving performance chapters, added an
+	additional AmigaOS entry in related software, added the FAILFREQ and
+	FAILSEED options, and changed the descriptions of ALLOCSTOP, REALLOCSTOP
+	and FREESTOP.
+
+	* man/man3/mpatrol.3, man/man1/mpatrol.1, man/cat3/mpatrol.3,
+	  man/cat1/mpatrol.1:
+	Added the FAILFREQ and FAILSEED options.
+
+	* src/inter.c:
+	Set up the random number generator for the FAILFREQ option.
+
+	* src/info.c: Added support for the FAILFREQ and FAILSEED options.
+
+	* src/info.h: Added the failure frequency and failure seed.
+
+	* src/diag.c:
+	Added display of failure frequency and failure seed when showing the
+	summary.
+
+	* src/option.c:
+	Added the FAILFREQ and FAILSEED options and increased the maximum size
+	of the MPATROL_OPTIONS environment variable from 256 to 1024 bytes.
+
+	* src/signals.c:
+	Changed __mp_trap() to do nothing so that it can be used as a breakpoint
+	target within a debugger.
+
+1999-11-23  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/mpatrol.texi:
+	Added more things to do and also added a list of related software for
+	the Amiga.
+
+1999-11-21  Graeme Roy  <graeme@epc.co.uk>
+
+	* NOTES:
+	Removed this file as its contents are now in the manual.
+
+	* README: Removed the reference to NOTES as it no longer exists.
+
+	* doc/mpatrol.texi:
+	Added the library performance section along with updated performance
+	figures.
+
+1999-11-18  Graeme Roy  <graeme@epc.co.uk>
+
+	* README, NOTES:
+	Removed a lot of text from these files as it is now in the manual.
+
+	* EXAMPLES, INSTALL:
+	Removed these files as their contents are now in the manual.
+
+	* doc/mpatrol.texi: Added the operating system support section.
+
+1999-11-16  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/mpatrol.texi:
+	Added information about manual layout and changed Examples appendix to a
+	chapter.
+
+1999-11-15  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/mpatrol.texi: Added the section on memory allocations.
+
+	* doc/Makefile: Now use makeguide to build the AmigaGuide document.
+
+1999-11-14  Graeme Roy  <graeme@epc.co.uk>
+
+	* doc/mpatrol.texi, doc/Makefile:
+	Added the mpatrol logo to the various document formats.
+
+	* doc/images/mpatrol.pdf, doc/images/mpatrol.eps,
+	  doc/images/mpatrol.jpg:
+	New image files containing the mpatrol logo, which are required by the
+	various documentation formats.
+
+1999-11-10  Graeme Roy  <graeme@epc.co.uk>
+
+	* bin/mupdate: Added ability to update NEWS with latest changes as well.
+
+	* NEWS: Added changes from previous versions.
+
+	* doc/Makefile, doc/mpatrol.texi:
+	New TeXinfo manual for the library, and a Makefile to build various
+	documentation formats from it.
+
+1999-11-07  Graeme Roy  <graeme@epc.co.uk>
+
+	* src/memory.c:
+	Added the getmemory() function for implementing a simulated heap.
+
+	* src/config.h: Added support for allocating memory from a static array.
+
+1999-10-21  Graeme Roy  <graeme@epc.co.uk>
+
+	* README, NOTES, EXAMPLES: Added information about the CHECK option.
+
+	* bin/mpatrol: Added the -C option.
+
+	* man/man3/mpatrol.3, man/man1/mpatrol.1, man/cat3/mpatrol.3,
+	  man/cat1/mpatrol.1:
+	Added the CHECK and -C options.
+
+	* src/inter.c:
+	Added the ability to only check the integrity of free memory and
+	overflow buffers when the allocation index is within a given range.
+
+	* src/info.h, src/diag.c, src/info.c:
+	Added lower and upper check ranges.
+
+	* src/option.h, src/option.c:
+	Added the readrange() function and the CHECK option.
+
+1999-10-19  Graeme Roy  <graeme@epc.co.uk>
+
+	* EXAMPLES:
+	Added information about the total warnings and errors displayed at
+	program termination.
+
+	* NOTES: Added information about 64-bit processors.
+
+	* src/diag.c:
+	Added information about the total number of warnings and errors.
+
+	* src/utils.h:
+	Added macro versions of some routines for efficiency reasons.
+
+	* src/utils.c:
+	Conditionally compile some routines depending on the macro
+	MP_MACROROUTINES.
+
+	* src/config.h:
+	Added the MP_MACROROUTINES macro which indicates if macro versions of
+	certain routines are to be used for efficiency reasons.
+
+	* src/memory.c:
+	Improved __mp_memcheck() to be much more efficient for large blocks of
+	memory.
+
+1999-10-17  Graeme Roy  <graeme@epc.co.uk>
+
+	* NOTES: Added library performance figures and more related software.
+
+	* README: Changed Solaris 2.7 to Solaris 7.
+
+	* EXAMPLES: Added note about not using the library in release builds.
+
+1999-10-15  Graeme Roy  <graeme@epc.co.uk>
+
+	* README: Documented the USEMMAP option.
+
+1999-10-14  Graeme Roy  <graeme@epc.co.uk>
+
+	* src/option.c:
+	Added the USEMMAP option for UNIX platforms that support mmap().
+
+	* src/memory.c:
+	Added support for allocating memory using mmap() on UNIX platforms that
+	support it.
+
+	* src/memory.h:
+	Changed the name of the watch point control file handle field and added
+	a memory mapped file handle field.
+
+	* src/config.h: Added MP_MMAP_SUPPORT and MP_MMAP_FILENAME.
+
+1999-10-13  Graeme Roy  <graeme@epc.co.uk>
+
+	* EXAMPLES: New file for illustrating how to use the library.
+
+1999-10-12  Graeme Roy  <graeme@epc.co.uk>
+
+	* src/alloc.c:
+	Fixed the problem in splitnode() whereby the free node would be lost if
+	there was no more system memory to allocate the leftmost or rightmost
+	nodes.
+
+	* src/symbol.c:
+	Don't attempt to read from _DYNAMIC if its address is NULL, since that
+	will be the case if the program is statically linked.
+
+1999-10-10  Graeme Roy  <graeme@epc.co.uk>
+
+	* bin/mupdate:
+	Only update ChangeLog if it has changed since the last release.
+
+1999-10-05  Graeme Roy  <graeme@epc.co.uk>
+
+	* src/info.c:
+	Fixed a bug in __mp_checkinfo() when all allocations are pages and no
+	freed allocations are being reused, since we don't need to check
+	overflow buffers if the allocation has been freed.
+
+	* src/stack.c:
+	Fixed a bug in __mp_newframe() if using MP_BUILTINSTACK_SUPPORT when the
+	loop went round one too many times, causing an infinite loop.
+
+1999-10-03  Graeme Roy  <graeme@epc.co.uk>
+
+	* src/inter.c:
+	Fixed problem in __mp_info() where the check for a known memory block
+	was doing an || instead of an && in the test.

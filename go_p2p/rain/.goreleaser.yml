@@ -1,0 +1,48 @@
+env:
+  - GO111MODULE=on
+before:
+  hooks:
+    - go mod download
+builds:
+  - env:
+    - CGO_ENABLED=0
+    ldflags:
+    - -s -w -X github.com/cenkalti/rain/torrent.Version={{.Version}}
+    goos:
+    - linux
+    - darwin
+    - windows
+    goarch:
+    - amd64
+archives:
+  - format: tar.gz
+    name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}"
+    replacements:
+      darwin: macos
+    format_overrides:
+      - goos: windows
+        format: zip
+checksum:
+  name_template: 'checksums.txt'
+snapshot:
+  name_template: "{{ .Tag }}-next"
+changelog:
+  sort: asc
+  filters:
+    exclude:
+    - '^docs:'
+    - '^test:'
+brews:
+  - github:
+      owner: cenkalti
+      name: homebrew-rain
+    folder: Formula
+    homepage:  https://github.com/cenkalti/rain
+    description: BitTorrent client
+    install: |
+      bin.install "rain"
+      output = Utils.popen_read("#{bin}/rain bash-autocomplete")
+      (bash_completion/"rain").write output
+      prefix.install_metafiles
+    test: |
+      system "#{bin}/rain --version"

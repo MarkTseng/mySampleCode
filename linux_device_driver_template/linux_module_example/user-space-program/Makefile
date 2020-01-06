@@ -1,5 +1,5 @@
-TOOL_CHAIN_DIR=/home/mark/mstar_workshop/toolchain/gcc-linaro-arm-linux-gnueabihf-4.8-2014.04_linux/bin
-CROSS_COMPILE=$(TOOL_CHAIN_DIR)/arm-linux-gnueabihf-
+#TOOL_CHAIN_DIR=/home/mark/mstar_workshop/toolchain/gcc-linaro-arm-linux-gnueabihf-4.8-2014.04_linux/bin
+CROSS_COMPILE=arm-linux-gnueabihf-
 CC = $(CROSS_COMPILE)gcc
 STRIP = $(CROSS_COMPILE)strip
 
@@ -18,7 +18,7 @@ FUNC_TRACE_FLAG = -finstrument-functions
 
 RM = rm -f
 INC = ./
-ProgramName = memtool print_segmemts netlink_recv netlink_send tailq_ex netlink_event mmaptest
+ProgramName = memtool print_segmemts netlink_recv netlink_send tailq_ex netlink_event mmaptest lab3_poll_test signal_from_kernel
 
 all: $(ProgramName)
 	@echo "Programs is ready $(ProgramName)" 
@@ -61,6 +61,16 @@ devmem: devmem.c
 	$(STRIP) $@
 
 memtool: memtool.c
+	@echo "Compile $@" 
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $^
+	$(STRIP) $@
+
+lab3_poll_test: lab3_poll_test.c
+	@echo "Compile $@" 
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $^
+	$(STRIP) $@
+
+signal_from_kernel: signal_from_kernel.c
 	@echo "Compile $@" 
 	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $^
 	$(STRIP) $@
