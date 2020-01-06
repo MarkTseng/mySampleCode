@@ -1,0 +1,336 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+CC	Makefile	/^CC=gcc$/;"	m
+CUTOFFRATIO	config.h	20;"	d
+DEFAULT_CHANNELS	config.h	8;"	d
+DEFAULT_GAIN	config.h	11;"	d
+DEFAULT_OSC_PORT	config.h	6;"	d
+DEFAULT_SAMPLERATE	config.h	13;"	d
+DEFAULT_WORKERS	config.h	17;"	d
+FRAMES	audio.c	977;"	d	file:
+HALF_PI	audio.c	37;"	d	file:
+JOB	jobqueue.h	11;"	d
+MAXFILES	file.h	5;"	d
+MAXLINE	audio.h	5;"	d
+MAXONSETS	segment.c	25;"	d	file:
+MAXOSCSZ	server.c	17;"	d	file:
+MAXPATHSIZE	file.h	6;"	d
+MAXSAMPLES	file.h	4;"	d
+MAXSOUNDS	audio.h	6;"	d
+MAXSZ	zmqserv.c	6;"	d	file:
+MAX_CHANNELS	config.h	10;"	d
+MAX_DB	audio.h	8;"	d
+MAX_SAMPLERATE	config.h	15;"	d
+MIN_CHANNELS	config.h	9;"	d
+MIN_SAMPLERATE	config.h	14;"	d
+OBJECTS	Makefile	/^OBJECTS=$(SOURCES:.c=.o)$/;"	m
+PA_FRAMES_PER_BUFFER	audio.c	29;"	d	file:
+ROUNDOFF	audio.h	7;"	d
+SOURCES	Makefile	/^SOURCES=dirt.c common.c audio.c file.c server.c jobqueue.c thpool.c$/;"	m
+StreamFinished	audio.c	/^static void StreamFinished( void* userData ) {$/;"	f	file:
+_DIRTCONFIGH_	config.h	2;"	d
+_DIRTJACKH_	jack.h	2;"	d
+__COMMON_H__	common.h	2;"	d
+__JOBQUEUE_H__	jobqueue.h	2;"	d
+__THPOOL_H__	thpool.h	2;"	d
+accelerate	audio.h	/^  float  accelerate;$/;"	m	struct:t_node
+accelerate	audio.h	/^  float accelerate;$/;"	m	struct:__anon5
+active	audio.h	/^  int    active;$/;"	m	struct:t_node
+add_delay	audio.c	/^void add_delay(t_line *line, float sample, float delay, float feedback) {$/;"	f
+args	jobqueue.h	/^    void* args;                      \/\/ function's argument$/;"	m	struct:__anon9
+attack	audio.h	/^  float  attack;$/;"	m	struct:t_node
+attack	audio.h	/^  float attack;$/;"	m	struct:__anon5
+aubio_destruct	segment.c	/^void aubio_destruct() {$/;"	f
+aubio_init	segment.c	/^void aubio_init(int c) {$/;"	f
+aubio_process	segment.c	/^int *aubio_process(t_sample *sample, float *input, sf_count_t nframes) {$/;"	f
+audio_close	audio.c	/^extern void audio_close(void) {$/;"	f
+audio_init	audio.c	/^ extern void audio_init(bool dirty_compressor, bool autoconnect, bool late_trigger, unsigned int num_workers, char *sroot, bool shape_gain_comp) {$/;"	f
+audio_play	audio.c	/^extern int audio_play(t_sound* sound) {$/;"	f
+bandf	audio.h	/^  float  bandf;$/;"	m	struct:t_node
+bandf	audio.h	/^  float bandf;$/;"	m	struct:__anon5
+bandq	audio.h	/^  float  bandq;$/;"	m	struct:t_node
+bandq	audio.h	/^  float bandq;$/;"	m	struct:__anon5
+bool	common.h	6;"	d
+bpf	audio.h	/^  t_vcf  *bpf;$/;"	m	struct:t_node
+buffer_size	segment.c	/^uint_t buffer_size                    = 512; \/*1024;*\/$/;"	v
+channels	audio.h	/^  int    channels;$/;"	m	struct:t_node
+channels	file.h	/^  unsigned int channels;$/;"	m	struct:__anon7
+channels	segment.c	/^uint_t channels;$/;"	v
+checks	audio.h	/^  int    checks;$/;"	m	struct:t_node
+chunk_n	file.h	/^  unsigned int chunk_n;$/;"	m	struct:__anon7
+chunksz	file.h	/^  unsigned int chunksz;$/;"	m	struct:__anon7
+client	jack.c	/^jack_client_t *client;$/;"	v
+coarse	audio.h	/^  int    coarse;$/;"	m	struct:t_node
+coarse	audio.h	/^  int coarse;$/;"	m	struct:__anon5
+coarsef	audio.h	/^  t_crs  *coarsef;$/;"	m	struct:t_node
+coeff	audio.c	/^const double coeff[5][11]= {$/;"	v
+compress	audio.c	/^float compress(float in) {$/;"	f
+compressdave	audio.c	/^float compressdave(float in) {$/;"	f
+compression_speed	audio.c	/^float compression_speed = -1;$/;"	v
+cps	audio.h	/^  float  cps;$/;"	m	struct:t_node
+cps	audio.h	/^  float cps;$/;"	m	struct:__anon5
+crush	audio.h	/^  float crush;$/;"	m	struct:__anon5
+crush	audio.h	/^  int    crush;$/;"	m	struct:t_node
+crush_bits	audio.h	/^  float  crush_bits;$/;"	m	struct:t_node
+cut	audio.c	/^void cut(t_sound *s) {$/;"	f
+cut_continue	audio.h	/^  int    cut_continue;$/;"	m	struct:t_node
+cutgroup	audio.h	/^  int    cutgroup;$/;"	m	struct:t_node
+cutgroup	audio.h	/^  int cutgroup;$/;"	m	struct:__anon5
+cutoff	audio.h	/^  float  cutoff;$/;"	m	struct:t_node
+cutoff	audio.h	/^  float cutoff;$/;"	m	struct:__anon5
+cutoff	audio.h	/^ float cutoff;$/;"	m	struct:__anon1
+delay	audio.h	/^  float  delay;$/;"	m	struct:t_node
+delay	audio.h	/^  float delay;$/;"	m	struct:__anon5
+delay_feedback	audio.c	/^float delay_feedback = 0.7;$/;"	v
+delay_time	audio.c	/^float delay_time = 0.1;$/;"	v
+delayfeedback	audio.h	/^  float delayfeedback;$/;"	m	struct:__anon5
+delayfeedback	audio.h	/^  float delayfeedback;$/;"	m	struct:t_node
+delays	audio.h	/^t_line* delays;$/;"	v
+delaytime	audio.h	/^  float delaytime;$/;"	m	struct:__anon5
+delaytime	audio.h	/^  float delaytime;$/;"	m	struct:t_node
+dequeue	audio.c	/^void dequeue(sampletime_t now) {$/;"	f
+dirty_compressor_flag	dirt.c	/^static int dirty_compressor_flag = 1;$/;"	v	file:
+effect_bpf	audio.c	/^float effect_bpf(float in, t_sound *sound, int channel) {$/;"	f
+effect_coarse	audio.c	/^float effect_coarse(float in, t_sound *sound, int channel) {$/;"	f
+effect_hpf	audio.c	/^float effect_hpf(float in, t_sound *sound, int channel) {$/;"	f
+effect_vcf	audio.c	/^float effect_vcf(float in, t_sound *sound, int channel) {$/;"	f
+end	audio.h	/^  float  end;$/;"	m	struct:t_node
+end	audio.h	/^  float end;$/;"	m	struct:__anon5
+entry_t	jobqueue.c	/^} entry_t;$/;"	t	typeref:struct:__anon8	file:
+epochOffset	audio.c	/^double epochOffset = 0;$/;"	v
+error	server.c	/^void error(int num, const char *msg, const char *path) {$/;"	f
+error	zmqserv.c	/^void error(int num, const char *msg, const char *path) {$/;"	f
+f	audio.h	/^ float f;$/;"	m	struct:__anon1
+fftgrain	segment.c	/^cvec_t * fftgrain;$/;"	v
+file_get	file.c	/^extern t_sample *file_get(char *samplename, const char *sampleroot) {$/;"	f
+file_get_from_cache	file.c	/^extern t_sample *file_get_from_cache(char *samplename) {$/;"	f
+find_sample	file.c	/^t_sample *find_sample (char *samplename) {$/;"	f
+fix_samplerate	file.c	/^void fix_samplerate (t_sample *sample) {$/;"	f
+formant_filter	audio.c	/^float formant_filter(float in, t_sound *sound, int channel) {$/;"	f
+formant_history	audio.h	/^  double **formant_history;$/;"	m	struct:t_node
+formant_vowelnum	audio.h	/^  int    formant_vowelnum;$/;"	m	struct:t_node
+frames	file.h	/^  unsigned int frames;$/;"	m	struct:__anon7
+free_bpf	audio.c	/^void free_bpf (t_sound *sound) {$/;"	f
+free_formant_history	audio.c	/^void free_formant_history (t_sound *sound) {$/;"	f
+free_hpf	audio.c	/^void free_hpf (t_sound *sound) {$/;"	f
+free_loop	file.c	/^void free_loop(t_loop *loop) {$/;"	f
+free_vcf	audio.c	/^void free_vcf (t_sound *sound) {$/;"	f
+function	jobqueue.h	/^    void* (*function)(void* args);   \/\/ function pointer$/;"	m	struct:__anon9
+g_gain	common.c	/^float g_gain = DEFAULT_GAIN;$/;"	v
+g_num_channels	common.c	/^int g_num_channels = DEFAULT_CHANNELS;$/;"	v
+g_samplerate	common.c	/^int g_samplerate = DEFAULT_SAMPLERATE;$/;"	v
+gain	audio.h	/^  float  gain;$/;"	m	struct:t_node
+gain	audio.h	/^  float gain;$/;"	m	struct:__anon5
+generic_handler	server.c	/^int generic_handler(const char *path, const char *types, lo_arg **argv,$/;"	f
+generic_handler	zmqserv.c	/^int generic_handler(const char *path, const char *types, lo_arg **argv,$/;"	f
+hcutoff	audio.h	/^  float  hcutoff;$/;"	m	struct:t_node
+hcutoff	audio.h	/^  float hcutoff;$/;"	m	struct:__anon5
+head	jobqueue.c	/^    entry_t* head;$/;"	m	struct:jobqueue	file:
+hold	audio.h	/^  float  hold;$/;"	m	struct:t_node
+hold	audio.h	/^  float hold;$/;"	m	struct:__anon5
+hop_s	file.h	/^  unsigned int hop_s;$/;"	m	struct:__anon7
+hpf	audio.h	/^  t_vcf  *hpf;$/;"	m	struct:t_node
+hresonance	audio.h	/^  float  hresonance;$/;"	m	struct:t_node
+hresonance	audio.h	/^  float hresonance;$/;"	m	struct:__anon5
+ibuf	segment.c	/^fvec_t * ibuf;$/;"	v
+in	file.h	/^  double *in;$/;"	m	struct:__anon7
+index	audio.h	/^  int index;$/;"	m	struct:__anon2
+info	file.h	/^  SF_INFO *info;$/;"	m	struct:__anon6
+init_bpf	audio.c	/^void init_bpf (t_sound *sound) {$/;"	f
+init_crs	audio.c	/^void init_crs(t_sound *sound) {$/;"	f
+init_formant_history	audio.c	/^void init_formant_history (t_sound *sound) {$/;"	f
+init_hpf	audio.c	/^void init_hpf (t_sound *sound) {$/;"	f
+init_sound	audio.c	/^void init_sound(t_sound *sound) {$/;"	f
+init_vcf	audio.c	/^void init_vcf (t_sound *sound) {$/;"	f
+initialised	file.h	/^  int initialised;$/;"	m	struct:__anon7
+input_port	jack.c	/^jack_port_t *input_port;$/;"	v
+is_kriole	audio.h	/^  int    is_kriole;$/;"	m	struct:t_node
+is_loop	audio.h	/^  int is_loop;$/;"	m	struct:t_node
+is_sample_loading	audio.c	/^static int is_sample_loading(const char* samplename) {$/;"	f	file:
+items	audio.h	/^  float  *items;$/;"	m	struct:t_node
+items	file.h	/^  float *items;$/;"	m	struct:__anon6
+items	file.h	/^  float *items;$/;"	m	struct:__anon7
+jack_auto_connect_flag	dirt.c	/^static int jack_auto_connect_flag = 1;$/;"	v	file:
+jack_callback	audio.c	/^extern int jack_callback(int frames, float *input, float **outputs) {$/;"	f
+jack_client	audio.c	/^jack_client_t *jack_client = NULL;$/;"	v
+jack_init	audio.c	/^void jack_init(bool autoconnect) {$/;"	f
+jack_shutdown	jack.c	/^void jack_shutdown(void *arg) {$/;"	f
+jack_start	jack.c	/^extern jack_client_t *jack_start(t_callback callback, bool autoconnect) {$/;"	f
+job	jobqueue.c	/^    job_t job;$/;"	m	struct:__anon8	file:
+job_t	jobqueue.h	/^} job_t;$/;"	t	typeref:struct:__anon9
+jobqueue	jobqueue.c	/^struct jobqueue {$/;"	s	file:
+jobqueue_destroy	jobqueue.c	/^void jobqueue_destroy(jobqueue_t* q) {$/;"	f
+jobqueue_init	jobqueue.c	/^jobqueue_t* jobqueue_init() {$/;"	f
+jobqueue_is_empty	jobqueue.c	/^bool jobqueue_is_empty(const jobqueue_t* q) {$/;"	f
+jobqueue_pop	jobqueue.c	/^bool jobqueue_pop (jobqueue_t* q, job_t* j) {$/;"	f
+jobqueue_push	jobqueue.c	/^bool jobqueue_push(jobqueue_t* q, job_t j) {$/;"	f
+jobqueue_size	jobqueue.c	/^unsigned int jobqueue_size(const jobqueue_t* q) {$/;"	f
+jobqueue_t	jobqueue.h	/^typedef struct jobqueue jobqueue_t;$/;"	t	typeref:struct:jobqueue
+jobqueue_top	jobqueue.c	/^job_t* jobqueue_top(jobqueue_t* q) {$/;"	f
+k	audio.h	/^ float k;$/;"	m	struct:__anon1
+kriole_chunk	audio.h	/^  int    kriole_chunk;$/;"	m	struct:t_node
+kriole_chunk	audio.h	/^  int kriole_chunk;$/;"	m	struct:__anon5
+last	audio.h	/^  float last;$/;"	m	struct:__anon2
+late_trigger_flag	dirt.c	/^static int late_trigger_flag = 1;$/;"	v	file:
+line_feedback_delay	audio.h	/^float line_feedback_delay;$/;"	v
+loading	audio.c	/^t_sound *loading = NULL;$/;"	v
+lock	jobqueue.c	/^    pthread_mutex_t lock;$/;"	m	struct:jobqueue	file:
+loop	audio.h	/^    t_loop *loop;$/;"	m	union:t_node::__anon4
+loop_start	audio.h	/^  unsigned int loop_start;$/;"	m	struct:t_node
+loops	file.h	/^  int loops;$/;"	m	struct:__anon7
+main	dirt.c	/^int main (int argc, char **argv) {$/;"	f
+main	zmqserv.c	/^int main (void) {$/;"	f
+mark_as_loading	audio.c	/^static void mark_as_loading(t_sound* sound) {$/;"	f	file:
+max_frames	file.h	/^  unsigned int max_frames;$/;"	m	struct:__anon7
+mono	audio.h	/^  int    mono;$/;"	m	struct:t_node
+mutex_samples	file.c	/^pthread_mutex_t mutex_samples;$/;"	v
+mutex_samples_init	file.c	/^bool mutex_samples_init = false;$/;"	v
+mutex_sounds	audio.c	/^pthread_mutex_t mutex_sounds;$/;"	v
+name	file.h	/^  char name[MAXPATHSIZE];$/;"	m	struct:__anon6
+new_loop	file.c	/^t_loop *new_loop(float seconds) {$/;"	f
+new_sound	audio.c	/^t_sound *new_sound() {$/;"	f
+next	audio.h	/^  struct t_node *next, *prev;$/;"	m	struct:t_node	typeref:struct:t_node::t_node
+next	jobqueue.c	/^    void* next;$/;"	m	struct:__anon8	file:
+now	file.h	/^  unsigned int now;$/;"	m	struct:__anon7
+num_threads	thpool.c	/^    unsigned int num_threads;$/;"	m	struct:thpool	file:
+o	segment.c	/^aubio_onsetdetection_t *o;$/;"	v
+o2	segment.c	/^aubio_onsetdetection_t *o2;$/;"	v
+offset	audio.h	/^  float  offset;$/;"	m	struct:t_node
+oldx	audio.h	/^ float oldx;$/;"	m	struct:__anon1
+oldy1	audio.h	/^ float oldy1;$/;"	m	struct:__anon1
+oldy2	audio.h	/^ float oldy2;$/;"	m	struct:__anon1
+oldy3	audio.h	/^ float oldy3;$/;"	m	struct:__anon1
+onset	segment.c	/^fvec_t *onset;$/;"	v
+onset2	segment.c	/^fvec_t *onset2;$/;"	v
+onset_n	segment.c	/^int onset_n = 0;$/;"	v
+onsets	file.h	/^  int *onsets;$/;"	m	struct:__anon6
+onsets	segment.c	/^int onsets[MAXONSETS];$/;"	v
+osc_init	zmqserv.c	/^void osc_init() {$/;"	f
+osc_send_pitch	server.c	/^extern void osc_send_pitch(float starttime, unsigned int chunk, $/;"	f
+osc_send_play	server.c	/^extern void osc_send_play(double when, int lowchunk, float pitch, float flux, float centroid) {$/;"	f
+output_ports	jack.c	/^jack_port_t **output_ports;$/;"	v
+overlap_size	segment.c	/^uint_t overlap_size = 256;$/;"	v
+p	audio.h	/^ float p;$/;"	m	struct:__anon1
+pa_callback	audio.c	/^static int pa_callback(const void *inputBuffer, void *outputBuffer,$/;"	f	file:
+pa_init	audio.c	/^void pa_init(void) {$/;"	f
+pan	audio.h	/^  float  pan;$/;"	m	struct:t_node
+pan	audio.h	/^  float pan;$/;"	m	struct:__anon5
+parms	segment.c	/^aubio_pickpeak_t * parms;$/;"	v
+pitch_calc	pitch.c	/^extern float *pitch_calc(t_loop *loop) {$/;"	f
+pitch_destruct	pitch.c	/^void pitch_destruct(t_loop *loop) {$/;"	f
+pitch_init	pitch.c	/^extern void pitch_init(t_loop *loop, int samplerate) {$/;"	f
+play_handler	server.c	/^int play_handler(const char *path, const char *types, lo_arg **argv,$/;"	f
+playback	audio.c	/^void playback(float **buffers, int frame, sampletime_t now) {$/;"	f
+playing	audio.c	/^t_sound *playing = NULL;$/;"	v
+playtime	audio.h	/^  float  playtime;$/;"	m	struct:t_node
+point	audio.h	/^  int   point;$/;"	m	struct:__anon3
+pos	segment.c	/^unsigned int pos = 0; \/*frames%dspblocksize*\/$/;"	v
+position	audio.h	/^  double position;$/;"	m	struct:t_node
+prev	audio.h	/^  struct t_node *next, *prev;$/;"	m	struct:t_node	typeref:struct:t_node::
+process	jack.c	/^int process(jack_nframes_t nframes, void *arg) {$/;"	f
+publisher	zmqserv.c	/^void *publisher;$/;"	v
+pulse_init	audio.c	/^void pulse_init() {$/;"	f
+pv	segment.c	/^aubio_pvoc_t * pv;$/;"	v
+queue	thpool.c	/^    jobqueue_t* queue;$/;"	m	struct:thpool	file:
+queue_add	audio.c	/^void queue_add(t_sound **queue, t_sound *new) {$/;"	f
+queue_loading_lock	audio.c	/^pthread_mutex_t queue_loading_lock;$/;"	v
+queue_next	audio.c	/^t_sound *queue_next(t_sound **queue, sampletime_t now) {$/;"	f
+queue_remove	audio.c	/^void queue_remove(t_sound **queue, t_sound *old) {$/;"	f
+queue_size	audio.c	/^int queue_size(t_sound *queue) {$/;"	f
+queue_waiting_lock	audio.c	/^pthread_mutex_t queue_waiting_lock;$/;"	v
+r	audio.h	/^ float r;$/;"	m	struct:__anon1
+read_file_func	audio.c	/^void read_file_func(void* new) {$/;"	f
+read_file_pool	audio.c	/^thpool_t* read_file_pool;$/;"	v
+release	audio.h	/^  float  release;$/;"	m	struct:t_node
+release	audio.h	/^  float release;$/;"	m	struct:__anon5
+res	audio.h	/^ float res;$/;"	m	struct:__anon1
+reset_sound	audio.c	/^static void reset_sound(t_sound* s) {$/;"	f	file:
+resonance	audio.h	/^  float  resonance;$/;"	m	struct:t_node
+resonance	audio.h	/^  float resonance;$/;"	m	struct:__anon5
+reverse	audio.h	/^  int    reverse;$/;"	m	struct:t_node
+run_pulse	audio.c	/^void run_pulse() {$/;"	f
+running	thpool.c	/^    bool running;$/;"	m	struct:thpool	file:
+s	zmqserv.c	/^lo_server s;$/;"	v
+sample	audio.h	/^    t_sample *sample;$/;"	m	union:t_node::__anon4
+sample_count	file.c	/^int sample_count = 0;$/;"	v
+sample_loop	audio.h	/^  int    sample_loop;$/;"	m	struct:t_node
+sample_loop	audio.h	/^  int sample_loop;$/;"	m	struct:__anon5
+sample_n	audio.h	/^  int sample_n;$/;"	m	struct:__anon5
+samplename	audio.h	/^  char *samplename;$/;"	m	struct:__anon5
+samplename	audio.h	/^  char samplename[MAXPATHSIZE+1];$/;"	m	struct:t_node
+samplerate	file.h	/^  unsigned int samplerate;$/;"	m	struct:__anon7
+sampleroot	audio.c	/^const char* sampleroot;$/;"	v
+samples	audio.h	/^  float samples[MAXLINE];$/;"	m	struct:__anon3
+samples	file.c	/^t_sample *samples[MAXSAMPLES];$/;"	v
+sampletime_t	audio.h	13;"	d
+sampletime_t	audio.h	15;"	d
+scale	audio.h	/^ float scale;$/;"	m	struct:__anon1
+segment_get_onsets	segment.c	/^extern int *segment_get_onsets(t_sample *sample) {$/;"	f
+server_init	server.c	/^extern int server_init(char *osc_port) {$/;"	f
+shape	audio.h	/^  float shape;$/;"	m	struct:__anon5
+shape	audio.h	/^  int    shape;$/;"	m	struct:t_node
+shape_gain_comp_flag	dirt.c	/^static int shape_gain_comp_flag = 0;$/;"	v	file:
+shape_k	audio.h	/^  float  shape_k;$/;"	m	struct:t_node
+shift_delay	audio.c	/^float shift_delay(t_line *line) {$/;"	f
+silence	segment.c	/^smpl_t silence                        = -90.;$/;"	v
+since_chunk	file.h	/^  unsigned int since_chunk;$/;"	m	struct:__anon7
+size	jobqueue.c	/^    unsigned int size;$/;"	m	struct:jobqueue	file:
+sounds	audio.c	/^t_sound sounds[MAXSOUNDS];$/;"	v
+speed	audio.h	/^  float  speed;$/;"	m	struct:t_node
+speed	audio.h	/^  float speed;$/;"	m	struct:__anon5
+start	audio.h	/^  float  start;$/;"	m	struct:t_node
+start	audio.h	/^  float start;$/;"	m	struct:__anon5
+startT	audio.h	/^  sampletime_t startT;$/;"	m	struct:t_node
+started	audio.h	/^  int    started;$/;"	m	struct:t_node
+starttime	audio.c	/^float starttime = 0;$/;"	v
+stream	audio.c	/^PaStream *stream;$/;"	v
+sum	audio.h	/^  float sum;$/;"	m	struct:__anon2
+t_callback	jack.h	/^typedef int (*t_callback)(int, float *, float **);$/;"	t
+t_crs	audio.h	/^} t_crs;$/;"	t	typeref:struct:__anon2
+t_line	audio.h	/^} t_line;$/;"	t	typeref:struct:__anon3
+t_loop	file.h	/^} t_loop;$/;"	t	typeref:struct:__anon7
+t_node	audio.h	/^typedef struct t_node {$/;"	s
+t_play_args	audio.h	/^} t_play_args;$/;"	t	typeref:struct:__anon5
+t_sample	file.h	/^} t_sample;$/;"	t	typeref:struct:__anon6
+t_sound	audio.h	/^} t_sound;$/;"	t	typeref:struct:t_node
+t_vcf	audio.h	/^} t_vcf;$/;"	t	typeref:struct:__anon1
+tail	jobqueue.c	/^    entry_t* tail;$/;"	m	struct:jobqueue	file:
+thpool	thpool.c	/^struct thpool {$/;"	s	file:
+thpool_add_job	thpool.c	/^bool thpool_add_job(thpool_t* p, void *(*function)(void*), void* args) {$/;"	f
+thpool_destroy	thpool.c	/^void thpool_destroy(thpool_t* p) {$/;"	f
+thpool_init	thpool.c	/^thpool_t* thpool_init(unsigned int num_threads) {$/;"	f
+thpool_size	thpool.c	/^unsigned int thpool_size(const thpool_t* p) {$/;"	f
+thpool_t	thpool.h	/^typedef struct thpool thpool_t;$/;"	t	typeref:struct:thpool
+thread_do	thpool.c	/^static void* thread_do(thpool_t* p) {$/;"	f	file:
+threads	thpool.c	/^    pthread_t* threads;$/;"	m	struct:thpool	file:
+threshold	segment.c	/^smpl_t threshold                      = 0.3;$/;"	v
+type_onset	segment.c	/^aubio_onsetdetection_type type_onset  = aubio_onset_kl;$/;"	v
+type_onset2	segment.c	/^aubio_onsetdetection_type type_onset2 = aubio_onset_complex;$/;"	v
+unit	audio.h	/^  char   unit;$/;"	m	struct:t_node
+unit	audio.h	/^  char unit;$/;"	m	struct:__anon5
+unmark_as_loading	audio.c	/^static void unmark_as_loading(const char* samplename, int success) {$/;"	f	file:
+update_cv	thpool.c	/^    pthread_cond_t  update_cv;$/;"	m	struct:thpool	file:
+update_mutex	thpool.c	/^    pthread_mutex_t update_mutex;$/;"	m	struct:thpool	file:
+use_dirty_compressor	audio.c	/^bool use_dirty_compressor = false;$/;"	v
+use_late_trigger	audio.c	/^bool use_late_trigger = false;$/;"	v
+use_shape_gain_comp	audio.c	/^bool use_shape_gain_comp = false;$/;"	v
+usedoubled	segment.c	/^int usedoubled = 1;$/;"	v
+vcf	audio.h	/^  t_vcf  *vcf;$/;"	m	struct:t_node
+velocity	audio.h	/^  float  velocity;$/;"	m	struct:t_node
+velocity	audio.h	/^  float velocity;$/;"	m	struct:__anon5
+vowelnum	audio.h	/^  int vowelnum;$/;"	m	struct:__anon5
+waiting	audio.c	/^t_sound *waiting = NULL;$/;"	v
+wav_filter	file.c	/^int wav_filter (const struct dirent *d) {$/;"	f
+when	audio.h	/^  double when;$/;"	m	struct:__anon5
+when	audio.h	/^  double when;$/;"	m	struct:t_node
+win_s	file.h	/^  unsigned int win_s;$/;"	m	struct:__anon7
+x	audio.h	/^ float x;$/;"	m	struct:__anon1
+y1	audio.h	/^ float y1;$/;"	m	struct:__anon1
+y2	audio.h	/^ float y2;$/;"	m	struct:__anon1
+y3	audio.h	/^ float y3;$/;"	m	struct:__anon1
+y4	audio.h	/^ float y4;$/;"	m	struct:__anon1
+zmqthread	server.c	/^void *zmqthread(void *data){$/;"	f

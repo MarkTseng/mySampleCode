@@ -1,0 +1,101 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+THPOOL_DEBUG	thpool.c	26;"	d	file:
+THPOOL_DEBUG	thpool.c	28;"	d	file:
+_POSIX_C_SOURCE	thpool.c	11;"	d	file:
+_THPOOL_	thpool.h	8;"	d
+arg	thpool.c	/^	void*  arg;                          \/* function's argument       *\/$/;"	m	struct:job	file:
+assure_installed_valgrind	tests/funcs.sh	/^function assure_installed_valgrind {$/;"	f
+bsem	thpool.c	/^typedef struct bsem {$/;"	s	file:
+bsem	thpool.c	/^} bsem;$/;"	t	typeref:struct:bsem	file:
+bsem_init	thpool.c	/^static void bsem_init(bsem *bsem_p, int value) {$/;"	f	file:
+bsem_post	thpool.c	/^static void bsem_post(bsem *bsem_p) {$/;"	f	file:
+bsem_post_all	thpool.c	/^static void bsem_post_all(bsem *bsem_p) {$/;"	f	file:
+bsem_reset	thpool.c	/^static void bsem_reset(bsem *bsem_p) {$/;"	f	file:
+bsem_wait	thpool.c	/^static void bsem_wait(bsem* bsem_p) {$/;"	f	file:
+compile	tests/funcs.sh	/^function compile { #cfilepath$/;"	f
+cond	thpool.c	/^	pthread_cond_t   cond;$/;"	m	struct:bsem	file:
+err	tests/funcs.sh	/^function err { #string #log$/;"	f
+err	thpool.c	32;"	d	file:
+err	thpool.c	34;"	d	file:
+extract_num	tests/funcs.sh	/^function extract_num { #needle with number #haystack$/;"	f
+front	thpool.c	/^	job  *front;                         \/* pointer to front of queue *\/$/;"	m	struct:jobqueue	file:
+function	thpool.c	/^	void   (*function)(void* arg);       \/* function pointer          *\/$/;"	m	struct:job	file:
+has_jobs	thpool.c	/^	bsem *has_jobs;                      \/* flag as binary semaphore  *\/$/;"	m	struct:jobqueue	file:
+id	thpool.c	/^	int       id;                        \/* friendly id               *\/$/;"	m	struct:thread	file:
+increment	tests/src/conc_increment.c	/^void increment() {$/;"	f
+job	thpool.c	/^typedef struct job{$/;"	s	file:
+job	thpool.c	/^} job;$/;"	t	typeref:struct:job	file:
+jobqueue	thpool.c	/^	jobqueue  jobqueue;                  \/* job queue                 *\/$/;"	m	struct:thpool_	file:
+jobqueue	thpool.c	/^typedef struct jobqueue{$/;"	s	file:
+jobqueue	thpool.c	/^} jobqueue;$/;"	t	typeref:struct:jobqueue	file:
+jobqueue_clear	thpool.c	/^static void jobqueue_clear(jobqueue* jobqueue_p){$/;"	f	file:
+jobqueue_destroy	thpool.c	/^static void jobqueue_destroy(jobqueue* jobqueue_p){$/;"	f	file:
+jobqueue_init	thpool.c	/^static int jobqueue_init(jobqueue* jobqueue_p){$/;"	f	file:
+jobqueue_pull	thpool.c	/^static struct job* jobqueue_pull(jobqueue* jobqueue_p){$/;"	f	file:
+jobqueue_push	thpool.c	/^static void jobqueue_push(jobqueue* jobqueue_p, struct job* newjob){$/;"	f	file:
+len	thpool.c	/^	int   len;                           \/* number of jobs in queue   *\/$/;"	m	struct:jobqueue	file:
+main	example.c	/^int main(){$/;"	f
+main	tests/ext_bugs/memleak.c	/^int main(void){$/;"	f
+main	tests/src/api.c	/^int main(int argc, char *argv[]){$/;"	f
+main	tests/src/conc_increment.c	/^int main(int argc, char *argv[]){$/;"	f
+main	tests/src/no_work.c	/^int main(int argc, char *argv[]){$/;"	f
+main	tests/src/nonzero_heap_stack.c	/^int main(){$/;"	f
+main	tests/src/pause_resume.c	/^int main(int argc, char *argv[]){$/;"	f
+main	tests/src/wait.c	/^int main(int argc, char *argv[]){$/;"	f
+mutex	tests/src/conc_increment.c	/^pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;$/;"	v
+mutex	thpool.c	/^	pthread_mutex_t mutex;$/;"	m	struct:bsem	file:
+needle	tests/funcs.sh	/^function needle { #needle #haystack$/;"	f
+nonzero_heap	tests/src/nonzero_heap_stack.c	/^void nonzero_heap(){$/;"	f
+nonzero_stack	tests/src/nonzero_heap_stack.c	/^void nonzero_stack(){$/;"	f
+num_threads_alive	thpool.c	/^	volatile int num_threads_alive;      \/* threads currently alive   *\/$/;"	m	struct:thpool_	file:
+num_threads_working	thpool.c	/^	volatile int num_threads_working;    \/* threads currently working *\/$/;"	m	struct:thpool_	file:
+prev	thpool.c	/^	struct job*  prev;                   \/* pointer to previous job   *\/$/;"	m	struct:job	typeref:struct:job::job	file:
+pthread	thpool.c	/^	pthread_t pthread;                   \/* pointer to actual thread  *\/$/;"	m	struct:thread	file:
+rear	thpool.c	/^	job  *rear;                          \/* pointer to rear  of queue *\/$/;"	m	struct:jobqueue	file:
+rwmutex	thpool.c	/^	pthread_mutex_t rwmutex;             \/* used for queue r\/w access *\/$/;"	m	struct:jobqueue	file:
+sleep_1	tests/src/wait.c	/^void sleep_1(int* secs) {$/;"	f
+sleep_2_secs	tests/src/api.c	/^void sleep_2_secs(){$/;"	f
+sleep_4_secs	tests/src/pause_resume.c	/^void sleep_4_secs(){$/;"	f
+sum	tests/src/conc_increment.c	/^int sum=0;$/;"	v
+task	tests/src/nonzero_heap_stack.c	/^void task(){$/;"	f
+task1	example.c	/^void task1(){$/;"	f
+task2	example.c	/^void task2(){$/;"	f
+test_api	tests/api.sh	/^function test_api {$/;"	f
+test_mass_addition	tests/threadpool.sh	/^function test_mass_addition { #endsum #threads$/;"	f
+test_pause_resume_est7secs	tests/pause_resume.sh	/^function test_pause_resume_est7secs { #threads$/;"	f
+test_thread_free	tests/memleaks.sh	/^function test_thread_free { #threads$/;"	f
+test_thread_free_multi	tests/memleaks.sh	/^function test_thread_free_multi { #threads #times$/;"	f
+test_wait_each_job	tests/wait.sh	/^function test_wait_each_job { #threads #jobs$/;"	f
+test_wait_pool	tests/wait.sh	/^function test_wait_pool { #threads #jobs$/;"	f
+test_with_nonzero_heap_and_stack	tests/heap_stack_garbage.sh	/^function test_with_nonzero_heap_and_stack {$/;"	f
+thcount_lock	thpool.c	/^	pthread_mutex_t  thcount_lock;       \/* used for thread count etc *\/$/;"	m	struct:thpool_	file:
+thpool_	thpool.c	/^typedef struct thpool_{$/;"	s	file:
+thpool_	thpool.c	/^} thpool_;$/;"	t	typeref:struct:thpool_	file:
+thpool_add_work	thpool.c	/^int thpool_add_work(thpool_* thpool_p, void (*function_p)(void*), void* arg_p){$/;"	f
+thpool_destroy	thpool.c	/^void thpool_destroy(thpool_* thpool_p){$/;"	f
+thpool_init	thpool.c	/^struct thpool_* thpool_init(int num_threads){$/;"	f
+thpool_num_threads_working	thpool.c	/^int thpool_num_threads_working(thpool_* thpool_p){$/;"	f
+thpool_p	thpool.c	/^	struct thpool_* thpool_p;            \/* access to thpool          *\/$/;"	m	struct:thread	typeref:struct:thread::thpool_	file:
+thpool_pause	thpool.c	/^void thpool_pause(thpool_* thpool_p) {$/;"	f
+thpool_resume	thpool.c	/^void thpool_resume(thpool_* thpool_p) {$/;"	f
+thpool_wait	thpool.c	/^void thpool_wait(thpool_* thpool_p){$/;"	f
+thread	thpool.c	/^typedef struct thread{$/;"	s	file:
+thread	thpool.c	/^} thread;$/;"	t	typeref:struct:thread	file:
+thread_destroy	thpool.c	/^static void thread_destroy (thread* thread_p){$/;"	f	file:
+thread_do	tests/ext_bugs/memleak.c	/^void* thread_do(void *arg){$/;"	f
+thread_do	thpool.c	/^static void* thread_do(struct thread* thread_p){$/;"	f	file:
+thread_hold	thpool.c	/^static void thread_hold(int sig_id) {$/;"	f	file:
+thread_init	thpool.c	/^static int thread_init (thpool_* thpool_p, struct thread** thread_p, int id){$/;"	f	file:
+threadpool	thpool.h	/^typedef struct thpool_* threadpool;$/;"	t	typeref:struct:thpool_
+threads	thpool.c	/^	thread**   threads;                  \/* pointer to threads        *\/$/;"	m	struct:thpool_	file:
+threads_all_idle	thpool.c	/^	pthread_cond_t  threads_all_idle;    \/* signal to thpool_wait     *\/$/;"	m	struct:thpool_	file:
+threads_keepalive	tests/ext_bugs/memleak.c	/^volatile int threads_keepalive = 1;$/;"	v
+threads_keepalive	thpool.c	/^static volatile int threads_keepalive;$/;"	v	file:
+threads_on_hold	thpool.c	/^static volatile int threads_on_hold;$/;"	v	file:
+time_exec	tests/funcs.sh	/^function time_exec { #command ..$/;"	f
+v	thpool.c	/^	int v;$/;"	m	struct:bsem	file:
