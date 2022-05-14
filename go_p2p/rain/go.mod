@@ -41,7 +41,7 @@ require (
 	github.com/zeebo/bencode v1.0.0
 	golang.org/x/crypto v0.0.0-20190923035154-9ee001bba392 // indirect
 	golang.org/x/sys v0.0.0-20190924154521-2837fb4f24fe
-	gopkg.in/yaml.v2 v2.2.2
+	gopkg.in/yaml.v2 v2.2.8
 )
 
 replace github.com/rcrowley/go-metrics => github.com/cenkalti/go-metrics v0.0.0-20190910102919-35c391953d1c
